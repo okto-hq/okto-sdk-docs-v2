@@ -1,0 +1,8 @@
+{
+    "title": "Authentication",
+    "pages": [
+        "login",
+        "logout",
+        "userInfo"
+    ]
+  }
