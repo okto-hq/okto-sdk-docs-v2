@@ -1,0 +1,1 @@
+self.__NEXT_FONT_MANIFEST="{\"pages\":{},\"app\":{\"/Users/vaibhav.pandey/Documents/okto/v2/okto-sdk-docs-v2/app/layout\":[\"static/media/eafabf029ad39a43-s.p.woff2\",\"static/media/8888a3826f4a3af4-s.p.woff2\",\"static/media/a34f9d1faa5f3315-s.p.woff2\"]},\"appUsingSizeAdjust\":true,\"pagesUsingSizeAdjust\":false}"

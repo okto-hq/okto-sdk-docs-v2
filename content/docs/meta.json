@@ -1,0 +1,19 @@
+{
+    "title": "Okto",
+    "pages": [
+      "---Introduction---",
+      "index",
+      "what-is-okto",
+      "understanding-okto",
+      "okto-sdk",
+      "okto-layer",
+      "---SDK---",
+      "typescript-sdk",
+      "---Resources---",
+      "brand-kit",
+      "faq",
+      "glossary",
+      "[Dev Tools](https://docs.okto.tech/tools)"
+    ],
+    "root": true
+  }

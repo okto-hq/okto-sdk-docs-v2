@@ -1,0 +1,9 @@
+{
+    "title": "Typescript",
+    "pages": [
+        "getting-started",
+        "authentication",
+        "using-sdk"
+    ],
+    "root": true
+  }

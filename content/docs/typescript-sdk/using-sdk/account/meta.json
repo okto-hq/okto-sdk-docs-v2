@@ -1,0 +1,9 @@
+{
+    "title": "Account",
+    "pages": [
+        "execute",
+        "estimate",
+        "singleUserOp",
+        "portfolio"
+    ]
+  }

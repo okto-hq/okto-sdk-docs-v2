@@ -1,0 +1,10 @@
+{
+    "title": "UserOp",
+    "pages": [
+        "tokenTransfer",
+        "nftTransfer",
+        "nftMint",
+        "nftCollectionCreation",
+        "rawTransaction"
+    ]
+  }
