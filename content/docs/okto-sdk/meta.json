@@ -2,9 +2,7 @@
     "title": "Okto SDK",
     "pages": [
         "sdk-introduction",
-        "sdk-overview",
-        "embedded-wallets",
-        "supported-chains",
+        "supported-sdk-platforms",
         "use-cases"
     ]
   }

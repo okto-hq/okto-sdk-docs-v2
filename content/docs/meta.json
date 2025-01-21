@@ -3,8 +3,9 @@
     "pages": [
       "---Introduction---",
       "index",
-      "what-is-okto",
-      "understanding-okto",
+      "okto-ecosystem",
+      "okto-abstraction-approach",
+      "supported-chains-tokens",
       "okto-sdk",
       "okto-layer",
       "---SDK---",
