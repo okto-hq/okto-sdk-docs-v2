@@ -28,7 +28,7 @@ okto-sdk-docs-v2-staging:
         scheme: HTTP
       initialDelaySeconds: 3
       periodSeconds: 2
-    DDService: okto-sdk-docs-staging
+    DDService: okto-sdk-docs-v2-staging
     topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: node
