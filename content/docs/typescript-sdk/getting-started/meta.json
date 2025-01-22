@@ -1,8 +1,6 @@
 {
     "title": "Getting Started",
     "pages": [
-        "prerequisites",
-        "installation",
-        "okto-client"
+        "quickstart"
     ]
   }
