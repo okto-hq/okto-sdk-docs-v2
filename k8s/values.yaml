@@ -58,6 +58,9 @@ okto-sdk-docs-v2-staging:
     - variable: NEXT_PUBLIC_GOOGLE_CLIENT_ID
       secretId: *oktohq-sdk-docs
       secretKey: NEXT_PUBLIC_GOOGLE_CLIENT_ID
+  externalSecret:
+    skipSecrets:
+      - oktohq/okto-sdk-docs-staging
   tolerations:
     - effect: NoSchedule
       key: application
