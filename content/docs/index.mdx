@@ -1,29 +1,26 @@
 ---
 title: Overview
-description: ✦ Welcome to Okto’s documentation ✦ Get started with Okto SDK in
-  your project. Learn the basics, explore how Okto works, and find helpful
-  resources to build and improve your app. We're here to guide you from your
-  first steps to creating amazing Web3 experiences.
 full: false
 icon: Star
 ---
 
-import DocCard from "../../app/components/mdx/DocCard";
-import TechnologyCard from "../../app/components/mdx/TechnologyCard";
-import SDKCard from "../../app/components/mdx/SDKCard";
-import Footer from "../../app/components/Footer";
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-import { FaReact } from "react-icons/fa6";
-import { FaUnity } from "react-icons/fa6";
+Welcome to **Okto's developer documentation**! Whether you're building decentralized applications, managing multi-chain interactions, or exploring wallet abstraction, Okto's tools and resources are here to guide you every step of the way.
+
+
+import TechnologyCard from "app/components/mdx/TechnologyCard";
+import Footer from "app/components/Footer";
+import { FaReact, FaUnity, FaDiscord } from "react-icons/fa6";
 import { MessageSquareText, MousePointer2 } from 'lucide-react';
 import { TbBrandReactNative, TbApi } from "react-icons/tb";
 import { SiFlutter } from "react-icons/si";
-import { LuLayoutDashboard, LuSettings, LuBookOpen, LuCode, LuToggleLeft } from "react-icons/lu";
+import { LuLayoutDashboard, LuToggleLeft, LuCode, LuBookOpen } from "react-icons/lu";
 import { IoDocumentOutline } from "react-icons/io5";
 
-## Quick Start Guide
+---
 
-Get started in three simple steps:
+## Quick Start
+
+Get started with Okto SDK in just three steps:
 
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
 
@@ -50,53 +47,25 @@ Get started in three simple steps:
 
 </div>
 
+---
+
 ## What is Okto SDK?
 
-Okto SDK provides developers with a fast and seamless way to build on Web3. It offers interoperable embedded wallets, enabling a Web2-like user experience while onboarding users to Web3 effortlessly. 
+Okto SDK empowers developers with tools to integrate Web3 functionality into their applications. It provides interoperable embedded wallets that offer a **Web2-like user experience**, simplifying blockchain adoption for developers and users.
 
-With Okto SDK, developers can transform their Web2 applications into Web3-powered platforms in just a few steps, without compromising user-friendliness. This powerful toolkit simplifies cross-chain interactions and ensures a smooth transition for both developers and users, accelerating Web3 adoption and integration.
+With Okto SDK, you can:
+- Transition Web2 apps into Web3 platforms seamlessly.
+- Simplify cross-chain interactions.
+- Accelerate Web3 adoption with user-friendly features.
 
-## Explore SDK Options
+<TechnologyCard 
+    icon={<LuCode size={"1.5rem"}/>}
+    title="Explore SDK Documentation"
+    subtitle="Discover how Okto SDK works and integrate it into your app"
+    link="/docs/okto-sdk/supported-sdk-platforms"
+/>
 
-Pick the right SDK for your platform and start integrating Web3 features:
-
-<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
-  <TechnologyCard
-      icon={<FaReact size={"3rem"} />}
-      title="React"
-      subtitle="for web"
-      link="/docs/react-sdk"
-  />
-
-  <TechnologyCard
-      icon={<TbBrandReactNative size={"3rem"} />}
-      title="React Native"
-      subtitle="for mobile"
-      link="/docs/react-native-sdk"
-  />
-
-  <TechnologyCard
-      icon={<SiFlutter size={"3rem"} />}
-      title="Flutter"
-      subtitle="for Android and iOS"
-      link="/docs/flutter-sdk"
-  />
-
-  <TechnologyCard 
-      icon={<TbApi size={"3rem"} />}
-      title="API"
-      subtitle="for server and client"
-      link="/api-docs"
-  />
-
-  <TechnologyCard 
-      icon={<FaUnity size={"3rem"} />}
-      title="Unity"
-      subtitle="for Web3-enabled gaming experiences"
-      link="/docs/unity-sdk"
-  />
-
-</div>
+---
 
 ## Learn More 
 
