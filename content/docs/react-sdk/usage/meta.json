@@ -3,9 +3,10 @@
     "pages": [
       "---Core---",
       "OktoClient",
-      "---Account---",
+      "login",
       "signUserOp",
       "executeUserOp",
+      "---Account---",
       "estimate",
       "---Explorer---",
       "getAccount",

@@ -3,3 +3,64 @@ title: Estimate
 description: Okto is a platform that allows you to integrate web3 functionality into your app without building things from scratch.
 full: false
 ---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react'; 
+
+import '../../styles.css';
+
+### Method Overview
+
+| Methods                                                                         | Description                          |                 
+|---------------------------------------------------------------------------------|--------------------------------------|
+| <sub><i>async</i></sub> [`estimate`](#estimate) | Estimate a user operation |
+
+<div className="method-box">
+
+## Estimate
+
+<sub><i>async</i></sub> `estimate(OktoClient, recipientWalletAddress, networkId, tokenAddress, amount)`<a href="https://github.com/okto-hq/okto-sdk-react/blob/main/src/OktoProvider.tsx#L340" target="_blank" rel="noopener noreferrer" style= {{ textDecoration: "none" }}> <IIcon icon="lucide:external-link" height="17" style={{ display: 'inline-block', verticalAlign: 'middle' }} /></a> estimates a user operation.
+
+### Parameters
+
+| Parameter   | Type                        | Description                            | 
+|-------------|-----------------------------|----------------------------------------|
+| `oktoClient` | `OktoClient` | Okto client |
+| `recipientWalletAddress` | `string` | The recipient wallet address |
+| `networkId` | `number` | The network id of the user operation |
+| `tokenAddress` | `string` | The token address of the user operation |
+| `amount` | `string` | The amount of the user operation |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type                  | Description                                   | 
+|------------|-----------------------|-----------------------------------------------|
+| `result`   | [`Promise<EstimateOrderPayload>`](/api-docs#model/estimateorderpayload) | Returns the estimate order payload | 
+
+</Callout>
+
+
+<Accordions>
+<Accordion title="Example">
+<Tabs items={['Typescript']}>
+  <Tab value="Typescript">
+    ```typescript
+        const estimateOrderPayload = await oktoClient.account.estimate(
+            oktoClient,
+            '0x3Fa18D1FC4ecFD2542a08cF35b680A4064bf986b',
+            'eip155:137',
+            '', // pass empty string for native token of the network
+            '10000',
+        );
+    ```
+  </Tab>
+</Tabs>
+</Accordion>
+</Accordions>
+
+</div>
