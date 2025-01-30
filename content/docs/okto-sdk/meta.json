@@ -3,6 +3,7 @@
     "pages": [
         "sdk-introduction",
         "supported-sdk-platforms",
+        "feature-support",
         "use-cases"
     ]
   }

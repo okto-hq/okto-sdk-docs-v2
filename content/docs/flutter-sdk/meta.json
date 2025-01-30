@@ -1,10 +1,9 @@
 {
-    "title": "Typescript",
+    "title": "Flutter",
     "pages": [
         "getting-started",
         "authentication",
-        "usage",
-        "v2-migration-guide"
+        "usage"
     ],
     "root": true
   }
