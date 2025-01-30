@@ -1,7 +1,6 @@
 {
     "title": "Authentication",
     "pages": [
-        "google-oauth",
-        "login"
+        "google-oauth"
     ]
   }
