@@ -1,6 +1,7 @@
 {
     "title": "Usage",
     "pages": [
+      "overview",
       "---Core---",
       "OktoClient",
       "---Account---",
