@@ -1,0 +1,22 @@
+{
+  "title": "React",
+  "pages": [
+    "index",
+    "quickstart",
+    "v2migration",
+    "---Authentication---",
+    "google-Oauth",
+    "login",
+    "---Usage---",
+    "overview",
+    "(hooks)",
+    "(Account)",
+    "(Explorer)",
+    "(UserOps)",
+    "---Reference---",
+    "constants",
+    "changelog",
+    "(Example Apps)"
+  ],
+  "root": true
+}
