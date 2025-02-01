@@ -11,7 +11,7 @@
       "---SDK---",
       "okto-sdk",
       "typescript-sdk",
-      "react-sdk",
+      "react",
       "react-native-sdk",
       "flutter-sdk",
       "rate-limits",
