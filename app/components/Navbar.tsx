@@ -16,6 +16,7 @@ import { FaReact } from "react-icons/fa6";
 import { TbBrandReactNative, TbApi } from "react-icons/tb";
 import { SiFlutter } from "react-icons/si";
 import { FaUnity } from "react-icons/fa6";
+import { SiTypescript } from "react-icons/si";
 import { useTheme } from "next-themes";
 import GitHubButton from "./GithubButton";
 import DiscordButton from "./DiscordButton";
@@ -43,22 +44,23 @@ export default function NavbarComponent() {
   }
 
   const navItems = [
-    { href: "/docs/introduction-to-okto", label: "Intro", subpath: '/okto-universe' },
     { href: "/docs/developer-admin-dashboard", label: "Using Dashboard", subpath: '/overview' },
-    { href: "/blogs", label: "Blog", subpath: '' },
+    { href: "https://www.okto.tech/blog", label: "Blog", subpath: '' },
     { href: "/showcase", label: "Showcase", subpath: '' },
     // { href: "/api-docs", label: "API Reference", subpath: '' },
   ];
 
   const sdkOptions = [
-    { href: "/docs/react-sdk", label: "React", subpath: '/', icons: <FaReact /> },
+    { href: "/docs/typescript-sdk", label: "Typescript", subpath: '/', icons: <SiTypescript /> },
+    { href: "/docs/react", label: "React", subpath: '/', icons: <FaReact /> },
     { href: "/docs/react-native-sdk", label: "React Native", subpath: '/', icons: <TbBrandReactNative /> },
     { href: "/docs/flutter-sdk", label: "Flutter", subpath: '/', icons: <SiFlutter /> },
-    { href: "/docs", label: "Unity", subpath: '/unity-sdk', icons: <FaUnity /> },
+    // { href: "/docs", label: "Unity", subpath: '/unity-sdk', icons: <FaUnity /> },
   ];
 
   const getFrameworkLabel = () => {
-    if (pathname.startsWith('/docs/react-sdk')) return 'React';
+    if (pathname.startsWith('/docs/typescript-sdk')) return 'Typescript';
+    if (pathname.startsWith('/docs/react')) return 'React';
     if (pathname.startsWith('/docs/react-native-sdk')) return 'React Native';
     if (pathname.startsWith('/docs/flutter-sdk')) return 'Flutter';
     return 'SDKs';
@@ -137,7 +139,7 @@ export default function NavbarComponent() {
         </NavbarItem>
         <NavbarItem className="hidden lg:flex">
           <SCButton variant="outline" className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]">
-            <Link href="https://teamcoindcx.typeform.com/to/CvPAQNAU">Grants</Link>
+            <Link href="http://bit.ly/okto-grants" target="_blank">Grants</Link>
             <MdOutlineArrowOutward size={".9rem"} />
           </SCButton>
         </NavbarItem>
@@ -149,7 +151,13 @@ export default function NavbarComponent() {
         </NavbarItem> */}
         <NavbarItem className="hidden lg:flex">
           <SCButton variant="outline" className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]">
-            <Link href="https://dashboard.okto.tech/">Dashboard</Link>
+            <Link href="https://dashboard.okto.tech/" target="_blank">Dashboard</Link>
+            <MdOutlineArrowOutward size={".9rem"} />
+          </SCButton>
+        </NavbarItem>
+        <NavbarItem className="hidden lg:flex">
+          <SCButton variant="outline" className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]">
+            <Link href="https://explorer.okto.zeeve.online/" target="_blank">Explorer</Link>
             <MdOutlineArrowOutward size={".9rem"} />
           </SCButton>
         </NavbarItem>
