@@ -4,43 +4,29 @@ description: Learn how Okto’s Decentralized Wallet Network (DWN) simplifies mu
 full: false
 ---
 
-# Decentralized Wallet Network (DWN)
-
-![DWN](/images/DWN-infra.png)
+## Decentralized Wallet Network: Introduction
 
 The **Decentralized Wallet Network (DWN)** is a network of secure, independent nodes that collectively manage user wallets in a trust-minimized manner. Instead of treating a wallet as a basic “bank account” on just one or two networks, the DWN abstracts the underlying complexities so a single wallet can function across multiple chains—Ethereum, Solana, Aptos, and many others.
 
-Within the Okto infrastructure, the DWN is responsible for two core functions:
-- **Creating user and vendor wallets across all supported chains:** Acting as a unified gateway for wallet creation across multiple blockchain ecosystems
-- **Transaction signing:** Coordinating a decentralized network of signing nodes to securely authorize transactions without any single point of failure
+![DWN](/images/DWN-infra.png)
 
+## Core Functionality
 
----
+The DWN's primary function is to provide a secure and decentralized infrastructure for managing user wallets across multiple blockchains. It eliminates the fragmentation and security risks associated with traditional wallet solutions in a multi-chain environment.
 
-## Why DWN? Addressing the Multi-Chain Challenge
+Key functionalities include:
 
-As blockchain usage expands across diverse networks such as Ethereum, Solana, Aptos, Cosmos, and more, traditional crypto wallets struggle to keep up. Users grapple with:
+- **Unified Multi-Chain Wallet Experience:** Provides users with a single wallet interface to access and manage assets across multiple blockchains, including EVM and non-EVM chains (e.g., Ethereum, Solana, Aptos).
 
-1. **Fragmentation**  
+- **Decentralized Key Management:**  Employs Multi-Party Computation (MPC) and Threshold Signature Schemes (TSS) to distribute private key management across a network of decentralized nodes, eliminating single points of failure and enhancing security.
 
-   Managing separate wallets and seed phrases for different chains can be confusing. Users often lose track of which private key controls which account, leading to frustration and potential loss of access. 
+- **Trust-Minimized Operation:**  Operates in a trust-minimized manner, ensuring that no single entity, including Okto, has unilateral control over user funds or private keys.
 
-2. **Security Risks**  
+- **User-Friendly Onboarding:** Supports Web2-style authentication methods (e.g., Google OAuth, Email OTP, Phone OTP), simplifying user onboarding and eliminating the need for seed phrase management.
 
-   Relying on a single private key can be risky—if compromised, it can lead to significant losses. On the other hand, fully centralized wallets place too much trust in a single entity, which could be hacked or fail.
+- **Secure Transaction Signing:**  Coordinates a decentralized network of MPC nodes to securely sign transactions on behalf of users, ensuring cryptographic security and user consent.
 
-3. **Complex Onboarding**  
-   Explaining seed phrases, private keys, and gas tokens to newcomers is daunting. This complexity is a major barrier to wider adoption of blockchain technology.
-
-**DWN solves these challenges** by unifying multiple chains under one secure, decentralized infrastructure. Users maintain **full control** over their assets while enjoying a simpler, more intuitive experience—akin to logging in with a Web2 account.
-
----
-
-## DWN: Core Principles and Architecture
-
-The **Decentralized Wallet Network** is a network of secure, independent nodes that collectively manage user wallets in a **trust-minimized** manner. Rather than functioning like a traditional, single-key wallet, the DWN leverages **MPC** to authorize transactions without ever assembling a complete private key in one place.
-
-### Key Highlights
+## Architecture and Technology
 
 - **Multi-Party Computation (MPC)**  
   - A quorum of MPC nodes (e.g., 11 of 20) must collaborate to sign a transaction.  
@@ -59,68 +45,6 @@ The **Decentralized Wallet Network** is a network of secure, independent nodes t
 - **Cross-Chain Compatibility**  
   - **EVM and non-EVM** networks are supported: Ethereum, Solana, Aptos, Cosmos, and more.  
   - Works seamlessly with **EOA wallets, ERC-4337 contract wallets, magic accounts,** and social logins.  
-
----
-
-## Detailed Flow: How the DWN Secures Transactions
-
-![DWN](/images/DWN-working.png)
-
-To illustrate how the DWN operates, let’s break down the process into two phases: **Authentication & Session Registration** and **Transaction Signing**. Below is a high-level overview:
-
----
-
-### Phase 1: Authentication & Session Registration
-
-**1. User Initiates Login**  
-   When you tap "Sign In", your client application (the dApp) generates a session key pair. Think of this as your temporary ID card - the private key stays securely on your device, while the public key gets registered with Okto.
-
-**2. Authentication Request to Okto Gateway**  
-   With your session key pair ready, your client creates an authentication request to the Gateway - the entry point for all interactions with Okto's infrastructure. This request bundles your login credentials (like a Google OAuth token) and your session public key and a signature proving you own the session key.
-
-**3. Decentralized Verification via Auth Module**  
-   The Gateway forwards the request to the Auth Module. Here, a network of decentralized nodes independently verify your credentials with auth providers like Google. A majority consensus among nodes ensures no single party can spoof authentication.
-
-**4. Key Generation & User Setup**  
-   - Once your identity is verified, DWN springs into action. It generates your blockchain identity by creating cryptographic keys (ECDSA/EdDSA) using Multi-Party Computation (MPC). 
-   - These keys are registered on the **Okto Chain** through a **User Operation (UserOp)**, linking the session key to the user’s **Smart Wallet Account (SWA)**.
-
----
-
-### Phase 2: Transaction Signing Flow
-
-**1. User Initiates Transaction**  
-   - With your session active, you tap "Mint NFT" in yout dApp. The client prepares a UserOp containing:
-   - The dApp packages transaction details into a **UserOp**, signed by the user’s session private key.
-
-**2. Submit UserOp to Okto Chain**  
-   - The UserOp is sent to Okto Gateway, which verifies the session signature via Okto Auth Service.
-   - A valid UserOp is broadcast to Okto Chain, where it’s validated on-chain. The SWA’s smart contract checks if the session key is authorized and Policy checks are enforced.
-
-**3. DTN (Decentralized Transaction Network) Coordination**  
-   Upon validation, the Okto chain creates a job, emits an event which is detected by the DTN and the DTN node picks up the job. It now fetches the necessary transaction details (e.g., NFT contract, recipient) and constructs the raw transaction payload needed for minting your NFT.
-
-**4. MPC Signing via DWN Nodes**  
-   The DTN sends the payload to the DWN’s Signing Service. Here, a network of nodes collaborate using MPC to generate the signature through a Threshold Signature Scheme. No node ever sees the complete private key.
-
-**5. On-Chain Execution**  
-   The DTN receives the signed transaction and broadcasts the transaction to the target blockchain. But its job isn't done - DTN actively monitors the transaction status, keeping the Okto Chain updated on its progress. Once the transaction is confirmed on the target chain, DTN updates the job status and transaction hash on the Okto Chain, completing the minting process.
-
-This two-phase approach **guarantees security and decentralization** at every step—authentication, wallet generation, and transaction signing—ensuring users enjoy a frictionless multi-chain experience without sacrificing self-custody.
-
----
-
-## **DWN Features**
-| Feature                     | Description |
-|-----------------------------|-------------|
-| **Unified Multi-Chain Wallet** | Single wallet supporting Ethereum, Solana, Aptos, Cosmos, and more. |
-| **Web2-Style Login** | Onboarding with Google, Facebook, or email while maintaining full self-custody. |
-| **MPC-Based Security** | Private keys never exist in full form, reducing attack vectors. |
-| **EigenLayer AVS** | Security backed by Ethereum restaking, ensuring decentralization and trust-minimized operations. |
-| **Seamless Developer Integration** | Easily integrate into apps via Okto SDKs. |
-| **Complete User Sovereignty**       | No single point of control—**not even Okto** can unilaterally move user funds. |
-
----
 
 ## **DWN + Embedded Wallets**
 Developers can integrate **DWN-powered embedded wallets** using **Okto’s SDKs**. These wallets offer:

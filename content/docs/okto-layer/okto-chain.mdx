@@ -3,3 +3,39 @@ title: Okto Chain
 description: Okto is a platform that allows you to integrate web3 functionality into your app without building things from scratch.
 full: false
 ---
+
+## Okto Chain: Introduction
+
+The Okto Chain is a specialized, utility-focused Layer-2 blockchain built using the Polygon Chain Development Kit (CDK). It serves as the central coordination and verification layer for the Okto ecosystem.
+
+Unlike general-purpose blockchains, the Okto Chain is specifically designed to manage and orchestrate cross-chain operations, ensuring transparency, security, and efficiency within the Okto Layer.
+
+By serving as the “glue” that binds together the Decentralized Wallet Network (DWN), Decentralized Transaction Network (DTN), and Unified Liquidity Layer (ULL), the Okto Chain enables end‐to‐end cross-chain operations with verifiable, on-chain commitments.
+
+![Okto Chain](/images/okto-chain-banner.png)
+
+## Core Functionality
+
+The primary function of the Okto Chain is to provide an immutable and auditable ledger for all activities within the Okto ecosystem. It acts as the "command center" for the DWN, ULL, and DTN, facilitating trustless interactions between these components.
+
+Key functionalities include:
+
+- **Intent and Job Management:**  The Okto Chain records user-initiated intents for cross-chain actions. These intents are broken down into granular "jobs," each tracked and managed on-chain, ensuring a complete and verifiable history of user requests.
+
+- **Policy Enforcement:**  The Okto Chain enforces predefined policies governing user permissions, vendor restrictions, and interactions between Okto components. This ensures that all operations within the ecosystem adhere to security and compliance parameters.
+
+- **Event-Driven Orchestration:** Publishes on-chain events (e.g., “job created,” “job assigned,” “job terminated”) to signal downstream components—particularly DTN—that further action is required.
+
+## Architecture and Technology
+
+- **Layer-2 Rollup on Polygon CDK:** Built as a ZK-based rollup, inheriting security from Ethereum and leveraging Polygon CDK for efficient development and deployment.
+
+- **Proof-of-Stake (PoS) Consensus:**  Utilizes a Proof-of-Stake consensus mechanism for network security and data availability guarantees.
+
+- **Specialized Utility Chain:** Optimized for coordination and verification tasks, not designed for general-purpose computation or DeFi activities.
+
+- **Job Manager:** Registers new jobs, updates their statuses, assigns DTN nodes, and logs final states.
+
+- **Registries:** The Okto Chain maintains several key registries:
+    - **User Accounts Registry:** Stores information on user metadata, including permissions and associated vendor information.
+    - **Bloc Registry:** Holds programmable scripts (“blocs”) that implement the logic for asynchronous job execution.
