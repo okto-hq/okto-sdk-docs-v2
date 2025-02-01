@@ -1,5 +1,35 @@
 ---
-title: Decentralized Transaction Network
+title: Decentralized Transaction Network (DTN)
 description: Okto is a platform that allows you to integrate web3 functionality into your app without building things from scratch.
 full: false
 ---
+
+## Decentralized Transaction Network: Introduction
+
+The Decentralized Transaction Network (DTN) is responsible for orchestrating multi-chain transactions and asynchronous workflows in the Okto ecosystem. It reads user jobs from the Okto Chain and decomposes them into sub-transactions, coordinating their execution across multiple blockchain networks. DTN ensures that transactions are executed in a secure, efficient, and verifiable manner by interfacing with both the DWN and ULL, while recording critical checkpoints on the Okto Chain.
+
+![DTN](/images/DTN-infra.png)
+
+## Core Functionality
+
+The DTN's primary function is to interpret and execute user intents that may or may not span multiple blockchains. It breaks down complex requests into manageable sub-transactions, coordinates with other Okto components (DWN, ULL), and ensures the successful and verifiable execution of cross-chain operations.
+
+Key functionalities include:
+
+- **Intent-Driven Execution:**  Breaks down a complex user intent (e.g., a multi-chain token swap) into sub-transactions that can be executed independently on target chains.
+
+- **Asynchronous Transaction Management:**  Manages sub-transactions asynchronously, optimizing for speed and efficiency across chains with varying confirmation times.
+
+- **Unified Liquidity Layer (ULL) Interaction:**  Leverages the ULL to identify and utilize optimal optimal liquidity route for each sub-transaction, ensuring cost-effectiveness and efficiency.
+
+- **Decentralized Wallet Network (DWN) Coordination:**  Collaborates with the DWN to securely obtain transaction signatures.
+
+- **On-Chain Verification and Transparency:**  Commits transaction payloads and execution status to the Okto Chain, providing an immutable and auditable record of all DTN operations.
+
+- **Error Handling and Retries:** Implements error handling and automated retry mechanisms to ensure transaction completion and resilience to network issues.
+
+## Architecture and Technology
+
+- **Decentralized Node Network:** Operates as a network of specialized nodes responsible for bidding on and executing jobs. Nodes are selected via a competitive bidding process based on performance, cost efficiency, and reputation.
+
+- **Asynchronous Transaction Management:**  Employs an asynchronous model to manage sub-transactions across different chains, accommodating varying confirmation times and network latencies.
