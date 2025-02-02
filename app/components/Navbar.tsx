@@ -103,6 +103,7 @@ export default function NavbarComponent() {
                   ? "text-blue-600"
                   : `${poppinsLight.className}`
                   } pb-1`}
+                  target={item.href.startsWith('/docs/developer-admin-dashboard') ? '_self' : '_blank'}
               >
                 {item.label}
               </ULink>
