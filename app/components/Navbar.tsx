@@ -52,7 +52,7 @@ export default function NavbarComponent() {
 
   const sdkOptions = [
     { href: "/docs/typescript-sdk", label: "Typescript", subpath: '/', icons: <SiTypescript /> },
-    { href: "/docs/react", label: "React", subpath: '/', icons: <FaReact /> },
+    { href: "/docs/react-sdk", label: "React", subpath: '/', icons: <FaReact /> },
     { href: "/docs/react-native-sdk", label: "React Native", subpath: '/', icons: <TbBrandReactNative /> },
     { href: "/docs/flutter-sdk", label: "Flutter", subpath: '/', icons: <SiFlutter /> },
     // { href: "/docs", label: "Unity", subpath: '/unity-sdk', icons: <FaUnity /> },
@@ -60,7 +60,7 @@ export default function NavbarComponent() {
 
   const getFrameworkLabel = () => {
     if (pathname.startsWith('/docs/typescript-sdk')) return 'Typescript';
-    if (pathname.startsWith('/docs/react')) return 'React';
+    if (pathname.startsWith('/docs/react-sdk')) return 'React';
     if (pathname.startsWith('/docs/react-native-sdk')) return 'React Native';
     if (pathname.startsWith('/docs/flutter-sdk')) return 'Flutter';
     return 'SDKs';
@@ -103,6 +103,7 @@ export default function NavbarComponent() {
                   ? "text-blue-600"
                   : `${poppinsLight.className}`
                   } pb-1`}
+                  target={item.href.startsWith('/docs/developer-admin-dashboard') ? '_self' : '_blank'}
               >
                 {item.label}
               </ULink>
@@ -110,7 +111,7 @@ export default function NavbarComponent() {
           ))}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <SCButton variant="ghost" className={`text-md flex hover:bg-transparent hover:text-inherit items-center gap-1 p-0 ${pathname.startsWith('/docs/react-sdk') || pathname.startsWith('/docs/react-native-sdk') || pathname.startsWith('/docs/flutter-sdk') ? "text-blue-600 hover:text-blue-600" : `${poppinsLight.className} hover:text-inherit` }`}>
+              <SCButton variant="ghost" className={`text-md flex hover:bg-transparent hover:text-inherit items-center gap-1 p-0 ${pathname.startsWith('/docs/typescript-sdk') || pathname.startsWith('/docs/react-sdk') || pathname.startsWith('/docs/react-native-sdk') || pathname.startsWith('/docs/flutter-sdk') ? "text-blue-600 hover:text-blue-600" : `${poppinsLight.className} hover:text-inherit` }`}>
                 {getFrameworkLabel()} <ChevronDown className="h-5 w-5 font-normal" />
               </SCButton>
             </DropdownMenuTrigger>
@@ -139,7 +140,7 @@ export default function NavbarComponent() {
         </NavbarItem>
         <NavbarItem className="hidden lg:flex">
           <SCButton variant="outline" className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]">
-            <Link href="http://bit.ly/okto-grants" target="_blank">Grants</Link>
+            <Link href="https://oktohq.notion.site/Okto-Grants-Program-13f8d0b09e5b8075a646d5dbaa394eeb" target="_blank">Grants</Link>
             <MdOutlineArrowOutward size={".9rem"} />
           </SCButton>
         </NavbarItem>
