@@ -8,6 +8,7 @@
       "supported-chains",
       "okto-layer",
       "system-capabilities",
+      "developer-admin-dashboard",
       "---SDK---",
       "okto-sdk",
       "typescript-sdk",
