@@ -1,5 +1,34 @@
 ---
 title: Embedded wallets
-description: A complete guide to integrating Okto into your React applications.
+description: Learn how to create embedded wallets for users within your application using the Okto SDK.
 full: false
 ---
+
+## Creating Embedded Wallets
+
+Okto's embedded wallets provide a seamless way to integrate wallet functionality into your application. This guide explains how to create and manage embedded wallets for your users.
+
+### Manual Wallet Creation
+
+Okto supports a manual wallet creation approach for embedded wallets, allowing you more control on when embedded wallets are created for your users. For example, the `createWallet()` function allows you to create an embedded wallet for the currently authenticated user.
+
+**Implementation**
+
+```ts
+import { useOkto, type OktoContextType } from 'okto-sdk-react';
+
+const { createWallet } = useOkto() as OktoContextType;
+
+// Create a wallet for the authenticated user
+createWallet()
+    .then((result) => {
+        console.log('Wallet created:', result);
+    })
+    .catch((error) => {
+        console.error('Error creating wallet:', error);
+    });
+```
+
+<Callout title="Note">
+Ensure that the user is authenticated before calling createWallet(). You should prompt users to log in if they are not already authenticated.
+</Callout>
