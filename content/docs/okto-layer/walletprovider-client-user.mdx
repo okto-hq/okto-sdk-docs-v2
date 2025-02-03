@@ -1,0 +1,54 @@
+---
+title: Wallet Provider / Client / User
+description: "In the Okto documentation, you'll frequently encounter three main personas: Wallet Provider, Client, and User. These personas are key to navigating how Okto interacts with developers and users across its platform. Let's break down each of these roles to understand their place in the ecosystem."
+full: false
+---
+
+import PersonaCard from "app/components/mdx/PersonaCard";
+import PersonaDescriptionCard from "app/components/mdx/PersonaDescriptionCard";
+
+## Overview
+
+<div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <PersonaCard
+        icon="/images/okto-persona.svg"
+        title="Wallet Provider"
+        description="Wallet Provider refers to our company, our platform, and the suite of services we provide, including Wallet and SDK."
+      />
+      <PersonaCard
+        icon="/images/vendor-persona.svg"
+        title="Client"
+        description="Client is any developer or company building an application that integrates Okto's services"
+      />
+      <PersonaCard
+        icon="/images/user-persona.svg"
+        title="User"
+        description="User is any individual who uses a Client's app and, by extension, uses Okto's services"
+      />
+</div>
+
+## Dive deep into what & how each personas work
+
+<PersonaDescriptionCard 
+  title="Wallet Provider"
+  description="Wallet Provider refers to our company, our platform, and the suite of services we provide"
+  
+/ >
+<br/>
+<PersonaDescriptionCard
+  iconPath="/images/vendor-persona-description.svg"
+  title="Client"
+  description="Client is any developer or company building an application that integrates Okto's services"
+  whatItDoes={["Builds applications using Okto's API and SDK", "Integrates Okto's wallet and services into their own apps", "Serves as the intermediary bringing Okto's functionalities to end-users"]}
+  whatItIs={["Each Client has a unique Client ID", "Clients receive an API ID and secret for secure integration", "Clients can onboard Users to the Okto ecosystem through their apps"]}
+  howToIdentify={["Each Client receives a unique Client ID", "Clients also get an API ID and secret for secure API calls", "This system ensures each Client's app is distinctly recognized on our platform"]}
+/>
+<br/>
+<PersonaDescriptionCard
+  iconPath="/images/user-persona-description.svg"
+  title="User"
+  description="User is any individual who uses a Client's app and, by extension, uses Okto's services"
+  whatItDoes={["Interacts with Client applications", "Manages wallets, sends tokens, and engages with blockchain features", "Benefits from the simplified blockchain experience provided by Okto and the Client"]}
+  whatItIs={["Each User has a unique User ID within the Okto ecosystem", "Users can interact with multiple Client apps using the same Okto account", "User experiences are tailored by Clients but powered by Okto"]}
+  howToIdentify={["Every User is assigned a unique User ID", "This ID manages their interactions, wallets, and transactions across the Okto ecosystem", "The same User ID works across multiple Client apps, providing a unified experience", "Since Okto is interoperable, the same user ID can be associated with multiple Client apps, allowing Users to have a unified experience across different applications while leveraging the same Okto infrastructure."]}
+/>
