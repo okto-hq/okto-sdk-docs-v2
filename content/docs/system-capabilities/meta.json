@@ -4,9 +4,9 @@
       "supported-chains",
       "embedded-wallets",
       "session-management",
+      "policy-engine",
       "wallet-connector",
       "cross-chain-intents",
-      "policy-engine",
       "vendor-control",
       "user-management"
     ]
