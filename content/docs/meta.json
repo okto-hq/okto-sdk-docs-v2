@@ -3,7 +3,6 @@
     "pages": [
       "---About Okto---",
       "index",
-      "okto-ecosystem",
       "okto-abstraction-approach",
       "supported-chains",
       "okto-layer",
@@ -14,7 +13,6 @@
       "react-sdk",
       "react-native-sdk",
       "flutter-sdk",
-      "rate-limits",
       "---Resources---",
       "brand-kit",
       "faq",
