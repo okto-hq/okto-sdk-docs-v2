@@ -38,7 +38,7 @@ export default function TechnologyCard({ icon, title, subtitle, link }: Technolo
                             </div>
                         </div>
                     </div>
-                    <ArrowUpRight className="text-[#5166EE] dark:text-[#7C8FFF]" />
+                    <ArrowUpRight className="text-[#5166EE] dark:text-[#7C8FFF] shrink-0" /> {/* Added shrink-0 */}
                 </CardContent>
             </Card>
         </Link>
