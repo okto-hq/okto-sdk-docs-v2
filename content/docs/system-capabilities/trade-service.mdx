@@ -1,0 +1,18 @@
+---
+title: Trade Service (Coming Soon)
+full: false
+---
+
+The Trade Service is a core component within Okto's Unified Liquidity Layer (ULL), designed to be **the central access point for all cross-chain swap functionalities.** Whether you are building a dApp directly interacting with ULL or leveraging the power of the Okto Layer through the Okto SDK, the Trade Service is the central component for accessing cross-chain swap functionalities.
+
+## Core Functionality
+
+The Trade Service offers a range of functionalities designed to simplify the process of initiating and executing cross-chain swaps. Its key capabilities include:
+
+- **Cross-Chain Swaps:** The Trade Service accepts user or application requests for cross-chain token swaps. These requests can simply specify the source chain, destination chain, input token, output token, and desired amount, and let the Trade Service handle the rest.
+- **Optimal Route Discovery:** Upon receiving a swap request, the Trade Service consults the Okto Aggregation Framework (OAF). OAF will consult a vast network of liquidity sources, including:
+    *   **Decentralized Exchanges** across multiple chains
+    *   **Cross-Chain Bridges** and bridging protocols
+    *   **ERC-7683 Solvers** and intent markets
+
+    to identify the **most efficient and cost-effective route** for your requested swap. You won't need to manually compare bridges or DEXs – the Trade Service will handle the pathfinding for you.
