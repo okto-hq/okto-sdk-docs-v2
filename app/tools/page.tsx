@@ -18,36 +18,36 @@ interface Tool {
 }
 
 const tools: Tool[] = [
-  {
-    title: 'API Explorer',
-    description: 'Interactive tool to explore and test our SDK\'s API endpoints.',
-    link: '/api-docs',
-  },
+  // {
+  //   title: 'API Explorer',
+  //   description: 'Interactive tool to explore and test our SDK\'s API endpoints.',
+  //   link: '/api-docs',
+  // },
   {
     title: 'Google ID Token Generator',
     description: 'Generate Google ID Tokens for testing purposes.',
     component: <GoogleIdTokenGenerator />,
   },
-  {
-    title: 'Okto OAuth Token Generator',
-    description: 'Generate Okto Auth Tokens using your Google ID Token.',
-    component: <OktoAuthTokenGenerator />,
-  },
-  {
-    title: 'Okto Quickstart CLI',
-    description: 'Step-by-step guide to properly configure the SDK for your project.',
-    link: 'https://www.npmjs.com/package/create-okto-app',
-  },
+  // {
+  //   title: 'Okto OAuth Token Generator',
+  //   description: 'Generate Okto Auth Tokens using your Google ID Token.',
+  //   component: <OktoAuthTokenGenerator />,
+  // },
+  // {
+  //   title: 'Okto Quickstart CLI',
+  //   description: 'Step-by-step guide to properly configure the SDK for your project.',
+  //   link: 'https://www.npmjs.com/package/create-okto-app',
+  // },
   {
     title: 'ABI Encoder',
     description: 'Encode smart contract function calls using ABI.',
     component: <AbiEncoder />,
   },
-  {
-    title: 'Advanced Technical Reference',
-    description: 'Detailed documentation for advanced usage.',
-    link: '/tools/technical-reference',
-  },
+  // {
+  //   title: 'Technical Reference',
+  //   description: 'Detailed documentation for advanced usage.',
+  //   link: '/tools/technical-reference',
+  // },
 ]
 
 export default function ToolsPage() {
