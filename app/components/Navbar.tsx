@@ -55,7 +55,7 @@ export default function NavbarComponent() {
     { href: "/docs/react-sdk", label: "React", subpath: '/', icons: <FaReact /> },
     { href: "/docs/react-native-sdk", label: "React Native", subpath: '/', icons: <TbBrandReactNative /> },
     { href: "/docs/flutter-sdk", label: "Flutter", subpath: '/', icons: <SiFlutter /> },
-    // { href: "/docs", label: "Unity", subpath: '/unity-sdk', icons: <FaUnity /> },
+    { href: "/docs", label: "Unity", subpath: '/unity-sdk', icons: <FaUnity /> },
   ];
 
   const getFrameworkLabel = () => {
@@ -63,6 +63,7 @@ export default function NavbarComponent() {
     if (pathname.startsWith('/docs/react-sdk')) return 'React';
     if (pathname.startsWith('/docs/react-native-sdk')) return 'React Native';
     if (pathname.startsWith('/docs/flutter-sdk')) return 'Flutter';
+    if (pathname.startsWith('/docs/unity-sdk')) return 'Unity';
     return 'SDKs';
   };
 
@@ -111,7 +112,7 @@ export default function NavbarComponent() {
           ))}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <SCButton variant="ghost" className={`text-md flex hover:bg-transparent hover:text-inherit items-center gap-1 p-0 ${pathname.startsWith('/docs/typescript-sdk') || pathname.startsWith('/docs/react-sdk') || pathname.startsWith('/docs/react-native-sdk') || pathname.startsWith('/docs/flutter-sdk') ? "text-blue-600 hover:text-blue-600" : `${poppinsLight.className} hover:text-inherit` }`}>
+              <SCButton variant="ghost" className={`text-md flex hover:bg-transparent hover:text-inherit items-center gap-1 p-0 ${pathname.startsWith('/docs/typescript-sdk') || pathname.startsWith('/docs/react-sdk') || pathname.startsWith('/docs/react-native-sdk') || pathname.startsWith('/docs/flutter-sdk') || pathname.startsWith('/docs/unity-sdk') ? "text-blue-600 hover:text-blue-600" : `${poppinsLight.className} hover:text-inherit` }`}>
                 {getFrameworkLabel()} <ChevronDown className="h-5 w-5 font-normal" />
               </SCButton>
             </DropdownMenuTrigger>

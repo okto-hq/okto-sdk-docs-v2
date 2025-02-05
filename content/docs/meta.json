@@ -13,6 +13,7 @@
       "react-sdk",
       "react-native-sdk",
       "flutter-sdk",
+      "unity-sdk",
       "---Resources---",
       "developer-admin-dashboard",
       "brand-kit",
