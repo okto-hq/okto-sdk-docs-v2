@@ -1,6 +1,7 @@
 {
     "title": "Flutter",
     "pages": [
+        "[About Okto](/)",
         "index",
         "getting-started",
         "authentication",
