@@ -10,7 +10,8 @@ import { CopyToClipboard } from '@/components/CopyToClipboard';
   .table-container {
     max-height: 300px;
     overflow-y: auto;
-     border: 1px solid #e5e7eb;
+    overflow-x: auto;
+    border: 1px solid #e5e7eb;
     border-radius: 0.5rem;
   }
 
@@ -22,13 +23,38 @@ import { CopyToClipboard } from '@/components/CopyToClipboard';
   .table-container th {
     position: sticky;
     top: 0;
-    background-color: white;
+   /* background-color: #f9fafb; */ /* Light gray background for light mode */
     z-index: 1;
     border-bottom: 2px solid #e5e7eb;
+    color: #11182f7;  /* Dark text for light mode */
+  }
+
+  /* For dark mode */
+  
+  @media (prefers-color-scheme: dark) {
+    .table-container th {
+      
+      color: #11182f7;
+    }
+  }
+  
+
+  .table-container th,
+  .table-container td {
+    padding: 0.75rem;
+    text-align: left;
+  }
+
+  .table-container tr:not(:last-child) td {
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .table-description {
+    margin-bottom: 0.5rem;
   }
 
   .important-notice {
-    background-color: #FFF9C4; /* More yellowish color */
+    background-color: #fefce8;
     border-left: 4px solid #eab308;
     padding: 1rem;
     margin: 1.5rem 0;
@@ -41,29 +67,15 @@ import { CopyToClipboard } from '@/components/CopyToClipboard';
     margin-bottom: 0.5rem;
   }
 
-  /* For dark mode */
+  /* Dark mode for important notice */
   @media (prefers-color-scheme: dark) {
-    .table-container th {
-      background-color: #1a1a1a;
-    }
     .important-notice {
-      background-color: rgba(255, 249, 196, 0.1);
+      background-color: rgba(254, 252, 232, 0.1);
       border-left-color: #ca8a04;
     }
     .important-notice strong {
       color: #fbbf24;
     }
-  }
-
-  .table-container th,
-  .table-container td {
-    padding: 0.5rem;
-    text-align: left;
-  }
-
-  .table-container tr:not(:last-child) td {
-    border-bottom: 2px ;
-    
   }
 
   .table-content {
@@ -139,14 +151,14 @@ import { CopyToClipboard } from '@/components/CopyToClipboard';
 
 <div className="table-container">
 
-    <div className="table-content">
+    
         | Value | Description |
         |-------|-------------|
         | `MINT` | Indicates that the order is for minting a new NFT. |
         | `NFT_TRANSFER` | Indicates that the order is for transferring an NFT to another address. |
         | `TOKEN_TRANSFER_EXECUTE` | Indicates that the order is for executing a token transfer transaction. |
         | `EXECUTE_RAW_TX` | Indicates that the order is for executing a raw blockchain transaction. |
-    </div>
+    
 </div>
 
 <div className="sub-headings">
