@@ -1,5 +1,52 @@
 ---
-title: Decentralized Wallet Network
-description: Okto is a platform that allows you to integrate web3 functionality into your app without building things from scratch.
+title: Decentralized Wallet Network (DWN)
 full: false
 ---
+
+The **Decentralized Wallet Network (DWN)** is a network of secure, independent nodes that collectively manage user wallets in a trust-minimized manner. Instead of treating a wallet as a basic “bank account” on just one or two networks, the DWN abstracts the underlying complexities so a single wallet can function across multiple chains—Ethereum, Solana, Aptos, and many others.
+
+![DWN](/images/DWN-infra.png)
+
+## Core Functionality
+
+The DWN's primary function is to provide a secure and decentralized infrastructure for managing user wallets across multiple blockchains. It eliminates the fragmentation and security risks associated with traditional wallet solutions in a multi-chain environment.
+
+Key functionalities include:
+
+- **Unified Multi-Chain Wallet Experience:** Provides users with a single wallet interface to access and manage assets across multiple blockchains, including EVM and non-EVM chains (e.g., Ethereum, Solana, Aptos).
+
+- **Decentralized Key Management:**  Employs Multi-Party Computation (MPC) and Threshold Signature Schemes (TSS) to distribute private key management across a network of decentralized nodes, eliminating single points of failure and enhancing security.
+
+- **Trust-Minimized Operation:**  Operates in a trust-minimized manner, ensuring that no single entity, including Okto, has unilateral control over user funds or private keys.
+
+- **User-Friendly Onboarding:** Supports Web2-style authentication methods (e.g., Google OAuth, Email OTP, Phone OTP), simplifying user onboarding and eliminating the need for seed phrase management.
+
+- **Secure Transaction Signing:**  Coordinates a decentralized network of MPC nodes to securely sign transactions on behalf of users, ensuring cryptographic security and user consent.
+
+## Architecture and Technology
+
+- **Multi-Party Computation (MPC)**  
+  - A quorum of MPC nodes (e.g., 11 of 20) must collaborate to sign a transaction.  
+  - Eliminates single points of failure—no single party (including Okto) can unilaterally move user funds.  
+  - Uses a **Threshold Signature Scheme (TSS)** so that each node only holds a share of the cryptographic key.
+
+- **EigenLayer AVS (Actively Validated Services)**  
+  - DWN nodes run as services on **EigenLayer**, inheriting **Ethereum’s restaking security**.  
+  - **Economic Deterrent**: Operators stake substantial assets; any malicious action puts that stake at risk across the EigenLayer ecosystem.  
+  - **Decentralization**: Independent operators provide infrastructure, preventing collusion.  
+
+- **Trusted Execution Environments (TEEs)**  
+  - Each MPC node runs inside a **TEE** such as **Intel SGX**, isolating sensitive cryptographic operations from the broader system.  
+  - Even if an operating system is compromised, the cryptographic key shards remain protected.  
+
+- **Cross-Chain Compatibility**  
+  - **EVM and non-EVM** networks are supported: Ethereum, Solana, Aptos, Cosmos, and more.  
+  - Works seamlessly with **EOA wallets, ERC-4337 contract wallets, magic accounts,** and social logins.  
+
+## **DWN + Embedded Wallets**
+Developers can integrate **DWN-powered embedded wallets** using **Okto’s SDKs**. These wallets offer:
+- **Interoperability:** A **single wallet interface** across multiple chains.
+- **Flexibility:** Can be used as a **closed-loop** or **interoperable** wallet.
+- **Simplified UX:** Users interact with dApps **without switching wallets**.
+
+**[Learn more about Embedded Wallets →](/docs/okto-abstraction-approach/embedded-wallets)**

@@ -1,6 +1,7 @@
 {
-    "title": "Okto Layer",
+    "title": "Okto Orchestration Layer",
     "pages": [
+        "walletprovider-client-user",
         "architecture",
         "okto-chain",
         "dwn",

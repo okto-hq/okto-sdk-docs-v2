@@ -1,0 +1,21 @@
+---
+title: Policy Engine
+description: "The Okto Policy Engine provides a flexible and robust mechanism for defining and enforcing transaction policies across the Okto ecosystem. Policies are crucial for managing risk, ensuring compliance, and enabling granular control over transaction parameters at the user, vendor, and system levels."
+full: false
+---
+
+## Policy Controls
+
+- **Daily transaction value limits:** Restricts total token outflow (in USD or token terms) over a 24-hour period. Useful for vendor accounts that sponsor gas or want to mitigate risk.
+
+- **Per-transaction value limits:** Sets a cap on the value of each individual transaction. This prevents any single operation from exceeding a defined threshold, thereby reducing the risk of large, unauthorized outflows.
+
+## Policy Enforcement Mechanism
+
+*   **Policy Manager Contract (Okto Chain):** The central Policy Manager smart contract on the Okto Chain stores and enforces all defined policies. This contract maintains records of user, vendor, and policies and provides functions for policy verification.
+
+*   **Policy Data in User Operations (UserOps):** When a user initiates a transaction (UserOp) on the Okto Chain, policy-related data is included within the UserOp's signature. This "Policy Data" is signed by a designated Policy Service Signer (a backend service).
+
+*   **On-Chain Policy Verification:**  During UserOp validation, the Entry Point contract and User Account contracts on the Okto Chain interact with the Policy Manager contract. They verify the "Policy Data" signature and evaluate the transaction against the applicable policies.
+
+*   **Transaction Reversal upon Policy Violation:** If a transaction violates any enforced policy, the validation process fails, and the transaction is reverted.

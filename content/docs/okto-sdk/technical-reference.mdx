@@ -1,0 +1,212 @@
+---
+title: Technical Reference
+full: false
+---
+
+import { CopyToClipboard } from '@/components/CopyToClipboard';
+
+<style>
+{`
+  .table-container {
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+  }
+
+  .table-container table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table-container th {
+    position: sticky;
+    top: 0;
+   /* background-color: #f9fafb; */ /* Light gray background for light mode */
+    z-index: 1;
+    border-bottom: 2px solid #e5e7eb;
+    color: #11182f7;  /* Dark text for light mode */
+  }
+
+  /* For dark mode */
+  
+  @media (prefers-color-scheme: dark) {
+    .table-container th {
+      
+      color: #11182f7;
+    }
+  }
+  
+
+  .table-container th,
+  .table-container td {
+    padding: 0.75rem;
+    text-align: left;
+  }
+
+  .table-container tr:not(:last-child) td {
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .table-description {
+    margin-bottom: 0.5rem;
+  }
+
+  .important-notice {
+    background-color: #fefce8;
+    border-left: 4px solid #eab308;
+    padding: 1rem;
+    margin: 1.5rem 0;
+    border-radius: 0.375rem;
+  }
+
+  .important-notice strong {
+    color: #854d0e;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Dark mode for important notice */
+  @media (prefers-color-scheme: dark) {
+    .important-notice {
+      background-color: rgba(254, 252, 232, 0.1);
+      border-left-color: #ca8a04;
+    }
+    .important-notice strong {
+      color: #fbbf24;
+    }
+  }
+
+  .table-content {
+    margin-top: 0px;
+    padding-top: 0
+  }
+
+  .sub-headings {
+    margin-left: 10px;
+    margin-bottom: 0px
+  }
+
+`}
+</style>
+
+<p2>A comrehensive overview of tokens, networks, and enum values</p2>
+
+---
+
+### Token Information
+<p>A list of all available tokens and their properties.</p>
+
+<div className="table-container">
+
+| Token Name | Token Address | Network Name |
+|------------|---------------|--------------|
+| APT | 0x1::a...Coin <CopyToClipboard text="0x1::a...Coin" /> | APTOS |
+| APT_TESTNET | 0x1::a...Coin <CopyToClipboard text="0x1::a...Coin" /> | APTOS_TESTNET |
+| ETH | N/A | BASE |
+| MATIC | N/A | POLYGON_TESTNET_AMOY |
+| POL | N/A | POLYGON |
+| SOL | N/A | SOLANA |
+| SOL_DEVNET | N/A | SOLANA_DEVNET |
+| Temp USDC | 0x3c49...3359 <CopyToClipboard text="0x3c499c542cef5e3811e1192ce70d8cc03d5c3359" /> | POLYGON |
+| USDC | 4zMMC9...ncDU <CopyToClipboard text="4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU" /> | SOLANA_DEVNET |
+| USDC | EPjFWd...Dt1v <CopyToClipboard text="EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v" /> | SOLANA |
+| USDC | 0x8335...2913 <CopyToClipboard text="0x833589fcd6edb6e08f4c7c32d4f71b54bda02913" /> | BASE |
+| USDC | 0x41e9...7582 <CopyToClipboard text="0x41e94eb019c0762f9bfcf9fb1e58725bfb0e7582" /> | POLYGON_TESTNET_AMOY |
+| USDT | 0xc213...8e8f <CopyToClipboard text="0xc2132d05d31c914a87c6611c10748aeb04b58e8f" /> | POLYGON |
+| USDT | 0xf22b...USDT <CopyToClipboard text="0xf22bede237a07e121b56d91a491eb7bcdfd1f5907926a9e58338f964a01b17fa::asset::USDT" /> | APTOS |
+| USDT | Es9vMf...wNYB <CopyToClipboard text="Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB" /> | SOLANA |
+
+</div>
+
+### Network Information
+<p>A list of all available networks and their properties.</p>
+
+<div className="table-container">
+
+| Network Name | Chain ID |
+|--------------|----------|
+| APTOS | 1 |
+| APTOS_TESTNET | 2 |
+| BASE | 8453 |
+| POLYGON | 137 |
+| POLYGON_TESTNET_AMOY | 80002 |
+| SOLANA | 101 |
+| SOLANA_DEVNET | 103 |
+</div>
+
+<div className="important-notice">
+  <strong>Important!</strong>
+  Native tokens on chains do not have a Token Address (N/A). Please use empty strings for these tokens wherever applicable.
+</div>
+
+## Possible Values for Custom Types
+<p>Possible values for selected types</p>
+
+<div className="sub-headings">
+        ### ORDER_TYPE
+        <p>Specifies the type of order.</p>
+</div>
+
+<div className="table-container">
+
+    
+        | Value | Description |
+        |-------|-------------|
+        | `MINT` | Indicates that the order is for minting a new NFT. |
+        | `NFT_TRANSFER` | Indicates that the order is for transferring an NFT to another address. |
+        | `TOKEN_TRANSFER_EXECUTE` | Indicates that the order is for executing a token transfer transaction. |
+        | `EXECUTE_RAW_TX` | Indicates that the order is for executing a raw blockchain transaction. |
+    
+</div>
+
+<div className="sub-headings">
+### OPERATION_TYPE
+<p>Specifies the type of operation being performed.</p>
+</div>
+
+<div className="table-container">
+    <div className="table-content">
+        | Value | Description |
+        |-------|-------------|
+        | `MINT` | Indicates that the order is for minting a new NFT. |
+        | `NFT_TRANSFER` | Indicates that the order is for transferring an NFT to another address. |
+        | `TOKEN_TRANSFER_EXECUTE` | Indicates that the order is for executing a token transfer transaction. |
+        | `EXECUTE_RAW_TX` | Indicates that the order is for executing a raw blockchain transaction. |
+    </div>
+</div>
+
+<div  className="sub-headings">
+### STATUS
+<p>Represents the current status of the order or transaction.</p>
+</div>
+
+<div className="table-container">
+    <div className="table-content">
+        | Value | Description |
+        |-------|-------------|
+        | `WAITING_INITIALIZATION` | The order is in queue and has not yet started processing. |
+        | `CREATED` | The order has been initialized and is ready for processing. |
+        | `RUNNING` | The transaction is being processed on the blockchain. |
+        | `WAITING_FOR_SIGNATURE` | The system is in the process of signing the transaction payload. |
+        | `REJECTED` | The order was rejected and will not be processed further. |
+        | `SUCCESS` | The order was successfully processed and confirmed on the blockchain. |
+        | `FAILED` | The order failed during processing. |
+    </div>
+</div>
+
+<div className="sub-headings">
+### ENTITY_TYPE
+<p>Defines the type of NFT or asset involved in the transaction.</p>
+</div>
+
+<div className="table-container">
+    <div className="table-content">
+        | Value | Description |
+        |-------|-------------|
+        | `ERC721` | An ERC-721 standard NFT on EVM-compatible blockchains. |
+        | `ERC1155` | An ERC-1155 standard NFT on EVM-compatible blockchains. |
+        | `NFT` | An NFT on non-EVM blockchains. |
+    </div>
+</div>

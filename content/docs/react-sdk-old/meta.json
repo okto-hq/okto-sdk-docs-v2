@@ -1,0 +1,10 @@
+{
+    "title": "React",
+    "pages": [
+        "index",
+        "getting-started",
+        "authentication",
+        "usage"
+    ],
+    "root": true
+  }

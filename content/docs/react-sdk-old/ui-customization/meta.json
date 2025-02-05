@@ -1,0 +1,8 @@
+{
+    "title": "UI & Customization",
+    "pages": [
+        "ui-onboarding-model",
+        "built-in-ui-screens"
+    ],
+    "root": true
+  }

@@ -1,5 +1,105 @@
 ---
 title: Architecture
-description: Okto is a platform that allows you to integrate web3 functionality into your app without building things from scratch.
+description: Detailed breakdown of the Okto architecture and its core components
 full: false
+---
+
+## What is the Okto Layer?
+
+The Okto Layer is a specialized middleware designed to simplify how developers and users interact with blockchain technology. It abstracts away the complexities of multi-chain operations—managing wallets, bridging assets, paying gas fees, and handling fragmented liquidity—making blockchain applications more accessible for everyone. 
+
+![Okto Infra](/images/Okto-Infra.png)
+
+---
+
+## Overview of the Okto Layer
+
+The Okto Layer serves as a universal bridge between multiple blockchains and the applications built on them. Instead of requiring developers or users to understand the nuances of different chains, the Okto Layer performs the “heavy lifting” behind the scenes.
+
+### Key Features
+
+1. **Chain Abstraction:** Simplifies interactions by hiding the complexities of different networks.
+2. **Transaction Automation:** Handles multi-step, multi-chain processes seamlessly.
+3. **Unified Liquidity:** Ensures efficient asset movement across chains.
+4. **Developer-Friendly Interfaces:** Provides intuitive SDKs and APIs for faster integration.
+
+Whether you’re swapping tokens, minting NFTs, or interacting with DeFi, the Okto Layer ensures that these actions are streamlined and user-friendly.
+
+---
+
+## Core Components of the Okto Layer
+
+The architecture is built on four interconnected components that work together to deliver a seamless blockchain experience:
+
+---
+
+### 1. **Decentralized Wallet Networks (DWNs)**
+
+The Decentralized Wallet Network is at the core of Okto’s user experience, offering a unified wallet for managing assets across multiple blockchains, including Ethereum, Solana, and Aptos.
+
+**Key Features:**
+- **Unified Wallets**: Access and manage assets across chains like Ethereum, Solana, and Aptos from a single wallet.
+- **MPC-Based Security**: Ensures private keys are never fully exposed by leveraging Multi-Party Computation (MPC) and Trusted Execution Environments (TEEs).
+- **User-Friendly Design**: Enables logins via familiar methods like Google or Facebook, removing the need for seed phrases.
+
+[Learn more about DWNs →](./dwn)
+
+---
+
+### 2. **Unified Liquidity Layer (ULL)**
+
+The **ULL** addresses the challenges of fragmented liquidity across chains by acting as an aggregator of aggregators. It connects with solutions like LayerZero, Socket, and Wormhole to optimize cross-chain swaps and transfers.
+
+**Key Features:**
+- **Aggregator of Aggregators**: Connects to leading bridging and swapping solutions.
+- **Optimized Routes**: Automatically finds the most efficient paths for cross-chain transactions.
+- **ERC-7683 Compatibility**: Ensures seamless interactions across EVM and non-EVM chains.
+
+[Learn more about ULL →](./ull)
+
+---
+
+### 3. **Decentralized Transaction Networks (DTNs)**
+
+The **DTN** automates the orchestration of complex, multi-step blockchain transactions. It acts as the brain coordinating all interactions between DWNs, ULLs, and blockchains.
+
+**Key Features:**
+- **Automation**: Breaks down tasks into smaller subtasks and executes them in the correct sequence.
+- **Error Handling**: Retries failed transactions automatically.
+- **Transparency**: Logs all steps on the Okto Chain for verification.
+
+[Learn more about DTNs →](./dtn)
+
+---
+
+### 4. **The Okto Chain**
+
+The **Okto Chain** serves as the coordination layer for the entire Okto ecosystem. Built as a ZK-based Layer 2 on Polygon CDK, it ensures transparency, decentralization, and efficient task management across DWNs, ULLs, and DTNs.
+
+**Key Features:**
+- **Immutable Coordination**: Logs “jobs” and “intents” from the DTN to ensure all actions are executed as promised.
+- **Policy Management**: Tracks wallet permissions and approved bridging/transaction solutions.
+- **Scalable Rollups**: Optimized for high-volume, low-cost operations.
+
+[Learn more about the Okto Chain →](./okto-chain)
+
+---
+
+## Benefits of the Okto Layer
+
+### 1. For Developers:
+
+- Simplified SDKs and APIs for faster integration.
+- Chain-abstracted tools for building user-friendly dApps.
+
+### 2. For End-Users:
+
+- Unified wallets for multiple chains.
+- Seamless cross-chain transactions with minimal fees.
+
+### 3. For the Blockchain Ecosystem:
+
+- Encourages adoption by reducing complexity.
+- Creates an interconnected, decentralized framework.
+
 ---

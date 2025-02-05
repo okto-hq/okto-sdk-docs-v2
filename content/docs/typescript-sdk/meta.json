@@ -1,9 +1,15 @@
 {
     "title": "Typescript",
     "pages": [
-        "getting-started",
+        "[About Okto](/)",
+        "index",
+        "quickstart",
         "authentication",
-        "usage"
+        "usage",
+        "v2-migration-guide",
+        "changelog",
+        "constants",
+        "example-apps"
     ],
     "root": true
   }

@@ -1,0 +1,90 @@
+---
+title: About SDK
+description: Okto provides a suite of SDKs tailored to different platforms, enabling you to integrate Web3 functionalities effortlessly. Whether you're building for the web, mobile, or other platforms, Okto has an SDK to match your needs. Below is an overview of each SDK, its use case, and links to get started.
+full: false
+---
+
+import TechnologyCard from "/app/components/mdx/TechnologyCard";
+import { IoBookOutline, IoCodeSlashOutline, IoRocketOutline, IoAppsOutline } from "react-icons/io5";
+import { LuLayoutDashboard, LuToggleLeft, LuCode, LuBookOpen, LuWallet } from "react-icons/lu";
+import { FaReact, FaUnity } from "react-icons/fa6";
+import { TbBrandReactNative, TbApi } from "react-icons/tb";
+import { SiFlutter, SiTypescript } from "react-icons/si";
+
+
+---
+
+## Quick Start
+
+Get started with Okto SDK in just three steps:
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+
+  <TechnologyCard 
+      icon={<LuLayoutDashboard size={"1.5rem"}/>}
+      title="1. Get Your App Secret from Okto Dashboard" 
+      subtitle="Sign up and retrieve your Okto App Secret" 
+      link="https://dashboard.okto.tech/"
+  />
+
+  <TechnologyCard 
+      icon={<LuToggleLeft size={"1.5rem"}/>}
+      title="2. Configure Chains & Tokens in Dashboard" 
+      subtitle="Easily select and configure the blockchains and tokens your application will support" 
+      link="https://docs.okto.tech/docs/developer-admin-dashboard/wallet-control"
+  />
+
+  <TechnologyCard
+      icon={<LuWallet size={"1.5rem"} />}
+      title="3. Enable Sponsorship (if needed)"
+      subtitle="Configure gas sponsorship for a smoother user experience. Required for Solana, optional for other chains."
+      link="https://docs.okto.tech/docs/developer-admin-dashboard/sponsorship/overview"
+  />
+
+  <TechnologyCard 
+      icon={<LuCode size={"1.5rem"}/>}
+      title="4. Choose Your SDK & Start Building!" 
+      subtitle="Select the Okto SDK that best fits your project's platform and begin integrating Web3 features effortlessly." 
+      link="/docs/okto-sdk/supported-sdk-platforms"
+  />
+
+</div>
+
+---
+
+## Explore Okto SDKs
+
+Pick the right SDK for your platform and start integrating Web3 features:
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+  <TechnologyCard
+      icon={<SiTypescript size={"3rem"} />}
+      title="TypeScript"
+      subtitle="for web"
+      link="/docs/typescript-sdk"
+  />
+  
+  <TechnologyCard
+      icon={<FaReact size={"3rem"} />}
+      title="React"
+      subtitle="for web"
+      link="/docs/react-sdk"
+  />
+
+  <TechnologyCard
+      icon={<TbBrandReactNative size={"3rem"} />}
+      title="React Native"
+      subtitle="for mobile"
+      link="/docs/react-native-sdk"
+  />
+
+  <TechnologyCard
+      icon={<SiFlutter size={"3rem"} />}
+      title="Flutter"
+      subtitle="for Android and iOS"
+      link="/docs/flutter-sdk"
+  />
+
+</div>
+
+---

@@ -1,5 +1,40 @@
 ---
-title: Unified Liquidity Layer
-description: Okto is a platform that allows you to integrate web3 functionality into your app without building things from scratch.
+title: Unified Liquidity Layer (ULL)
 full: false
 ---
+
+The **Unified Liquidity Layer (ULL)** is a crucial component of the Okto Layer, designed to address liquidity fragmentation across the Web3 landscape. ULL acts as an "aggregator of aggregators," routing cross-chain swaps and transfers through the most efficient and cost-effective pathways available, simplifying cross-chain asset management for users and applications.
+
+![ULL](/images/ull-infra.png)
+
+## Core Functionality
+
+The ULL's primary function is to provide a unified and optimized access point to cross-chain liquidity. It abstracts away the complexities of navigating multiple bridges, DEXs, and liquidity sources, offering a seamless and efficient experience for cross-chain asset movements.
+
+Key functionalities include:
+
+- **Aggregator of Aggregators:**  Utilizes liquidity from various sources, including:
+    - ERC-7683 compatible solvers.
+    - Third-party bridging and swapping protocols (e.g., LayerZero, Wormhole, Socket, Across).
+    - Canonical bridges.
+
+- **Optimal Pathfinding and Routing:**  Intelligently analyzes and selects the most efficient routes for cross-chain swaps and transfers, minimizing fees and execution time.
+
+- **ERC-7683 Standard Implementation:** By leveraging this Ethereum standard, ULL ensures a unified approach to cross-chain liquidity, enabling seamless interaction across diverse ecosystems, including non-EVM chains like Solana and Aptos.
+
+- **Minimized Fees:** While users pay network fees and a small Okto fee, the ULL's efficient routing and operation pooling often results in lower total costs compared to manual bridging.
+
+- **Multi-Chain Gasless Operations:** Supports gasless transactions by abstracting the complexities of fee management across different chains.
+
+
+## Architecture
+
+- **Trade Service:**  A backend engine that acts as the decision maker, interfacing with various bridging and DEX protocols to gather quotes and route information.
+
+- **Integration with External Protocols:**  Connects to various bridging protocols (e.g., LayerZero, Wormhole, Socket) and DEX aggregators to access diverse liquidity pools.
+
+- **ERC-7683 Settlement Contracts:**  Deployed on each chain, lock user funds and release them once bridging or swap conditions are met.
+
+- **Solver and Settler Nodes:** Off-chain entities that participate in the ULL framework as liquidity providers and verification/settlement agents.
+    - Solvers: Entities that can front-run bridging or swapping.
+    - Settlers: Confirm destination chain events back to the source chain contract to finalize the operation.

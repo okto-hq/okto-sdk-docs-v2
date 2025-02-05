@@ -1,0 +1,51 @@
+---
+title: OktoClient
+description: OktoClient is the main class that you will use to interact with the Okto API.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react'; 
+
+import '../../styles.css';
+
+<div className="method-box">
+
+### Parameters
+
+| Parameter   | Type                        | Description                            | 
+|-------------|-----------------------------|----------------------------------------|
+| `environment`     | [`string`](/api-docs#model/userop) | The environment to use |
+| `vendorPriKey`     | [`string`](/api-docs#model/userop) | The vendor private key to use | 
+| `vendorSWA`     | [`string`](/api-docs#model/userop) | The vendor's sender wallet address to use | 
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type                  | Description                                   | 
+|------------|-----------------------|-----------------------------------------------|
+| `result`   | [`OktoClient`](/api-docs#model/oktoclient) | Returns the OktoClient | 
+
+</Callout>
+
+<Accordions>
+<Accordion title="Example">
+<Tabs items={['Typescript']}>
+  <Tab value="Typescript">
+    ```typescript
+        const oktoClient = new OktoClient({
+            environment: 'sandbox', // or 'production'
+            vendorPriKey: '0x1234567890abcdef',
+            vendorSWA: '0x1234567890abcdef',
+        });
+    ```
+  </Tab>
+</Tabs>
+</Accordion>
+</Accordions>
+
+</div>

@@ -1,0 +1,14 @@
+{
+    "title": "System Capabilities",
+    "pages": [
+      "supported-chains",
+      "embedded-wallets",
+      "session-management",
+      "policy-engine",
+      "wallet-connector",
+      "cross-chain-intents",
+      "trade-service",
+      "vendor-control",
+      "user-management"
+    ]
+  }

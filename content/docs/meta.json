@@ -1,20 +1,25 @@
 {
     "title": "Okto",
     "pages": [
-      "---Introduction---",
+      "---About Okto---",
       "index",
-      "okto-ecosystem",
       "okto-abstraction-approach",
-      "supported-chains-tokens",
-      "okto-sdk",
+      "supported-chains",
       "okto-layer",
+      "system-capabilities",
       "---SDK---",
+      "okto-sdk",
       "typescript-sdk",
+      "react-sdk",
+      "react-native-sdk",
+      "flutter-sdk",
       "---Resources---",
+      "developer-admin-dashboard",
       "brand-kit",
       "faq",
+      "troubleshooting",
       "glossary",
-      "[Dev Tools](https://docs.okto.tech/tools)"
+      "[Dev Tools](https://docsv2-staging.okto.tech/tools)"
     ],
     "root": true
   }

@@ -1,0 +1,56 @@
+---
+title: Quickstart
+description: Okto is a platform that allows you to integrate web3 functionality into your app without building things from scratch.
+full: false
+---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+You can create an Okto-powered application using Typescript directly. 
+
+Here's how you can do it:
+
+<Steps>
+
+<Step>
+
+## Initilaize a new project
+
+    Initialize a new typescript project with Okto SDK.
+
+    ```bash title="bash"
+    npm install @okto_web3/core-js-sdk@latest
+    ```
+
+</Step>
+
+<Step>
+
+## Initialize OktoClient
+
+    Inside your main file, initialize the OktoClient.
+
+    ```typescript title="main.ts"
+    import { OktoClient } from '@okto_web3/core-js-sdk';
+
+    const oktoClient = new OktoClient({
+        environment: 'sandbox', // or 'production'
+        vendorPrivKey: '{Private Key}',
+        vendorSWA: '{Vendor Signer Wallet Address}',
+    });
+    ```
+
+</Step>
+
+<Step>
+
+## Start using Okto SDK
+
+That's it! You can now start using Okto SDK to create your own web3 applications. 
+
+Refer to the [SDK Documentation](/docs/typescript-sdk/usage/overview) for more information on how to use Okto SDK.
+
+</Step>
+
+</Steps>

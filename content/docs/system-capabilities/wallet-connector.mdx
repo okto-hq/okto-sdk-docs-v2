@@ -1,0 +1,32 @@
+---
+title: Wallet Connector (Coming Soon)
+full: false
+---
+
+Okto will be interoperable with a variety of wallet connectors libraries so your application can easily interface with your users wallets. Okto is built to connect with all external wallets, including those on browser and mobile devices, so that users can bring their existing wallets and assets into your app.
+
+## Compatibility with Web3 Libraries
+
+Okto is designed to be compatible with popular Web3 libraries, allowing existing dApps to integrate Okto functionalities with minimal code migration. This compatibility includes:
+
+*   **Wagmi** (for React-based interfaces)
+*   **Viem** (for lightweight Ethereum interactions)
+*   **Ethers.js**  (for comprehensive wallet and contract management)
+*   **@solana/web3.js**  (for applications interacting with Solana)
+*   **Web3swift** (for swift-based wallet integration)
+
+## Wallet Management and Interfacing
+
+Okto primarily manages wallets within its ecosystem, leveraging MPC-based Decentralized Wallet Networks (DWNs) to provide secure, self-custodial smart contract accounts for users. This approach ensures that users benefit from the advanced features of account abstraction and the security of MPC.
+
+However, recognizing the diverse Web3 landscape, Okto also aims to support connectivity with externally owned accounts (EOAs) and other wallet types managed outside the Okto ecosystem.
+
+Key points:
+
+- **Easy Integration:** External wallets can be connected via simple, step-by-step processes.
+
+- **Self-Custody:** All imported wallets, while being managed by the Okto Ecosystem will retain their self custodial nature. No single entity, including Okto, can unilaterally access or control user funds.
+
+- **Sponsorship Limitations for Externally Owned Accounts (EOAs):** Users connecting via external wallet connectors are not eligible for gas sponsorship on the Okto Chain. Sponsorship is designed for users onboarded with Okto-managed smart contract wallets. EOAs will typically be responsible for paying their own gas fees.
+
+- **EOA Wallet Enhancements** The Ethereum Pectra Upgrade may enhance EOAs with additional “smart” features, potentially narrowing the functional gap between EOAs and Okto-managed smart contract wallets. Okto will continue to monitor these developments and adapt its wallet connector functionalities to further enhance the user experience.

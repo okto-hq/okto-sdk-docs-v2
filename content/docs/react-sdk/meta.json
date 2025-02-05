@@ -1,0 +1,32 @@
+{
+  "title": "React",
+  "pages": [
+    "[About Okto](/)",
+    "index",
+    "quickstart",
+    "v2migration",
+    "---Authentication---",
+    "./authenticate-users/okto-auth",
+    "./authenticate-users/google-oauth",
+    "./authenticate-users/email-otp",
+    "./authenticate-users/phone-otp",
+    "./authenticate-users/jwt-closed-loop",
+    "./authenticate-users/onboarding-modal",
+    "./authenticate-users/login-logout",
+    "---Wallets---",
+    "./wallets/overview",
+    "./wallets/(embedded-wallets)",
+    "./wallets/external-wallets",
+    "---Usage---",
+    "overview",
+    "(hooks)",
+    "(Account)",
+    "(Explorer)",
+    "(Intents)",
+    "---References---",
+    "constants",
+    "changelog",
+    "(Example Apps)"
+  ],
+  "root": true
+}

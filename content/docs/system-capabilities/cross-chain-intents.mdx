@@ -1,0 +1,31 @@
+---
+title: Cross-Chain Intents
+description: "Cross-Chain Intent is a standardized approach to representing and fulfilling user requests that span multiple blockchains. ERC-7683 defines a universal “language” for describing these intents, letting specialized “fillers” handle the bridging, swapping, and final settlement. The Okto Ecosystem is adopting the ERC‑7683 standard as part of its effort to simplify cross‑chain interactions."
+full: false
+---
+
+## What is ERC-7683? 
+
+ERC-7683 is a proposed Ethereum standard that aims to establish a universal "language" for cross-chain interactions. It defines standardized data formats and interfaces that enable users to express their desired cross-chain outcomes (intents) in a clear and unambiguous manner. Specialized actors known as "fillers" then compete to fulfill these intents, handling the underlying technical complexities of bridging, swapping, and transaction execution across different chains.
+
+## Key Benefits of ERC-7683
+
+*   **Standardized Cross-Chain Orders:** ERC-7683 introduces standard data structures (e.g., `GaslessCrossChainOrder`, `OnchainCrossChainOrder`) to represent cross-chain actions, tokens, destinations, deadlines, and other relevant parameters. This standardization simplifies integration and reduces ambiguity in cross-chain communication.
+
+*   **Shared Infrastructure and Filler Networks:** By defining a common order format, ERC-7683 facilitates the emergence of shared filler networks. Fillers, acting as liquidity providers and execution agents, can operate across multiple chains and intent markets, enhancing liquidity and competition.
+
+*   **Interoperability Across Ecosystems:** ERC-7683 promotes interoperability by establishing a common "cross-chain language" that protocols, dApps, and infrastructure providers can adopt. This reduces reliance on fragmented, proprietary solutions and fosters a more interconnected Web3.
+
+*   **Developer Ecosystem Growth:** Developers gain a standard set of tools and interfaces, freeing them from low-level complexities and enabling more innovation. This paves the way for dApps that operate seamlessly across multiple ecosystems.
+
+## Okto's Adoption and Implementation of ERC-7683
+
+Okto is actively adopting and implementing ERC-7683 within its ecosystem. Key aspects of Okto's ERC-7683 implementation include:
+
+- Okto leverages ERC‑7683 within its Unified Liquidity Layer (ULL) to standardize liquidity sourcing, order fulfillment, and settlement processes. This helps create a transparent, efficient, and user‑centric multi‑chain environment.
+
+- ULL leverages ERC-7683 as a foundational standard, integrating with ERC-7683 compatible solvers and intent markets to access aggregated cross-chain liquidity.
+
+- Okto will deploy Settlement Contracts on all supported chains that are fully compliant with the ERC-7683 standard. These contracts serve as the on-chain infrastructure for initiating, resolving, and settling ERC-7683 cross-chain orders.
+
+- **Extending ERC-7683 to Non-EVM Chains:** Okto is actively working to extend ERC-7683-based workflows to non-EVM chains like Solana, bridging the interoperability gap and contributing to a truly unified Web3.

@@ -1,0 +1,27 @@
+---
+title: Vendor Control
+full: false
+---
+
+Vendors in the Okto ecosystem can manage user onboarding, sponsor gas, and handle batch operations. Okto provides two specialized wallet constructs to support vendor activities: **Sponsor Wallet** and **Central Wallet**.
+
+## 1. Sponsor Wallet
+
+- **Purpose:** Primarily designed for **gas sponsorship**. Vendor Sponsor Wallets are used to fund gas fees for user transactions on chosen blockchain networks, enabling a frictionless user experience.
+- **Key Features:**
+    - **Gas Fee Sponsorship:** Automatically covers transaction fees for user operations initiated under the vendor’s purview.
+    - **Funding Mechanism:** Vendors deposit funds into the Sponsor Wallet, which are then used exclusively for gas sponsorship.
+    - **Chain-Specific Sponsorship (Configurable):** Vendors can configure their Sponsor Wallets to sponsor gas fees on specific chains relevant to their applications or user activities.
+    - **Policy Integration:** The vendor can specify policy constraints (daily volume limit, per transaction limit) to avoid misuse.
+
+## 2. Central Wallet
+
+- **Purpose:** Designed for performing **aggregated or batch actions** across multiple users and potentially multiple chains. Central Wallets are used for vendor-initiated operations that require centralized control and execution, such as:
+    - Batch token transfers to multiple users.
+    - Aggregated smart contract interactions on behalf of a group of users.
+    - Centralized management of vendor-specific assets or operations.
+
+- **Key Features:**
+    - **Aggregated Transaction Execution:** Vendor Central Wallets can initiate transactions that affect multiple user accounts or perform actions across different chains in a coordinated manner.
+    - **Batch Operations:** Enables efficient batching of transactions, reducing gas costs and improving operational efficiency for vendor-driven actions.
+    - **Centralized Asset Management:** Provides vendors with centralized oversight of all transactions under their management.
