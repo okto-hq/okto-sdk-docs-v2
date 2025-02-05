@@ -3,7 +3,7 @@
     "pages": [
         "[About Okto](/)",
         "index",
-        "getting-started",
+        "quickstart",
         "authentication",
         "usage",
         "v2-migration-guide",
