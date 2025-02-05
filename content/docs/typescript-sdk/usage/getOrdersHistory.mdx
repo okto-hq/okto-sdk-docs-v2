@@ -46,7 +46,9 @@ import '../../styles.css';
 <Tabs items={['Typescript']}>
   <Tab value="Typescript">
     ```typescript
-    const ordersHistory = await oktoClient.explorer.getOrdersHistory();
+    import { getOrdersHistory } from "@okto_web3/core-js-sdk/explorer";
+    
+    const ordersHistory = await getOrdersHistory();
     ```
   </Tab>
 </Tabs>

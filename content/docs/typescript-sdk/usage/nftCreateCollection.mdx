@@ -47,7 +47,9 @@ import '../../styles.css';
 <Tabs items={['Typescript']}>
   <Tab value="Typescript">
     ```typescript
-    const result = await oktoClient.userop.nftCollectionCreation(oktoClient, nftCollectionCreationIntentData);
+    import { nftCollectionCreation } from "@okto_web3/core-js-sdk/userop";
+
+    const result = await nftCollectionCreation(oktoClient, nftCollectionCreationIntentData);
     ```
   </Tab>
 </Tabs>

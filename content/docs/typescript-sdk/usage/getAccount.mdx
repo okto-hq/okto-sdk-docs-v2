@@ -46,7 +46,9 @@ import '../../styles.css';
 <Tabs items={['Typescript']}>
   <Tab value="Typescript">
     ```typescript
-    const wallets = await oktoClient.explorer.getAccount();
+    import { getAccount } from "@okto_web3/core-js-sdk/userop";
+    
+    const wallets = await getAccount();
     ```
   </Tab>
 </Tabs>

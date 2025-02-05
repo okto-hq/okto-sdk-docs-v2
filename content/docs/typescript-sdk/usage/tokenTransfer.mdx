@@ -47,7 +47,9 @@ import '../../styles.css';
 <Tabs items={['Typescript']}>
   <Tab value="Typescript">
     ```typescript
-    const result = await oktoClient.userop.tokenTransfer(oktoClient, tokenTransferIntentData);
+    import { tokenTransfer } from "@okto_web3/core-js-sdk/userop";
+
+    const result = await tokenTransfer(oktoClient, tokenTransferIntentData);
     ```
   </Tab>
 </Tabs>

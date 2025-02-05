@@ -46,7 +46,9 @@ import '../../styles.css';
 <Tabs items={['Typescript']}>
   <Tab value="Typescript">
     ```typescript
-    const chains = await oktoClient.explorer.getChains();
+    import { getChains } from "@okto_web3/core-js-sdk/explorer";
+    
+    const chains = await getChains();
     ```
   </Tab>
 </Tabs>
