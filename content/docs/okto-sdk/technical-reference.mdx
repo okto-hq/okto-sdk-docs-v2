@@ -95,45 +95,20 @@ import { CopyToClipboard } from '@/components/CopyToClipboard';
 
 ---
 
-### Token Information
-<p>A list of all available tokens and their properties.</p>
-
-<div className="table-container">
-
-| Token Name | Token Address | Network Name |
-|------------|---------------|--------------|
-| APT | 0x1::a...Coin <CopyToClipboard text="0x1::a...Coin" /> | APTOS |
-| APT_TESTNET | 0x1::a...Coin <CopyToClipboard text="0x1::a...Coin" /> | APTOS_TESTNET |
-| ETH | N/A | BASE |
-| MATIC | N/A | POLYGON_TESTNET_AMOY |
-| POL | N/A | POLYGON |
-| SOL | N/A | SOLANA |
-| SOL_DEVNET | N/A | SOLANA_DEVNET |
-| Temp USDC | 0x3c49...3359 <CopyToClipboard text="0x3c499c542cef5e3811e1192ce70d8cc03d5c3359" /> | POLYGON |
-| USDC | 4zMMC9...ncDU <CopyToClipboard text="4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU" /> | SOLANA_DEVNET |
-| USDC | EPjFWd...Dt1v <CopyToClipboard text="EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v" /> | SOLANA |
-| USDC | 0x8335...2913 <CopyToClipboard text="0x833589fcd6edb6e08f4c7c32d4f71b54bda02913" /> | BASE |
-| USDC | 0x41e9...7582 <CopyToClipboard text="0x41e94eb019c0762f9bfcf9fb1e58725bfb0e7582" /> | POLYGON_TESTNET_AMOY |
-| USDT | 0xc213...8e8f <CopyToClipboard text="0xc2132d05d31c914a87c6611c10748aeb04b58e8f" /> | POLYGON |
-| USDT | 0xf22b...USDT <CopyToClipboard text="0xf22bede237a07e121b56d91a491eb7bcdfd1f5907926a9e58338f964a01b17fa::asset::USDT" /> | APTOS |
-| USDT | Es9vMf...wNYB <CopyToClipboard text="Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB" /> | SOLANA |
-
-</div>
-
 ### Network Information
 <p>A list of all available networks and their properties.</p>
 
 <div className="table-container">
 
-| Network Name | Chain ID |
+| Network Name | CAIP-2 ID |
 |--------------|----------|
-| APTOS | 1 |
-| APTOS_TESTNET | 2 |
-| BASE | 8453 |
-| POLYGON | 137 |
-| POLYGON_TESTNET_AMOY | 80002 |
-| SOLANA | 101 |
-| SOLANA_DEVNET | 103 |
+| APTOS | aptos:1 |
+| APTOS_TESTNET | aptos:2 |
+| BASE | eip155:8453 |
+| POLYGON | eip155:137 |
+| POLYGON_TESTNET_AMOY | eip155:80002 |
+| SOLANA | solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp |
+| SOLANA_DEVNET | solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1 |
 </div>
 
 <div className="important-notice">
@@ -145,7 +120,7 @@ import { CopyToClipboard } from '@/components/CopyToClipboard';
 <p>Possible values for selected types</p>
 
 <div className="sub-headings">
-        ### ORDER_TYPE
+        ### INTENT_TYPE
         <p>Specifies the type of order.</p>
 </div>
 
@@ -159,22 +134,6 @@ import { CopyToClipboard } from '@/components/CopyToClipboard';
         | `TOKEN_TRANSFER_EXECUTE` | Indicates that the order is for executing a token transfer transaction. |
         | `EXECUTE_RAW_TX` | Indicates that the order is for executing a raw blockchain transaction. |
     
-</div>
-
-<div className="sub-headings">
-### OPERATION_TYPE
-<p>Specifies the type of operation being performed.</p>
-</div>
-
-<div className="table-container">
-    <div className="table-content">
-        | Value | Description |
-        |-------|-------------|
-        | `MINT` | Indicates that the order is for minting a new NFT. |
-        | `NFT_TRANSFER` | Indicates that the order is for transferring an NFT to another address. |
-        | `TOKEN_TRANSFER_EXECUTE` | Indicates that the order is for executing a token transfer transaction. |
-        | `EXECUTE_RAW_TX` | Indicates that the order is for executing a raw blockchain transaction. |
-    </div>
 </div>
 
 <div  className="sub-headings">
