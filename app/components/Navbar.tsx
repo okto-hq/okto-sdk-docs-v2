@@ -53,9 +53,9 @@ export default function NavbarComponent() {
   const sdkOptions = [
     { href: "/docs/typescript-sdk", label: "Typescript", subpath: '/', icons: <SiTypescript /> },
     { href: "/docs/react-sdk", label: "React", subpath: '/', icons: <FaReact /> },
-    { href: "/docs/react-native-sdk", label: "React Native", subpath: '/', icons: <TbBrandReactNative /> },
-    { href: "/docs/flutter-sdk", label: "Flutter", subpath: '/', icons: <SiFlutter /> },
-    { href: "/docs", label: "Unity", subpath: '/unity-sdk', icons: <FaUnity /> },
+    { href: "/docs/react-native-sdk", label: "React Native (Coming Soon)", subpath: '/', icons: <TbBrandReactNative /> },
+    { href: "/docs/flutter-sdk", label: "Flutter (Coming Soon)", subpath: '/', icons: <SiFlutter /> },
+    { href: "/docs", label: "Unity (Coming Soon)", subpath: '/unity-sdk', icons: <FaUnity /> },
   ];
 
   const getFrameworkLabel = () => {
