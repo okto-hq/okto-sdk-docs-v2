@@ -1,5 +1,75 @@
 ---
 title: Sign UserOp
-description: A complete guide to integrating Okto into your React applications. 
+description: Learn how to sign user operations using the Okto SDK.
 full: false
 ---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react';
+
+The `signUserOp()` method is available on the OktoClient instance and is used to sign user operations before they can be executed on the blockchain. This method is essential for preparing transactions in a secure manner.
+
+### Method Overview
+
+| Methods | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`oktoClient.signUserOp`](#sign-userop) | Sign a user operation |
+
+<div className="method-box">
+
+## Sign UserOp
+
+<sub><i>async</i></sub> `oktoClient.signUserOp(userop: UserOp)` signs a user operation with the user's credentials.
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `userop` | `UserOp` | The user operation to be signed |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | `Promise<UserOp>` | Returns the signed user operation |
+
+</Callout>
+
+<Accordions>
+<Accordion title="Example">
+<Tabs items={['TypeScript']}>
+<Tab value="TypeScript">
+```typescript
+import { useOkto } from '@okto_web3/react-sdk';
+
+function SignOperation() {
+    const oktoClient = useOkto();
+
+    async function handleSignOperation(userOp) {
+        try {
+            const signedOp = await oktoClient.signUserOp(userOp);
+            console.log('Signed operation:', signedOp);
+            return signedOp;
+        } catch (error) {
+            console.error('Error signing operation:', error);
+        }
+    }
+
+    return (
+        <button onClick={() => handleSignOperation(userOp)}>
+            Sign Operation
+        </button>
+    );
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+</Accordions>
+
+</div>

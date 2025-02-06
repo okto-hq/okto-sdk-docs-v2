@@ -1,0 +1,6 @@
+{
+    "title": "Intents",
+    "pages": [
+        "tokenTransfer", "nftTransfer", "createNFTCollection", "rawTransaction"
+    ]
+}

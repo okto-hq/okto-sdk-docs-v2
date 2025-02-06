@@ -1,5 +1,182 @@
 ---
 title: Overview
-description: A complete guide to integrating Okto into your React applications. 
+description: A comprehensive guide to the Okto React SDK and its features
 full: false
 ---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react';
+
+The Okto React SDK provides a comprehensive set of tools and hooks for integrating blockchain functionality into your React applications. This guide will help you understand the main components and features available in the SDK.
+
+## Core Components
+
+<Accordions>
+<Accordion title="Hooks">
+
+The SDK provides essential React hooks for accessing Okto functionality:
+
+| Hook | Description |
+|------|-------------|
+| `useOkto` | Primary hook that provides access to the OktoClient instance |
+
+</Accordion>
+
+<Accordion title="Account Operations">
+
+Methods available on OktoClient for managing transactions:
+
+| Method | Description |
+|--------|-------------|
+| `signUserOp` | Sign user operations for transaction security |
+| `executeUserOp` | Execute signed user operations on the blockchain |
+| `estimate` | Calculate gas estimates for operations |
+
+</Accordion>
+
+<Accordion title="Explorer Functions">
+
+Functions for retrieving blockchain and account data:
+
+| Function | Description |
+|----------|-------------|
+| `getAccount` | Retrieve user's wallet information |
+| `getChains` | Get supported blockchain networks |
+| `getTokens` | Fetch supported tokens list |
+| `getPortfolio` | Access user's portfolio data |
+| `getPortfolioActivity` | View portfolio transaction history |
+| `getPortfolioNFT` | Get user's NFT holdings |
+| `getNftCollections` | Retrieve NFT collection details |
+| `getOrdersHistory` | Access transaction order history |
+
+</Accordion>
+
+<Accordion title="Intent Operations">
+
+Methods for creating different types of blockchain transactions:
+
+| Intent | Description |
+|--------|-------------|
+| `tokenTransfer` | Create operations for transferring tokens |
+| `nftTransfer` | Handle NFT transfer operations |
+| `evmRawTransaction` | Execute custom EVM transactions |
+
+</Accordion>
+</Accordions>
+
+## Transaction Flow
+
+<Callout type="info">
+Most operations in the SDK follow this pattern:
+
+1. Get the OktoClient instance using useOkto hook
+2. Create a user operation using intent functions
+3. Sign the operation using signUserOp
+4. Execute the operation using executeUserOp
+</Callout>
+
+### Example Implementation
+
+<Tabs items={['TypeScript']}>
+<Tab value="TypeScript">
+```typescript
+import { useOkto } from '@okto_web3/react-sdk';
+import { tokenTransfer } from '@okto_web3/react-sdk';
+
+function TransactionExample() {
+    const oktoClient = useOkto();
+
+    async function handleTransaction() {
+        try {
+            // 1. Create operation
+            const userOp = await tokenTransfer(oktoClient, {
+                amount: BigInt("1000000000000000000"), // 1 token
+                recipient: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+                token: "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+                chain: "eip155:1" // Ethereum Mainnet
+            });
+            
+            // 2. Sign operation
+            const signedOp = await oktoClient.signUserOp(userOp);
+            
+            // 3. Execute operation
+            const txHash = await oktoClient.executeUserOp(signedOp);
+            console.log('Transaction completed:', txHash);
+        } catch (error) {
+            console.error('Transaction failed:', error);
+        }
+    }
+
+    return (
+        <button onClick={handleTransaction}>
+            Execute Transaction
+        </button>
+    );
+}
+```
+</Tab>
+</Tabs>
+
+## Getting Started
+
+<Accordions>
+<Accordion title="Installation">
+<Tabs items={['npm', 'yarn', 'pnpm']}>
+<Tab value="npm">
+```bash
+npm install @okto_web3/react-sdk
+```
+</Tab>
+<Tab value="yarn">
+```bash
+yarn add @okto_web3/react-sdk
+```
+</Tab>
+<Tab value="pnpm">
+```bash
+pnpm add @okto_web3/react-sdk
+```
+</Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Setup">
+<Tabs items={['TypeScript']}>
+<Tab value="TypeScript">
+```typescript
+import { OktoProvider } from '@okto_web3/react-sdk';
+
+const config = {
+    environment: "sandbox",
+    vendorPrivKey: "YOUR_VENDOR_PRIVATE_KEY",
+    vendorSWA: "YOUR_VENDOR_SWA",
+};
+
+function App() {
+    return (
+        <OktoProvider config={config}>
+            <YourApp />
+        </OktoProvider>
+    );
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+</Accordions>
+
+## Key Features
+
+| Feature | Description |
+|---------|-------------|
+| Authentication | Built-in support for OAuth authentication |
+| Multi-chain Support | Support for multiple blockchain networks |
+| Asset Management | Comprehensive token and NFT handling |
+| Portfolio Tracking | Built-in portfolio and activity tracking |
+| Custom Transactions | Support for custom EVM transactions |
+| Type Safety | Full TypeScript support |
+
+For detailed guides on specific features, refer to their respective documentation sections.
