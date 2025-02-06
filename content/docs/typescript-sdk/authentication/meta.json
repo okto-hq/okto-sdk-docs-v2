@@ -1,7 +1,8 @@
 {
     "title": "Authentication",
     "pages": [
+        "okto-auth",
         "google-oauth",
-        "login"
+        "session-management"
     ]
   }
