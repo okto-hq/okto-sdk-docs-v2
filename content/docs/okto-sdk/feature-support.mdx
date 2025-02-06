@@ -3,6 +3,52 @@ title: Feature Support
 full: false
 ---
 
+<style jsx>
+{`
+.feature-supported-version {
+    display: inline-block;
+    padding: 2px 8px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-align: center;
+}
+.feature-q2 {
+    display: inline-block;
+    padding: 2px 8px;
+    background-color: #FFD700; /* Light Yellow for Q2/Q3 */
+    color: black; /* Or choose a dark color for readability */
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-align: center; /* Center text */
+}
+
+.feature-q3 {
+    display: inline-block;
+    padding: 2px 8px;
+    background-color:rgb(255, 153, 0); /* Light Yellow for Q2/Q3 */
+    color: black; /* Or choose a dark color for readability */
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-align: center; /* Center text */
+}
+
+/* Ensure table cells are aligned and centered */
+td {
+    text-align: center;
+    vertical-align: middle; 
+    padding: 8px; 
+th {
+    text-align: left; 
+    padding: 8px;
+}
+`}
+</style>
+
 Okto provides a seamless and secure way to integrate blockchain functionality into your applications. The Okto SDK enables developers to onboard users, manage wallets, interact with multiple chains, and facilitate smooth crypto transactions.
 
 ---
@@ -13,11 +59,11 @@ Okto offers a range of SDKs tailored to diverse development platforms, ensuring 
 
 - [**TypeScript**](/docs/typescript-sdk) – A TypeScript SDK for building Web3 applications.
 - [**React**](/docs/react-sdk) – A React library for integrating Okto into web applications.
-- [**React Native**](/docs/react-native-sdk) – A React Native SDK for mobile applications.
-- [**Flutter**](/docs/flutter-sdk) – A Swift SDK for iOS applications.
-- [**Unity**](/docs/unity-sdk) – A Unity SDK for blockchain-based gaming apps.
+- [**React Native**](/docs/react-native-sdk) **(Coming Soon)** – A React Native SDK for mobile applications.
+- [**Flutter**](/docs/flutter-sdk) **(Coming Soon)** – A Flutter SDK for cross-platform applications.
+- [**Unity**](/docs/unity-sdk) **(Coming Soon)** – A Unity SDK for blockchain-based gaming apps.
 
-The Okto SDK supports multiple chains like **EVM, Solana and Aptos** , enabling seamless cross-chain interactions.
+The Okto SDK supports multiple chains like **EVM, Solana and Aptos**, enabling seamless cross-chain interactions.
 
 ---
 
@@ -25,49 +71,76 @@ The Okto SDK supports multiple chains like **EVM, Solana and Aptos** , enabling 
 
 Check out the matrix below to determine which features are supported in each Okto SDK.
 
+**Legend:**
+
+*   <span className="feature-supported-version">vX.X.X</span> - Feature supported in SDK version X.X.X and later.
+*   <span className="feature-q2">Q2</span> - Feature planned for release in **Q2 [2025]**.
+*   <span className="feature-q3">Q3</span> - Feature planned for release in **Q3 [2025]**.
+*   <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="EVM" /> - EVM Chains
+*   <img src="https://cdn3.emoji.gg/emojis/7187-solana.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Solana" /> - Solana Chain
+*   <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> - Aptos Chain
+
 ### Authentication
 
 | Feature               | Typescript | React | React Native | Flutter | Unity |
 | --------------------- | ---------- | ----- | ------------ | ------- | ----- |
-| Google OAuth          | ✅         | ✅    | ✅            | ✅      |   ✅   |
-| Email OTP             | ✅         | ✅    | ✅            | ✅       |       |
-| Phone OTP             | ✅         | ✅    | ✅            | ✅       |       |
-| Whatsapp OTP          | ✅         | ✅    | ✅            | ✅     |       |
-| Custom Authentication |          |    |            |       |       |
-| Passkeys              |          |     |              |         |       |
+| Google OAuth          | <span className="feature-supported-version">v0.0.0-dev.41</span>        | <span className="feature-supported-version">v0.0.0-dev.41</span>    | <span className="feature-q2">Q2</span>            | <span className="feature-q2">Q2</span>      |   <span className="feature-q2">Q2</span>   |
+| Email OTP             | <span className="feature-q2">Q2</span>         | <span className="feature-q2">Q2</span>    | <span className="feature-q2">Q2</span>            | <span className="feature-q2">Q2</span>       |  <span className="feature-q2">Q2</span>     |
+| Phone OTP             | <span className="feature-q2">Q2</span>         | <span className="feature-q2">Q2</span>    | <span className="feature-q2">Q2</span>            | <span className="feature-q2">Q2</span>       |  <span className="feature-q2">Q2</span>     |
+| Whatsapp OTP          | <span className="feature-q2">Q2</span>         | <span className="feature-q2">Q2</span>    | <span className="feature-q2">Q2</span>            | <span className="feature-q2">Q2</span>     |  <span className="feature-q2">Q2</span>     |
+| Custom Authentication |  <span className="feature-q2">Q2</span>         |  <span className="feature-q2">Q2</span>   |  <span className="feature-q2">Q2</span>            |  <span className="feature-q2">Q2</span>       |  <span className="feature-q2">Q2</span>     |
 
 ### Okto Smart Wallets
 
 | Feature                   | Typescript | React | React Native | Flutter | Unity |
 | ------------------------- | ---------- | ----- | ------------ | ------- | ----- |
-| Embedded Wallets          | ✅         | ✅    | ✅           | ✅      | ✅    |
-| Signing Transactions      | ✅         | ✅    | ✅           | ✅      | ✅    |
-| Broadcasting Transactions | ✅         | ✅    | ✅           | ✅      | ✅    |
-| Transaction MFA           | ✅         | ✅    | ✅           | ✅      |       |
-| Wallet Key Export         | ✅         | ✅    | ✅           | ✅      |       |
-| HD Wallets                | ✅         | ✅    | ✅           | ✅      |       |
+| Embedded Wallets          | <span className="feature-supported-version">v0.0.0-dev.41</span>         | <span className="feature-supported-version">v0.0.0-dev.41</span>    | <span className="feature-q2">Q2</span>           | <span className="feature-q2">Q2</span>      | <span className="feature-q2">Q2</span>    |
+| Signing Transactions      | <span className="feature-supported-version">v0.0.0-dev.41</span>         | <span className="feature-supported-version">v0.0.0-dev.41</span>    | <span className="feature-q2">Q2</span>           | <span className="feature-q2">Q2</span>      | <span className="feature-q2">Q2</span>    |
+| Broadcasting Transactions | <span className="feature-supported-version">v0.0.0-dev.41</span>         | <span className="feature-supported-version">v0.0.0-dev.41</span>    | <span className="feature-q2">Q2</span>           | <span className="feature-q2">Q2</span>      | <span className="feature-q2">Q2</span>    |
+| Transaction MFA           | <span className="feature-q2">Q2</span>           | <span className="feature-q2">Q2</span>       | <span className="feature-q2">Q2</span>           | <span className="feature-q2">Q2</span>    | <span className="feature-q2">Q2</span>           | <span className="feature-q2">Q2</span>      |  <span className="feature-q2">Q2</span>    |
+| Wallet Key Export         | <span className="feature-q2">Q2</span>           | <span className="feature-q2">Q2</span>         | <span className="feature-q2">Q2</span>           | <span className="feature-q2">Q2</span>    | <span className="feature-q2">Q2</span>           | <span className="feature-q2">Q2</span>      |  <span className="feature-q2">Q2</span>    |
+| HD Wallets                | <span className="feature-q2">Q2</span>           | <span className="feature-q2">Q2</span>         | <span className="feature-q2">Q2</span>           | <span className="feature-q2">Q2</span>    | <span className="feature-q2">Q2</span>           | <span className="feature-q2">Q2</span>      |  <span className="feature-q2">Q2</span>    |
 
 ### Custom Blockchain Support
 
 | Feature                     | Typescript | React | React Native | Flutter | Unity |
 | --------------------------- | ---------- | ----- | ------------ | ------- | ----- |
-| Custom EVM Chain Support    | ✅         | ✅    | ✅           | ✅      | ✅    |
-| Custom Solana Chain Support | ✅         | ✅    | ✅           | ✅      | ✅    |
+| EVM Chains Support    | <span className="feature-supported-version">v0.0.0-dev.41</span>         | <span className="feature-supported-version">v0.0.0-dev.41</span>    | <span className="feature-q2">Q2</span>           | <span className="feature-q2">Q2</span>      | <span className="feature-q2">Q2</span>    |
+| Custom EVM Chains Support    | <span className="feature-supported-version">v0.0.0-dev.41</span>         | <span className="feature-supported-version">v0.0.0-dev.41</span>    | <span className="feature-q2">Q2</span>           | <span className="feature-q2">Q2</span>      | <span className="feature-q2">Q2</span>    |
+| Solana Chain Support | <span className="feature-supported-version">v0.0.0-dev.41</span>         | <span className="feature-supported-version">v0.0.0-dev.41</span>    | <span className="feature-q2">Q2</span>           | <span className="feature-q2">Q2</span>      | <span className="feature-q2">Q2</span>    |
+| Aptos Chain Support |  <span className="feature-supported-version">v0.0.0-dev.41</span>         |  <span className="feature-supported-version">v0.0.0-dev.41</span>    | <span className="feature-q2">Q2</span>           | <span className="feature-q2">Q2</span>      | <span className="feature-q2">Q2</span>    |
 
 ### Connectors
 
 | Feature                                          | Typescript | React | React Native | Flutter | Unity |
 | ------------------------------------------------ | ---------- | ----- | ------------ | ------- | ----- |
-| External Wallets (MetaMask, WalletConnect, etc.) | ✅         | ✅    | ✅           | ✅      | ✅    |
-| Wagmi                                            | ✅         |       |              |         |       |
-| Viem                                             | ✅         |       |              |         |       |
-| Ethers.js                                        | ✅         |       |              |         |       |
-| @solana/web3.js                                  | ✅         |       |              |         |       |
+| Ethers.js                                        | <span className="feature-supported-version">v0.0.0-dev.41</span>         |  <span className="feature-supported-version">v0.0.0-dev.41</span>    |  <span className="feature-q2">Q2</span>              |  <span className="feature-q2">Q2</span>         |  <span className="feature-q2">Q2</span>    |
+| External Wallets (MetaMask, WalletConnect, etc.) | <span className="feature-q2">Q2</span>          | <span className="feature-q2">Q2</span>     | <span className="feature-q2">Q2</span>           | <span className="feature-q2">Q2</span>      | <span className="feature-q2">Q2</span>    |
+| Wagmi                                            | <span className="feature-q2">Q2</span>          |  <span className="feature-q2">Q2</span>    |  <span className="feature-q2">Q2</span>              |  <span className="feature-q2">Q2</span>         |  <span className="feature-q2">Q2</span>    |
+| Viem                                             | <span className="feature-q2">Q2</span>          |  <span className="feature-q2">Q2</span>    |  <span className="feature-q2">Q2</span>              |  <span className="feature-q2">Q2</span>         |  <span className="feature-q2">Q2</span>    |
+| @solana/web3.js                                  | <span className="feature-q2">Q2</span>          |  <span className="feature-q2">Q2</span>    |  <span className="feature-q2">Q2</span>              |  <span className="feature-q2">Q2</span>         |  <span className="feature-q2">Q2</span>    |
 
 ### Funding & Payments
 
 | Feature                | Typescript      | React | React Native | Flutter | Unity |
 | ---------------------- | --------------- | ----- | ------------ | ------- | ----- |
-| Transfer from Wallet   | <img src="https://cdn3.emoji.gg/emojis/7187-solana.png" className='not-prose' style={{display: 'inline'}} width="20px" height="20px" alt="Solana" /> <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> | ✅    | ✅           | ✅      | ✅    |
-| Transfer from Exchange | ✅             | ✅    | ✅           | ✅      |       |
-| Pay with Card          | ✅        | ✅    | ✅           | ✅      |       |
+| Transfer from Wallet   | <span className="feature-supported-version">v0.0.0-dev.41</span> | <span className="feature-supported-version">v0.0.0-dev.41</span>    | <span className="feature-q2">Q2</span>           | <span className="feature-q2">Q2</span>      | <span className="feature-q2">Q2</span>    |
+| On-Ramp |  <span className="feature-q2">Q2</span>             |  <span className="feature-q2">Q2</span>    |  <span className="feature-q2">Q2</span>           |  <span className="feature-q2">Q2</span>      |  <span className="feature-q2">Q2</span>    |
+| Cross-Chain Liquidity | <span className="feature-q2">Q2</span> | <span className="feature-q2">Q2</span> | <span className="feature-q2">Q2</span> | <span className="feature-q2">Q2</span> | <span className="feature-q2">Q2</span> |
+| Cross-Chain Swaps   | <span className="feature-q2">Q2</span> | <span className="feature-q2">Q2</span> | <span className="feature-q2">Q2</span> | <span className="feature-q2">Q2</span> | <span className="feature-q2">Q2</span> |
+| Pay with Card          |  <span className="feature-q3">Q3</span>        |  <span className="feature-q3">Q3</span>    |  <span className="feature-q3">Q3</span>           |  <span className="feature-q3">Q3</span>      |  <span className="feature-q3">Q3</span>    |
+
+### NFTs
+
+| Feature             | Typescript      | React         | React Native    | Flutter       | Unity         |
+| ------------------- | --------------- | ------------- | --------------- | ------------- | ------------- |
+| Collection Creation | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> | <span className="feature-q2">Q2</span> | <span className="feature-q2">Q2</span> | <span className="feature-q2">Q2</span> |
+| Minting             | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> | <span className="feature-q2">Q2</span> | <span className="feature-q2">Q2</span> | <span className="feature-q2">Q2</span> |
+| Transfers           | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> <img src="https://cdn3.emoji.gg/emojis/7187-solana.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Solana" /> <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> <img src="https://cdn3.emoji.gg/emojis/7187-solana.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Solana" /> <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> | <span className="feature-q2">Q2</span> | <span className="feature-q2">Q2</span> | <span className="feature-q2">Q2</span> |
+
+### Smart Contract Interactions
+
+| Feature                     | Typescript      | React         | React Native    | Flutter       | Unity         |
+| --------------------------- | --------------- | ------------- | --------------- | ------------- | ------------- |
+| RawRead (Read from Smart Contract)    | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> <img src="https://cdn3.emoji.gg/emojis/7187-solana.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Solana" /> <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> <img src="https://cdn3.emoji.gg/emojis/7187-solana.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Solana" /> <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> | <span className="feature-q2">Q2</span> | <span className="feature-q2">Q2</span> | <span className="feature-q2">Q2</span> |
+| RawWrite (Write to Smart Contract)   | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> <img src="https://cdn3.emoji.gg/emojis/7187-solana.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Solana" /> <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> <img src="https://cdn3.emoji.gg/emojis/7187-solana.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Solana" /> <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> | <span className="feature-q2">Q2</span> | <span className="feature-q2">Q2</span> | <span className="feature-q2">Q2</span> |
