@@ -44,7 +44,7 @@ export default function NavbarComponent() {
   }
 
   const navItems = [
-    { href: "/docs/developer-admin-dashboard", label: "Using Dashboard", subpath: '/overview' },
+    // { href: "/docs/developer-admin-dashboard", label: "Using Dashboard", subpath: '/overview' },
     { href: "https://www.okto.tech/blog", label: "Blog", subpath: '' },
     { href: "/showcase", label: "Showcase", subpath: '' },
     // { href: "/api-docs", label: "API Reference", subpath: '' },
@@ -53,9 +53,9 @@ export default function NavbarComponent() {
   const sdkOptions = [
     { href: "/docs/typescript-sdk", label: "Typescript", subpath: '/', icons: <SiTypescript /> },
     { href: "/docs/react-sdk", label: "React", subpath: '/', icons: <FaReact /> },
-    { href: "/docs/react-native-sdk", label: "React Native", subpath: '/', icons: <TbBrandReactNative /> },
-    { href: "/docs/flutter-sdk", label: "Flutter", subpath: '/', icons: <SiFlutter /> },
-    { href: "/docs", label: "Unity", subpath: '/unity-sdk', icons: <FaUnity /> },
+    { href: "/docs/react-native-sdk", label: "React Native (Coming Soon)", subpath: '/', icons: <TbBrandReactNative /> },
+    { href: "/docs/flutter-sdk", label: "Flutter (Coming Soon)", subpath: '/', icons: <SiFlutter /> },
+    { href: "/docs", label: "Unity (Coming Soon)", subpath: '/unity-sdk', icons: <FaUnity /> },
   ];
 
   const getFrameworkLabel = () => {
@@ -151,12 +151,12 @@ export default function NavbarComponent() {
             <MdOutlineArrowOutward size={".9rem"} />
           </SCButton>
         </NavbarItem> */}
-        <NavbarItem className="hidden lg:flex">
+        {/* <NavbarItem className="hidden lg:flex">
           <SCButton variant="outline" className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]">
             <Link href="https://dashboard.okto.tech/" target="_blank">Dashboard</Link>
             <MdOutlineArrowOutward size={".9rem"} />
           </SCButton>
-        </NavbarItem>
+        </NavbarItem> */}
         <NavbarItem className="hidden lg:flex">
           <SCButton variant="outline" className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]">
             <Link href="https://explorer.okto.zeeve.online/" target="_blank">Explorer</Link>
