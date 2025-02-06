@@ -1,0 +1,449 @@
+---
+title: NextJS Setup
+description: Learn how to create a Next.js app and initialize it with the Okto SDK.
+full: false
+---
+
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+<Steps>
+
+<Step>
+## Prerequisites
+Before you begin, ensure you have:
+
+-   **Node.js and npm/pnpm/yarn:**  Make sure you have Node.js and your preferred package manager installed.
+-   **Okto API Keys:** You'll need your Okto API keys to connect your app to the Okto platform. Obtain your `NEXT_PUBLIC_VENDOR_PRIVATE_KEY` and `NEXT_PUBLIC_VENDOR_SWA` from the [Okto Dashboard](https://dashboard.okto.tech/login).
+-   **Google OAuth Credentials:** To let users log in with Google, you need to set up a Google OAuth application. Go to the [Google Cloud Console](https://console.cloud.google.com/) and create a project and OAuth credentials to get your `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`.
+-   **Auth Secret:** NextAuth needs a secret key to keep your app secure. You can easily generate one by running this command in your terminal:  `openssl rand -base64 32`. Copy the output – that's your `AUTH_SECRET`!
+
+</Step>
+
+<Step>
+    ## Create Your NextJS App
+
+    Let's start by creating a brand new Next.js app! Open your terminal and run these commands:
+
+    ```bash title="bash"
+    npx create-next-app@latest my-okto-app
+    cd my-okto-app
+    ```
+    This will:
+    -  `npx create-next-app@latest my-okto-app`: Create a new Next.js project named `my-okto-app` in a folder of the same name. 
+    -  `cd my-okto-app`: This command moves you *inside* the `my-okto-app` folder you just created, so all subsequent commands apply to your new project.
+</Step>
+
+<Step>
+    ## Install the Okto SDK and other dependencies
+
+    Your Next.js app needs the Okto SDK and NextAuth to work. Let's install them! Run the command below that matches your package manager (`npm`, `pnpm`, or `yarn`):
+
+    <Tabs items={['npm', 'pnpm', 'yarn']}>
+        <Tab value="npm">
+            ```bash
+            npm install @okto_web3/react-sdk next-auth
+            ```
+            </Tab>
+            <Tab value="pnpm">
+            ```bash
+            pnpm add @okto_web3/react-sdk next-auth
+            ```
+            </Tab>
+            <Tab value="yarn">
+             ```bash
+            yarn add @okto_web3/react-sdk next-auth
+            ```
+        </Tab>
+    </Tabs>
+    This command installs the necessary packages as dependencies for your project.
+
+</Step>
+
+<Step>
+    ## Set up Environment Variables
+
+    Environment variables are like secret keys for your app. They store sensitive information and configurations.  You need to create a `.env.local` file and put your API keys and secrets there.
+
+    1.  **Create `.env.local` file:** In the root of your `my-okto-app` project (the same folder where you ran `create-next-app`), create a new file named exactly `.env.local`.  *(Make sure there's a dot at the beginning and `.local` at the end!)*
+    2.  **Add variables:** Open `.env.local` in your code editor and paste in the code below. **Important:** Replace `YOUR_...` placeholders with the actual values you got from the Okto Dashboard and Google Cloud Console in the Prerequisites step!
+
+    ```bash title=".env.local"
+    GOOGLE_CLIENT_SECRET = YOUR_GOOGLE_CLIENT_SECRET
+    GOOGLE_CLIENT_ID = YOUR_GOOGLE_CLIENT_ID
+    
+    AUTH_SECRET = YOUR_AUTH_SECRET # Use: openssl rand -base64 32
+
+    NEXT_PUBLIC_VENDOR_PRIVATE_KEY = YOUR_OKTO_VENDOR_PRIVATE_KEY
+    NEXT_PUBLIC_VENDOR_SWA = YOUR_OKTO_VENDOR_SWA
+
+    NEXT_PUBLIC_ENVIRONMENT = sandbox # or production
+    ```
+    <Callout title="Important Notes about Environment Variables">
+    -   **Replace Placeholders!**  Don't forget to replace `YOUR_GOOGLE_CLIENT_SECRET`, `YOUR_GOOGLE_CLIENT_ID`, `YOUR_AUTH_SECRET`, `YOUR_OKTO_VENDOR_PRIVATE_KEY`, and `YOUR_OKTO_VENDOR_SWA` with *your actual keys and secrets*.
+    -   **`AUTH_SECRET` Generation:** If you haven't already, run `openssl rand -base64 32` in your terminal to generate a secure `AUTH_SECRET` and paste it into `.env.local`.
+    - For `NEXT_PUBLIC_ENVIRONMENT`, use `sandbox` for testing and development, and `production` for live environments.
+    </Callout>
+</Step>
+
+<Step>
+    ## Set Up Root Layout (`layout.tsx`)
+
+    The `layout.tsx` file is the main structure of your app. Let's modify it to include the `AppProvider`, which sets up the Okto SDK and session management for your whole application.
+
+    1.  **Open `layout.tsx`:** Go to the `app` directory in your project and open the `layout.tsx` file.
+    2.  **Replace content:**  Replace the existing code in `layout.tsx` with the code below:
+
+    ```tsx title="layout.tsx"
+    import type { Metadata } from "next";
+    import { Inter } from "next/font/google";
+    import "./globals.css";
+    import AppProvider from "./components/providers";
+    import { getServerSession } from "next-auth";
+    import { authOptions } from "./api/auth/[...nextauth]/route";
+
+    const inter = Inter({ subsets: ["latin"] });
+
+    export const metadata: Metadata = {
+      title: "Okto React SDK with Google Auth",
+      description: "Next.js app integrated with Okto SDK and Google Authentication",
+    };
+
+    export default async function RootLayout({
+      children,
+    }: Readonly<{
+      children: React.ReactNode;
+    }>) {
+      const session = await getServerSession(authOptions);
+      return (
+        <html lang="en">
+          <body className={inter.className}>
+            <AppProvider session={session}>{children}</AppProvider>
+          </body>
+        </html>
+      );
+    }
+    ```
+    This layout sets up the basic structure of your app and wraps it with `AppProvider` for session and Okto context.
+
+</Step>
+
+<Step>
+    ## Create Providers Component (`providers.tsx`)
+
+    Now, let's create the `providers.tsx` component we imported in `layout.tsx`. This component will actually initialize the Okto SDK.
+
+    1.  **Create `components` folder:** If you don't already have a folder named `components` inside your `app` directory, create one now.
+    2.  **Create `providers.tsx`:** Inside the `components` folder, create a new file named `providers.tsx`.
+    3.  **Add code:**  Paste the following code into `providers.tsx`:
+
+    ```tsx title="components/providers.tsx"
+    "use client";
+    import { SessionProvider } from "next-auth/react";
+    import { OktoProvider } from "@okto_web3/react-sdk";
+    import React from "react";
+
+    const config = { // Configuration for Okto SDK
+        environment: process.env.NEXT_PUBLIC_ENVIRONMENT || 'sandbox', // Environment from .env.local
+        vendorPrivKey: process.env.NEXT_PUBLIC_VENDOR_PRIVATE_KEY || '', // Vendor Private Key from .env.local
+        vendorSWA: process.env.NEXT_PUBLIC_VENDOR_SWA || '', // Vendor SWA from .env.local
+    };
+
+    function AppProvider({ children, session }) {
+    return (
+        <SessionProvider session={session}>
+        <OktoProvider config={config}>
+            {children}
+        </OktoProvider>
+        </SessionProvider>
+    );
+    }
+
+    export default AppProvider;
+    ```
+
+</Step>
+
+<Step>
+    ## Configure Google Login with NextAuth
+
+    To enable Google Login, you need to configure NextAuth. You'll create a `route.ts` file in a specific directory structure within your `app` folder.
+
+    1.  **Create `api/auth/[...nextauth]` folders:** Inside your `app` directory, create these folders in order:
+        -   First, create a folder named `api`.
+        -   Inside `api`, create a folder named `auth`.
+        -   Inside `auth`, create a folder named `[...nextauth]` *(that's square brackets, then three dots, then `nextauth`, then closing square brackets)*.  This special folder name in Next.js is for dynamic routes.
+    2.  **Create `route.ts`:** Inside the `[...nextauth]` folder, create a new file named `route.ts`.
+    3.  **Add code:**  Paste the following code into `route.ts`:
+
+    ```tsx title="app/api/auth/[...nextauth]/route.ts"
+    import NextAuth from "next-auth";
+    import GoogleProvider from "next-auth/providers/google";
+    import type { AuthOptions } from "next-auth";
+
+    export const authOptions: AuthOptions = {
+      secret: process.env.AUTH_SECRET,
+      providers: [
+        GoogleProvider({ // Configure Google Provider
+          clientId: process.env.GOOGLE_CLIENT_ID!, // Your GOOGLE_CLIENT_ID from .env.local
+          clientSecret: process.env.GOOGLE_CLIENT_SECRET!, // Your GOOGLE_CLIENT_SECRET from .env.local
+        }),
+      ],
+      session: {
+        strategy: "jwt",
+      },
+      callbacks: {
+        async jwt({ token, user, account }) {
+          if (account) {
+            token.id_token = account.id_token;
+          }
+          return token;
+        },
+        async session({ session, token }) {
+          //@ts-ignore
+          session.id_token = token.id_token;
+          return session;
+        },
+      },
+    };
+
+    const handler = NextAuth(authOptions);
+
+    export { handler as GET, handler as POST };
+    ```
+    This configuration sets up NextAuth with Google Provider and ensures the `id_token` is passed in the session, which is needed by Okto SDK for authentication.
+
+</Step>
+
+<Step>
+    ## Create a Sample Login Page (`page.tsx`)
+
+    Now, let's create a simple page where users can log in and you can test the Okto SDK! We'll create a `LoginButton` component and a `GetButton` component to interact with Okto.
+
+    ### 1. **Create `LoginButton.tsx` in `components` folder:** 
+    Inside your `app/components` folder, create a new file named `LoginButton.tsx` and paste this code:
+
+
+    ```tsx title="components/LoginButton.tsx"
+    "use client";
+    import { useSession, signIn, signOut } from "next-auth/react";
+
+    export function LoginButton() {
+        const { data: session } = useSession(); // Get session data
+
+        const handleLogin = () => {
+            signIn("google");   // Trigger Google sign-in
+        };
+
+        return (
+            <button
+                className={`border border-transparent rounded px-4 py-2 transition-colors ${
+                    session
+                    ? "bg-blue-500 hover:bg-blue-700 text-white"
+                    : "bg-blue-500 hover:bg-blue-700 text-white"
+                }`}
+                onClick={handleLogin}
+            >
+                Authenticate
+            </button>
+        );
+    }
+    ```
+
+    ### 2. **Create `GetButton.tsx` in `components` folder:** 
+    In the same `app/components` folder, create `GetButton.tsx` and paste this code:
+
+    ```tsx title="components/GetButton.tsx"
+    "use client";
+    import React, { useState } from "react";
+    import { useOkto } from "@okto_web3/react-sdk";
+
+    interface GetButtonProps {
+        title: string;
+        apiFn: any;
+    }
+
+    const GetButton: React.FC<GetButtonProps> = ({ title, apiFn }) => {
+        const [modalVisible, setModalVisible] = useState(false);
+        const [resultData, setResultData] = useState("");
+        const oktoClient = useOkto();
+
+        const handleButtonClick = () => {
+            apiFn(oktoClient)
+            .then((result: any) => {
+                console.log(`${title}:`, result);
+                const resultData = JSON.stringify(result, null, 2);
+                setResultData(resultData !== "null" ? resultData : "No result");
+                setModalVisible(true);
+            })
+            .catch((error: any) => {
+                console.error(`${title} error:`, error);
+                setResultData(`error: ${error}`);
+                setModalVisible(true);
+            });
+        };
+
+        const handleClose = () => setModalVisible(false);
+
+        return (
+            <div className="text-center text-white">
+                <button
+                    className="px-4 py-2 w-full bg-blue-500 text-white rounded"
+                    onClick={handleButtonClick}
+                >
+                    {title}
+                </button>
+
+                {modalVisible && (
+                    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+                        <div className="bg-black rounded-lg w-11/12 max-w-2xl p-6">
+                            <div className="flex justify-between items-center border-b pb-2 mb-4">
+                                <h2 className="text-lg font-semibold">{title} Result</h2>
+                                <button
+                                    className="text-gray-500 hover:text-gray-700"
+                                    onClick={handleClose}
+                                >
+                                    ×
+                                </button>
+                            </div>
+                            <div className="text-left text-white max-h-96 overflow-y-auto">
+                                <pre className="whitespace-pre-wrap break-words text-white">
+                                    {resultData}
+                                </pre>
+                            </div>
+                            <div className="mt-4 text-right">
+                                <button
+                                    className="px-4 py-2 bg-gray-500 text-white rounded"
+                                    onClick={handleClose}
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+        );
+    };
+
+    export default GetButton;
+    ```
+
+    ### **Update `page.tsx` in `app` directory:** 
+    Open `app/page.tsx` and replace its content with this code:
+
+    ```tsx title="app/page.tsx"
+    "use client";
+    import React, { useEffect, useMemo } from "react";
+    import { useSession, signOut } from "next-auth/react";
+    import { LoginButton } from "@/app/components/LoginButton";
+    import GetButton from "@/app/components/GetButton";
+    import {getAccount, useOkto } from '@okto_web3/react-sdk';
+
+
+    export default function Home() {
+        const { data: session } = useSession();
+        const oktoClient = useOkto();
+
+        //@ts-ignore
+        const idToken = useMemo(() => (session ? session.id_token : null), [session]);
+
+        async function handleAuthenticate(): Promise<any> {
+            if (!idToken) {
+                return { result: false, error: "No google login" };
+            }
+            const user = await oktoClient.loginUsingOAuth({
+                idToken: idToken,
+                provider: 'google',
+            });
+            console.log("Authentication Success", user);
+            return JSON.stringify(user);
+        }
+
+        async function handleLogout() {
+            try {
+                signOut();
+                return { result: "logout success" };
+            } catch (error) {
+                return { result: "logout failed" };
+            }
+        }
+
+        useEffect(()=>{
+            if(idToken){
+                handleAuthenticate();
+            }
+        }, [idToken])
+
+        return (
+            <main className="flex min-h-screen flex-col items-center space-y-6 p-12 bg-violet-200">
+                <div className="text-black font-bold text-3xl mb-8">Template App</div>
+
+                <div className="grid grid-cols-2 gap-4 w-full max-w-lg mt-8">
+                    <LoginButton />
+                    <GetButton title="Okto Log out" apiFn={handleLogout} />
+                    <GetButton title="getAccount" apiFn={getAccount} />
+                </div>
+            </main>
+        );
+    }
+    ```
+</Step>
+
+<Step>
+## 5. Run Your Dapp
+
+Time to run your app and see it in action! In your terminal, inside the `my-okto-app` directory, run the command that matches your package manager:
+
+<Tabs items={['npm', 'pnpm', 'yarn']}>
+        <Tab value="npm">
+            ```bash
+            npm run dev
+            ```
+            </Tab>
+            <Tab value="pnpm">
+            ```bash
+            pnpm dev
+            ```
+            </Tab>
+            <Tab value="yarn">
+             ```bash
+            yarn dev
+            ```
+        </Tab>
+    </Tabs>
+This command starts the Next.js development server.
+
+Now, open your web browser and go to [http://localhost:3000](http://localhost:3000).
+
+You should see your "Template App" with an "Authenticate with Google" button and "Okto Log out" and "getAccount" buttons!
+
+-   **Click "Authenticate with Google"**: You should be prompted to log in with your Google account.
+-   **After logging in**: You might not see any immediate changes on the page in this very basic example, but in the background, your app has authenticated with Okto using your Google login!
+-   **Click "getAccount"**:  This button will call the `getAccount` function from the Okto SDK and display the result in a pop-up modal.
+-   **Click "Okto Log out"**: This will log you out of your app.
+
+<Callout type="tip" title="Troubleshooting Tip">
+If you encounter any errors when running `npm run dev` (or `pnpm dev`, `yarn dev`), check your terminal for error messages. Common issues include:
+    -   **Environment Variable Errors**: Double-check that you correctly set up your `.env.local` file and that all the `YOUR_...` placeholders are replaced with your actual keys and secrets.
+    -   **Package Installation Errors**: If you see errors related to missing packages, try re-running the install command (e.g., `npm install`) to make sure all dependencies are installed correctly.
+</Callout>        
+</Step>
+
+<Step>
+ ## Congratulations! You're a Web3 Dapp Developer!
+
+🎉 Congratulations! You've done it! You've successfully set up a Next.js application that's integrated with the Okto SDK and Google Authentication.
+
+**You now have a basic foundation to build your own Web3 dApps!**
+
+**What's next? Explore more!**
+
+-   **Dive Deeper into Okto SDK Features:**  This quick start just scratched the surface. Explore the [Okto SDK documentation](/docs/react-sdk/overview) to discover all the powerful features Okto offers, like portfolio management, transactions, smart contract interactions, and much more!
+-   **Check out the Template Repo:** For a more complete example app with more features and UI elements, check out the [Template Repo](https://github.com/okto-hq/okto-sdkv2-nextjs-template-app). It can give you more ideas and code examples to build upon.
+-   **Start Building Your Dapp!**  Now that you have the basic setup, you can start building your own unique Web3 application. Think about what cool features you want to add, and use the Okto SDK and this template as your starting point!
+
+Happy Dapp Building! 🚀
+</Step>
+
+</Steps>
