@@ -1,316 +1,216 @@
 ---
 title: React Setup
-description: In this guide, you'll learn how to create a React app and initialize it with the Okto SDK, including setting up authentication using Google OAuth and the Okto Provider.
+description: Learn how to create a React app and initialize it with the Okto SDK, including setting up authentication and executing your first token transfer.
 full: false
 ---
 
-import { Step, Steps } from 'fumadocs-ui/components/steps';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
-You can create an Okto-powered application in three different ways. Choose the approach that best suits your needs:
+<Tabs items={['Vite-React-App']}>
+<Tab value="Vite-React-App">
 
-1. **Traditional Create React App setup with manual configuration:**  
-   Best for developers who need full control and customization over their project.
-2. **Streamlined Okto React setup:**  
-   The easiest way to get started with a pre-configured setup.
-3. **Streamlined Okto Next.js-based setup:**  
-   Ideal for Next.js developers looking to leverage Okto with minimal configuration.
+This approach uses Vite to create a React App and manually configures the Okto SDK. Follow these steps to set up your project and execute your first token transfer.
 
-<Tabs items={['create-react-app', 'create-okto-app React', 'create-okto-app Next.js']}>
-
-<Tab value="create-react-app">
-This approach uses Create React App and manually configures the Okto SDK. This gives you the most control over your setup and is great if you need to integrate Okto into an existing React application.
 <Steps>
 
 <Step>
-    ## Create React App
+    ## Initialize a Vite React App
 
     Run the following commands in your terminal to create a new React app:
 
     ```bash title="bash"
-    npx create-react-app my-okto-app
+    npx create vite@latest my-okto-app --template react-ts
     cd my-okto-app
     ```
-    This sets up a new React project in the folder `my-okto-app` with all the default settings.
 </Step>
 
 <Step>
-    ## Install the Okto SDK
+    ## Install Dependencies
 
-    Run the following commands to add Okto's SDK and Google OAuth to your project. Choose the command that matches your package manager:
+    Install the required packages:
 
     <Tabs items={['npm', 'pnpm', 'yarn']}>
         <Tab value="npm">
             ```bash
-            npm i okto-sdk-react @react-oauth/google 
+            npm i @okto_web3/react-sdk @react-oauth/google
             ```
-            </Tab>
-            <Tab value="pnpm">
+        </Tab>
+        <Tab value="pnpm">
             ```bash
-            pnpm add okto-sdk-react @react-oauth/google 
+            pnpm add @okto_web3/react-sdk @react-oauth/google
             ```
-            </Tab>
-            <Tab value="yarn">
-             ```bash
-            yarn add okto-sdk-react @react-oauth/google 
+        </Tab>
+        <Tab value="yarn">
+            ```bash
+            yarn add @okto_web3/react-sdk @react-oauth/google
             ```
-        </Tab>    
+        </Tab>
     </Tabs>
-    This installs the SDK and adds it as a dependency in your project.
-
-</Step>
-
-<Step>
-    ## Initialize Okto SDK 
-    To get started with authentication, we'll initialize the Google OAuth provider in the `index.js` file.
-    ```javascript title="index.js"
-        import React from 'react';
-        import ReactDOM from 'react-dom/client';
-        import { GoogleOAuthProvider } from '@react-oauth/google';
-        import App from './App';
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        const GOOGLE_CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID"
-        root.render(
-            <React.StrictMode>
-                <GoogleOAuthProvider clientId = {GOOGLE_CLIENT_ID}>
-                    <App />
-                </GoogleOAuthProvider>
-            </React.StrictMode>
-        );
-    ```
-    <div style={{ textAlign: "right", fontSize: "14px", margin: "0", padding: "0", marginTop: "-1rem"}}>
-        View [here](https://github.com/okto-hq/okto-sdk-react-template-app/blob/main/src/index.js)
-    </div>
-
-   
-</Step>
-
-<Step>
-    ## Initialize Google OAuth Provider
-    Now, let's set up the Okto provider in your `App.js`:
-   ```javascript title="App.js"
-    import React from 'react';
-    import { OktoProvider, BuildType } from 'okto-sdk-react';
-    import LoginPage from './LoginPage';
-
-    const OKTO_CLIENT_API_KEY = "OKTO_CLIENT_API_KEY";
-
-    function App() {
-        return (
-            <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
-                <LoginPage/>
-            </OktoProvider>
-        );
-    }
-    export default App;
-   ```
-   <div style={{ textAlign: "right", fontSize: "14px", margin: "0", padding: "0", marginTop: "-1rem"}}>
-        View [here](https://github.com/okto-hq/okto-sdk-react-template-app/blob/main/src/App.js)
-    </div>
-</Step>
-
-<Step>
-    ## Sample Login Page
-    Now, we will create a sample `LoginPage.js` file to test out our functionalities:
-    ```javascript title="LoginPage.js"
-        import React, { useState } from "react";
-        import { useOkto } from "okto-sdk-react";
-        import { GoogleLogin } from "@react-oauth/google";
-
-        function LoginPage() {
-        const { authenticate } = useOkto();
-        const [authToken, setAuthToken] = useState(null);
-
-        const handleGoogleLogin = async (credentialResponse) => {
-         const idToken = credentialResponse.credential;
-          authenticate(idToken, (authResponse, error) => {
-              if (authResponse) {
-                setAuthToken(authResponse.auth_token);
-                console.log("Authenticated successfully, auth token:", authResponse.auth_token);
-              } else if (error) {
-                    console.error("Authentication error:", error);
-                }
-            });
-         };
-
-         return (
-            <div>
-                <h1>Login</h1>
-                {!authToken ? (
-                <GoogleLogin
-                    onSuccess={handleGoogleLogin}
-                    onError={(error) => console.error("Login Failed", error)}
-                />
-                ) : (
-                    <p>Authenticated</p>
-                )}
-            </div>
-            );
-        }
-
-        export default LoginPage;
-    ```
-    <div style={{ textAlign: "right", fontSize: "14px", margin: "0", padding: "0", marginTop: "-1rem" }}>
-        View [here](https://github.com/okto-hq/okto-sdk-react-template-app/blob/main/src/LoginPage.jss)
-    </div>
-</Step>
-
-<Step>
-    ## Congratulations!
-
-    🎉 Congratulations! You now have a basic dApp powered by Okto. You can focus on your business logic and UI/UX now. You can checkout how to use other features in the [Template Repo](https://github.com/okto-hq/okto-sdk-react-template-app/).
-</Step>
-
-</Steps>
-
-</Tab>
-
-<Tab value="create-okto-app React">
-This is the quickest way to get started with Okto in a React application. Our CLI tool will set up everything you need with minimal configuration required.
-<Steps>
-
-<Step>
-    ## Create New Project
-
-    Run this command in your terminal:
-
-    ```bash title="bash"
-    npx create-okto-app@latest
-    ```
-
-    You'll be prompted to:
-    1. Choose 'React' as your template using arrow keys
-    2. Enter your project name
-
-    ```bash
-    Welcome to create-okto-app!
-    ✔ Choose a template: › React
-    ✔ Enter your project name: › my-okto-app
-    ```
-
-    After creation is complete, change into your project directory and install dependencies:
-    ```bash
-    cd my-okto-app
-    npm install    # Install dependencies
-    ```
 </Step>
 
 <Step>
     ## Configure Environment Variables
 
-    Create a new `.env` file in the root of your project with the following values:
+    Create a `.env` file in your project root:
 
     ```bash title=".env"
-    REACT_APP_GOOGLE_CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID"
-    REACT_APP_OKTO_CLIENT_API_KEY = "YOUR_OKTO_CLIENT_API_KEY"
-    ```   
+    VITE_GOOGLE_CLIENT_ID="YOUR_GOOGLE_CLIENT_ID"
+    VITE_VENDOR_PRIV_KEY="YOUR_VENDOR_PRIVATE_KEY"
+    VITE_VENDOR_SWA="YOUR_VENDOR_SWA"
+    
+    VITE_GOOGLE_CLIENT_SECRET="YOUR_GOOGLE_CLIENT_SECRET"
+    VITE_AUTH_SECRET="YOUR_AUTH_SECRET"
+    ```
 
-    Make sure to replace the placeholder values with your actual Google Client ID and Okto API Key. For instructions on getting Google credentials, follow our [Google OAuth2 Setup Guide](https://docs.okto.tech/docs/react-sdk/authenticate-users/google-oauth/google-console-setup). 
+    Replace the placeholders with your actual credentials.
+</Step>
+
+<Step>
+    ## Set Up Providers
+
+    Update your `main.tsx`:
+
+    ```tsx title="main.tsx"
+    import React from "react";
+    import ReactDOM from "react-dom/client";
+    import App from "./App";
+    import { GoogleOAuthProvider } from "@react-oauth/google";
+    import { OktoProvider } from "@okto_web3/react-sdk";
+
+    const config = {
+        environment: "sandbox",
+        vendorPrivKey: import.meta.env.VITE_VENDOR_PRIV_KEY,
+        vendorSWA: import.meta.env.VITE_VENDOR_SWA,
+    };
+
+    ReactDOM.createRoot(document.getElementById("root")!).render(
+        <React.StrictMode>
+            <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+                <OktoProvider config={config}>
+                    <App />
+                </OktoProvider>
+            </GoogleOAuthProvider>
+        </React.StrictMode>
+    );
+    ```
+</Step>
+
+<Step>
+    ## Implement Authentication
+
+    Create your `App.tsx`:
+
+    ```tsx title="App.tsx"
+    import { useOkto } from "@okto_web3/react-sdk";
+    import { GoogleLogin } from "@react-oauth/google";
+
+    function App() {
+        const oktoClient = useOkto();
+
+        async function handleGoogleLogin(credentialResponse: any) {
+            try {
+                await oktoClient.loginUsingOAuth({
+                    idToken: credentialResponse.credential,
+                    provider: "google",
+                });
+            } catch (error) {
+                console.error("Authentication error:", error);
+            }
+        }
+
+        return (
+            <div>
+                {oktoClient.user ? (
+                    <TokenTransfer />
+                ) : (
+                    <GoogleLogin onSuccess={handleGoogleLogin} />
+                )}
+            </div>
+        );
+    }
+
+    export default App;
+    ```
+</Step>
+
+<Step>
+    ## Implement Token Transfer
+
+    Create a new component for token transfer:
+
+    ```tsx title="TokenTransfer.tsx"
+    import { useOkto, tokenTransfer } from "@okto_web3/react-sdk";
+    import { useState } from "react";
+
+    export function TokenTransfer() {
+        const oktoClient = useOkto();
+        const [status, setStatus] = useState("");
+
+        async function handleTransfer() {
+            try {
+                setStatus("Creating transfer...");
+                
+                // 1. Create the transfer operation
+                const userOp = await tokenTransfer(oktoClient, {
+                    amount: BigInt("1000000000000000000"), // 1 token
+                    recipient: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+                    token: "", // Empty string for native token
+                    chain: "eip155:1" // Ethereum Mainnet
+                });
+
+                setStatus("Signing operation...");
+                // 2. Sign the operation
+                const signedOp = await oktoClient.signUserOp(userOp);
+
+                setStatus("Executing transfer...");
+                // 3. Execute the transfer
+                const txHash = await oktoClient.executeUserOp(signedOp);
+                
+                setStatus(`Transfer complete! Hash: ${txHash}`);
+            } catch (error) {
+                console.error("Transfer failed:", error);
+                setStatus(`Transfer failed: ${error.message}`);
+            }
+        }
+
+        return (
+            <div>
+                <h2>Token Transfer</h2>
+                <button onClick={handleTransfer}>
+                    Send 1 ETH
+                </button>
+                <p>{status}</p>
+            </div>
+        );
+    }
+    ```
 </Step>
 
 <Step>
     ## Start Development Server
 
-    Run this command to start your development server:
+    Run your app:
 
     ```bash
-    npm start
+    npm run dev
     ```
-    Your app will be available at `http://localhost:3000`.
+
+    Visit `http://localhost:5173` in your browser.
 </Step>
 
 <Step>
     ## Congratulations!
 
-    🎉 Congratulations! You now have a fully configured Okto-powered React application. All the necessary components and configurations are already set up, so you can start building your Web3 features right away. You can checkout how to use other features in the [Template Repo](https://github.com/okto-hq/okto-sdk-react-template-app/).
-</Step>
-
-</Steps>
-</Tab>
-
-<Tab value="create-okto-app Next.js">
-
-Follow the steps below to get started quickly with building an Okto-powered Next.js app app!
-<Steps>
-
-<Step>
-    ## Create New Project
-
-    Run the following command in your terminal:
-
-    ```bash title="bash"
-    npx create-okto-app@latest
-    ```
-
-    You'll be prompted to:
-    - Choose 'Next JS' as your template using arrow keys
-    - Enter your project name
-
-    ```bash
-    Welcome to create-okto-app!
-    ✔ Choose a template: › Next JS
-    ✔ Enter your project name: › my-okto-app
-    ```
-
-    After creation is complete, change into your project directory and install dependencies:
-    ```bash
-    cd my-okto-app
-    npm install    # Install dependencies
-    ```
-</Step>
-
-<Step>
-    ## Configure Environment Variables
-    Create a `.env.local` file in the root of your project:
-
-    ```bash title=".env.local"
-    GOOGLE_CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID"
-    GOOGLE_CLIENT_SECRET = "YOUR_GOOGLE_CLIENT_SECRET"
-
-    # Add these Next-Auth configurations
-    AUTH_SECRET = "generate-a-secret-key"  # Use: openssl rand -base64 32
-    ```
-
-    Replace the placeholders with your actual values.
-    
-    To generate `AUTH_SECRET`, run the command `openssl rand -base64 32`.
-
-    For instructions on getting Google credentials, follow our [Google OAuth2 Setup Guide](https://docs.okto.tech/docs/react-sdk/authenticate-users/google-oauth/google-console-setup).
-</Step>
-
-<Step>
-    ## Start Development Server
-
-    Run this command to start your development server:
-
-    ```bash
-    npm run dev    # Starts development server
-    ```
-
-    For production, use:
-    
-    ```bash
-    npm run build  # Creates optimized production build
-    npm start      # Starts production server
-    ```
-
-    Your app will be available at `http://localhost:3000`.
-</Step>
-
-<Step>
-    ## Congratulations!
-
-    🎉 Congratulations! You now have a powerful Next.js application powered by Okto. Your application is ready for both development and production environments.
+ 🎉 Congratulations! You now have a basic dApp powered by Okto. You can focus on your business logic and UI/UX now. You can checkout how to use other features in the [Template Repo](https://github.com/okto-hq/okto-sdkv2-react-template-app/).
 </Step>
 
 </Steps>
 
 </Tab>
-
 </Tabs>
 
-
 <Callout>
-For more details, refer to the [Template Repo](https://github.com/okto-hq/okto-sdk-react-template-app/) and the [Okto SDK Cheatsheet](https://docs.google.com/document/d/1ePHrAjiTvLOkBwOaaDvTQlv8qeRu7ATwh7dicnzfK2E/edit) for commonly used methods and configurations. 
+For more examples and advanced usage, check out the [Template Repo](https://github.com/okto-hq/okto-sdkv2-react-template-app).
 </Callout>
+

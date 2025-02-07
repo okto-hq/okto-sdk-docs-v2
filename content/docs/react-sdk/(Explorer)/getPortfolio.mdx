@@ -1,5 +1,75 @@
 ---
 title: Get Portfolio
-description: A complete guide to integrating Okto into your React applications. 
+description: Learn how to retrieve user portfolio data using the Okto SDK.
 full: false
 ---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react';
+
+The `getPortfolio` function retrieves the aggregated portfolio for the authenticated user.
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`getPortfolio`](#get-portfolio) | Get user's portfolio data |
+
+<div className="method-box">
+
+## Get Portfolio
+
+<sub><i>async</i></sub> `getPortfolio(oktoClient: OktoClient)` retrieves the user's aggregated portfolio data.
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `portfolio` | `Promise<UserPortfolioData>` | User's portfolio information |
+
+</Callout>
+
+<Accordions>
+<Accordion title="Example">
+<Tabs items={['TypeScript']}>
+<Tab value="TypeScript">
+```typescript
+import { useOkto } from '@okto_web3/react-sdk';
+import { getPortfolio } from '@okto_web3/react-sdk';
+
+function Portfolio() {
+    const oktoClient = useOkto();
+
+    async function fetchPortfolio() {
+        try {
+            const portfolio = await getPortfolio(oktoClient);
+            console.log('Portfolio data:', portfolio);
+        } catch (error) {
+            console.error('Error fetching portfolio:', error);
+        }
+    }
+
+    return (
+        <button onClick={fetchPortfolio}>
+            Fetch Portfolio
+        </button>
+    );
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+</Accordions>
+
+</div>
