@@ -40,12 +40,12 @@ This hook must be used within components wrapped by the `OktoProvider`.
 
 | Method | Signature | Description |
 |--------|-----------|-------------|
-| `loginUsingOAuth` | `Promise<User>` | Authenticate using OAuth providers |
+| `loginUsingOAuth` | [`Promise<User>`](/docs/react-sdk/technical-reference#models) | Authenticate using OAuth providers |
 | `verifyLogin` | `Promise<boolean>` | Verify if user is logged in |
 | `getAuthorizationToken` | `Promise<string>` | Get current authorization token |
 | `paymasterData` | `Promise<Hex>` | Get paymaster data for transactions |
 | `executeUserOp` | `Promise<string>` | Execute a user operation |
-| `signUserOp` | `Promise<UserOp>` | Sign a user operation |
+| `signUserOp` | [`Promise<UserOp>`](/docs/react-sdk/technical-reference#models) | Sign a user operation |
 
 </Callout>
 
