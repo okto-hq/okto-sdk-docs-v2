@@ -5,7 +5,10 @@
         "index",
         "getting-started",
         "authentication",
-        "usage"
+        "usage",
+        "technical-reference",
+        "sdk-error-warnings",
+        "troubleshooting"
     ],
     "root": true
   }
