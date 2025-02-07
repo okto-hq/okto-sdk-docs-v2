@@ -431,19 +431,110 @@ If you encounter any errors when running `npm run dev` (or `pnpm dev`, `yarn dev
 </Step>
 
 <Step>
- ## Congratulations! You're a Web3 Dapp Developer!
+ ## Congratulations!
 
-🎉 Congratulations! You've done it! You've successfully set up a Next.js application that's integrated with the Okto SDK and Google Authentication.
-
-**You now have a basic foundation to build your own Web3 dApps!**
-
-**What's next? Explore more!**
-
--   **Dive Deeper into Okto SDK Features:**  This quick start just scratched the surface. Explore the [Okto SDK documentation](/docs/react-sdk/overview) to discover all the powerful features Okto offers, like portfolio management, transactions, smart contract interactions, and much more!
--   **Check out the Template Repo:** For a more complete example app with more features and UI elements, check out the [Template Repo](https://github.com/okto-hq/okto-sdkv2-nextjs-template-app). It can give you more ideas and code examples to build upon.
--   **Start Building Your Dapp!**  Now that you have the basic setup, you can start building your own unique Web3 application. Think about what cool features you want to add, and use the Okto SDK and this template as your starting point!
-
-Happy Dapp Building! 🚀
+🎉 Your basic Okto integration is now complete! You're ready to bring your dApp to life. Let's try out a simple user operation!
 </Step>
 
 </Steps>
+
+<br/>
+<br/>
+## Trying Out a User Operation
+
+Now that we have our basic setup complete, let's implement a token transfer on Solana devnet to understand how user operations work in Okto.
+
+<Steps>
+
+<Step>
+    ## Get Your Wallet Address
+
+    First, get your Solana wallet address:
+
+    ```tsx
+    import { getAccounts } from "@okto_web3/react-sdk";
+    
+    const accounts = await getAccounts(oktoClient);
+    const solanaAccount = accounts.find(account => account.chain === "solana:devnet");
+    console.log("Your Solana address:", solanaAccount.address);
+    ```
+</Step>
+
+<Step>
+    ## Fund Your Wallet
+
+    To perform a token transfer, you'll need some funds in your wallet. Add funds to this address using the [Solana Devnet Faucet](https://faucet.solana.com).
+</Step>
+
+<Step>
+    ## Check Network Information
+
+    Before creating the user operation, check the [Network Information Guide](/docs/react-sdk/technical-reference#network-information) for getting the correct CAIP-2 IDs of chains.
+</Step>
+
+<Step>
+    ## Implement Token Transfer
+
+    Create a new component for handling the transfer:
+
+    ```tsx title="app/components/TokenTransfer.tsx"
+    "use client";
+    import { useOkto, tokenTransfer } from "@okto_web3/react-sdk";
+    import { useState } from "react";
+
+    export function TokenTransfer() {
+        const oktoClient = useOkto();
+        const [status, setStatus] = useState("");
+
+        async function handleTransfer() {
+            try {
+                setStatus("Creating transfer...");
+                
+                const userOp = await tokenTransfer(oktoClient, {
+                    amount: BigInt("1000000000"), // 1 SOL
+                    recipient: "YOUR_RECIPIENT_ADDRESS",
+                    token: "", // Empty string for native token
+                    chain: "SOLANA_CHAIN_ID" // caip2id of Solana devnet from step 3
+                });
+
+                setStatus("Signing operation...");
+                const signedOp = await oktoClient.signUserOp(userOp);
+
+                setStatus("Executing transfer...");
+                const txHash = await oktoClient.executeUserOp(signedOp);
+                
+                setStatus(`Transfer complete! Hash: ${txHash}`);
+            } catch (error) {
+                console.error("Transfer failed:", error);
+                setStatus(`Transfer failed: ${error.message}`);
+            }
+        }
+
+        return (
+            <div>
+                <h2>Token Transfer</h2>
+                <button onClick={handleTransfer}>
+                    Send 1 SOL
+                </button>
+                <p>{status}</p>
+            </div>
+        );
+    }
+    ```
+</Step>
+
+<Step>
+    ## Verify The Transfer
+
+    After the transfer is complete, you can verify it through:
+    - The `getPortfolio` method to check your updated balance
+    - The [Solana Explorer](https://explorer.solana.com) (devnet) using the transaction hash
+</Step>
+
+</Steps>
+
+Now that you've completed your first user operation, you're ready to explore more advanced features! Check out our [Usage Guide](/docs/react-sdk/usage-overview) to learn about other operations like NFT transfers, contract interactions, and more.
+
+<Callout>
+For more examples and advanced usage, check out the [Template Repo](https://github.com/okto-hq/okto-sdkv2-nextjs-template-app).
+</Callout>

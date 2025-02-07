@@ -1,56 +1,229 @@
 ---
 title: Quickstart
-description: Okto is a platform that allows you to integrate web3 functionality into your app without building things from scratch.
+description: Learn how to create a TypeScript application and initialize it with the Okto SDK, including setting up authentication and executing your first token transfer.
 full: false
 ---
 
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
 
-You can create an Okto-powered application using Typescript directly. 
+## TypeScript App
 
-Here's how you can do it:
+This approach shows how to create a TypeScript application and manually configure the Okto SDK. Follow these steps to set up your project and execute your first token transfer.
 
 <Steps>
 
 <Step>
+    ## Initialize a TypeScript Project
 
-## Initilaize a new project
-
-    Initialize a new typescript project with Okto SDK.
+    If you already have a TypeScript project, you can skip this step and proceed directly to Step 2 to start integrating Okto.
 
     ```bash title="bash"
-    npm install @okto_web3/core-js-sdk@latest
+    mkdir my-okto-app
+    cd my-okto-app
+    npm init -y
+    npm install typescript @types/node --save-dev
+    npx tsc --init
     ```
-
 </Step>
 
 <Step>
+    ## Install Dependencies
 
-## Initialize OktoClient
+    Install the required packages:
 
-    Inside your main file, initialize the OktoClient.
+    <Tabs items={['npm', 'pnpm', 'yarn']}>
+        <Tab value="npm">
+            ```bash
+            npm install @okto_web3/core-js-sdk
+            ```
+        </Tab>
+        <Tab value="pnpm">
+            ```bash
+            pnpm add @okto_web3/core-js-sdk
+            ```
+        </Tab>
+        <Tab value="yarn">
+            ```bash
+            yarn add @okto_web3/core-js-sdk
+            ```
+        </Tab>
+    </Tabs>
+</Step>
 
-    ```typescript title="main.ts"
+<Step>
+    ## Configure Environment Variables
+
+    Create a `.env` file in your project root:
+
+    ```bash title=".env"
+    VENDOR_PRIVATE_KEY=YOUR_VENDOR_PRIVATE_KEY
+    VENDOR_SWA=YOUR_VENDOR_SWA
+    ENVIRONMENT=sandbox
+    ```
+
+    Create a configuration file to load these variables:
+
+    ```typescript title="config.ts"
+    import * as dotenv from 'dotenv';
+    dotenv.config();
+
+    export const config = {
+        environment: process.env.ENVIRONMENT || 'sandbox',
+        vendorPrivKey: process.env.VENDOR_PRIVATE_KEY!,
+        vendorSWA: process.env.VENDOR_SWA!,
+    };
+    ```
+</Step>
+
+<Step>
+    ## Initialize Okto Client
+
+    Create your main file:
+
+    ```typescript title="index.ts"
     import { OktoClient } from '@okto_web3/core-js-sdk';
+    import { config } from './config';
 
     const oktoClient = new OktoClient({
-        environment: 'sandbox', // or 'production'
-        vendorPrivKey: '{Private Key}',
-        vendorSWA: '{Vendor Signer Wallet Address}',
+        environment: config.environment,
+        vendorPrivKey: config.vendorPrivKey,
+        vendorSWA: config.vendorSWA,
     });
-    ```
 
+    async function main() {
+        // Your code will go here
+        console.log("Okto client initialized!");
+    }
+
+    main().catch(console.error);
+    ```
 </Step>
 
 <Step>
+    ## Implement Authentication
 
-## Start using Okto SDK
+    Currently, you can onboard users and support on-chain interaction via the Okto Embedded wallet. To do this you must first authenticate your user via social login. We currently support Google OAuth.
 
-That's it! You can now start using Okto SDK to create your own web3 applications. 
+    Update your main file to include authentication:
 
-Refer to the [SDK Documentation](/docs/typescript-sdk/usage/overview) for more information on how to use Okto SDK.
+    ```typescript title="index.ts"
+    async function authenticate(idToken: string) {
+        try {
+            const user = await oktoClient.loginUsingOAuth({
+                idToken,
+                provider: "google",
+            });
+            console.log("Authentication successful:", user);
+            return user;
+        } catch (error) {
+            console.error("Authentication failed:", error);
+            throw error;
+        }
+    }
+    ```
+</Step>
 
+<Step>
+    ## Start Development
+
+    Run your application:
+
+    ```bash
+    npx ts-node index.ts
+    ```
+</Step>
+
+<Step>
+    ## Congratulations!
+
+    🎉 Your basic Okto integration is now complete! You're ready to bring your dApp to life. Let's try out a simple user operation!
 </Step>
 
 </Steps>
+
+<br/>
+<br/>
+## Trying Out a User Operation
+
+Now that we have our basic setup complete, let's implement a token transfer on Solana devnet to understand how user operations work in Okto.
+
+<Steps>
+
+<Step>
+    ## Get Your Wallet Address
+
+    First, get your Solana wallet address:
+
+    ```typescript
+    import { getAccounts } from "@okto_web3/core-js-sdk";
+    
+    const accounts = await getAccounts(oktoClient);
+    const solanaAccount = accounts.find(account => account.chain === "solana:devnet");
+    console.log("Your Solana address:", solanaAccount.address);
+    ```
+</Step>
+
+<Step>
+    ## Fund Your Wallet
+
+    To perform a token transfer, you'll need some funds in your wallet. Add funds to this address using the [Solana Devnet Faucet](https://faucet.solana.com).
+</Step>
+
+<Step>
+    ## Check Network Information
+
+    Before creating the user operation, check the [Network Information Guide](/docs/react-sdk/technical-reference#network-information) for getting the correct CAIP-2 IDs of chains.
+</Step>
+
+<Step>
+    ## Implement Token Transfer
+
+    Add this function to your main file:
+
+    ```typescript title="index.ts"
+    import { tokenTransfer } from "@okto_web3/core-js-sdk";
+
+    async function handleTransfer() {
+        try {
+            console.log("Creating transfer...");
+            
+            const userOp = await tokenTransfer(oktoClient, {
+                amount: BigInt("1000000000"), // 1 SOL
+                recipient: "YOUR_RECIPIENT_ADDRESS",
+                token: "", // Empty string for native token
+                chain: "SOLANA_CHAIN_ID" // caip2id of Solana devnet from step 3
+            });
+
+            console.log("Signing operation...");
+            const signedOp = await oktoClient.signUserOp(userOp);
+
+            console.log("Executing transfer...");
+            const txHash = await oktoClient.executeUserOp(signedOp);
+            
+            console.log(`Transfer complete! Hash: ${txHash}`);
+            return txHash;
+        } catch (error) {
+            console.error("Transfer failed:", error);
+            throw error;
+        }
+    }
+    ```
+</Step>
+
+<Step>
+    ## Verify The Transfer
+
+    After the transfer is complete, you can verify it through:
+    - The `getPortfolio` method to check your updated balance
+    - The [Solana Explorer](https://explorer.solana.com) (devnet) using the transaction hash
+</Step>
+
+</Steps>
+
+Now that you've completed your first user operation, you're ready to explore more advanced features! Check out our [Usage Guide](/docs/typescript-sdk/usage/overview) to learn about other operations like NFT transfers, contract interactions, and more.
+
+<Callout>
+For more examples and advanced usage, check out the [Template Repo](https://github.com/okto-hq/okto-sdkv2-typescript-template).
+</Callout>
