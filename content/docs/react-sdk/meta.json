@@ -23,8 +23,10 @@
     "(Account)",
     "(Explorer)",
     "(Intents)",
-    "---References---",
-    "constants",
+    "---Resources---",
+    "technical-reference",
+    "sdk-error-warnings",
+    "troubleshooting",
     "changelog",
     "feature-support",
     "(Example Apps)"
