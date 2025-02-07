@@ -9,7 +9,9 @@
         "v2-migration-guide",
         "changelog",
         "feature-support",
-        "constants",
+        "technical-reference",
+        "sdk-error-warnings",
+        "troubleshooting",
         "example-apps"
     ],
     "root": true

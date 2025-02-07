@@ -1,0 +1,171 @@
+---
+title: Technical Reference
+full: false
+---
+
+import { CopyToClipboard } from '@/components/CopyToClipboard';
+
+<style>
+{`
+  .table-container {
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+  }
+
+  .table-container table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table-container th {
+    position: sticky;
+    top: 0;
+   /* background-color: #f9fafb; */ /* Light gray background for light mode */
+    z-index: 1;
+    border-bottom: 2px solid #e5e7eb;
+    color: #11182f7;  /* Dark text for light mode */
+  }
+
+  /* For dark mode */
+  
+  @media (prefers-color-scheme: dark) {
+    .table-container th {
+      
+      color: #11182f7;
+    }
+  }
+  
+
+  .table-container th,
+  .table-container td {
+    padding: 0.75rem;
+    text-align: left;
+  }
+
+  .table-container tr:not(:last-child) td {
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .table-description {
+    margin-bottom: 0.5rem;
+  }
+
+  .important-notice {
+    background-color: #fefce8;
+    border-left: 4px solid #eab308;
+    padding: 1rem;
+    margin: 1.5rem 0;
+    border-radius: 0.375rem;
+  }
+
+  .important-notice strong {
+    color: #854d0e;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Dark mode for important notice */
+  @media (prefers-color-scheme: dark) {
+    .important-notice {
+      background-color: rgba(254, 252, 232, 0.1);
+      border-left-color: #ca8a04;
+    }
+    .important-notice strong {
+      color: #fbbf24;
+    }
+  }
+
+  .table-content {
+    margin-top: 0px;
+    padding-top: 0
+  }
+
+  .sub-headings {
+    margin-left: 10px;
+    margin-bottom: 0px
+  }
+
+`}
+</style>
+
+<p2>A comrehensive overview of tokens, networks, and enum values</p2>
+
+---
+
+### Network Information
+<p>A list of all available networks and their properties.</p>
+
+<div className="table-container">
+
+| Network Name | CAIP-2 ID |
+|--------------|----------|
+| APTOS | aptos:1 |
+| APTOS_TESTNET | aptos:2 |
+| BASE | eip155:8453 |
+| POLYGON | eip155:137 |
+| POLYGON_TESTNET_AMOY | eip155:80002 |
+| SOLANA | solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp |
+| SOLANA_DEVNET | solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1 |
+</div>
+
+<div className="important-notice">
+  <strong>Important!</strong>
+  Native tokens on chains do not have a Token Address (N/A). Please use empty strings for these tokens wherever applicable.
+</div>
+
+## Possible Values for Custom Types
+<p>Possible values for selected types</p>
+
+<div className="sub-headings">
+        ### INTENT_TYPE
+        <p>Specifies the type of order.</p>
+</div>
+
+<div className="table-container">
+
+    
+        | Value | Description |
+        |-------|-------------|
+        | `MINT` | Indicates that the order is for minting a new NFT. |
+        | `NFT_TRANSFER` | Indicates that the order is for transferring an NFT to another address. |
+        | `TOKEN_TRANSFER_EXECUTE` | Indicates that the order is for executing a token transfer transaction. |
+        | `EXECUTE_RAW_TX` | Indicates that the order is for executing a raw blockchain transaction. |
+    
+</div>
+
+<div  className="sub-headings">
+### STATUS
+<p>Represents the current status of the order or transaction.</p>
+</div>
+
+<div className="table-container">
+    <div className="table-content">
+        | Value | Description |
+        |-------|-------------|
+        | `WAITING_INITIALIZATION` | The order is in queue and has not yet started processing. |
+        | `CREATED` | The order has been initialized and is ready for processing. |
+        | `RUNNING` | The transaction is being processed on the blockchain. |
+        | `WAITING_FOR_SIGNATURE` | The system is in the process of signing the transaction payload. |
+        | `REJECTED` | The order was rejected and will not be processed further. |
+        | `SUCCESS` | The order was successfully processed and confirmed on the blockchain. |
+        | `FAILED` | The order failed during processing. |
+    </div>
+</div>
+
+<div className="sub-headings">
+### ENTITY_TYPE
+<p>Defines the type of NFT or asset involved in the transaction.</p>
+</div>
+
+<div className="table-container">
+    <div className="table-content">
+        | Value | Description |
+        |-------|-------------|
+        | `ERC721` | An ERC-721 standard NFT on EVM-compatible blockchains. |
+        | `ERC1155` | An ERC-1155 standard NFT on EVM-compatible blockchains. |
+        | `NFT` | An NFT on non-EVM blockchains. |
+    </div>
+</div>
