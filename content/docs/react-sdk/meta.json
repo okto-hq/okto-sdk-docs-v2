@@ -18,7 +18,7 @@
     "./wallets/(embedded-wallets)",
     "./wallets/external-wallets",
     "---Usage---",
-    "overview",
+    "usage-overview",
     "(hooks)",
     "(Account)",
     "(Explorer)",
