@@ -35,24 +35,28 @@ Before you begin, ensure you have:
 </Step>
 
 <Step>
-    ## Install the Okto SDK and other dependencies
+    ## Install Dependencies
+
+    <Callout type="info">
+    Please use version 0.0.0-dev.42 of the npm package.
+    </Callout>
 
     Your Next.js app needs the Okto SDK and NextAuth to work. Let's install them! Run the command below that matches your package manager (`npm`, `pnpm`, or `yarn`):
 
     <Tabs items={['npm', 'pnpm', 'yarn']}>
         <Tab value="npm">
             ```bash
-            npm install @okto_web3/react-sdk next-auth
+            npm i @okto_web3/react-sdk@dev next-auth
             ```
             </Tab>
             <Tab value="pnpm">
             ```bash
-            pnpm add @okto_web3/react-sdk next-auth
+            pnpm add @okto_web3/react-sdk@dev next-auth
             ```
             </Tab>
             <Tab value="yarn">
              ```bash
-            yarn add @okto_web3/react-sdk next-auth
+            yarn add @okto_web3/react-sdk@dev next-auth
             ```
         </Tab>
     </Tabs>
