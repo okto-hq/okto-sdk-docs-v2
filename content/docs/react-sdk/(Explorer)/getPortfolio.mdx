@@ -40,8 +40,10 @@ The `getPortfolio` function retrieves the aggregated portfolio for the authentic
 
 </Callout>
 
+### Example
+
 <Accordions>
-<Accordion title="Example">
+<Accordion title="Usage">
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
 ```typescript
@@ -69,6 +71,59 @@ function Portfolio() {
 ```
 </Tab>
 </Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": {
+        "aggregated_data": {
+            "holdings_count": "6",
+            "holdings_price_inr": "594.5431000000001",
+            "holdings_price_usdt": "8.821019999999999",
+            "total_holding_price_inr": "594.5431000000001",
+            "total_holding_price_usdt": "8.821019999999999"
+        },
+        "group_tokens": [
+            {
+                "id": "a9e192bb-bd18-3a47-ab07-5ecff29776e3",
+                "name": "Polygon Ecosystem Token",
+                "symbol": "POL",
+                "short_name": "POL",
+                "token_image": "https://www.dextools.io/resources/tokens/logos/3/ether/0x455e53cbb86018ac2b8092fdcd39d8444affc3f6.png?1698233684",
+                "token_address": "",
+                "group_id": "c885bfd2-abff-30d5-a0ba-aed6573a836d",
+                "network_id": "ae506585-0ba7-32f3-8b92-120ddf940198",
+                "precision": "4",
+                "network_name": "POLYGON",
+                "is_primary": false,
+                "balance": "3.7258",
+                "holdings_price_usdt": "1.14661",
+                "holdings_price_inr": "77.28166",
+                "aggregation_type": "group",
+                "tokens": [
+                    {
+                        "id": "a9e192bb-bd18-3a47-ab07-5ecff29776e3",
+                        "name": "Polygon Ecosystem Token",
+                        "symbol": "POL",
+                        "short_name": "POL",
+                        "token_image": "https://www.dextools.io/resources/tokens/logos/3/ether/0x455e53cbb86018ac2b8092fdcd39d8444affc3f6.png?1698233684",
+                        "token_address": "",
+                        "network_id": "ae506585-0ba7-32f3-8b92-120ddf940198",
+                        "precision": "4",
+                        "network_name": "POLYGON",
+                        "is_primary": true,
+                        "balance": "3.7258",
+                        "holdings_price_usdt": "1.14661",
+                        "holdings_price_inr": "77.28166"
+                    }
+                ]
+            }
+        ]
+    }
+}
+```
 </Accordion>
 </Accordions>
 

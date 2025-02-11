@@ -40,8 +40,10 @@ The `getPortfolioNFT` function retrieves the list of NFTs in the authenticated u
 
 </Callout>
 
+### Example
+
 <Accordions>
-<Accordion title="Example">
+<Accordion title="Usage">
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
 ```typescript
@@ -69,6 +71,34 @@ function NFTPortfolio() {
 ```
 </Tab>
 </Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": {
+        "count": 2,
+        "details": [
+            {
+                "caip_id": "eip155:8453",
+                "network_name": "BASE",
+                "entity_type": "ERC721",
+                "collection_address": "0x19fc518b9eed93f70aa4b49133d303101699467a",
+                "collection_name": "MAYANKONBOARDINGTEST",
+                "nft_id": "5",
+                "image": "ipfs://QmWypyEUGo9mpt5R2EXbAwVRvtaAfg8TTyzwZEdDRowdov",
+                "quantity": "1.000000000000000000",
+                "token_uri": "https://ipfs.io/ipfs/QmT434r64HQXdkpKo5fRCCn2PzxmQQPtXgGSnrUVzpPwaw",
+                "description": "Marks a splashy start to your journey of conquering the ocean of web3 and achieving the ultimate feat of becoming a whale, metaphorically atleast ;)",
+                "nft_name": "Dolphin NFT - CoinDCX Maxis",
+                "explorer_smart_contract_url": "https://basescan.org/search?f=0&q=0x19fc518b9eed93f70aa4b49133d303101699467a",
+                "collection_image": "https://coindcx.s3.amazonaws.com/static/images/474c04b3-3abd-4d45-8cf4-f59871e15aec/Unfold_23.png"
+            }
+        ]
+    }
+}
+```
 </Accordion>
 </Accordions>
 

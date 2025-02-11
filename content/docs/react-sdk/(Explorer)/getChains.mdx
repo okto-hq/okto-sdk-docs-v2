@@ -40,8 +40,10 @@ The `getChains` function retrieves a list of all blockchain networks supported b
 
 </Callout>
 
+### Example
+
 <Accordions>
-<Accordion title="Example">
+<Accordion title="Usage">
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
 ```typescript
@@ -69,6 +71,66 @@ function ChainsList() {
 ```
 </Tab>
 </Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": {
+        "network": [
+            {
+                "caip_id": "eip155:56",
+                "network_name": "BSC",
+                "chain_id": "56",
+                "logo": "BSC",
+                "sponsorship_enabled": true,
+                "gsn_enabled": false,
+                "type": "EVM",
+                "network_id": "9a26afcf-ed62-43d8-91ea-42dc7cd55890",
+                "onramp_enabled": false,
+                "whitelisted": true
+            },
+            {
+                "caip_id": "eip155:42161",
+                "network_name": "ARBITRUM",
+                "chain_id": "42161",
+                "logo": "ARB",
+                "sponsorship_enabled": false,
+                "gsn_enabled": false,
+                "type": "EVM",
+                "network_id": "a003a74c-4dd2-3fc7-8c70-c080c9ca5afb",
+                "onramp_enabled": false,
+                "whitelisted": true
+            },
+            {
+                "caip_id": "eip155:137",
+                "network_name": "POLYGON",
+                "chain_id": "137",
+                "logo": "POLYGON",
+                "sponsorship_enabled": true,
+                "gsn_enabled": false,
+                "type": "EVM",
+                "network_id": "ae506585-0ba7-32f3-8b92-120ddf940198",
+                "onramp_enabled": false,
+                "whitelisted": true
+            },
+            {
+                "caip_id": "eip155:43114",
+                "network_name": "AVALANCHE",
+                "chain_id": "43114",
+                "logo": "AVAX",
+                "sponsorship_enabled": true,
+                "gsn_enabled": false,
+                "type": "EVM",
+                "network_id": "a3b96c4e-dc81-3c52-a9ee-729974ea74a0",
+                "onramp_enabled": false,
+                "whitelisted": true
+            }
+        ]
+    }
+}
+```
 </Accordion>
 </Accordions>
 
