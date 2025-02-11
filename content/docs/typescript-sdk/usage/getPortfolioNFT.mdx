@@ -12,6 +12,8 @@ import { Icon as IIcon } from '@iconify/react';
 
 import '../../styles.css';
 
+The `getPortfolioNFT` function retrieves the list of NFTs in the authenticated user's portfolio.
+
 ### Method Overview
 
 | Methods                                                                         | Description                          |                 
@@ -22,7 +24,8 @@ import '../../styles.css';
 
 ## Get Portfolio NFT
 
-<sub><i>async</i></sub> `getPortfolioNFT(OktoClient)`<a href="https://github.com/okto-hq/okto-sdk-react/blob/main/src/OktoProvider.tsx#L340" target="_blank" rel="noopener noreferrer" style= {{ textDecoration: "none" }}> <IIcon icon="lucide:external-link" height="17" style={{ display: 'inline-block', verticalAlign: 'middle' }} /></a> returns the NFT portfolio of the user.
+<sub><i>async</i></sub> `getPortfolioNFT(OktoClient)` returns the NFT portfolio of the user.
+
 ### Parameters
 
 | Parameter   | Type                        | Description                            | 
@@ -39,18 +42,47 @@ import '../../styles.css';
 
 </Callout>
 
+### Example
 
 <Accordions>
-<Accordion title="Example">
+<Accordion title="Usage">
 <Tabs items={['Typescript']}>
   <Tab value="Typescript">
     ```typescript
     import { getPortfolioNFT } from "@okto_web3/core-js-sdk/explorer";
 
-    const portfolioNFT = await getPortfolioNFT();
+    const portfolioNFT = await getPortfolioNFT(oktoClient);
     ```
   </Tab>
 </Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": {
+        "count": 2,
+        "details": [
+            {
+                "caip_id": "eip155:8453",
+                "network_name": "BASE",
+                "entity_type": "ERC721",
+                "collection_address": "0x19fc518b9eed93f70aa4b49133d303101699467a",
+                "collection_name": "MAYANKONBOARDINGTEST",
+                "nft_id": "5",
+                "image": "ipfs://QmWypyEUGo9mpt5R2EXbAwVRvtaAfg8TTyzwZEdDRowdov",
+                "quantity": "1.000000000000000000",
+                "token_uri": "https://ipfs.io/ipfs/QmT434r64HQXdkpKo5fRCCn2PzxmQQPtXgGSnrUVzpPwaw",
+                "description": "Marks a splashy start to your journey of conquering the ocean of web3 and achieving the ultimate feat of becoming a whale, metaphorically atleast ;)",
+                "nft_name": "Dolphin NFT - CoinDCX Maxis",
+                "explorer_smart_contract_url": "https://basescan.org/search?f=0&q=0x19fc518b9eed93f70aa4b49133d303101699467a",
+                "collection_image": "https://coindcx.s3.amazonaws.com/static/images/474c04b3-3abd-4d45-8cf4-f59871e15aec/Unfold_23.png"
+            }
+        ]
+    }
+}
+```
 </Accordion>
 </Accordions>
 

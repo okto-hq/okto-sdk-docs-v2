@@ -12,6 +12,8 @@ import { Icon as IIcon } from '@iconify/react';
 
 import '../../styles.css';
 
+Okto SDK provides the `getAccount()` method to retrieve details of wallets connected to the current user's Okto account. This includes both embedded wallets created via Okto and external wallets connected by the user (e.g., MetaMask, Phantom).
+
 ### Method Overview
 
 | Methods                                                                         | Description                          |                 
@@ -22,7 +24,9 @@ import '../../styles.css';
 
 ## Get Account
 
-<sub><i>async</i></sub> `getAccount(OktoClient)`<a href="https://github.com/okto-hq/okto-sdk-react/blob/main/src/OktoProvider.tsx#L340" target="_blank" rel="noopener noreferrer" style= {{ textDecoration: "none" }}> <IIcon icon="lucide:external-link" height="17" style={{ display: 'inline-block', verticalAlign: 'middle' }} /></a> returns the list of wallets of the user.
+<sub><i>async</i></sub> `getAccount()` retrieves the list of all wallets associated with the currently authenticated user. 
+
+In Okto, an **account** represents the user's identity in the Okto ecosystem, encompassing both embedded wallets seamlessly created by Okto and external wallets users choose to connect.
 
 ### Parameters
 
@@ -40,18 +44,36 @@ import '../../styles.css';
 
 </Callout>
 
+### Example
 
 <Accordions>
-<Accordion title="Example">
+<Accordion title="Usage">
 <Tabs items={['Typescript']}>
   <Tab value="Typescript">
     ```typescript
     import { getAccount } from "@okto_web3/core-js-sdk/userop";
     
-    const wallets = await getAccount();
+    const wallets = await getAccount(oktoClient);
     ```
   </Tab>
 </Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": [
+        {
+            "caip_id": "eip155:10",
+            "network_name": "OPTIMISM",
+            "address": "0x6698c56f99EaF4662cD70f974Cf787926e47781b",
+            "network_id": "f0620691-ce05-3d5c-94c7-1f2cf275c781",
+            "network_symbol": "OP"
+        }
+    ]
+}
+```
 </Accordion>
 </Accordions>
 
