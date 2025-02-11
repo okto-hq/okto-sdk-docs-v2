@@ -1,6 +1,6 @@
 {
     "title": "Account",
     "pages": [
-        "estimate", "signUserOp" , "executeUserOp"
+        "userop-learn", "estimate", "signUserOp" , "executeUserOp"
     ]
 }
