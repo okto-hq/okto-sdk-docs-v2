@@ -3,3 +3,81 @@ title: Overview of Typescript SDK
 description: Okto is a platform that allows you to integrate web3 functionality into your app without building things from scratch.
 full: false
 ---
+
+import TechnologyCard from 'app/components/mdx/TechnologyCard';
+import { IoCodeSlashOutline } from "react-icons/io5";
+
+## Introduction to Okto TypeScript SDK
+
+**Okto TypeScript SDK** is your comprehensive toolkit for integrating Web3 functionality into TypeScript applications. With an intuitive API and built-in type safety, it simplifies blockchain interactions—helping you quickly onboard users to the decentralized ecosystem and manage secure transactions with ease.
+
+<Callout title="Important Note">
+The Okto TypeScript SDK is built exclusively for client-side (frontend) usage. Do not use this SDK in server-side applications or backend services.
+</Callout>
+
+<div className="my-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+  <TechnologyCard
+    icon={<IoCodeSlashOutline size={"1.5rem"} />}
+    title="GitHub Repository"
+    subtitle="View SDK Source Code"
+    link="https://github.com/okto-hq/okto-js-sdk-monorepo"
+  />
+  <TechnologyCard
+    icon={<IoCodeSlashOutline size={"1.5rem"} />}
+    title="Template Repository" 
+    subtitle="Example Implementation"
+    link="https://github.com/okto-hq/okto-sdkv2-ts-template"
+  />
+</div>
+
+---
+
+## Installation & Quickstart
+
+Kickstart your project by following our [Quickstart Guide](/docs/typescript-sdk/quickstart). This guide will take you through installing the SDK, configuring your project, and executing your first transaction.
+
+---
+
+## Key Features
+
+- **Wallet Management:** Create and manage embedded wallets for your users, ensuring secure and seamless account handling.
+- **Multi-Chain Support:** Effortlessly interact with multiple blockchain networks, including EVM-compatible chains and beyond.
+- **Asset Management:** Handle various digital assets like tokens and NFTs with robust functionalities.
+- **Type Safety:** Leverage TypeScript’s powerful type system for enhanced code reliability and developer productivity.
+- **Easy Integration:** Enjoy a simple setup process with minimal configuration required to get started.
+
+---
+
+## Navigating the TypeScript SDK Docs
+
+Our documentation is organized to support every aspect of your development journey—from initial setup to advanced operations:
+
+### 1. Getting Started
+- [Quickstart Guide](/docs/typescript-sdk/quickstart): Set up your TypeScript project and integrate the Okto SDK in minutes.
+- [Prerequisites](/docs/typescript-sdk/prerequisites): A checklist of required dependencies, API keys, and setup steps.
+
+### 2. Authentication
+Implement secure user login and session management:
+- [Google OAuth](/docs/typescript-sdk/authentication/google-oauth/learn): Set up and authenticate users via Google.
+- [Session Management](/docs/typescript-sdk/authentication/session-management/login): Manage user sessions and tokens.
+
+### 3. Usage & Features
+Explore the full suite of capabilities provided by the SDK:
+- [Usage Overview](/docs/typescript-sdk/usage/overview): Comprehensive guide to utilizing the SDK effectively.
+
+### 4. Additional Resources
+Access further support and development tools:
+- [Technical Reference](/docs/typescript-sdk/technical-reference): In-depth documentation of classes, methods, and data models.
+- [SDK Error Warnings](/docs/typescript-sdk/sdk-error-warnings): A list of common error messages and troubleshooting tips.
+- [Troubleshooting](/docs/typescript-sdk/troubleshooting): Guidance on resolving common issues.
+- [Changelog](/docs/typescript-sdk/changelog): Detailed release notes and updates.
+- [Feature Support](/docs/typescript-sdk/feature-support): Information on supported chains, tokens, and additional functionalities.
+- [Example Apps](/docs/typescript-sdk/example-apps/template-repo): Sample projects showcasing best practices with the SDK.
+
+---
+
+## Get Started
+
+Ready to dive in? Begin with our **[Quickstart Guide](/docs/typescript-sdk/quickstart)** to set up your environment, obtain your Okto API key, and build your first TypeScript application powered by the Okto SDK.
+**Happy Building!**
+

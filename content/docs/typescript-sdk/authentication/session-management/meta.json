@@ -1,6 +1,8 @@
 {
     "title": "Session Management",
     "pages": [
-      "login"
+      "loginUsingOAuth",
+      "verifyLogin",
+      "getAuthToken"
     ]
   }

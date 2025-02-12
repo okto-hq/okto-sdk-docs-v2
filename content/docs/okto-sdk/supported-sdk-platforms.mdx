@@ -7,44 +7,7 @@ full: false
 import TechnologyCard from "app/components/mdx/TechnologyCard";
 import { IoBookOutline, IoCodeSlashOutline, IoRocketOutline, IoAppsOutline } from "react-icons/io5";
 
-## 1. **Typescript SDK**
-The Typescript SDK is designed for developers building Web3 applications with TypeScript. It simplifies blockchain interactions, enabling seamless onboarding and smooth user experiences.
-
-**Use Case**: Client-side web apps that don’t require a React-based solution
-
-<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
-    <TechnologyCard
-        icon={<IoBookOutline size={"1.5rem"} />}
-        title="Learn More"
-        subtitle="Explore Typescript SDK documentation"
-        link="/docs/typescript-sdk"
-    />
-
-    <TechnologyCard
-        icon={<IoCodeSlashOutline size={"1.5rem"} />}
-        title="GitHub Repository"
-        subtitle="Access the source code"
-        link="https://github.com/okto-hq/okto-js-sdk-monorepo"
-    />
-
-    <TechnologyCard
-        icon={<IoRocketOutline size={"1.5rem"} />}
-        title="Quick Start Guide"
-        subtitle="Get up and running quickly"
-        link="/docs/typescript-sdk/quickstart"
-    />
-
-    <TechnologyCard
-        icon={<IoAppsOutline size={"1.5rem"} />}
-        title="Template App"
-        subtitle="Example implementation"
-        link="https://github.com/okto-hq/okto-sdkv2-ts-template"
-    />
-</div>
-
----
-
-## 2. **React SDK**
+## 1. **React SDK**
 The React SDK is designed for developers building Web3 applications for the web. It simplifies blockchain interactions, enabling seamless onboarding and smooth user experiences.
 
 **Use Case**: Web applications
@@ -61,7 +24,7 @@ The React SDK is designed for developers building Web3 applications for the web.
     icon={<IoCodeSlashOutline size={"1.5rem"} />}
     title="GitHub Repository"
     subtitle="Access the source code"
-    link="https://github.com/okto-hq/okto-sdk-react"
+    link="https://github.com/okto-hq/okto-js-sdk-monorepo"
   />
 
   <TechnologyCard
@@ -75,7 +38,7 @@ The React SDK is designed for developers building Web3 applications for the web.
     icon={<IoAppsOutline size={"1.5rem"} />}
     title="Template App"
     subtitle="Example implementation"
-    link="https://github.com/okto-hq/okto-sdk-react-template-app"
+    link="/docs/react-sdk/templateRepo"
   />
 
   <TechnologyCard
@@ -95,7 +58,7 @@ The React SDK is designed for developers building Web3 applications for the web.
 
 ---
 
-## 3. **React Native SDK** (Coming Soon)
+## 2. **React Native SDK** (Coming Soon)
 If you’re developing mobile-first Web3 applications, the React Native SDK is your go-to option. It provides all the tools necessary to onboard users to Web3 seamlessly.
 
 **Use Case**: Mobile applications for iOS and Android
@@ -133,7 +96,7 @@ If you’re developing mobile-first Web3 applications, the React Native SDK is y
 
 ---
 
-## 4. **Flutter SDK** (Coming Soon)
+## 3. **Flutter SDK** (Coming Soon)
 The Flutter SDK caters to developers using Flutter and Dart to build cross-platform mobile applications. It reduces setup complexity and enhances user experiences.
 
 **Use Case**: Cross-platform mobile applications (Android and iOS)
@@ -173,11 +136,52 @@ The Flutter SDK caters to developers using Flutter and Dart to build cross-platf
 
 ---
 
-## 5. **Unity SDK** (Coming Soon)
+## 4. **Unity SDK** (Coming Soon)
 
 The Unity SDK will empower game developers to integrate Web3 features into their games across platforms such as web, mobile, and desktop.
 
 **Use Case**: Web3-enabled gaming experiences
+
+---
+
+## 5. **Typescript SDK**
+The Typescript SDK is designed for developers building Web3 applications with TypeScript. It simplifies blockchain interactions, enabling seamless onboarding and smooth user experiences.
+
+**Use Case**: Client-side web apps that don’t require a React-based solution
+
+<Callout title="Important Note">
+The Okto TypeScript SDK is built exclusively for client-side (frontend) usage. Do not use this SDK in server-side applications or backend services.
+</Callout>
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+    <TechnologyCard
+        icon={<IoBookOutline size={"1.5rem"} />}
+        title="Learn More"
+        subtitle="Explore Typescript SDK documentation"
+        link="/docs/typescript-sdk"
+    />
+
+    <TechnologyCard
+        icon={<IoCodeSlashOutline size={"1.5rem"} />}
+        title="GitHub Repository"
+        subtitle="Access the source code"
+        link="https://github.com/okto-hq/okto-js-sdk-monorepo"
+    />
+
+    <TechnologyCard
+        icon={<IoRocketOutline size={"1.5rem"} />}
+        title="Quick Start Guide"
+        subtitle="Get up and running quickly"
+        link="/docs/typescript-sdk/quickstart"
+    />
+
+    <TechnologyCard
+        icon={<IoAppsOutline size={"1.5rem"} />}
+        title="Template App"
+        subtitle="Example implementation"
+        link="https://github.com/okto-hq/okto-sdkv2-ts-template"
+    />
+</div>
 
 ---
 

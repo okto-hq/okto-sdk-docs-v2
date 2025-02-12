@@ -40,8 +40,10 @@ The `getPortfolioActivity` function retrieves the portfolio activity for the aut
 
 </Callout>
 
+### Example
+
 <Accordions>
-<Accordion title="Example">
+<Accordion title="Usage">
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
 ```typescript
@@ -69,6 +71,65 @@ function PortfolioActivity() {
 ```
 </Tab>
 </Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": {
+        "count": 50,
+        "activity": [
+            {
+                "symbol": "",
+                "image": "",
+                "name": "",
+                "short_name": "",
+                "id": "",
+                "group_id": "",
+                "description": "NFT Deposit",
+                "quantity": "1.000000000000000000",
+                "amount": "",
+                "order_type": "EXTERNAL_TRANSFER",
+                "transfer_type": "DEPOSIT",
+                "status": true,
+                "created_at": 1739176632,
+                "updated_at": 1739176632,
+                "timestamp": 1739176632,
+                "tx_hash": "0x4e20af759a50080e548cc40f2504e569935ce0f3255bed9c9121e3fdaebc36d1",
+                "network_id": "ae506585-0ba7-32f3-8b92-120ddf940198",
+                "network_name": "POLYGON",
+                "network_explorer_url": "https://polygonscan.com/",
+                "network_symbol": "POLYGON",
+                "caip_id": "eip155:137"
+            },
+            {
+                "symbol": "",
+                "image": "",
+                "name": "",
+                "short_name": "",
+                "id": "",
+                "group_id": "",
+                "description": "NFT Deposit",
+                "quantity": "1.000000000000000000",
+                "amount": "",
+                "order_type": "EXTERNAL_TRANSFER",
+                "transfer_type": "DEPOSIT",
+                "status": true,
+                "created_at": 1739170093,
+                "updated_at": 1739170093,
+                "timestamp": 1739170093,
+                "tx_hash": "0xba4eec0a5b1b1c6e4f741a94eb6350bffab0a2a822041ca69ccaee1c7978f0c8",
+                "network_id": "ae506585-0ba7-32f3-8b92-120ddf940198",
+                "network_name": "POLYGON",
+                "network_explorer_url": "https://polygonscan.com/",
+                "network_symbol": "POLYGON",
+                "caip_id": "eip155:137"
+            }
+        ]
+    }
+}
+```
 </Accordion>
 </Accordions>
 
