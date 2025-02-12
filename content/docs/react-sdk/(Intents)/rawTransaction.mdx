@@ -22,6 +22,10 @@ The `evmRawTransaction()` function creates a user operation for executing raw EV
 
 ## EVM Raw Transaction
 
+<Callout title="Note">
+Before using this function, ensure your target chain is an EVM-compatible chain by checking the [Supported Chains and Tokens](/docs/system-capabilities/supported-chains) documentation.
+</Callout>
+
 <sub><i>async</i></sub> `evmRawTransaction(oktoClient: OktoClient, data: RawTransactionIntentParams)` creates a user operation for raw EVM transactions.
 
 ### Parameters
@@ -181,3 +185,7 @@ const rawTxParams = {
 </Accordions>
 
 </div>
+
+<Callout title="Note">
+In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation for more details.
+</Callout>
