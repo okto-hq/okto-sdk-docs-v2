@@ -12,6 +12,8 @@ import { Icon as IIcon } from '@iconify/react';
 
 import '../../styles.css';
 
+The `getPortfolioActivity` function retrieves the portfolio activity for the authenticated user.
+
 ### Method Overview
 
 | Methods                                                                         | Description                          |                 
@@ -22,7 +24,8 @@ import '../../styles.css';
 
 ## Get Portfolio Activity
 
-<sub><i>async</i></sub> `getPortfolioActivity(OktoClient)`<a href="https://github.com/okto-hq/okto-sdk-react/blob/main/src/OktoProvider.tsx#L340" target="_blank" rel="noopener noreferrer" style= {{ textDecoration: "none" }}> <IIcon icon="lucide:external-link" height="17" style={{ display: 'inline-block', verticalAlign: 'middle' }} /></a> returns the portfolio activity of the user.
+<sub><i>async</i></sub> `getPortfolioActivity(OktoClient)` retrieves the user's portfolio activity history.
+
 ### Parameters
 
 | Parameter   | Type                        | Description                            | 
@@ -39,18 +42,78 @@ import '../../styles.css';
 
 </Callout>
 
+### Example
 
 <Accordions>
-<Accordion title="Example">
+<Accordion title="Usage">
 <Tabs items={['Typescript']}>
   <Tab value="Typescript">
     ```typescript
     import { getPortfolioActivity } from "@okto_web3/core-js-sdk/explorer";
 
-    const portfolioActivity = await getPortfolioActivity();
+    const portfolioActivity = await getPortfolioActivity(oktoClient);
     ```
   </Tab>
 </Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": {
+        "count": 50,
+        "activity": [
+            {
+                "symbol": "",
+                "image": "",
+                "name": "",
+                "short_name": "",
+                "id": "",
+                "group_id": "",
+                "description": "NFT Deposit",
+                "quantity": "1.000000000000000000",
+                "amount": "",
+                "order_type": "EXTERNAL_TRANSFER",
+                "transfer_type": "DEPOSIT",
+                "status": true,
+                "created_at": 1739176632,
+                "updated_at": 1739176632,
+                "timestamp": 1739176632,
+                "tx_hash": "0x4e20af759a50080e548cc40f2504e569935ce0f3255bed9c9121e3fdaebc36d1",
+                "network_id": "ae506585-0ba7-32f3-8b92-120ddf940198",
+                "network_name": "POLYGON",
+                "network_explorer_url": "https://polygonscan.com/",
+                "network_symbol": "POLYGON",
+                "caip_id": "eip155:137"
+            },
+            {
+                "symbol": "",
+                "image": "",
+                "name": "",
+                "short_name": "",
+                "id": "",
+                "group_id": "",
+                "description": "NFT Deposit",
+                "quantity": "1.000000000000000000",
+                "amount": "",
+                "order_type": "EXTERNAL_TRANSFER",
+                "transfer_type": "DEPOSIT",
+                "status": true,
+                "created_at": 1739170093,
+                "updated_at": 1739170093,
+                "timestamp": 1739170093,
+                "tx_hash": "0xba4eec0a5b1b1c6e4f741a94eb6350bffab0a2a822041ca69ccaee1c7978f0c8",
+                "network_id": "ae506585-0ba7-32f3-8b92-120ddf940198",
+                "network_name": "POLYGON",
+                "network_explorer_url": "https://polygonscan.com/",
+                "network_symbol": "POLYGON",
+                "caip_id": "eip155:137"
+            }
+        ]
+    }
+}
+```
 </Accordion>
 </Accordions>
 

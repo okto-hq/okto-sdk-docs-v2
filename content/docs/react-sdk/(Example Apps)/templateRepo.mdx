@@ -3,10 +3,70 @@ title: Template Repo
 full: false
 ---
 
+A comprehensive walkthrough of the React Template app built using the Okto SDK. This template demonstrates core Okto functionality including authentication, wallet management, and blockchain interactions.
+
 import { Callout } from 'fumadocs-ui/components/callout';
 
-Walkthrough for understanding the simple React Template app built using the Okto SDK. Check out the app [here](https://v2-react-sdk-sample-app.vercel.app/).
+<div className="bg-white dark:bg-[#1a1a1e] rounded-lg shadow-sm border border-gray-200 dark:border-[#2b2b2c] p-4 w-full my-4">
+  <div className="flex items-center justify-between">
+    <span className="text-base font-semibold text-gray-900 dark:text-gray-100">Template Repository</span>
+    <div className="flex gap-3">
+      <a
+        href="https://v2-react-sdk-sample-app.vercel.app/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="no-underline px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-colors min-w-[120px] text-center"
+      >
+        Live Demo
+      </a>
+      <a
+        href="https://github.com/okto-hq/okto-sdkv2-react-template-app"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="no-underline px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors min-w-[120px] text-center"
+      >
+        View on GitHub
+      </a>
+    </div>
+  </div>
+</div>
 
-<Callout title="Github Repo">
-    View the entire code in the Github repo [here](https://github.com/okto-hq/okto-sdkv2-react-template-app).
-</Callout>
+## Getting Started
+
+<div className="max-w-[450px] my-5 mx-auto">
+    <img 
+        src="/images/react-template.png" 
+        alt="Template App" 
+        className="w-full rounded-lg shadow-sm"
+    />
+</div>
+
+1. Clone the repository:
+```bash
+git clone https://github.com/okto-hq/okto-sdkv2-react-template-app.git
+```
+
+2. Install dependencies:
+```bash
+cd okto-sdkv2-react-template-app
+npm install
+```
+
+3. Set up environment variables:
+```bash
+cp .env.sample .env.local
+```
+
+4. Add your API keys to `.env.local`:
+```
+VITE_VENDOR_PRIVATE_KEY="YOUR_VENDOR_PRIVATE_KEY"
+VITE_VENDOR_SWA="YOUR_VENDOR_SWA"
+
+VITE_GOOGLE_CLIENT_SECRET="YOUR_GOOGLE_CLIENT_SECRET"
+VITE_GOOGLE_CLIENT_ID="YOUR_GOOGLE_CLIENT_ID"
+```
+
+5. Start the development server:
+```bash
+npm start
+```

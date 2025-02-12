@@ -1,6 +1,6 @@
 ---
 title: Get Chains
-description: Get the chains of a user.
+description: Learn how to retrieve supported blockchain networks using the Okto SDK.
 full: false
 ---
 
@@ -12,6 +12,8 @@ import { Icon as IIcon } from '@iconify/react';
 
 import '../../styles.css';
 
+The `getChains` function retrieves a list of all blockchain networks supported by Okto. This includes information about each chain's configuration, network details, and supported features.
+
 ### Method Overview
 
 | Methods                                                                         | Description                          |                 
@@ -22,7 +24,7 @@ import '../../styles.css';
 
 ## Get Chains
 
-<sub><i>async</i></sub> `getChains(OktoClient)`<a href="https://github.com/okto-hq/okto-sdk-react/blob/main/src/OktoProvider.tsx#L340" target="_blank" rel="noopener noreferrer" style= {{ textDecoration: "none" }}> <IIcon icon="lucide:external-link" height="17" style={{ display: 'inline-block', verticalAlign: 'middle' }} /></a> returns the list of supported chains.
+<sub><i>async</i></sub> `getChains(OktoClient)` returns the list of supported chains.
 
 ### Parameters
 
@@ -40,18 +42,79 @@ import '../../styles.css';
 
 </Callout>
 
+### Example
 
 <Accordions>
-<Accordion title="Example">
+<Accordion title="Usage">
 <Tabs items={['Typescript']}>
   <Tab value="Typescript">
     ```typescript
     import { getChains } from "@okto_web3/core-js-sdk/explorer";
     
-    const chains = await getChains();
+    const chains = await getChains(oktoClient);
     ```
   </Tab>
 </Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": {
+        "network": [
+            {
+                "caip_id": "eip155:56",
+                "network_name": "BSC",
+                "chain_id": "56",
+                "logo": "BSC",
+                "sponsorship_enabled": true,
+                "gsn_enabled": false,
+                "type": "EVM",
+                "network_id": "9a26afcf-ed62-43d8-91ea-42dc7cd55890",
+                "onramp_enabled": false,
+                "whitelisted": true
+            },
+            {
+                "caip_id": "eip155:42161",
+                "network_name": "ARBITRUM",
+                "chain_id": "42161",
+                "logo": "ARB",
+                "sponsorship_enabled": false,
+                "gsn_enabled": false,
+                "type": "EVM",
+                "network_id": "a003a74c-4dd2-3fc7-8c70-c080c9ca5afb",
+                "onramp_enabled": false,
+                "whitelisted": true
+            },
+            {
+                "caip_id": "eip155:137",
+                "network_name": "POLYGON",
+                "chain_id": "137",
+                "logo": "POLYGON",
+                "sponsorship_enabled": true,
+                "gsn_enabled": false,
+                "type": "EVM",
+                "network_id": "ae506585-0ba7-32f3-8b92-120ddf940198",
+                "onramp_enabled": false,
+                "whitelisted": true
+            },
+            {
+                "caip_id": "eip155:43114",
+                "network_name": "AVALANCHE",
+                "chain_id": "43114",
+                "logo": "AVAX",
+                "sponsorship_enabled": true,
+                "gsn_enabled": false,
+                "type": "EVM",
+                "network_id": "a3b96c4e-dc81-3c52-a9ee-729974ea74a0",
+                "onramp_enabled": false,
+                "whitelisted": true
+            }
+        ]
+    }
+}
+```
 </Accordion>
 </Accordions>
 

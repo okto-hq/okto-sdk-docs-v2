@@ -12,6 +12,8 @@ import { Icon as IIcon } from '@iconify/react';
 
 import '../../styles.css';
 
+The `getOrdersHistory` function retrieves the list of orders for the authenticated user.
+
 ### Method Overview
 
 | Methods                                                                         | Description                          |                 
@@ -22,7 +24,7 @@ import '../../styles.css';
 
 ## Get Orders History
 
-<sub><i>async</i></sub> `getOrdersHistory(OktoClient)`<a href="https://github.com/okto-hq/okto-sdk-react/blob/main/src/OktoProvider.tsx#L340" target="_blank" rel="noopener noreferrer" style= {{ textDecoration: "none" }}> <IIcon icon="lucide:external-link" height="17" style={{ display: 'inline-block', verticalAlign: 'middle' }} /></a> returns the list of orders history of the user.
+<sub><i>async</i></sub> `getOrdersHistory(OktoClient)` retrieves the user's order history.
 
 ### Parameters
 
@@ -40,18 +42,54 @@ import '../../styles.css';
 
 </Callout>
 
+### Example
 
 <Accordions>
-<Accordion title="Example">
+<Accordion title="Usage">
 <Tabs items={['Typescript']}>
   <Tab value="Typescript">
     ```typescript
     import { getOrdersHistory } from "@okto_web3/core-js-sdk/explorer";
     
-    const ordersHistory = await getOrdersHistory();
+    const ordersHistory = await getOrdersHistory(oktoClient);
     ```
   </Tab>
 </Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": {
+        "count": 1,
+        "items": [
+            {
+                "downstream_transaction_hash": [
+                    "0xb30aacea6ee3883939255195172a62110b02aeb03dc590e0cd4d878995bc958b"
+                ],
+                "transaction_hash": [
+                    "0x1378f79faffa6ff1242c5d4ebdbc8fffc4bdbc44723cb63041d54fc67c671f97",
+                    "0xd6f8416207f1589a600ce1c1a1b492b28f0ab5e9bcb499eb0886f886d4daed75"
+                ],
+                "status": "SUCCESSFUL",
+                "intent_id": "21260b29-2e72-4337-b494-c69d62dd3c92",
+                "intent_type": "TOKEN_TRANSFER",
+                "network_name": "OKTO_DEVNET",
+                "caip_id": "eip155:24879",
+                "details": {
+                    "amount": "164060000",
+                    "networkId": "eip155:137",
+                    "recipientWalletAddress": "0x08a51013e6db8CE4594e0F9c0D13c96772d24336",
+                    "tokenAddress": ""
+                },
+                "reason": "",
+                "block_timestamp": 1738761051000
+            }
+        ]
+    }
+}
+```
 </Accordion>
 </Accordions>
 
