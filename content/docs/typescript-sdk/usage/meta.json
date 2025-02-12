@@ -1,10 +1,10 @@
 {
     "title": "Usage",
     "pages": [
-      "overview",
       "---Core---",
       "OktoClient",
       "---Account---",
+      "userop-learn",
       "signUserOp",
       "executeUserOp",
       "estimate",
@@ -20,6 +20,7 @@
       "---UserOp---",
       "nftCreateCollection",
       "nftTransfer",
-      "tokenTransfer"
+      "tokenTransfer",
+      "rawTransaction"
     ]
   }

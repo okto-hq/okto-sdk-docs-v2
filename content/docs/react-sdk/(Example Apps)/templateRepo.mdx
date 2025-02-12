@@ -1,15 +1,16 @@
 ---
-title: Template Repo
+title: Template Repositories
 full: false
 ---
 
-A comprehensive walkthrough of the React Template app built using the Okto SDK. This template demonstrates core Okto functionality including authentication, wallet management, and blockchain interactions.
+A comprehensive walkthrough of the Okto SDK Template Apps designed for both React and Next.js. These templates demonstrate core Okto functionality—including authentication, wallet management, and blockchain interactions—so you can quickly get started building with Okto.
 
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
 import { Callout } from 'fumadocs-ui/components/callout';
 
 <div className="bg-white dark:bg-[#1a1a1e] rounded-lg shadow-sm border border-gray-200 dark:border-[#2b2b2c] p-4 w-full my-4">
   <div className="flex items-center justify-between">
-    <span className="text-base font-semibold text-gray-900 dark:text-gray-100">Template Repository</span>
+    <span className="text-base font-semibold text-gray-900 dark:text-gray-100">React Template Repository</span>
     <div className="flex gap-3">
       <a
         href="https://v2-react-sdk-sample-app.vercel.app/"
@@ -31,42 +32,116 @@ import { Callout } from 'fumadocs-ui/components/callout';
   </div>
 </div>
 
-## Getting Started
-
-<div className="max-w-[450px] my-5 mx-auto">
-    <img 
-        src="/images/react-template.png" 
-        alt="Template App" 
-        className="w-full rounded-lg shadow-sm"
-    />
+<div className="bg-white dark:bg-[#1a1a1e] rounded-lg shadow-sm border border-gray-200 dark:border-[#2b2b2c] p-4 w-full my-4">
+  <div className="flex items-center justify-between">
+    <span className="text-base font-semibold text-gray-900 dark:text-gray-100">Next.js Template Repository</span>
+    <div className="flex gap-3">
+      <a
+        href="https://okto-v2-nextjs-example.vercel.app/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="no-underline px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-colors min-w-[120px] text-center"
+      >
+        Live Demo
+      </a>
+      <a
+        href="https://github.com/okto-hq/okto-sdkv2-nextjs-template-app"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="no-underline px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors min-w-[120px] text-center"
+      >
+        View on GitHub
+      </a>
+    </div>
+  </div>
 </div>
 
-1. Clone the repository:
-```bash
-git clone https://github.com/okto-hq/okto-sdkv2-react-template-app.git
-```
+## Getting Started
 
-2. Install dependencies:
-```bash
-cd okto-sdkv2-react-template-app
-npm install
-```
+For detailed installation instructions, select your framework below:
 
-3. Set up environment variables:
-```bash
-cp .env.sample .env.local
-```
+<Tabs items={["React", "Next.js"]}>
+  <Tab value="React" label="React">
 
-4. Add your API keys to `.env.local`:
-```
-VITE_VENDOR_PRIVATE_KEY="YOUR_VENDOR_PRIVATE_KEY"
-VITE_VENDOR_SWA="YOUR_VENDOR_SWA"
+  <div className="max-w-[450px] my-5 mx-auto">
+      <img 
+          src="/images/react-template.png" 
+          alt="React Template App" 
+          className="w-full rounded-lg shadow-sm"
+      />
+  </div>
 
-VITE_GOOGLE_CLIENT_SECRET="YOUR_GOOGLE_CLIENT_SECRET"
-VITE_GOOGLE_CLIENT_ID="YOUR_GOOGLE_CLIENT_ID"
-```
+  1. Clone the repository:
+  ```bash
+  git clone https://github.com/okto-hq/okto-sdkv2-react-template-app.git
+  ```
 
-5. Start the development server:
-```bash
-npm start
-```
+  2. Change into the project directory and install dependencies:
+  ```bash
+  cd okto-sdkv2-react-template-app
+  npm install
+  ```
+
+  3. Set up environment variables:
+  ```bash
+  cp .env.sample .env.local
+  ```
+
+  4. Add your API keys to the `.env.local` file:
+  ```
+  VITE_VENDOR_PRIVATE_KEY="YOUR_VENDOR_PRIVATE_KEY"
+  VITE_VENDOR_SWA="YOUR_VENDOR_SWA"
+
+  VITE_GOOGLE_CLIENT_SECRET="YOUR_GOOGLE_CLIENT_SECRET"
+  VITE_GOOGLE_CLIENT_ID="YOUR_GOOGLE_CLIENT_ID"
+  ```
+
+  5. Start the development server:
+  ```bash
+  npm start
+  ```
+  
+  </Tab>
+  
+  <Tab value="Next.js" label="Next.js">
+
+  <div className="max-w-[450px] my-5 mx-auto">
+      <img 
+          src="/images/nextjs-template.png" 
+          alt="Next.js Template App" 
+          className="w-full rounded-lg shadow-sm"
+      />
+  </div>
+
+  1. Clone the repository:
+  ```bash
+  git clone https://github.com/okto-hq/okto-sdkv2-nextjs-template-app.git
+  ```
+
+  2. Change into the project directory and install dependencies:
+  ```bash
+  cd okto-sdkv2-nextjs-template-app
+  npm install
+  ```
+
+  3. Set up environment variables:
+  ```bash
+  cp .env.sample .env.local
+  ```
+
+  4. Add your API keys to the `.env.local` file:
+  ```
+  NEXT_PUBLIC_VENDOR_PRIVATE_KEY="YOUR_VENDOR_PRIVATE_KEY"
+  NEXT_PUBLIC_VENDOR_SWA="YOUR_VENDOR_SWA"
+  AUTH_SECRET="YOUR_AUTH_SECRET"
+  NEXT_PUBLIC_GOOGLE_CLIENT_SECRET="YOUR_GOOGLE_CLIENT_SECRET"
+  NEXT_PUBLIC_GOOGLE_CLIENT_ID="YOUR_GOOGLE_CLIENT_ID"
+  ```
+
+  5. Start the development server:
+  ```bash
+  npm run dev
+  ```
+  
+  </Tab>
+</Tabs>
