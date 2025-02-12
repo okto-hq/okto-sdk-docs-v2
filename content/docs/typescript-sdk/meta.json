@@ -4,15 +4,15 @@
         "[About Okto](/)",
         "index",
         "quickstart",
+        "!example-apps",
+        "feature-support",
         "authentication",
         "usage",
         "v2-migration-guide",
-        "changelog",
-        "feature-support",
+        "!changelog",
         "technical-reference",
         "sdk-error-warnings",
-        "troubleshooting",
-        "example-apps"
+        "troubleshooting"
     ],
     "root": true
   }

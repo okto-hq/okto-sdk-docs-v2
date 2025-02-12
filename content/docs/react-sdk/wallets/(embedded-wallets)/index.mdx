@@ -8,27 +8,55 @@ full: false
 
 Okto's embedded wallets provide a seamless way to integrate wallet functionality into your application. This guide explains how to create and manage embedded wallets for your users.
 
-### Manual Wallet Creation
+### Automatic Wallet Creation
 
-Okto supports a manual wallet creation approach for embedded wallets, allowing you more control on when embedded wallets are created for your users. For example, the `createWallet()` function allows you to create an embedded wallet for the currently authenticated user.
+Okto automatically handles wallet creation for your users. When a user authenticates with your application, Okto creates their embedded wallet addresses across supported chains. This means:
 
-**Implementation**
+1. No manual wallet creation is required
+2. Wallets are instantly available after authentication
+3. Users can immediately start interacting with supported chains
 
-```ts
-import { useOkto, type OktoContextType } from 'okto-sdk-react';
+### Accessing User Wallets
 
-const { createWallet } = useOkto() as OktoContextType;
+To retrieve a user's wallets across different chains, use the `getAccount` function:
 
-// Create a wallet for the authenticated user
-createWallet()
-    .then((result) => {
-        console.log('Wallet created:', result);
-    })
-    .catch((error) => {
-        console.error('Error creating wallet:', error);
-    });
+```typescript
+import { useOkto, getAccount } from '@okto_web3/react-sdk';
+
+function WalletExample() {
+    const oktoClient = useOkto();
+    
+    async function fetchUserWallets() {
+        try {
+            const wallets = await getAccount(oktoClient);
+            console.log('User wallets:', wallets);
+            // Example response:
+            // {
+            //     "status": "success",
+            //     "data": [
+            //         {
+            //             "caip_id": "eip155:1",
+            //             "network_name": "ETHEREUM",
+            //             "address": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+            //             "network_id": "1",
+            //             "network_symbol": "ETH"
+            //         },
+            //         // ... other chain wallets
+            //     ]
+            // }
+        } catch (error) {
+            console.error('Error fetching wallets:', error);
+        }
+    }
+    
+    return (
+        <button onClick={fetchUserWallets}>
+            View My Wallets
+        </button>
+    );
+}
 ```
 
 <Callout title="Note">
-Ensure that the user is authenticated before calling createWallet(). You should prompt users to log in if they are not already authenticated.
+Ensure that the user is authenticated before calling `getAccount()`. You should prompt users to log in if they are not already authenticated.
 </Callout>

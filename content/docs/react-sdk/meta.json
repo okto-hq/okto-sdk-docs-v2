@@ -4,6 +4,8 @@
     "[About Okto](/)",
     "index",
     "quickstart",
+    "(Example Apps)",
+    "feature-support",
     "v2migration",
     "---Authentication---",
     "./authenticate-users/okto-auth",
@@ -27,9 +29,8 @@
     "technical-reference",
     "sdk-error-warnings",
     "troubleshooting",
-    "changelog",
-    "feature-support",
-    "(Example Apps)"
+    "!changelog"
+
   ],
   "root": true
 }

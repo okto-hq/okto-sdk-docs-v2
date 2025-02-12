@@ -6,6 +6,7 @@ full: false
 
 ## General Errors
 
+{/*
 | **Code**                 | **Message**                              | **Description**                                                                                                                               |
 |--------------------------|------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
 | `ER-TECH-0016`           | Something went wrong.                    | No vendor key found. Please add a valid non-null x-api-key in API headers.                                                                     |
@@ -42,3 +43,14 @@ full: false
 | `401`                    | Unauthorized                             | Please refresh your auth token and try again.                                                                                                  |
 | `400 ER-TECH-0016`       | Validation failed                        | Please ensure all required keys are not null and follow the API Docs.                                                                          |
 | `400 ER-TECH-0014`       | Vendor Order Not Allowed                 | The transfer is not allowed by the vendor.                                                                                                     |
+*/}
+
+## Paymaster Related Errors
+
+| **Code** | **Message**                | **Description**                                                                                                                                                                                                           |
+|----------|----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `AA24`   | Signature Error            | The `validateUserOp` function of the smart account rejected the signature of the user operation.                                                                                                                           |
+| `AA30`   | Paymaster Not Deployed     | The first 20 bytes of the `paymasterAndData` field specify the address of the paymaster contract you are requesting to use. The paymaster contract is not deployed.                                                     |
+| `AA31`   | Paymaster Deposit Too Low  | The first 20 bytes of the `paymasterAndData` field specify the address of the paymaster contract you are requesting to use. The paymaster contract does not have enough funds deposited into the EntryPoint contract to cover the required prefund of the user operation. |
+| `AA33`   | Reverted (or OOG)          | OOG = Out Of Gas. The `validatePaymasterUserOp` function of the paymaster contract either reverted or ran out of gas.                                                                                                        |
+| `AA34`   | Signature Error            | The first 20 bytes of the `paymasterAndData` field specify the address of the paymaster contract you are requesting to use. The `validatePaymasterUserOp` function of the paymaster contract rejected the signature of the user operation.                  |
