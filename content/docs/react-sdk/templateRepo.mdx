@@ -84,10 +84,10 @@ For detailed installation instructions, select your framework below:
 
   3. Set up environment variables:
   ```bash
-  cp .env.sample .env.local
+  cp .env.sample .env
   ```
 
-  4. Add your API keys to the `.env.local` file:
+  4. Add your API keys to the `.env` file:
   ```
   VITE_VENDOR_PRIVATE_KEY="YOUR_VENDOR_PRIVATE_KEY"
   VITE_VENDOR_SWA="YOUR_VENDOR_SWA"
@@ -95,6 +95,17 @@ For detailed installation instructions, select your framework below:
   VITE_GOOGLE_CLIENT_SECRET="YOUR_GOOGLE_CLIENT_SECRET"
   VITE_GOOGLE_CLIENT_ID="YOUR_GOOGLE_CLIENT_ID"
   ```
+
+  <Callout title="Note">
+    To obtain these credentials:
+
+    - **Vendor Private Key & SWA**: Get these from the Okto Dashboard. These keys are essential for authenticating your requests with Okto's services.
+
+    - **Google OAuth Credentials**: Required for Google Sign-In functionality
+      1. Set up a project in [Google Cloud Console](https://console.cloud.google.com/)
+      2. Create OAuth 2.0 credentials
+      3. Follow our [Google Console Setup Guide](/docs/react-sdk/authenticate-users/google-oauth/google-console-setup) for detailed instructions
+  </Callout>
 
   5. Start the development server:
   ```bash
@@ -126,10 +137,10 @@ For detailed installation instructions, select your framework below:
 
   3. Set up environment variables:
   ```bash
-  cp .env.sample .env.local
+  cp .env.sample .env
   ```
 
-  4. Add your API keys to the `.env.local` file:
+  4. Add your API keys to the `.env` file:
   ```
   NEXT_PUBLIC_VENDOR_PRIVATE_KEY="YOUR_VENDOR_PRIVATE_KEY"
   NEXT_PUBLIC_VENDOR_SWA="YOUR_VENDOR_SWA"
@@ -137,6 +148,21 @@ For detailed installation instructions, select your framework below:
   NEXT_PUBLIC_GOOGLE_CLIENT_SECRET="YOUR_GOOGLE_CLIENT_SECRET"
   NEXT_PUBLIC_GOOGLE_CLIENT_ID="YOUR_GOOGLE_CLIENT_ID"
   ```
+
+    <Callout title="Note">
+    To obtain these credentials:
+
+    - **Vendor Private Key & SWA**: Get these from the Okto Dashboard. These keys are essential for authenticating your requests with Okto's services.
+
+    - **Google OAuth Credentials**: Required for Google Sign-In functionality
+      1. Set up a project in [Google Cloud Console](https://console.cloud.google.com/)
+      2. Create OAuth 2.0 credentials
+      3. Follow our [Google Console Setup Guide](/docs/react-sdk/authenticate-users/google-oauth/google-console-setup) for detailed instructions
+    - **Auth Secret** (Next.js only): Generate a secure random string for NextAuth.js session handling. You can create one by running:
+      ```bash
+      openssl rand -base64 32
+      ```
+    </Callout>
 
   5. Start the development server:
   ```bash
