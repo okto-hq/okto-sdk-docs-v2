@@ -7,21 +7,28 @@ full: false
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
+<Callout>
+Want an even faster setup? Clone our [Template Repo](/docs/react-sdk/example-apps/template-repo) and follow the steps provided to get your dApp running in minutes!
+</Callout>
+
 <Steps>
 
 <Step>
 ## Prerequisites
 Before you begin, ensure you have:
 
--   **Node.js and npm/pnpm/yarn:**  Make sure you have Node.js and your preferred package manager installed.
--   **Okto API Keys:** You'll need your Okto API keys to connect your app to the Okto platform. Obtain your `NEXT_PUBLIC_VENDOR_PRIVATE_KEY` and `NEXT_PUBLIC_VENDOR_SWA` from the [Okto Dashboard](https://dashboard.okto.tech/login).
--   **Google OAuth Credentials:** To let users log in with Google, you need to set up a Google OAuth application. Go to the [Google Cloud Console](https://console.cloud.google.com/) and create a project and OAuth credentials to get your `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`.
--   **Auth Secret:** NextAuth needs a secret key to keep your app secure. You can easily generate one by running this command in your terminal:  `openssl rand -base64 32`. Copy the output – that's your `AUTH_SECRET`!
+-   **Node.js (v18+) and npm/pnpm/yarn:** [Download Node.js](https://nodejs.org/)
+-   **Okto API Keys:** You'll need your Okto API keys to connect your app to the Okto platform. Obtain your `NEXT_PUBLIC_VENDOR_PRIVATE_KEY` and `NEXT_PUBLIC_VENDOR_SWA` from the Okto Dashboard.
+-   **Google OAuth Credentials:** Set up your OAuth 2.0 credentials in [Google Cloud Console](https://console.cloud.google.com/) to get your `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`.
+    - Need help? Follow our [Google Console Setup Guide](/docs/react-sdk/authenticate-users/google-oauth/google-console-setup)
+-   **Auth Secret:** NextAuth needs a secret key to keep your app secure. You can easily generate one by running this command in your terminal:  `openssl rand -base64 32`.
 
 </Step>
 
 <Step>
     ## Create Your NextJS App
+
+    If you already have a React app, you can skip this step and proceed directly to Step 3 to start integrating Okto.
 
     Let's start by creating a brand new Next.js app! Open your terminal and run these commands:
 
@@ -60,33 +67,33 @@ Before you begin, ensure you have:
             ```
         </Tab>
     </Tabs>
-    This command installs the necessary packages as dependencies for your project.
 
 </Step>
 
 <Step>
     ## Set up Environment Variables
 
-    Environment variables are like secret keys for your app. They store sensitive information and configurations.  You need to create a `.env.local` file and put your API keys and secrets there.
+    Create `.env` in your project root:
 
-    1.  **Create `.env.local` file:** In the root of your `my-okto-app` project (the same folder where you ran `create-next-app`), create a new file named exactly `.env.local`.  *(Make sure there's a dot at the beginning and `.local` at the end!)*
-    2.  **Add variables:** Open `.env.local` in your code editor and paste in the code below. **Important:** Replace `YOUR_...` placeholders with the actual values you got from the Okto Dashboard and Google Cloud Console in the Prerequisites step!
-
-    ```bash title=".env.local"
-    GOOGLE_CLIENT_SECRET = YOUR_GOOGLE_CLIENT_SECRET
-    GOOGLE_CLIENT_ID = YOUR_GOOGLE_CLIENT_ID
+    ```bash title=".env"
+    NEXT_PUBLIC_VENDOR_PRIVATE_KEY = YOUR_OKTO_VENDOR_PRIVATE_KEY
+    NEXT_PUBLIC_VENDOR_SWA = YOUR_OKTO_VENDOR_SWA
+    NEXT_PUBLIC_ENVIRONMENT = sandbox # or production
     
     AUTH_SECRET = YOUR_AUTH_SECRET # Use: openssl rand -base64 32
 
-    NEXT_PUBLIC_VENDOR_PRIVATE_KEY = YOUR_OKTO_VENDOR_PRIVATE_KEY
-    NEXT_PUBLIC_VENDOR_SWA = YOUR_OKTO_VENDOR_SWA
-
-    NEXT_PUBLIC_ENVIRONMENT = sandbox # or production
+    # Google OAuth credentials (Required only if you want to enable Google Sign-In)
+    GOOGLE_CLIENT_SECRET = YOUR_GOOGLE_CLIENT_SECRET
+    GOOGLE_CLIENT_ID = YOUR_GOOGLE_CLIENT_ID
     ```
     <Callout title="Important Notes about Environment Variables">
     -   **Replace Placeholders!**  Don't forget to replace `YOUR_GOOGLE_CLIENT_SECRET`, `YOUR_GOOGLE_CLIENT_ID`, `YOUR_AUTH_SECRET`, `YOUR_OKTO_VENDOR_PRIVATE_KEY`, and `YOUR_OKTO_VENDOR_SWA` with *your actual keys and secrets*.
-    -   **`AUTH_SECRET` Generation:** If you haven't already, run `openssl rand -base64 32` in your terminal to generate a secure `AUTH_SECRET` and paste it into `.env.local`.
+    -   **`AUTH_SECRET` Generation:** If you haven't already, run `openssl rand -base64 32` in your terminal to generate a secure `AUTH_SECRET` and paste it into `.env`.
     - For `NEXT_PUBLIC_ENVIRONMENT`, use `sandbox` for testing and development, and `production` for live environments.
+    </Callout>
+
+    <Callout type="warning">
+    Never commit your `.env` file to version control. Add it to your `.gitignore`!
     </Callout>
 </Step>
 
@@ -148,9 +155,9 @@ Before you begin, ensure you have:
     import React from "react";
 
     const config = { // Configuration for Okto SDK
-        environment: process.env.NEXT_PUBLIC_ENVIRONMENT || 'sandbox', // Environment from .env.local
-        vendorPrivKey: process.env.NEXT_PUBLIC_VENDOR_PRIVATE_KEY || '', // Vendor Private Key from .env.local
-        vendorSWA: process.env.NEXT_PUBLIC_VENDOR_SWA || '', // Vendor SWA from .env.local
+        environment: process.env.NEXT_PUBLIC_ENVIRONMENT || 'sandbox', // Environment from .env
+        vendorPrivKey: process.env.NEXT_PUBLIC_VENDOR_PRIVATE_KEY || '', // Vendor Private Key from .env
+        vendorSWA: process.env.NEXT_PUBLIC_VENDOR_SWA || '', // Vendor SWA from .env
     };
 
     function AppProvider({ children, session }) {
@@ -189,8 +196,8 @@ Before you begin, ensure you have:
       secret: process.env.AUTH_SECRET,
       providers: [
         GoogleProvider({ // Configure Google Provider
-          clientId: process.env.GOOGLE_CLIENT_ID!, // Your GOOGLE_CLIENT_ID from .env.local
-          clientSecret: process.env.GOOGLE_CLIENT_SECRET!, // Your GOOGLE_CLIENT_SECRET from .env.local
+          clientId: process.env.GOOGLE_CLIENT_ID!, // Your GOOGLE_CLIENT_ID from .env
+          clientSecret: process.env.GOOGLE_CLIENT_SECRET!, // Your GOOGLE_CLIENT_SECRET from .env
         }),
       ],
       session: {
@@ -392,6 +399,24 @@ Before you begin, ensure you have:
         );
     }
     ```
+
+    Your project structure should look like this:
+    ```
+    my-okto-app/
+    ├── app/
+    │   ├── api/
+    │   │   └── auth/
+    │   │       └── [...nextauth]/
+    │   │           └── route.ts
+    │   ├── components/
+    │   │   ├── providers.tsx
+    │   │   ├── LoginButton.tsx
+    │   │   └── GetButton.tsx
+    │   ├── layout.tsx
+    │   └── page.tsx
+    ├── .env
+    └── package.json
+    ```
 </Step>
 
 <Step>
@@ -429,7 +454,7 @@ You should see your "Template App" with an "Authenticate with Google" button and
 
 <Callout type="tip" title="Troubleshooting Tip">
 If you encounter any errors when running `npm run dev` (or `pnpm dev`, `yarn dev`), check your terminal for error messages. Common issues include:
-    -   **Environment Variable Errors**: Double-check that you correctly set up your `.env.local` file and that all the `YOUR_...` placeholders are replaced with your actual keys and secrets.
+    -   **Environment Variable Errors**: Double-check that you correctly set up your `.env` file and that all the `YOUR_...` placeholders are replaced with your actual keys and secrets.
     -   **Package Installation Errors**: If you see errors related to missing packages, try re-running the install command (e.g., `npm install`) to make sure all dependencies are installed correctly.
 </Callout>        
 </Step>
@@ -538,7 +563,3 @@ Now that we have our basic setup complete, let's implement a token transfer on S
 </Steps>
 
 Now that you've completed your first user operation, you're ready to explore more advanced features! Check out our [Usage Guide](/docs/react-sdk/usage-overview) to learn about other operations like NFT transfers, contract interactions, and more.
-
-<Callout>
-For more examples and advanced usage, check out the [Template Repo](https://github.com/okto-hq/okto-sdkv2-nextjs-template-app).
-</Callout>
