@@ -49,7 +49,7 @@ okto-sdk-docs-v2-staging:
       - host: docsv2-staging.okto.tech
   autoscaling:
     enabled: true
-    minReplicas: 1
+    minReplicas: 2
     maxReplicas: 4
   envFromSecrets:
     - variable: val1
