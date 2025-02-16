@@ -3,7 +3,7 @@
     "pages": [
       "---Core---",
       "OktoClient",
-      "---Account---",
+      "---UserOp---",
       "userop-learn",
       "signUserOp",
       "executeUserOp",
@@ -17,7 +17,8 @@
       "getPortfolioActivity",
       "getPortfolioNFT",
       "getTokens",
-      "---UserOp---",
+      "---Intents---",
+      "intents",
       "nftCreateCollection",
       "nftTransfer",
       "tokenTransfer",
