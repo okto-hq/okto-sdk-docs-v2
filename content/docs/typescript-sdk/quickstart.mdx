@@ -67,8 +67,8 @@ This approach shows how to create a TypeScript application and manually configur
     Create a `.env` file in your project root:
 
     ```bash title=".env"
-    VENDOR_PRIVATE_KEY=YOUR_VENDOR_PRIVATE_KEY
-    VENDOR_SWA=YOUR_VENDOR_SWA
+    CLIENT_PRIVATE_KEY=YOUR_CLIENT_PRIVATE_KEY
+    CLIENT_SWA=YOUR_CLIENT_SWA
     ENVIRONMENT=sandbox
     ```
 
@@ -80,8 +80,8 @@ This approach shows how to create a TypeScript application and manually configur
 
     export const config = {
         environment: process.env.ENVIRONMENT || 'sandbox',
-        vendorPrivKey: process.env.VENDOR_PRIVATE_KEY!,
-        vendorSWA: process.env.VENDOR_SWA!,
+        clientPrivKey: process.env.CLIENT_PRIVATE_KEY!,
+        clientSWA: process.env.CLIENT_SWA!,
     };
     ```
 </Step>
@@ -97,8 +97,8 @@ This approach shows how to create a TypeScript application and manually configur
 
     const oktoClient = new OktoClient({
         environment: config.environment,
-        vendorPrivKey: config.vendorPrivKey,
-        vendorSWA: config.vendorSWA,
+        clientPrivKey: config.clientPrivKey,
+        clientSWA: config.clientSWA,
     });
 
     async function main() {
