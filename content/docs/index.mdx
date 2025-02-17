@@ -4,66 +4,97 @@ full: false
 icon: Star
 ---
 
-# Welcome to the Future of Web3 Development with Okto!
-
-Build powerful decentralized applications with the ease of Web2 and the power of chain abstraction. **Okto SDK** lets you integrate blockchain functionality without infrastructure complexity. Add multi-chain wallets, secure transactions, and Web3 features to any app in days, not months.
-
 import TechnologyCard from "app/components/mdx/TechnologyCard";
+import FeatureCard from "app/components/mdx/FeatureCard";
 import QuickStartBanner from "app/components/mdx/QuickStartBanner";
 import { 
-  LuLayoutDashboard, LuToggleLeft, LuCode, LuWallet, LuBookOpen
+  LuLayoutDashboard, LuToggleLeft, LuCode, LuWallet, LuBookOpen, 
+  LuKey, LuArrowRightLeft, LuNetwork, LuMousePointerClick, 
+  LuUserPlus, LuShoppingCart, LuGamepad2, LuBoxes
 } from "react-icons/lu";
 import { FaDiscord } from "react-icons/fa6";
 import { MousePointer2 } from 'lucide-react';
 
+# Welcome to the Future of Web3 Development with Okto!
+
 <QuickStartBanner />
 
-<div className="space-y-16">
+The **Okto SDK** is a game-changer for developers looking to integrate blockchain seamlessly into their applications, whether they are Web2 companies exploring Web3 or existing Web3 projects expanding capabilities. It eliminates the complexity of blockchain interactions by providing a **plug-and-play** abstraction layer, allowing developers to focus on building **intuitive and user-friendly experiences**.
 
-## Start building with Okto SDK in 4 Steps
+## Key Features
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
-
-  <TechnologyCard 
-      icon={<LuLayoutDashboard size={"1.5rem"}/>}
-      title="1. Get Your App Secret from Okto Dashboard" 
-      subtitle="Create account & get App Secret" 
-      link="https://docs.google.com/document/d/1nZZefjQ-1dPE--FmsBB8TLOzMOorNg8N85pMDg3rmCY/edit?usp=sharing"
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <FeatureCard
+    icon={<LuKey size={20} />}
+    title="Social Logins"
+    description="Seamless authentication with popular social providers"
+    iconColor="text-blue-500"
   />
-
-  <TechnologyCard 
-      icon={<LuToggleLeft size={"1.5rem"}/>}
-      title="2. Configure Chains & Tokens" 
-      subtitle="Select and configure the chains and tokens your application will support" 
-      link="https://docs.google.com/document/d/1nZZefjQ-1dPE--FmsBB8TLOzMOorNg8N85pMDg3rmCY/edit?usp=sharing"
+  <FeatureCard
+    icon={<LuArrowRightLeft size={20} />}
+    title="Automated Transactions"
+    description="Simplified transaction handling and gas management"
+    iconColor="text-green-500"
   />
-
-  <TechnologyCard
-      icon={<LuWallet size={"1.5rem"} />}
-      title="3. Enable Sponsorship (if needed)"
-      subtitle="Configure gas sponsorship for a smoother user experience. Required for Solana, optional for other chains."
-      link="https://docs.google.com/document/d/1nZZefjQ-1dPE--FmsBB8TLOzMOorNg8N85pMDg3rmCY/edit?usp=sharing"
+  <FeatureCard
+    icon={<LuNetwork size={20} />}
+    title="Multi-chain Support"
+    description="Seamless interaction across different blockchains"
+    iconColor="text-purple-500"
   />
-
-  <TechnologyCard 
-      icon={<LuCode size={"1.5rem"}/>}
-      title="4. Choose Your SDK & Start Building!" 
-      subtitle="Select the Okto SDK that best fits your project's platform and begin integrating Web3 features effortlessly." 
-      link="/docs/okto-sdk/supported-sdk-platforms"
+  <FeatureCard
+    icon={<LuMousePointerClick size={20} />}
+    title="One-click Transactions"
+    description="Simplified user experience for multi chain transactions"
+    iconColor="text-orange-500"
   />
-
+  <FeatureCard
+    icon={<LuWallet size={20} />}
+    title="Asset Management"
+    description="Cross-chain asset handling and portfolio management"
+    iconColor="text-red-500"
+  />
+  <FeatureCard
+    icon={<LuUserPlus size={20} />}
+    title="Easy Onboarding"
+    description="Simplified user onboarding for Web3 applications"
+    iconColor="text-teal-500"
+  />
 </div>
 
-<Callout title="Key Resources">
+<div className="flex flex-col lg:flex-row items-center justify-between px-6 py-4 mt-8 bg-gradient-to-r from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-800 rounded-lg border-2 border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 transition-all shadow-sm">
+  <div className="flex-1 pr-4 mb-2 lg:mb-0">
+    <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-200 m-0">
+      Why Okto SDK?
+    </h2>
+    <div className="text-zinc-600 dark:text-zinc-400 m-0">
+      By handling blockchain complexity behind the scenes, Okto SDK accelerates development, enhances security, and ensures a superior user experience—paving the way for mass adoption. 🚀
+    </div>
+  </div>
+</div>
 
-📱 Check out our [supported SDK platforms](/docs/okto-sdk/supported-sdk-platforms) to find the perfect SDK for your project
+## Real-World Applications
 
-⚡ Explore our comprehensive [feature support](/docs/okto-sdk/feature-support) to see what you can build with Okto
-
-🔨 Get inspired by [real-world use cases](/docs/okto-sdk/use-cases) that can be built with Okto SDK
-</Callout>
-
----
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <FeatureCard
+    icon={<LuShoppingCart size={20} />}
+    title="E-commerce"
+    description="Integrate crypto payments and NFT loyalty rewards without backend rework"
+    iconColor="text-blue-500"
+  />
+  <FeatureCard
+    icon={<LuGamepad2 size={20} />}
+    title="Gaming"
+    description="Enable seamless cross-chain asset trading in gaming environments"
+    iconColor="text-purple-500"
+  />
+  <FeatureCard
+    icon={<LuBoxes size={20} />}
+    title="Web3 Projects"
+    description="Scale across multiple chains with abstracted gas management"
+    iconColor="text-green-500"
+  />
+</div>
 
 ## Explore Okto: Dive Deeper & Learn More
 
@@ -71,7 +102,7 @@ import { MousePointer2 } from 'lucide-react';
   <TechnologyCard
       icon={<LuBookOpen size={"1.5rem"}/>}
       title="Introduction to Okto Universe"
-      subtitle="Discover the core concepts, architecture, and benefits of the Okto Layer and its components."
+      subtitle="Discover the core concepts of the Okto Layer and its components."
       link="/docs/okto-ecosystem"
   />
 
@@ -85,15 +116,8 @@ import { MousePointer2 } from 'lucide-react';
   <TechnologyCard
       icon={<LuLayoutDashboard size={"1.5rem"}/>}
       title="Master the Developer Dashboard"
-      subtitle="Learn how to leverage the Okto Admin Dashboard to configure your application, manage sponsorship, and customize onboarding flows."
+      subtitle="Learn how to leverage the Okto Admin Dashboard to configure your application."
       link="docs/developer-admin-dashboard/overview"
-  />
-
-  <TechnologyCard
-      icon={<MousePointer2 size={"1.5rem"}/>}
-      title="Real World Use Cases & Examples"
-      subtitle="Explore practical use cases and code examples demonstrating how to build various Web3 applications with Okto SDK."
-      link="/docs/okto-sdk/use-cases"
   />
 
    <TechnologyCard
@@ -102,7 +126,4 @@ import { MousePointer2 } from 'lucide-react';
       subtitle="Connect with the Okto team and fellow developers on Discord for support, feedback, and collaboration."
       link="https://discord.com/invite/okto-916349620383252511"
   />
- 
-</div>
-
 </div>

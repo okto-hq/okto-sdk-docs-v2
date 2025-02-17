@@ -1,100 +1,95 @@
 ---
 title: About SDK
-description: Okto provides a suite of SDKs tailored to different platforms, enabling you to integrate Web3 functionalities effortlessly. Whether you're building for the web, mobile, or other platforms, Okto has an SDK to match your needs. Below is an overview of each SDK, its use case, and links to get started.
+description: Okto provides a suite of SDKs tailored to different platforms, enabling you to integrate Web3 functionalities effortlessly.
 full: false
 ---
 
+import { Step, Steps } from "fumadocs-ui/components/steps";
 import TechnologyCard from "/app/components/mdx/TechnologyCard";
 import { IoBookOutline, IoCodeSlashOutline, IoRocketOutline, IoAppsOutline } from "react-icons/io5";
 import { LuLayoutDashboard, LuToggleLeft, LuCode, LuBookOpen, LuWallet } from "react-icons/lu";
 import { FaReact, FaUnity } from "react-icons/fa6";
-import { TbBrandReactNative, TbApi } from "react-icons/tb";
+import { TbBrandReactNative, TbBrandNextjs } from "react-icons/tb";
 import { SiFlutter, SiTypescript } from "react-icons/si";
 
+## What is Okto SDK?
+
+Okto SDK is a powerful chain abstraction toolkit that simplifies blockchain development. It handles complex blockchain operations behind the scenes—from wallet management to cross-chain transactions—allowing developers to build Web3 applications using familiar development patterns. 
+
+Whether you're creating a DeFi platform, NFT marketplace, or adding Web3 features to an existing app, Okto SDK provides the tools you need with Web2-like simplicity.
+
+[Learn more about Okto SDK →](/docs/okto-sdk/sdk-introduction)
 
 ---
 
-## Quick Start
+## Start building with Okto SDK in 3 Steps
 
-Get started with Okto SDK in just four steps:
+<Steps>
+  <Step>
+    ### Get Your API Keys from Okto Dashboard
+    <a 
+      href="https://docs.google.com/document/d/1nZZefjQ-1dPE--FmsBB8TLOzMOorNg8N85pMDg3rmCY/edit?tab=t.0" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="no-underline"
+    >Create your account </a> 
+    on the Okto Dashboard and obtain your App Secret to begin integrating the SDK.
+  </Step>
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+  <Step>
+    ### Configure Chains and Tokens
+    <a 
+      href="https://docs.google.com/document/d/1nZZefjQ-1dPE--FmsBB8TLOzMOorNg8N85pMDg3rmCY/edit?tab=t.0" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="no-underline"
+    >Select and configure the chains and tokens </a>
+    your application will support. If needed, set up gas sponsorship for a smoother user experience (required for Solana, optional for other chains).
+  </Step>
 
-  <TechnologyCard 
-      icon={<LuLayoutDashboard size={"1.5rem"}/>}
-      title="1. Get Your App Secret from Okto Dashboard" 
-      subtitle="Sign up and retrieve your Okto App Secret" 
-      link="https://docs.google.com/document/d/1nZZefjQ-1dPE--FmsBB8TLOzMOorNg8N85pMDg3rmCY/edit?usp=sharing"
-  />
+  <Step>
+    ### Start Building!
 
-  <TechnologyCard 
-      icon={<LuToggleLeft size={"1.5rem"}/>}
-      title="2. Configure Chains & Tokens in Dashboard" 
-      subtitle="Easily select and configure the blockchains and tokens your application will support" 
-      link="https://docs.google.com/document/d/1nZZefjQ-1dPE--FmsBB8TLOzMOorNg8N85pMDg3rmCY/edit?usp=sharing"
-  />
+    Select the Okto SDK that best fits your project's platform and begin integrating Web3 features effortlessly.
 
-  <TechnologyCard
-      icon={<LuWallet size={"1.5rem"} />}
-      title="3. Enable Sponsorship (if needed)"
-      subtitle="Configure gas sponsorship for a smoother user experience. Required for Solana, optional for other chains."
-      link="https://docs.google.com/document/d/1nZZefjQ-1dPE--FmsBB8TLOzMOorNg8N85pMDg3rmCY/edit?usp=sharing"
-  />
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+  
+      <TechnologyCard
+          icon={<FaReact size={"3rem"} />}
+          title="React"
+          subtitle="for web"
+          link="/docs/react-sdk/quickstart/new-okto-react-setup"
+      />
 
-  <TechnologyCard 
-      icon={<LuCode size={"1.5rem"}/>}
-      title="4. Choose Your SDK & Start Building!" 
-      subtitle="Select the Okto SDK that best fits your project's platform and begin integrating Web3 features effortlessly." 
-      link="/docs/okto-sdk/supported-sdk-platforms"
-  />
+      <TechnologyCard
+          icon={<TbBrandNextjs size={"3rem"} />}
+          title="Next.js"
+          subtitle="for web"
+          link="/docs/react-sdk/quickstart/new-okto-nextjs-setup"
+      />
 
-</div>
+      <TechnologyCard
+          icon={<TbBrandReactNative size={"3rem"} />}
+          title="React Native"
+          subtitle="for mobile"
+          link="/docs/react-native-sdk/getting-started/quickstart"
+      />
+
+      <TechnologyCard
+          icon={<SiTypescript size={"3rem"} />}
+          title="TypeScript"
+          subtitle="for web"
+          link="/docs/typescript-sdk/quickstart"
+      />
+
+    </div>
+  </Step>
+</Steps>
 
 <Callout title="Key Resources">
-
-📱 Check out our [supported SDK platforms](/docs/okto-sdk/supported-sdk-platforms) to find the perfect SDK for your project
 
 ⚡ Explore our comprehensive [feature support](/docs/okto-sdk/feature-support) to see what you can build with Okto
 
 🔨 Get inspired by [real-world use cases](/docs/okto-sdk/use-cases) that can be built with Okto SDK
 </Callout>
 
----
-
-## Explore Okto SDKs
-
-Pick the right SDK for your platform and start integrating Web3 features:
-
-<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
-  
-  <TechnologyCard
-      icon={<FaReact size={"3rem"} />}
-      title="React"
-      subtitle="for web"
-      link="/docs/react-sdk"
-  />
-
-  <TechnologyCard
-      icon={<TbBrandReactNative size={"3rem"} />}
-      title="React Native"
-      subtitle="for mobile"
-      link="/docs/react-native-sdk"
-  />
-
-  <TechnologyCard
-      icon={<SiFlutter size={"3rem"} />}
-      title="Flutter"
-      subtitle="for Android and iOS"
-      link="/docs/flutter-sdk"
-  />
-
-  <TechnologyCard
-      icon={<SiTypescript size={"3rem"} />}
-      title="TypeScript"
-      subtitle="for web"
-      link="/docs/typescript-sdk"
-  />
-
-</div>
-
----

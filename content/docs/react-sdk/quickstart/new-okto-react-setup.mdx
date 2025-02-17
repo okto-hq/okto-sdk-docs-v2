@@ -6,19 +6,26 @@ full: false
 
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
-
-## Vite-React-App
-
-This approach uses Vite to create a React App and manually configures the Okto SDK. Follow these steps to set up your project and execute your first token transfer.
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
+import ExternalLink from 'app/components/mdx/ExternalLink';
 
 <Callout>
-Want an even faster setup? Clone our [Template Repo](/docs/react-sdk/example-apps/template-repo) and follow the steps provided to get your dApp running in minutes!
+Want an even faster setup? Check out our <ExternalLink href="/docs/react-sdk/templateRepo">Template Repo</ExternalLink> to get your dApp running in minutes!
 </Callout>
+
+<CollapsibleCallout type="warning" title="Essential Setup Required">
+Before proceeding with this guide, please ensure you have:
+- Created your Okto Dashboard account
+- Obtained your API keys from the dashboard
+- Enabled the specific chains and tokens you plan to use in your application
+
+Without completing these steps first, your application won't be able to interact with the Okto platform properly. Need help? Check out our <a href="/docs/developer-admin-dashboard/overview" target="_blank" rel="noopener noreferrer">Dashboard Setup Guide</a> for detailed instructions.
+</CollapsibleCallout>
 
 <Steps>
 
 <Step>
-    ## Initialize a Vite React App
+    ## 1. Initialize a Vite React App
 
     If you already have a React app, you can skip this step and proceed directly to Step 2 to start integrating Okto.
 
@@ -31,7 +38,7 @@ Want an even faster setup? Clone our [Template Repo](/docs/react-sdk/example-app
 </Step>
 
 <Step>
-    ## Install Dependencies
+    ## 2. Install Dependencies
 
     <Callout type="info">
     Please use version 0.0.0-dev.42 of the npm package.
@@ -59,24 +66,35 @@ Want an even faster setup? Clone our [Template Repo](/docs/react-sdk/example-app
 </Step>
 
 <Step>
-    ## Configure Environment Variables
+    ## 3. Configure Environment Variables
 
     Create a `.env` file in your project root:
 
     ```bash title=".env"
-    VITE_VENDOR_PRIV_KEY="YOUR_VENDOR_PRIVATE_KEY"
-    VITE_VENDOR_SWA="YOUR_VENDOR_SWA"
+    VITE_CLIENT_PRIV_KEY="YOUR_CLIENT_PRIVATE_KEY"
+    VITE_CLIENT_SWA="YOUR_CLIENT_SWA"
 
     # Google OAuth credentials (Required only if you want to enable Google Sign-In)
-    VITE_GOOGLE_CLIENT_SECRET="YOUR_GOOGLE_CLIENT_SECRET"
     VITE_GOOGLE_CLIENT_ID="YOUR_GOOGLE_CLIENT_ID"
     ```
 
     Replace the placeholders with your actual credentials.
+    <CollapsibleCallout type="warning" title="Important">
+        - Replace all placeholder values (`YOUR_...`) with your actual keys.
+        - Never commit your `.env` file to version control. Add it to your `.gitignore`.
+    </CollapsibleCallout>
+    <CollapsibleCallout type="tip" title="Setting up Google OAuth">
+        1. Go to <ExternalLink href="https://console.cloud.google.com/">Google Cloud Console</ExternalLink>.
+        2. Create OAuth 2.0 credentials for your project.
+        3. Set the redirect URI to: `[YOUR_APP_URL]/auth/google` (for example, `http://localhost:5173/auth/google` during local development).
+        4. Save your Client ID and Client Secret.
+        
+        Need detailed instructions? Check our <ExternalLink href="/docs/react-sdk/authenticate-users/google-oauth/google-console-setup">Google Console Setup Guide</ExternalLink>.
+    </CollapsibleCallout>
 </Step>
 
 <Step>
-    ## Set Up Okto Provider
+    ## 4. Set Up Okto Provider
 
     Update your `main.tsx` to initialize the Okto SDK:
 
@@ -88,8 +106,8 @@ Want an even faster setup? Clone our [Template Repo](/docs/react-sdk/example-app
 
     const config = {
         environment: "sandbox",
-        vendorPrivKey: import.meta.env.VITE_VENDOR_PRIV_KEY,
-        vendorSWA: import.meta.env.VITE_VENDOR_SWA,
+        clientPrivKey: import.meta.env.VITE_CLIENT_PRIV_KEY,
+        clientSWA: import.meta.env.VITE_CLIENT_SWA,
     };
 
     ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -103,7 +121,7 @@ Want an even faster setup? Clone our [Template Repo](/docs/react-sdk/example-app
 </Step>
 
 <Step>
-    ## Set Up Google OAuth Provider
+    ## 5. Set Up Google OAuth Provider
 
     Wrap your app with the Google OAuth provider:
 
@@ -116,8 +134,8 @@ Want an even faster setup? Clone our [Template Repo](/docs/react-sdk/example-app
 
     const config = {
         environment: "sandbox",
-        vendorPrivKey: import.meta.env.VITE_VENDOR_PRIV_KEY,
-        vendorSWA: import.meta.env.VITE_VENDOR_SWA,
+        clientPrivKey: import.meta.env.VITE_CLIENT_PRIV_KEY,
+        clientSWA: import.meta.env.VITE_CLIENT_SWA,
     };
 
     ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -133,7 +151,7 @@ Want an even faster setup? Clone our [Template Repo](/docs/react-sdk/example-app
 </Step>
 
 <Step>
-    ## Implement Authentication
+    ## 6. Implement Authentication
 
     Currently, you can onboard users and support on-chain interaction via the Okto Embedded wallet. To do this you must first authenticate your user via social login. We currently support Google OAuth.
 
@@ -183,7 +201,7 @@ Want an even faster setup? Clone our [Template Repo](/docs/react-sdk/example-app
 </Step>
 
 <Step>
-    ## Get User Details and Portfolio
+    ## 7. Get User Details and Portfolio
 
     Create a UserDashboard component to display user information:
 
@@ -225,7 +243,7 @@ Want an even faster setup? Clone our [Template Repo](/docs/react-sdk/example-app
 </Step>
 
 <Step>
-    ## Start Development Server
+    ## 8. Start Development Server
 
     Run your app:
 
@@ -237,7 +255,7 @@ Want an even faster setup? Clone our [Template Repo](/docs/react-sdk/example-app
 </Step>
 
 <Step>
-    ## Congratulations!
+    ## 9. Congratulations!
 
     🎉 Your basic Okto integration is now complete! You're ready to bring your dApp to life. Let's try out a simple user operation!
 </Step>
@@ -252,7 +270,7 @@ Now that we have our basic setup complete, let's implement a token transfer on S
 <Steps>
 
 <Step>
-    ## Get Your Wallet Address
+    ## 1. Get Your Wallet Address
 
     First, get your Solana wallet address:
 
@@ -266,19 +284,19 @@ Now that we have our basic setup complete, let's implement a token transfer on S
 </Step>
 
 <Step>
-    ## Fund Your Wallet
+    ## 2. Fund Your Wallet
 
     To perform a token transfer, you'll need some funds in your wallet. Add funds to this address using the [Solana Devnet Faucet](https://faucet.solana.com).
 </Step>
 
 <Step>
-    ## Check Network Information
+    ## 3. Check Network Information
 
     Before creating the user operation, check the [Network Information Guide](/docs/react-sdk/technical-reference#network-information) for getting the correct CAIP-2 IDs of chains.
 </Step>
 
 <Step>
-    ## Implement Token Transfer
+    ## 4. Implement Token Transfer
 
     Create a new component for handling the transfer:
 
@@ -331,7 +349,7 @@ Now that we have our basic setup complete, let's implement a token transfer on S
 </Step>
 
 <Step>
-    ## Verify The Transfer
+    ## 5. Verify The Transfer
 
     After the transfer is complete, you can verify it through:
     - The `getPortfolio` method to check your updated balance
@@ -346,3 +364,86 @@ Now that you've completed your first user operation, you're ready to explore mor
 For more examples and advanced usage, check out the [Template Repo](https://github.com/okto-hq/okto-sdkv2-react-template-app).
 </Callout>
 
+## SDK Reference
+
+### Get Commands
+
+| Command | Description | Documentation |
+|---------|-------------|---------------|
+| `const account = await getAccount(oktoClient);` | Get user's wallet details | <ExternalLink href="/docs/react-sdk/getAccount">Method Overview</ExternalLink> |
+| `const chains = await getChains(oktoClient);` | List supported blockchain networks | <ExternalLink href="/docs/react-sdk/getChains">Method Overview</ExternalLink> |
+| `const tokens = await getTokens(oktoClient);` | List supported tokens | <ExternalLink href="/docs/react-sdk/getTokens">Method Overview</ExternalLink> |
+| `const portfolio = await getPortfolio(oktoClient);` | Get user's token holdings | <ExternalLink href="/docs/react-sdk/getPortfolio">Method Overview</ExternalLink> |
+| `const nfts = await getPortfolioNFT(oktoClient);` | Get user's NFT holdings | <ExternalLink href="/docs/react-sdk/getPortfolioNFT">Method Overview</ExternalLink> |
+| `const activity = await getPortfolioActivity(oktoClient);` | Get transaction history | <ExternalLink href="/docs/react-sdk/getPortfolioActivity">Method Overview</ExternalLink> |
+| `const orders = await getOrdersHistory(oktoClient);` | Get transaction order history | <ExternalLink href="/docs/react-sdk/getOrdersHistory">Method Overview</ExternalLink> |
+| `const collections = await getNftCollections(oktoClient);` | Get NFT collections | <ExternalLink href="/docs/react-sdk/getNFTCollection">Method Overview</ExternalLink> |
+
+### User Operations (Intents)
+
+Intents are pre-built action templates within the Okto SDK that simplify common Web3 tasks. They provide one-liner functions for complex blockchain interactions.
+
+#### 1. Token Transfer
+Send tokens to another address. <ExternalLink href="/docs/react-sdk/tokenTransfer">Learn more</ExternalLink>
+
+```typescript
+const transferParams = {
+  amount: BigInt("1000000000000000000"), // Amount in smallest unit
+  recipient: "0xRecipientAddress...",     // Recipient wallet address
+  token: "0xTokenAddress...",             // Token address ("" for native token)
+  chain: "eip155:1",                      // Target chain CAIP-2 ID
+};
+const result = await tokenTransfer(oktoClient, transferParams);
+```
+
+#### 2. NFT Transfer
+Transfer NFTs between addresses. <ExternalLink href="/docs/react-sdk/nftTransfer">Learn more</ExternalLink>
+
+```typescript
+const nftParams = {
+  caip2Id: "eip155:1",                           // Target chain CAIP-2 ID
+  collectionAddress: "0xCollectionAddress...",    // NFT Collection address
+  nftId: "NFTTokenID",                           // NFT identifier
+  recipientWalletAddress: "0xRecipientAddress...",// Recipient address
+  amount: 1n,
+  nftType: "ERC721",                             // or "ERC1155"
+};
+const result = await nftTransfer(oktoClient, nftParams);
+```
+
+#### 3. Raw Transaction (EVM)
+Execute custom EVM contract calls. <ExternalLink href="/docs/react-sdk/rawTransaction">Learn more</ExternalLink>
+
+```typescript
+import { encodeFunctionData } from 'viem';
+
+// 1. Define Contract Interaction
+const contractAddress = '0xContractAddress...';
+const functionName = 'setValue';
+const functionArgs = [123];
+
+// 2. Encode Function Data
+const functionData = encodeFunctionData({
+  abi: [
+    {
+      "name": functionName,
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "inputs": [{ "type": "uint256", "name": "_value" }]
+    }
+  ] as const,
+  functionName,
+  args: functionArgs,
+});
+
+// 3. Execute Transaction
+const rawTxParams = {
+  networkId: "eip155:1",
+  transaction: {
+    to: contractAddress,
+    data: functionData,
+    // value: BigInt(0),  // Optional: for payable functions
+  },
+};
+const result = await evmRawTransaction(oktoClient, rawTxParams);
+```

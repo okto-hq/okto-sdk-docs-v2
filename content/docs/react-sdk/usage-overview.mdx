@@ -4,68 +4,155 @@ description: A comprehensive guide to using the Okto React SDK and its features
 full: false
 ---
 
-import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { Callout } from 'fumadocs-ui/components/callout';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-import { Icon as IIcon } from '@iconify/react';
+import TechnologyCard from "app/components/mdx/TechnologyCard";
+import { 
+  IoKeyOutline,
+  IoWalletOutline,
+  IoSearchOutline,
+  IoSwapHorizontalOutline,
+  IoCodeSlashOutline,
+  IoServerOutline,
+  IoAppsOutline,
+  IoListOutline,
+  IoRocketOutline
+} from "react-icons/io5";
 
 The Okto React SDK provides a comprehensive set of tools and hooks for integrating blockchain functionality into your React applications. This guide will help you understand the main components and features available in the SDK.
 
-## Core Components
+## Core Functions
 
-<Accordions>
-<Accordion title="Hooks">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+  <TechnologyCard
+    icon={<IoKeyOutline size={"1.5rem"} />}
+    title="useOkto Hook"
+    subtitle="Primary hook that provides access to the OktoClient instance"
+    link="/docs/react-sdk/useOkto"
+  />
+</div>
 
-The SDK provides essential React hooks for accessing Okto functionality:
+## Account Operations
 
-| Hook | Description |
-|------|-------------|
-| `useOkto` | Primary hook that provides access to the OktoClient instance |
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+  <TechnologyCard
+    icon={<IoCodeSlashOutline size={"1.5rem"} />}
+    title="Understanding UserOp"
+    subtitle="Learn about user operations and best practices"
+    link="/docs/react-sdk/userop-learn"
+  />
 
-</Accordion>
+  <TechnologyCard
+    icon={<IoKeyOutline size={"1.5rem"} />}
+    title="signUserOp"
+    subtitle="Sign user operations for transaction integrity"
+    link="/docs/react-sdk/signUserOp"
+  />
 
-<Accordion title="Account Operations">
+  <TechnologyCard
+    icon={<IoSwapHorizontalOutline size={"1.5rem"} />}
+    title="executeUserOp"
+    subtitle="Submit signed operations to the blockchain"
+    link="/docs/react-sdk/executeUserOp"
+  />
 
-Methods available on OktoClient for managing transactions:
+  <TechnologyCard
+    icon={<IoServerOutline size={"1.5rem"} />}
+    title="estimate"
+    subtitle="Calculate gas and fee estimates for transactions"
+    link="/docs/react-sdk/estimate"
+  />
+</div>
 
-| Method | Description |
-|--------|-------------|
-| `signUserOp` | Sign user operations for transaction security |
-| `executeUserOp` | Execute signed user operations on the blockchain |
-| `estimate` | Calculate gas estimates for operations |
+## Explorer Functions
 
-</Accordion>
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+  <TechnologyCard
+    icon={<IoWalletOutline size={"1.5rem"} />}
+    title="getAccount"
+    subtitle="Retrieve detailed account and wallet information"
+    link="/docs/react-sdk/getAccount"
+  />
 
-<Accordion title="Explorer Functions">
+  <TechnologyCard
+    icon={<IoListOutline size={"1.5rem"} />}
+    title="getChains"
+    subtitle="Get list of supported blockchain networks"
+    link="/docs/react-sdk/getChains"
+  />
 
-Functions for retrieving blockchain and account data:
+  <TechnologyCard
+    icon={<IoAppsOutline size={"1.5rem"} />}
+    title="getNftCollection"
+    subtitle="Browse and verify NFT collections"
+    link="/docs/react-sdk/getNFTCollection"
+  />
 
-| Function | Description |
-|----------|-------------|
-| `getAccount` | Retrieve user's wallet information |
-| `getChains` | Get supported blockchain networks |
-| `getTokens` | Fetch supported tokens list |
-| `getPortfolio` | Access user's portfolio data |
-| `getPortfolioActivity` | View portfolio transaction history |
-| `getPortfolioNFT` | Get user's NFT holdings |
-| `getNftCollections` | Retrieve NFT collection details |
-| `getOrdersHistory` | Access transaction order history |
+  <TechnologyCard
+    icon={<IoSearchOutline size={"1.5rem"} />}
+    title="getOrderHistory"
+    subtitle="View historical transactions and orders"
+    link="/docs/react-sdk/getOrderHistory"
+  />
 
-</Accordion>
+  <TechnologyCard
+    icon={<IoWalletOutline size={"1.5rem"} />}
+    title="getPortfolio"
+    subtitle="Get aggregated token holdings across chains"
+    link="/docs/react-sdk/getPortfolio"
+  />
 
-<Accordion title="Intent Operations">
+  <TechnologyCard
+    icon={<IoListOutline size={"1.5rem"} />}
+    title="getPortfolioActivity"
+    subtitle="Track recent portfolio changes and transactions"
+    link="/docs/react-sdk/getPortfolioActivity"
+  />
 
-Methods for creating different types of blockchain transactions:
+  <TechnologyCard
+    icon={<IoAppsOutline size={"1.5rem"} />}
+    title="getPortfolioNFT"
+    subtitle="View NFT holdings and metadata"
+    link="/docs/react-sdk/getPortfolioNFT"
+  />
 
-| Intent | Description |
-|--------|-------------|
-| `tokenTransfer` | Create operations for transferring tokens |
-| `nftTransfer` | Handle NFT transfer operations |
-| `evmRawTransaction` | Execute custom EVM transactions |
+  <TechnologyCard
+    icon={<IoListOutline size={"1.5rem"} />}
+    title="getTokens"
+    subtitle="List available tokens and their details"
+    link="/docs/react-sdk/getTokens"
+  />
+</div>
 
-</Accordion>
-</Accordions>
+## Intents
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+  <TechnologyCard
+    icon={<IoRocketOutline size={"1.5rem"} />}
+    title="Understanding Intents"
+    subtitle="Learn about Okto's simplified blockchain interactions"
+    link="/docs/react-sdk/intents"
+  />
+
+  <TechnologyCard
+    icon={<IoSwapHorizontalOutline size={"1.5rem"} />}
+    title="tokenTransfer"
+    subtitle="Transfer fungible tokens between wallets"
+    link="/docs/react-sdk/tokenTransfer"
+  />
+
+  <TechnologyCard
+    icon={<IoSwapHorizontalOutline size={"1.5rem"} />}
+    title="nftTransfer"
+    subtitle="Transfer NFTs between wallets"
+    link="/docs/react-sdk/nftTransfer"
+  />
+
+  <TechnologyCard
+    icon={<IoCodeSlashOutline size={"1.5rem"} />}
+    title="rawTransaction"
+    subtitle="Create custom EVM transactions"
+    link="/docs/react-sdk/rawTransaction"
+  />
+</div>
 
 ## Transaction Flow
 
@@ -79,16 +166,3 @@ Most operations in the SDK follow this pattern:
 </Callout>
 
 For installation, initialization, and example implementations, refer to our [React](/docs/react-sdk/quickstart/new-okto-react-setup) or [Next.js](/docs/react-sdk/quickstart/new-okto-nextjs-setup) setup guides.
-
-## Key Features
-
-| Feature | Description |
-|---------|-------------|
-| Authentication | Built-in support for OAuth authentication |
-| Multi-chain Support | Support for multiple blockchain networks |
-| Asset Management | Comprehensive token and NFT handling |
-| Portfolio Tracking | Built-in portfolio and activity tracking |
-| Custom Transactions | Support for custom EVM transactions |
-| Type Safety | Full TypeScript support |
-
-For detailed guides on specific features, refer to their respective documentation sections.
