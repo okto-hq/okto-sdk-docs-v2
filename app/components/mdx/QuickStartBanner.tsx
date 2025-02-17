@@ -16,7 +16,7 @@ export default function QuickStartBanner() {
       </div>
       <div className="flex gap-6 items-center flex-wrap justify-center">
         <Link
-          href="/docs/react-sdk/quickstart/new-okto-react-setup"
+          href="/docs/new-okto-react-setup"
           className="relative group no-underline p-3 rounded-md border-2 border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all"
         >
           <FaReact
@@ -29,7 +29,7 @@ export default function QuickStartBanner() {
         </Link>
 
         <Link
-          href="/docs/react-sdk/quickstart/new-okto-nextjs-setup"
+          href="/docs/new-okto-nextjs-setup"
           className="relative group no-underline p-3 rounded-md border-2 border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all"
         >
           <TbBrandNextjs
@@ -42,7 +42,7 @@ export default function QuickStartBanner() {
         </Link>
 
         <Link
-          href="/docs/react-native-sdk/getting-started/quickstart"
+          href="/docs/new-okto-react-native-setup"
           className="relative group no-underline p-3 rounded-md border-2 border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all"
         >
           <TbBrandReactNative
@@ -55,7 +55,7 @@ export default function QuickStartBanner() {
         </Link>
 
         <Link
-          href="/docs/typescript-sdk/quickstart"
+          href="/docs/new-okto-typescript-setup"
           className="relative group no-underline p-3 rounded-md border-2 border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all"
         >
           <SiTypescript
