@@ -1,12 +1,14 @@
 {
   "title": "React",
   "pages": [
-    "[About Okto](/)",
+    "[← Back to Home](/)",
     "index",
-    "quickstart",
-    "templateRepo",
     "feature-support",
-    "v2migration",
+    "---Quickstart---",
+    "./quickstart/prerequisites",
+    "./quickstart/new-okto-react-setup",
+    "./quickstart/new-okto-nextjs-setup",
+    "templateRepo",
     "---Authentication---",
     "./authenticate-users/okto-auth",
     "./authenticate-users/google-oauth",

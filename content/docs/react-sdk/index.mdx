@@ -4,9 +4,19 @@ description: A complete guide to integrating Okto into your React applications.
 full: false
 ---
 
-
 import TechnologyCard from 'app/components/mdx/TechnologyCard';
-import { IoCodeSlashOutline } from "react-icons/io5";
+import { 
+  IoCodeSlashOutline, 
+  IoKeyOutline, 
+  IoWalletOutline, 
+  IoBookOutline,
+  IoConstructOutline,
+  IoGitBranchOutline,
+  IoHelpCircleOutline,
+  IoSwapHorizontalOutline 
+} from "react-icons/io5";
+import { FaReact, FaBook, FaTools, FaExchangeAlt } from "react-icons/fa6";
+import { VscDebugConsole } from "react-icons/vsc";
 
 ## Introduction to Okto React SDK
 
@@ -14,12 +24,14 @@ import { IoCodeSlashOutline } from "react-icons/io5";
 
 <div className="my-6 grid grid-cols-1 md:grid-cols-2 gap-4">
   <TechnologyCard
-    icon={<IoCodeSlashOutline size={"1.5rem"} />}
+    className="h-25"
+    icon={<IoGitBranchOutline size={"1.5rem"} />}
     title="GitHub Repository"
     subtitle="View SDK Source Code"
     link="https://github.com/okto-hq/okto-js-sdk-monorepo"
   />
   <TechnologyCard
+    className="h-25"
     icon={<IoCodeSlashOutline size={"1.5rem"} />}
     title="Template Repository" 
     subtitle="Example Implementation"
@@ -35,52 +47,60 @@ Kickstart your project by following our [Quickstart Guide](/docs/react-sdk/quick
 
 ---
 
-## Navigating the React SDK Docs
+## Explore the React SDK
 
-Our documentation is organized into several sections to help you at every stage of your development journey—from initial setup to advanced features. Here’s an updated overview of the main sections:
-
-### 1. Getting Started
-- [Quickstart Guide](/docs/react-sdk/quickstart/new-okto-react-setup): Learn how to create a new React app and integrate the Okto SDK in minutes.
-- [Prerequisites](/docs/react-sdk/quickstart/prerequisites): A checklist of required dependencies, API keys, and initial setup steps.
-
-### 2. Authentication
-Implement secure user login and session management:
-- [Okto Auth](/docs/react-sdk/authenticate-users/okto-auth): Learn about authorization in Okto and Okto Auth Token
-- [Google OAuth](/docs/react-sdk/authenticate-users/google-oauth/learn): Setup and authenticate users via Google.
-- [Session Management](/docs/react-sdk/authenticate-users/login-logout/loginUsingOAuth): Manage user sessions and tokens.
-
-### 3. Wallets
-Manage wallet functionality and customization:
-- [Wallet Overview](/docs/react-sdk/wallets/overview): An introduction to wallet features within the SDK.
-- [Embedded Wallets](/docs/react-sdk/wallets/(embedded-wallets)): Configure self-custodial wallets integrated into your app.
-- [External Wallets](/docs/react-sdk/wallets/external-wallets) (Coming Soon): Integrate and manage third-party wallet solutions.
-
-### 4. Usage & Features
-Explore the core capabilities of the SDK:
-- [Usage Overview](/docs/react-sdk/usage-overview): A complete guide to using the Okto React SDK.
-- [Hooks](/docs/react-sdk/(hooks)/useOkto): Leverage React hooks to tap into Okto functionality.
-- [Account Operations](/docs/react-sdk/(Account)/estimate): Sign and execute user operations for on-chain actions.
-- [Explorer Functions](/docs/react-sdk/(Explorer)/getAccount): Retrieve account details, supported chains, tokens, and portfolio data.
-- [Intent Operations](/docs/react-sdk/(Intents)/…): Create and manage blockchain transactions such as token or NFT transfers.
-
-### 5. Resources
-Access additional reference materials and support:
-- [Technical Reference](/docs/react-sdk/technical-reference): In-depth documentation of classes, methods, and data models.
-- [SDK Error Warnings](/docs/react-sdk/sdk-error-warnings): A list of common error messages and troubleshooting tips.
-- [Troubleshooting](/docs/react-sdk/troubleshooting): Guidance on resolving common issues.
-- [Feature Support](/docs/react-sdk/feature-support): Information on supported chains, tokens, and additional functionalities.
-- [Template Apps](/docs/react-sdk/templateRepo): Sample projects showcasing best practices with the SDK.
-
-### 6. Migration
-- [V2 Migration Guide](/docs/react-sdk/v2migration) (Coming Soon): Instructions and tips for upgrading from previous versions of the SDK.
+<div className="my-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+  <TechnologyCard
+    className="h-25"
+    icon={<IoKeyOutline size={"1.5rem"} />}
+    title="Authentication"
+    subtitle="Implement secure user login and session management"
+    link="/docs/react-sdk/authenticate-users/okto-auth"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoWalletOutline size={"1.5rem"} />}
+    title="Wallet Management"
+    subtitle="Configure and manage embedded and external wallets"
+    link="/docs/react-sdk/wallets/overview"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoConstructOutline size={"1.5rem"} />}
+    title="Usage & Features"
+    subtitle="Explore hooks, explorer functions, and intent operations"
+    link="/docs/react-sdk/usage-overview"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoBookOutline size={"1.5rem"} />}
+    title="Technical Reference"
+    subtitle="In-depth documentation of classes, methods, and data models"
+    link="/docs/react-sdk/technical-reference"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoHelpCircleOutline size={"1.5rem"} />}
+    title="Troubleshooting"
+    subtitle="Common issues and their solutions"
+    link="/docs/react-sdk/troubleshooting"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoSwapHorizontalOutline size={"1.5rem"} />}
+    title="Migration Guide"
+    subtitle="Upgrade from previous versions of the SDK"
+    link="/docs/react-sdk/v2migration"
+  />
+</div>
 
 ---
 
 ## Get Started
 
-Ready to dive in? We recommend you begin with our **[Getting Started guide](./react-sdk/quickstart/new-okto-react-setup)** to set up your environment, get your Okto API key, and spin up a simple React app. Once you’re comfortable with the basics, feel free to explore more advanced features or check out our example apps.
+Ready to dive in? We recommend you begin with our **[Getting Started guide](./react-sdk/quickstart/new-okto-react-setup)** to set up your environment, get your Okto API key, and spin up a simple React app. Once you're comfortable with the basics, feel free to explore more advanced features or check out our example apps.
 
-If you have any questions or need assistance, don’t hesitate to reach out via our **[Troubleshooting](./react-sdk/troubleshooting)** page or email us at `devrel@coindcx.com`.
+If you have any questions or need assistance, don't hesitate to reach out via our **[Troubleshooting](./react-sdk/troubleshooting)** page or email us at `devrel@coindcx.com`.
 
 **Happy Building!**
 

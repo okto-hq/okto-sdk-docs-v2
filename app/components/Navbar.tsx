@@ -52,9 +52,9 @@ export default function NavbarComponent() {
 
   const sdkOptions = [
     { href: "/docs/react-sdk", label: "React", subpath: '/', icons: <FaReact /> },
-    { href: "/docs/react-native-sdk", label: "React Native (Coming Soon)", subpath: '/', icons: <TbBrandReactNative /> },
-    { href: "/docs/flutter-sdk", label: "Flutter (Coming Soon)", subpath: '/', icons: <SiFlutter /> },
-    { href: "/docs", label: "Unity (Coming Soon)", subpath: '/unity-sdk', icons: <FaUnity /> },
+    { href: "/docs/react-native-sdk", label: "React Native", subpath: '/', icons: <TbBrandReactNative /> },
+    // { href: "/docs/flutter-sdk", label: "Flutter (Coming Soon)", subpath: '/', icons: <SiFlutter /> },
+    // { href: "/docs", label: "Unity (Coming Soon)", subpath: '/unity-sdk', icons: <FaUnity /> },
     { href: "/docs/typescript-sdk", label: "Typescript", subpath: '/', icons: <SiTypescript /> },
   ];
 
@@ -62,8 +62,8 @@ export default function NavbarComponent() {
     if (pathname.startsWith('/docs/typescript-sdk')) return 'Typescript';
     if (pathname.startsWith('/docs/react-sdk')) return 'React';
     if (pathname.startsWith('/docs/react-native-sdk')) return 'React Native';
-    if (pathname.startsWith('/docs/flutter-sdk')) return 'Flutter';
-    if (pathname.startsWith('/docs/unity-sdk')) return 'Unity';
+    // if (pathname.startsWith('/docs/flutter-sdk')) return 'Flutter';
+    // if (pathname.startsWith('/docs/unity-sdk')) return 'Unity';
     return 'SDKs';
   };
 

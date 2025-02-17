@@ -6,29 +6,52 @@ full: false
 
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
+import ExternalLink from 'app/components/mdx/ExternalLink';
 
 <Callout>
-Want an even faster setup? Clone our [Template Repo](/docs/react-sdk/example-apps/template-repo) and follow the steps provided to get your dApp running in minutes!
+Want an even faster setup? Check out our <ExternalLink href="/docs/react-sdk/templateRepo">Template Repo</ExternalLink> to get your dApp running in minutes!
 </Callout>
+
+<CollapsibleCallout type="warning" title="Essential Setup Required">
+Before you begin, make sure you have:
+- Created your Okto Dashboard account.
+- Retrieved your API keys from the dashboard (`NEXT_PUBLIC_CLIENT_PRIVATE_KEY` and `NEXT_PUBLIC_CLIENT_SWA`).
+- Enabled the chains and tokens your application will use.
+
+If you need help, see our <ExternalLink href="/docs/developer-admin-dashboard/overview">Dashboard Setup Guide</ExternalLink> for detailed instructions.
+</CollapsibleCallout>
 
 <Steps>
 
 <Step>
-## Prerequisites
-Before you begin, ensure you have:
+    ## Prerequisites
 
--   **Node.js (v18+) and npm/pnpm/yarn:** [Download Node.js](https://nodejs.org/)
--   **Okto API Keys:** You'll need your Okto API keys to connect your app to the Okto platform. Obtain your `NEXT_PUBLIC_VENDOR_PRIVATE_KEY` and `NEXT_PUBLIC_VENDOR_SWA` from the Okto Dashboard.
--   **Google OAuth Credentials:** Set up your OAuth 2.0 credentials in [Google Cloud Console](https://console.cloud.google.com/) to get your `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`.
-    - Need help? Follow our [Google Console Setup Guide](/docs/react-sdk/authenticate-users/google-oauth/google-console-setup)
--   **Auth Secret:** NextAuth needs a secret key to keep your app secure. You can easily generate one by running this command in your terminal:  `openssl rand -base64 32`.
+    Before getting started, ensure you have the following:
+    - **Node.js (v18+) and npm/pnpm/yarn:** <ExternalLink href="https://nodejs.org/">Download Node.js</ExternalLink>
+    - **Okto API Keys:** You need your `NEXT_PUBLIC_CLIENT_PRIVATE_KEY` and `NEXT_PUBLIC_CLIENT_SWA`. Obtain these from the Okto Dashboard.
+    - **Google OAuth Credentials:** Create OAuth 2.0 credentials in the <ExternalLink href="https://console.cloud.google.com/">Google Cloud Console</ExternalLink> to get your `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`.
+    - **Auth Secret:** NextAuth requires a secret for signing tokens. Generate one by running:
+    
+    ```bash:title="bash"
+    openssl rand -base64 32
+    ```
+
+    <CollapsibleCallout type="tip" title="Setting up Google OAuth">
+    1. Go to <ExternalLink href="https://console.cloud.google.com/">Google Cloud Console</ExternalLink>.
+    2. Create OAuth 2.0 credentials for your project.
+    3. Set the redirect URI to: `[YOUR_APP_URL]/api/auth/callback/google` (for example, `http://localhost:3000/api/auth/callback/google` during local development).
+    4. Save your Client ID and Client Secret.
+    
+    Need detailed instructions? Check our <ExternalLink href="/docs/react-sdk/authenticate-users/google-oauth/google-console-setup">Google Console Setup Guide</ExternalLink>.
+    </CollapsibleCallout>
 
 </Step>
 
 <Step>
-    ## Create Your NextJS App
+    ## 1. Create Your NextJS App
 
-    If you already have a React app, you can skip this step and proceed directly to Step 3 to start integrating Okto.
+    If you already have a NextJS app, you can skip this step and proceed directly to the next step to start integrating Okto.
 
     Let's start by creating a brand new Next.js app! Open your terminal and run these commands:
 
@@ -36,19 +59,31 @@ Before you begin, ensure you have:
     npx create-next-app@latest my-okto-app
     cd my-okto-app
     ```
-    This will:
-    -  `npx create-next-app@latest my-okto-app`: Create a new Next.js project named `my-okto-app` in a folder of the same name. 
-    -  `cd my-okto-app`: This command moves you *inside* the `my-okto-app` folder you just created, so all subsequent commands apply to your new project.
+
+    <CollapsibleCallout type="tip" title="Configuration Options">
+        When prompted during setup, select:
+        - **TypeScript:** Yes
+        - **ESLint:** Yes
+        - **Tailwind CSS:** Yes
+        - **Use `src/` directory:** Yes
+        - **App Router:** Yes
+        - **Customize default import alias:** No
+    </CollapsibleCallout>
+
+    <CollapsibleCallout type="note" title="What this does">
+        - Creates a new Next.js project named `my-okto-app`.
+        - Switches you into the project directory.
+    </CollapsibleCallout>
 </Step>
 
 <Step>
-    ## Install Dependencies
+    ## 2. Install Dependencies
 
     <Callout type="info">
     Please use version 0.0.0-dev.42 of the npm package.
     </Callout>
 
-    Your Next.js app needs the Okto SDK and NextAuth to work. Let's install them! Run the command below that matches your package manager (`npm`, `pnpm`, or `yarn`):
+    Your Next.js app needs the Okto SDK and NextAuth to work. Let's install them! Run the command below for the package manager of your choice:
 
     <Tabs items={['npm', 'pnpm', 'yarn']}>
         <Tab value="npm">
@@ -71,41 +106,134 @@ Before you begin, ensure you have:
 </Step>
 
 <Step>
-    ## Set up Environment Variables
+    ## 3. Set up Environment Variables
 
-    Create `.env` in your project root:
+    Create a `.env` file in your project root and add the following environment variables:
 
     ```bash title=".env"
-    NEXT_PUBLIC_VENDOR_PRIVATE_KEY = YOUR_OKTO_VENDOR_PRIVATE_KEY
-    NEXT_PUBLIC_VENDOR_SWA = YOUR_OKTO_VENDOR_SWA
+    NEXT_PUBLIC_CLIENT_PRIVATE_KEY = YOUR_OKTO_CLIENT_PRIVATE_KEY
+    NEXT_PUBLIC_CLIENT_SWA = YOUR_OKTO_CLIENT_SWA
     NEXT_PUBLIC_ENVIRONMENT = sandbox # or production
     
-    AUTH_SECRET = YOUR_AUTH_SECRET # Use: openssl rand -base64 32
+    AUTH_SECRET = YOUR_AUTH_SECRET # Generate using: openssl rand -base64 32
 
-    # Google OAuth credentials (Required only if you want to enable Google Sign-In)
+    # Google OAuth credentials (Required only if using Google Sign-In)
     GOOGLE_CLIENT_SECRET = YOUR_GOOGLE_CLIENT_SECRET
     GOOGLE_CLIENT_ID = YOUR_GOOGLE_CLIENT_ID
     ```
-    <Callout title="Important Notes about Environment Variables">
-    -   **Replace Placeholders!**  Don't forget to replace `YOUR_GOOGLE_CLIENT_SECRET`, `YOUR_GOOGLE_CLIENT_ID`, `YOUR_AUTH_SECRET`, `YOUR_OKTO_VENDOR_PRIVATE_KEY`, and `YOUR_OKTO_VENDOR_SWA` with *your actual keys and secrets*.
-    -   **`AUTH_SECRET` Generation:** If you haven't already, run `openssl rand -base64 32` in your terminal to generate a secure `AUTH_SECRET` and paste it into `.env`.
-    - For `NEXT_PUBLIC_ENVIRONMENT`, use `sandbox` for testing and development, and `production` for live environments.
-    </Callout>
 
-    <Callout type="warning">
-    Never commit your `.env` file to version control. Add it to your `.gitignore`!
-    </Callout>
+    <CollapsibleCallout type="warning" title="Important">
+        - Replace all placeholder values (`YOUR_...`) with your actual keys.
+        - Never commit your `.env` file to version control. Add it to your `.gitignore`.
+    </CollapsibleCallout>
+
 </Step>
 
 <Step>
-    ## Set Up Root Layout (`layout.tsx`)
+    ## 4. Set Up the Okto Provider
 
-    The `layout.tsx` file is the main structure of your app. Let's modify it to include the `AppProvider`, which sets up the Okto SDK and session management for your whole application.
+    Create a provider component to initialize the Okto SDK and authentication context. Create a file at `app/components/providers.tsx` with the following code:
 
-    1.  **Open `layout.tsx`:** Go to the `app` directory in your project and open the `layout.tsx` file.
-    2.  **Replace content:**  Replace the existing code in `layout.tsx` with the code below:
+    ```tsx title="app/components/providers.tsx"
+    "use client";
+    import { SessionProvider } from "next-auth/react";
+    import { OktoProvider } from "@okto_web3/react-sdk";
+    import React from "react";
 
-    ```tsx title="layout.tsx"
+    const config = { // Configuration for Okto SDK
+        environment: process.env.NEXT_PUBLIC_ENVIRONMENT || 'sandbox', // Environment from .env
+        clientPrivKey: process.env.NEXT_PUBLIC_CLIENT_PRIVATE_KEY || '', // Client Private Key from .env
+        clientSWA: process.env.NEXT_PUBLIC_CLIENT_SWA || '', // Client SWA from .env
+    };
+
+    function AppProvider({ children, session }) {
+    return (
+        <SessionProvider session={session}>
+        <OktoProvider config={config}>
+            {children}
+        </OktoProvider>
+        </SessionProvider>
+    );
+    }
+
+    export default AppProvider;
+    ```
+
+    <CollapsibleCallout type="info" title="Understanding the Provider">
+        The `AppProvider` wraps your app with:
+        - `SessionProvider` for authentication.
+        - `OktoProvider` to initialize the Okto SDK using your environment settings.
+        
+        Remember that the `"use client"` directive is required for client-side components.
+    </CollapsibleCallout>
+
+</Step>
+
+<Step>
+    
+    ## 5. Configure Google Authentication
+
+    Set up NextAuth using Google as the provider. Create the file at `app/api/auth/[...nextauth]/route.ts`:
+
+    <CollapsibleCallout type="tip" title="File Structure">
+        Create these folders in your app directory:
+        app/
+        └── api/
+        └── auth/
+        └── [...nextauth]/
+        └── route.ts
+    </CollapsibleCallout>
+
+    ```tsx title="app/api/auth/[...nextauth]/route.ts"
+    import NextAuth from "next-auth";
+    import GoogleProvider from "next-auth/providers/google";
+    import type { AuthOptions } from "next-auth";
+
+    export const authOptions: AuthOptions = {
+      secret: process.env.AUTH_SECRET,
+      providers: [
+        GoogleProvider({ // Configure Google Provider
+          clientId: process.env.GOOGLE_CLIENT_ID!, // From .env
+          clientSecret: process.env.GOOGLE_CLIENT_SECRET!, // From .env
+        }),
+      ],
+      session: {
+        strategy: "jwt",
+      },
+      callbacks: {
+        async jwt({ token, user, account }) {
+          if (account) {
+            token.id_token = account.id_token;
+          }
+          return token;
+        },
+        async session({ session, token }) {
+          //@ts-ignore
+          session.id_token = token.id_token;
+          return session;
+        },
+      },
+    };
+
+    const handler = NextAuth(authOptions);
+
+    export { handler as GET, handler as POST };
+    ```
+    <CollapsibleCallout type="info" title="Authentication Overview">
+        This configuration:
+        - Sets up NextAuth to use Google for authentication.
+        - Utilizes JWT for session management.
+        - Seeds the session with Google's `id_token`, which is later used by the Okto SDK.
+    </CollapsibleCallout>
+
+</Step>
+
+<Step>
+    ## 6. Set up Root Layout
+
+    Update your root layout to include the `AppProvider` so that the authentication and Okto context are available throughout your app. Modify `app/layout.tsx` as follows:
+
+    ```tsx title="app/layout.tsx"
     import type { Metadata } from "next";
     import { Inter } from "next/font/google";
     import "./globals.css";
@@ -135,105 +263,20 @@ Before you begin, ensure you have:
       );
     }
     ```
-    This layout sets up the basic structure of your app and wraps it with `AppProvider` for session and Okto context.
+    <CollapsibleCallout type="note" title="Layout Details">
+        Using `AppProvider` ensures that every page in your application has access to both the session and Okto context.
+    </CollapsibleCallout>
 
 </Step>
 
 <Step>
-    ## Create Providers Component (`providers.tsx`)
+    ## 7. Create a Sample Login Page (`page.tsx`)
 
-    Now, let's create the `providers.tsx` component we imported in `layout.tsx`. This component will actually initialize the Okto SDK.
+    Let's build a simple page to test out authentication and basic Okto operations. You will create two components—`LoginButton` and `GetButton`—and update your home page.
 
-    1.  **Create `components` folder:** If you don't already have a folder named `components` inside your `app` directory, create one now.
-    2.  **Create `providers.tsx`:** Inside the `components` folder, create a new file named `providers.tsx`.
-    3.  **Add code:**  Paste the following code into `providers.tsx`:
-
-    ```tsx title="components/providers.tsx"
-    "use client";
-    import { SessionProvider } from "next-auth/react";
-    import { OktoProvider } from "@okto_web3/react-sdk";
-    import React from "react";
-
-    const config = { // Configuration for Okto SDK
-        environment: process.env.NEXT_PUBLIC_ENVIRONMENT || 'sandbox', // Environment from .env
-        vendorPrivKey: process.env.NEXT_PUBLIC_VENDOR_PRIVATE_KEY || '', // Vendor Private Key from .env
-        vendorSWA: process.env.NEXT_PUBLIC_VENDOR_SWA || '', // Vendor SWA from .env
-    };
-
-    function AppProvider({ children, session }) {
-    return (
-        <SessionProvider session={session}>
-        <OktoProvider config={config}>
-            {children}
-        </OktoProvider>
-        </SessionProvider>
-    );
-    }
-
-    export default AppProvider;
-    ```
-
-</Step>
-
-<Step>
-    ## Configure Google Login with NextAuth
-
-    To enable Google Login, you need to configure NextAuth. You'll create a `route.ts` file in a specific directory structure within your `app` folder.
-
-    1.  **Create `api/auth/[...nextauth]` folders:** Inside your `app` directory, create these folders in order:
-        -   First, create a folder named `api`.
-        -   Inside `api`, create a folder named `auth`.
-        -   Inside `auth`, create a folder named `[...nextauth]` *(that's square brackets, then three dots, then `nextauth`, then closing square brackets)*.  This special folder name in Next.js is for dynamic routes.
-    2.  **Create `route.ts`:** Inside the `[...nextauth]` folder, create a new file named `route.ts`.
-    3.  **Add code:**  Paste the following code into `route.ts`:
-
-    ```tsx title="app/api/auth/[...nextauth]/route.ts"
-    import NextAuth from "next-auth";
-    import GoogleProvider from "next-auth/providers/google";
-    import type { AuthOptions } from "next-auth";
-
-    export const authOptions: AuthOptions = {
-      secret: process.env.AUTH_SECRET,
-      providers: [
-        GoogleProvider({ // Configure Google Provider
-          clientId: process.env.GOOGLE_CLIENT_ID!, // Your GOOGLE_CLIENT_ID from .env
-          clientSecret: process.env.GOOGLE_CLIENT_SECRET!, // Your GOOGLE_CLIENT_SECRET from .env
-        }),
-      ],
-      session: {
-        strategy: "jwt",
-      },
-      callbacks: {
-        async jwt({ token, user, account }) {
-          if (account) {
-            token.id_token = account.id_token;
-          }
-          return token;
-        },
-        async session({ session, token }) {
-          //@ts-ignore
-          session.id_token = token.id_token;
-          return session;
-        },
-      },
-    };
-
-    const handler = NextAuth(authOptions);
-
-    export { handler as GET, handler as POST };
-    ```
-    This configuration sets up NextAuth with Google Provider and ensures the `id_token` is passed in the session, which is needed by Okto SDK for authentication.
-
-</Step>
-
-<Step>
-    ## Create a Sample Login Page (`page.tsx`)
-
-    Now, let's create a simple page where users can log in and you can test the Okto SDK! We'll create a `LoginButton` component and a `GetButton` component to interact with Okto.
-
-    ### 1. **Create `LoginButton.tsx` in `components` folder:** 
-    Inside your `app/components` folder, create a new file named `LoginButton.tsx` and paste this code:
-
+    ### a. Create the Login Button Component
+    
+    This component will trigger Google authentication. Create the file `app/components/LoginButton.tsx`:
 
     ```tsx title="components/LoginButton.tsx"
     "use client";
@@ -260,9 +303,15 @@ Before you begin, ensure you have:
         );
     }
     ```
+    <CollapsibleCallout type="note" title="About the Login Button">
+        Using the `signIn` method from NextAuth, this button starts the Google authentication flow. No extra configuration is required on the client side.
+    </CollapsibleCallout>
 
-    ### 2. **Create `GetButton.tsx` in `components` folder:** 
-    In the same `app/components` folder, create `GetButton.tsx` and paste this code:
+    ### b. Create the Get Button Component
+    
+    This component is designed to call a function (such as logging out or fetching account details) and display the result in a modal. 
+    
+    Create the file `app/components/GetButton.tsx`:
 
     ```tsx title="components/GetButton.tsx"
     "use client";
@@ -339,9 +388,14 @@ Before you begin, ensure you have:
 
     export default GetButton;
     ```
+    <CollapsibleCallout type="note" title="About the Get Button">
+        This component accepts a SDK function as a prop. When clicked, it calls the function with the Okto client, displays the JSON response in a modal, and handles any errors.
+    </CollapsibleCallout>
 
-    ### **Update `page.tsx` in `app` directory:** 
-    Open `app/page.tsx` and replace its content with this code:
+    ### c. Update the App Home Page
+    Integrate both buttons on your home page. 
+    
+    Replace the content of `app/page.tsx` with:
 
     ```tsx title="app/page.tsx"
     "use client";
@@ -350,6 +404,7 @@ Before you begin, ensure you have:
     import { LoginButton } from "@/app/components/LoginButton";
     import GetButton from "@/app/components/GetButton";
     import {getAccount, useOkto } from '@okto_web3/react-sdk';
+    import { TokenTransfer } from "@/app/components/TokenTransfer";
 
 
     export default function Home() {
@@ -394,35 +449,27 @@ Before you begin, ensure you have:
                     <LoginButton />
                     <GetButton title="Okto Log out" apiFn={handleLogout} />
                     <GetButton title="getAccount" apiFn={getAccount} />
+                    <div className="col-span-2">
+                        <TokenTransfer />
+                    </div>
                 </div>
             </main>
         );
     }
     ```
 
-    Your project structure should look like this:
-    ```
-    my-okto-app/
-    ├── app/
-    │   ├── api/
-    │   │   └── auth/
-    │   │       └── [...nextauth]/
-    │   │           └── route.ts
-    │   ├── components/
-    │   │   ├── providers.tsx
-    │   │   ├── LoginButton.tsx
-    │   │   └── GetButton.tsx
-    │   ├── layout.tsx
-    │   └── page.tsx
-    ├── .env
-    └── package.json
-    ```
+    <CollapsibleCallout type="tip" title="Testing Your Login Page">
+        After launching the app, use these buttons to:
+        - Initiate Google authentication.
+        - Trigger a logout.
+        - Retrieve your account(list of wallets)details.
+    </CollapsibleCallout>
 </Step>
 
 <Step>
-## 5. Run Your Dapp
+## 8. Run Your dApp
 
-Time to run your app and see it in action! In your terminal, inside the `my-okto-app` directory, run the command that matches your package manager:
+It's time to see your work in action. Inside the `my-okto-app` directory, run the appropriate command based on your package manager:
 
 <Tabs items={['npm', 'pnpm', 'yarn']}>
         <Tab value="npm">
@@ -441,34 +488,24 @@ Time to run your app and see it in action! In your terminal, inside the `my-okto
             ```
         </Tab>
     </Tabs>
-This command starts the Next.js development server.
 
-Now, open your web browser and go to [http://localhost:3000](http://localhost:3000).
+Open your browser and navigate to [http://localhost:3000](http://localhost:3000). You should see your "Template App" with buttons to:
+- Authenticate using Google.
+- Log out.
+- Retrieve your account details with the `getAccount` function.
 
-You should see your "Template App" with an "Authenticate with Google" button and "Okto Log out" and "getAccount" buttons!
-
--   **Click "Authenticate with Google"**: You should be prompted to log in with your Google account.
--   **After logging in**: You might not see any immediate changes on the page in this very basic example, but in the background, your app has authenticated with Okto using your Google login!
--   **Click "getAccount"**:  This button will call the `getAccount` function from the Okto SDK and display the result in a pop-up modal.
--   **Click "Okto Log out"**: This will log you out of your app.
-
-<Callout type="tip" title="Troubleshooting Tip">
+<CollapsibleCallout type="tip" title="Troubleshooting Tip">
 If you encounter any errors when running `npm run dev` (or `pnpm dev`, `yarn dev`), check your terminal for error messages. Common issues include:
     -   **Environment Variable Errors**: Double-check that you correctly set up your `.env` file and that all the `YOUR_...` placeholders are replaced with your actual keys and secrets.
     -   **Package Installation Errors**: If you see errors related to missing packages, try re-running the install command (e.g., `npm install`) to make sure all dependencies are installed correctly.
-</Callout>        
-</Step>
-
-<Step>
- ## Congratulations!
-
-🎉 Your basic Okto integration is now complete! You're ready to bring your dApp to life. Let's try out a simple user operation!
+</CollapsibleCallout>        
 </Step>
 
 </Steps>
 
 <br/>
 <br/>
+
 ## Trying Out a User Operation
 
 Now that we have our basic setup complete, let's implement a token transfer on Solana devnet to understand how user operations work in Okto.
@@ -476,9 +513,9 @@ Now that we have our basic setup complete, let's implement a token transfer on S
 <Steps>
 
 <Step>
-    ## Get Your Wallet Address
+    ### 1. Get Your Wallet Address
 
-    First, get your Solana wallet address:
+    Retrieve your Solana wallet address using:
 
     ```tsx
     import { getAccounts } from "@okto_web3/react-sdk";
@@ -490,21 +527,21 @@ Now that we have our basic setup complete, let's implement a token transfer on S
 </Step>
 
 <Step>
-    ## Fund Your Wallet
+    ### 2. Fund Your Wallet
 
-    To perform a token transfer, you'll need some funds in your wallet. Add funds to this address using the [Solana Devnet Faucet](https://faucet.solana.com).
+    Before transferring tokens, fund your wallet using the <ExternalLink href="https://faucet.solana.com">Solana Devnet Faucet</ExternalLink>.
 </Step>
 
 <Step>
-    ## Check Network Information
+    ### 3. Review Network Information
 
-    Before creating the user operation, check the [Network Information Guide](/docs/react-sdk/technical-reference#network-information) for getting the correct CAIP-2 IDs of chains.
+    Consult the <ExternalLink href="/docs/react-sdk/technical-reference#network-information">Network Information Guide</ExternalLink> to ensure you have the correct CAIP-2 chain identifiers.
 </Step>
 
 <Step>
-    ## Implement Token Transfer
+    ### 4. Implement Token Transfer
 
-    Create a new component for handling the transfer:
+    Create a new component called `TokenTransfer.tsx` to handle a token transfer:
 
     ```tsx title="app/components/TokenTransfer.tsx"
     "use client";
@@ -514,6 +551,7 @@ Now that we have our basic setup complete, let's implement a token transfer on S
     export function TokenTransfer() {
         const oktoClient = useOkto();
         const [status, setStatus] = useState("");
+        const [modalVisible, setModalVisible] = useState(false);
 
         async function handleTransfer() {
             try {
@@ -533,6 +571,7 @@ Now that we have our basic setup complete, let's implement a token transfer on S
                 const txHash = await oktoClient.executeUserOp(signedOp);
                 
                 setStatus(`Transfer complete! Hash: ${txHash}`);
+                setModalVisible(true);
             } catch (error) {
                 console.error("Transfer failed:", error);
                 setStatus(`Transfer failed: ${error.message}`);
@@ -540,26 +579,169 @@ Now that we have our basic setup complete, let's implement a token transfer on S
         }
 
         return (
-            <div>
-                <h2>Token Transfer</h2>
-                <button onClick={handleTransfer}>
+            <div className="text-center text-white">
+                <button
+                    className="px-4 py-2 w-full bg-blue-500 text-white rounded"
+                    onClick={handleTransfer}
+                >
                     Send 1 SOL
                 </button>
-                <p>{status}</p>
+
+                {modalVisible && (
+                    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+                        <div className="bg-black rounded-lg w-11/12 max-w-2xl p-6">
+                            <div className="flex justify-between items-center border-b pb-2 mb-4">
+                                <h2 className="text-lg font-semibold">Token Transfer Status</h2>
+                                <button
+                                    className="text-gray-500 hover:text-gray-700"
+                                    onClick={() => setModalVisible(false)}
+                                >
+                                    ×
+                                </button>
+                            </div>
+                            <div className="text-left text-white max-h-96 overflow-y-auto">
+                                <pre className="whitespace-pre-wrap break-words text-white">
+                                    {status}
+                                </pre>
+                            </div>
+                            <div className="mt-4 text-right">
+                                <button
+                                    className="px-4 py-2 bg-gray-500 text-white rounded"
+                                    onClick={() => setModalVisible(false)}
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         );
     }
     ```
+    <CollapsibleCallout type="warning" title="Before Executing">
+        Before executing the transfer, verify:
+        - That you have replaced `"YOUR_RECIPIENT_ADDRESS"` with an actual wallet address.
+        - You are using the correct CAIP-2 identifier for the Solana devnet (`"SOLANA_CHAIN_ID"`).
+    </CollapsibleCallout>
 </Step>
 
 <Step>
-    ## Verify The Transfer
+    ### 5. Add the Component to Your Home Page
 
-    After the transfer is complete, you can verify it through:
-    - The `getPortfolio` method to check your updated balance
-    - The [Solana Explorer](https://explorer.solana.com) (devnet) using the transaction hash
+    Update your `app/page.tsx` to include the new TokenTransfer component:
+
+    ```tsx title="app/page.tsx"
+    // Add to your imports
+    import { TokenTransfer } from "@/app/components/TokenTransfer";
+
+    // Add inside your grid div
+        <div className="col-span-2">
+            <TokenTransfer />
+        </div>
+    ```
+
+    ### 6. Test the Token Transfer
+
+   - Run your dApp, open [http://localhost:3000](http://localhost:3000), and sign in with Google. 
+   - Then, navigate to the page where your **Token Transfer** component is displayed and click on the **Send 1 SOL** button. 
+   - A modal will appear showing the transfer status (e.g., "Transfer successful! Transaction Hash: …").
+</Step>
+
+<Step>
+    ### 7. Verify The Transfer
+
+    Once complete, verify its success by:
+    - Checking your updated balance using the `getPortfolio` method.
+    - Viewing the transaction details on the <ExternalLink href="https://explorer.solana.com">Solana Explorer</ExternalLink> (select devnet).
 </Step>
 
 </Steps>
 
-Now that you've completed your first user operation, you're ready to explore more advanced features! Check out our [Usage Guide](/docs/react-sdk/usage-overview) to learn about other operations like NFT transfers, contract interactions, and more.
+Congratulations! You have successfully integrated the Okto SDK with your Next.js app and executed your first user operation.
+<br/>
+<br/>
+
+## SDK Reference
+
+### Get Commands
+
+| Command | Description | Documentation |
+|---------|-------------|---------------|
+| `const account = await getAccount(oktoClient);` | Get user's wallet details | <ExternalLink href="/docs/react-sdk/getAccount">Method Overview</ExternalLink> |
+| `const chains = await getChains(oktoClient);` | List supported blockchain networks | <ExternalLink href="/docs/react-sdk/getChains">Method Overview</ExternalLink> |
+| `const tokens = await getTokens(oktoClient);` | List supported tokens | <ExternalLink href="/docs/react-sdk/getTokens">Method Overview</ExternalLink> |
+| `const portfolio = await getPortfolio(oktoClient);` | Get user's token holdings | <ExternalLink href="/docs/react-sdk/getPortfolio">Method Overview</ExternalLink> |
+| `const nfts = await getPortfolioNFT(oktoClient);` | Get user's NFT holdings | <ExternalLink href="/docs/react-sdk/getPortfolioNFT">Method Overview</ExternalLink> |
+| `const activity = await getPortfolioActivity(oktoClient);` | Get transaction history | <ExternalLink href="/docs/react-sdk/getPortfolioActivity">Method Overview</ExternalLink> |
+| `const orders = await getOrdersHistory(oktoClient);` | Get transaction order history | <ExternalLink href="/docs/react-sdk/getOrdersHistory">Method Overview</ExternalLink> |
+| `const collections = await getNftCollections(oktoClient);` | Get NFT collections | <ExternalLink href="/docs/react-sdk/getNFTCollection">Method Overview</ExternalLink> |
+
+### User Operations (Intents)
+
+Intents are pre-built action templates within the Okto SDK that simplify common Web3 tasks. They provide one-liner functions for complex blockchain interactions.
+
+#### 1. Token Transfer
+Send tokens to another address. <ExternalLink href="/docs/react-sdk/tokenTransfer">Learn more</ExternalLink>
+
+```typescript
+const transferParams = {
+  amount: BigInt("1000000000000000000"), // Amount in smallest unit
+  recipient: "0xRecipientAddress...",     // Recipient wallet address
+  token: "0xTokenAddress...",             // Token address ("" for native token)
+  chain: "eip155:1",                      // Target chain CAIP-2 ID
+};
+const result = await tokenTransfer(oktoClient, transferParams);
+```
+
+#### 2. NFT Transfer
+Transfer NFTs between addresses. <ExternalLink href="/docs/react-sdk/nftTransfer">Learn more</ExternalLink>
+
+```typescript
+const nftParams = {
+  caip2Id: "eip155:1",                           // Target chain CAIP-2 ID
+  collectionAddress: "0xCollectionAddress...",    // NFT Collection address
+  nftId: "NFTTokenID",                           // NFT identifier
+  recipientWalletAddress: "0xRecipientAddress...",// Recipient address
+  amount: 1n,
+  nftType: "ERC721",                             // or "ERC1155"
+};
+const result = await nftTransfer(oktoClient, nftParams);
+```
+
+#### 3. Raw Transaction (EVM)
+Execute custom EVM contract calls. <ExternalLink href="/docs/react-sdk/rawTransaction">Learn more</ExternalLink>
+
+```typescript
+import { encodeFunctionData } from 'viem';
+
+// 1. Define Contract Interaction
+const contractAddress = '0xContractAddress...';
+const functionName = 'setValue';
+const functionArgs = [123];
+
+// 2. Encode Function Data
+const functionData = encodeFunctionData({
+  abi: [
+    {
+      "name": functionName,
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "inputs": [{ "type": "uint256", "name": "_value" }]
+    }
+  ] as const,
+  functionName,
+  args: functionArgs,
+});
+
+// 3. Execute Transaction
+const rawTxParams = {
+  networkId: "eip155:1",
+  transaction: {
+    to: contractAddress,
+    data: functionData,
+    // value: BigInt(0),  // Optional: for payable functions
+  },
+};
+const result = await evmRawTransaction(oktoClient, rawTxParams);
+```

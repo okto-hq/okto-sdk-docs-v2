@@ -162,3 +162,8 @@ html {
   font-weight: bold;
   font-style: normal;
 }
+
+/* Add this rule to make the "About Okto" link bold in the sidebar */
+#nd-docs-layout aside a[href="/"] {
+  font-weight: bold;
+}
