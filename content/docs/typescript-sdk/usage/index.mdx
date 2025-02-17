@@ -1,79 +1,166 @@
 ---
-title: Overview
+title: Usage Overview
 full: false
 ---
 
-This section provides a comprehensive overview of the functions available in the Typescript SDK. These functions empower you to interact seamlessly with the Okto platform—from initiating transaction operations to retrieving data related to accounts, portfolios, and more. 
+import TechnologyCard from "app/components/mdx/TechnologyCard";
+import { 
+  IoKeyOutline,
+  IoWalletOutline,
+  IoSearchOutline,
+  IoSwapHorizontalOutline,
+  IoCodeSlashOutline,
+  IoServerOutline,
+  IoAppsOutline,
+  IoListOutline
+} from "react-icons/io5";
 
-The functions are organized by their purpose, ensuring a clear separation of concerns and making it easier to integrate the right functionality into your application.
+This section provides a comprehensive overview of the functions available in the Typescript SDK. These functions empower you to interact seamlessly with the Okto platform—from initiating transaction operations to retrieving data related to accounts, portfolios, and more.
 
 ## Core Functions
 
-- **[OktoClient](/docs/typescript-sdk/usage/OktoClient)**  
-  The heartbeat of the SDK, the `OktoClient` serves as the primary interface with the Okto system. It manages authentication, session management, and acts as the gateway for every operation you will perform. All further interactions—be it signing or executing user operations—are routed through this client.
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+  <TechnologyCard
+    icon={<IoKeyOutline size={"1.5rem"} />}
+    title="OktoClient"
+    subtitle="Primary interface for authentication and session management"
+    link="/docs/typescript-sdk/usage/OktoClient"
+  />
+</div>
 
-## Account Operations
+## UserOp
 
-Functions in this category help you manage and execute user operations securely:
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+  <TechnologyCard
+    icon={<IoCodeSlashOutline size={"1.5rem"} />}
+    title="Understanding UserOp"
+    subtitle="Learn about user operations and best practices"
+    link="/docs/typescript-sdk/usage/userop-learn"
+  />
 
-- **[Understanding UserOp](/docs/typescript-sdk/usage/userop-learn)**  
-  Gain a deeper understanding of how user operations work—including best practices for creating, signing, and managing them.
+  <TechnologyCard
+    icon={<IoKeyOutline size={"1.5rem"} />}
+    title="signUserOp"
+    subtitle="Sign user operations for transaction integrity"
+    link="/docs/typescript-sdk/usage/signUserOp"
+  />
 
-- **[signUserOp](/docs/typescript-sdk/usage/signUserOp)**  
-  This function signs a user operation. It ensures the integrity and authenticity of your transaction data before sending it for execution.
+  <TechnologyCard
+    icon={<IoSwapHorizontalOutline size={"1.5rem"} />}
+    title="executeUserOp"
+    subtitle="Submit signed operations to the blockchain"
+    link="/docs/typescript-sdk/usage/executeUserOp"
+  />
 
-- **[executeUserOp](/docs/typescript-sdk/usage/executeUserOp)**  
-  Once a transaction has been signed, the `executeUserOp` function is used to submit it to the blockchain network. It handles the actual dispatching of the signed operation and returns a transaction hash or job identifier.
-
-- **[estimate](/docs/typescript-sdk/usage/estimate)**  
-  Prior to execution, the `estimate` function calculates the necessary gas or fee estimates for your transaction. It helps in determining the cost associated with an operation.
+  <TechnologyCard
+    icon={<IoServerOutline size={"1.5rem"} />}
+    title="estimate"
+    subtitle="Calculate gas and fee estimates for transactions"
+    link="/docs/typescript-sdk/usage/estimate"
+  />
+</div>
 
 ## Explorer Functions
 
-These functions allow you to retrieve critical information about account activity and network status:
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+  <TechnologyCard
+    icon={<IoWalletOutline size={"1.5rem"} />}
+    title="getAccount"
+    subtitle="Retrieve detailed account and wallet information"
+    link="/docs/typescript-sdk/usage/getAccount"
+  />
 
-- **[getAccount](/docs/typescript-sdk/usage/getAccount)**  
-  Retrieves detailed information about a user's account, including wallet details and associated metadata.
+  <TechnologyCard
+    icon={<IoListOutline size={"1.5rem"} />}
+    title="getChains"
+    subtitle="Get list of supported blockchain networks"
+    link="/docs/typescript-sdk/usage/getChains"
+  />
 
-- **[getChains](/docs/typescript-sdk/usage/getChains)**  
-  Fetches a list of supported blockchain networks within the Okto ecosystem. Use this to present available networks to your users or to validate network-specific transactions.
+  <TechnologyCard
+    icon={<IoAppsOutline size={"1.5rem"} />}
+    title="getNftCollections"
+    subtitle="Browse and verify NFT collections"
+    link="/docs/typescript-sdk/usage/getNftCollections"
+  />
 
-- **[getNftCollections](/docs/typescript-sdk/usage/getNftCollections)**  
-  Retrieves data on available NFT collections. Whether you are browsing or verifying NFT collections, this function provides the required information.
+  <TechnologyCard
+    icon={<IoSearchOutline size={"1.5rem"} />}
+    title="getOrdersHistory"
+    subtitle="View historical transactions and orders"
+    link="/docs/typescript-sdk/usage/getOrdersHistory"
+  />
 
-- **[getOrdersHistory](/docs/typescript-sdk/usage/getOrdersHistory)**  
-  Provides a historical list of orders or transactions associated with a user. This is particularly useful for audit trails and transaction monitoring.
+  <TechnologyCard
+    icon={<IoWalletOutline size={"1.5rem"} />}
+    title="getPortfolio"
+    subtitle="Get aggregated token holdings across chains"
+    link="/docs/typescript-sdk/usage/getPortfolio"
+  />
 
-- **[getPortfolio](/docs/typescript-sdk/usage/getPortfolio)**  
-  Aggregates a user’s token holdings across multiple chains. This function gives an up-to-date snapshot of a user's overall portfolio.
+  <TechnologyCard
+    icon={<IoListOutline size={"1.5rem"} />}
+    title="getPortfolioActivity"
+    subtitle="Track recent portfolio changes and transactions"
+    link="/docs/typescript-sdk/usage/getPortfolioActivity"
+  />
 
-- **[getPortfolioActivity](/docs/typescript-sdk/usage/getPortfolioActivity)**  
-  Offers insight into recent portfolio activities, including transactions, deposits, and withdrawals. It assists in tracking changes over time.
+  <TechnologyCard
+    icon={<IoAppsOutline size={"1.5rem"} />}
+    title="getPortfolioNFT"
+    subtitle="View NFT holdings and metadata"
+    link="/docs/typescript-sdk/usage/getPortfolioNFT"
+  />
 
-- **[getPortfolioNFT](/docs/typescript-sdk/usage/getPortfolioNFT)**  
-  Specifically lists the NFTs held by a user, detailing ownership and related metadata.
+  <TechnologyCard
+    icon={<IoListOutline size={"1.5rem"} />}
+    title="getTokens"
+    subtitle="List available tokens and their details"
+    link="/docs/typescript-sdk/usage/getTokens"
+  />
+</div>
 
-- **[getTokens](/docs/typescript-sdk/usage/getTokens)**  
-  Enumerates the tokens available or managed within the Okto platform. This ensures that your application displays the most accurate and current set of token details.
+## Intents
 
-## User Operation Functions
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+  <TechnologyCard
+    icon={<IoCodeSlashOutline size={"1.5rem"} />}
+    title="Understanding Intents"
+    subtitle="Learn about intents"
+    link="/docs/typescript-sdk/usage/intents"
+  />
+  
+  <TechnologyCard
+    icon={<IoAppsOutline size={"1.5rem"} />}
+    title="nftCreateCollection"
+    subtitle="Create new NFT collections efficiently"
+    link="/docs/typescript-sdk/usage/nftCreateCollection"
+  />
 
-These advanced functions cater to operations involving NFTs and tokens:
+  <TechnologyCard
+    icon={<IoSwapHorizontalOutline size={"1.5rem"} />}
+    title="nftTransfer"
+    subtitle="Transfer NFTs between wallets"
+    link="/docs/typescript-sdk/usage/nftTransfer"
+  />
 
-- **[nftCreateCollection](/docs/typescript-sdk/usage/nftCreateCollection)**  
-  Facilitates the creation of a new NFT collection. This function abstracts the underlying on-chain complexity, letting you establish collections quickly and efficiently.
+  <TechnologyCard
+    icon={<IoSwapHorizontalOutline size={"1.5rem"} />}
+    title="tokenTransfer"
+    subtitle="Transfer fungible tokens between wallets"
+    link="/docs/typescript-sdk/usage/tokenTransfer"
+  />
 
-- **[nftTransfer](/docs/typescript-sdk/usage/nftTransfer)**  
-  Enables the transfer of NFTs between wallets. With this function, you can initiate an NFT transfer by providing parameters such as chain identifiers, collection addresses, and recipient details.
-
-- **[tokenTransfer](/docs/typescript-sdk/usage/tokenTransfer)**  
-  Handles the transfer of fungible tokens. Whether sending tokens between wallets or facilitating more complex token operations, this function manages the low-level details for you.
-
-- **[rawTransaction](/docs/typescript-sdk/usage/rawTransaction)**  
-  Creates a user operation for raw EVM transactions. This function allows you to create custom transactions by specifying the raw transaction parameters.
+  <TechnologyCard
+    icon={<IoCodeSlashOutline size={"1.5rem"} />}
+    title="rawTransaction"
+    subtitle="Create custom EVM transactions"
+    link="/docs/typescript-sdk/usage/rawTransaction"
+  />
+</div>
 
 ## Conclusion
 
-Together, these functions provide a robust, developer-friendly toolkit designed to cover all essential interactions with the Okto ecosystem. Whether you need to execute secure transactions, query account and portfolio data, or perform token and NFT operations, the Typescript SDK has you covered. For detailed usage instructions and examples, be sure to check out the individual documentation pages linked throughout the SDK.
+Together, these functions provide a robust, developer-friendly toolkit designed to cover all essential interactions with the Okto ecosystem. Whether you need to execute secure transactions, query account and portfolio data, or perform token and NFT operations, the Typescript SDK has you covered.
 
 Happy building with Okto!
