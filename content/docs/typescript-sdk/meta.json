@@ -2,6 +2,7 @@
     "title": "Typescript",
     "pages": [
         "[← Back to Home](/)",
+        "------",
         "index",
         "quickstart",
         "!example-apps",
