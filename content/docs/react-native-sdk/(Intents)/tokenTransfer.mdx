@@ -1,0 +1,108 @@
+---
+title: Token Transfer
+description: Learn how to create token transfer operations using the Okto SDK.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react';
+
+The `tokenTransfer()` function creates a user operation for transferring tokens. This function initiates the process of transferring a token by encoding the necessary parameters into a User Operation, which can then be signed and executed using the OktoClient.
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`tokenTransfer`](#token-transfer) | Create a user operation for token transfer |
+
+<div className="method-box">
+
+## Token Transfer
+
+<sub><i>async</i></sub> `tokenTransfer(oktoClient: OktoClient, data: TokenTransferIntentParams)` creates a user operation for transferring tokens.
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
+| `data` | [`TokenTransferIntentParams`](./technical-reference#models) | Parameters for the token transfer |
+
+Where `TokenTransferIntentParams` contains:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `amount` | `number \| bigint` | Amount to send, in the smallest unit (e.g., gwei for ETH) |
+| `recipient` | `Address` | Wallet address of the recipient |
+| `token` | `Address \| ''` | The token address for the transaction |
+| `chain` | `string` | The network ID (e.g., Ethereum - eip155:1, Polygon - eip155:137) |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | [`Promise<UserOp>`](./technical-reference#models) | Returns the user operation for the token transfer |
+
+</Callout>
+
+### Example
+
+<Accordions>
+<Accordion title="Usage">
+<Tabs items={['TypeScript']}>
+<Tab value="TypeScript">
+```typescript
+import { useOkto } from '@okto_web3/react-native-sdk';
+import { tokenTransfer } from '@okto_web3/react-native-sdk';
+import { View, Text, Pressable } from 'react-native';
+
+function TokenTransfer() {
+    const oktoClient = useOkto();
+
+    async function handleTokenTransfer() {
+        try {
+            const transferParams = {
+                amount: BigInt("1000000000000000000"), // 1 token with 18 decimals
+                recipient: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+                token: "0x2170ed0880ac9a755fd29b2688956bd959f933f8", // Token contract address
+                chain: "eip155:1"
+            };
+
+            // Create the user operation
+            const userOp = await tokenTransfer(oktoClient, transferParams);
+            
+            // Sign the operation
+            const signedOp = await oktoClient.signUserOp(userOp);
+            
+            // Execute the transfer
+            const txHash = await oktoClient.executeUserOp(signedOp);
+            console.log('Transfer transaction hash:', txHash);
+        } catch (error) {
+            console.error('Error in token transfer:', error);
+        }
+    }
+
+    return (
+        <View>
+            <Pressable onPress={handleTokenTransfer}>
+                <Text>Transfer Token</Text>
+            </Pressable>
+        </View>
+    );
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+</Accordions>
+
+</div>
+
+<Callout title="Note">
+In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](./sdk-error-warnings) documentation for more details.
+</Callout>

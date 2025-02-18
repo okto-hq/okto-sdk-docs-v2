@@ -3,7 +3,6 @@
     "pages": [
       "learn",
       "get-token-id",
-      "google-console-setup",
-      "auth-user-via-code"
+      "google-console-setup"
     ]
   }

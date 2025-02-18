@@ -1,0 +1,108 @@
+---
+title: Get Chains
+description: Learn how to retrieve supported blockchain networks using the Okto SDK.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react';
+
+The `getChains` function retrieves a list of all blockchain networks supported by Okto. This includes information about each chain's configuration, network details, and supported features.
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`getChains`](#get-chains) | Get all supported blockchain networks |
+
+<div className="method-box">
+
+## Get Chains
+
+<sub><i>async</i></sub> `getChains(oktoClient: OktoClient)` retrieves the list of all blockchain networks supported by Okto.
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `chains` | [`Promise<GetSupportedNetworksResponseData[]>`](./technical-reference#models) | Array of supported blockchain networks |
+
+</Callout>
+
+### Example
+
+<Accordions>
+<Accordion title="Usage">
+<Tabs items={['TypeScript']}>
+<Tab value="TypeScript">
+```typescript
+import { useOkto } from '@okto_web3/react-native-sdk';
+import { getChains } from '@okto_web3/react-native-sdk';
+import { View, Text, Pressable } from 'react-native';
+
+function ChainsList() {
+    const oktoClient = useOkto();
+
+    async function fetchChains() {
+        try {
+            const chains = await getChains(oktoClient);
+            console.log('Supported chains:', chains);
+        } catch (error) {
+            console.error('Error fetching chains:', error);
+        }
+    }
+
+    return (
+        <View>
+            <Pressable onPress={fetchChains}>
+                <Text>Fetch Supported Chains</Text>
+            </Pressable>
+        </View>
+    );
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": {
+        "network": [
+            {
+                "caip_id": "eip155:56",
+                "network_name": "BSC",
+                "chain_id": "56",
+                "logo": "BSC",
+                "sponsorship_enabled": true,
+                "gsn_enabled": false,
+                "type": "EVM",
+                "network_id": "9a26afcf-ed62-43d8-91ea-42dc7cd55890",
+                "onramp_enabled": false,
+                "whitelisted": true
+            }
+        ]
+    }
+}
+```
+</Accordion>
+</Accordions>
+
+</div>
+
+<Callout title="Note">
+In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](./sdk-error-warnings) documentation for more details.
+</Callout>

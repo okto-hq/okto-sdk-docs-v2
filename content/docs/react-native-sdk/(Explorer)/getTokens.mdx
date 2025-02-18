@@ -1,0 +1,109 @@
+---
+title: Get Tokens
+description: Learn how to retrieve supported tokens using the Okto SDK.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react';
+
+The `getTokens` function fetches the list of supported tokens from the backend.
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`getTokens`](#get-tokens) | Get list of supported tokens |
+
+<div className="method-box">
+
+## Get Tokens
+
+<sub><i>async</i></sub> `getTokens(oktoClient: OktoClient)` retrieves the list of supported tokens.
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `tokens` | [`Promise<Token[]>`](./technical-reference#models) | Array of supported tokens |
+
+</Callout>
+
+### Example
+
+<Accordions>
+<Accordion title="Usage">
+<Tabs items={['TypeScript']}>
+<Tab value="TypeScript">
+```typescript
+import { useOkto } from '@okto_web3/react-native-sdk';
+import { getTokens } from '@okto_web3/react-native-sdk';
+
+function TokensList() {
+    const oktoClient = useOkto();
+
+    async function fetchTokens() {
+        try {
+            const tokens = await getTokens(oktoClient);
+            console.log('Supported tokens:', tokens);
+        } catch (error) {
+            console.error('Error fetching tokens:', error);
+        }
+    }
+
+    return (
+        <Pressable onPress={fetchTokens}>
+            <Text>Fetch Supported Tokens</Text>
+        </Pressable>
+    );
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": {
+        "count": 24,
+        "tokens": [
+            {
+                "address": "0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2",
+                "caip_id": "eip155:8453",
+                "symbol": "USDT",
+                "image": "https://images.okto.tech/token_logos/USDT.png",
+                "name": "",
+                "short_name": "Tether USD",
+                "id": "a060dd71-4ab2-3865-9530-5c4288f40506",
+                "group_id": "83e77d34-88e9-3e59-a678-231fbf336b08",
+                "is_primary": false,
+                "network_id": "9400de12-efc6-3e69-ab02-0eaf5aaf21e5",
+                "network_name": "BASE",
+                "onramp_enabled": false,
+                "whitelisted": true
+            }
+        ]
+    }
+}
+```
+</Accordion>
+</Accordions>
+
+</div>
+
+<Callout title="Note">
+In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](./sdk-error-warnings) documentation for more details.
+</Callout>
