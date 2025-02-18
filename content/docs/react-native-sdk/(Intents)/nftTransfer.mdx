@@ -29,7 +29,7 @@ The `nftTransfer()` function creates a user operation for transferring NFTs. Thi
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
-| `data` | [`NFTTransferIntentParams`](/docs/react-sdk/technical-reference#models) | Parameters for the NFT transfer |
+| `data` | [`NFTTransferIntentParams`](/docs/react-native-sdk/technical-reference#models) | Parameters for the NFT transfer |
 
 Where `NFTTransferIntentParams` contains:
 
@@ -48,7 +48,7 @@ Where `NFTTransferIntentParams` contains:
 
 | Field Name | Type | Description |
 |------------|------|-------------|
-| `result` | [`Promise<UserOp>`](/docs/react-sdk/technical-reference#models) | Returns the user operation for the NFT transfer |
+| `result` | [`Promise<UserOp>`](/docs/react-native-sdk/technical-reference#models) | Returns the user operation for the NFT transfer |
 
 </Callout>
 
@@ -59,8 +59,9 @@ Where `NFTTransferIntentParams` contains:
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
 ```typescript
-import { useOkto } from '@okto_web3/react-sdk';
-import { nftTransfer } from '@okto_web3/react-sdk';
+import { useOkto } from '@okto_web3/react-native-sdk';
+import { nftTransfer } from '@okto_web3/react-native-sdk';
+import { View, Text, Pressable } from 'react-native';
 
 function NFTTransfer() {
     const oktoClient = useOkto();
@@ -91,9 +92,11 @@ function NFTTransfer() {
     }
 
     return (
-        <button onClick={handleNFTTransfer}>
-            Transfer NFT
-        </button>
+        <View>
+            <Pressable onPress={handleNFTTransfer}>
+                <Text>Transfer NFT</Text>
+            </Pressable>
+        </View>
     );
 }
 ```
@@ -105,5 +108,5 @@ function NFTTransfer() {
 </div>
 
 <Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation for more details.
+In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](./sdk-error-warnings) documentation for more details.
 </Callout>

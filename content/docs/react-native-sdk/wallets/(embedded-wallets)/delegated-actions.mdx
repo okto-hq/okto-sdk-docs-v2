@@ -1,0 +1,20 @@
+---
+title: Degelegated actions
+description: Understand how to enable delegated actions for embedded wallets.
+full: false
+---
+
+## Delegated Actions for Embedded Wallets
+
+Okto lets you securely request “on-behalf-of” permissions from users for their embedded wallets. This is known as delegated actions. It allows your application or backend to perform certain wallet operations without requiring a user signature prompt each time, so long as it adheres to user-approved policies.
+
+### What are delegated actions?
+
+Delegated actions empower your application to take pre-defined actions using a user's embedded wallet, with the user's explicit consent.  This means your application can, for example, initiate transactions or sign messages on behalf of the user, within clearly defined boundaries and under secure conditions.
+
+### How It Works
+1. **User Consent:** The user must explicitly delegate their embedded wallet to your application.
+2. **Limited Scope:** Delegation is governed by a policy engine that enforces limits (e.g., transaction count, spend limits) to protect the user.
+
+## Policy Enforcement
+Okto’s policy engine may enforce transaction thresholds—such as daily or total spend—beyond which users need to re-confirm.

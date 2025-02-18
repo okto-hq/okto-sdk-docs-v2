@@ -1,0 +1,108 @@
+---
+title: Get Portfolio Activity
+description: Learn how to retrieve a user's portfolio activity using the Okto SDK.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react';
+
+The `getPortfolioActivity` function retrieves the user's recent portfolio activity and transactions.
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`getPortfolioActivity`](#get-portfolio-activity) | Get user's portfolio activity |
+
+<div className="method-box">
+
+## Get Portfolio Activity
+
+<sub><i>async</i></sub> `getPortfolioActivity(oktoClient: OktoClient)` retrieves the user's recent portfolio activity.
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `activity` | `Promise<ActivityData[]>` | Array of portfolio activities |
+
+</Callout>
+
+### Example
+
+<Accordions>
+<Accordion title="Usage">
+<Tabs items={['TypeScript']}>
+<Tab value="TypeScript">
+```typescript
+import { useOkto } from '@okto_web3/react-native-sdk';
+import { getPortfolioActivity } from '@okto_web3/react-native-sdk';
+import { View, Text, Pressable } from 'react-native';
+
+function PortfolioActivity() {
+    const oktoClient = useOkto();
+
+    async function fetchActivity() {
+        try {
+            const activity = await getPortfolioActivity(oktoClient);
+            console.log('Portfolio activity:', activity);
+        } catch (error) {
+            console.error('Error fetching activity:', error);
+        }
+    }
+
+    return (
+        <View>
+            <Pressable onPress={fetchActivity}>
+                <Text>Fetch Portfolio Activity</Text>
+            </Pressable>
+        </View>
+    );
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": {
+        "activities": [
+            {
+                "id": "act_123",
+                "type": "TRANSFER",
+                "timestamp": "2024-03-20T10:30:00Z",
+                "amount": "1.5",
+                "token": "ETH",
+                "from": "0x123...",
+                "to": "0x456...",
+                "txHash": "0x789...",
+                "status": "COMPLETED",
+                "networkName": "Ethereum"
+            }
+        ]
+    }
+}
+```
+</Accordion>
+</Accordions>
+
+</div>
+
+<Callout title="Note">
+In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](./sdk-error-warnings) documentation for more details.
+</Callout>

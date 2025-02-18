@@ -1,14 +1,30 @@
 {
     "title": "React Native (Coming Soon)",
     "pages": [
-        "[About Okto](/)",
-        "index",
-        "getting-started",
-        "authentication",
-        "usage",
-        "technical-reference",
-        "sdk-error-warnings",
-        "troubleshooting"
-    ],
+    "[← Back to Home](/)",
+    "index",
+    "feature-support",
+    "---Getting Started---",
+    "./quickstart/prerequisites",
+    "./quickstart/new-okto-react-native-setup",
+    "templateRepo",
+    "---Authentication---",
+    "...authenticate-users",
+    "---Wallets---",
+    "./wallets/overview",
+    "./wallets/(embedded-wallets)",
+    "./wallets/external-wallets",
+    "---Usage---",
+    "usage-overview",
+    "(Hooks)",
+    "(Account)",
+    "(Explorer)",
+    "(Intents)",
+    "---Resources---",
+    "technical-reference",
+    "sdk-error-warnings",
+    "troubleshooting"
+
+  ],
     "root": true
   }

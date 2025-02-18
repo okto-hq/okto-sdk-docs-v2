@@ -1,0 +1,112 @@
+---
+title: Get Portfolio NFTs
+description: Learn how to retrieve a user's NFT holdings using the Okto SDK.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react';
+
+The `getPortfolioNFT` function retrieves all NFTs owned by the user across supported chains.
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`getPortfolioNFT`](#get-portfolio-nft) | Get user's NFT holdings |
+
+<div className="method-box">
+
+## Get Portfolio NFT
+
+<sub><i>async</i></sub> `getPortfolioNFT(oktoClient: OktoClient)` retrieves the user's NFT portfolio data.
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `nfts` | `Promise<NFTData[]>` | Array of user's NFT holdings |
+
+</Callout>
+
+### Example
+
+<Accordions>
+<Accordion title="Usage">
+<Tabs items={['TypeScript']}>
+<Tab value="TypeScript">
+```typescript
+import { useOkto } from '@okto_web3/react-native-sdk';
+import { getPortfolioNFT } from '@okto_web3/react-native-sdk';
+import { View, Text, Pressable } from 'react-native';
+
+function NFTPortfolio() {
+    const oktoClient = useOkto();
+
+    async function fetchNFTs() {
+        try {
+            const nfts = await getPortfolioNFT(oktoClient);
+            console.log('NFT holdings:', nfts);
+        } catch (error) {
+            console.error('Error fetching NFTs:', error);
+        }
+    }
+
+    return (
+        <View>
+            <Pressable onPress={fetchNFTs}>
+                <Text>Fetch NFT Holdings</Text>
+            </Pressable>
+        </View>
+    );
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": {
+        "nfts": [
+            {
+                "tokenId": "1234",
+                "name": "Cool NFT #1234",
+                "description": "A very cool NFT",
+                "image": "https://example.com/nft/1234.png",
+                "collectionName": "Cool NFTs",
+                "collectionAddress": "0x1234...",
+                "chain": "eip155:1",
+                "standard": "ERC721",
+                "attributes": [
+                    {
+                        "trait_type": "Background",
+                        "value": "Blue"
+                    }
+                ]
+            }
+        ]
+    }
+}
+```
+</Accordion>
+</Accordions>
+
+</div>
+
+<Callout title="Note">
+In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](./sdk-error-warnings) documentation for more details.
+</Callout>
