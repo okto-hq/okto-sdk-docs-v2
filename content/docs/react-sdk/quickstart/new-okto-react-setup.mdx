@@ -202,19 +202,19 @@ Without completing these steps first, your application won't be able to interact
     Create a UserDashboard component to display user information:
 
     ```tsx title="UserDashboard.tsx"
-    import { useOkto, getWallets, getPortfolio } from "@okto_web3/react-sdk";
+    import { useOkto, getAccount, getPortfolio } from "@okto_web3/react-sdk";
     import { useEffect, useState } from "react";
 
     export function UserDashboard() {
         const oktoClient = useOkto();
-        const [wallets, setWallets] = useState([]);
+        const [accounts, setAccounts] = useState([]);
         const [portfolio, setPortfolio] = useState(null);
 
         useEffect(() => {
             async function fetchUserData() {
-                // Get user's wallets
-                const userWallets = await getWallets(oktoClient);
-                setWallets(userWallets);
+                // Get user's accounts/wallets
+                const userAccounts = await getAccount(oktoClient);
+                setAccounts(userAccounts.data);
 
                 // Get user's portfolio
                 const userPortfolio = await getPortfolio(oktoClient);
@@ -227,11 +227,16 @@ Without completing these steps first, your application won't be able to interact
         return (
             <div>
                 <h2>Welcome {oktoClient.user?.userAddress}</h2>
-                <h3>Your Wallets:</h3>
-                <pre>{wallets}</pre>
+                <h3>Your Accounts:</h3>
+                {accounts.map(account => (
+                    <div key={account.caip_id}>
+                        <p>Network: {account.network_name}</p>
+                        <p>Address: {account.address}</p>
+                    </div>
+                ))}
             
                 <h3>Portfolio:</h3>
-                <pre>{portfolio}</pre>
+                <pre>{JSON.stringify(portfolio, null, 2)}</pre>
             </div>
         );
     }
@@ -271,10 +276,10 @@ Now that we have our basic setup complete, let's implement a token transfer on S
     First, get your Solana wallet address:
 
     ```tsx
-    import { getAccounts } from "@okto_web3/react-sdk";
+    import { getAccount } from "@okto_web3/react-sdk";
     
-    const accounts = await getAccounts(oktoClient);
-    const solanaAccount = accounts.find(account => account.chain === "solana:devnet");
+    const accounts = await getAccount(oktoClient);
+    const solanaAccount = accounts.data.find(account => account.network_name === "SOLANA_DEVNET");
     console.log("Your Solana address:", solanaAccount.address);
     ```
 </Step>
