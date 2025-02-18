@@ -1,0 +1,9 @@
+{
+    "title": "Quickstart",
+    "pages": [
+        "new-okto-react-setup",
+        "new-okto-nextjs-setup",
+        "new-okto-react-native-setup",
+        "new-okto-typescript-setup"
+    ]
+}
