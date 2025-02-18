@@ -6,11 +6,16 @@ full: false
 
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
 import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
 import ExternalLink from 'app/components/mdx/ExternalLink';
 
-<Callout>
-Want an even faster setup? Check out our <ExternalLink href="/docs/react-sdk/templateRepo">Template Repo</ExternalLink> to get your dApp running in minutes!
+<Callout type="info" emoji="🚀">
+### Quick Start Template Available!
+Skip the manual setup and get started in minutes with our <ExternalLink href="/docs/react-sdk/templateRepo">Template Repository</ExternalLink>. It includes:
+- Pre-configured Okto SDK integration
+- Authentication setup
+- Example components and operations
 </Callout>
 
 <CollapsibleCallout type="warning" title="Essential Setup Required">
