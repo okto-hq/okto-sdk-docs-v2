@@ -43,20 +43,20 @@ export default function NavbarComponent() {
     setTheme(resolvedTheme === "light" ? "dark" : "light")
   }
 
-  const navItems = [
-    // { href: "/docs/developer-admin-dashboard", label: "Using Dashboard", subpath: '/overview' },
-    { href: "https://www.okto.tech/blog", label: "Blog", subpath: '' },
-    { href: "/showcase", label: "Showcase", subpath: '' },
-    // { href: "/api-docs", label: "API Reference", subpath: '' },
-  ];
+  // const navItems = [
+  //   // { href: "/docs/developer-admin-dashboard", label: "Using Dashboard", subpath: '/overview' },
+  //   { href: "https://www.okto.tech/blog", label: "Blog", subpath: '' },
+  //   { href: "/showcase", label: "Showcase", subpath: '' },
+  //   // { href: "/api-docs", label: "API Reference", subpath: '' },
+  // ];
 
-  const sdkOptions = [
-    { href: "/docs/react-sdk", label: "React", subpath: '/', icons: <FaReact /> },
-    { href: "/docs/react-native-sdk", label: "React Native", subpath: '/', icons: <TbBrandReactNative /> },
-    // { href: "/docs/flutter-sdk", label: "Flutter (Coming Soon)", subpath: '/', icons: <SiFlutter /> },
-    // { href: "/docs", label: "Unity (Coming Soon)", subpath: '/unity-sdk', icons: <FaUnity /> },
-    { href: "/docs/typescript-sdk", label: "Typescript", subpath: '/', icons: <SiTypescript /> },
-  ];
+  // const sdkOptions = [
+  //   { href: "/docs/react-sdk", label: "React", subpath: '/', icons: <FaReact /> },
+  //   { href: "/docs/react-native-sdk", label: "React Native", subpath: '/', icons: <TbBrandReactNative /> },
+  //   // { href: "/docs/flutter-sdk", label: "Flutter (Coming Soon)", subpath: '/', icons: <SiFlutter /> },
+  //   // { href: "/docs", label: "Unity (Coming Soon)", subpath: '/unity-sdk', icons: <FaUnity /> },
+  //   { href: "/docs/typescript-sdk", label: "Typescript", subpath: '/', icons: <SiTypescript /> },
+  // ];
 
   const getFrameworkLabel = () => {
     if (pathname.startsWith('/docs/typescript-sdk')) return 'Typescript';
@@ -67,20 +67,20 @@ export default function NavbarComponent() {
     return 'SDKs';
   };
 
-  useEffect(() => {
-    const updateActiveItem = () => {
-      const activeNavItem = [...navItems, ...sdkOptions].find(item => pathname.startsWith(item.href));
-      setActiveItem(activeNavItem ? activeNavItem.href : "");
-    };
+  // useEffect(() => {
+  //   const updateActiveItem = () => {
+  //     const activeNavItem = [...navItems, ...sdkOptions].find(item => pathname.startsWith(item.href));
+  //     setActiveItem(activeNavItem ? activeNavItem.href : "");
+  //   };
 
-    updateActiveItem();
-  }, [pathname]);
+  //   updateActiveItem();
+  // }, [pathname]);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const isFrameworkSelected = sdkOptions.some(option => pathname.startsWith(option.href));
+  // const isFrameworkSelected = sdkOptions.some(option => pathname.startsWith(option.href));
 
   return (
     <Navbar isBordered className="nav-spacing border-b border-gray-200 dark:border-gray-700">
@@ -94,7 +94,7 @@ export default function NavbarComponent() {
             </Chip>
           </NavbarItem>
         </ULink>
-        <NavbarContent className="hidden sm:flex gap-8" justify="start">
+        {/* <NavbarContent className="hidden sm:flex gap-8" justify="start">
           {navItems.map((item) => (
             <NavbarItem key={item.href}>
               <ULink
@@ -130,7 +130,7 @@ export default function NavbarComponent() {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-        </NavbarContent>
+        </NavbarContent> */}
       </NavbarBrand>
       <NavbarContent justify="end">
         <NavbarItem>
@@ -138,6 +138,12 @@ export default function NavbarComponent() {
         </NavbarItem>
         <NavbarItem>
           <GitHubButton />
+        </NavbarItem>
+        <NavbarItem className="hidden lg:flex">
+          <SCButton variant="outline" className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]">
+            <Link href="https://www.okto.tech/blog" target="_blank">Blog</Link>
+            <MdOutlineArrowOutward size={".9rem"} />
+          </SCButton>
         </NavbarItem>
         <NavbarItem className="hidden lg:flex">
           <SCButton variant="outline" className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]">
