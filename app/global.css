@@ -156,15 +156,20 @@ html {
   display: none;
 }
 
+
+/* Add this rule to make the "Back" link bold in the sidebar */
+#nd-docs-layout aside a[href="/"] {
+  color: #000000;
+}
+
+/* Fix dark mode: override the color in dark mode */
+.dark #nd-docs-layout aside a[href="/"] {
+  color: #FFFFFF;
+}
+
 @font-face {
   font-family: 'FunnelDisplay';
   src: url('/fonts/FunnelDisplay.ttf') format('ttf');
   font-weight: bold;
   font-style: normal;
-}
-
-/* Add this rule to make the "Back" link bold in the sidebar */
-#nd-docs-layout aside a[href="/"] {
-  font-weight: bold;
-  color: #000000;
 }

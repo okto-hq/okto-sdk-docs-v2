@@ -1,5 +1,5 @@
 ---
-title: Quickstart
+title: TypeScript Setup
 description: Learn how to create a TypeScript application and initialize it with the Okto SDK, including setting up authentication and executing your first token transfer.
 full: false
 ---
@@ -7,6 +7,8 @@ full: false
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { Callout } from 'fumadocs-ui/components/callout';
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
+import ExternalLink from 'app/components/mdx/ExternalLink';
 
 <Callout type="warning" title="Essential Setup Required">
 Before proceeding with this guide, please ensure you have:
@@ -14,7 +16,7 @@ Before proceeding with this guide, please ensure you have:
 - Obtained your API keys from the dashboard
 - Enabled the specific chains and tokens you plan to use in your application
 
-Without completing these steps first, your application won't be able to interact with the Okto platform properly. Need help? Check out our [Dashboard Setup Guide](/docs/developer-admin-dashboard/overview) for detailed instructions.
+Without completing these steps first, your application won't be able to interact with the Okto platform properly. Need help? Check out our <ExternalLink href="/docs/developer-admin-dashboard/overview">Dashboard Setup Guide</ExternalLink> for detailed instructions.
 </Callout>
 
 ## TypeScript App
@@ -183,7 +185,7 @@ Now that we have our basic setup complete, let's implement a token transfer on S
 <Step>
     ## Check Network Information
 
-    Before creating the user operation, check the [Network Information Guide](/docs/react-sdk/technical-reference#network-information) for getting the correct CAIP-2 IDs of chains.
+    Before creating the user operation, check the <ExternalLink href="/docs/typescript-sdk/technical-reference#network-information">Network Information Guide</ExternalLink> for getting the correct CAIP-2 IDs of chains.
 </Step>
 
 <Step>
@@ -226,13 +228,106 @@ Now that we have our basic setup complete, let's implement a token transfer on S
 
     After the transfer is complete, you can verify it through:
     - The `getPortfolio` method to check your updated balance
-    - The [Solana Explorer](https://explorer.solana.com) (devnet) using the transaction hash
+    - The <ExternalLink href="https://explorer.solana.com">Solana Explorer</ExternalLink> (devnet) using the transaction hash
 </Step>
 
 </Steps>
 
-Now that you've completed your first user operation, you're ready to explore more advanced features! Check out our [Usage Guide](/docs/typescript-sdk/usage/overview) to learn about other operations like NFT transfers, contract interactions, and more.
+Now that you've completed your first user operation, you're ready to explore more advanced features! Check out our <ExternalLink href="/docs/typescript-sdk/usage/overview">Usage Guide</ExternalLink> to learn about other operations like NFT transfers, contract interactions, and more.
 
-<Callout>
-For more examples and advanced usage, check out the [Template Repo](https://github.com/okto-hq/okto-sdkv2-typescript-template).
-</Callout>
+---
+
+## SDK Reference
+
+### Get Commands
+
+| Command | Description | Documentation |
+|---------|-------------|---------------|
+| `const account = await getAccount(oktoClient);` | Get user's wallet details | <ExternalLink href="/docs/typescript-sdk/usage/getAccount">Method Overview</ExternalLink> |
+| `const chains = await getChains(oktoClient);` | List supported blockchain networks | <ExternalLink href="/docs/typescript-sdk/usage/getChains">Method Overview</ExternalLink> |
+| `const tokens = await getTokens(oktoClient);` | List supported tokens | <ExternalLink href="/docs/typescript-sdk/usage/getTokens">Method Overview</ExternalLink> |
+| `const portfolio = await getPortfolio(oktoClient);` | Get user's token holdings | <ExternalLink href="/docs/typescript-sdk/usage/getPortfolio">Method Overview</ExternalLink> |
+| `const nfts = await getPortfolioNFT(oktoClient);` | Get user's NFT holdings | <ExternalLink href="/docs/typescript-sdk/usage/getPortfolioNFT">Method Overview</ExternalLink> |
+| `const activity = await getPortfolioActivity(oktoClient);` | Get transaction history | <ExternalLink href="/docs/typescript-sdk/usage/getPortfolioActivity">Method Overview</ExternalLink> |
+| `const orders = await getOrdersHistory(oktoClient);` | Get transaction order history | <ExternalLink href="/docs/typescript-sdk/usage/getOrdersHistory">Method Overview</ExternalLink> |
+| `const collections = await getNftCollections(oktoClient);` | Get NFT collections | <ExternalLink href="/docs/typescript-sdk/usage/getNftCollections">Method Overview</ExternalLink> |
+
+### User Operations (Intents)
+
+Intents are pre-built action templates within the Okto SDK that simplify common Web3 tasks. They provide one-liner functions for complex blockchain interactions.
+
+#### 1. Token Transfer
+Send tokens to another address. <ExternalLink href="/docs/typescript-sdk/usage/tokenTransfer">Learn more</ExternalLink>
+
+```typescript
+const transferParams = {
+  amount: BigInt("1000000000000000000"), // Amount in smallest unit
+  recipient: "0xRecipientAddress...",     // Recipient wallet address
+  token: "0xTokenAddress...",             // Token address ("" for native token)
+  chain: "eip155:1",                      // Target chain CAIP-2 ID
+};
+const result = await tokenTransfer(oktoClient, transferParams);
+```
+
+#### 2. NFT Transfer
+Transfer NFTs between addresses. <ExternalLink href="/docs/typescript-sdk/usage/nftTransfer">Learn more</ExternalLink>
+
+```typescript
+const nftParams = {
+  caip2Id: "eip155:1",                           // Target chain CAIP-2 ID
+  collectionAddress: "0xCollectionAddress...",    // NFT Collection address
+  nftId: "NFTTokenID",                           // NFT identifier
+  recipientWalletAddress: "0xRecipientAddress...",// Recipient address
+  amount: 1n,
+  nftType: "ERC721",                             // or "ERC1155"
+};
+const result = await nftTransfer(oktoClient, nftParams);
+```
+
+#### 3. Raw Transaction (EVM)
+Execute custom EVM contract calls. <ExternalLink href="/docs/typescript-sdk/usage/rawTransaction">Learn more</ExternalLink>
+
+```typescript
+import { encodeFunctionData } from 'viem';
+
+// 1. Define Contract Interaction
+const contractAddress = '0xContractAddress...';
+const functionName = 'setValue';
+const functionArgs = [123];
+
+// 2. Encode Function Data
+const functionData = encodeFunctionData({
+  abi: [
+    {
+      "name": functionName,
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "inputs": [{ "type": "uint256", "name": "_value" }]
+    }
+  ] as const,
+  functionName,
+  args: functionArgs,
+});
+
+// 3. Execute Transaction
+const rawTxParams = {
+  networkId: "eip155:1",
+  transaction: {
+    to: contractAddress,
+    data: functionData,
+    // value: BigInt(0),  // Optional: for payable functions
+  },
+};
+const result = await evmRawTransaction(oktoClient, rawTxParams);
+```
+
+---
+
+## Additional Resources
+
+- <ExternalLink href="/docs/typescript-sdk/troubleshooting">Troubleshooting Guide</ExternalLink>
+- <ExternalLink href="/docs/typescript-sdk/technical-reference">Technical Reference</ExternalLink>
+- <ExternalLink href="/docs/typescript-sdk/usage">Advanced Usage Examples</ExternalLink>
+
+Need help? Join our <ExternalLink href="https://discord.com/invite/okto-916349620383252511">Discord community</ExternalLink> or email us at `devrel@coindcx.com`.
+
