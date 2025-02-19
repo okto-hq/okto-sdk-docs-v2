@@ -31,6 +31,15 @@ import '../../styles.css';
 | `oktoClient` | [`OktoClient`](/docs/typescript-sdk/technical-reference#models) | Okto client |
 | `data` | [`TokenTransferIntentParams`](/docs/typescript-sdk/technical-reference#models) | The data for the token transfer |
 
+Where `TokenTransferIntentParams` contains:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `amount` | `number \| bigint` | Amount to send, in the smallest unit (e.g., gwei for ETH) |
+| `recipient` | `Address` | Wallet address of the recipient |
+| `token` | `Address \| ''` | The token address for the transaction |
+| `caip2Id` | `string` | The network ID (e.g., Ethereum - eip155:1, Polygon - eip155:137) |
+
 ### Response
 
 <Callout title="Success Response">

@@ -107,7 +107,7 @@ Without completing these steps first, your application won't be able to interact
 
     const config = {
         environment: "sandbox",
-        clientPrivKey: import.meta.env.VITE_CLIENT_PRIV_KEY,
+        clientPrivateKey: import.meta.env.VITE_CLIENT_PRIV_KEY,
         clientSWA: import.meta.env.VITE_CLIENT_SWA,
     };
 
@@ -135,7 +135,7 @@ Without completing these steps first, your application won't be able to interact
 
     const config = {
         environment: "sandbox",
-        clientPrivKey: import.meta.env.VITE_CLIENT_PRIV_KEY,
+        clientPrivateKey: import.meta.env.VITE_CLIENT_PRIV_KEY,
         clientSWA: import.meta.env.VITE_CLIENT_SWA,
     };
 
@@ -231,7 +231,7 @@ Without completing these steps first, your application won't be able to interact
 
         return (
             <div>
-                <h2>Welcome {oktoClient.user?.userAddress}</h2>
+                <h2>Welcome {oktoClient.userSWA?.userAddress}</h2>
                 <h3>Your Accounts:</h3>
                 {accounts.map(account => (
                     <div key={account.caip_id}>
@@ -278,21 +278,21 @@ Now that we have our basic setup complete, let's implement a token transfer on S
 <Step>
     ### 1. Get Your Wallet Address
 
-    First, get your Solana wallet address:
+    First, get your Polygon wallet address:
 
     ```tsx
     import { getAccount } from "@okto_web3/react-sdk";
     
     const accounts = await getAccount(oktoClient);
-    const solanaAccount = accounts.data.find(account => account.network_name === "SOLANA_DEVNET");
-    console.log("Your Solana address:", solanaAccount.address);
+    const polygonAccount = accounts.data.find(account => account.network_name === "POLYGON_TESTNET_AMOY");
+    console.log("Your Polygon Amoy address:", polygonAccount.address);
     ```
 </Step>
 
 <Step>
     ### 2. Fund Your Wallet
 
-    To perform a token transfer, you'll need some funds in your wallet. Add funds to this address using the [Solana Devnet Faucet](https://faucet.solana.com).
+    To perform a token transfer, you'll need some funds in your wallet. Add funds to this address using the [Polygon Amoy Faucet](https://faucet.polygon.technology/).
 </Step>
 
 <Step>
@@ -318,10 +318,10 @@ Now that we have our basic setup complete, let's implement a token transfer on S
         async function handleTransfer() {
             try {
                 const txHash = await tokenTransfer(oktoClient, {
-                    amount: BigInt("1000000000"), // 1 SOL
+                    amount: BigInt("1000000000"), // Amount of tokens to transfer (smallest unit)
                     recipient: "YOUR_RECIPIENT_ADDRESS",
                     token: "", // Empty string for native token
-                    chain: "SOLANA_CHAIN_ID" // caip2id of Solana devnet from step 3
+                    caip2Id: "eip155:137" // caip2id of Polygon Amoy
                 });
                 setStatus(`Transfer complete! Hash: ${txHash}`);
             } catch (error) {
@@ -334,7 +334,7 @@ Now that we have our basic setup complete, let's implement a token transfer on S
             <div>
                 <h2>Token Transfer</h2>
                 <button onClick={handleTransfer}>
-                    Send 1 SOL
+                    Send 1 POL
                 </button>
                 <p>{status}</p>
             </div>
@@ -348,7 +348,7 @@ Now that we have our basic setup complete, let's implement a token transfer on S
 
     After the transfer is complete, you can verify it through:
     - The `getPortfolio` method to check your updated balance
-    - The [Solana Explorer](https://explorer.solana.com) (devnet) using the transaction hash
+    - The [Polygon Explorer](https://amoy.polygonscan.com/) using the transaction hash
 </Step>
 
 </Steps>
@@ -372,7 +372,7 @@ For more examples and advanced usage, check out the [Template Repo](https://gith
 | `const nfts = await getPortfolioNFT(oktoClient);` | Get user's NFT holdings | <ExternalLink href="/docs/react-sdk/getPortfolioNFT">Method Overview</ExternalLink> |
 | `const activity = await getPortfolioActivity(oktoClient);` | Get transaction history | <ExternalLink href="/docs/react-sdk/getPortfolioActivity">Method Overview</ExternalLink> |
 | `const orders = await getOrdersHistory(oktoClient);` | Get transaction order history | <ExternalLink href="/docs/react-sdk/getOrdersHistory">Method Overview</ExternalLink> |
-| `const collections = await getNftCollections(oktoClient);` | Get NFT collections | <ExternalLink href="/docs/react-sdk/getNFTCollection">Method Overview</ExternalLink> |
+| `const collections = await getNftCollections(oktoClient);` | Get NFT collections | <ExternalLink href="/docs/react-sdk/getNFTCollections">Method Overview</ExternalLink> |
 
 ### User Operations (Intents)
 
@@ -385,8 +385,8 @@ Send tokens to another address. <ExternalLink href="/docs/react-sdk/tokenTransfe
 const transferParams = {
   amount: BigInt("1000000000000000000"), // Amount in smallest unit
   recipient: "0xRecipientAddress...",     // Recipient wallet address
-  token: "0xTokenAddress...",             // Token address ("" for native token)
-  chain: "eip155:1",                      // Target chain CAIP-2 ID
+  token: "",             // Token address ("" for native token)
+  caip2Id: "eip155:137",                      // Target chain CAIP-2 ID
 };
 const result = await tokenTransfer(oktoClient, transferParams);
 ```
@@ -400,7 +400,7 @@ const nftParams = {
   collectionAddress: "0xCollectionAddress...",    // NFT Collection address
   nftId: "NFTTokenID",                           // NFT identifier
   recipientWalletAddress: "0xRecipientAddress...",// Recipient address
-  amount: 1n,
+  amount: 1,                                       // Amount of tokens to transfer
   nftType: "ERC721",                             // or "ERC1155"
 };
 const result = await nftTransfer(oktoClient, nftParams);
@@ -413,7 +413,6 @@ Execute custom EVM contract calls. <ExternalLink href="/docs/react-sdk/rawTransa
 import { encodeFunctionData } from 'viem';
 
 // 1. Define Contract Interaction
-const contractAddress = '0xContractAddress...';
 const functionName = 'setValue';
 const functionArgs = [123];
 
@@ -426,18 +425,19 @@ const functionData = encodeFunctionData({
       "stateMutability": "nonpayable",
       "inputs": [{ "type": "uint256", "name": "_value" }]
     }
-  ] as const,
+  ],
   functionName,
   args: functionArgs,
 });
 
 // 3. Execute Transaction
 const rawTxParams = {
-  networkId: "eip155:1",
+  caip2Id: "eip155:1",
   transaction: {
-    to: contractAddress,
+    from: "0xuserWalletAddress",
+    to: "0xcontractAddress",
     data: functionData,
-    // value: BigInt(0),  // Optional: for payable functions
+    value: BigInt(0),
   },
 };
 const result = await evmRawTransaction(oktoClient, rawTxParams);

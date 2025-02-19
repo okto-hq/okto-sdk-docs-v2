@@ -39,7 +39,7 @@ Where `RawTransactionIntentParams` contains:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `networkId` | `string` | The network identifier (e.g., eip155:1 for Ethereum) |
+| `caip2Id` | `string` | The network identifier (e.g., eip155:1 for Ethereum) |
 | `transaction` | `EVMRawTransaction` | The raw transaction parameters |
 
 And `EVMRawTransaction` contains:
@@ -49,7 +49,7 @@ And `EVMRawTransaction` contains:
 | `from` | `Address` | The sender's address |
 | `to` | `Address` | The recipient's address |
 | `data` | `Hash` | The transaction data (optional) |
-| `value` | `number \| bigint` | The amount of native currency to send (optional) |
+| `value` | `Hash` | The amount of native currency to send (optional) |
 
 ### Response
 
