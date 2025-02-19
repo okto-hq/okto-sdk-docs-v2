@@ -10,6 +10,31 @@ import SupportedChainCard from "app/components/mdx/SupportedChainCard";
 ## Supported Chains
 
 <SupportedChainCard
+  chainIcon="/images/HL-icon.png"
+  chainName="HyperEVM"
+  tokens={[
+    { name: "HYPE (Native)", icon: "/images/aptos-icon.svg" },
+  ]}
+  whitelistNote="For HyperEVM, any fungible asset can be whitelisted by contacting the team."
+  resources={{
+    "HL Docs": "https://hyperliquid.gitbook.io/hyperliquid-docs",
+    "HyperEVM": "https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/evm",
+    "HL Python SDK": "https://github.com/hyperliquid-dex/hyperliquid-python-sdk",
+    "HL Rust SDK": "https://github.com/hyperliquid-dex/hyperliquid-rust-sdk",
+  }}
+  supportedTestnet={{
+    "HyperEVM Testnet": "#",
+  }}
+  networkInfo={[
+    {
+      name: "HyperEVM",
+      confirmations: "1",
+      blockInterval: "2s",
+    },
+  ]}
+/>
+<br/>
+<SupportedChainCard
   chainIcon="/images/polygon-logo.svg"
   chainName="Polygon"
   tokens={[
@@ -88,11 +113,16 @@ import SupportedChainCard from "app/components/mdx/SupportedChainCard";
     "OpenZeppelin": "https://www.openzeppelin.com/",
   }}
   supportedTestnet={{
-    "No Supported Testnet": "#",
+    "Base Sepolia Testnet": "https://sepolia.basescan.org/",
   }}
   networkInfo={[
     {
       name: "Base Mainnet",
+      confirmations: "1",
+      blockInterval: "2s",
+    },
+    {
+      name: "Base Sepolia Testnet",
       confirmations: "1",
       blockInterval: "2s",
     },

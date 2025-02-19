@@ -12,6 +12,15 @@ import { Icon as IIcon } from '@iconify/react';
 
 The `nftTransfer()` function creates a user operation for transferring NFTs. This function initiates the process of transferring an NFT by encoding the necessary parameters into a User Operation, which can then be signed and executed using the OktoClient.
 
+<Callout 
+  title="Note" 
+  style={{ backgroundColor: '#f8d7da', color: '#842029', margin: 0, border: '1px solid #f5c2c7' }}
+>
+  This function is currently **not supported** for the following chains:
+  - Base Sepolia
+  - HyperEVM
+</Callout>
+
 ### Method Overview
 
 | Method | Description |
@@ -72,8 +81,8 @@ function NFTTransfer() {
                 collectionAddress: "0x23581767a106ae21c074b2276D25e5C3e136a68b",
                 nftId: "123", // NFT token ID
                 recipientWalletAddress: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-                amount: 1n,
-                nftType: "ERC721" as const
+                amount: 1,
+                nftType: 'ERC721'
             };
 
             // Create the user operation

@@ -1,0 +1,6 @@
+{
+    "title": "Authenticate Users",
+    "pages": [
+        "okto-auth", "google-oauth", "session-management"
+    ]
+}

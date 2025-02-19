@@ -1,16 +1,21 @@
 ---
-title: NextJS Quickstart
+title: NextJS Setup
 description: Learn how to create a Next.js app and initialize it with the Okto SDK.
 full: false
 ---
 
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
 import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
 import ExternalLink from 'app/components/mdx/ExternalLink';
 
-<Callout>
-Want an even faster setup? Check out our <ExternalLink href="/docs/react-sdk/templateRepo">Template Repo</ExternalLink> to get your dApp running in minutes!
+<Callout type="info" emoji="🚀">
+### Quick Start Template Available!
+Skip the manual setup and get started in minutes with our <ExternalLink href="/docs/react-sdk/templateRepo">Template Repository</ExternalLink>. It includes:
+- Pre-configured Okto SDK integration
+- Authentication setup
+- Example components and operations
 </Callout>
 
 <CollapsibleCallout type="warning" title="Essential Setup Required">
@@ -65,7 +70,7 @@ If you need help, see our <ExternalLink href="/docs/developer-admin-dashboard/ov
         - **TypeScript:** Yes
         - **ESLint:** Yes
         - **Tailwind CSS:** Yes
-        - **Use `src/` directory:** Yes
+        - **Use `src/` directory:** No
         - **App Router:** Yes
         - **Customize default import alias:** No
     </CollapsibleCallout>
@@ -133,13 +138,15 @@ If you need help, see our <ExternalLink href="/docs/developer-admin-dashboard/ov
     ```tsx title="app/components/providers.tsx"
     "use client";
     import { SessionProvider } from "next-auth/react";
-    import { OktoProvider } from "@okto_web3/react-sdk";
+    import { Hex, Hash, OktoProvider } from "@okto_web3/react-sdk";
     import React from "react";
 
-    const config = { // Configuration for Okto SDK
-        environment: process.env.NEXT_PUBLIC_ENVIRONMENT || 'sandbox', // Environment from .env
-        clientPrivKey: process.env.NEXT_PUBLIC_CLIENT_PRIVATE_KEY || '', // Client Private Key from .env
-        clientSWA: process.env.NEXT_PUBLIC_CLIENT_SWA || '', // Client SWA from .env
+    type Env = 'sandbox' | 'production';
+
+    const config = {
+        environment: (process.env.NEXT_PUBLIC_ENVIRONMENT || 'sandbox') as Env,
+        clientPrivateKey: process.env.NEXT_PUBLIC_CLIENT_PRIVATE_KEY as Hash,
+        clientSWA: process.env.NEXT_PUBLIC_CLIENT_SWA as Hex,
     };
 
     function AppProvider({ children, session }) {
@@ -400,7 +407,6 @@ If you need help, see our <ExternalLink href="/docs/developer-admin-dashboard/ov
     import { LoginButton } from "@/app/components/LoginButton";
     import GetButton from "@/app/components/GetButton";
     import {getAccount, useOkto } from '@okto_web3/react-sdk';
-    import { TokenTransfer } from "@/app/components/TokenTransfer";
 
 
     export default function Home() {
@@ -445,9 +451,6 @@ If you need help, see our <ExternalLink href="/docs/developer-admin-dashboard/ov
                     <LoginButton />
                     <GetButton title="Okto Log out" apiFn={handleLogout} />
                     <GetButton title="getAccount" apiFn={getAccount} />
-                    <div className="col-span-2">
-                        <TokenTransfer />
-                    </div>
                 </div>
             </main>
         );

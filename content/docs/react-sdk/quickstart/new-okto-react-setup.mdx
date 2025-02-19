@@ -1,16 +1,21 @@
 ---
-title: React Quickstart
+title: React Setup
 description: Learn how to create a React app and initialize it with the Okto SDK, including setting up authentication and executing your first token transfer.
 full: false
 ---
 
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Callout } from 'fumadocs-ui/components/callout';
 import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
 import ExternalLink from 'app/components/mdx/ExternalLink';
 
-<Callout>
-Want an even faster setup? Check out our <ExternalLink href="/docs/react-sdk/templateRepo">Template Repo</ExternalLink> to get your dApp running in minutes!
+<Callout type="info" emoji="🚀">
+### Quick Start Template Available!
+Skip the manual setup and get started in minutes with our <ExternalLink href="/docs/react-sdk/templateRepo">Template Repository</ExternalLink>. It includes:
+- Pre-configured Okto SDK integration
+- Authentication setup
+- Example components and operations
 </Callout>
 
 <CollapsibleCallout type="warning" title="Essential Setup Required">
@@ -32,7 +37,7 @@ Without completing these steps first, your application won't be able to interact
     To create a new React app, run the following commands in your terminal:
 
     ```bash title="bash"
-    npx create vite@latest my-okto-app --template react-ts
+    npm create vite@latest my-okto-app --template react-ts
     cd my-okto-app
     ```
 </Step>
@@ -202,19 +207,19 @@ Without completing these steps first, your application won't be able to interact
     Create a UserDashboard component to display user information:
 
     ```tsx title="UserDashboard.tsx"
-    import { useOkto, getWallets, getPortfolio } from "@okto_web3/react-sdk";
+    import { useOkto, getAccount, getPortfolio } from "@okto_web3/react-sdk";
     import { useEffect, useState } from "react";
 
     export function UserDashboard() {
         const oktoClient = useOkto();
-        const [wallets, setWallets] = useState([]);
+        const [accounts, setAccounts] = useState([]);
         const [portfolio, setPortfolio] = useState(null);
 
         useEffect(() => {
             async function fetchUserData() {
-                // Get user's wallets
-                const userWallets = await getWallets(oktoClient);
-                setWallets(userWallets);
+                // Get user's accounts/wallets
+                const userAccounts = await getAccount(oktoClient);
+                setAccounts(userAccounts.data);
 
                 // Get user's portfolio
                 const userPortfolio = await getPortfolio(oktoClient);
@@ -227,11 +232,16 @@ Without completing these steps first, your application won't be able to interact
         return (
             <div>
                 <h2>Welcome {oktoClient.user?.userAddress}</h2>
-                <h3>Your Wallets:</h3>
-                <pre>{wallets}</pre>
+                <h3>Your Accounts:</h3>
+                {accounts.map(account => (
+                    <div key={account.caip_id}>
+                        <p>Network: {account.network_name}</p>
+                        <p>Address: {account.address}</p>
+                    </div>
+                ))}
             
                 <h3>Portfolio:</h3>
-                <pre>{portfolio}</pre>
+                <pre>{JSON.stringify(portfolio, null, 2)}</pre>
             </div>
         );
     }
@@ -271,10 +281,10 @@ Now that we have our basic setup complete, let's implement a token transfer on S
     First, get your Solana wallet address:
 
     ```tsx
-    import { getAccounts } from "@okto_web3/react-sdk";
+    import { getAccount } from "@okto_web3/react-sdk";
     
-    const accounts = await getAccounts(oktoClient);
-    const solanaAccount = accounts.find(account => account.chain === "solana:devnet");
+    const accounts = await getAccount(oktoClient);
+    const solanaAccount = accounts.data.find(account => account.network_name === "SOLANA_DEVNET");
     console.log("Your Solana address:", solanaAccount.address);
     ```
 </Step>
