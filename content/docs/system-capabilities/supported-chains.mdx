@@ -3,7 +3,7 @@ title: Supported Chains & Tokens
 full: false
 ---
 
- Overview of supported chains, wallet structure, testnet availability, and token whitelisting in Okto’s ecosystem. These chains and tokens can be enabled from the [**Okto Dashboard**](https://dashboard.okto.tech/login).
+Overview of supported chains, wallet structure, testnet availability, and token whitelisting in Okto’s ecosystem. These chains and tokens can be enabled from the [**Okto Dashboard**](https://dashboard.okto.tech/login).
 
 import SupportedChainCard from "app/components/mdx/SupportedChainCard";
 
@@ -13,7 +13,7 @@ import SupportedChainCard from "app/components/mdx/SupportedChainCard";
   chainIcon="/images/HL-icon.png"
   chainName="HyperEVM"
   tokens={[
-    { name: "HYPE (Native)", icon: "/images/aptos-icon.svg" },
+    { name: "HYPE (Native)", icon: "/images/HL-icon.png" },
   ]}
   whitelistNote="For HyperEVM, any fungible asset can be whitelisted by contacting the team."
   resources={{
@@ -67,38 +67,6 @@ import SupportedChainCard from "app/components/mdx/SupportedChainCard";
 />
 <br/>
 <SupportedChainCard
-  chainIcon="/images/sol-icon.svg"
-  chainName="Solana"
-  tokens={[
-    { name: "SOL (Native)", icon: "/images/sol-icon.svg" },
-    { name: "USDT (Default)", icon: "/images/usdt-icon.svg" },
-    { name: "USDC (Default)", icon: "/images/usdc-icon.svg" },
-  ]}
-  whitelistNote="For Solana, any SPL token can be whitelisted by contacting the team."
-  resources={{
-    "Solana Docs": "https://solana.com/docs",
-    "Rust": "https://www.rust-lang.org/",
-    "Anchor": "https://www.anchor-lang.com/",
-    "Solana Playground": "https://beta.solpg.io/",
-  }}
-  supportedTestnet={{
-    "Solana Devnet": "https://explorer.solana.com/?cluster=devnet",
-  }}
-  networkInfo={[
-    {
-      name: "Solana Mainnet",
-      confirmations: "1",
-      blockInterval: "0.4s",
-    },
-    {
-      name: "Solana Devnet",
-      confirmations: "1",
-      blockInterval: "0.4s",
-    },
-  ]}
-/>
-<br/>
-<SupportedChainCard
   chainIcon="/images/base-icon.svg"
   chainName="Base"
   tokens={[
@@ -129,36 +97,6 @@ import SupportedChainCard from "app/components/mdx/SupportedChainCard";
   ]}
 />
 <br/>
-<SupportedChainCard
-  chainIcon="/images/aptos-icon.svg"
-  chainName="Aptos"
-  tokens={[
-    { name: "APTOS (Native)", icon: "/images/aptos-icon.svg" },
-    { name: "USDC (Default)", icon: "/images/usdc-icon.svg" },
-  ]}
-  whitelistNote="For Aptos, any fungible asset can be whitelisted by contacting the team."
-  resources={{
-    "Aptos Docs": "https://aptos.dev/en",
-    "Move": "https://aptos.dev/en/build/smart-contracts",
-    "Aptos CLI": "https://aptos.dev/en/build/cli",
-    "Aptos SDK": "https://aptos.dev/en/build/sdks",
-  }}
-  supportedTestnet={{
-    "Aptos Testnet": "https://explorer.aptoslabs.com/?network=testnet",
-  }}
-  networkInfo={[
-    {
-      name: "Aptos Mainnet",
-      confirmations: "1",
-      blockInterval: "4s",
-    },
-    {
-      name: "Aptos Testnet",
-      confirmations: "1",
-      blockInterval: "4s",
-    },
-  ]}
-/>
 
 ## Conclusion
 
