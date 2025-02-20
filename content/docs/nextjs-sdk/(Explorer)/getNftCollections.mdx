@@ -1,0 +1,88 @@
+---
+title: Get NFT Collections
+description: Learn how to retrieve NFT collections using the Okto SDK.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react';
+
+The `getNftCollections` function retrieves NFT collection details for the authenticated user from the backend.
+
+<Callout 
+  title="Note" 
+  style={{ backgroundColor: '#f8d7da', color: '#842029', margin: 0, border: '1px solid #f5c2c7' }}
+>
+  This function is currently **not supported** for the following chains:
+  - Base Sepolia
+  - HyperEVM
+</Callout>
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`getNftCollections`](#get-nft-collections) | Get NFT collections for the user |
+
+<div className="method-box">
+
+## Get NFT Collections
+
+<sub><i>async</i></sub> `getNftCollections(oktoClient: OktoClient)` retrieves the list of NFT collections associated with the user.
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `collections` | [`Promise<Order[]>`](/docs/react-sdk/technical-reference#models) | Array of NFT collection orders |
+
+</Callout>
+
+<Accordions>
+<Accordion title="Example">
+<Tabs items={['TypeScript']}>
+<Tab value="TypeScript">
+```typescript
+import { useOkto } from '@okto_web3/react-sdk';
+import { getNftCollections } from '@okto_web3/react-sdk';
+
+function NFTCollectionsList() {
+    const oktoClient = useOkto();
+
+    async function fetchCollections() {
+        try {
+            const collections = await getNftCollections(oktoClient);
+            console.log('NFT Collections:', collections);
+        } catch (error) {
+            console.error('Error fetching collections:', error);
+        }
+    }
+
+    return (
+        <button onClick={fetchCollections}>
+            Fetch NFT Collections
+        </button>
+    );
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+</Accordions>
+
+</div> 
+
+<Callout title="Note">
+In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation for more details.
+</Callout>

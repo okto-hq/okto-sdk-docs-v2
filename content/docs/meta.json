@@ -12,6 +12,7 @@
       "---SDK---",
       "okto-sdk",
       "react-sdk",
+      "nextjs-sdk",
       "react-native-sdk",
       "!flutter-sdk",
       "!unity-sdk",

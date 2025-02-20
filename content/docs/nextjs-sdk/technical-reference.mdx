@@ -1,0 +1,477 @@
+---
+title: Technical Reference
+full: false
+---
+
+import { CopyToClipboard } from '@/components/CopyToClipboard';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+<style>
+{`
+  .table-container {
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+  }
+
+  .table-container table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table-container th {
+    position: sticky;
+    top: 0;
+   /* background-color: #f9fafb; */ /* Light gray background for light mode */
+    z-index: 1;
+    border-bottom: 2px solid #e5e7eb;
+    color: #11182f7;  /* Dark text for light mode */
+  }
+
+  /* For dark mode */
+  
+  @media (prefers-color-scheme: dark) {
+    .table-container th {
+      
+      color: #11182f7;
+    }
+  }
+  
+
+  .table-container th,
+  .table-container td {
+    padding: 0.75rem;
+    text-align: left;
+  }
+
+  .table-container tr:not(:last-child) td {
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .table-description {
+    margin-bottom: 0.5rem;
+  }
+
+  .important-notice {
+    background-color: #fefce8;
+    border-left: 4px solid #eab308;
+    padding: 1rem;
+    margin: 1.5rem 0;
+    border-radius: 0.375rem;
+  }
+
+  .important-notice strong {
+    color: #854d0e;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Dark mode for important notice */
+  @media (prefers-color-scheme: dark) {
+    .important-notice {
+      background-color: rgba(254, 252, 232, 0.1);
+      border-left-color: #ca8a04;
+    }
+    .important-notice strong {
+      color: #fbbf24;
+    }
+  }
+
+  .table-content {
+    margin-top: 0px;
+    padding-top: 0
+  }
+
+  .sub-headings {
+    margin-left: 10px;
+    margin-bottom: 0px
+  }
+
+`}
+</style>
+
+<p2>A comrehensive overview of tokens, networks, and enum values</p2>
+
+---
+
+### Network Information
+<p>A list of all available networks and their properties.</p>
+
+<div className="table-container">
+
+| Network Name | CAIP-2 ID |
+|--------------|----------|
+| APTOS | aptos:1 |
+| APTOS_TESTNET | aptos:2 |
+| ARBITRUM | eip155:42161 |
+| AVALANCHE | eip155:43114 |
+| BASE | eip155:8453 |
+| BSC | eip155:56 |
+| POLYGON | eip155:137 |
+| POLYGON_TESTNET_AMOY | eip155:80002 |
+| SOLANA | solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp |
+| SOLANA_DEVNET | solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1 |
+</div>
+
+<div className="important-notice">
+  <strong>Important!</strong>
+  Native tokens on chains do not have a Token Address (N/A). Please use empty strings for these tokens wherever applicable.
+</div>
+
+## Possible Values for Custom Types
+<p>Possible values for selected types</p>
+
+<div className="sub-headings">
+        ### INTENT_TYPE
+        <p>Specifies the type of order.</p>
+</div>
+
+<div className="table-container">
+
+    
+        | Value | Description |
+        |-------|-------------|
+        | `NFT_TRANSFER` | Indicates that the order is for transferring an NFT to another address. |
+        | `TOKEN_TRANSFER` | Indicates that the order is for executing a token transfer transaction. |
+        | `RAW_TRANSACTION` | Indicates that the order is for executing a raw blockchain transaction. |
+    
+</div>
+
+<div  className="sub-headings">
+### STATUS
+<p>Represents the current status of the order or transaction.</p>
+</div>
+
+<div className="table-container">
+    <div className="table-content">
+        | Value | Description |
+        |-------|-------------|
+        | `WAITING_INITIALIZATION` | The order is in queue and has not yet started processing. |
+        | `CREATED` | The order has been initialized and is ready for processing. |
+        | `RUNNING` | The transaction is being processed on the blockchain. |
+        | `WAITING_FOR_SIGNATURE` | The system is in the process of signing the transaction payload. |
+        | `REJECTED` | The order was rejected and will not be processed further. |
+        | `SUCCESS` | The order was successfully processed and confirmed on the blockchain. |
+        | `FAILED` | The order failed during processing. |
+    </div>
+</div>
+
+
+<div className="sub-headings">
+### ENTITY_TYPE
+<p>Defines the category of asset involved in the transaction.</p>
+</div>
+<div className="table-container">
+    <div className="table-content">
+        | Value | Description |
+        |-------|-------------|
+        | `TOKENS` | Fungible tokens |
+        | `NETWORKS` | Blockchain networks |
+        | `NFTS` | Non-fungible tokens |
+    </div>
+</div>
+
+---
+
+<div className="sub-headings">
+### ERC_TYPE
+<p>Specifies the ERC standard for NFTs on EVM-compatible blockchains.</p>
+</div>
+<div className="table-container">
+    <div className="table-content">
+        | Value | Description |
+        |-------|-------------|
+        | `ERC721` | An ERC-721 standard NFT on EVM-compatible blockchains |
+        | `ERC1155` | An ERC-1155 standard NFT on EVM-compatible blockchains. |
+    </div>
+</div>
+
+---
+
+## Models
+
+<p>Detailed information about the data models used in the SDK.</p>
+
+<Accordions>
+<Accordion title="User">
+<p>Contains user authentication and session information.</p>
+
+| Key | Description | Data Type |  
+|-----|--------|-----------|
+| `userId` | Unique identifier for the user | string |   
+| `userAddress` | User's wallet address | string |   
+| `ecdsaPublicKey` | ECDSA public key | string |   
+| `eddsaPublicKey` | EDDSA public key | string |   
+| `sessionExpiry` | Session expiration timestamp | string |   
+
+```typescript
+const user = {
+    userId: "user_123456789",
+    userAddress: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+    ecdsaPublicKey: "0x04a5c10c34cfed756b3f3...",
+    eddsaPublicKey: "0x04b7d89e23afd867b9c...",
+    sessionExpiry: "2024-03-21T10:00:00Z"
+};
+```
+</Accordion>
+
+<Accordion title="UserOp">
+<p>Represents a user operation for account abstraction.</p>
+
+| Key | Description | Data Type |  
+|-----|--------|-----------|
+| `callData` | Execution call data | Hex |   
+| `callGasLimit` | Gas limit for main call | Hex |   
+| `factory` | Account factory address | Address |   
+| `factoryData` | Factory initialization data | Hex |   
+| `maxFeePerGas` | Maximum fee per gas | Hex |   
+| `maxPriorityFeePerGas` | Maximum priority fee | Hex |   
+| `nonce` | Operation nonce | Hex |   
+| `paymaster` | Paymaster contract address | Address |   
+| `paymasterData` | Paymaster data | Hex |   
+| `paymasterPostOpGasLimit` | Post-op gas limit | Hex |   
+| `paymasterVerificationGasLimit` | Verification gas limit | Hex |   
+| `preVerificationGas` | Pre-verification gas | Hex |   
+| `sender` | Sender account address | Address |   
+| `signature` | Authorization signature | Hex |   
+| `verificationGasLimit` | Verification step gas limit | Hex |   
+
+```typescript
+const userOp = {
+    callData: "0x123...",
+    callGasLimit: "0x5208",
+    factory: "0x123...",
+    factoryData: "0x",
+    maxFeePerGas: "0x5208",
+    maxPriorityFeePerGas: "0x5208",
+    nonce: "0x1",
+    paymaster: "0x123...",
+    paymasterData: "0x",
+    paymasterPostOpGasLimit: "0x5208",
+    paymasterVerificationGasLimit: "0x5208",
+    preVerificationGas: "0x5208",
+    sender: "0x123...",
+    signature: "0x123...",
+    verificationGasLimit: "0x5208"
+};
+```
+</Accordion>
+
+
+<Accordion title="Wallet">
+<p>Represents a blockchain wallet with its network details.</p>
+
+| Key | Description | Data Type |
+|-----|--------|-----------|
+| `caipId` | Chain agnostic identifier | string |
+| `networkName` | Name of the network | string |
+| `address` | Wallet address | string |
+| `networkId` | Network identifier | string |
+| `networkSymbol` | Symbol of the network | string |
+
+```typescript
+const wallet = {
+    caipId: "eip155:1",
+    networkName: "Ethereum Mainnet",
+    address: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+    networkId: "1",
+    networkSymbol: "ETH"
+};
+```
+</Accordion>
+
+<Accordion title="Token">
+<p>Describes a cryptocurrency token and its properties.</p>
+
+| Key | Description | Data Type |  
+|-----|--------|-----------|
+| `address` | Token contract address | string |   
+| `caipId` | Chain agnostic identifier | string |   
+| `symbol` | Token symbol | string |   
+| `image` | Token icon URL | string |   
+| `name` | Full token name | string |   
+| `shortName` | Abbreviated name | string |   
+| `id` | Unique token identifier | string |   
+| `groupId` | Token group identifier | string |   
+| `isPrimary` | Primary token flag | boolean |   
+| `networkId` | Network identifier | string |   
+| `networkName` | Network name | string |   
+| `isOnrampEnabled` | Onramp availability | boolean |   
+
+```typescript
+const token = {
+    address: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+    caipId: "eip155:1",
+    symbol: "DAI",
+    image: "https://example.com/dai.png",
+    name: "Dai Stablecoin",
+    shortName: "DAI",
+    id: "token_123456789",
+    groupId: "group_123456789",
+    isPrimary: true,
+    networkId: "1",
+    networkName: "Ethereum Mainnet",
+    isOnrampEnabled: true
+};
+```
+</Accordion>
+
+<Accordion title="Network">
+<p>Contains information about supported blockchain networks.</p>
+
+| Key | Description | Data Type |  
+|-----|--------|-----------|
+| `caipId` | Chain agnostic identifier | string |   
+| `networkName` | Network name | string |   
+| `chainId` | Chain identifier | string |   
+| `logo` | Network logo URL | string |   
+| `sponsorshipEnabled` | Sponsorship status | boolean |   
+| `gsnEnabled` | GSN support status | boolean |   
+| `type` | Network type | string |   
+| `networkId` | Network identifier | string |   
+
+```typescript
+const network = {
+    caipId: "eip155:1",
+    networkName: "Ethereum Mainnet",
+    chainId: "1",
+    logo: "https://example.com/eth.png",
+    sponsorshipEnabled: true,
+    gsnEnabled: true,
+    type: "EVM",
+    networkId: "1"
+};
+```
+</Accordion>
+
+<Accordion title="Order">
+ <p>Represents an order/transaction status and details.</p>
+
+| Key | Description | Data Type |  
+|-----|--------|-----------|
+| `downstreamTransactionHash` | Array of downstream tx hashes | string[] |   
+| `transactionHash` | Array of transaction hashes | string[] |   
+| `status` | Order status | string |   
+| `intentId` | Unique intent identifier | string |   
+| `intentType` | Type of intent | string |   
+| `networkName` | Network name | string |   
+| `caipId` | Chain identifier | string |   
+| `details` | Order specific details | OrderDetails |   
+
+```typescript
+const order = {
+    downstreamTransactionHash: ["0x123..."],
+    transactionHash: ["0x456..."],
+    status: "SUCCESS",
+    intentId: "intent_123",
+    intentType: "TOKEN_TRANSFER",
+    networkName: "Ethereum Mainnet",
+    caipId: "eip155:1",
+    details: { /* Order specific details */ }
+};
+```
+</Accordion>
+
+
+<Accordion title="TokenTransferIntent">
+<p>Parameters for initiating a token transfer.</p>
+
+| Key | Description | Data Type |  
+|-----|--------|-----------|
+| `amount` | Transfer amount | number \| bigint |   
+| `recipient` | Recipient's address | Address |   
+| `token` | Token address (empty for native) | Address \| '' |   
+| `chain` | Chain identifier | string |   
+
+```typescript
+const tokenTransferParams = {
+    amount: 1000000000n,
+    recipient: "0x123...",
+    token: "", // Native token
+    chain: "eip155:1"
+};
+```
+</Accordion>
+
+
+<Accordion title="NFTTransferIntent">
+<p>Parameters for initiating an NFT transfer.</p>
+
+| Key | Description | Data Type |  
+|-----|--------|-----------|
+| `caip2Id` | Chain identifier | string |   
+| `collectionAddress` | NFT collection address | Address |   
+| `nftId` | Token ID of the NFT | string |   
+| `recipientWalletAddress` | Recipient's wallet address | Address |   
+| `amount` | Transfer amount | number \| bigint |   
+| `nftType` | Type of NFT standard | 'ERC721' \| 'ERC1155' |   
+
+```typescript
+const nftTransferParams = {
+    caip2Id: "eip155:1",
+    collectionAddress: "0x123...",
+    nftId: "42",
+    recipientWalletAddress: "0x456...",
+    amount: 1n,
+    nftType: "ERC721"
+};
+```
+</Accordion>
+
+
+<Accordion title="UserPortfolio">
+<p>Contains user's portfolio and holdings information.</p>
+
+| Key | Description | Data Type |  
+|-----|--------|-----------|
+| `aggregatedData` | Portfolio summary | Object |   
+| `aggregatedData.holdingsCount` | Number of holdings | string |   
+| `aggregatedData.holdingsPriceInr` | Value in INR | string |   
+| `aggregatedData.holdingsPriceUsdt` | Value in USDT | string |   
+| `aggregatedData.totalHoldingPriceInr` | Total value in INR | string |   
+| `aggregatedData.totalHoldingPriceUsdt` | Total value in USDT | string |   
+| `groupTokens` | Token groups | Array |   
+| `groupTokens[].id` | Group token ID | string |   
+| `groupTokens[].name` | Token name | string |   
+| `groupTokens[].symbol` | Token symbol | string |   
+| `groupTokens[].shortName` | Short name | string |   
+| `groupTokens[].tokenImage` | Token icon URL | string |   
+| `groupTokens[].tokenAddress` | Token address | string |   
+| `groupTokens[].groupId` | Group identifier | string |   
+| `groupTokens[].networkId` | Network ID | string |   
+| `groupTokens[].precision` | Decimal precision | string |   
+| `groupTokens[].networkName` | Network name | string |   
+| `groupTokens[].isPrimary` | Primary token flag | boolean |   
+| `groupTokens[].balance` | Token balance | string |   
+| `groupTokens[].holdingsPriceUsdt` | Value in USDT | string |   
+| `groupTokens[].holdingsPriceInr` | Value in INR | string |   
+| `groupTokens[].aggregationType` | Aggregation type | string |   
+| `groupTokens[].tokens` | Individual tokens | Array |   
+
+```typescript
+const portfolio = {
+    aggregatedData: {
+        holdingsCount: "5",
+        holdingsPriceInr: "100000",
+        holdingsPriceUsdt: "1200",
+        totalHoldingPriceInr: "100000",
+        totalHoldingPriceUsdt: "1200"
+    },
+    groupTokens: [{
+        id: "token_1",
+        name: "Ethereum",
+        symbol: "ETH",
+        // ... other fields
+        tokens: [{
+            id: "token_1_1",
+            name: "Ethereum",
+            symbol: "ETH",
+            // ... other token fields
+        }]
+    }]
+};
+```
+</Accordion>
+</Accordions>

@@ -1,0 +1,140 @@
+---
+title: Get Portfolio Activity
+description: Learn how to retrieve user portfolio activity using the Okto SDK.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react';
+
+The `getPortfolioActivity` function retrieves the portfolio activity for the authenticated user.
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`getPortfolioActivity`](#get-portfolio-activity) | Get user's portfolio activity |
+
+<div className="method-box">
+
+## Get Portfolio Activity
+
+<sub><i>async</i></sub> `getPortfolioActivity(oktoClient: OktoClient)` retrieves the user's portfolio activity history.
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `activities` | `Promise<UserPortfolioActivity[]>` | Array of user's portfolio activities |
+
+</Callout>
+
+### Example
+
+<Accordions>
+<Accordion title="Usage">
+<Tabs items={['TypeScript']}>
+<Tab value="TypeScript">
+```typescript
+import { useOkto } from '@okto_web3/react-sdk';
+import { getPortfolioActivity } from '@okto_web3/react-sdk';
+
+function PortfolioActivity() {
+    const oktoClient = useOkto();
+
+    async function fetchActivity() {
+        try {
+            const activities = await getPortfolioActivity(oktoClient);
+            console.log('Portfolio activities:', activities);
+        } catch (error) {
+            console.error('Error fetching activities:', error);
+        }
+    }
+
+    return (
+        <button onClick={fetchActivity}>
+            Fetch Portfolio Activity
+        </button>
+    );
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": {
+        "count": 50,
+        "activity": [
+            {
+                "symbol": "",
+                "image": "",
+                "name": "",
+                "short_name": "",
+                "id": "",
+                "group_id": "",
+                "description": "NFT Deposit",
+                "quantity": "1.000000000000000000",
+                "amount": "",
+                "order_type": "EXTERNAL_TRANSFER",
+                "transfer_type": "DEPOSIT",
+                "status": true,
+                "created_at": 1739176632,
+                "updated_at": 1739176632,
+                "timestamp": 1739176632,
+                "tx_hash": "0x4e20af759a50080e548cc40f2504e569935ce0f3255bed9c9121e3fdaebc36d1",
+                "network_id": "ae506585-0ba7-32f3-8b92-120ddf940198",
+                "network_name": "POLYGON",
+                "network_explorer_url": "https://polygonscan.com/",
+                "network_symbol": "POLYGON",
+                "caip_id": "eip155:137"
+            },
+            {
+                "symbol": "",
+                "image": "",
+                "name": "",
+                "short_name": "",
+                "id": "",
+                "group_id": "",
+                "description": "NFT Deposit",
+                "quantity": "1.000000000000000000",
+                "amount": "",
+                "order_type": "EXTERNAL_TRANSFER",
+                "transfer_type": "DEPOSIT",
+                "status": true,
+                "created_at": 1739170093,
+                "updated_at": 1739170093,
+                "timestamp": 1739170093,
+                "tx_hash": "0xba4eec0a5b1b1c6e4f741a94eb6350bffab0a2a822041ca69ccaee1c7978f0c8",
+                "network_id": "ae506585-0ba7-32f3-8b92-120ddf940198",
+                "network_name": "POLYGON",
+                "network_explorer_url": "https://polygonscan.com/",
+                "network_symbol": "POLYGON",
+                "caip_id": "eip155:137"
+            }
+        ]
+    }
+}
+```
+</Accordion>
+</Accordions>
+
+</div>
+
+<Callout title="Note">
+In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation for more details.
+</Callout>
