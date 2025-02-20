@@ -4,6 +4,6 @@
         "../react-sdk/quickstart/new-okto-react-setup",
         "../react-sdk/quickstart/new-okto-nextjs-setup",
         "../react-native-sdk/quickstart/new-okto-react-native-setup",
-        "../typescript-sdk/quickstart"
+        "../typescript-sdk/quickstart/new-okto-typescript-setup"
     ]
 }

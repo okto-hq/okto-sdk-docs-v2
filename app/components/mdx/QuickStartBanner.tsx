@@ -4,6 +4,9 @@ import { SiTypescript } from "react-icons/si";
 import Link from "next/link";
 
 export default function QuickStartBanner() {
+  const baseButtonStyles = "relative group no-underline p-3 rounded-md border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 shadow-md transition-all";
+  const baseIconStyles = "transition-transform transition-colors duration-200 ease-in-out group-hover:scale-110";
+  
   return (
     <div className="flex flex-col lg:flex-row items-center justify-between px-6 py-4 mb-8 bg-gradient-to-r from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-800 rounded-lg border-2 border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 transition-all shadow-sm">
       <div className="flex-1 pr-4 mb-6 lg:mb-0">
@@ -16,12 +19,12 @@ export default function QuickStartBanner() {
       </div>
       <div className="flex gap-6 items-center flex-wrap justify-center">
         <Link
-          href="/docs/quickstart/new-okto-react-setup"
-          className="relative group no-underline p-3 rounded-md border-2 border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all"
+          href="/docs/react-sdk/quickstart/new-okto-react-setup"
+          className={baseButtonStyles}
         >
           <FaReact
             size={36}
-            className="text-zinc-600 dark:text-zinc-400 transition-transform transition-colors duration-200 ease-in-out group-hover:scale-110 group-hover:text-[#61dafb]"
+            className={`${baseIconStyles} text-[#61dafb] opacity-80 group-hover:opacity-100`}
           />
           <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-max px-2 py-1 text-xs text-white bg-zinc-900 dark:bg-zinc-200 dark:text-black rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
             React Quickstart
@@ -29,12 +32,12 @@ export default function QuickStartBanner() {
         </Link>
 
         <Link
-          href="/docs/quickstart/new-okto-nextjs-setup"
-          className="relative group no-underline p-3 rounded-md border-2 border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all"
+          href="/docs/nextjs-sdk/quickstart/new-okto-nextjs-setup"
+          className={baseButtonStyles}
         >
           <TbBrandNextjs
             size={36}
-            className="text-zinc-600 dark:text-zinc-400 transition-transform transition-colors duration-200 ease-in-out group-hover:scale-110 group-hover:text-black dark:group-hover:text-white"
+            className={`${baseIconStyles} text-black dark:text-white opacity-80 group-hover:opacity-100`}
           />
           <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-max px-2 py-1 text-xs text-white bg-zinc-900 dark:bg-zinc-200 dark:text-black rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
             Next.js Quickstart
@@ -42,12 +45,12 @@ export default function QuickStartBanner() {
         </Link>
 
         <Link
-          href="/docs/quickstart/new-okto-react-native-setup"
-          className="relative group no-underline p-3 rounded-md border-2 border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all"
+          href="/docs/react-native-sdk/quickstart/new-okto-react-native-setup"
+          className={baseButtonStyles}
         >
           <TbBrandReactNative
             size={36}
-            className="text-zinc-600 dark:text-zinc-400 transition-transform transition-colors duration-200 ease-in-out group-hover:scale-110 group-hover:text-purple-500"
+            className={`${baseIconStyles} text-purple-500 opacity-80 group-hover:opacity-100`}
           />
           <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-max px-2 py-1 text-xs text-white bg-zinc-900 dark:bg-zinc-200 dark:text-black rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
             React Native Quickstart
@@ -55,12 +58,12 @@ export default function QuickStartBanner() {
         </Link>
 
         <Link
-          href="/docs/quickstart/new-okto-typescript-setup"
-          className="relative group no-underline p-3 rounded-md border-2 border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all"
+          href="/docs/typescript-sdk/quickstart/new-okto-typescript-setup"
+          className={baseButtonStyles}
         >
           <SiTypescript
             size={36}
-            className="text-zinc-600 dark:text-zinc-400 transition-transform transition-colors duration-200 ease-in-out group-hover:scale-110 group-hover:text-[#3178c6]"
+            className={`${baseIconStyles} text-[#3178c6] opacity-80 group-hover:opacity-100`}
           />
           <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-max px-2 py-1 text-xs text-white bg-zinc-900 dark:bg-zinc-200 dark:text-black rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
             TypeScript Quickstart

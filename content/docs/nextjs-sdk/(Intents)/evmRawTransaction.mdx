@@ -49,7 +49,7 @@ And `EVMRawTransaction` contains:
 | `from` | `Address` | The sender's address |
 | `to` | `Address` | The recipient's address |
 | `data` | `Hash` | The transaction data (optional) |
-| `value` | `number \| bigint` | The amount of native currency to send (optional) |
+| `value` | `Hash` | The amount of native currency to send (optional) |
 
 ### Response
 
@@ -68,32 +68,43 @@ And `EVMRawTransaction` contains:
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
 ```typescript
-import { evmRawTransaction } from "@okto_web3/core-js-sdk/userop";
+import { useOkto } from '@okto_web3/react-sdk';
+import { evmRawTransaction } from '@okto_web3/react-sdk';
 
-async function handleRawTransaction() {
-    try {
-        const rawTxParams = {
-            networkId: "eip155:1", // Ethereum Mainnet
-            transaction: {
-                from: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-                to: "0x23581767a106ae21c074b2276D25e5C3e136a68b",
-                data: "0x", // Optional transaction data
-                value: BigInt("1000000000000000000") // 1 ETH
-            }
-        };
+function RawTransaction() {
+    const oktoClient = useOkto();
 
-        // Create the user operation
-        const userOp = await evmRawTransaction(oktoClient, rawTxParams);
-        
-        // Sign the operation
-        const signedOp = await oktoClient.signUserOp(userOp);
-        
-        // Execute the transaction
-        const txHash = await oktoClient.executeUserOp(signedOp);
-        console.log('Raw transaction hash:', txHash);
-    } catch (error) {
-        console.error('Error in raw transaction:', error);
+    async function handleRawTransaction() {
+        try {
+            const rawTxParams = {
+                caip2Id: "eip155:1", // Ethereum Mainnet
+                transaction: {
+                    from: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+                    to: "0x23581767a106ae21c074b2276D25e5C3e136a68b",
+                    data: "0x", // Optional transaction data
+                    value: BigInt("1000000000000000000") // 1 ETH
+                }
+            };
+
+            // Create the user operation
+            const userOp = await evmRawTransaction(oktoClient, rawTxParams);
+            
+            // Sign the operation
+            const signedOp = await oktoClient.signUserOp(userOp);
+            
+            // Execute the transaction
+            const txHash = await oktoClient.executeUserOp(signedOp);
+            console.log('Raw transaction hash:', txHash);
+        } catch (error:any) {
+            console.error('Error in raw transaction:', error);
+        }
     }
+
+    return (
+        <button onClick={handleRawTransaction}>
+            Execute Raw Transaction
+        </button>
+    );
 }
 ```
 </Tab>
@@ -124,7 +135,7 @@ const data = encodeFunctionData({
 
 // Create raw transaction parameters
 const rawTxParams = {
-   networkId: "eip155:1",
+   caip2Id: "eip155:1",
    transaction: {
        from: "0xSenderAddress",
        to: "0xDestinationAddress",
@@ -158,7 +169,7 @@ const data = iface.encodeFunctionData("deposit", [
 
 // Create raw transaction parameters
 const rawTxParams = {
-    networkId: "eip155:1",
+    caip2Id: "eip155:1",
     transaction: {
         from: "0xSenderAddress",
         to: "0xDestinationAddress",
@@ -170,10 +181,11 @@ const rawTxParams = {
 </Tab>
 </Tabs>
 </Accordion>
+
 </Accordions>
 
 </div>
 
 <Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/typescript-sdk/sdk-error-warnings) documentation for more details.
+In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation for more details.
 </Callout>
