@@ -318,7 +318,7 @@ Let's implement a token transfer on Solana devnet to understand how user operati
                     amount: BigInt("1000000000"), // 1 SOL
                     recipient: "RECIPIENT_ADDRESS",
                     token: "", // Empty string for native token
-                    chain: "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1" // Solana devnet chain ID
+                    caip2Id: "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1" // Solana devnet chain ID
                 };
 
                 //create the user operation
@@ -396,7 +396,7 @@ const transferParams = {
   amount: BigInt("1000000000000000000"), // Amount in smallest unit
   recipient: "0xRecipientAddress...",     // Recipient wallet address
   token: "0xTokenAddress...",             // Token address ("" for native token)
-  chain: "eip155:1",                      // Target chain CAIP-2 ID
+  caip2Id: "eip155:1",                      // Target chain CAIP-2 ID
 };
 const result = await tokenTransfer(oktoClient, transferParams);
 ```
@@ -443,7 +443,7 @@ const functionData = encodeFunctionData({
 
 // 3. Execute Transaction
 const rawTxParams = {
-  networkId: "eip155:1",
+  caip2Id: "eip155:1",
   transaction: {
     to: contractAddress,
     data: functionData,

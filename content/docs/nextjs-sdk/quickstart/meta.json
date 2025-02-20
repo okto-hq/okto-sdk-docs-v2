@@ -1,0 +1,8 @@
+{
+  "title": "Getting Started",
+  "pages": [
+    "prerequisites",
+    "new-okto-react-setup",
+    "new-okto-nextjs-setup"
+  ]
+}

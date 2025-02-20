@@ -60,7 +60,7 @@ export default function Sample() {
     const oktoClient = useOkto();
     
     // Access user state
-    const isLoggedIn = !!oktoClient.user;
+    const isLoggedIn = !!oktoClient.userSWA;
     
     // Example authentication
     async function handleLogin(googleCredential) {
