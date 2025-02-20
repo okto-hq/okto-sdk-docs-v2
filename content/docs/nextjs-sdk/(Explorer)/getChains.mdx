@@ -57,7 +57,7 @@ function ChainsList() {
         try {
             const chains = await getChains(oktoClient);
             console.log('Supported chains:', chains);
-        } catch (error) {
+        } catch (error:any) {
             console.error('Error fetching chains:', error);
         }
     }

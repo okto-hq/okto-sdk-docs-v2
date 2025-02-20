@@ -55,7 +55,7 @@ function SignOperation() {
             const signedOp = await oktoClient.signUserOp(userOp);
             console.log('Signed operation:', signedOp);
             return signedOp;
-        } catch (error) {
+        } catch (error:any) {
             console.error('Error signing operation:', error);
         }
     }

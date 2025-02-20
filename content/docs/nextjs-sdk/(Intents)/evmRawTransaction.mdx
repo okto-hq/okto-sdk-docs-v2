@@ -95,7 +95,7 @@ function RawTransaction() {
             // Execute the transaction
             const txHash = await oktoClient.executeUserOp(signedOp);
             console.log('Raw transaction hash:', txHash);
-        } catch (error) {
+        } catch (error:any) {
             console.error('Error in raw transaction:', error);
         }
     }

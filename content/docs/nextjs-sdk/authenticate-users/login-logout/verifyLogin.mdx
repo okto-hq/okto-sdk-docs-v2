@@ -52,7 +52,7 @@ This method doesn't take any parameters.
             try {
                 const isLoggedIn = await oktoClient.verifyLogin();
                 console.log("Login status:", isLoggedIn);
-            } catch (error) {
+            } catch (error:any) {
                 console.error("Verification failed:", error);
             }
         }

@@ -432,7 +432,7 @@ If you need help, see our <ExternalLink href="/docs/developer-admin-dashboard/ov
             try {
                 signOut();
                 return { result: "logout success" };
-            } catch (error) {
+            } catch (error:any) {
                 return { result: "logout failed" };
             }
         }
@@ -563,7 +563,7 @@ Now that we have our basic setup complete, let's implement a token transfer on S
                 });
                 setStatus(`Transfer complete! Hash: ${txHash}`);
                 setModalVisible(true);
-            } catch (error) {
+            } catch (error:any) {
                 console.error("Transfer failed:", error);
                 setStatus(`Transfer failed: ${error.message}`);
             }

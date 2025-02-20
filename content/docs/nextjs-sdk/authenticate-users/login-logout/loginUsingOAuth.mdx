@@ -68,7 +68,7 @@ function LoginComponent() {
                 provider: "google",
             });
             console.log("Login successful:", user);
-        } catch (error) {
+        } catch (error:any) {
             console.error("Login failed:", error);
         }
     }
@@ -81,7 +81,7 @@ function LoginComponent() {
                 provider: "okto",
             });
             console.log("Login successful:", user);
-        } catch (error) {
+        } catch (error:any) {
             console.error("Login failed:", error);
         }
     }

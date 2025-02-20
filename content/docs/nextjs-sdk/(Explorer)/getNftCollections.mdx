@@ -64,7 +64,7 @@ function NFTCollectionsList() {
         try {
             const collections = await getNftCollections(oktoClient);
             console.log('NFT Collections:', collections);
-        } catch (error) {
+        } catch (error:any) {
             console.error('Error fetching collections:', error);
         }
     }

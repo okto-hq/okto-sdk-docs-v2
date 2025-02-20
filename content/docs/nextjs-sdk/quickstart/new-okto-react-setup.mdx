@@ -171,7 +171,7 @@ Without completing these steps first, your application won't be able to interact
                     idToken: credentialResponse.credential,
                     provider: "google",
                 });
-            } catch (error) {
+            } catch (error:any) {
                 console.error("Authentication error:", error);
             }
         }
@@ -324,7 +324,7 @@ Now that we have our basic setup complete, let's implement a token transfer on S
                     caip2Id: "eip155:137" // caip2id of Polygon Amoy
                 });
                 setStatus(`Transfer complete! Hash: ${txHash}`);
-            } catch (error) {
+            } catch (error:any) {
                 console.error("Transfer failed:", error);
                 setStatus(`Transfer failed: ${error.message}`);
             }

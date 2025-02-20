@@ -59,7 +59,7 @@ In Okto, an **account** represents the user's identity in the Okto ecosystem, en
             try {
                 const account = await getAccount(oktoClient);
                 console.log('Account data:', account);
-            } catch (error) {
+            } catch (error:any) {
                 console.error('Error fetching user account:', error);
             }
         }

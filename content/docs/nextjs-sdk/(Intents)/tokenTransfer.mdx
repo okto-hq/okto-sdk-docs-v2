@@ -81,7 +81,7 @@ function TokenTransfer() {
             // Execute the transfer
             const txHash = await oktoClient.executeUserOp(signedOp);
             console.log('Transfer transaction hash:', txHash);
-        } catch (error) {
+        } catch (error:any) {
             console.error('Error in token transfer:', error);
         }
     }

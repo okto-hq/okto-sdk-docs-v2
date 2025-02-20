@@ -57,7 +57,7 @@ function TokensList() {
         try {
             const tokens = await getTokens(oktoClient);
             console.log('Supported tokens:', tokens);
-        } catch (error) {
+        } catch (error:any) {
             console.error('Error fetching tokens:', error);
         }
     }

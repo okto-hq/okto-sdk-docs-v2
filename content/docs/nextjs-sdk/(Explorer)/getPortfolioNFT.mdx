@@ -66,7 +66,7 @@ function NFTPortfolio() {
         try {
             const nfts = await getPortfolioNFT(oktoClient);
             console.log('NFT portfolio:', nfts);
-        } catch (error) {
+        } catch (error:any) {
             console.error('Error fetching NFTs:', error);
         }
     }

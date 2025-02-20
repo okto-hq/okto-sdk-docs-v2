@@ -94,7 +94,7 @@ function NFTTransfer() {
             // Execute the transfer
             const txHash = await oktoClient.executeUserOp(signedOp);
             console.log('NFT Transfer transaction hash:', txHash);
-        } catch (error) {
+        } catch (error:any) {
             console.error('Error in NFT transfer:', error);
         }
     }

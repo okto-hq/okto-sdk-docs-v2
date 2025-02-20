@@ -52,7 +52,7 @@ This method doesn't take any parameters.
             try {
                 const token = await oktoClient.getAuthorizationToken();
                 console.log("Auth token retrieved");
-            } catch (error) {
+            } catch (error:any) {
                 console.error("Failed to get token:", error);
             }
         }

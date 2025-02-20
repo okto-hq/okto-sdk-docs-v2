@@ -58,7 +58,7 @@ function OrderHistory() {
         try {
             const orders = await getOrdersHistory(oktoClient);
             console.log('Order history:', orders);
-        } catch (error) {
+        } catch (error:any) {
             console.error('Error fetching orders:', error);
         }
     }

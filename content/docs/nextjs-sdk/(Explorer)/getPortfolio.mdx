@@ -57,7 +57,7 @@ function Portfolio() {
         try {
             const portfolio = await getPortfolio(oktoClient);
             console.log('Portfolio data:', portfolio);
-        } catch (error) {
+        } catch (error:any) {
             console.error('Error fetching portfolio:', error);
         }
     }

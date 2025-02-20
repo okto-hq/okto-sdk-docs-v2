@@ -57,7 +57,7 @@ function PortfolioActivity() {
         try {
             const activities = await getPortfolioActivity(oktoClient);
             console.log('Portfolio activities:', activities);
-        } catch (error) {
+        } catch (error:any) {
             console.error('Error fetching activities:', error);
         }
     }
