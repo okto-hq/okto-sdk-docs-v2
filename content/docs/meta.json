@@ -17,6 +17,7 @@
       "!unity-sdk",
       "typescript-sdk",
       "---Resources---",
+      "migrate-react-sdk",
       "developer-admin-dashboard",
       "troubleshooting",
       "brand-kit",
