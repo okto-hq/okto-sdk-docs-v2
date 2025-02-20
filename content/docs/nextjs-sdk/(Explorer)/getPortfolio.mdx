@@ -1,0 +1,134 @@
+---
+title: Get Portfolio
+description: Learn how to retrieve user portfolio data using the Okto SDK.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react';
+
+The `getPortfolio` function retrieves the aggregated portfolio for the authenticated user.
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`getPortfolio`](#get-portfolio) | Get user's portfolio data |
+
+<div className="method-box">
+
+## Get Portfolio
+
+<sub><i>async</i></sub> `getPortfolio(oktoClient: OktoClient)` retrieves the user's aggregated portfolio data.
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `portfolio` | [`Promise<UserPortfolioData>`](/docs/react-sdk/technical-reference#models) | User's portfolio information |
+
+</Callout>
+
+### Example
+
+<Accordions>
+<Accordion title="Usage">
+<Tabs items={['TypeScript']}>
+<Tab value="TypeScript">
+```typescript
+import { useOkto } from '@okto_web3/react-sdk';
+import { getPortfolio } from '@okto_web3/react-sdk';
+
+function Portfolio() {
+    const oktoClient = useOkto();
+
+    async function fetchPortfolio() {
+        try {
+            const portfolio = await getPortfolio(oktoClient);
+            console.log('Portfolio data:', portfolio);
+        } catch (error:any) {
+            console.error('Error fetching portfolio:', error);
+        }
+    }
+
+    return (
+        <button onClick={fetchPortfolio}>
+            Fetch Portfolio
+        </button>
+    );
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": {
+        "aggregated_data": {
+            "holdings_count": "6",
+            "holdings_price_inr": "594.5431000000001",
+            "holdings_price_usdt": "8.821019999999999",
+            "total_holding_price_inr": "594.5431000000001",
+            "total_holding_price_usdt": "8.821019999999999"
+        },
+        "group_tokens": [
+            {
+                "id": "a9e192bb-bd18-3a47-ab07-5ecff29776e3",
+                "name": "Polygon Ecosystem Token",
+                "symbol": "POL",
+                "short_name": "POL",
+                "token_image": "https://www.dextools.io/resources/tokens/logos/3/ether/0x455e53cbb86018ac2b8092fdcd39d8444affc3f6.png?1698233684",
+                "token_address": "",
+                "group_id": "c885bfd2-abff-30d5-a0ba-aed6573a836d",
+                "network_id": "ae506585-0ba7-32f3-8b92-120ddf940198",
+                "precision": "4",
+                "network_name": "POLYGON",
+                "is_primary": false,
+                "balance": "3.7258",
+                "holdings_price_usdt": "1.14661",
+                "holdings_price_inr": "77.28166",
+                "aggregation_type": "group",
+                "tokens": [
+                    {
+                        "id": "a9e192bb-bd18-3a47-ab07-5ecff29776e3",
+                        "name": "Polygon Ecosystem Token",
+                        "symbol": "POL",
+                        "short_name": "POL",
+                        "token_image": "https://www.dextools.io/resources/tokens/logos/3/ether/0x455e53cbb86018ac2b8092fdcd39d8444affc3f6.png?1698233684",
+                        "token_address": "",
+                        "network_id": "ae506585-0ba7-32f3-8b92-120ddf940198",
+                        "precision": "4",
+                        "network_name": "POLYGON",
+                        "is_primary": true,
+                        "balance": "3.7258",
+                        "holdings_price_usdt": "1.14661",
+                        "holdings_price_inr": "77.28166"
+                    }
+                ]
+            }
+        ]
+    }
+}
+```
+</Accordion>
+</Accordions>
+
+</div>
+
+<Callout title="Note">
+In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation for more details.
+</Callout>

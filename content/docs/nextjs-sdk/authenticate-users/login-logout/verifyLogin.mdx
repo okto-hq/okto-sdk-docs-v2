@@ -1,0 +1,72 @@
+---
+title: Verify Login
+description: Learn how to verify user login status using the Okto SDK.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react';
+
+The `verifyLogin()` method checks if a user is currently logged in. If the user is not logged in, it automatically clears the auth options to maintain consistency.
+
+### Method Overview
+
+| Methods | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> `OktoClient.verifyLogin` | Verify if user is logged in |
+
+<div className="method-box">
+
+## Verify Login
+
+<sub><i>async</i></sub> `OktoClient.verifyLogin()` checks the current login status of the user.
+
+### Parameters
+
+This method doesn't take any parameters.
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | `Promise<boolean>` | Returns true if user is logged in, false otherwise |
+
+</Callout>
+
+<Accordions>
+<Accordion title="Example">
+<Tabs items={['Typescript']}>
+  <Tab value="Typescript">
+    ```typescript
+    import { useOkto } from '@okto_web3/react-sdk';
+
+    function AuthCheck() {
+        const oktoClient = useOkto();
+
+        async function checkLoginStatus() {
+            try {
+                const isLoggedIn = await oktoClient.verifyLogin();
+                console.log("Login status:", isLoggedIn);
+            } catch (error:any) {
+                console.error("Verification failed:", error);
+            }
+        }
+
+        return <button onClick={checkLoginStatus}>Check Login Status</button>;
+    }
+    ```
+  </Tab>
+</Tabs>
+</Accordion>
+</Accordions>
+
+</div>
+
+<Callout title="Note">
+In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation for more details.
+</Callout>

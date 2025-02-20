@@ -40,6 +40,30 @@ Without completing these steps first, your application won't be able to interact
     npm create vite@latest my-okto-app --template react-ts
     cd my-okto-app
     ```
+
+    <Callout type="tip" title="Resolving Vite Buffer Error">
+    To resolve a buffer not defined error with Vite, update your `vite.config.ts` file with the following configuration:
+
+    ```typescript title="vite.config.ts"
+    import { defineConfig } from 'vite'
+    import react from '@vitejs/plugin-react'
+    import { nodePolyfills } from 'vite-plugin-node-polyfills'
+
+    // https://vite.dev/config/
+    export default defineConfig({
+      plugins: [react(), nodePolyfills()],
+      server: {
+        port: 3000, // will always start the service on port 3000
+      }
+    })
+    ```
+
+    Don't forget to install the required package:
+    ```bash
+    npm i -D vite-plugin-node-polyfills
+    ```
+    
+    </Callout>
 </Step>
 
 <Step>
@@ -178,7 +202,7 @@ Without completing these steps first, your application won't be able to interact
 
         return (
             <div>
-                {oktoClient.user ? (
+                {oktoClient.userSWA ? (
                     <UserDashboard />
                 ) : (
                     <GoogleLogin onSuccess={handleGoogleLogin} />

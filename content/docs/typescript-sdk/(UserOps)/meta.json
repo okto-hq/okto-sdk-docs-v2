@@ -1,0 +1,9 @@
+{
+    "title": "UserOps",
+    "pages": [
+        "userop-learn",
+        "signUserOp",
+        "executeUserOp",
+        "estimate"
+    ]
+} 
