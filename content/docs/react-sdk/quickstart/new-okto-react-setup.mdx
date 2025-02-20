@@ -178,7 +178,7 @@ Without completing these steps first, your application won't be able to interact
 
         return (
             <div>
-                {oktoClient.user ? (
+                {oktoClient.userSWA ? (
                     <UserDashboard />
                 ) : (
                     <GoogleLogin onSuccess={handleGoogleLogin} />

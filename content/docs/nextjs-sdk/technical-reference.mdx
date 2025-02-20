@@ -383,14 +383,14 @@ const order = {
 | `amount` | Transfer amount | number \| bigint |   
 | `recipient` | Recipient's address | Address |   
 | `token` | Token address (empty for native) | Address \| '' |   
-| `chain` | Chain identifier | string |   
+| `caip2Id` | Chain identifier | string |   
 
 ```typescript
 const tokenTransferParams = {
     amount: 1000000000n,
     recipient: "0x123...",
     token: "", // Native token
-    chain: "eip155:1"
+    caip2Id: "eip155:1"
 };
 ```
 </Accordion>

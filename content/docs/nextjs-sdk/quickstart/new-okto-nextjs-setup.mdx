@@ -559,7 +559,7 @@ Now that we have our basic setup complete, let's implement a token transfer on S
                     amount: BigInt("1000000000"), // 1 SOL
                     recipient: "YOUR_RECIPIENT_ADDRESS",
                     token: "", // Empty string for native token
-                    chain: "SOLANA_CHAIN_ID" // caip2id of Solana devnet from step 3
+                    caip2Id: "SOLANA_CHAIN_ID" // caip2id of Solana devnet from step 3
                 });
                 setStatus(`Transfer complete! Hash: ${txHash}`);
                 setModalVisible(true);
@@ -680,7 +680,7 @@ const transferParams = {
   amount: BigInt("1000000000000000000"), // Amount in smallest unit
   recipient: "0xRecipientAddress...",     // Recipient wallet address
   token: "0xTokenAddress...",             // Token address ("" for native token)
-  chain: "eip155:1",                      // Target chain CAIP-2 ID
+  caip2Id: "eip155:1",                      // Target chain CAIP-2 ID
 };
 const result = await tokenTransfer(oktoClient, transferParams);
 ```
@@ -727,7 +727,7 @@ const functionData = encodeFunctionData({
 
 // 3. Execute Transaction
 const rawTxParams = {
-  networkId: "eip155:1",
+  caip2Id: "eip155:1",
   transaction: {
     to: contractAddress,
     data: functionData,
