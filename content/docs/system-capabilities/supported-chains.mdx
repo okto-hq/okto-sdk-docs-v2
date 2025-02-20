@@ -3,7 +3,7 @@ title: Supported Chains & Tokens
 full: false
 ---
 
-Overview of supported chains, wallet structure, testnet availability, and token whitelisting in Okto’s ecosystem. These chains and tokens can be enabled from the [**Okto Dashboard**](https://dashboard.okto.tech/login).
+Overview of supported chains, wallet structure, testnet availability, and token whitelisting in Okto's ecosystem. These chains and tokens can be enabled from the [**Okto Dashboard**](https://dashboard.okto.tech/login).
 
 import SupportedChainCard from "app/components/mdx/SupportedChainCard";
 
@@ -91,6 +91,262 @@ import SupportedChainCard from "app/components/mdx/SupportedChainCard";
     },
     {
       name: "Base Sepolia Testnet",
+      confirmations: "1",
+      blockInterval: "2s",
+    },
+  ]}
+/>
+<br/>
+<SupportedChainCard
+  chainIcon="/images/avalanche-icon.svg"
+  chainName="Avalanche"
+  tokens={[
+    { name: "AVAX (Native)", icon: "/images/avalanche-icon.svg" },
+    { name: "USDT (Default)", icon: "/images/usdt-icon.svg" },
+    { name: "USDC (Default)", icon: "/images/usdc-icon.svg" },
+  ]}
+  whitelistNote="For EVM chains, any ERC20 token can be whitelisted by contacting the team."
+  resources={{
+    "Solidity": "https://soliditylang.org/",
+    "Remix": "https://remix.ethereum.org/",
+    "Hardhat": "https://hardhat.org/",
+    "OpenZeppelin": "https://www.openzeppelin.com/",
+  }}
+  supportedTestnet={{
+    "Avalanche Fuji Testnet": "https://testnet.snowtrace.io/",
+  }}
+  networkInfo={[
+    {
+      name: "Avalanche Mainnet",
+      confirmations: "1",
+      blockInterval: "2s",
+    },
+    {
+      name: "Avalanche Fuji Testnet",
+      confirmations: "1",
+      blockInterval: "2s",
+    },
+  ]}
+/>
+<br/>
+<SupportedChainCard
+  chainIcon="/images/arbitrum-icon.svg"
+  chainName="Arbitrum"
+  tokens={[
+    { name: "ETH (Native)", icon: "/images/eth-icon.svg" },
+    { name: "USDT (Default)", icon: "/images/usdt-icon.svg" },
+    { name: "USDC (Default)", icon: "/images/usdc-icon.svg" },
+  ]}
+  whitelistNote="For EVM chains, any ERC20 token can be whitelisted by contacting the team."
+  resources={{
+    "Solidity": "https://soliditylang.org/",
+    "Remix": "https://remix.ethereum.org/",
+    "Hardhat": "https://hardhat.org/",
+    "OpenZeppelin": "https://www.openzeppelin.com/",
+  }}
+  supportedTestnet={{
+    "Arbitrum Sepolia Testnet": "https://sepolia.arbiscan.io/",
+  }}
+  networkInfo={[
+    {
+      name: "Arbitrum Mainnet",
+      confirmations: "1",
+      blockInterval: "2s",
+    },
+    {
+      name: "Arbitrum Sepolia Testnet",
+      confirmations: "1",
+      blockInterval: "2s",
+    },
+  ]}
+/>
+<br/>
+<SupportedChainCard
+  chainIcon="/images/bsc-icon.svg"
+  chainName="BSC"
+  tokens={[
+    { name: "BNB (Native)", icon: "/images/bsc-icon.svg" },
+    { name: "USDT (Default)", icon: "/images/usdt-icon.svg" },
+    { name: "USDC (Default)", icon: "/images/usdc-icon.svg" },
+  ]}
+  whitelistNote="For EVM chains, any BEP20 token can be whitelisted by contacting the team."
+  resources={{
+    "Solidity": "https://soliditylang.org/",
+    "Remix": "https://remix.ethereum.org/",
+    "Hardhat": "https://hardhat.org/",
+    "OpenZeppelin": "https://www.openzeppelin.com/",
+  }}
+  supportedTestnet={{
+    "BSC Testnet": "https://testnet.bscscan.com/",
+  }}
+  networkInfo={[
+    {
+      name: "BSC Mainnet",
+      confirmations: "1",
+      blockInterval: "3s",
+    },
+    {
+      name: "BSC Testnet",
+      confirmations: "1",
+      blockInterval: "3s",
+    },
+  ]}
+/>
+<br/>
+<SupportedChainCard
+  chainIcon="/images/eth-icon.svg"
+  chainName="Ethereum"
+  tokens={[
+    { name: "ETH (Native)", icon: "/images/eth-icon.svg" },
+    { name: "USDT (Default)", icon: "/images/usdt-icon.svg" },
+    { name: "USDC (Default)", icon: "/images/usdc-icon.svg" },
+  ]}
+  whitelistNote="For EVM chains, any ERC20 token can be whitelisted by contacting the team."
+  resources={{
+    "Solidity": "https://soliditylang.org/",
+    "Remix": "https://remix.ethereum.org/",
+    "Hardhat": "https://hardhat.org/",
+    "OpenZeppelin": "https://www.openzeppelin.com/",
+  }}
+  supportedTestnet={{
+    "Ethereum Sepolia": "https://sepolia.etherscan.io/",
+  }}
+  networkInfo={[
+    {
+      name: "Ethereum Mainnet",
+      confirmations: "1",
+      blockInterval: "12s",
+    },
+    {
+      name: "Ethereum Sepolia",
+      confirmations: "1",
+      blockInterval: "12s",
+    },
+  ]}
+/>
+<br/>
+<SupportedChainCard
+  chainIcon="/images/fantom-icon.svg"
+  chainName="Fantom"
+  tokens={[
+    { name: "FTM (Native)", icon: "/images/fantom-icon.svg" },
+    { name: "USDT (Default)", icon: "/images/usdt-icon.svg" },
+    { name: "USDC (Default)", icon: "/images/usdc-icon.svg" },
+  ]}
+  whitelistNote="For EVM chains, any ERC20 token can be whitelisted by contacting the team."
+  resources={{
+    "Solidity": "https://soliditylang.org/",
+    "Remix": "https://remix.ethereum.org/",
+    "Hardhat": "https://hardhat.org/",
+    "OpenZeppelin": "https://www.openzeppelin.com/",
+  }}
+  supportedTestnet={{
+    "Fantom Testnet": "https://testnet.ftmscan.com/",
+  }}
+  networkInfo={[
+    {
+      name: "Fantom Mainnet",
+      confirmations: "1",
+      blockInterval: "1s",
+    },
+    {
+      name: "Fantom Testnet",
+      confirmations: "1",
+      blockInterval: "1s",
+    },
+  ]}
+/>
+<br/>
+<SupportedChainCard
+  chainIcon="/images/linea-icon.svg"
+  chainName="Linea"
+  tokens={[
+    { name: "ETH (Native)", icon: "/images/eth-icon.svg" },
+    { name: "USDT (Default)", icon: "/images/usdt-icon.svg" },
+    { name: "USDC (Default)", icon: "/images/usdc-icon.svg" },
+  ]}
+  whitelistNote="For EVM chains, any ERC20 token can be whitelisted by contacting the team."
+  resources={{
+    "Solidity": "https://soliditylang.org/",
+    "Remix": "https://remix.ethereum.org/",
+    "Hardhat": "https://hardhat.org/",
+    "OpenZeppelin": "https://www.openzeppelin.com/",
+  }}
+  supportedTestnet={{
+    "Linea Goerli Testnet": "https://goerli.lineascan.build/",
+  }}
+  networkInfo={[
+    {
+      name: "Linea Mainnet",
+      confirmations: "1",
+      blockInterval: "12s",
+    },
+    {
+      name: "Linea Goerli Testnet",
+      confirmations: "1",
+      blockInterval: "12s",
+    },
+  ]}
+/>
+<br/>
+<SupportedChainCard
+  chainIcon="/images/metis-icon.png"
+  chainName="Metis"
+  tokens={[
+    { name: "ETH (Native)", icon: "/images/eth-icon.svg" },
+    { name: "USDT (Default)", icon: "/images/usdt-icon.svg" },
+    { name: "USDC (Default)", icon: "/images/usdc-icon.svg" },
+  ]}
+  whitelistNote="For EVM chains, any ERC20 token can be whitelisted by contacting the team."
+  resources={{
+    "Solidity": "https://soliditylang.org/",
+    "Remix": "https://remix.ethereum.org/",
+    "Hardhat": "https://hardhat.org/",
+    "OpenZeppelin": "https://www.openzeppelin.com/",
+  }}
+  supportedTestnet={{
+    "Metis Sepolia Testnet": "https://sepolia.explorer.metis.io/",
+  }}
+  networkInfo={[
+    {
+      name: "Metis Mainnet",
+      confirmations: "1",
+      blockInterval: "2s",
+    },
+    {
+      name: "Metis Sepolia Testnet",
+      confirmations: "1",
+      blockInterval: "2s",
+    },
+  ]}
+/>
+<br/>
+<SupportedChainCard
+  chainIcon="/images/optimism-icon.jpg"
+  chainName="Optimism"
+  tokens={[
+    { name: "ETH (Native)", icon: "/images/eth-icon.svg" },
+    { name: "USDT (Default)", icon: "/images/usdt-icon.svg" },
+    { name: "USDC (Default)", icon: "/images/usdc-icon.svg" },
+  ]}
+  whitelistNote="For EVM chains, any ERC20 token can be whitelisted by contacting the team."
+  resources={{
+    "Solidity": "https://soliditylang.org/",
+    "Remix": "https://remix.ethereum.org/",
+    "Hardhat": "https://hardhat.org/",
+    "OpenZeppelin": "https://www.openzeppelin.com/",
+  }}
+  supportedTestnet={{
+    "Optimism Sepolia Testnet": "https://sepolia-optimism.etherscan.io/",
+  }}
+  networkInfo={[
+    {
+      name: "Optimism Mainnet",
+      confirmations: "1",
+      blockInterval: "2s",
+    },
+    {
+      name: "Optimism Sepolia Testnet",
       confirmations: "1",
       blockInterval: "2s",
     },
