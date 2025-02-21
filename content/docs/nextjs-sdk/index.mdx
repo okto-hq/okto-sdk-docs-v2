@@ -35,7 +35,7 @@ If you need help, see our <ExternalLink href="/docs/developer-admin-dashboard/ov
     Before getting started, ensure you have the following:
     - **Node.js (v18+) and npm/pnpm/yarn:** <ExternalLink href="https://nodejs.org/">Download Node.js</ExternalLink>
     - **Okto API Keys:** You need your `NEXT_PUBLIC_CLIENT_PRIVATE_KEY` and `NEXT_PUBLIC_CLIENT_SWA`. Obtain these from the Okto Dashboard.
-    - **Google OAuth Credentials:** Create OAuth 2.0 credentials in the <ExternalLink href="https://console.cloud.google.com/">Google Cloud Console</ExternalLink> to get your `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`.
+    - **Google OAuth Credentials:** Create OAuth 2.0 credentials in the <ExternalLink href="/docs/nextjs-sdk/authenticate-users/google-oauth/google-console-setup">Google Cloud Console</ExternalLink> to get your `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`.
     - **Auth Secret:** NextAuth requires a secret for signing tokens. Generate one by running:
     
     ```bash:title="bash"
@@ -48,7 +48,7 @@ If you need help, see our <ExternalLink href="/docs/developer-admin-dashboard/ov
     3. Set the redirect URI to: `[YOUR_APP_URL]/api/auth/callback/google` (for example, `http://localhost:3000/api/auth/callback/google` during local development).
     4. Save your Client ID and Client Secret.
     
-    Need detailed instructions? Check our <ExternalLink href="/docs/react-sdk/authenticate-users/google-oauth/google-console-setup">Google Console Setup Guide</ExternalLink>.
+    Need detailed instructions? Check our <ExternalLink href="/docs/nextjs-sdk/authenticate-users/google-oauth/google-console-setup">Google Console Setup Guide</ExternalLink>.
     </CollapsibleCallout>
 
 </Step>
