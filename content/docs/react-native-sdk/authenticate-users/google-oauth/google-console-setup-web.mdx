@@ -4,8 +4,9 @@ full: false
 ---
 
 import { Step, Steps } from 'fumadocs-ui/components/steps';
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
 
-This guide will walk you through the steps to set up a project in Google Console, create an OAuth consent screen, and generate web and Android client IDs for Google authentication.
+This guide will walk you through the steps to set up a project in Google Console, create an OAuth consent screen, and generate a web client ID for Google authentication in your Expo app.
 
 <Steps style={{ marginTop: "0" }}>
 
@@ -39,19 +40,65 @@ This guide will walk you through the steps to set up a project in Google Console
 </Step>
 
 <Step>
+## Getting Your Expo Configuration
+
+Your Expo username and app slug are required for setting up the redirect URL. These can be found in your `app.json`:
+
+<CollapsibleCallout type="info" title="Finding Your App Details">
+In your `app.json`, look for:
+```json
+{
+  "expo": {
+    "owner": "your-username",
+    "slug": "your-app-slug"
+  }
+}
+```
+If `owner` is not set, it will use your Expo username.
+</CollapsibleCallout>
+</Step>
+
+<Step>
 ## Creating a Web Client ID
 1. Navigate to the "Credentials" page under "APIs & Services" in Google Cloud Console.
 2. Click on "Create credentials" and select "OAuth client ID".
 3. Choose "Web application" as the application type.
-4. Click "Create" to generate your web client ID.
-5. Copy the client ID and client secret provided.
-![Create Web Client ID](/images/cloud-console.png)
+4. Add the following configurations:
+   - **Authorized JavaScript origins:**
+     ```
+     https://auth.expo.io
+     ```
+   - **Authorized redirect URIs:**
+     ```
+     https://auth.expo.io/@your-username/your-app-slug
+     ```
+     Replace `your-username` and `your-app-slug` with your actual Expo username and app slug.
+
+5. Click "Create" to generate your web client ID.
+6. Copy the client ID - you'll need this for your app's Google Sign-In configuration.
+
+<CollapsibleCallout type="warning" title="Important">
+Make sure to:
+- Use your correct Expo username and app slug in the redirect URI
+- Include both the JavaScript origin and redirect URI exactly as shown
+- Keep the `@` symbol in the redirect URI
+</CollapsibleCallout>
 </Step>
 
 <Step>
 ## Conclusion
-You have successfully set up a project in Google Console, created an OAuth consent screen, and generated the web client ID for Google authentication. You can now integrate Google authentication into your web application using the Okto SDK.
+You have successfully set up a project in Google Console and generated the web client ID for Google authentication. You can now use this client ID in your Expo application's Google Sign-In configuration.
 
+<CollapsibleCallout type="tip" title="Next Steps">
+Return to the quickstart guide and use your web client ID in the Google Sign-In configuration:
+
+```typescript
+const [request, response, promptAsync] = Google.useAuthRequest({
+    webClientId: 'YOUR_WEB_CLIENT_ID', // Add it here
+    // ... other configuration
+});
+```
+</CollapsibleCallout>
 </Step>
 
 </Steps>

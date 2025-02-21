@@ -30,6 +30,25 @@ Without completing these steps first, your application won't be able to interact
 <Steps>
 
 <Step>
+    ## Prerequisites
+
+    Before getting started, ensure you have the following:
+    - **Node.js (v18+) and npm/pnpm/yarn:** <ExternalLink href="https://nodejs.org/">Download Node.js</ExternalLink>
+    - **Okto API Keys:** You need your `VITE_CLIENT_PRIV_KEY` and `VITE_CLIENT_SWA`. Obtain these from the Okto Dashboard.
+    - **Google OAuth Credentials:** Create OAuth 2.0 credentials in the <ExternalLink href="https://console.cloud.google.com/">Google Cloud Console</ExternalLink> to get your `GOOGLE_CLIENT_ID`.
+
+    <CollapsibleCallout type="tip" title="Setting up Google OAuth">
+    1. Go to <ExternalLink href="https://console.cloud.google.com/">Google Cloud Console</ExternalLink>.
+    2. Create OAuth 2.0 credentials for your project.
+    3. Set the redirect URI to: `[YOUR_APP_URL]` (for example, `http://localhost:3000` during local development).
+    4. Save your Client ID.
+    
+    Need detailed instructions? Check our <ExternalLink href="/docs/react-sdk/authenticate-users/google-oauth/google-console-setup">Google Console Setup Guide</ExternalLink>.
+    </CollapsibleCallout>
+
+</Step>
+
+<Step>
     ## 1. Initialize a Vite React App
 
     If you already have a React app, you can skip this step and proceed directly to Step 2 to start integrating Okto.
@@ -341,13 +360,22 @@ Now that we have our basic setup complete, let's implement a token transfer on S
 
         async function handleTransfer() {
             try {
-                const txHash = await tokenTransfer(oktoClient, {
-                    amount: BigInt("1000000000"), // Amount of tokens to transfer (smallest unit)
-                    recipient: "YOUR_RECIPIENT_ADDRESS",
+                const transferParams = {
+                    amount: BigInt("1000000000000000000"), // 1 POL (18 decimals)
+                    recipient: "RECIPIENT_ADDRESS",
                     token: "", // Empty string for native token
-                    caip2Id: "eip155:137" // caip2id of Polygon Amoy
-                });
-                setStatus(`Transfer complete! Hash: ${txHash}`);
+                    caip2Id: "eip155:80002" // Polygon Amoy Testnet chain ID
+                };
+
+                //create the userop
+                const userOp = await tokenTransfer(oktoClient, transferParams);
+
+                //sign the userop
+                const signedUserop = await oktoClient.signUserop(userOp);
+
+                //execute the userop
+                const txHash = await oktoClient.executeUserop(signedUserop);
+                setStatus(`Transfer executed! Result: ${txHash}`);
             } catch (error) {
                 console.error("Transfer failed:", error);
                 setStatus(`Transfer failed: ${error.message}`);
