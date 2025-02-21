@@ -3,14 +3,21 @@
     "pages": [
     "[← Back to Home](/)",
     "------",
-    "index",
-    "feature-support",
-    "---Getting Started---",
+    "---Quickstart---",
     "./quickstart/prerequisites",
-    "./quickstart/new-okto-react-native-setup",
+    "index",
     "templateRepo",
+    "------",
+    "overview",
+    "feature-support",
     "---Authentication---",
-    "...authenticate-users",
+    "./authenticate-users/okto-auth",
+    "./authenticate-users/google-oauth",
+    "!./authenticate-users/email-otp",
+    "!./authenticate-users/phone-otp",
+    "!./authenticate-users/jwt-closed-loop",
+    "!./authenticate-users/onboarding-modal",
+    "./authenticate-users/login-logout",
     "---Wallets---",
     "./wallets/overview",
     "./wallets/(embedded-wallets)",
@@ -24,8 +31,8 @@
     "---Resources---",
     "technical-reference",
     "sdk-error-warnings",
-    "troubleshooting"
-
+    "troubleshooting",
+    "!changelog"
   ],
     "root": true
-  }
+}

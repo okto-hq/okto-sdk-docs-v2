@@ -1,0 +1,102 @@
+---
+title: Overview of TypeScript SDK
+description: Okto is a platform that allows you to integrate web3 functionality into your app without building things from scratch.
+full: false
+---
+
+import TechnologyCard from 'app/components/mdx/TechnologyCard';
+import { 
+  IoCodeSlashOutline, 
+  IoKeyOutline, 
+  IoWalletOutline, 
+  IoBookOutline,
+  IoConstructOutline,
+  IoGitBranchOutline,
+  IoHelpCircleOutline,
+  IoSwapHorizontalOutline 
+} from "react-icons/io5";
+
+## Introduction to Okto TypeScript SDK
+
+**Okto TypeScript SDK** is your comprehensive toolkit for integrating Web3 functionality into TypeScript applications. With an intuitive API and built-in type safety, it simplifies blockchain interactions—helping you quickly onboard users to the decentralized ecosystem and manage secure transactions with ease.
+
+<Callout title="Important Note">
+The Okto TypeScript SDK is built exclusively for client-side (frontend) usage. Do not use this SDK in server-side applications or backend services.
+</Callout>
+
+<div className="my-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+  <TechnologyCard
+    className="h-25"
+    icon={<IoGitBranchOutline size={"1.5rem"} />}
+    title="GitHub Repository"
+    subtitle="View SDK Source Code"
+    link="https://github.com/okto-hq/okto-js-sdk-monorepo"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoCodeSlashOutline size={"1.5rem"} />}
+    title="Template Repository" 
+    subtitle="Example Implementation"
+    link="https://github.com/okto-hq/okto-sdkv2-ts-template"
+  />
+</div>
+
+## Installation & Quickstart
+
+Kickstart your project by following our [Quickstart Guide](/docs/typescript-sdk/quickstart). This guide will take you through installing the SDK, configuring your project, and executing your first transaction.
+
+## Explore the TypeScript SDK
+
+<div className="my-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+  <TechnologyCard
+    className="h-25"
+    icon={<IoKeyOutline size={"1.5rem"} />}
+    title="Authentication"
+    subtitle="Implement secure user login and session management"
+    link="/docs/typescript-sdk/authentication/okto-auth"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoWalletOutline size={"1.5rem"} />}
+    title="Wallet Management"
+    subtitle="Configure and manage embedded and external wallets"
+    link="/docs/typescript-sdk/authentication/session-management/loginUsingOAuth"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoConstructOutline size={"1.5rem"} />}
+    title="Usage & Features"
+    subtitle="Explore hooks, explorer functions, and intent operations"
+    link="/docs/typescript-sdk/usage/overview"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoBookOutline size={"1.5rem"} />}
+    title="Technical Reference"
+    subtitle="In-depth documentation of classes, methods, and data models"
+    link="/docs/typescript-sdk/technical-reference"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoHelpCircleOutline size={"1.5rem"} />}
+    title="Troubleshooting"
+    subtitle="Common issues and their solutions"
+    link="/docs/typescript-sdk/troubleshooting"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoSwapHorizontalOutline size={"1.5rem"} />}
+    title="Feature Support"
+    subtitle="Information on supported chains, tokens, and functionalities"
+    link="/docs/typescript-sdk/feature-support"
+  />
+</div>
+
+## Get Started
+
+Ready to dive in? Begin with our **[Quickstart Guide](/docs/typescript-sdk/quickstart)** to set up your environment, obtain your Okto API key, and build your first TypeScript application powered by the Okto SDK.
+
+If you have any questions or need assistance, don't hesitate to reach out via our **[Troubleshooting](/docs/typescript-sdk/troubleshooting)** page or email us at `devrel@coindcx.com`.
+
+**Happy Building!**
+

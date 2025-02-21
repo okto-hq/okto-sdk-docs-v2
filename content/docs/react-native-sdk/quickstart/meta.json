@@ -1,7 +1,6 @@
 {
     "title": "Getting Started",
     "pages": [
-        "prerequisites",
-        "new-okto-react-native-setup"
+        "prerequisites"
     ]
   }
