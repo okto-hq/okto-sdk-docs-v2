@@ -140,6 +140,15 @@ export default function NavbarComponent() {
           <GitHubButton />
         </NavbarItem>
         <NavbarItem className="hidden lg:flex">
+          <SCButton variant="outline" className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF] group relative">
+            <Link href="https://forms.gle/VN19AYHnvm7V5qe2A" target="_blank">Add Project</Link>
+            <MdOutlineArrowOutward size={".9rem"} />
+            <span className="absolute left-1/2 transform -translate-x-1/2 -bottom-8 w-max px-2 py-1 text-xs text-white bg-zinc-900 dark:bg-zinc-200 dark:text-black rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
+              Add your project to Okto's showcase
+            </span>
+          </SCButton>
+        </NavbarItem>
+        <NavbarItem className="hidden lg:flex">
           <SCButton variant="outline" className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]">
             <Link href="https://www.okto.tech/blog" target="_blank">Blog</Link>
             <MdOutlineArrowOutward size={".9rem"} />
