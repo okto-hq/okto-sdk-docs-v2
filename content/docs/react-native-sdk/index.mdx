@@ -8,13 +8,9 @@ import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
 import ExternalLink from 'app/components/mdx/ExternalLink';
+import TemplateRepoBanner from 'app/components/mdx/TemplateRepoBanner';
 
-<Callout>
-Want an even faster setup? Check out our <ExternalLink href="https://github.com/okto-hq/okto-sdkv2-react-native-template-app">Template Repo</ExternalLink> to get your app running in minutes! It includes:
-- Pre-configured Okto SDK integration
-- Authentication setup
-- Example components and operations
-</Callout>
+<TemplateRepoBanner sdk="react-native" />
 
 <CollapsibleCallout type="warning" title="Essential Setup Required">
 Before proceeding with this guide, please ensure you have:
@@ -37,9 +33,9 @@ Without completing these steps first, your application won't be able to interact
 
      <CollapsibleCallout type="tip" title="Setting up Google OAuth">
         You'll need to set up OAuth 2.0 credentials in the Google Cloud Console:
-        1. For Web & Expo Go: <ExternalLink href="/docs/react-native-sdk/authenticate-users/google-oauth/web-setup">Web Client Setup</ExternalLink>
-        2. For iOS: <ExternalLink href="/docs/react-native-sdk/authenticate-users/google-oauth/ios-setup">iOS Setup</ExternalLink>
-        3. For Android: <ExternalLink href="/docs/react-native-sdk/authenticate-users/google-oauth/android-setup">Android Setup</ExternalLink>
+        1. For Web & Expo Go: <ExternalLink href="/docs/react-native-sdk/authenticate-users/google-oauth/google-console-setup-web">Web Client Setup</ExternalLink>
+        2. For iOS: <ExternalLink href="/docs/react-native-sdk/authenticate-users/google-oauth/google-console-setup-ios">iOS Setup</ExternalLink>
+        3. For Android: <ExternalLink href="/docs/react-native-sdk/authenticate-users/google-oauth/google-console-setup-android">Android Setup</ExternalLink>
     </CollapsibleCallout>
 </Step>
 
@@ -199,9 +195,9 @@ Without completing these steps first, your application won't be able to interact
 
     <CollapsibleCallout type="tip" title="Setting up Google OAuth">
         You'll need to set up OAuth 2.0 credentials in the Google Cloud Console:
-        1. For Web & Expo Go: <ExternalLink href="/docs/react-native-sdk/authenticate-users/google-oauth/web-setup">Web Client Setup</ExternalLink>
-        2. For iOS: <ExternalLink href="/docs/react-native-sdk/authenticate-users/google-oauth/ios-setup">iOS Setup</ExternalLink>
-        3. For Android: <ExternalLink href="/docs/react-native-sdk/authenticate-users/google-oauth/android-setup">Android Setup</ExternalLink>
+        1. For Web & Expo Go: <ExternalLink href="/docs/react-native-sdk/authenticate-users/google-oauth/google-console-setup-web">Web Client Setup</ExternalLink>
+        2. For iOS: <ExternalLink href="/docs/react-native-sdk/authenticate-users/google-oauth/google-console-setup-ios">iOS Setup</ExternalLink>
+        3. For Android: <ExternalLink href="/docs/react-native-sdk/authenticate-users/google-oauth/google-console-setup-android">Android Setup</ExternalLink>
     </CollapsibleCallout>
 </Step>
 
@@ -460,6 +456,8 @@ const result = await evmRawTransaction(oktoClient, rawTxParams);
 ```
 
 ---
+
+<TemplateRepoBanner sdk="react-native" />
 
 ## Additional Resources
 

@@ -7,6 +7,14 @@ import { Step, Steps } from "fumadocs-ui/components/steps";
 
 [Wagmi](https://wagmi.sh/) is a collection of React hooks for Ethereum, making it easy to interact with wallets and smart contracts. Okto provides seamless integration with Wagmi through its adapter package, allowing you to leverage Wagmi's capabilities while maintaining Okto's wallet management features.
 
+<Callout>
+This guide shows how to add Okto wallet support to an existing wagmi application. 
+
+If you're starting from scratch, you have two options:
+- Build with an <a href="/docs/okto-sdk/supported-sdk-platforms" target="_blank" rel="noopener noreferrer">Okto SDK</a> directly
+- Follow the <a href="https://wagmi.sh/react/getting-started" target="_blank" rel="noopener noreferrer">wagmi getting started guide</a> first, then return here to add Okto support
+</Callout>
+
 <Steps>
 
 <Step>
@@ -27,7 +35,7 @@ npm i @okto_web3/wagmi-adapter wagmi @tanstack/react-query
 
 Create a configuration file to set up wagmi with the Okto connector:
 
-```typescript
+```typescript title="wagmi.config.ts"
 import { okto } from '@okto_web3/wagmi-adapter';
 import { cookieStorage, createConfig, createStorage, http } from 'wagmi';
 import { mainnet, optimism, polygon } from 'wagmi/chains';
@@ -75,7 +83,7 @@ declare module 'wagmi' {
 
 Update your app's root component to include the necessary providers:
 
-```tsx
+```tsx title="providers.tsx"
 import { headers } from 'next/headers';
 import type { ReactNode } from 'react';
 import { cookieToInitialState } from 'wagmi';
