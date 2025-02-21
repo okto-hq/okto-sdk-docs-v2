@@ -1,0 +1,310 @@
+---
+title: Okto Eliza Plugin
+description: A plugin that connects Eliza AI with Okto's Web3 infrastructure for natural language blockchain interactions.
+full: false
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
+import ExternalLink from 'app/components/mdx/ExternalLink';
+import FeatureCard from 'app/components/mdx/FeatureCard';
+import { LuWallet, LuKey, LuArrowRightLeft, LuBoxes, LuHistory, LuNetwork, LuBrain, LuCoins, LuUsers, LuHeadphones } from "react-icons/lu";
+
+ <ExternalLink href="https://elizaos.github.io/eliza/">Eliza</ExternalLink> is a powerful multi-agent simulation framework for building autonomous AI agents. Built with TypeScript, it enables developers to create intelligent agents that can execute complex tasks through natural language.
+
+<div className="flex flex-col lg:flex-row items-center justify-between px-6 py-4 mt-8 bg-gradient-to-r from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-800 rounded-lg border-2 border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 transition-all shadow-sm">
+  <div className="flex-1 pr-4 mb-2 lg:mb-0">
+    <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-200 m-0">
+      The Okto Eliza Plugin
+    </h2>
+    <div className="text-zinc-600 dark:text-zinc-400 m-0">
+      By bridging Eliza's AI capabilities with Okto's Web3 infrastructure, this plugin enables your agents to perform blockchain operations through natural language, making Web3 interactions more intuitive and accessible than ever. 🚀
+    </div>
+  </div>
+</div>
+
+## Key Features
+
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <FeatureCard
+    icon={<LuKey size={20} />}
+    title="Wallet Management"
+    description="Create and manage wallets, view addresses, check balances across chains"
+    iconColor="text-teal-500"
+  />
+  <FeatureCard
+    icon={<LuWallet size={20} />}
+    title="Portfolio Management"
+    description="Real-time tracking of tokens, NFTs, and cross-chain assets"
+    iconColor="text-blue-500"
+  />
+  <FeatureCard
+    icon={<LuArrowRightLeft size={20} />}
+    title="Token Operations"
+    description="Transfer tokens, execute swaps, manage DEX integrations"
+    iconColor="text-green-500"
+  />
+  <FeatureCard
+    icon={<LuBoxes size={20} />}
+    title="NFT Operations"
+    description="View collections, transfer NFTs, track balances"
+    iconColor="text-purple-500"
+  />
+  <FeatureCard
+    icon={<LuHistory size={20} />}
+    title="Transaction History"
+    description="Track operations across networks with detailed txn history"
+    iconColor="text-orange-500"
+  />
+  <FeatureCard
+    icon={<LuNetwork size={20} />}
+    title="Multi-chain Support"
+    description="Support for Ethereum, Polygon, Solana, and more"
+    iconColor="text-red-500"
+  />
+</div>
+
+<br/>
+## Okto Eliza Plugin Setup
+
+Learn how to integrate the Okto Eliza Plugin with your existing Eliza project. This guide covers plugin configuration, authentication setup, and executing your first blockchain operations.
+<br />
+
+<Callout type="info" emoji="🚀">
+### Quick Start Example Available!
+Skip the manual setup and get started in minutes with our <ExternalLink href="https://github.com/okto-hq/okto-eliza-ai-agent-example">Example Repository</ExternalLink>. It includes:
+- Pre-configured Okto Plugin integration
+- Authentication setup
+- Example AI agent implementation
+</Callout>
+
+<CollapsibleCallout type="warning" title="Important Setup Steps">
+- Created your Okto Dashboard account
+- Obtained your API keys from the dashboard
+- Enabled the specific chains and tokens you plan to use in your application
+
+Without completing these steps first, your application won't be able to interact with the Okto platform properly. Need help? Check out our <a href="/docs/developer-admin-dashboard/overview" target="_blank" rel="noopener noreferrer">Dashboard Setup Guide</a> for detailed instructions.
+</CollapsibleCallout>
+
+<Steps>
+<Step>
+### Prerequisites
+
+Before getting started, ensure you have the following:
+- **Node.js (v23+) and pnpm:** <ExternalLink href="https://nodejs.org/">Download Node.js</ExternalLink>
+- **Existing Eliza Project:** A working Eliza project where you want to add Web3 capabilities
+- **Okto API Keys:** You need your `OKTO_CLIENT_PRIVATE_KEY` and `OKTO_CLIENT_SWA`. Obtain these from the Okto Dashboard.
+- **Google OAuth Credentials:** Create OAuth 2.0 credentials in the <ExternalLink href="https://console.cloud.google.com/">Google Cloud Console</ExternalLink>.
+- **LLM Provider Account (Optional):** Access to OpenAI, Anthropic, or another supported LLM provider.
+
+</Step>
+
+<Step>
+### Installation
+
+First, install the Okto Eliza Plugin package in your project:
+
+```bash title="bash"
+npm install @okto_web3/eliza-plugin
+```
+</Step>
+
+<Step>
+### Environment Setup
+
+Configure your environment variables to connect with Okto services and authentication providers:
+
+```bash title=".env"
+# Okto Settings
+OKTO_ENVIRONMENT=                # Optional. Defaults to "sandbox"
+OKTO_CLIENT_PRIVATE_KEY=         # Required. Your client private key
+OKTO_CLIENT_SWA=                 # Required. Your client SWA
+
+# Google OAuth
+GOOGLE_CLIENT_ID=                # Required
+GOOGLE_CLIENT_SECRET=            # Required
+
+# LLM Provider (Optional)
+LLM_API_KEY=                     # Your LLM provider API key
+```
+</Step>
+
+<Step>
+### Google OAuth Configuration
+
+Set up Google OAuth to enable user authentication:
+
+1. Visit [Google Cloud Console](https://console.cloud.google.com)
+2. Create a new project
+3. Configure OAuth consent screen
+4. Create OAuth 2.0 credentials
+5. Add redirect URI: `http://localhost:5000`
+6. Save credentials in environment variables
+</Step>
+
+<Step>
+### Configuration
+
+Configure the application settings and character parameters:
+
+1. Edit `.env` with your credentials
+2. Configure required environment variables
+3. Review and update application settings as needed
+
+<CollapsibleCallout type="tip" title="Customizing the LLM Provider">
+Currently, this sample agent uses Groq as the LLM model provider. If you prefer a different provider:
+1. Open `characters/okto.character.json`
+2. Update the LLM provider configuration
+3. Adjust character parameters as needed
+</CollapsibleCallout>
+</Step>
+
+<Step>
+### Basic Implementation
+
+Initialize the Okto Plugin in your application:
+
+```typescript
+import {OktoPlugin} from "@okto_web3/eliza-plugin";
+
+const oktoPlugin = new OktoPlugin()
+return new AgentRuntime({
+  databaseAdapter: db,
+  token,
+  modelProvider: character.modelProvider,
+  plugins: [bootstrapPlugin, nodePlugin, oktoPlugin].filter(Boolean),
+  services: [oktoPlugin.oktoService],
+  // ... other configurations
+});
+```
+</Step>
+
+</Steps>
+
+## Available Actions
+
+The Okto Eliza Plugin provides the following actions:
+
+| Action | Description | Github Source Code |
+|---------|-------------|---------------|
+| `OKTO_GET_PORTFOLIO` | Get user's token portfolio | <ExternalLink href="https://github.com/okto-hq/eliza-plugin/blob/main/src/actions/getPortfolioAction.ts">Source Code</ExternalLink> |
+| `OKTO_GET_ACCOUNT` | Get wallet accounts | <ExternalLink href="https://github.com/okto-hq/eliza-plugin/blob/main/src/actions/getAccountAction.ts">Source Code</ExternalLink> |
+| `OKTO_GET_CHAINS` | List supported networks | <ExternalLink href="https://github.com/okto-hq/eliza-plugin/blob/main/src/actions/getChainAction.ts">Source Code</ExternalLink> |
+| `OKTO_GET_NFT_COLLECTIONS` | Get NFT collections | <ExternalLink href="https://github.com/okto-hq/eliza-plugin/blob/main/src/actions/getNftCollectionsAction.ts">Source Code</ExternalLink> |
+| `OKTO_GET_ORDERS_HISTORY` | View transaction history | <ExternalLink href="https://github.com/okto-hq/eliza-plugin/blob/main/src/actions/getOrdersHistoryAction.ts">Source Code</ExternalLink> |
+| `OKTO_GET_PORTFOLIO_NFT` | Get NFT portfolio | <ExternalLink href="https://github.com/okto-hq/eliza-plugin/blob/main/src/actions/getPortfolioNftAction.ts">Source Code</ExternalLink> |
+| `OKTO_GET_TOKENS` | List supported tokens | <ExternalLink href="https://github.com/okto-hq/eliza-plugin/blob/main/src/actions/getTokensAction.ts">Source Code</ExternalLink> |
+| `OKTO_TRANSFER` | Transfer tokens | <ExternalLink href="https://github.com/okto-hq/eliza-plugin/blob/main/src/actions/transferTokensAction.ts">Source Code</ExternalLink> |
+| `OKTO_NFT_TRANSFER` | Transfer NFTs | <ExternalLink href="https://github.com/okto-hq/eliza-plugin/blob/main/src/actions/nftTransferAction.ts">Source Code</ExternalLink> |
+| `OKTO_SWAP` | Execute token swaps | <ExternalLink href="https://github.com/okto-hq/eliza-plugin/blob/main/src/actions/swapAction.ts">Source Code</ExternalLink> |
+
+## Okto Eliza AI Agent Example
+
+Learn how to run and customize our example implementation of the Okto Eliza Plugin.
+
+<Steps>
+
+<Step>
+### Prerequisites
+
+Before running the sample application, ensure you have:
+- **Node.js:** v23+ (required) - <ExternalLink href="https://nodejs.org/">Download</ExternalLink>
+- **Package Manager:** pnpm - <ExternalLink href="https://pnpm.io/installation">Install Guide</ExternalLink>
+- **Okto Account:** Active account with API credentials
+- **LLM Provider:** Access to OpenAI, Anthropic, or other supported providers
+</Step>
+
+<Step>
+### Setup & Installation
+
+Clone the repository and set up the initial project structure:
+
+```bash title="bash"
+# Clone the repository
+git clone https://github.com/okto-hq/okto-eliza-ai-agent-example
+
+# Navigate and setup
+cd okto-eliza-ai-agent-example
+cp .env.sample .env
+
+# Install dependencies
+pnpm install
+```
+</Step>
+
+<Step>
+### Configuration
+
+Configure the application settings and character parameters:
+
+1. Edit `.env` with your credentials
+2. Configure required environment variables
+3. Review and update application settings as needed
+
+<CollapsibleCallout type="tip" title="Customizing the LLM Provider">
+Currently, this sample agent uses Groq as the LLM model provider. If you prefer a different provider:
+1. Open `characters/okto.character.json`
+2. Update the LLM provider configuration
+3. Adjust character parameters as needed
+</CollapsibleCallout>
+</Step>
+
+<Step>
+### Launch
+
+Start the application and begin testing:
+
+```bash title="bash"
+pnpm run start
+```
+</Step>
+
+</Steps>
+
+## Example Use Cases
+
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <FeatureCard
+    icon={<LuBrain size={20} />}
+    title="AI Trading Assistant"
+    description="Smart trading with portfolio analysis and automation"
+    iconColor="text-purple-500"
+  />
+  <FeatureCard
+    icon={<LuBrain size={20} />}
+    title="NFT Collection Manager"
+    description="Voice-controlled NFT operations and analytics"
+    iconColor="text-blue-500"
+  />
+  <FeatureCard
+    icon={<LuCoins size={20} />}
+    title="DeFi Operations Bot"
+    description="Automated yield farming and liquidity management"
+    iconColor="text-green-500"
+  />
+  <FeatureCard
+    icon={<LuUsers size={20} />}
+    title="Portfolio Assistant"
+    description="Cross-chain tracking and investment insights"
+    iconColor="text-orange-500"
+  />
+  <FeatureCard
+    icon={<LuHeadphones size={20} />}
+    title="Support Agent"
+    description="Transaction help and wallet guidance"
+    iconColor="text-teal-500"
+  />
+  <FeatureCard
+    icon={<LuNetwork size={20} />}
+    title="Cross-chain Bridge Bot"
+    description="Automated asset bridging and transfer assistance"
+    iconColor="text-red-500"
+  />
+</div>
+
+<Callout type="info" emoji="💡">
+Need help or have questions? Join our <ExternalLink href="https://discord.com/invite/okto-916349620383252511">Discord community</ExternalLink> for support and discussions!
+</Callout>
+
+

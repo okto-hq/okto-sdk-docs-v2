@@ -15,6 +15,7 @@
       "!flutter-sdk",
       "!unity-sdk",
       "typescript-sdk",
+      "okto-eliza-plugin",
       "---About Okto SDK---",
       "okto-sdk/overview",
       "okto-sdk/sdk-introduction",
