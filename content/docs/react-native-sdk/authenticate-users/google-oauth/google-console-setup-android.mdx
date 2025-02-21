@@ -44,8 +44,8 @@ This guide will walk you through the steps to set up a project in Google Console
 1. In Google Cloud Console, navigate to the "Credentials" page under "APIs & Services".
 2. Click on "Create credentials" and select "OAuth client ID".
 3. Choose "Android" as the application type.
-4. In the "Package name" field, enter the package name of your Android app (e.g., `com.example.myapp`).
-5. In the "SHA-1 certificate fingerprint" field, enter the SHA-1 fingerprint of your signing certificate. You can obtain this fingerprint using the EAS credentials command:
+4. In the `Package name` field, enter the package name of your Android app (e.g., `com.example.myapp`).
+5. In the `SHA-1 certificate fingerprint` field, enter the SHA-1 fingerprint of your signing certificate. You can obtain this fingerprint using the EAS credentials command:
 ```bash title="bash"
 npx eas credentials
 ```
@@ -55,12 +55,15 @@ If this is your first time using EAS credentials, you might need to:
 2. Log in to your Expo account: `eas login`
 3. Configure your project: `eas build:configure`
 </CollapsibleCallout>
-</Step>
+
 This command will show your project's credentials, including the SHA-1 fingerprint needed for Google OAuth setup.
 
-6. Click "Create" to generate your Android client ID.
-7. Copy the client ID provided.
+6. Under "Advanced Settings", enable `Custom URI Scheme Support` to handle OAuth redirects properly
+7. Click "Create" to generate your Android client ID.
+8. Copy the client ID provided.
+
 ![Create Web Client ID](/images/create-android-clientid.png)
+</Step>
 
 
 <Step>
