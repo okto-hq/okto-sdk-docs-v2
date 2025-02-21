@@ -72,11 +72,17 @@ export default function SupportedChainCard({
         <div className="flex flex-col sm:flex-row items-start">
           {/* Left (Chain Logo & Name) */}
           <div className="w-full sm:w-1/4 mb-4 sm:mb-0">
-            <img
-              src={chainIcon}
-              alt={`${chainName} logo`}
-              className="w-14 h-14 m-0 pb-2"
-            />
+            <div className="w-14 h-14 rounded-full overflow-hidden bg-white dark:bg-[#1a1a1a] flex items-center justify-center m-0 mb-2">
+              <img
+                src={chainIcon}
+                alt={`${chainName} logo`}
+                className="w-10 h-10 object-contain min-w-[40px] min-h-[40px]"
+                style={{
+                  objectFit: 'contain',
+                  imageRendering: 'auto'
+                }}
+              />
+            </div>
             <div className="text-xl sm:text-2xl font-semibold">
               {chainName}
             </div>

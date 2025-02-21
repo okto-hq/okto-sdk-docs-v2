@@ -1,9 +1,9 @@
 {
     "title": "Quickstart",
     "pages": [
-        "../react-sdk/quickstart/new-okto-react-setup",
-        "../react-sdk/quickstart/new-okto-nextjs-setup",
-        "../react-native-sdk/quickstart/new-okto-react-native-setup",
-        "../typescript-sdk/quickstart/new-okto-typescript-setup"
+        "../react-sdk",
+        "../nextjs-sdk",
+        "../react-native-sdk",
+        "../typescript-sdk"
     ]
 }

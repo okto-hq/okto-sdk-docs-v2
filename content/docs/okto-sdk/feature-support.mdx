@@ -12,7 +12,8 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
 Okto offers a range of SDKs tailored to diverse development platforms, ensuring you have the right tools for your project:
 
 - [**React**](/docs/react-sdk) – A React library for integrating Okto into web applications.
-- [**React Native**](/docs/react-native-sdk) **(Coming Soon)** – A React Native SDK for mobile applications.
+- [**NextJS**](/docs/nextjs-sdk) – A NextJS library for integrating Okto into web applications.
+- [**React Native**](/docs/react-native-sdk) – A React Native SDK for mobile applications.
 - [**Flutter**](/docs/flutter-sdk) **(Coming Soon)** – A Flutter SDK for cross-platform applications.
 - [**Unity**](/docs/unity-sdk) **(Coming Soon)** – A Unity SDK for blockchain-based gaming apps.
 - [**TypeScript**](/docs/typescript-sdk) – A TypeScript SDK for building Web3 applications.
@@ -35,64 +36,63 @@ Check out the matrix below to determine which features are supported in each Okt
 
 ### Authentication
 
-| Feature               | Typescript | React |
-| --------------------- | ---------- | ----- |
-| Google OAuth          | ✅        | ✅    |
-| Email OTP             | 🔜         | 🔜    |
-| Phone OTP             | 🔜         | 🔜    |
-| Whatsapp OTP          | 🔜         | 🔜    |
-| Custom Authentication |  🔜         |  🔜   |
+| Feature               | React | NextJS | React Native | Typescript |
+| --------------------- | ---------- | ----- | ------ | ------------ |
+| Google OAuth          | ✅        | ✅    | ✅     | ✅          |
+| Email OTP             | 🔜         | 🔜    | 🔜     | 🔜          |
+| Phone OTP             | 🔜         | 🔜    | 🔜     | 🔜          |
+| Whatsapp OTP          | 🔜         | 🔜    | 🔜     | 🔜          |
+| Custom Authentication |  🔜         |  🔜   |  🔜    |  🔜         |
 
 ### Okto Smart Wallets
 
-| Feature                   | Typescript | React |
-| ------------------------- | ---------- | ----- |
-| Embedded Wallets          | ✅         | ✅    |
-| Signing Transactions      | ✅         | ✅    |
-| Broadcasting Transactions | ✅         | ✅    |
-| Transaction MFA           | 🔜           | 🔜       |
-| Wallet Key Export         | 🔜           | 🔜         |
-| HD Wallets                | 🔜           | 🔜         |
+| Feature                   | React | NextJS | React Native | Typescript |
+| ------------------------- | ---------- | ----- | ------ | ------------ |
+| Embedded Wallets          | ✅         | ✅    | ✅     | ✅          |
+| Signing Transactions      | ✅         | ✅    | ✅     | ✅          |
+| Broadcasting Transactions | ✅         | ✅    | ✅     | ✅          |
+| Transaction MFA           | 🔜           | 🔜       | 🔜     | 🔜          |
+| Wallet Key Export         | 🔜           | 🔜         | 🔜     | 🔜          |
 
 ### Custom Blockchain Support
 
-| Feature                     | Typescript | React |
-| --------------------------- | ---------- | ----- |
-| EVM Chains Support    | ✅         | ✅    |
-| Custom EVM Chains Support    | ✅         | ✅    |
-| Solana Chain Support | ✅         | ✅    |
-| Aptos Chain Support |  ✅         |  ✅    |
+| Feature                     | React | NextJS | React Native | Typescript |
+| --------------------------- | ---------- | ----- | ------ | ------------ |
+| EVM Chains Support    | ✅         | ✅    | ✅     | ✅          |
+| Custom EVM Chains Support    | ✅         | ✅    | ✅     | ✅          |
+| Solana Chain Support | 🔜         | 🔜    | 🔜     | 🔜          |
+| Aptos Chain Support |  🔜         |  🔜    |  🔜    |  🔜    |
 
 ### Connectors
 
-| Feature                                          | Typescript | React |
-| ------------------------------------------------ | ---------- | ----- |
-| Ethers.js                                        | ✅         |  ✅    |
-| External Wallets (MetaMask, WalletConnect, etc.) | 🔜          | 🔜     |
-| Wagmi                                            | 🔜          |  🔜    |
-| Viem                                             | 🔜          |  🔜    |
-| @solana/web3.js                                  | 🔜          |  🔜    |
+| Feature                                          | React | NextJS | React Native | Typescript |
+| ------------------------------------------------ | ---------- | ----- | ------ | ------------ |
+| Wagmi                                          | ✅         |  ✅    | 🔜     | ✅          |
+| Ethers.js                                        |   🔜       |  🔜    | 🔜     | 🔜          |
+|  External Wallets (MetaMask, WalletConnect, etc.)      | 🔜          |  🔜    | 🔜     | 🔜          |
+| Viem                                             | 🔜          |  🔜    | 🔜     | 🔜          |
+| @solana/web3.js                                  | 🔜          |  🔜    | 🔜     | 🔜          |
 
 ### Funding & Payments
 
-| Feature                | Typescript      | React |
-| ---------------------- | --------------- | ----- |
-| Transfer from Wallet   | ✅    | ✅    |
-| On-Ramp |  🔜             |  🔜    |
-| Cross-Chain Liquidity | 🔜 | 🔜 |
-| Cross-Chain Swaps   | 🔜 | 🔜 |
+| Feature                | React | NextJS | React Native | Typescript |
+| ---------------------- | ---------- | ----- | ------ | ------------ |
+| Transfer from Wallet   | ✅    | ✅    | ✅     | ✅          |
+| On-Ramp |  🔜             |  🔜    | 🔜     | 🔜          |
+| Cross-Chain Liquidity | 🔜 | 🔜 | 🔜 | 🔜 |
+| Cross-Chain Swaps   | 🔜 | 🔜 | 🔜 | 🔜 |
 
 ### NFTs
 
-| Feature             | Typescript      | React         |
-| ------------------- | --------------- | ------------- |
-| Collection Creation | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> |
-| Minting             | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> |
-| Transfers           | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> <img src="https://cdn3.emoji.gg/emojis/7187-solana.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Solana" /> <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> <img src="https://cdn3.emoji.gg/emojis/7187-solana.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Solana" /> <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> |
+| Feature             | React | NextJS | React Native | Typescript |
+| ------------------- | ---------- | ----- | ------ | ------------ |
+| Transfers | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> |    
+| Minting             | 🔜 | 🔜 | 🔜 | 🔜 |
+| Collection Creation           | 🔜 | 🔜 | 🔜 | 🔜 |
 
 ### Smart Contract Interactions
 
-| Feature                     | Typescript      | React         |
-| --------------------------- | --------------- | ------------- |
-| RawRead (Read from Smart Contract)    | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> <img src="https://cdn3.emoji.gg/emojis/7187-solana.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Solana" /> <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> <img src="https://cdn3.emoji.gg/emojis/7187-solana.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Solana" /> <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> |
-| RawWrite (Write to Smart Contract)   | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> <img src="https://cdn3.emoji.gg/emojis/7187-solana.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Solana" /> <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> <img src="https://cdn3.emoji.gg/emojis/7187-solana.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Solana" /> <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> |
+| Feature                     | React         | NextJS        | React Native | Typescript |
+| --------------------------- | --------------- | ------------- | ------------ | ------------ |
+| RawWrite (Write to Smart Contract)    | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> |
+|  RawRead (Read from Smart Contract)  | 🔜 | 🔜 | 🔜 | 🔜 |
