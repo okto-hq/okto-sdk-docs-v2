@@ -21,7 +21,7 @@
     "---Wallets---",
     "./wallets/overview",
     "./wallets/(embedded-wallets)",
-    "./wallets/external-wallets",
+    "!./wallets/external-wallets",
     "---Usage---",
     "usage-overview",
     "(Hooks)",

@@ -9,6 +9,9 @@ import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { Callout } from 'fumadocs-ui/components/callout';
 import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
 import ExternalLink from 'app/components/mdx/ExternalLink';
+import TemplateRepoBanner from 'app/components/mdx/TemplateRepoBanner';
+
+<TemplateRepoBanner sdk="typescript" />
 
 <Callout type="warning" title="Essential Setup Required">
 Before proceeding with this guide, please ensure you have:
@@ -24,6 +27,25 @@ Without completing these steps first, your application won't be able to interact
 This approach shows how to create a TypeScript application and manually configure the Okto SDK. Follow these steps to set up your project and execute your first token transfer.
 
 <Steps>
+
+<Step>
+    ## Prerequisites
+
+    Before getting started, ensure you have the following:
+    - **Node.js (v18+) and npm/pnpm/yarn:** <ExternalLink href="https://nodejs.org/">Download Node.js</ExternalLink>
+    - **Okto API Keys:** You need your `CLIENT_PRIVATE_KEY` and `CLIENT_SWA`. Obtain these from the Okto Dashboard.
+    - **Google OAuth Credentials:** Create OAuth 2.0 credentials in the <ExternalLink href="/docs/typescript-sdk/authentication/google-oauth/google-console-setup">Google Cloud Console</ExternalLink> to get your `GOOGLE_CLIENT_ID`.
+    
+    <CollapsibleCallout type="tip" title="Setting up Google OAuth">
+    1. Go to <ExternalLink href="https://console.cloud.google.com/">Google Cloud Console</ExternalLink>.
+    2. Create OAuth 2.0 credentials for your project.
+    3. Set the redirect URI to: `[YOUR_APP_URL]/api/auth/callback/google` (for example, `http://localhost:3000/api/auth/callback/google` during local development).
+    4. Save your Client ID.
+    
+    Need detailed instructions? Check our <ExternalLink href="/docs/typescript-sdk/authentication/google-oauth/google-console-setup">Google Console Setup Guide</ExternalLink>.
+    </CollapsibleCallout>
+
+</Step>
 
 <Step>
     ## Initialize a TypeScript Project
@@ -153,7 +175,6 @@ This approach shows how to create a TypeScript application and manually configur
 </Step>
 
 </Steps>
-
 <br/>
 <br/>
 ## Trying Out a User Operation
@@ -322,6 +343,8 @@ const result = await evmRawTransaction(oktoClient, rawTxParams);
 ```
 
 ---
+
+<TemplateRepoBanner sdk="typescript" />
 
 ## Additional Resources
 

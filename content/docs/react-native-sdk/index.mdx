@@ -8,13 +8,9 @@ import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
 import ExternalLink from 'app/components/mdx/ExternalLink';
+import TemplateRepoBanner from 'app/components/mdx/TemplateRepoBanner';
 
-<Callout>
-Want an even faster setup? Check out our <ExternalLink href="https://github.com/okto-hq/okto-sdkv2-react-native-template-app">Template Repo</ExternalLink> to get your app running in minutes! It includes:
-- Pre-configured Okto SDK integration
-- Authentication setup
-- Example components and operations
-</Callout>
+<TemplateRepoBanner sdk="react-native" />
 
 <CollapsibleCallout type="warning" title="Essential Setup Required">
 Before proceeding with this guide, please ensure you have:
@@ -460,6 +456,8 @@ const result = await evmRawTransaction(oktoClient, rawTxParams);
 ```
 
 ---
+
+<TemplateRepoBanner sdk="react-native" />
 
 ## Additional Resources
 
