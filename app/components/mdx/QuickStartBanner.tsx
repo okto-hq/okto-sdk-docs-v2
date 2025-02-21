@@ -19,7 +19,7 @@ export default function QuickStartBanner() {
       </div>
       <div className="flex gap-6 items-center flex-wrap justify-center">
         <Link
-          href="/docs/react-sdk/quickstart/new-okto-react-setup"
+          href="/docs/react-sdk"
           className={baseButtonStyles}
         >
           <FaReact
@@ -32,7 +32,7 @@ export default function QuickStartBanner() {
         </Link>
 
         <Link
-          href="/docs/nextjs-sdk/quickstart/new-okto-nextjs-setup"
+          href="/docs/nextjs-sdk"
           className={baseButtonStyles}
         >
           <TbBrandNextjs
@@ -45,7 +45,7 @@ export default function QuickStartBanner() {
         </Link>
 
         <Link
-          href="/docs/react-native-sdk/quickstart/new-okto-react-native-setup"
+          href="/docs/react-native-sdk"
           className={baseButtonStyles}
         >
           <TbBrandReactNative
@@ -58,7 +58,7 @@ export default function QuickStartBanner() {
         </Link>
 
         <Link
-          href="/docs/typescript-sdk/quickstart/new-okto-typescript-setup"
+          href="/docs/typescript-sdk"
           className={baseButtonStyles}
         >
           <SiTypescript
