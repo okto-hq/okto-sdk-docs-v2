@@ -53,6 +53,7 @@ yarn add @okto_web3/react-sdk
 In Okto V1, only one environment variable was needed: `OKTO_CLIENT_API_KEY`. However, in V2, Okto has moved to a decentralized approach where even the client is a smart contract on the Okto chain.
 
 <Tabs items={['New Configuration', 'Old Configuration']} defaultValue="New Configuration">
+<div>
 <Tab value="New Configuration">
 ```env
 VITE_CLIENT_PRIV_KEY="YOUR_CLIENT_PRIVATE_KEY"
@@ -62,11 +63,14 @@ VITE_CLIENT_SWA="YOUR_CLIENT_SWA"
 VITE_GOOGLE_CLIENT_ID="YOUR_GOOGLE_CLIENT_ID"
 ```
 </Tab>
+</div>
+<div className="no-copy-code">
 <Tab value="Old Configuration" >
-<pre>
+```bash
 OKTO_CLIENT_API_KEY="your-api-key"
-</pre>
+```
 </Tab>
+</div>
 </Tabs>
 
 <CollapsibleCallout type="warning" title="Essential Setup Required">
@@ -107,7 +111,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 In V1, the provider required `OKTO_CLIENT_API_KEY` and `buildType` as parameters. In V2, this approach has been simplified by consolidating all necessary values into a single config parameter. This config object now holds the `client’s private key`, `client SWA`, and `environment`, making integration more streamlined and easier to manage.
 
 <Tabs items={["Updated Implementation", "Old Implementation"]} defaultValue="Updated Implementation">
-<Tab value="Updated Implementation" hideCopy>
+<div>
+<Tab value="Updated Implementation" >
 ```tsx 
 import React from "react"; 
 import { OktoProvider } from "@okto_web3/react-sdk";
@@ -128,6 +133,8 @@ function App() {
 export default App;
 ```
 </Tab> 
+</div>
+<div className="no-copy-code">
 <Tab value="Old Implementation"> 
 ```tsx
 import { OktoProvider, BuildType } from 'okto-sdk-react';
@@ -148,6 +155,7 @@ function App() {
 export default App;
 ```
 </Tab>
+</div>
 </Tabs>
 
 ### 5. Authentication Implementation
@@ -158,6 +166,7 @@ In V2, authentication remains backward-compatible with V1.
 - Using Google Authentication (Google OAuth); V2 continues to support direct authentication with Google OAuth, maintaining seamless integration with Google's trusted authentication infrastructure within the Okto React SDK.
 
 <Tabs items={["Updated Implementation", "Old Implementation"]} defaultValue="Updated Implementation">
+<div>
 <Tab value="Updated Implementation">
 ```tsx
 // Using Google OAuth
@@ -174,8 +183,10 @@ async function handleGoogleLogin(credentialResponse: any) {
 }
 ```
 </Tab>
+</div>
+<div className="no-copy-code">
 <Tab value="Old Implementation">
-```tsx no-copy
+```tsx
 import {
   useOkto,
   type OktoContextType,
@@ -193,11 +204,13 @@ authenticate(idToken, (result, error) => {
 });
 ```
 </Tab>
+</div>
 </Tabs>
 
 - Using Other Authentication Methods; All authentication methods from V1 remain supported in V2. The authToken retrieved from successful authentication in V1 can still be used in V2 without modification.
 
 <Tabs items={["Updated Implementation", "Old Implementation"]} defaultValue="Old Implementation">
+<div>
 <Tab value="Updated Implementation">
 ```tsx
 // Using Okto OAuth
@@ -214,6 +227,8 @@ async function handleGoogleLogin(credentialResponse: any) {
 }
 ```
 </Tab>
+</div>
+<div className="no-copy-code">
 <Tab value="Old Implementation">
 ```tsx
 import {
@@ -233,6 +248,7 @@ authenticate(idToken, (result, error) => {
 });
 ```
 </Tab>
+</div>
 </Tabs>
 
 #### **Wallet Creation in V2**
