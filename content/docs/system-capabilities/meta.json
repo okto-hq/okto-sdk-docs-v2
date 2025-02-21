@@ -1,7 +1,6 @@
 {
     "title": "System Capabilities",
     "pages": [
-      "supported-chains",
       "embedded-wallets",
       "session-management",
       "policy-engine",

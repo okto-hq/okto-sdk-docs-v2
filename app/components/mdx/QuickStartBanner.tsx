@@ -4,7 +4,7 @@ import { SiTypescript } from "react-icons/si";
 import Link from "next/link";
 
 export default function QuickStartBanner() {
-  const baseButtonStyles = "relative group no-underline p-3 rounded-md border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 shadow-md transition-all";
+  const baseButtonStyles = "relative group no-underline p-3 rounded-md border-2 border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-800/80 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-2px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.5),0_2px_4px_-2px_rgba(0,0,0,0.4)] transition-all hover:scale-105 hover:shadow-[0_8px_12px_-3px_rgba(0,0,0,0.15),0_4px_6px_-4px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_8px_12px_-3px_rgba(0,0,0,0.6),0_4px_6px_-4px_rgba(0,0,0,0.5)] dark:hover:bg-zinc-700/90 dark:hover:border-zinc-500";
   const baseIconStyles = "transition-transform transition-colors duration-200 ease-in-out group-hover:scale-110";
   
   return (
@@ -19,7 +19,7 @@ export default function QuickStartBanner() {
       </div>
       <div className="flex gap-6 items-center flex-wrap justify-center">
         <Link
-          href="/docs/react-sdk/quickstart/new-okto-react-setup"
+          href="/docs/react-sdk"
           className={baseButtonStyles}
         >
           <FaReact
@@ -32,7 +32,7 @@ export default function QuickStartBanner() {
         </Link>
 
         <Link
-          href="/docs/nextjs-sdk/quickstart/new-okto-nextjs-setup"
+          href="/docs/nextjs-sdk"
           className={baseButtonStyles}
         >
           <TbBrandNextjs
@@ -45,7 +45,7 @@ export default function QuickStartBanner() {
         </Link>
 
         <Link
-          href="/docs/react-native-sdk/quickstart/new-okto-react-native-setup"
+          href="/docs/react-native-sdk"
           className={baseButtonStyles}
         >
           <TbBrandReactNative
@@ -58,7 +58,7 @@ export default function QuickStartBanner() {
         </Link>
 
         <Link
-          href="/docs/typescript-sdk/quickstart/new-okto-typescript-setup"
+          href="/docs/typescript-sdk"
           className={baseButtonStyles}
         >
           <SiTypescript
