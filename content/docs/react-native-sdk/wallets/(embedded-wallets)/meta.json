@@ -1,8 +1,8 @@
 {
     "title": "Embedded Wallets",
     "pages": [
-      "2FA",
+      "!2FA",
       "delegated-actions",
-      "key-export"
+      "!key-export"
     ]
   }
