@@ -4,6 +4,7 @@ full: false
 ---
 
 import { Step, Steps } from 'fumadocs-ui/components/steps';
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
 
 This guide will walk you through the steps to set up a project in Google Console, create an OAuth consent screen, and generate an Android client ID for Google authentication.
 
@@ -44,19 +45,38 @@ This guide will walk you through the steps to set up a project in Google Console
 2. Click on "Create credentials" and select "OAuth client ID".
 3. Choose "Android" as the application type.
 4. In the "Package name" field, enter the package name of your Android app (e.g., `com.example.myapp`).
-5. In the "SHA-1 certificate fingerprint" field, enter the SHA-1 fingerprint of your signing certificate. You can obtain this fingerprint using keytool or Android Studio. You can use the following command to get the fingerprint using keytool
+5. In the "SHA-1 certificate fingerprint" field, enter the SHA-1 fingerprint of your signing certificate. You can obtain this fingerprint using the EAS credentials command:
+```bash title="bash"
+npx eas credentials
 ```
-keytool -keystore ./android/app/debug.keystore -list -v
-```
+<CollapsibleCallout type="info" title="First Time Setup">
+If this is your first time using EAS credentials, you might need to:
+1. Install the EAS CLI: `npm install -g eas-cli`
+2. Log in to your Expo account: `eas login`
+3. Configure your project: `eas build:configure`
+</CollapsibleCallout>
+</Step>
+This command will show your project's credentials, including the SHA-1 fingerprint needed for Google OAuth setup.
+
 6. Click "Create" to generate your Android client ID.
 7. Copy the client ID provided.
 ![Create Web Client ID](/images/create-android-clientid.png)
-</Step>
+
 
 <Step>
 ## Conclusion
-You have successfully set up a project in Google Console, created an OAuth consent screen, and generated the Android client ID for Google authentication. You can now integrate Google authentication into your web application using the Okto SDK.
+You have successfully set up a project in Google Console and generated the Android client ID for Google authentication. You can now use this client ID in your Expo application's Google Sign-In configuration.
 
+<CollapsibleCallout type="tip" title="Next Steps">
+Return to the quickstart guide and use your Android client ID in the Google Sign-In configuration:
+
+```typescript
+const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId: 'YOUR_ANDROID_CLIENT_ID', // Add it here
+    // ... other configuration
+});
+```
+</CollapsibleCallout>
 </Step>
 
 </Steps>

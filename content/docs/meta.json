@@ -23,7 +23,6 @@
       "okto-sdk/rate-limits",
       "okto-sdk/use-cases",
       "---Resources---",
-      "migrate-react-sdk",
       "developer-admin-dashboard",
       "troubleshooting",
       "brand-kit",

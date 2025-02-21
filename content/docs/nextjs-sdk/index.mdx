@@ -507,28 +507,28 @@ If you encounter any errors when running `npm run dev` (or `pnpm dev`, `yarn dev
 
 ## Trying Out a User Operation
 
-Now that we have our basic setup complete, let's implement a token transfer on Solana devnet to understand how user operations work in Okto.
+Let's implement a token transfer on Polygon Testnet Amoy to understand how user operations work in Okto.
 
 <Steps>
 
 <Step>
     ### 1. Get Your Wallet Address
 
-    Retrieve your Solana wallet address using:
+    ```typescript
+    import { getAccount } from "@okto_web3/react-sdk";
 
-    ```tsx
-    import { getAccounts } from "@okto_web3/react-sdk";
-    
-    const accounts = await getAccounts(oktoClient);
-    const solanaAccount = accounts.find(account => account.chain === "solana:devnet");
-    console.log("Your Solana address:", solanaAccount.address);
+    const accounts = await getAccount(oktoClient);
+    const polygonAccount = accounts.data.find(
+        account => account.network_name === "POLYGON_TESTNET_AMOY"
+    );
+    console.log("Your Polygon Amoy address:", polygonAccount.address);
     ```
 </Step>
 
 <Step>
     ### 2. Fund Your Wallet
 
-    Before transferring tokens, fund your wallet using the <ExternalLink href="https://faucet.solana.com">Solana Devnet Faucet</ExternalLink>.
+    Before transferring tokens, fund your wallet using the <ExternalLink href="https://faucet.polygon.technology/">Polygon Amoy Faucet</ExternalLink>.
 </Step>
 
 <Step>
@@ -544,68 +544,49 @@ Now that we have our basic setup complete, let's implement a token transfer on S
 
     ```tsx title="app/components/TokenTransfer.tsx"
     "use client";
+
     import { useOkto } from "@okto_web3/react-sdk";
-    import { tokenTransfer } from "@okto_web3/react-sdk/abstract";
+    import { tokenTransfer } from "@okto_web3/react-sdk/abstracted";
     import { useState } from "react";
 
     export function TokenTransfer() {
         const oktoClient = useOkto();
         const [status, setStatus] = useState("");
-        const [modalVisible, setModalVisible] = useState(false);
 
         async function handleTransfer() {
             try {
-                const txHash = await tokenTransfer(oktoClient, {
-                    amount: BigInt("1000000000"), // 1 SOL
-                    recipient: "YOUR_RECIPIENT_ADDRESS",
+                const transferParams = {
+                    amount: BigInt("1000000000000000000"), // 1 POL (18 decimals)
+                    recipient: "RECIPIENT_ADDRESS",
                     token: "", // Empty string for native token
-                    caip2Id: "SOLANA_CHAIN_ID" // caip2id of Solana devnet from step 3
-                });
-                setStatus(`Transfer complete! Hash: ${txHash}`);
-                setModalVisible(true);
-            } catch (error:any) {
+                    caip2Id: "eip155:80002" // Polygon Amoy Testnet chain ID
+                };
+                const userOp = await tokenTransfer(oktoClient, transferParams);
+                setStatus(`Transfer userop created! Result: ${userOp}`);
+
+                //sign the userop
+                const signedUserop = await oktoClient.signUserop(userOp);
+
+                //execute the userop
+                const txHash = await oktoClient.executeUserop(signedUserop);
+
+                setStatus(`Transfer executed! Result: ${txHash}`);
+            } catch (error) {
                 console.error("Transfer failed:", error);
                 setStatus(`Transfer failed: ${error.message}`);
             }
         }
 
         return (
-            <div className="text-center text-white">
-                <button
-                    className="px-4 py-2 w-full bg-blue-500 text-white rounded"
+            <div className="p-4 bg-white rounded-lg shadow">
+                <h2 className="text-xl font-bold mb-4">Token Transfer</h2>
+                <button 
                     onClick={handleTransfer}
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
                 >
-                    Send 1 SOL
+                    Send 1 POL
                 </button>
-
-                {modalVisible && (
-                    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
-                        <div className="bg-black rounded-lg w-11/12 max-w-2xl p-6">
-                            <div className="flex justify-between items-center border-b pb-2 mb-4">
-                                <h2 className="text-lg font-semibold">Token Transfer Status</h2>
-                                <button
-                                    className="text-gray-500 hover:text-gray-700"
-                                    onClick={() => setModalVisible(false)}
-                                >
-                                    ×
-                                </button>
-                            </div>
-                            <div className="text-left text-white max-h-96 overflow-y-auto">
-                                <pre className="whitespace-pre-wrap break-words text-white">
-                                    {status}
-                                </pre>
-                            </div>
-                            <div className="mt-4 text-right">
-                                <button
-                                    className="px-4 py-2 bg-gray-500 text-white rounded"
-                                    onClick={() => setModalVisible(false)}
-                                >
-                                    Close
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                )}
+                <p className="mt-4 text-gray-600">{status}</p>
             </div>
         );
     }
@@ -631,20 +612,22 @@ Now that we have our basic setup complete, let's implement a token transfer on S
             <TokenTransfer />
         </div>
     ```
+</Step>
 
+<Step>
     ### 6. Test the Token Transfer
 
    - Run your dApp, open [http://localhost:3000](http://localhost:3000), and sign in with Google. 
-   - Then, navigate to the page where your **Token Transfer** component is displayed and click on the **Send 1 SOL** button. 
-   - A modal will appear showing the transfer status (e.g., "Transfer successful! Transaction Hash: …").
+   - Then, navigate to the page where your **Token Transfer** component is displayed and click on the **Send 1 POL** button. 
+   - A modal will appear showing the transfer status (e.g., "Transfer executed! Result: …").
 </Step>
 
 <Step>
     ### 7. Verify The Transfer
 
     Once complete, verify its success by:
-    - Checking your updated balance using the `getPortfolio` method.
-    - Viewing the transaction details on the <ExternalLink href="https://explorer.solana.com">Solana Explorer</ExternalLink> (select devnet).
+    - Checking your updated balance using the `getPortfolio` method
+    - Viewing the transaction details on the [Polygon Amoy Explorer](https://amoy.polygonscan.com/)
 </Step>
 
 </Steps>
