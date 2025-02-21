@@ -16,7 +16,7 @@
         "!./authentication/email-otp",
         "!./authentication/phone-otp",
         "!./authentication/jwt-closed-loop",
-        "./authentication/login-logout",
+        "./authentication/session-management",
         "---Usage---",
         "usage-overview",
         "(Core)",

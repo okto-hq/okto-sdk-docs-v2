@@ -17,7 +17,7 @@
     "!./authenticate-users/phone-otp",
     "!./authenticate-users/jwt-closed-loop",
     "!./authenticate-users/onboarding-modal",
-    "./authenticate-users/login-logout",
+    "./authenticate-users/session-management",
     "---Wallets---",
     "./wallets/overview",
     "./wallets/(embedded-wallets)",
