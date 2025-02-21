@@ -4,8 +4,9 @@ full: false
 ---
 
 import { Step, Steps } from 'fumadocs-ui/components/steps';
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
 
-This guide will walk you through the steps to set up a project in Google Console, create an OAuth consent screen, and generate iOS client ID for Google authentication.
+This guide will walk you through the steps to set up a project in Google Console, create an OAuth consent screen, and generate an iOS client ID for Google authentication.
 
 <Steps style={{ marginTop: "0" }}>
 
@@ -39,22 +40,48 @@ This guide will walk you through the steps to set up a project in Google Console
 </Step>
 
 <Step>
+## Getting Your App's Bundle ID
+
+Your bundle ID can be found in your `app.json` under the `ios.bundleIdentifier` field. If not set, it defaults to `com.your.app`.
+
+<CollapsibleCallout type="info" title="Setting Bundle ID">
+In your `app.json`, ensure you have set the iOS bundle identifier:
+```json
+{
+  "expo": {
+    "ios": {
+      "bundleIdentifier": "com.yourcompany.yourapp"
+    }
+  }
+}
+```
+</CollapsibleCallout>
+</Step>
+
+<Step>
 ## Creating an iOS Client ID
 1. In Google Cloud Console, navigate to the "Credentials" page under "APIs & Services".
 2. Click on "Create credentials" and select "OAuth client ID".
 3. Choose "iOS" as the application type.
-4. In the "Bundle ID" field, enter the bundle id of your iOS app, you can get this from XCode or info.plist (e.g., `com.example.myapp`).
+4. In the "Bundle ID" field, enter your app's bundle identifier from your `app.json`.
 5. Click "Create" to generate your iOS client ID.
-6. Copy the client ID and iOS URL scheme provided.
-7. Download the plist file and rename it to `GoogleService-Info.plist`.
-8. Add the `GoogleService-Info.plist` file to your iOS project.
-![Create Web Client ID](/images/create-ios-clientid.png)
+6. Copy the client ID - you'll need this for your app's Google Sign-In configuration.
 </Step>
 
 <Step>
 ## Conclusion
-You have successfully set up a project in Google Console, created an OAuth consent screen, and generated the iOS client ID for Google authentication. You can now integrate Google authentication into your web application using the Okto SDK.
+You have successfully set up a project in Google Console and generated the iOS client ID for Google authentication. You can now use this client ID in your Expo application's Google Sign-In configuration.
 
+<CollapsibleCallout type="tip" title="Next Steps">
+Return to the quickstart guide and use your iOS client ID in the Google Sign-In configuration:
+
+```typescript
+const [request, response, promptAsync] = Google.useAuthRequest({
+    iosClientId: 'YOUR_IOS_CLIENT_ID', // Add it here
+    // ... other configuration
+});
+```
+</CollapsibleCallout>
 </Step>
 
 </Steps>
