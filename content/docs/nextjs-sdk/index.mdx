@@ -534,7 +534,7 @@ Now that we have our basic setup complete, let's implement a token transfer on S
 <Step>
     ### 3. Review Network Information
 
-    Consult the <ExternalLink href="/docs/react-sdk/technical-reference#network-information">Network Information Guide</ExternalLink> to ensure you have the correct CAIP-2 chain identifiers.
+    Consult the <ExternalLink href="/docs/nextjs-sdk/technical-reference#network-information">Network Information Guide</ExternalLink> to ensure you have the correct CAIP-2 chain identifiers.
 </Step>
 
 <Step>
@@ -659,21 +659,21 @@ Congratulations! You have successfully integrated the Okto SDK with your Next.js
 
 | Command | Description | Documentation |
 |---------|-------------|---------------|
-| `const account = await getAccount(oktoClient);` | Get user's wallet details | <ExternalLink href="/docs/react-sdk/getAccount">Method Overview</ExternalLink> |
-| `const chains = await getChains(oktoClient);` | List supported blockchain networks | <ExternalLink href="/docs/react-sdk/getChains">Method Overview</ExternalLink> |
-| `const tokens = await getTokens(oktoClient);` | List supported tokens | <ExternalLink href="/docs/react-sdk/getTokens">Method Overview</ExternalLink> |
-| `const portfolio = await getPortfolio(oktoClient);` | Get user's token holdings | <ExternalLink href="/docs/react-sdk/getPortfolio">Method Overview</ExternalLink> |
-| `const nfts = await getPortfolioNFT(oktoClient);` | Get user's NFT holdings | <ExternalLink href="/docs/react-sdk/getPortfolioNFT">Method Overview</ExternalLink> |
-| `const activity = await getPortfolioActivity(oktoClient);` | Get transaction history | <ExternalLink href="/docs/react-sdk/getPortfolioActivity">Method Overview</ExternalLink> |
-| `const orders = await getOrdersHistory(oktoClient);` | Get transaction order history | <ExternalLink href="/docs/react-sdk/getOrdersHistory">Method Overview</ExternalLink> |
-| `const collections = await getNftCollections(oktoClient);` | Get NFT collections | <ExternalLink href="/docs/react-sdk/getNFTCollections">Method Overview</ExternalLink> |
+| `const account = await getAccount(oktoClient);` | Get user's wallet details | <ExternalLink href="/docs/nextjs-sdk/getAccount">Method Overview</ExternalLink> |
+| `const chains = await getChains(oktoClient);` | List supported blockchain networks | <ExternalLink href="/docs/nextjs-sdk/getChains">Method Overview</ExternalLink> |
+| `const tokens = await getTokens(oktoClient);` | List supported tokens | <ExternalLink href="/docs/nextjs-sdk/getTokens">Method Overview</ExternalLink> |
+| `const portfolio = await getPortfolio(oktoClient);` | Get user's token holdings | <ExternalLink href="/docs/nextjs-sdk/getPortfolio">Method Overview</ExternalLink> |
+| `const nfts = await getPortfolioNFT(oktoClient);` | Get user's NFT holdings | <ExternalLink href="/docs/nextjs-sdk/getPortfolioNFT">Method Overview</ExternalLink> |
+| `const activity = await getPortfolioActivity(oktoClient);` | Get transaction history | <ExternalLink href="/docs/nextjs-sdk/getPortfolioActivity">Method Overview</ExternalLink> |
+| `const orders = await getOrdersHistory(oktoClient);` | Get transaction order history | <ExternalLink href="/docs/nextjs-sdk/getOrdersHistory">Method Overview</ExternalLink> |
+| `const collections = await getNftCollections(oktoClient);` | Get NFT collections | <ExternalLink href="/docs/nextjs-sdk/getNFTCollections">Method Overview</ExternalLink> |
 
 ### User Operations (Intents)
 
 Intents are pre-built action templates within the Okto SDK that simplify common Web3 tasks. They provide one-liner functions for complex blockchain interactions.
 
 #### 1. Token Transfer
-Send tokens to another address. <ExternalLink href="/docs/react-sdk/tokenTransfer">Learn more</ExternalLink>
+Send tokens to another address. <ExternalLink href="/docs/nextjs-sdk/tokenTransfer">Learn more</ExternalLink>
 
 ```typescript
 const transferParams = {
@@ -686,7 +686,7 @@ const result = await tokenTransfer(oktoClient, transferParams);
 ```
 
 #### 2. NFT Transfer
-Transfer NFTs between addresses. <ExternalLink href="/docs/react-sdk/nftTransfer">Learn more</ExternalLink>
+Transfer NFTs between addresses. <ExternalLink href="/docs/nextjs-sdk/nftTransfer">Learn more</ExternalLink>
 
 ```typescript
 const nftParams = {
@@ -701,7 +701,7 @@ const result = await nftTransfer(oktoClient, nftParams);
 ```
 
 #### 3. Raw Transaction (EVM)
-Execute custom EVM contract calls. <ExternalLink href="/docs/react-sdk/rawTransaction">Learn more</ExternalLink>
+Execute custom EVM contract calls. <ExternalLink href="/docs/nextjs-sdk/evmRawTransaction">Learn more</ExternalLink>
 
 ```typescript
 import { encodeFunctionData } from 'viem';
@@ -741,8 +741,8 @@ const result = await evmRawTransaction(oktoClient, rawTxParams);
 
 ## Additional Resources
 
-- <ExternalLink href="/docs/react-sdk/troubleshooting">Troubleshooting Guide</ExternalLink>
-- <ExternalLink href="/docs/react-sdk/technical-reference">Technical Reference</ExternalLink>
-- <ExternalLink href="/docs/react-sdk/usage-overview">Advanced Usage Examples</ExternalLink>
+- <ExternalLink href="/docs/nextjs-sdk/troubleshooting">Troubleshooting Guide</ExternalLink>
+- <ExternalLink href="/docs/nextjs-sdk/technical-reference">Technical Reference</ExternalLink>
+- <ExternalLink href="/docs/nextjs-sdk/usage-overview">Advanced Usage Examples</ExternalLink>
 
 Need help? Join our <ExternalLink href="https://discord.com/invite/okto-916349620383252511">Discord community</ExternalLink> or email us at `devrel@coindcx.com`.
