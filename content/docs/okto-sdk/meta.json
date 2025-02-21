@@ -1,6 +1,7 @@
 {
     "title": "About SDK",
     "pages": [
+        "overview",
         "sdk-introduction",
         "supported-sdk-platforms",
         "feature-support",

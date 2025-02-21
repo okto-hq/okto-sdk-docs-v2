@@ -1,97 +1,464 @@
 ---
-title: Overview of React Native SDK
-description: A complete guide to integrating Okto into your React Native applications.
+title: React Native Quickstart
+description: Learn how to create a React Native app and initialize it with the Okto SDK, including setting up authentication and executing your first token transfer.
 full: false
 ---
 
-import TechnologyCard from 'app/components/mdx/TechnologyCard';
-import { 
-  IoCodeSlashOutline, 
-  IoKeyOutline, 
-  IoWalletOutline, 
-  IoBookOutline,
-  IoConstructOutline,
-  IoGitBranchOutline,
-  IoHelpCircleOutline,
-  IoSwapHorizontalOutline 
-} from "react-icons/io5";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
+import ExternalLink from 'app/components/mdx/ExternalLink';
 
-## Introduction to Okto React Native SDK
+<Callout>
+Want an even faster setup? Check out our <ExternalLink href="https://github.com/okto-hq/okto-sdkv2-react-native-template-app">Template Repo</ExternalLink> to get your app running in minutes!
+</Callout>
 
-**Okto React Native SDK** is your all-in-one toolkit for integrating Web3 functionality into any React Native application. With minimal setup time, you can effortlessly onboard your users to the Web3 ecosystem and provide them with a seamless mobile experience.
+<CollapsibleCallout type="warning" title="Essential Setup Required">
+Before proceeding with this guide, please ensure you have:
+- Created your Okto Dashboard account
+- Obtained your API keys from the dashboard
+- Enabled the specific chains and tokens you plan to use in your application
 
-<div className="my-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-  <TechnologyCard
-    className="h-25"
-    icon={<IoGitBranchOutline size={"1.5rem"} />}
-    title="GitHub Repository"
-    subtitle="View SDK Source Code"
-    link="https://github.com/okto-hq/okto-js-sdk-monorepo"
-  />
-  <TechnologyCard
-    className="h-25"
-    icon={<IoCodeSlashOutline size={"1.5rem"} />}
-    title="Template Repository" 
-    subtitle="Example Implementation"
-    link="https://github.com/okto-hq/okto-sdkv2-react-native-template-app"
-  />
-</div>
+Without completing these steps first, your application won't be able to interact with the Okto platform properly. Need help? Check out our <a href="/docs/developer-admin-dashboard/overview" target="_blank" rel="noopener noreferrer">Dashboard Setup Guide</a> for detailed instructions.
+</CollapsibleCallout>
 
-## Installation & Quickstart
+<Steps>
 
-Kickstart your project by following our [Quickstart Guide](/docs/react-native-sdk/quickstart/new-okto-react-native-setup). This guide will take you through installing the SDK, configuring your project, and executing your first transaction.
+<Step>
+    ## 1. Initialize a React Native App
 
-## Explore the React Native SDK
+    If you already have a React Native app, you can skip this step and proceed directly to Step 2.
 
-<div className="my-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-  <TechnologyCard
-    className="h-25"
-    icon={<IoKeyOutline size={"1.5rem"} />}
-    title="Authentication"
-    subtitle="Implement secure user login and session management"
-    link="/docs/react-native-sdk/authenticate-users/okto-auth"
-  />
-  <TechnologyCard
-    className="h-25"
-    icon={<IoWalletOutline size={"1.5rem"} />}
-    title="Wallet Management"
-    subtitle="Configure and manage embedded and external wallets"
-    link="/docs/react-native-sdk/wallets/overview"
-  />
-  <TechnologyCard
-    className="h-25"
-    icon={<IoConstructOutline size={"1.5rem"} />}
-    title="Usage & Features"
-    subtitle="Explore hooks, explorer functions, and intent operations"
-    link="/docs/react-native-sdk/usage-overview"
-  />
-  <TechnologyCard
-    className="h-25"
-    icon={<IoBookOutline size={"1.5rem"} />}
-    title="Technical Reference"
-    subtitle="In-depth documentation of classes, methods, and data models"
-    link="/docs/react-native-sdk/technical-reference"
-  />
-  <TechnologyCard
-    className="h-25"
-    icon={<IoHelpCircleOutline size={"1.5rem"} />}
-    title="Troubleshooting"
-    subtitle="Common issues and their solutions"
-    link="/docs/react-native-sdk/troubleshooting"
-  />
-  <TechnologyCard
-    className="h-25"
-    icon={<IoSwapHorizontalOutline size={"1.5rem"} />}
-    title="Migration Guide"
-    subtitle="Upgrade from previous versions of the SDK"
-    link="/docs/react-native-sdk/v2migration"
-  />
-</div>
+    Create a new React Native project using the CLI:
 
-## Get Started
+    ```bash title="bash"
+    npx @react-native-community/cli@latest init OktoApp
+    cd OktoApp
+    ```
+</Step>
 
-Ready to dive in? Begin with our **[Quickstart Guide](/docs/react-native-sdk/quickstart/new-okto-react-native-setup)** to set up your environment, obtain your Okto API key, and build your first React Native application powered by the Okto SDK.
+<Step>
+    ## 2. Install Dependencies
 
-If you have any questions or need assistance, don't hesitate to reach out via our **[Troubleshooting](/docs/react-native-sdk/troubleshooting)** page or email us at `devrel@coindcx.com`.
+    Install the required packages:
 
-**Happy Building!**
+    <Tabs items={['npm', 'yarn']}>
+        <Tab value="npm">
+            ```bash
+            npm i @react-native-community/google-signin @react-native-async-storage/async-storage @okto_web3/react-native-sdk@latest
+            npx pod-install
+            ```
+        </Tab>
+        <Tab value="yarn">
+            ```bash
+            yarn add @react-native-community/google-signin @react-native-async-storage/async-storage @okto_web3/react-native-sdk@latest
+            npx pod-install
+            ```
+        </Tab>
+    </Tabs>
+</Step>
+
+<Step>
+    ## 3. Set Up Okto Provider
+
+    Update your `index.js` to initialize the Okto SDK:
+
+    ```typescript title="index.js"
+    import { AppRegistry } from 'react-native';
+    import App from './App';
+    import { name as appName } from './app.json';
+    import { OktoProvider } from '@okto_web3/react-native-sdk';
+
+    const config = {
+        environment: "sandbox",
+        clientPrivateKey: "YOUR_CLIENT_PRIVATE_KEY",  // Replace with your actual private key
+        clientSWA: "YOUR_CLIENT_SWA",             // Replace with your actual SWA
+    };
+
+    function Root() {
+        return (
+            <OktoProvider config={config}>
+                <App />
+            </OktoProvider>
+        );
+    }
+
+    AppRegistry.registerComponent(appName, () => Root);
+    ```
+</Step>
+
+<Step>
+    ## 4. Platform-Specific Setup
+
+    ### iOS Setup
+
+    In Xcode, open `Info` tab as below:  
+	![](/images/react-native-quickstart/image2.png)
+	Under the URL Types section, click `+` button. In the `URL Schemes` field, enter your reversed iOS client ID  
+	![](/images/react-native-quickstart/image8.png)
+    <br/>
+
+    ### Android Setup
+    Update your `android/build.gradle`:
+
+    ```groovy title="android/build.gradle"
+    buildscript {
+        ext {
+            // ... existing config
+            googlePlayServicesAuthVersion = "19.0.0"
+        }
+        // ... rest of the file
+        dependencies {
+            // ... existing dependencies
+            classpath('com.google.gms:google-services:4.3.4')
+        }
+    }
+    ```
+</Step>
+
+<Step>
+    ## 5. Implement Authentication
+
+    Create new directory called `components` with a file called `GoogleSignInButton.tsx` in your root folder.
+
+    ```typescript title="components/GoogleSignInButton.tsx"
+    import React, { useState } from 'react';
+    import { Button, Text, View, StyleSheet } from 'react-native';
+    import { GoogleSignin, User } from '@react-native-community/google-signin';
+    import { useOkto } from '@okto_web3/react-native-sdk';
+
+    GoogleSignin.configure({
+        webClientId: 'OAUTH_WEB_CLIENT_ID',     // Replace with your actual Web Client ID
+        iosClientId: 'OAUTH_IOS_CLIENT_ID',     // Replace with your actual iOS Client ID
+        offlineAccess: false,
+    });
+
+    export function GoogleSignInButton() {
+        const oktoClient = useOkto();
+        const [userInfo, setUserInfo] = useState<User | null>(null);
+
+        const signIn = async () => {
+            try {
+                await GoogleSignin.hasPlayServices();
+                const userInfo = await GoogleSignin.signIn();
+                setUserInfo(userInfo);
+                
+                // Authenticate with Okto using Google token
+                await oktoClient.loginUsingOAuth({
+                    idToken: userInfo.idToken,
+                    provider: "google",
+                });
+            } catch (error) {
+                console.error('Sign-in error:', error);
+            }
+        };
+
+        return (
+            <View style={styles.container}>
+                {userInfo ? (
+                    <Text>Welcome {userInfo.user.name}</Text>
+                ) : (
+                    <Button title="Sign in with Google" onPress={signIn} />
+                )}
+            </View>
+        );
+    }
+
+    const styles = StyleSheet.create({
+        container: {
+            padding: 20,
+        }
+    });
+    ```
+    <Callout title="Note">
+		In case of android app, you don’t have to specify your `OAUTH_ANDROID_CLIENT_ID`, only `OAUTH_WEB_CLIENT_ID` is sufficient.
+	</Callout>
+</Step>
+
+<Step>
+    ## 6. Get User Details and Portfolio
+
+    Create a Dashboard component:
+
+    ```typescript title="components/Dashboard.tsx"
+    import React, { useEffect, useState } from 'react';
+    import { View, Text, StyleSheet, ScrollView } from 'react-native';
+    import { useOkto, getAccount, getPortfolio } from '@okto_web3/react-native-sdk';
+
+    export function Dashboard() {
+        const oktoClient = useOkto();
+        const [accounts, setAccounts] = useState([]);
+        const [portfolio, setPortfolio] = useState(null);
+
+        useEffect(() => {
+            async function fetchUserData() {
+                try {
+                    // Get user's accounts
+                    const userAccounts = await getAccount(oktoClient);
+                    setAccounts(userAccounts.data);
+
+                    // Get user's portfolio
+                    const userPortfolio = await getPortfolio(oktoClient);
+                    setPortfolio(userPortfolio);
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
+            }
+
+            fetchUserData();
+        }, []);
+
+        return (
+            <ScrollView style={styles.container}>
+                <Text style={styles.title}>Your Accounts</Text>
+                {accounts.map(account => (
+                    <View key={account.caip_id} style={styles.accountCard}>
+                        <Text>Network: {account.network_name}</Text>
+                        <Text>Address: {account.address}</Text>
+                    </View>
+                ))}
+                
+                <Text style={styles.title}>Portfolio</Text>
+                <Text>{JSON.stringify(portfolio, null, 2)}</Text>
+            </ScrollView>
+        );
+    }
+
+    const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            padding: 20,
+        },
+        title: {
+            fontSize: 20,
+            fontWeight: 'bold',
+            marginVertical: 10,
+        },
+        accountCard: {
+            padding: 10,
+            marginVertical: 5,
+            backgroundColor: '#f5f5f5',
+            borderRadius: 5,
+        },
+    });
+    ```
+</Step>
+
+<Step>
+    ## 7. Run Your App
+
+    Start your app on your preferred platform:
+
+    <Tabs items={['iOS', 'Android']}>
+        <Tab value="iOS">
+            ```bash
+            npx react-native run-ios
+            ```
+        </Tab>
+        <Tab value="Android">
+            ```bash
+            npx react-native run-android
+            ```
+        </Tab>
+    </Tabs>
+</Step>
+
+<Step>
+    ## 8. Congratulations!
+
+    🎉 Your basic Okto integration is now complete! Let's try out a simple user operation!
+</Step>
+
+</Steps>
+
+<br/>
+## Trying Out a User Operation
+
+Let's implement a token transfer on Solana devnet to understand how user operations work in Okto.
+
+<Steps>
+
+<Step>
+    ### 1. Get Your Wallet Address
+
+    ```typescript
+    import { getAccount } from '@okto_web3/react-native-sdk';
+    
+    const accounts = await getAccount(oktoClient);
+    const solanaAccount = accounts.data.find(
+        account => account.network_name === "SOLANA_DEVNET"
+    );
+    console.log("Your Solana address:", solanaAccount.address);
+    ```
+</Step>
+
+<Step>
+    ### 2. Fund Your Wallet
+
+    Add funds to your wallet using the [Solana Devnet Faucet](https://faucet.solana.com).
+</Step>
+
+<Step>
+    ### 3. Implement Token Transfer
+
+    Create a transfer component:
+
+    ```typescript title="components/TokenTransfer.tsx"
+    import React, { useState } from 'react';
+    import { View, Button, Text, StyleSheet } from 'react-native';
+    import { useOkto, tokenTransfer } from '@okto_web3/react-native-sdk';
+
+    export function TokenTransfer() {
+        const oktoClient = useOkto();
+        const [status, setStatus] = useState('');
+
+        async function handleTransfer() {
+            try {
+                const transferParams = {
+                    amount: BigInt("1000000000"), // 1 SOL
+                    recipient: "RECIPIENT_ADDRESS",
+                    token: "", // Empty string for native token
+                    caip2Id: "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1" // Solana devnet chain ID
+                };
+
+                //create the user operation
+                const userOp = await tokenTransfer(oktoClient, transferParams);
+
+                //sign the user operation
+                const signedOp = await oktoClient.signUserOp(userOp);
+
+                //send the user operation
+                const txHash = await oktoClient.executeUserOp(signedOp);
+
+                setStatus(`Transfer complete! Hash: ${txHash}`);
+
+
+            } catch (error) {
+                console.error("Transfer failed:", error);
+                setStatus(`Transfer failed: ${error.message}`);
+            }
+        }
+
+        return (
+            <View style={styles.container}>
+                <Button 
+                    title="Send 1 SOL" 
+                    onPress={handleTransfer}
+                />
+                <Text style={styles.status}>{status}</Text>
+            </View>
+        );
+    }
+
+    const styles = StyleSheet.create({
+        container: {
+            padding: 20,
+        },
+        status: {
+            marginTop: 10,
+        }
+    });
+    ```
+</Step>
+
+</Steps>
+
+Now that you've completed your first user operation, you're ready to explore more advanced features! Check out our [Usage Guide](/docs/react-native-sdk/usage-overview) to learn about other operations like NFT transfers, contract interactions, and more.
+
+<Callout>
+For more examples and advanced usage, check out the [Template Repo](https://github.com/okto-hq/okto-sdkv2-react-native-template-app).
+</Callout>
+
+## SDK Reference
+
+### Get Commands
+
+| Command | Description | Documentation |
+|---------|-------------|---------------|
+| `const account = await getAccount(oktoClient);` | Get user's wallet details | <ExternalLink href="/docs/react-native-sdk/getAccount">Method Overview</ExternalLink> |
+| `const chains = await getChains(oktoClient);` | List supported blockchain networks | <ExternalLink href="/docs/react-native-sdk/getChains">Method Overview</ExternalLink> |
+| `const tokens = await getTokens(oktoClient);` | List supported tokens | <ExternalLink href="/docs/react-native-sdk/getTokens">Method Overview</ExternalLink> |
+| `const portfolio = await getPortfolio(oktoClient);` | Get user's token holdings | <ExternalLink href="/docs/react-native-sdk/getPortfolio">Method Overview</ExternalLink> |
+| `const nfts = await getPortfolioNFT(oktoClient);` | Get user's NFT holdings | <ExternalLink href="/docs/react-native-sdk/getPortfolioNFT">Method Overview</ExternalLink> |
+| `const activity = await getPortfolioActivity(oktoClient);` | Get transaction history | <ExternalLink href="/docs/react-native-sdk/getPortfolioActivity">Method Overview</ExternalLink> |
+| `const orders = await getOrdersHistory(oktoClient);` | Get transaction order history | <ExternalLink href="/docs/react-native-sdk/getOrdersHistory">Method Overview</ExternalLink> |
+| `const collections = await getNftCollections(oktoClient);` | Get NFT collections | <ExternalLink href="/docs/react-native-sdk/getNFTCollection">Method Overview</ExternalLink> |
+
+### User Operations (Intents)
+
+Intents are pre-built action templates within the Okto SDK that simplify common Web3 tasks. They provide one-liner functions for complex blockchain interactions.
+
+#### 1. Token Transfer
+Send tokens to another address. <ExternalLink href="/docs/react-native-sdk/tokenTransfer">Learn more</ExternalLink>
+
+```typescript
+const transferParams = {
+  amount: BigInt("1000000000000000000"), // Amount in smallest unit
+  recipient: "0xRecipientAddress...",     // Recipient wallet address
+  token: "0xTokenAddress...",             // Token address ("" for native token)
+  caip2Id: "eip155:1",                      // Target chain CAIP-2 ID
+};
+const result = await tokenTransfer(oktoClient, transferParams);
+```
+
+#### 2. NFT Transfer
+Transfer NFTs between addresses. <ExternalLink href="/docs/react-native-sdk/nftTransfer">Learn more</ExternalLink>
+
+```typescript
+const nftParams = {
+  caip2Id: "eip155:1",                           // Target chain CAIP-2 ID
+  collectionAddress: "0xCollectionAddress...",    // NFT Collection address
+  nftId: "NFTTokenID",                           // NFT identifier
+  recipientWalletAddress: "0xRecipientAddress...",// Recipient address
+  amount: 1n,
+  nftType: "ERC721",                             // or "ERC1155"
+};
+const result = await nftTransfer(oktoClient, nftParams);
+```
+
+#### 3. Raw Transaction (EVM)
+Execute custom EVM contract calls. <ExternalLink href="/docs/react-native-sdk/rawTransaction">Learn more</ExternalLink>
+
+```typescript
+import { encodeFunctionData } from 'viem';
+
+// 1. Define Contract Interaction
+const contractAddress = '0xContractAddress...';
+const functionName = 'setValue';
+const functionArgs = [123];
+
+// 2. Encode Function Data
+const functionData = encodeFunctionData({
+  abi: [
+    {
+      "name": functionName,
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "inputs": [{ "type": "uint256", "name": "_value" }]
+    }
+  ] as const,
+  functionName,
+  args: functionArgs,
+});
+
+// 3. Execute Transaction
+const rawTxParams = {
+  caip2Id: "eip155:1",
+  transaction: {
+    to: contractAddress,
+    data: functionData,
+    // value: BigInt(0),  // Optional: for payable functions
+  },
+};
+const result = await evmRawTransaction(oktoClient, rawTxParams);
+```
+
+---
+
+## Additional Resources
+
+- <ExternalLink href="/docs/react-native-sdk/troubleshooting">Troubleshooting Guide</ExternalLink>
+- <ExternalLink href="/docs/react-native-sdk/technical-reference">Technical Reference</ExternalLink>
+- <ExternalLink href="/docs/react-native-sdk/usage-overview">Advanced Usage Examples</ExternalLink>
+
+Need help? Join our <ExternalLink href="https://discord.com/invite/okto-916349620383252511">Discord community</ExternalLink> or email us at `devrel@coindcx.com`.
