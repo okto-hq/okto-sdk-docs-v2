@@ -1,0 +1,171 @@
+---
+title: Ideas to Get Started
+description: Creative ideas and use cases for building with the Okto Eliza Plugin
+full: false
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import ExternalLink from 'app/components/mdx/ExternalLink';
+import { Brain, Coins, Users, Headphones, Network } from 'lucide-react';
+import FeatureCard from 'app/components/mdx/FeatureCard';
+
+## Implementation Ideas
+
+Get inspired with these practical examples of what you can build using the Okto Eliza Plugin.
+
+
+<div className="grid grid-cols-1 gap-6 mt-8">
+  <div className="p-6 rounded-lg border-2 border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 transition-all">
+    <h3 className="text-xl font-bold mb-3">Portfolio Tracker Bot</h3>
+    <p className="text-zinc-600 dark:text-zinc-400 mb-4">
+      A Twitter bot that lets users check their crypto portfolio by tweeting their wallet address.
+    </p>
+    
+    <div className="bg-zinc-50 dark:bg-zinc-800 p-4 rounded-md mb-4">
+      <h4 className="font-semibold mb-2">Implementation Details</h4>
+      <ul className="list-disc list-inside space-y-1 text-sm">
+        <li>Users tweet: <code>@ElizaBot !portfolio 0x123...</code></li>
+        <li>Bot fetches balances using <code>OKTO_GET_PORTFOLIO</code></li>
+        <li>Replies with holdings summary</li>
+      </ul>
+    </div>
+    
+    <div className="mt-4">
+      <span className="font-semibold">Use Case: </span>
+      <span className="text-zinc-600 dark:text-zinc-400">Makes Web3 portfolio tracking accessible directly on Twitter.</span>
+    </div>
+  </div>
+
+  <div className="p-6 rounded-lg border-2 border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 transition-all">
+    <h3 className="text-xl font-bold mb-3">NFT Showcase Bot</h3>
+    <p className="text-zinc-600 dark:text-zinc-400 mb-4">
+      A bot that helps users display their NFT collections through simple commands.
+    </p>
+    
+    <div className="bg-zinc-50 dark:bg-zinc-800 p-4 rounded-md mb-4">
+      <h4 className="font-semibold mb-2">Implementation Details</h4>
+      <ul className="list-disc list-inside space-y-1 text-sm">
+        <li>Users tweet: <code>!showNFTs</code></li>
+        <li>Bot calls <code>OKTO_GET_NFT_COLLECTIONS</code></li>
+        <li>Displays NFT images and collection details</li>
+      </ul>
+    </div>
+    
+    <div className="mt-4">
+      <span className="font-semibold">Use Case: </span>
+      <span className="text-zinc-600 dark:text-zinc-400">Perfect for NFT collectors wanting to showcase their assets.</span>
+    </div>
+  </div>
+
+  <div className="p-6 rounded-lg border-2 border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 transition-all">
+    <h3 className="text-xl font-bold mb-3">Token Transfer Assistant</h3>
+    <p className="text-zinc-600 dark:text-zinc-400 mb-4">
+      Enables token transfers through natural language commands on Twitter.
+    </p>
+    
+    <div className="bg-zinc-50 dark:bg-zinc-800 p-4 rounded-md mb-4">
+      <h4 className="font-semibold mb-2">Implementation Details</h4>
+      <ul className="list-disc list-inside space-y-1 text-sm">
+        <li>Users tweet: <code>!transfer 0.1 ETH to @user</code></li>
+        <li>Bot uses <code>OKTO_TRANSFER</code> for execution</li>
+        <li>Includes DM confirmation for security</li>
+        <li>Confirms successful transfers</li>
+      </ul>
+    </div>
+    
+    <div className="mt-4">
+      <span className="font-semibold">Use Case: </span>
+      <span className="text-zinc-600 dark:text-zinc-400">Simplifies token transfers on social platforms.</span>
+    </div>
+  </div>
+
+  <div className="p-6 rounded-lg border-2 border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 transition-all">
+    <h3 className="text-xl font-bold mb-3">Market Alert Bot</h3>
+    <p className="text-zinc-600 dark:text-zinc-400 mb-4">
+      Keeps users informed about market movements through customizable alerts.
+    </p>
+    
+    <div className="bg-zinc-50 dark:bg-zinc-800 p-4 rounded-md mb-4">
+      <h4 className="font-semibold mb-2">Implementation Details</h4>
+      <ul className="list-disc list-inside space-y-1 text-sm">
+        <li>Monitors prices using <code>OKTO_GET_TOKENS</code></li>
+        <li>Sends alerts for user-defined thresholds</li>
+        <li>Example: "ETH dropped below $2,000!"</li>
+      </ul>
+    </div>
+    
+    <div className="mt-4">
+      <span className="font-semibold">Use Case: </span>
+      <span className="text-zinc-600 dark:text-zinc-400">Real-time market updates through social media.</span>
+    </div>
+  </div>
+
+  <div className="p-6 rounded-lg border-2 border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 transition-all">
+    <h3 className="text-xl font-bold mb-3">Sentiment Reward Bot</h3>
+    <p className="text-zinc-600 dark:text-zinc-400 mb-4">
+      Incentivizes positive community engagement through automated rewards.
+    </p>
+    
+    <div className="bg-zinc-50 dark:bg-zinc-800 p-4 rounded-md mb-4">
+      <h4 className="font-semibold mb-2">Implementation Details</h4>
+      <ul className="list-disc list-inside space-y-1 text-sm">
+        <li>Monitors Okto-related posts</li>
+        <li>Analyzes sentiment of mentions</li>
+        <li>Sends reward claim links via DM</li>
+        <li>Tracks and manages reward distribution</li>
+      </ul>
+    </div>
+    
+    <div className="mt-4">
+      <span className="font-semibold">Use Case: </span>
+      <span className="text-zinc-600 dark:text-zinc-400">Builds community engagement while rewarding positive interactions.</span>
+    </div>
+  </div>
+  
+</div>
+
+## Advanced Implementation Ideas
+
+These more complex use cases demonstrate the full potential of the Okto Eliza Plugin:
+
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+  <FeatureCard
+    icon={<Brain size={20} />}
+    title="AI Trading Assistant"
+    description="Smart trading with portfolio analysis and automation"
+    iconColor="text-purple-500"
+  />
+  <FeatureCard
+    icon={<Coins size={20} />}
+    title="DeFi Operations Bot"
+    description="Automated yield farming and liquidity management"
+    iconColor="text-green-500"
+  />
+  <FeatureCard
+    icon={<Users size={20} />}
+    title="Portfolio Assistant"
+    description="Cross-chain tracking and investment insights"
+    iconColor="text-orange-500"
+  />
+  <FeatureCard
+    icon={<Headphones size={20} />}
+    title="Support Agent"
+    description="Transaction help and wallet guidance"
+    iconColor="text-teal-500"
+  />
+  <FeatureCard
+    icon={<Network size={20} />}
+    title="Cross-chain Bridge Bot"
+    description="Automated asset bridging and transfer assistance"
+    iconColor="text-red-500"
+  />
+</div>
+
+<Callout type="info" emoji="💡">
+These examples are just starting points - combine them or create entirely new use cases based on your needs!
+</Callout>
+
+
+
+
+
