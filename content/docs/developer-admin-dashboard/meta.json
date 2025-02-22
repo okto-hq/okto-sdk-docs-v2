@@ -5,10 +5,12 @@
       "dashboard-account",
       "okto-environments",
       "api-key",
+      "rate-limits",
       "ui-customizations",
       "wallet-control",
       "sponsorship",
-      "user-order-logs"
+      "user-order-logs",
+      "okto-faucet"
     ],
     "icon": "Shield",
     "root": true
