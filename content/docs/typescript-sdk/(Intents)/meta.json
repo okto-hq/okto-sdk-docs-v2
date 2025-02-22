@@ -5,6 +5,6 @@
         "evmRawTransaction",
         "tokenTransfer",
         "nftTransfer",
-        "nftCreateCollection"
+        "!nftCreateCollection"
     ]
 } 
