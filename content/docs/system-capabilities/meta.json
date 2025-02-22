@@ -4,10 +4,10 @@
       "embedded-wallets",
       "session-management",
       "policy-engine",
+      "vendor-control",
+      "user-management",
       "wallet-connector",
       "cross-chain-intents",
-      "trade-service",
-      "vendor-control",
-      "user-management"
+      "trade-service"
     ]
   }

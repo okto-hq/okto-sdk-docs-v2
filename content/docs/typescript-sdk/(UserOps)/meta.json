@@ -4,6 +4,6 @@
         "userop-learn",
         "signUserOp",
         "executeUserOp",
-        "estimate"
+        "!estimate"
     ]
 } 
