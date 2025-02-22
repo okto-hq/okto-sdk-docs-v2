@@ -160,10 +160,10 @@ export default App;
 
 ### 5. Authentication Implementation
 
-In V1, Okto supports multiple authentication methods, including Google Auth (GAuth), email OTP, phone OTP, and JWT custom auth. Upon successful authentication, Okto generates an AuthToken, which is used for delegated access.
+In V1, Okto supports multiple authentication methods, including [`Google-Auth (GAuth)`](https://docs.okto.tech/docs/react-sdk/authenticate-users/google-oauth/auth-user-via-code#authenticate-a-user), [`email-OTP`](https://docs.okto.tech/docs/react-sdk/authenticate-users/email-otp/auth-user-via-email), [`phone-OTP`](https://docs.okto.tech/docs/react-sdk/authenticate-users/phone-otp/auth-user-via-phone), and [`JWT-custom-auth`](https://docs.okto.tech/docs/react-sdk/authenticate-users/jwt-closed-loop/learn). Upon successful authentication, Okto generates an AuthToken, which is used for delegated access.
 
 In V2, authentication remains backward-compatible with V1.
-- Using Google Authentication (Google OAuth); V2 continues to support direct authentication with Google OAuth, maintaining seamless integration with Google's trusted authentication infrastructure within the Okto React SDK.
+- **Using Google Authentication (Google OAuth)**; V2 continues to support direct authentication with Google OAuth, maintaining seamless integration with Google's trusted authentication infrastructure within the Okto React SDK.
 
 <Tabs items={["Updated Implementation", "Old Implementation"]} defaultValue="Updated Implementation">
 <div>
@@ -207,21 +207,21 @@ authenticate(idToken, (result, error) => {
 </div>
 </Tabs>
 
-- Using Other Authentication Methods; All authentication methods from V1 remain supported in V2. The authToken retrieved from successful authentication in V1 can still be used in V2 without modification.
+- **Using Other Authentication Methods**; All authentication methods from V1 remain supported in V2. The authToken retrieved from successful authentication in V1 can still be used in V2 without modification.
 
 <Tabs items={["Updated Implementation", "Old Implementation"]} defaultValue="Old Implementation">
 <div>
 <Tab value="Updated Implementation">
 ```tsx
-// Using Okto OAuth
-async function handleGoogleLogin(credentialResponse: any) {
+// Using Okto auth token
+async function handleOktoLogin(authToken: string) {
     try {
         const user = await oktoClient.loginUsingOAuth({
-            idToken: credentialResponse.credential,
+            authToken: authToken, // replace with authtoken received from V1 login
             provider: "okto",
         });
         console.log("Login successful:", user);
-    } catch (error) {
+    } catch (error:any) {
         console.error("Login failed:", error);
     }
 }
@@ -265,7 +265,6 @@ In V1, the AuthToken was a combination of the user login method and the client A
 
 - Generated client-side and unique for each user login and client SWA.
 - Acts as the authority for the User SWA within policy limits.
-- Returns an authentication token (JWT) after successful authentication.
 </CollapsibleCallout>
 
 
@@ -275,14 +274,15 @@ In V1, the AuthToken was a combination of the user login method and the client A
 
 | V1 Function | V2 Function | Changes |
 |------------|-------------|----------|
-| [`getWallets()`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/get-embedded-wallet-details) | [`getAccount()`](/docs/react-sdk/getAccount) | - Now returns enhanced wallet details<br/>- Includes network symbol and comprehensive chain data|
-| [`getPortfolio()`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/get-user-balance-portfolio) | [`getPortfolio(oktoClient)`](/docs/react-sdk/getPortfolio) | - Now retrieves the user's aggregated portfolio data|
-| [`getSupportedNetworks()`](https://docs.okto.tech/docs/react-sdk/chains-tokens/supported-networks#get-all-supported-networks) | [`getChains(oktoClient)`](/docs/react-sdk/getChains) | - Renamed for clarity<br/>- Retrieves the list of all blockchain networks supported by Okto|
-| [`getNftOrderDetails(query)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-nfts#get-nft-order-details) | [`getNftCollections(oktoClient)`](/docs/react-sdk/getNftCollections) | - Simplified from order-specific queries to full collection retrieval<br/>- Added comprehensive collection metadata support |
-| [`orderHistory(query)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-tokens#fetch-order-history) | [`getOrdersHistory(oktoClient, filters?)`](/docs/react-sdk/getOrdersHistory) | - Now fetches the list of orders for the authenticated user. |
+| [`getWallets()`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/get-embedded-wallet-details) | [`getAccount()`](/docs/react-sdk/getAccount) | - Now returns enhanced wallet details<br/>- Includes network symbol and comprehensive chain data |
+| [`getSupportedNetworks()`](https://docs.okto.tech/docs/react-sdk/chains-tokens/supported-networks#get-all-supported-networks) | [`getChains(oktoClient)`](/docs/react-sdk/getChains) | - Renamed for clarity<br/>- Retrieves the list of all blockchain networks supported by Okto |
+| - | [`getNftCollections(oktoClient)`](https://docsv2.okto.tech/docs/react-sdk/getNftCollections) | - Retrieves NFT collection metadata |
+| [`orderHistory(query)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-tokens#fetch-order-history) <br/> [`getNftOrderDetails(query)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-nfts#get-nft-order-details) <br/> [`getRawTransactionStatus(query)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/raw-transactions#get-raw-transactions) | [`getOrdersHistory(oktoClient, filters?)`](/docs/react-sdk/getOrdersHistory) | - All order history functions are now combined into one<br/>- Retrieves order history for token transfers, NFT transfers, and raw transactions using filter parameters |
+| [`getPortfolio()`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/get-user-balance-portfolio) | [`getPortfolio(oktoClient)`](/docs/react-sdk/getPortfolio) | - Now retrieves the user's aggregated portfolio data |
 | - | [`getPortfolioActivity(oktoClient)`](/docs/react-sdk/getPortfolioActivity) | - Get user's portfolio activity |
-| - | [`getPortfolioNFT(oktoClient)`](/docs/react-sdk/getPortfolioNFT) | - Get user's NFT portfolio|
-| [`getSupportedTokens()`](https://docs.okto.tech/docs/react-sdk/chains-tokens/supported-networks#get-all-supported-tokens) | [`getTokens(oktoClient)`](/docs/react-sdk/getTokens) | - Returns supported token list|
+| - | [`getPortfolioNFT(oktoClient)`](/docs/react-sdk/getPortfolioNFT) | - Get user's NFT portfolio |
+| [`getSupportedTokens()`](https://docs.okto.tech/docs/react-sdk/chains-tokens/supported-networks#get-all-supported-tokens) | [`getTokens(oktoClient)`](/docs/react-sdk/getTokens) | - Returns supported token list |
+
 
 ### Intent Functions
 
@@ -294,7 +294,7 @@ All intents are available in both abstracted and detailed flows. In the detailed
 | [`transferNft(data)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-nfts#transfer-nfts) | [`nftTransfer(oktoClient, data)`](/docs/react-sdk/nftTransfer) | - Converted to UserOp-based transfer model<br/>- Consolidated multiple NFT functions into one<br/>- Added chain compatibility checks<br/> |
 | [`executeRawTransaction()`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/raw-transactions#execute-raw-transaction) | [`evmRawTransaction(oktoClient, data)`](/docs/react-sdk/evmRawTransaction) | - Now creates a UserOp for executing raw EVM transactions.|
 
-### New Account Functions
+### V2 Functions
 
 | Function | Description |
 |----------|-------------|
