@@ -11,7 +11,7 @@
       "---SDK Quickstarts---",
       "react-sdk",
       "nextjs-sdk",
-      "react-native-sdk",
+      "!react-native-sdk",
       "!flutter-sdk",
       "!unity-sdk",
       "typescript-sdk",

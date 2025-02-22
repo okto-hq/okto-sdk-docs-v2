@@ -44,7 +44,7 @@ export default function QuickStartBanner() {
           </span>
         </Link>
 
-        <Link
+        {/* <Link
           href="/docs/react-native-sdk"
           className={baseButtonStyles}
         >
@@ -55,7 +55,7 @@ export default function QuickStartBanner() {
           <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-max px-2 py-1 text-xs text-white bg-zinc-900 dark:bg-zinc-200 dark:text-black rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
             React Native Quickstart
           </span>
-        </Link>
+        </Link> */}
 
         <Link
           href="/docs/typescript-sdk"
