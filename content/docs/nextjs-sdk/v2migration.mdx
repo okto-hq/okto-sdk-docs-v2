@@ -249,18 +249,18 @@ authenticate(idToken, (result, error) => {
 <div>
 <Tab value="Updated Implementation">
 ```tsx
-// Using Okto OAuth
+// Using Okto auth token
 async function handleOktoLogin(authToken: string) {
-        try {
-            const user = await oktoClient.loginUsingOAuth({
-                authToken: authToken, // Auth token received from V1 login
-                provider: "okto",
-            });
-            console.log("Login successful:", user);
-        } catch (error:any) {
-            console.error("Login failed:", error);
-        }
+    try {
+        const user = await oktoClient.loginUsingOAuth({
+            authToken: authToken, // replace with authtoken received from V1 login
+            provider: "okto",
+        });
+        console.log("Login successful:", user);
+    } catch (error:any) {
+        console.error("Login failed:", error);
     }
+}
 ```
 </Tab>
 </div>

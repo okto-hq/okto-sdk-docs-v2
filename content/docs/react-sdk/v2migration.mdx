@@ -217,7 +217,7 @@ authenticate(idToken, (result, error) => {
 async function handleOktoLogin(authToken: string) {
     try {
         const user = await oktoClient.loginUsingOAuth({
-            authToken: authToken, // Auth token received from V1 login
+            authToken: authToken, // replace with authtoken received from V1 login
             provider: "okto",
         });
         console.log("Login successful:", user);
