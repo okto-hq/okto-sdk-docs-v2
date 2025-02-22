@@ -1,0 +1,116 @@
+---
+title: Overview
+description: A plugin that connects Eliza AI with Okto's Web3 infrastructure for natural language blockchain interactions.
+full: false
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import ExternalLink from 'app/components/mdx/ExternalLink';
+import TechnologyCard from 'app/components/mdx/TechnologyCard';
+import FeatureCard from 'app/components/mdx/FeatureCard';
+import { LuWallet, LuKey, LuArrowRightLeft, LuBoxes, LuHistory, LuNetwork } from "react-icons/lu";
+import { IoCodeSlashOutline, IoGitBranchOutline, IoBookOutline, IoConstructOutline } from "react-icons/io5";
+
+## What is Eliza?
+
+<ExternalLink href="https://elizaos.github.io/eliza/">Eliza</ExternalLink> is an open-source framework designed for building AI agents that can interact across multiple platforms. It provides a modular and flexible architecture to create customizable, scalable, and stateful AI agents.
+
+
+### Core Features of Eliza
+
+- **Modular Design:** Uses plugins and services for easy customization
+- **Scalable Knowledge:** Supports Retrieval-Augmented Generation (RAG)
+- **Stateful Interactions:** Maintains context across conversations
+- **Multi-Agent Support:** Runs multiple agents with unique configurations
+- **Multi-Platform Support:** Integrates with Discord, Twitter, and more
+
+<div className="my-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+  <TechnologyCard
+    className="h-25"
+    icon={<IoBookOutline size={"1.5rem"} />}
+    title="Explore Eliza" 
+    subtitle="Eliza Documentation"
+    link="https://elizaos.github.io/eliza/"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoGitBranchOutline size={"1.5rem"} />}
+    title="GitHub Repository"
+    subtitle="Eliza GitHub Repository"
+    link="https://github.com/elizaOS/eliza"
+  />
+</div>
+
+
+## What is the Okto Eliza Plugin?
+
+The Okto Eliza Plugin bridges Eliza's AI capabilities with Okto's Web3 infrastructure to enable natural language blockchain interactions. It makes Web3 more intuitive and accessible than ever, allowing your AI agents to perform blockchain operations through simple conversations. 🚀
+
+## Key Features
+
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+  <FeatureCard
+    icon={<LuKey size={20} />}
+    title="Wallet Management"
+    description="Create and manage wallets, view addresses, check balances across chains"
+    iconColor="text-teal-500"
+  />
+  <FeatureCard
+    icon={<LuWallet size={20} />}
+    title="Portfolio Management"
+    description="Real-time tracking of tokens, NFTs, and cross-chain assets"
+    iconColor="text-blue-500"
+  />
+  <FeatureCard
+    icon={<LuArrowRightLeft size={20} />}
+    title="Token Operations"
+    description="Transfer tokens, execute swaps, manage DEX integrations"
+    iconColor="text-green-500"
+  />
+  <FeatureCard
+    icon={<LuBoxes size={20} />}
+    title="NFT Operations"
+    description="View collections, transfer NFTs, track balances"
+    iconColor="text-purple-500"
+  />
+  <FeatureCard
+    icon={<LuHistory size={20} />}
+    title="Transaction History"
+    description="Track operations across networks with detailed txn history"
+    iconColor="text-orange-500"
+  />
+  <FeatureCard
+    icon={<LuNetwork size={20} />}
+    title="Multi-chain Support"
+    description="Support for Ethereum, Polygon, Solana, and more"
+    iconColor="text-red-500"
+  />
+</div>
+
+## Explore the Plugin
+
+<div className="my-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+  <TechnologyCard
+    className="h-25"
+    icon={<IoConstructOutline size={"1.5rem"} />}
+    title="Setup Guide"
+    subtitle="Install and configure the plugin"
+    link="/docs/okto-eliza-plugin/eliza-okto-plugin-setup"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoCodeSlashOutline size={"1.5rem"} />}
+    title="Sample Agent"
+    subtitle="Run example implementation"
+    link="/docs/okto-eliza-plugin/eliza-okto-sample-agent"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoBookOutline size={"1.5rem"} />}
+    title="Ideas to Get Started"
+    subtitle="Example use cases and implementations"
+    link="/docs/okto-eliza-plugin/ideas-to-get-started"
+  />
+</div>
+
+
