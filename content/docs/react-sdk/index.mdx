@@ -202,26 +202,34 @@ Without completing these steps first, your application won't be able to interact
     1. Create the basic authentication component:
 
     ```tsx title="App.tsx"
+    import { useState } from "react";
     import { useOkto } from "@okto_web3/react-sdk";
     import { GoogleLogin } from "@react-oauth/google";
-
+    import { UserDashboard } from "./components/UserDashboard";
+    
     function App() {
         const oktoClient = useOkto();
+        const [isLoading, setIsLoading] = useState(false);
 
         async function handleGoogleLogin(credentialResponse: any) {
             try {
+                setIsLoading(true);
                 await oktoClient.loginUsingOAuth({
                     idToken: credentialResponse.credential,
                     provider: "google",
                 });
             } catch (error) {
                 console.error("Authentication error:", error);
+            } finally {
+                setIsLoading(false);
             }
         }
 
         return (
             <div>
-                {oktoClient.userSWA ? (
+                {isLoading ? (
+                    <div>Loading...</div>
+                ) : oktoClient.userSWA ? (
                     <UserDashboard />
                 ) : (
                     <GoogleLogin onSuccess={handleGoogleLogin} />
@@ -253,37 +261,37 @@ Without completing these steps first, your application won't be able to interact
     ```tsx title="UserDashboard.tsx"
     import { useOkto, getAccount, getPortfolio } from "@okto_web3/react-sdk";
     import { useEffect, useState } from "react";
-
+    
     export function UserDashboard() {
         const oktoClient = useOkto();
         const [accounts, setAccounts] = useState([]);
         const [portfolio, setPortfolio] = useState(null);
-
+    
         useEffect(() => {
             async function fetchUserData() {
                 // Get user's accounts/wallets
                 const userAccounts = await getAccount(oktoClient);
-                setAccounts(userAccounts.data);
-
+                setAccounts(userAccounts);
+    
                 // Get user's portfolio
                 const userPortfolio = await getPortfolio(oktoClient);
                 setPortfolio(userPortfolio);
             }
-
+    
             fetchUserData();
         }, []);
-
+    
         return (
             <div>
-                <h2>Welcome {oktoClient.userSWA?.userAddress}</h2>
+                <h2>Welcome {oktoClient.userSWA}</h2>
                 <h3>Your Accounts:</h3>
                 {accounts.map(account => (
-                    <div key={account.caip_id}>
-                        <p>Network: {account.network_name}</p>
+                    <div key={account.caipId}>
+                        <p>Network: {account.networkName}</p>
                         <p>Address: {account.address}</p>
                     </div>
                 ))}
-
+    
                 <h3>Portfolio:</h3>
                 <pre>{JSON.stringify(portfolio, null, 2)}</pre>
             </div>
