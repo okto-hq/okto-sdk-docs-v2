@@ -39,7 +39,7 @@ function TokenTransfer() {
                 caip2Id: "eip155:1"
             };
             // Execute the transfer
-            const jobId = await oktoClient.executeIntent(transferParams);
+            const jobId = await tokenTransfer(oktoClient, transferParams);
             console.log('Transfer jobId:', jobId);
         } catch (error:any) {
             console.error('Error in token transfer:', error);
@@ -78,7 +78,7 @@ function TokenTransfer() {
             const signedOp = await oktoClient.signUserOp(userOp);
             
             // Execute the transfer
-            const jobId = await oktoClient.executeIntent(signedOp);
+            const jobId = await oktoClient.executeUserOp(signedOp);
             console.log('Transfer jobId:', jobId);
         } catch (error:any) {
             console.error('Error in token transfer:', error);

@@ -1,0 +1,165 @@
+---
+title: Okto Eliza Plugin Setup
+description: A plugin that connects Eliza AI with Okto's Web3 infrastructure for natural language blockchain interactions.
+full: false
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
+import ExternalLink from 'app/components/mdx/ExternalLink';
+import TemplateRepoBanner from 'app/components/mdx/TemplateRepoBanner';
+
+## Getting Started
+
+This guide assumes you have an existing Eliza project where you want to add Web3 capabilities. If you're new to Eliza, you can either:
+- Explore the <ExternalLink href="https://github.com/elizaOS/eliza">Eliza Framework</ExternalLink> to create a new project from scratch
+- Use our [Sample Agent Implementation](/docs/okto-eliza-plugin/eliza-okto-sample-agent) which comes with both Eliza and the Okto plugin pre-configured
+
+<CollapsibleCallout type="warning" title="Essential Setup Required">
+Before you begin, make sure you have:
+- Created your [Okto Developer Dashboard](https://dashboard.okto.tech/login) account
+- Get your [Okto credits](https://dashboard.okto.tech/okto-credits) from the dashboard
+- Obtained your [API keys](https://dashboard.okto.tech/api-keys) from the dashboard
+- Enabled the specific [Chains and Tokens](https://dashboard.okto.tech/wallet-controls) you plan to use in your application
+- Optional: Enable [Sponsorship](https://dashboard.okto.tech/paymaster) for the desired chains
+
+If you need help, see our <ExternalLink href="/docs/developer-admin-dashboard/overview">Dashboard Setup Guide</ExternalLink> for detailed instructions.
+</CollapsibleCallout>
+
+<Steps>
+
+<Step>
+### Prerequisites
+
+Before getting started, ensure you have the following:
+- **Node.js (v23+) and pnpm:** <ExternalLink href="https://nodejs.org/">Download Node.js</ExternalLink>
+- **Existing Eliza Project:** A working Eliza project where you want to add Web3 capabilities
+- **Okto API Keys:** You need your `OKTO_CLIENT_PRIVATE_KEY` and `OKTO_CLIENT_SWA`. Obtain these from the [Okto Developer Dashboard](https://dashboard.okto.tech/login).
+- **Google OAuth Credentials:** Create OAuth 2.0 credentials in the <ExternalLink href="https://console.cloud.google.com/">Google Cloud Console</ExternalLink>.
+- **LLM Provider Account (Optional):** Access to OpenAI, Anthropic, or another supported LLM provider.
+</Step>
+
+<Step>
+### Installation
+
+Install the Okto Eliza Plugin package in your project:
+
+<Tabs items={['npm', 'pnpm', 'yarn']}>
+    <Tab value="npm">
+        ```bash
+        npm install @okto_web3/eliza-plugin
+        ```
+    </Tab>
+    <Tab value="pnpm">
+        ```bash
+        pnpm add @okto_web3/eliza-plugin
+        ```
+    </Tab>
+    <Tab value="yarn">
+        ```bash
+        yarn add @okto_web3/eliza-plugin
+        ```
+    </Tab>
+</Tabs>
+</Step>
+
+<Step>
+### Environment Setup
+
+Create a `.env` file in your project root:
+
+```bash title=".env"
+# Okto Settings
+OKTO_ENVIRONMENT=                # Optional. Defaults to "sandbox"
+OKTO_CLIENT_PRIVATE_KEY=         # Required. Your client private key
+OKTO_CLIENT_SWA=                 # Required. Your client SWA
+
+# Google OAuth
+GOOGLE_CLIENT_ID=                # Required
+GOOGLE_CLIENT_SECRET=            # Required
+
+# LLM Provider (Optional)
+LLM_API_KEY=                     # Your LLM provider API key
+```
+
+<CollapsibleCallout type="warning" title="Important">
+    - Replace all placeholder values with your actual keys
+    - Never commit your `.env` file to version control
+    - Add `.env` to your `.gitignore`
+</CollapsibleCallout>
+</Step>
+
+<Step>
+### Google OAuth Configuration
+
+Set up Google OAuth to enable user authentication:
+
+1. Visit [Google Cloud Console](https://console.cloud.google.com)
+2. Create a new project
+3. Configure OAuth consent screen
+4. Create OAuth 2.0 credentials
+5. Add redirect URI: `http://localhost:5000`
+6. Save credentials in environment variables
+
+<CollapsibleCallout type="tip" title="Setting up Google OAuth">
+Need detailed instructions? Check our [Google Console Setup Guide](/docs/typescript-sdk/authentication/google-oauth/google-console-setup).
+</CollapsibleCallout>
+</Step>
+
+<Step>
+### Basic Implementation
+
+Initialize the Okto Plugin in your application:
+
+```typescript
+import { OktoPlugin } from "@okto_web3/eliza-plugin";
+
+const oktoPlugin = new OktoPlugin();
+
+return new AgentRuntime({
+  databaseAdapter: db,
+  token,
+  modelProvider: character.modelProvider,
+  plugins: [bootstrapPlugin, nodePlugin, oktoPlugin].filter(Boolean),
+  services: [oktoPlugin.oktoService],
+  // ... other configurations
+});
+```
+</Step>
+
+<Step>
+### Verify Installation
+
+Test your setup by running your agent and trying a basic Web3 command:
+
+```bash title="bash"
+pnpm run start
+```
+
+Try asking your agent about wallet balances or supported chains to verify the integration.
+</Step>
+
+</Steps>
+
+## Available Actions
+
+The Okto Eliza Plugin provides the following actions:
+
+| Action | Description | GitHub Source |
+|---------|-------------|---------------|
+| `OKTO_GET_PORTFOLIO` | Get user's token portfolio | <ExternalLink href="https://github.com/okto-hq/eliza-plugin/blob/main/src/actions/getPortfolioAction.ts">Source</ExternalLink> |
+| `OKTO_GET_ACCOUNT` | Get wallet accounts | <ExternalLink href="https://github.com/okto-hq/eliza-plugin/blob/main/src/actions/getAccountAction.ts">Source</ExternalLink> |
+| `OKTO_GET_CHAINS` | List supported networks | <ExternalLink href="https://github.com/okto-hq/eliza-plugin/blob/main/src/actions/getChainAction.ts">Source</ExternalLink> |
+| `OKTO_GET_NFT_COLLECTIONS` | Get NFT collections | <ExternalLink href="https://github.com/okto-hq/eliza-plugin/blob/main/src/actions/getNftCollectionsAction.ts">Source</ExternalLink> |
+| `OKTO_GET_ORDERS_HISTORY` | View transaction history | <ExternalLink href="https://github.com/okto-hq/eliza-plugin/blob/main/src/actions/getOrdersHistoryAction.ts">Source</ExternalLink> |
+| `OKTO_GET_PORTFOLIO_NFT` | Get NFT portfolio | <ExternalLink href="https://github.com/okto-hq/eliza-plugin/blob/main/src/actions/getPortfolioNftAction.ts">Source</ExternalLink> |
+| `OKTO_GET_TOKENS` | List supported tokens | <ExternalLink href="https://github.com/okto-hq/eliza-plugin/blob/main/src/actions/getTokensAction.ts">Source</ExternalLink> |
+| `OKTO_TRANSFER` | Transfer tokens | <ExternalLink href="https://github.com/okto-hq/eliza-plugin/blob/main/src/actions/transferTokensAction.ts">Source</ExternalLink> |
+| `OKTO_NFT_TRANSFER` | Transfer NFTs | <ExternalLink href="https://github.com/okto-hq/eliza-plugin/blob/main/src/actions/nftTransferAction.ts">Source</ExternalLink> |
+| `OKTO_SWAP` | Execute token swaps | <ExternalLink href="https://github.com/okto-hq/eliza-plugin/blob/main/src/actions/swapAction.ts">Source</ExternalLink> |
+
+<Callout type="info" emoji="💡">
+Need help or have questions? Join our <ExternalLink href="https://discord.com/invite/okto-916349620383252511">Discord community</ExternalLink> for support and discussions!
+</Callout>

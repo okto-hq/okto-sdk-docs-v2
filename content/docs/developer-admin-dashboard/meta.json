@@ -1,7 +1,9 @@
 {
     "title": "Dashboard",
     "pages": [
-      "overview",
+      "[← Back to Home](/)",
+      "------",
+      "index",
       "dashboard-account",
       "okto-environments",
       "okto-faucet",
