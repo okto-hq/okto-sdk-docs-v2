@@ -12,36 +12,10 @@ import { Icon as IIcon } from '@iconify/react';
 
 The `executeUserOp()` method is available on the OktoClient instance and is used to submit signed user operations to the blockchain. This method is used to execute transactions after they have been signed.
 
-### Method Overview
+### Example
 
-| Methods | Description |
-|---------|-------------|
-| <sub><i>async</i></sub> [`oktoClient.executeUserOp`](#execute-userop) | Execute a signed user operation |
-
-<div className="method-box">
-
-## Execute UserOp
-
-<sub><i>async</i></sub> `oktoClient.executeUserOp(userop: UserOp)` executes a signed user operation on the blockchain.
-
-### Parameters
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `userop` | [`UserOp`](/docs/react-sdk/technical-reference#models) | The signed user operation to be executed |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `result` | `Promise<string>` | Returns the transaction hash of the executed operation |
-
-</Callout>
-
-<Accordions>
-<Accordion title="Example">
+<Accordions defaultValue="Usage">
+<Accordion title="Usage">
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
 ```typescript
@@ -52,9 +26,9 @@ function ExecuteOperation() {
 
     async function handleExecuteOperation(signedUserOp) {
         try {
-            const txHash = await oktoClient.executeUserOp(signedUserOp);
-            console.log('Transaction hash:', txHash);
-            return txHash;
+            const result = await oktoClient.executeUserOp(signedUserOp);
+            console.log('Job ID:', result);
+            return result;
         } catch (error) {
             console.error('Error executing operation:', error);
         }
@@ -70,10 +44,55 @@ function ExecuteOperation() {
 </Tab>
 </Tabs>
 </Accordion>
+
+<Accordion title="Sample Response">
+```json
+// JobId returned
+"3ee33731-9e96-4ab9-892c-ea476b36295d"
+```
+</Accordion>
 </Accordions>
 
-</div>
-
-<Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation for more details.
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
 </Callout>
+
+### Method Overview
+
+| Methods | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`oktoClient.executeUserOp`](#execute-userop) | Execute a signed user operation |
+
+<div className="method-box">
+
+## Execute UserOp
+
+<sub><i>async</i></sub> `oktoClient.executeUserOp(userop: UserOp)` executes a signed user operation on the blockchain.
+
+### Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|-----------|
+| `userop` | [`SignedUserOp`](/docs/react-sdk/technical-reference#models) | The signed user operation to be executed | Yes |
+
+### Response
+
+<Callout title="Success Response">
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | `Promise<string>` | Returns the job ID of the executed user operation |
+
+<Accordions>
+<Accordion title="Response Type">
+```typescript
+interface {
+    jobId: string;
+}
+```
+</Accordion>
+</Accordions>
+</Callout>
+
+</div>
