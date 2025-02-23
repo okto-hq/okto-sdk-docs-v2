@@ -4,12 +4,10 @@
       "overview",
       "dashboard-account",
       "okto-environments",
+      "okto-faucet",
       "api-key",
-      "ui-customizations",
       "wallet-control",
-      "sponsorship",
-      "user-order-logs",
-      "okto-faucet"
+      "sponsorship"
     ],
     "icon": "Shield",
     "root": true
