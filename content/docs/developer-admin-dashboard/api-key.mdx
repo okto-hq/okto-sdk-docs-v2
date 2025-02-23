@@ -6,9 +6,9 @@ full: false
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-## App ID
+## App ID / Client ID / Client SWA
 
-The App ID is a unique identifier for your application and you as a [Client](/docs/introduction-to-okto/okto-client-user). It's used to associate your Okto client with this specific app in our system.
+The App ID is a unique identifier for your application and you as a [Client](/docs/introduction-to-okto/okto-client-user). It is the smart contract address of the client's smart wallet account (SWA). It's used to associate your Okto client with this specific app in our system. 
 
 ### Steps to Access App ID
 
@@ -24,15 +24,15 @@ The App ID is a unique identifier for your application and you as a [Client](/do
 
 ---
 
-## App Secret
+## App Secret / Client API Key
 
-The App Secret is a confidential key used to authenticate your API requests. Keep this secret secure and never share it publicly or include it in client-side code.
+The App Secret is a confidential key used to authenticate your API requests. This is the private key of the authority of the client SWA. Keep this secret secure and never share it publicly or include it in client-side code. In case the key is compromised, you can always reset the authority.
 
-<Callout title="Note">
+/* <Callout title="Note">
 The “App ID”, which is also revealed in the “API Keys” page, is different. It is a public unique ID, but the **App Secret** is the actual key you need to download and keep safe. You can use this key to access all SDK and client-side APIs.
-</Callout>
+</Callout> */
 
-### Steps to Access App Secret
+### Steps to Access App Secret (Put ss for necessary steps)
 
 1. [Log in](https://dashboard.okto.tech/login) to the Okto Dashboard.
 
@@ -42,7 +42,7 @@ The “App ID”, which is also revealed in the “API Keys” page, is differen
 
 3. Click the **Get App Secret** button. You may be prompted to re-authenticate.
 
-4. Once revealed, copy and securely store the App Secret.
+4. Once revealed, copy and securely store the App Secret. We recommend that you download this value and store it somewhere safe.
 
 <Callout title="Note">
 - App ID and App Secret pairs are unique for each environment (e.g., sandbox, production).  
@@ -54,11 +54,11 @@ The “App ID”, which is also revealed in the “API Keys” page, is differen
 
 ## Storing App Secret
 
-* **How Okto stores it**: Okto does not store any clients’ API secret. In case it's lost, you can reset the key.  
+* **How Okto stores it**: Okto does not store any clients' API secret. In case it's lost, you can reset the key.  
 * **How you should store it**:  
   * Use environment variables or secure secret management systems.  
   * Never hardcode the secret in your application code.  
-  * Avoid storing it in version control systems.
+  * Avoid storing it in version control systems like Git.
 
 ---
 
@@ -87,7 +87,7 @@ If you lose your App Secret or suspect unauthorized use:
 
 **1. What is the difference between App ID and App Secret for Clients?**
 
-- App ID: A public identifier for your application used to associate your client with Okto.
+- App ID: A public identifier for your application used to associate your client with Okto. It also the contract address of your client SWA on the okto chain.
 
 - App Secret: A private key used to authenticate requests from your application to Okto's servers. It is also referred to as OKTO API KEY in the docs.
 
