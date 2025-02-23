@@ -8,68 +8,59 @@ import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-import { Icon as IIcon } from '@iconify/react';
+import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
 
 The `evmRawTransaction()` function creates a user operation for executing raw EVM transactions. This function allows you to create custom transactions by specifying the raw transaction parameters.
 
-### Method Overview
-
-| Method | Description |
-|---------|-------------|
-| <sub><i>async</i></sub> [`evmRawTransaction`](#evm-raw-transaction) | Create a user operation for raw EVM transaction |
-
-<div className="method-box">
-
-## EVM Raw Transaction
-
-<Callout title="Note">
-Before using this function, ensure your target chain is an EVM-compatible chain by checking the [Supported Chains and Tokens](/docs/system-capabilities/supported-chains) documentation.
-</Callout>
-
-<sub><i>async</i></sub> `evmRawTransaction(oktoClient: OktoClient, data: RawTransactionIntentParams)` creates a user operation for raw EVM transactions.
-
-### Parameters
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
-| `data` | `RawTransactionIntentParams` | Parameters for the raw transaction |
-
-Where `RawTransactionIntentParams` contains:
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `caip2Id` | `string` | The network identifier (e.g., eip155:1 for Ethereum) |
-| `transaction` | `EVMRawTransaction` | The raw transaction parameters |
-
-And `EVMRawTransaction` contains:
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `from` | `Address` | The sender's address |
-| `to` | `Address` | The recipient's address |
-| `data` | `Hash` | The transaction data (optional) |
-| `value` | `Hash` | The amount of native currency to send (optional) |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `result` | `Promise<UserOp>` | Returns the user operation for the raw transaction |
-
-</Callout>
+<ChainSupportStatus 
+/>
 
 ### Example
 
-<Accordions>
+<Accordions defaultValue="Usage">
 <Accordion title="Usage">
-<Tabs items={['TypeScript']}>
-<Tab value="TypeScript">
+
+<Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+<Tab value="Abstracted Flow">
 ```typescript
 import { useOkto } from '@okto_web3/react-sdk';
 import { evmRawTransaction } from '@okto_web3/react-sdk';
+
+function RawTransaction() {
+    const oktoClient = useOkto();
+
+    async function handleRawTransaction() {
+        try {
+            const rawTxParams = {
+                caip2Id: "eip155:1", // Ethereum Mainnet
+                transaction: {
+                    from: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+                    to: "0x23581767a106ae21c074b2276D25e5C3e136a68b",
+                    data: "0x", // Optional transaction data
+                    value: BigInt("1000000000000000000") // 1 ETH
+                }
+            };
+            
+            // Execute the transaction
+            const jobId = await oktoClient.executeIntent(rawTxParams);
+            console.log('Transaction jobId:', jobId);
+        } catch (error) {
+            console.error('Error in raw transaction:', error);
+        }
+    }
+
+    return (
+        <button onClick={handleRawTransaction}>
+            Execute Raw Transaction
+        </button>
+    );
+}
+```
+</Tab>
+<Tab value="UserOp Flow">
+```typescript
+import { useOkto } from '@okto_web3/react-sdk';
+import { evmRawTransaction } from '@okto_web3/react-sdk/userop';
 
 function RawTransaction() {
     const oktoClient = useOkto();
@@ -93,9 +84,9 @@ function RawTransaction() {
             const signedOp = await oktoClient.signUserOp(userOp);
             
             // Execute the transaction
-            const txHash = await oktoClient.executeUserOp(signedOp);
-            console.log('Raw transaction hash:', txHash);
-        } catch (error:any) {
+            const jobId = await oktoClient.executeIntent(signedOp);
+            console.log('Transaction jobId:', jobId);
+        } catch (error) {
             console.error('Error in raw transaction:', error);
         }
     }
@@ -105,6 +96,37 @@ function RawTransaction() {
             Execute Raw Transaction
         </button>
     );
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Sample Response">
+<Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+<Tab value="Abstracted Flow">
+```typescript
+// JobId returned
+"3ee33731-9e96-4ab9-892c-ea476b36295d"
+```
+</Tab>
+<Tab value="UserOp Flow">
+```typescript
+// UserOp returned from evmRawTransaction
+{
+    "sender": "0xa9F6b3A5a718754979dbA78113f3614Dd4524c53",
+    "nonce": "0x000000000000000000000000000000003ee337319e964ab9892cea476b36295d",
+    "paymaster": "0x5408fAa7F005c46B85d82060c532b820F534437c",
+    "callGasLimit": "0x493e0",
+    "verificationGasLimit": "0x30d40",
+    "preVerificationGas": "0xc350",
+    "maxFeePerGas": "0x77359400",
+    "maxPriorityFeePerGas": "0x77359400",
+    "paymasterPostOpGasLimit": "0x186a0",
+    "paymasterVerificationGasLimit": "0x186a0",
+    "callData": "0x8dd7712f...", // truncated for brevity
+    "paymasterData": "0x000000...", // truncated for brevity
+    "signature": "0x6bf06e6d..." // truncated for brevity
 }
 ```
 </Tab>
@@ -181,11 +203,104 @@ const rawTxParams = {
 </Tab>
 </Tabs>
 </Accordion>
-
 </Accordions>
 
-</div>
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/nextjs-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/nextjs-sdk/troubleshooting) to contact support
+</Callout>
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`evmRawTransaction`](#evm-raw-transaction) | Create a user operation for raw EVM transaction |
+
+<div className="method-box">
+
+## EVM Raw Transaction
 
 <Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation for more details.
+Before using this function, ensure your target chain is an EVM-compatible chain by checking the [Supported Chains and Tokens](/docs/system-capabilities/supported-chains) documentation.
 </Callout>
+
+<sub><i>async</i></sub> `evmRawTransaction(oktoClient: OktoClient, data: RawTransactionIntentParams)` creates a user operation for raw EVM transactions.
+
+### Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|----------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+| `data` | `RawTransactionIntentParams` | Parameters for the raw transaction | Yes |
+
+Where `RawTransactionIntentParams` contains:
+
+| Field | Type | Description | Required |
+|-------|------|-------------|----------|
+| `caip2Id` | `string` | The network identifier (e.g., eip155:1 for Ethereum) | Yes |
+| `transaction` | `EVMRawTransaction` | The raw transaction parameters | Yes |
+
+And `EVMRawTransaction` contains:
+
+| Field | Type | Description | Required |
+|-------|------|-------------|----------|
+| `from` | `Address` | The sender's address | Yes |
+| `to` | `Address` | The recipient's address | Yes |
+| `data` | `Hash` | The transaction data | No |
+| `value` | `Hash` | The amount of native currency to send | Yes |
+
+### Response
+
+<Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+<Tab value="Abstracted Flow">
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | `Promise<string>` | Returns the jobId for the raw transaction |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface {
+            jobId: string;  
+        }
+        ```
+    </Accordion>
+</Accordions>
+</Callout>
+</Tab>
+<Tab value="UserOp Flow">
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | [`Promise<UserOp>`](/docs/nextjs-sdk/technical-reference#models) | Returns the user operation for the raw transaction |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface UserOp {
+            sender: string;
+            nonce: string;
+            paymaster: string;
+            callGasLimit: string;
+            verificationGasLimit: string;
+            preVerificationGas: string;
+            maxFeePerGas: string;
+            maxPriorityFeePerGas: string;
+            paymasterPostOpGasLimit: string;
+            paymasterVerificationGasLimit: string;
+            callData: string;
+            paymasterData: string;
+            signature: string;
+        }
+        ```
+    </Accordion>
+</Accordions>
+</Callout>
+</Tab>
+</Tabs>
+
+</div>

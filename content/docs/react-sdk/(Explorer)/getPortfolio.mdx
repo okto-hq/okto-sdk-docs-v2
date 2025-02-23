@@ -1,6 +1,6 @@
 ---
 title: Get Portfolio
-description: Learn how to retrieve user portfolio data using the Okto SDK.
+description: Learn how to retrieve portfolio information using the Okto SDK.
 full: false
 ---
 
@@ -8,41 +8,16 @@ import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-import { Icon as IIcon } from '@iconify/react';
+import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
 
-The `getPortfolio` function retrieves the aggregated portfolio for the authenticated user.
+The `getPortfolio` function retrieves the user's portfolio information, including token balances and total portfolio value across all supported chains.
 
-### Method Overview
-
-| Method | Description |
-|---------|-------------|
-| <sub><i>async</i></sub> [`getPortfolio`](#get-portfolio) | Get user's portfolio data |
-
-<div className="method-box">
-
-## Get Portfolio
-
-<sub><i>async</i></sub> `getPortfolio(oktoClient: OktoClient)` retrieves the user's aggregated portfolio data.
-
-### Parameters
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `portfolio` | [`Promise<UserPortfolioData>`](/docs/react-sdk/technical-reference#models) | User's portfolio information |
-
-</Callout>
+<ChainSupportStatus 
+/>
 
 ### Example
 
-<Accordions>
+<Accordions defaultValue="Usage">
 <Accordion title="Usage">
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
@@ -127,8 +102,86 @@ function Portfolio() {
 </Accordion>
 </Accordions>
 
-</div>
-
-<Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation for more details.
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
 </Callout>
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`getPortfolio`](#get-portfolio) | Get portfolio information for the user |
+
+<div className="method-box">
+
+## Get Portfolio
+
+<sub><i>async</i></sub> `getPortfolio(oktoClient: OktoClient)` retrieves the user's aggregated portfolio data.
+
+### Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|-----------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `portfolio` | [`Promise<UserPortfolioData>`](/docs/react-sdk/technical-reference#models) | User's portfolio information |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface UserPortfolioData {
+            aggregated_data: {
+                holdings_count: string;
+                holdings_price_inr: string;
+                holdings_price_usdt: string;
+                total_holding_price_inr: string;
+                total_holding_price_usdt: string;
+            };
+            group_tokens: {
+                id: string;
+                name: string;
+                symbol: string;
+                short_name: string;
+                token_image: string;
+                token_address: string;
+                group_id: string;
+                network_id: string;
+                precision: string;
+                network_name: string;
+                is_primary: boolean;
+                balance: string;
+                holdings_price_usdt: string;
+                holdings_price_inr: string;
+                aggregation_type: string;
+                tokens: {
+                    id: string;
+                    name: string;
+                    symbol: string; 
+                    short_name: string;
+                    token_image: string;
+                    token_address: string;
+                    network_id: string;
+                    precision: string;
+                    network_name: string;
+                    is_primary: boolean;
+                    balance: string;
+                    holdings_price_usdt: string;
+                    holdings_price_inr: string;
+                }[];
+            }[];
+        }
+        ```
+    </Accordion>
+</Accordions>
+
+</Callout>
+
+</div>
