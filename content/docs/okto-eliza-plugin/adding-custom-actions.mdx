@@ -1,0 +1,218 @@
+---
+title: Adding Custom Actions
+description: Learn how to extend the Okto Eliza Plugin with your own custom actions
+full: false
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
+import ExternalLink from 'app/components/mdx/ExternalLink';
+
+The Okto Eliza Plugin provides core blockchain functionalities through its built-in actions. However, you can create your own plugins with custom actions that leverage these core functionalities to build more complex features.
+
+## Why Create Custom Actions?
+
+Custom actions allow you to:
+- Build complex multi-step workflows
+- Add business-specific logic and validations
+- Create specialized user experiences
+- Integrate with external services and APIs
+
+Here are some examples of what you can build with custom actions:
+
+| Use Case | Description | Implementation Example |
+|----------|-------------|------------------------|
+| Trading Bot | Automated trading based on market conditions | Combine `OKTO_GET_TOKENS` for price monitoring with `OKTO_SWAP` for execution |
+| Portfolio Rebalancer | Maintain target portfolio allocations | Use `OKTO_GET_PORTFOLIO` to check balances and `OKTO_TRANSFER` to rebalance |
+| DeFi Yield Optimizer | Automate yield farming strategies | Chain multiple `OKTO_SWAP` actions to move funds between protocols |
+| Cross-chain Bridge | Simplify asset bridging across networks | Coordinate `OKTO_TRANSFER` actions across different chains |
+| Social Trading | Copy trading with social features | Monitor successful traders and replicate their `OKTO_SWAP` transactions |
+
+## Getting Started with Custom Actions
+
+This guide will show you how to create a custom plugin and integrate it with your Eliza project. 
+
+<Steps>
+
+<Step>
+### Create Plugin Directory
+
+Create a new directory for your custom plugin:
+
+```bash title="bash"
+mkdir src/plugins/custom-plugin
+```
+</Step>
+
+<Step>
+### Create Plugin Entry Point
+
+Create your plugin class that implements the Plugin interface:
+
+```typescript title="src/plugins/custom-plugin/index.ts"
+import {
+  Plugin,
+  Action,
+  Service,
+  elizaLogger,
+} from "@elizaos/core";
+import { customAction } from "./actions/customAction";
+
+class CustomPlugin implements Plugin {
+  readonly name: string = "custom-plugin";
+  readonly description: string = "A plugin that allows trading bot functionalities";
+
+  constructor() {
+    elizaLogger.info("initializing custom plugin")
+  }
+
+  actions: Action[] = [
+    customAction(this),
+  ];
+
+  services: Service[] = [];
+}
+
+export { CustomPlugin };
+```
+</Step>
+
+<Step>
+### Create Custom Action
+
+Define your action with validation and handler logic:
+
+```typescript title="src/plugins/custom-plugin/actions/customAction.ts"
+import { 
+  Action, 
+  elizaLogger, 
+  HandlerCallback, 
+  IAgentRuntime, 
+  Memory, 
+  State 
+} from "@elizaos/core";
+import { handleApiError, validateSearchQuery } from "../utils";
+import { OktoPlugin } from "../index";
+
+export const customAction = (plugin: OktoPlugin): Action => {
+  return {
+    name: "CUSTOM_ACTION_NAME",
+    description: "Description of what this action does",
+    examples: [
+      [
+        { user: "user", content: { text: "example command 1" } },
+      ],
+      [
+        { user: "user", content: { text: "example command 2" } },
+      ],
+    ],
+    similes: ["SIMILAR_ACTION_1", "SIMILAR_ACTION_2"],
+    suppressInitialMessage: true,
+    
+    validate: async (runtime: IAgentRuntime, message: Memory, state?: State) => {
+      try {
+        validateSearchQuery(message.content);
+        return true;
+      } catch {
+        return false;
+      }
+    },
+    
+    handler: async (
+      runtime: IAgentRuntime,
+      message: Memory,
+      state?: State,
+      options?: any,
+      callback?: HandlerCallback
+    ) => {
+      try {
+        validateSearchQuery(message.content);
+        
+        try {
+          // Get data using Okto service
+          const result = await plugin.oktoService.someMethod();
+          
+          // Process the result
+          const formattedResult = formatResult(result);
+          elizaLogger.log("Action Result:", formattedResult);
+          
+          // Send response through callback
+          callback?.(
+            { text: `✅ Success: \n${formattedResult}` },
+            []
+          );
+          
+          return {
+            success: true,
+            response: "action completed successfully",
+          };
+        } catch (error) {
+          elizaLogger.error("Action failed: ", error.message);
+          callback?.(
+            { text: `❌ Action failed.` },
+            []
+          );
+          return {
+            success: false,
+            response: "action failed",
+          };
+        }
+      } catch (error) {
+        console.log("ERROR: ", error);
+        return handleApiError(error);
+      }
+    },
+  }
+}
+```
+</Step>
+
+<Step>
+### Register Custom Plugin
+
+Add your plugin to the agent runtime:
+
+```typescript title="src/index.ts"
+import { CustomPlugin } from "./plugins/custom-plugin";
+
+const customPlugin = new CustomPlugin();
+
+return new AgentRuntime({
+  databaseAdapter: db,
+  token,
+  modelProvider: character.modelProvider,
+  evaluators: [],
+  character,
+  plugins: [
+    bootstrapPlugin,
+    nodePlugin,
+    oktoPlugin,
+    customPlugin,  // Add your custom plugin
+  ].filter(Boolean),
+  providers: [],
+  actions: [],
+  services: [oktoPlugin.oktoService],
+  managers: [],
+  cacheManager: cache,
+});
+```
+</Step>
+
+<Step>
+### Run Your Project
+
+Start your Eliza agent with the custom plugin:
+
+```bash title="bash"
+pnpm run start
+```
+
+Your custom action will now be available through the Eliza agent's natural language interface.
+</Step>
+
+</Steps>
+
+<Callout type="info" emoji="💡">
+Need help or have questions? Join our <ExternalLink href="https://discord.com/invite/okto-916349620383252511">Discord community</ExternalLink> for support and discussions!
+</Callout>

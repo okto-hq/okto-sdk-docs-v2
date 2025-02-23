@@ -10,6 +10,26 @@ import TechnologyCard from 'app/components/mdx/TechnologyCard';
 import FeatureCard from 'app/components/mdx/FeatureCard';
 import { LuWallet, LuKey, LuArrowRightLeft, LuBoxes, LuHistory, LuNetwork } from "react-icons/lu";
 import { IoCodeSlashOutline, IoGitBranchOutline, IoBookOutline, IoConstructOutline } from "react-icons/io5";
+import { FaCode, FaGithub } from "react-icons/fa";
+
+<Callout type="info">
+**Choose Your Integration Path:**
+The Okto Eliza Plugin can be used in two ways:
+1. [Integrate into your dApp](/docs/okto-eliza-plugin/integrating-into-dapp/eliza-okto-plugin-setup) - Enhance your existing dapp powered by Eliza with ready-to-use Web3 functionality
+2. [Add Custom Actions](/docs/okto-eliza-plugin/adding-custom-actions) - Fork the plugin and add your own custom actions
+
+</Callout>
+
+## Video Walkthrough
+
+<div className="mb-8">
+  <iframe
+    className="w-full aspect-video rounded-lg"
+    src="https://www.loom.com/embed/2359e23e93944606a80ba82bcf39ee3b?sid=7a8a18a4-c5f9-4ffa-a203-34ebd6a1c9dc"
+    frameBorder="0"
+    allowFullScreen
+  ></iframe>
+</div>
 
 ## What is Eliza?
 
@@ -23,6 +43,17 @@ import { IoCodeSlashOutline, IoGitBranchOutline, IoBookOutline, IoConstructOutli
 - **Stateful Interactions:** Maintains context across conversations
 - **Multi-Agent Support:** Runs multiple agents with unique configurations
 - **Multi-Platform Support:** Integrates with Discord, Twitter, and more
+
+### Eliza's architecture consists of:
+
+- **Agent Runtime:** The central coordinator for message processing, memory, and actions.
+- **Character Files:** Define agent personality, tone, and capabilities.
+- **Clients:** Connect agents to platforms.
+- **Actions:** Enable specific agent behaviors.
+- **Evaluators:** Monitor and improve responses.
+- **Providers:** Supply external data.
+- **Memory & Knowledge Systems:** Store and retrieve conversation context and facts.
+
 
 <div className="my-6 grid grid-cols-1 md:grid-cols-2 gap-4">
   <TechnologyCard
@@ -42,9 +73,11 @@ import { IoCodeSlashOutline, IoGitBranchOutline, IoBookOutline, IoConstructOutli
 </div>
 
 
-## What is the Okto Eliza Plugin?
+## What is the Eliza Okto Plugin?
 
-The Okto Eliza Plugin bridges Eliza's AI capabilities with Okto's Web3 infrastructure to enable natural language blockchain interactions. It makes Web3 more intuitive and accessible than ever, allowing your AI agents to perform blockchain operations through simple conversations. 🚀
+The Eliza Okto Plugin ( [`@okto_web3/eliza-plugin`](https://www.npmjs.com/package/@okto_web3/eliza-plugin) ) is a powerful integration plugin for Eliza that
+connects your AI agents to Okto's Web3 APIs and services. It enables blockchain-related 
+functionality, making it perfect for decentralized applications (dApps) and Web3 interactions. 🚀
 
 ## Key Features
 
@@ -93,24 +126,34 @@ The Okto Eliza Plugin bridges Eliza's AI capabilities with Okto's Web3 infrastru
   <TechnologyCard
     className="h-25"
     icon={<IoConstructOutline size={"1.5rem"} />}
-    title="Setup Guide"
-    subtitle="Install and configure the plugin"
-    link="/docs/okto-eliza-plugin/eliza-okto-plugin-setup"
-  />
-  <TechnologyCard
-    className="h-25"
-    icon={<IoCodeSlashOutline size={"1.5rem"} />}
-    title="Sample Agent"
-    subtitle="Run example implementation"
-    link="/docs/okto-eliza-plugin/eliza-okto-sample-agent"
+    title="Integration Guide"
+    subtitle="Add Web3 to your Eliza agent"
+    link="/docs/okto-eliza-plugin/integrating-into-dapp/eliza-okto-plugin-setup"
   />
   <TechnologyCard
     className="h-25"
     icon={<IoBookOutline size={"1.5rem"} />}
+    title="Custom Actions"
+    subtitle="Build your own blockchain actions"
+    link="/docs/okto-eliza-plugin/adding-custom-actions"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoCodeSlashOutline size={"1.5rem"} />}
     title="Ideas to Get Started"
     subtitle="Example use cases and implementations"
     link="/docs/okto-eliza-plugin/ideas-to-get-started"
   />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoGitBranchOutline size={"1.5rem"} />}
+    title="Resources"
+    subtitle="Helpful tools and documentation"
+    link="/docs/okto-eliza-plugin/resources"
+  />
 </div>
+
+
+
 
 
