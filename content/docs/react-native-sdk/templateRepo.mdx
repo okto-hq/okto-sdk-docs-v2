@@ -1,0 +1,148 @@
+---
+title: Template Repository
+full: false
+---
+
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+
+<div className="bg-white dark:bg-[#1a1a1e] rounded-lg shadow-sm border border-gray-200 dark:border-[#2b2b2c] p-4 w-full my-4">
+  <div className="flex items-center justify-between">
+    <span className="text-base font-semibold text-gray-900 dark:text-gray-100">React Native Template Repository</span>
+    <div className="flex gap-3">
+      <a
+        href="https://github.com/okto-hq/okto-sdkv2-react-native-template-app"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="no-underline px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors min-w-[120px] text-center"
+      >
+        View on GitHub
+      </a>
+    </div>
+  </div>
+</div>
+
+## Getting Started
+
+For detailed installation instructions, select your framework below:
+
+<Tabs items={["Expo", "React Native CLI"]}>
+  <Tab value="Expo" label="Expo">
+
+  1. Clone the repository:
+  ```bash
+  git clone https://github.com/okto-hq/okto-sdkv2-react-native-template-app.git
+  cd okto-sdkv2-react-native-template-app
+  ```
+
+  2. Install dependencies:
+  ```bash
+  npm install
+  ```
+
+  3. Configure your credentials in the app:
+  ```typescript
+  // Update the configuration in your app
+  const config = {
+     environment: "sandbox",
+    clientPrivateKey: "YOUR_CLIENT_PRIVATE_KEY",
+    clientSWA: "YOUR_CLIENT_SWA",
+  };
+
+  const googleConfig = {
+    webClientId: "YOUR_GOOGLE_WEB_CLIENT_ID",
+    iosClientId: "YOUR_GOOGLE_IOS_CLIENT_ID",
+    androidClientId: "YOUR_GOOGLE_ANDROID_CLIENT_ID"
+  };
+  ```
+
+  <Callout title="Note">
+    To obtain these credentials:
+
+    - **Client Private Key & SWA**: Get these from the Okto Dashboard. These keys are essential for authenticating your requests with Okto's services.
+
+    - **Google OAuth Credentials**: Required for Google Sign-In functionality
+      1. Set up a project in [Google Cloud Console](https://console.cloud.google.com/)
+      2. Create OAuth 2.0 credentials for each platform:
+         - Web Client ID (for Expo Go and web)
+         - iOS Client ID
+         - Android Client ID
+      3. Follow our platform-specific setup guides:
+         - [Web Client Setup](/docs/react-native-sdk/authenticate-users/google-oauth/google-console-setup-web)
+         - [iOS Setup](/docs/react-native-sdk/authenticate-users/google-oauth/google-console-setup-ios)
+         - [Android Setup](/docs/react-native-sdk/authenticate-users/google-oauth/google-console-setup-android)
+  </Callout>
+
+  4. Start the development server:
+  ```bash
+  npx expo start
+  ```
+  
+  </Tab>
+  
+  <Tab value="React Native CLI" label="React Native CLI">
+
+  1. Clone the repository:
+  ```bash
+  git clone https://github.com/okto-hq/okto-sdkv2-react-native-template-app.git
+  cd okto-sdkv2-react-native-template-app
+  ```
+
+  2. Install dependencies:
+  ```bash
+  npm install
+  
+  # For iOS
+  cd ios && pod install && cd ..
+  ```
+
+  3. Configure your credentials in the app:
+  ```typescript
+  // Update the configuration in your app
+  const config = {
+     environment: "sandbox",
+    clientPrivateKey: "YOUR_CLIENT_PRIVATE_KEY",
+    clientSWA: "YOUR_CLIENT_SWA",
+  };
+
+  const googleConfig = {
+    webClientId: "YOUR_GOOGLE_WEB_CLIENT_ID",
+    iosClientId: "YOUR_GOOGLE_IOS_CLIENT_ID",
+    androidClientId: "YOUR_GOOGLE_ANDROID_CLIENT_ID"
+  };
+  ```
+
+  <Callout title="Note">
+    To obtain these credentials:
+
+    - **Client Private Key & SWA**: Get these from the Okto Dashboard. These keys are essential for authenticating your requests with Okto's services.
+
+    - **Google OAuth Credentials**: Required for Google Sign-In functionality
+      1. Set up a project in [Google Cloud Console](https://console.cloud.google.com/)
+      2. Create OAuth 2.0 credentials for each platform:
+         - Web Client ID
+         - iOS Client ID
+         - Android Client ID
+      3. Follow our platform-specific setup guides:
+         - [Web Client Setup](/docs/react-native-sdk/authenticate-users/google-oauth/google-console-setup-web)
+         - [iOS Setup](/docs/react-native-sdk/authenticate-users/google-oauth/google-console-setup-ios)
+         - [Android Setup](/docs/react-native-sdk/authenticate-users/google-oauth/google-console-setup-android)
+  </Callout>
+
+  4. Start the development server:
+  <Tabs items={['iOS', 'Android']}>
+    <Tab value="iOS">
+      ```bash
+      npx react-native run-ios
+      ```
+    </Tab>
+    <Tab value="Android">
+      ```bash
+      npx react-native run-android
+      ```
+    </Tab>
+  </Tabs>
+  
+  </Tab>
+</Tabs>
+

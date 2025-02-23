@@ -1,20 +1,82 @@
 ---
 title: Delegated actions
-description: Understand how to enable delegated actions for embedded wallets.
 full: false
 ---
 
-## Delegated Actions for Embedded Wallets
+import { Callout } from 'fumadocs-ui/components/callout';
+import FeatureCard from "app/components/mdx/FeatureCard";
+import { LuArrowRightLeft, LuCalendarClock, LuSprout } from "react-icons/lu";
 
-Okto lets you securely request “on-behalf-of” permissions from users for their embedded wallets. This is known as delegated actions. It allows your application or backend to perform certain wallet operations without requiring a user signature prompt each time, so long as it adheres to user-approved policies.
+Okto lets you securely request "on-behalf-of" permissions from users for their embedded wallets. This is known as delegated actions. It allows your application or backend to perform certain wallet operations without requiring a user signature prompt each time, so long as it adheres to user-approved policies.
 
-### What are delegated actions?
+## What are delegated actions?
 
-Delegated actions empower your application to take pre-defined actions using a user's embedded wallet, with the user's explicit consent.  This means your application can, for example, initiate transactions or sign messages on behalf of the user, within clearly defined boundaries and under secure conditions.
+Delegated actions empower your application to take pre-defined actions using a user's embedded wallet, with the user's explicit consent. This means your application can, for example, initiate transactions or sign messages on behalf of the user, within clearly defined boundaries and under secure conditions.
 
-### How It Works
+## How to get started with delegated actions
+
+To implement delegated actions in your application:
+
+1. **Capture the Session Key**:
+   During user authentication, capture the session private key that's provided in the login callback. This key is essential for performing delegated actions.
+
+   <Callout type="info">
+   Learn more about session keys and their management in our [Session Management Guide](/docs/system-capabilities/session-management)
+   </Callout>
+
+2. **Implementation Example**:
+   Here's how to capture the session key during Google OAuth login:
+
+   ```typescript
+   // Using Google OAuth
+   async function handleGoogleLogin(credentialResponse: any) {
+       try {
+           const user = await oktoClient.loginUsingOAuth({
+               idToken: credentialResponse.credential,
+               provider: "google",
+           }, (sessionPrivateKey: string) => {
+               console.log("Session Private Key:", sessionPrivateKey);
+           });
+
+           console.log("Login successful:", user);
+       } catch (error) {
+           console.error("Login failed:", error);
+       }
+   }
+   ```
+
+## How It Works
 1. **User Consent:** The user must explicitly delegate their embedded wallet to your application.
 2. **Limited Scope:** Delegation is governed by a policy engine that enforces limits (e.g., transaction count, spend limits) to protect the user.
 
 ## Policy Enforcement
-Okto’s policy engine may enforce transaction thresholds—such as daily or total spend—beyond which users need to re-confirm.
+Okto's policy engine may enforce transaction thresholds—such as daily or total spend—beyond which users need to re-confirm.
+
+<Callout type="info">
+For more details please read our section on [Policy engine](/docs/system-capabilities/policy-engine)
+</Callout>
+
+## Example Usecases
+
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <FeatureCard
+    icon={<LuArrowRightLeft size={20} />}
+    title="Automated Trading"
+    description="Schedule recurring token swaps or DeFi interactions without user prompts for each transaction"
+    iconColor="text-blue-500"
+  />
+  <FeatureCard
+    icon={<LuCalendarClock size={20} />}
+    title="Subscription Payments"
+    description="Handle recurring membership fees or subscription payments automatically using delegated permissions"
+    iconColor="text-purple-500"
+  />
+  <FeatureCard
+    icon={<LuSprout size={20} />}
+    title="Yield Management"
+    description="Automate yield harvesting and reinvestment strategies based on predefined user conditions"
+    iconColor="text-green-500"
+  />
+</div>
+
+
