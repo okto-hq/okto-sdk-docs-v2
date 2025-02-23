@@ -36,7 +36,7 @@ This hook must be used within components wrapped by the `OktoProvider`.
 |----------|------|-------------|
 | `user`            | `User \| undefined` | Current authenticated user information |
 | `userSWA`               | `Hex \| undefined` | User's Smart Wallet Address |
-| `vendorSWA`            | `Hex \| undefined` | Vendor's Smart Wallet Address |
+| `clientSWA`            | `Hex \| undefined` | Client's Smart Wallet Address |
 
 | Method | Signature | Description |
 |--------|-----------|-------------|
@@ -91,7 +91,7 @@ export default function Sample() {
             {isLoggedIn ? (
                 <View>
                     <Text>Welcome, User SWA: {oktoClient.userSWA}</Text>
-                    <Text>Vendor SWA: {oktoClient.vendorSWA}</Text>
+                    <Text>Client SWA: {oktoClient.clientSWA}</Text>
                 </View>
             ) : (
                 <Pressable onPress={() => handleLogin()}>

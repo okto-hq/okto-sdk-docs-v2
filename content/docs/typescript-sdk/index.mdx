@@ -104,7 +104,7 @@ This approach shows how to create a TypeScript application and manually configur
 
     export const config = {
         environment: process.env.ENVIRONMENT || 'sandbox',
-        clientPrivKey: process.env.CLIENT_PRIVATE_KEY!,
+        clientPrivateKey: process.env.CLIENT_PRIVATE_KEY!,
         clientSWA: process.env.CLIENT_SWA!,
     };
     ```
@@ -121,7 +121,7 @@ This approach shows how to create a TypeScript application and manually configur
 
     const oktoClient = new OktoClient({
         environment: config.environment,
-        clientPrivKey: config.clientPrivKey,
+        clientPrivateKey: config.clientPrivateKey,
         clientSWA: config.clientSWA,
     });
 
