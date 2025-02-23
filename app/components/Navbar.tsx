@@ -83,11 +83,20 @@ export default function NavbarComponent() {
   // const isFrameworkSelected = sdkOptions.some(option => pathname.startsWith(option.href));
 
   return (
-    <Navbar isBordered className="nav-spacing border-b border-gray-200 dark:border-gray-700">
+    <Navbar
+      isBordered
+      className="nav-spacing border-b border-gray-200 dark:border-gray-700"
+    >
       <NavbarBrand className={`${poppins.className} gap-20 flex items-center`}>
         <ULink href="/docs" color="foreground" className="no-underline">
           <NavbarItem className="flex gap-2 items-center">
-            <Image src="/logo/okto-icon.png" alt="Okto Logo" width={30} height={30} className="display-logo"/>
+            <Image
+              src="/logo/okto-icon.png"
+              alt="Okto Logo"
+              width={30}
+              height={30}
+              className="display-logo"
+            />
             <p className="text-2xl">okto</p>
             <Chip className="bg-[#F5F6FE] dark:bg-gray-700 text-[#5166EE] dark:text-[#7C8FFF] h-[22px] w-[55px] text-[14px]">
               DocsV2
@@ -140,8 +149,13 @@ export default function NavbarComponent() {
           <GitHubButton />
         </NavbarItem>
         <NavbarItem className="hidden lg:flex">
-          <SCButton variant="outline" className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF] group relative">
-            <Link href="https://forms.gle/VN19AYHnvm7V5qe2A" target="_blank">Add Project</Link>
+          <SCButton
+            variant="outline"
+            className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF] group relative"
+          >
+            <Link href="https://forms.gle/VN19AYHnvm7V5qe2A" target="_blank">
+              Add Project
+            </Link>
             <MdOutlineArrowOutward size={".9rem"} />
             <span className="absolute left-1/2 transform -translate-x-1/2 -bottom-8 w-max px-2 py-1 text-xs text-white bg-zinc-900 dark:bg-zinc-200 dark:text-black rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
               Add your project to Okto's showcase
@@ -149,14 +163,27 @@ export default function NavbarComponent() {
           </SCButton>
         </NavbarItem>
         <NavbarItem className="hidden lg:flex">
-          <SCButton variant="outline" className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]">
-            <Link href="https://www.okto.tech/blog" target="_blank">Blog</Link>
+          <SCButton
+            variant="outline"
+            className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]"
+          >
+            <Link href="https://www.okto.tech/blog" target="_blank">
+              Blog
+            </Link>
             <MdOutlineArrowOutward size={".9rem"} />
           </SCButton>
         </NavbarItem>
         <NavbarItem className="hidden lg:flex">
-          <SCButton variant="outline" className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]">
-            <Link href="https://oktohq.notion.site/Okto-Grants-Program-13f8d0b09e5b8075a646d5dbaa394eeb" target="_blank">Grants</Link>
+          <SCButton
+            variant="outline"
+            className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]"
+          >
+            <Link
+              href="https://oktohq.notion.site/Okto-Grants-Program-13f8d0b09e5b8075a646d5dbaa394eeb"
+              target="_blank"
+            >
+              Grants
+            </Link>
             <MdOutlineArrowOutward size={".9rem"} />
           </SCButton>
         </NavbarItem>
@@ -173,8 +200,24 @@ export default function NavbarComponent() {
           </SCButton>
         </NavbarItem> */}
         <NavbarItem className="hidden lg:flex">
-          <SCButton variant="outline" className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]">
-            <Link href="https://testnet.okto.tech/" target="_blank">Explorer</Link>
+          <SCButton
+            variant="outline"
+            className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]"
+          >
+            <Link href="https://testnet.okto.tech/" target="_blank">
+              Explorer
+            </Link>
+            <MdOutlineArrowOutward size={".9rem"} />
+          </SCButton>
+        </NavbarItem>
+        <NavbarItem className="hidden lg:flex">
+          <SCButton
+            variant="outline"
+            className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]"
+          >
+            <Link href="https://dashboard.okto.tech/home" target="_blank">
+              Dashboard
+            </Link>
             <MdOutlineArrowOutward size={".9rem"} />
           </SCButton>
         </NavbarItem>

@@ -1,0 +1,13 @@
+{
+    "title": "Okto Eliza Plugin",
+    "pages": [
+      "[← Back to Home](/)",
+      "------",
+      "index",
+      "eliza-okto-plugin-setup",
+      "eliza-okto-sample-agent",
+      "ideas-to-get-started"
+    ],
+    "root": true
+  }
+  

@@ -8,41 +8,16 @@ import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-import { Icon as IIcon } from '@iconify/react';
+import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
 
 The `getChains` function retrieves a list of all blockchain networks supported by Okto. This includes information about each chain's configuration, network details, and supported features.
 
-### Method Overview
-
-| Method | Description |
-|---------|-------------|
-| <sub><i>async</i></sub> [`getChains`](#get-chains) | Get all supported blockchain networks |
-
-<div className="method-box">
-
-## Get Chains
-
-<sub><i>async</i></sub> `getChains(oktoClient: OktoClient)` retrieves the list of all blockchain networks supported by Okto.
-
-### Parameters
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `chains` | [`Promise<GetSupportedNetworksResponseData[]>`](/docs/react-sdk/technical-reference#models) | Array of supported blockchain networks |
-
-</Callout>
+<ChainSupportStatus 
+/>
 
 ### Example
 
-<Accordions>
+<Accordions defaultValue="Usage">
 <Accordion title="Usage">
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
@@ -57,7 +32,7 @@ function ChainsList() {
         try {
             const chains = await getChains(oktoClient);
             console.log('Supported chains:', chains);
-        } catch (error:any) {
+        } catch (error) {
             console.error('Error fetching chains:', error);
         }
     }
@@ -90,42 +65,6 @@ function ChainsList() {
                 "network_id": "9a26afcf-ed62-43d8-91ea-42dc7cd55890",
                 "onramp_enabled": false,
                 "whitelisted": true
-            },
-            {
-                "caip_id": "eip155:42161",
-                "network_name": "ARBITRUM",
-                "chain_id": "42161",
-                "logo": "ARB",
-                "sponsorship_enabled": false,
-                "gsn_enabled": false,
-                "type": "EVM",
-                "network_id": "a003a74c-4dd2-3fc7-8c70-c080c9ca5afb",
-                "onramp_enabled": false,
-                "whitelisted": true
-            },
-            {
-                "caip_id": "eip155:137",
-                "network_name": "POLYGON",
-                "chain_id": "137",
-                "logo": "POLYGON",
-                "sponsorship_enabled": true,
-                "gsn_enabled": false,
-                "type": "EVM",
-                "network_id": "ae506585-0ba7-32f3-8b92-120ddf940198",
-                "onramp_enabled": false,
-                "whitelisted": true
-            },
-            {
-                "caip_id": "eip155:43114",
-                "network_name": "AVALANCHE",
-                "chain_id": "43114",
-                "logo": "AVAX",
-                "sponsorship_enabled": true,
-                "gsn_enabled": false,
-                "type": "EVM",
-                "network_id": "a3b96c4e-dc81-3c52-a9ee-729974ea74a0",
-                "onramp_enabled": false,
-                "whitelisted": true
             }
         ]
     }
@@ -134,8 +73,57 @@ function ChainsList() {
 </Accordion>
 </Accordions>
 
-</div>
-
-<Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation for more details.
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/nextjs-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/nextjs-sdk/troubleshooting) to contact support
 </Callout>
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`getChains`](#get-chains) | Get all supported blockchain networks |
+
+<div className="method-box">
+
+## Get Chains
+
+<sub><i>async</i></sub> `getChains(oktoClient: OktoClient)` retrieves the list of all blockchain networks supported by Okto.
+
+### Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|-----------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `chains` | [`Promise<GetSupportedNetworksResponseData[]>`](/docs/nextjs-sdk/technical-reference#models) | Array of supported blockchain networks |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface GetSupportedNetworksResponseData {
+            caip_id: string;
+            network_name: string;
+            chain_id: string;
+            logo: string;
+            sponsorship_enabled: boolean;
+            gsn_enabled: boolean;
+            type: string;
+            network_id: string;
+            onramp_enabled: boolean;
+            whitelisted: boolean;
+        }
+        ```
+    </Accordion>
+</Accordions>
+
+</Callout>
+
+</div>

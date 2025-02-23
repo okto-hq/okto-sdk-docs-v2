@@ -1,5 +1,308 @@
 ---
-title: V2 Migration Guide (Coming Soon)
-description: A complete guide to integrating Okto into your React applications.
+id: migrate-react-sdk
+title: React Native V2 Migration Guide
+description: A comprehensive guide for migrating your React Native application from Okto SDK V1 to Okto SDK V2.
 full: false
 ---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
+import ExternalLink from 'app/components/mdx/ExternalLink';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react';
+
+This guide provides a detailed walkthrough for migrating your React Native application from [Okto SDK V1](https://docs.okto.tech/docs/react-native-sdk) to [Okto SDK V2](https://docsv2.okto.tech/docs/react-native-sdk/overview). While the core functionality remains the same, V2 introduces a more decentralized architecture that enhances security and provides comprehensive developer controls.
+
+### Key Changes Overview
+
+| Area | Changes |
+|------|---------|
+| Architecture | Moved to a more decentralized system with smart contracts on the Okto chain |
+| Authentication | OAuth-first approach with session key implementation |
+| Wallet Management | Automated wallet creation across all enabled chains |
+| Package Structure | Migration to scoped packages under @okto_web3 namespace |
+
+## Migration Steps
+
+Previously, Okto integration in React Native required one of the following methods:
+- Manual Configuration using the React Native Community CLI.
+- Streamlined Okto React Native Setup for simplified integration.
+With Okto SDK V2, an optimized Expo setup is now available, enhancing the onboarding process.
+<Callout title="Note">
+This guide assumes that you have already set up a fully functional react dapp using Okto SDK V1.
+</Callout>
+
+### 1. Installing Dependencies
+
+Okto SDK V2 adopts a scoped package structure under the `@okto_web3` namespace, providing enhanced access control and enabling private package distribution when required. This approach aligns with modern best practices in package management, ensuring a more organized, and scalable  package structure.
+
+Previously, it was `okto-sdk-react`; it has now been updated to:
+<Tabs items={['npm','pnpm', 'yarn']} defaultValue="npm">
+<Tab value="npm">
+```bash
+npm i @okto_web3/react-native-sdk@latest expo-auth-session expo-web-browser
+```
+</Tab>
+<Tab value="pnpm">
+```bash
+pnpm add @okto_web3/react-native-sdk@latest expo-auth-session expo-web-browser 
+```
+</Tab>
+<Tab value="yarn">
+```bash
+yarn add @okto_web3/react-native-sdk@latest expo-auth-session expo-web-browser
+```
+</Tab>
+</Tabs>
+
+### 2. Environment Configuration
+
+In Okto V1, only one environment variable was needed: `OKTO_CLIENT_API_KEY`. However, in V2, Okto has moved to a decentralized approach where even the client is a smart contract on the Okto chain.
+
+<Tabs items={['New Configuration', 'Old Configuration']} defaultValue="New Configuration">
+<div>
+<Tab value="New Configuration">
+```env
+CLIENT_PRIVATE_KEY="YOUR_CLIENT_PRIVATE_KEY"
+CLIENT_SWA="YOUR_CLIENT_SWA"
+
+# Optional - Required only for Google Sign-In
+GOOGLE_CLIENT_ID="YOUR_GOOGLE_CLIENT_ID"
+```
+</Tab>
+</div>
+<div className="no-copy-code">
+<Tab value="Old Configuration" >
+```bash
+OKTO_CLIENT_API_KEY="your-api-key"
+```
+</Tab>
+</div>
+</Tabs>
+
+<CollapsibleCallout type="warning" title="Essential Setup Required">
+Before you begin, make sure you have:
+- Created your [Okto Developer Dashboard](https://dashboard.okto.tech/)
+- Retrieved your API keys from the dashboard (`VITE_CLIENT_PRIV_KEY` and `VITE_CLIENT_SWA`)
+- Enabled the chains and tokens your application will use
+- Added your .env file to .gitignore
+
+If you need help, see our <ExternalLink href="/docs/developer-admin-dashboard/overview">Dashboard Setup Guide</ExternalLink> for detailed instructions.
+</CollapsibleCallout>
+
+
+### 4. OktoProvider Setup
+
+In V1, the provider required `OKTO_CLIENT_API_KEY` and `buildType` as parameters. In V2, this approach has been simplified by consolidating all necessary values into a single config parameter. This config object now holds the `client’s private key`, `client SWA`, and `environment`, making integration more streamlined and easier to manage.
+
+<Tabs items={["Updated Implementation", "Old Implementation"]} defaultValue="Updated Implementation">
+<div>
+<Tab value="Updated Implementation" >
+```tsx 
+import { OktoProvider } from '@okto_web3/react-native-sdk';
+import { ThemeProvider } from '@react-navigation/native';
+import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+ 
+const config = {
+    environment: "sandbox",
+    clientPrivateKey: "YOUR_CLIENT_PRIVATE_KEY",  // Replace with your actual private key
+    clientSWA: "YOUR_CLIENT_SWA",             // Replace with your actual SWA
+};
+ 
+export default function RootLayout() {
+    return (
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <OktoProvider config={config}>
+                <Stack>
+                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                    <Stack.Screen name="+not-found" />
+                </Stack>
+            </OktoProvider>
+            <StatusBar style="auto" />
+        </ThemeProvider>
+    );
+}
+```
+</Tab> 
+</div>
+<div className="no-copy-code">
+<Tab value="Old Implementation"> 
+```tsx
+/**
+* @format
+*/
+
+import { AppRegistry } from 'react-native';
+import App from './src/App';
+import { name as appName } from './app.json';
+import { OktoProvider, BuildType } from 'okto-sdk-react-native';
+
+// Create a Root component that wraps App with OktoProvider
+function Root() {
+    return (
+        <OktoProvider apiKey={OKTO_CLIENT_APP_SECRET} buildType={BuildType.SANDBOX}>
+            <App />
+        </OktoProvider>
+    );
+}
+
+// Register the Root component instead of App
+AppRegistry.registerComponent(appName, () => Root);
+```
+</Tab>
+</div>
+</Tabs>
+
+### 5. Authentication Implementation
+
+In V1, Okto supports multiple authentication methods, including [`Google-Auth (GAuth)`](https://docs.okto.tech/docs/react-sdk/authenticate-users/google-oauth/auth-user-via-code#authenticate-a-user), [`email-OTP`](https://docs.okto.tech/docs/react-sdk/authenticate-users/email-otp/auth-user-via-email), [`phone-OTP`](https://docs.okto.tech/docs/react-sdk/authenticate-users/phone-otp/auth-user-via-phone), and [`JWT-custom-auth`](https://docs.okto.tech/docs/react-sdk/authenticate-users/jwt-closed-loop/learn). Upon successful authentication, Okto generates an AuthToken, which is used for delegated access.
+
+In V2, authentication remains backward-compatible with V1.
+- **Using Google Authentication (Google OAuth)**; V2 continues to support direct authentication with Google OAuth, maintaining seamless integration with Google's trusted authentication infrastructure within the Okto React SDK.
+
+<Tabs items={["Updated Implementation", "Old Implementation"]} defaultValue="Updated Implementation">
+<div>
+<Tab value="Updated Implementation">
+```tsx
+// Using Google OAuth
+async function handleGoogleLogin(credentialResponse: any) {
+    try {
+        const user = await oktoClient.loginUsingOAuth({
+            idToken: credentialResponse.credential,
+            provider: "google",
+        });
+        console.log("Login successful:", user);
+    } catch (error) {
+        console.error("Login failed:", error);
+    }
+}
+```
+</Tab>
+</div>
+<div className="no-copy-code">
+<Tab value="Old Implementation">
+```tsx
+import {
+  useOkto,
+  type OktoContextType,
+} from 'okto-sdk-react';
+ 
+const { authenticate } = useOkto() as OktoContextType;
+const idToken = 'USER_ID_TOKEN';
+authenticate(idToken, (result, error) => {
+  if (result) {
+      console.log('authentication successful');
+  }
+  if (error) {
+      console.error('authentication error:', error);
+  }
+});
+```
+</Tab>
+</div>
+</Tabs>
+
+- **Using Other Authentication Methods**; All authentication methods from V1 remain supported in V2. The authToken retrieved from successful authentication in V1 can still be used in V2 without modification.
+
+<Tabs items={["Updated Implementation", "Old Implementation"]} defaultValue="Old Implementation">
+<div>
+<Tab value="Updated Implementation">
+```tsx
+// Using Okto auth token
+async function handleOktoLogin(authToken: string) {
+    try {
+        const user = await oktoClient.loginUsingOAuth({
+            authToken: authToken, // replace with authtoken received from V1 login
+            provider: "okto",
+        });
+        console.log("Login successful:", user);
+    } catch (error:any) {
+        console.error("Login failed:", error);
+    }
+}
+```
+</Tab>
+</div>
+<div className="no-copy-code">
+<Tab value="Old Implementation">
+```tsx
+import {
+  useOkto,
+  type OktoContextType,
+} from 'okto-sdk-react';
+ 
+const { authenticate } = useOkto() as OktoContextType;
+const idToken = 'USER_ID_TOKEN';
+authenticate(idToken, (result, error) => {
+  if (result) {
+      console.log('authentication successful');
+  }
+  if (error) {
+      console.error('authentication error:', error);
+  }
+});
+```
+</Tab>
+</div>
+</Tabs>
+
+#### **Wallet Creation in V2**
+
+In V1, wallets had to be manually created using [`createWallet()`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/setup-embedded-wallets/create-embedded-wallets#create-a-new-wallet-for-current-user). In V2, after successful authentication:
+- A session is created for the user and client, with a default validity of 7 days. However, this duration can be customized as needed
+- Wallets are automatically retrieved for the user or created if none exist
+- Users automatically have wallets in all enabled chains of the client
+- A User SWA (Smart Wallet Address) is created/fetched on/from the Okto chain
+- The current session is registered to the user's Smart Wallet Account (SWA).
+
+<CollapsibleCallout type="note" title="V1 AuthToken vs V2 Session Keys" >
+In V1, the AuthToken was a combination of the user login method and the client API key, providing delegated access to the client. In V2, authentication results in a session key pair that is:
+
+- Generated client-side and unique for each user login and client SWA.
+- Acts as the authority for the User SWA within policy limits.
+</CollapsibleCallout>
+
+
+## SDK Function Migration References
+
+### Explorer Functions
+
+| V1 Function | V2 Function | Changes |
+|------------|-------------|----------|
+| [`getWallets()`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/get-embedded-wallet-details) | [`getAccount()`](/docs/react-sdk/getAccount) | - Now returns enhanced wallet details<br/>- Includes network symbol and comprehensive chain data |
+| [`getSupportedNetworks()`](https://docs.okto.tech/docs/react-sdk/chains-tokens/supported-networks#get-all-supported-networks) | [`getChains(oktoClient)`](/docs/react-sdk/getChains) | - Renamed for clarity<br/>- Retrieves the list of all blockchain networks supported by Okto |
+| [`getSupportedTokens()`](https://docs.okto.tech/docs/react-sdk/chains-tokens/supported-networks#get-all-supported-tokens) | [`getTokens(oktoClient)`](/docs/react-sdk/getTokens) | - Returns supported token list |
+| [`getPortfolio()`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/get-user-balance-portfolio) | [`getPortfolio(oktoClient)`](/docs/react-sdk/getPortfolio) | - Now retrieves the user's aggregated portfolio data |
+| - | [`getPortfolioActivity(oktoClient)`](/docs/react-sdk/getPortfolioActivity) | - Get user's portfolio activity |
+| - | [`getPortfolioNFT(oktoClient)`](/docs/react-sdk/getPortfolioNFT) | - Get user's NFT portfolio |
+| - | [`getNftCollections(oktoClient)`](https://docsv2.okto.tech/docs/react-sdk/getNftCollections) | - Retrieves NFT collection metadata |
+| [`orderHistory(query)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-tokens#fetch-order-history) <br/> [`getNftOrderDetails(query)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-nfts#get-nft-order-details) <br/> [`getRawTransactionStatus(query)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/raw-transactions#get-raw-transactions) | [`getOrdersHistory(oktoClient, filters?)`](/docs/react-sdk/getOrdersHistory) | - All order history functions are now combined into one<br/>- Retrieves order history for token transfers, NFT transfers, and raw transactions using filter parameters |
+
+### Intent Functions
+
+All intents are available in both abstracted and detailed flows. In the detailed flow, intents can be converted into a user operation (UserOp), signed, and executed on the Okto chain as separate calls. In the abstracted flow, these three steps are combined into a single call for a more seamless experience.
+
+| V1 Function | V2 Function | Changes |
+|------------|-------------|----------|
+| [`transferTokens(data)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-tokens#transfer-tokens) | [`tokenTransfer(oktoClient, data)`](/docs/react-sdk/tokenTransfer) | - Switched to UserOp-based transfer model<br/>- Added transaction simulation<br/>- Improved gas optimization options |
+| [`transferNft(data)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-nfts#transfer-nfts) | [`nftTransfer(oktoClient, data)`](/docs/react-sdk/nftTransfer) | - Converted to UserOp-based transfer model<br/>- Consolidated multiple NFT functions into one<br/>- Added chain compatibility checks<br/> |
+| [`executeRawTransaction()`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/raw-transactions#execute-raw-transaction) | [`evmRawTransaction(oktoClient, data)`](/docs/react-sdk/evmRawTransaction) | - Now creates a UserOp for executing raw EVM transactions.|
+
+### V2 Functions
+
+| Function | Description |
+|----------|-------------|
+| [`signUserOp(userop)`](/docs/react-sdk/signUserOp) | - Signs user operations<br/>- Validates operation parameters<br/>- Includes policy checks |
+| [`executeUserOp(userop)`](/docs/react-sdk/executeUserOp) | - Executes signed operations<br/>- Handles transaction bundling<br/>|
+
+<Callout title="Migration Support">
+For additional help:
+- [Okto V1 Docs for React](https://docs.okto.tech/docs/react-sdk)
+- [Okto V2 Docs for React](https://docsV2.okto.tech/docs/react-sdk/quickstart/new-okto-react-setup)
+- [API Reference](https://docsV2.okto.tech/docs/react-sdk/technical-reference)
+- [V1 Developer Dashboard](https://dashboard.okto.tech/)
+- [V2 Developer Dashboard](/docs/developer-admin-dashboard/overview)
+</Callout>

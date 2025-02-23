@@ -1,14 +1,15 @@
 {
     "title": "Dashboard",
     "pages": [
-      "overview",
+      "[← Back to Home](/)",
+      "------",
+      "index",
       "dashboard-account",
       "okto-environments",
+      "okto-faucet",
       "api-key",
-      "ui-customizations",
       "wallet-control",
-      "sponsorship",
-      "user-order-logs"
+      "sponsorship"
     ],
     "icon": "Shield",
     "root": true
