@@ -42,7 +42,7 @@ function RawTransaction() {
             };
             
             // Execute the transaction
-            const jobId = await oktoClient.executeIntent(rawTxParams);
+            const jobId = await evmRawTransaction(oktoClient, rawTxParams);
             console.log('Transaction jobId:', jobId);
         } catch (error) {
             console.error('Error in raw transaction:', error);
@@ -84,7 +84,7 @@ function RawTransaction() {
             const signedOp = await oktoClient.signUserOp(userOp);
             
             // Execute the transaction
-            const jobId = await oktoClient.executeIntent(signedOp);
+            const jobId = await oktoClient.executeUserOp(signedOp);
             console.log('Transaction jobId:', jobId);
         } catch (error) {
             console.error('Error in raw transaction:', error);
