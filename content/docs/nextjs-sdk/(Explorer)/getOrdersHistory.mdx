@@ -8,46 +8,16 @@ import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-import { Icon as IIcon } from '@iconify/react';
 import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
 
-The `getOrdersHistory` function retrieves the list of orders for the authenticated user.
+The `getOrdersHistory` function retrieves the transaction history of orders placed by the authenticated user.
 
 <ChainSupportStatus 
 />
 
-### Method Overview
-
-| Method | Description |
-|---------|-------------|
-| <sub><i>async</i></sub> [`getOrdersHistory`](#get-orders-history) | Get user's order history |
-
-<div className="method-box">
-
-## Get Orders History
-
-<sub><i>async</i></sub> `getOrdersHistory(oktoClient: OktoClient, filters?: OrderFilterRequest)` retrieves the user's order history.
-
-### Parameters
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
-| `filters` | `OrderFilterRequest` | Optional filters for the orders query |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `orders` | [`Promise<Order[]>`](/docs/react-sdk/technical-reference#models) | Array of user's orders |
-
-</Callout>
-
 ### Example
 
-<Accordions>
+<Accordions defaultValue="Usage">
 <Accordion title="Usage">
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
@@ -58,17 +28,17 @@ import { getOrdersHistory } from '@okto_web3/react-sdk';
 function OrderHistory() {
     const oktoClient = useOkto();
 
-    async function fetchOrders() {
+    async function fetchOrderHistory() {
         try {
-            const orders = await getOrdersHistory(oktoClient);
-            console.log('Order history:', orders);
-        } catch (error:any) {
-            console.error('Error fetching orders:', error);
+            const history = await getOrdersHistory(oktoClient);
+            console.log('Order history:', history);
+        } catch (error) {
+            console.error('Error fetching order history:', error);
         }
     }
 
     return (
-        <button onClick={fetchOrders}>
+        <button onClick={fetchOrderHistory}>
             Fetch Order History
         </button>
     );
@@ -114,8 +84,66 @@ function OrderHistory() {
 </Accordion>
 </Accordions>
 
-</div> 
-
-<Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation for more details.
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/nextjs-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/nextjs-sdk/troubleshooting) to contact support
 </Callout>
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`getOrdersHistory`](#get-orders-history) | Get order history for the user |
+
+<div className="method-box">
+
+## Get Orders History
+
+<sub><i>async</i></sub> `getOrdersHistory(oktoClient: OktoClient, filters?: OrderFilterRequest)` retrieves the transaction history of orders placed by the user.
+
+### Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|-----------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+| `filters` | `OrderFilterRequest` | Optional filters for the orders query | No |
+
+Where `OrderFilterRequest` contains:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `intentId` | `string` | Optional ID to filter specific order/transaction |
+| `status` | `STATUS_TYPE` | Optional status to filter orders by (e.g., "SUCCESSFUL", "FAILED", "PENDING", "REJECTED") |
+| `intentType` | `INTENT_TYPE` | Optional type to filter orders by (e.g., "TOKEN_TRANSFER", "NFT_TRANSFER", "RAW_TRANSACTION") |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `orders` | [`Promise<Order[]>`](/docs/nextjs-sdk/technical-reference#models) | Array of order history items |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface Order {
+            downstream_transaction_hash: string[];
+            transaction_hash: string[];
+            status: "SUCCESSFUL" | "FAILED" | "PENDING" | "REJECTED";
+            intent_id: string;
+            intent_type: "TOKEN_TRANSFER" | "NFT_TRANSFER" | "RAW_TRANSACTION";
+            network_name: string;
+            caip_id: string;
+            details: OrderDetails;
+            reason: string;
+            block_timestamp: number;
+        }
+        ```
+    </Accordion>
+</Accordions>
+
+</Callout>
+
+</div>

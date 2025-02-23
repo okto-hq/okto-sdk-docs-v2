@@ -8,7 +8,6 @@ import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-import { Icon as IIcon } from '@iconify/react';
 import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
 
 The `getNftCollections` function retrieves NFT collection details for the authenticated user from the backend.
@@ -20,36 +19,10 @@ The `getNftCollections` function retrieves NFT collection details for the authen
   ]}
 />
 
-### Method Overview
+### Example
 
-| Method | Description |
-|---------|-------------|
-| <sub><i>async</i></sub> [`getNftCollections`](#get-nft-collections) | Get NFT collections for the user |
-
-<div className="method-box">
-
-## Get NFT Collections
-
-<sub><i>async</i></sub> `getNftCollections(oktoClient: OktoClient)` retrieves the list of NFT collections associated with the user.
-
-### Parameters
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `collections` | [`Promise<Order[]>`](/docs/react-sdk/technical-reference#models) | Array of NFT collection orders |
-
-</Callout>
-
-<Accordions>
-<Accordion title="Example">
+<Accordions defaultValue="Usage">
+<Accordion title="Usage">
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
 ```typescript
@@ -78,10 +51,79 @@ function NFTCollectionsList() {
 </Tab>
 </Tabs>
 </Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": {
+        "collections": [
+            {
+                "caip_id": "eip155:8453",
+                "network_name": "BASE",
+                "entity_type": "ERC721",
+                "collection_address": "0x19fc518b9eed93f70aa4b49133d303101699467a",
+                "collection_name": "EXAMPLE_COLLECTION",
+                "description": "Collection description",
+                "collection_image": "https://example.com/image.png",
+                "whitelisted": true
+            }
+        ]
+    }
+}
+```
+</Accordion>
 </Accordions>
 
-</div> 
-
-<Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation for more details.
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
 </Callout>
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`getNftCollections`](#get-nft-collections) | Get NFT collections for the user |
+
+<div className="method-box">
+
+## Get NFT Collections
+
+<sub><i>async</i></sub> `getNftCollections(oktoClient: OktoClient)` retrieves the list of NFT collections associated with the user.
+
+### Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|-----------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `collections` | [`Promise<NFTCollection[]>`](/docs/react-sdk/technical-reference#models) | Array of NFT collections |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface NFTCollection {
+            caip_id: string;            
+            network_name: string;       
+            entity_type: "ERC721" | "ERC1155"; 
+            collection_address: string; 
+            collection_name: string;    
+            description: string;        
+            collection_image: string;   
+            whitelisted: boolean;      
+        }
+        ```
+    </Accordion>
+</Accordions>
+
+</Callout>
+
+</div>

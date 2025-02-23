@@ -56,7 +56,7 @@ export default function ChainSupportStatus({ unsupportedChains = [] }: ChainSupp
         </div>
         {supportedChains.length > 0 && (
           <p className="text-xs text-gray-500 mt-3 italic">
-            To enable these chains for your application, please configure them in your Okto Dashboard.
+            To enable these chains for your application, please configure them in the Okto Dashboard.
           </p>
         )}
       </div>
