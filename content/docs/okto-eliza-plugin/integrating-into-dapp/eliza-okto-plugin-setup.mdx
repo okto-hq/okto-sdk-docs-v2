@@ -1,0 +1,169 @@
+---
+title: Eliza Okto Plugin Setup
+description: A plugin that connects Eliza AI with Okto's Web3 infrastructure for natural language blockchain interactions.
+full: false
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
+import ExternalLink from 'app/components/mdx/ExternalLink';
+import TemplateRepoBanner from 'app/components/mdx/TemplateRepoBanner';
+
+<TemplateRepoBanner sdk="eliza-okto-plugin" description="Get started quickly with our pre-configured example that demonstrates the Okto Eliza Plugin in action. This implementation includes authentication setup, basic Web3 operations, and example conversations." />
+
+## Getting Started
+
+This guide assumes you have an existing Eliza project where you want to add Web3 capabilities. If you're new to Eliza, you can either:
+- Explore the <ExternalLink href="https://github.com/elizaOS/eliza">Eliza Framework</ExternalLink> by referring to the <ExternalLink href="https://elizaos.github.io/eliza/docs/intro/">docs</ExternalLink> to create a new project from scratch
+- Use our [Sample Agent Implementation](/docs/okto-eliza-plugin/integrating-into-dapp/eliza-okto-sample-agent) which comes with both Eliza and the Okto plugin pre-configured
+
+<CollapsibleCallout type="warning" title="Essential Setup Required">
+Before proceeding with this guide, please ensure you have:
+- Created your [Okto Developer Dashboard](https://dashboard.okto.tech/login) account
+- Get your [Okto credits](https://dashboard.okto.tech/okto-credits) from the dashboard
+- Obtained your [API keys](https://dashboard.okto.tech/api-keys) from the dashboard
+- Enabled the specific [chains and tokens](https://dashboard.okto.tech/wallet-controls) you plan to use in your application
+- Optional: Enable [sponsorship](https://dashboard.okto.tech/paymaster) for the desired chains
+
+Detailed explainations is give in [prerequisites](/docs/react-sdk/quickstart/prerequisites)
+
+Without completing these steps first, your application won't be able to interact with the Okto platform properly. Need help? Check out our <a href="/docs/developer-admin-dashboard/overview" target="_blank" rel="noopener noreferrer">Dashboard Setup Guide</a> for detailed instructions.
+</CollapsibleCallout>
+
+<Steps>
+
+<Step>
+### Prerequisites
+
+Before getting started, ensure you have the following:
+- **Node.js (v23+) and pnpm:** <ExternalLink href="https://nodejs.org/">Download Node.js</ExternalLink>
+- **Existing Eliza Project:** A working Eliza project where you want to add Web3 capabilities
+- **Okto API Keys:** You need your `OKTO_CLIENT_PRIVATE_KEY` and `OKTO_CLIENT_SWA`. Obtain these from the [Okto Developer Dashboard](https://dashboard.okto.tech/login).
+- **Google OAuth Credentials:** Create OAuth 2.0 credentials in the <ExternalLink href="https://console.cloud.google.com/">Google Cloud Console</ExternalLink>.
+- **LLM Provider Account (Optional):** Access to OpenAI, Anthropic, or another supported LLM provider.
+</Step>
+
+<Step>
+### Installation
+
+Install the Okto Eliza Plugin package in your project:
+
+<Tabs items={['npm', 'pnpm', 'yarn']}>
+    <Tab value="npm">
+        ```bash
+        npm install @okto_web3/eliza-plugin
+        ```
+    </Tab>
+    <Tab value="pnpm">
+        ```bash
+        pnpm add @okto_web3/eliza-plugin
+        ```
+    </Tab>
+    <Tab value="yarn">
+        ```bash
+        yarn add @okto_web3/eliza-plugin
+        ```
+    </Tab>
+</Tabs>
+</Step>
+
+<Step>
+### Environment Setup
+
+Create a `.env` file in your project root:
+
+```bash title=".env"
+# Okto specific settings
+OKTO_ENVIRONMENT=                # Optional. Defaults to "sandbox". Options: sandbox, staging, production.
+OKTO_CLIENT_PRIVATE_KEY=         # Required. Your client private key provided by Okto.
+OKTO_CLIENT_SWA=                 # Required. Your client SWA provided by Okto.
+
+# Google OAuth settings
+GOOGLE_CLIENT_ID=                # Required. Get from https://console.cloud.google.com/
+GOOGLE_CLIENT_SECRET=            # Required. Get from https://console.cloud.google.com/
+
+# Note: You also need to set the environment variable for the LLM you want to use.
+```
+
+Get your `OKTO_CLIENT_PRIVATE_KEY` and `OKTO_CLIENT_SWA` from the [Okto Dashboard](https://dashboard.okto.tech).
+
+<CollapsibleCallout type="tip" title="Setting up Google OAuth">
+1. Go to <ExternalLink href="https://console.cloud.google.com/">Google Cloud Console</ExternalLink>
+2. Create OAuth 2.0 credentials for your project
+3. Set the redirect URI to: `http://localhost:5000`
+4. Save your Client ID and Client Secret in the `.env` file
+
+Need detailed instructions? Check our <ExternalLink href="/docs/typescript-sdk/authentication/google-oauth/google-console-setup">Google Console Setup Guide</ExternalLink>.
+</CollapsibleCallout>
+</Step>
+
+<Step>
+### Basic Implementation
+
+Initialize the Okto Plugin in your application:
+
+```typescript title="src/index.ts"
+import { OktoPlugin } from "@okto_web3/eliza-plugin";
+
+const oktoPlugin = new OktoPlugin();
+
+ return new AgentRuntime({
+    databaseAdapter: db,
+    token,
+    modelProvider: character.modelProvider,
+    evaluators: [],
+    character,
+    plugins: [
+      bootstrapPlugin,
+      nodePlugin,
+      oktoPlugin,
+    ].filter(Boolean),
+    providers: [],
+    actions: [],
+    services: [oktoPlugin.oktoService],
+    managers: [],
+    cacheManager: cache,
+  });
+```
+</Step>
+
+<Step>
+### Verify Installation
+
+Test your setup by running your agent and trying a basic Web3 command:
+
+```bash title="bash"
+pnpm run start
+```
+Try these example commands to test the integration:
+- "Show me my wallet balance"
+- "What chains are supported?"
+- "Help me transfer some tokens"
+</Step>
+
+</Steps>
+
+## Available Actions
+
+The Okto Eliza Plugin provides the following actions:
+
+| Action | Description | Example Prompt |
+|---------|-------------|---------------|
+| `OKTO_GET_PORTFOLIO` | Get user's token portfolio | "Show me my portfolio" |
+| `OKTO_GET_ACCOUNT` | Get wallet accounts | "What's my wallet address?" |
+| `OKTO_GET_CHAINS` | List supported networks | "What chains are supported?" |
+| `OKTO_GET_NFT_COLLECTIONS` | Get NFT collections | "Show my NFT collections" |
+| `OKTO_GET_ORDERS_HISTORY` | View transaction history | "Show my transaction history" |
+| `OKTO_GET_PORTFOLIO_NFT` | Get NFT portfolio | "Display my NFT portfolio" |
+| `OKTO_GET_TOKENS` | List supported tokens | "What tokens are supported?" |
+| `OKTO_TRANSFER` | Transfer tokens | "Send 0.1 ETH to 0x123..." |
+| `OKTO_NFT_TRANSFER` | Transfer NFTs | "Transfer my NFT to 0x456..." |
+| `OKTO_SWAP` | Execute token swaps | "Swap ETH for USDC" |
+
+<TemplateRepoBanner sdk="eliza-okto-plugin" description="Get started quickly with our pre-configured example that demonstrates the Okto Eliza Plugin in action. This implementation includes authentication setup, basic Web3 operations, and example conversations." />
+
+<Callout type="info" emoji="💡">
+Need help or have questions? Join our <ExternalLink href="https://discord.com/invite/okto-916349620383252511">Discord community</ExternalLink> for support and discussions!
+</Callout>

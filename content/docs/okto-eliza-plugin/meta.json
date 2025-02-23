@@ -4,9 +4,10 @@
       "[← Back to Home](/)",
       "------",
       "index",
-      "eliza-okto-plugin-setup",
-      "eliza-okto-sample-agent",
-      "ideas-to-get-started"
+      "integrating-into-dapp",
+      "adding-custom-actions",
+      "ideas-to-get-started",
+      "resources"
     ],
     "root": true
   }
