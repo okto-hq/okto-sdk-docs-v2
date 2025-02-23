@@ -45,7 +45,7 @@ function NFTTransfer() {
             };
             
             // Execute the transfer
-            const jobId = await oktoClient.executeIntent(transferParams);
+            const jobId = await nftTransfer(oktoClient, transferParams);
             console.log('Transfer jobId:', jobId);
         } catch (error) {
             console.error('Error in NFT transfer:', error);
@@ -86,7 +86,7 @@ function NFTTransfer() {
             const signedOp = await oktoClient.signUserOp(userOp);
             
             // Execute the transfer
-            const jobId = await oktoClient.executeIntent(signedOp);
+            const jobId = await oktoClient.executeUserOp(signedOp);
             console.log('Transfer jobId:', jobId);
         } catch (error) {
             console.error('Error in NFT transfer:', error);
