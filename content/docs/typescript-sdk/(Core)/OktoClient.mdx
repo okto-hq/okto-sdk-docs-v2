@@ -19,8 +19,8 @@ import '../../styles.css';
 | Parameter   | Type                        | Description                            | 
 |-------------|-----------------------------|----------------------------------------|
 | `environment`     | [`string`](/docs/typescript-sdk/technical-reference#models) | The environment to use |
-| `vendorPriKey`     | [`string`](/docs/typescript-sdk/technical-reference#models) | The vendor private key to use | 
-| `vendorSWA`     | [`string`](/docs/typescript-sdk/technical-reference#models) | The vendor's sender wallet address to use | 
+| `clientPrivateKey`     | [`string`](/docs/typescript-sdk/technical-reference#models) | The client private key to use | 
+| `clientSWA`     | [`string`](/docs/typescript-sdk/technical-reference#models) | The client's sender wallet address to use | 
 
 ### Response
 
@@ -39,8 +39,8 @@ import '../../styles.css';
     ```typescript
         const oktoClient = new OktoClient({
             environment: 'sandbox', // or 'production'
-            vendorPriKey: '0x1234567890abcdef',
-            vendorSWA: '0x1234567890abcdef',
+            clientPrivateKey: '0x1234567890abcdef',
+            clientSWA: '0x1234567890abcdef',
         });
     ```
   </Tab>
