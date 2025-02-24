@@ -3,19 +3,17 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const chains = [
-  { logo: "/images/polygon-logo.svg", name: "Polygon", type: "EVM", mainnet: true, testnet: true, section: "polygon" },
-  { logo: "/images/base-icon.svg", name: "Base", type: "EVM", mainnet: true, testnet: false, section: "base" },
-  { logo: "/images/avalanche-icon.svg", name: "Avalanche", type: "EVM", mainnet: true, testnet: true, section: "avalanche" },
-  { logo: "/images/arbitrum-icon.png", name: "Arbitrum", type: "EVM", mainnet: true, testnet: true, section: "arbitrum" },
-  { logo: "/images/bsc-icon.png", name: "BSC", type: "EVM", mainnet: true, testnet: true, section: "bsc" },
-  { logo: "/images/eth-icon.svg", name: "Ethereum", type: "EVM", mainnet: true, testnet: true, section: "ethereum" },
-  { logo: "/images/fantom-icon.svg", name: "Fantom", type: "EVM", mainnet: true, testnet: true, section: "fantom" },
-  { logo: "/images/linea-icon.svg", name: "Linea", type: "EVM", mainnet: true, testnet: true, section: "linea" },
-  { logo: "/images/metis-icon.png", name: "Metis", type: "EVM", mainnet: true, testnet: true, section: "metis" },
-  { logo: "/images/optimism-icon.jpg", name: "Optimism", type: "EVM", mainnet: true, testnet: true, section: "optimism" },
-  { logo: "/images/HL-icon.png", name: "HyperEVM", type: "EVM", mainnet: true, testnet: true, section: "hyperevm"},
-  { logo: "/images/base-icon.svg", name: "Base", type: "EVM", mainnet: true, testnet: true, section: "base-2" },
-  { logo: "/images/polygon-logo.svg", name: "Polygon", type: "EVM", mainnet: true, testnet: true, section: "polygon-2" }
+    { logo: "/images/HL-icon.png", name: "HyperEVM", type: "EVM", mainnet: false, testnet: true, section: "hyperevm"},
+    { logo: "/images/polygon-logo.svg", name: "Polygon", type: "EVM", mainnet: true, testnet: true, section: "polygon" },
+    { logo: "/images/base-icon.svg", name: "Base", type: "EVM", mainnet: true, testnet: true, section: "base" },
+    { logo: "/images/avalanche-icon.svg", name: "Avalanche", type: "EVM", mainnet: true, testnet: false, section: "avalanche" },
+    { logo: "/images/arbitrum-icon.png", name: "Arbitrum", type: "EVM", mainnet: true, testnet: false, section: "arbitrum" },
+    { logo: "/images/bsc-icon.png", name: "BSC", type: "EVM", mainnet: true, testnet: false, section: "bsc" },
+    { logo: "/images/eth-icon.svg", name: "Ethereum", type: "EVM", mainnet: true, testnet: false, section: "ethereum" },
+    { logo: "/images/fantom-icon.svg", name: "Fantom", type: "EVM", mainnet: true, testnet: false, section: "fantom" },
+    { logo: "/images/linea-icon.svg", name: "Linea", type: "EVM", mainnet: true, testnet: false, section: "linea" },
+    { logo: "/images/metis-icon.png", name: "Metis", type: "EVM", mainnet: true, testnet: false, section: "metis" },
+    { logo: "/images/optimism-icon.jpg", name: "Optimism", type: "EVM", mainnet: true, testnet: false, section: "optimism" },
 ];
 
 export default function ChainDescriptionTable() {
@@ -35,7 +33,7 @@ export default function ChainDescriptionTable() {
           <tr className="text-gray-500">
             <th className="text-left"></th>
             <th className="text-left">Name</th>
-            <th className="text-left">Type</th>
+            <th className="text-center">Type*</th>
             <th className="text-center">Mainnet</th>
             <th className="text-center">Testnet</th>
           </tr>
@@ -57,7 +55,7 @@ export default function ChainDescriptionTable() {
                 </div>
               </td>
               <td className="text-gray-700 dark:text-white">{chain.name}</td>
-              <td className="text-gray-700 dark:text-white">{chain.type}</td>
+              <td className="text-gray-700 dark:text-white text-center"><img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /></td>
               <td className="text-center">
                 {chain.mainnet ? 
                   <span className="text-green-500">✅</span> : 

@@ -5,8 +5,7 @@ full: false
 
 Overview of supported chains, wallet structure, testnet availability, and token whitelisting in Okto's ecosystem. These chains and tokens can be enabled from the [**Okto Dashboard**](https://dashboard.okto.tech/wallet-controls).
 
-
-
+import { Callout } from 'fumadocs-ui/components/callout';
 import SupportedChainCard from "app/components/mdx/SupportedChainCard";
 import ChainNavigationCard from "app/components/mdx/ChainNavigationCard";
 import ChainDescriptionTable from "app/components/mdx/ChainDescriptionTable";
@@ -17,18 +16,26 @@ import ChainDescriptionTable from "app/components/mdx/ChainDescriptionTable";
 
 <ChainDescriptionTable />
 
+<Callout title="What is Type?">
+**Type** refers to the family of chains or ecosystems a blockchain belongs to. For example, the EVM ecosystem includes all chains that run EVM-compatible nodes, sharing similar consensus mechanisms and transaction processing methods. Other ecosystems include Solana, Aptos, Bitcoin, and Cosmos, each with distinct approaches to transaction payload creation and processing. Understanding a chain’s type is essential for constructing the appropriate payloads when interacting with that blockchain.
+</Callout>
+
 ### **Need Testnet/Mainnet Funds? Fill out the form below:**
 
-<div style={{ width: '90%', margin: '0 auto' }}>
+<div style={{ width: '80%', maxWidth: '600px', margin: '0 auto' }}>
   <iframe
     id="typeform-widget"
     title="Troubleshooting Form"
     src="https://coindcx.typeform.com/to/oXtDR5xw"
     width="100%"
-    height="600rem"
+    height="580px"
     frameBorder="0"
     allowFullScreen
-    style={{ border: 'none', borderRadius: '5px' }}
+    style={{ 
+      border: 'none', 
+      borderRadius: '5px',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+    }}
   ></iframe>
 </div>
 
