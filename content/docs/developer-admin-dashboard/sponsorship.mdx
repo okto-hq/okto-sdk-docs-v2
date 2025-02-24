@@ -1,0 +1,76 @@
+---
+title: Sponsorship
+full: false
+---
+
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
+import { Callout } from 'fumadocs-ui/components/callout';
+
+
+## **Overview**
+
+Sponsorship enables you to cover transaction fees (gas fees) for your users, creating a smoother experience by eliminating the need for users to hold native tokens for transaction fees.
+
+![Sponsorship Page - Okto Dashboard](/images/dashboard-img-v2/dashboard-sponsorship-v2.png)
+
+
+## **How Sponsorship Works with Okto Across Ecosystems**
+
+Sponsorship integrates with Okto's wallet infrastructure to automatically cover gas fees for transactions on supported chains for all transactions initiated by the client across users. When a user initiates a transaction, the sponsorship system pays the required gas fee, allowing the transaction to proceed even if the user doesn't have the native token for gas.
+
+<CollapsibleCallout type="note" title="Prerequisites">
+
+    * Enable chains in your [Okto Dashboard](https://dashboard.okto.tech)
+    * Activate sponsorship individually for each of the enabled chains that needs sponsorship 
+    * Load native tokens into your sponsorship account
+
+</CollapsibleCallout>
+
+<CollapsibleCallout type="note" title="Loading Funds to Sponsorship">
+
+    * Only native tokens of the respective chains can be loaded into sponsorship accounts.  
+    * Each chain has a unique sponsorship address. You can find this address in your Okto dashboard.  
+    * For testnets, you can use faucets to acquire tokens. 
+
+</CollapsibleCallout>
+
+## Steps to Set Up Sponsorship
+1. Enable desired chains in your Okto dashboard
+2. Activate sponsorship for each chain
+3. Add native funds via airdrop or transfer to the sponsorship address
+4. Enable/disable sponsorship as needed
+
+<CollapsibleCallout type="tip" title="Sponsorship Necessity">
+
+You can disable sponsorship on the developer dashboard if activated. If not activated, you don't need to activate it until you need to use it.
+
+</CollapsibleCallout>
+
+## Supported Operations Across Chains
+
+- All chains: Gas fees
+- Aptos and Solana: Account creation and initiation
+- Solana specific: SPL ATA accounts, nonce advancement, rent
+
+## Transaction Management
+
+- Sponsorship accounts are segregated by client ID to ensure funds are used only within your application
+- Current implementation covers all transactions for your users
+- Future updates will introduce conditional sponsorship coverage
+
+<Callout title="Note">
+**You have full authority over your sponsorship account. Neither Okto nor any third party can drain your sponsorship funds.**
+</Callout>
+
+## Low Balance Scenarios
+If your sponsorship account balance is low:
+- You'll receive notifications via the SDK and API.
+- You can either recharge the account or disable sponsorship to prevent transaction failures. Incase you disable sponsorship, fee will be directly deducted from the user's account who initiates the transaction. **This means the user must hold native tokens of the destination chain on which the transaction is being executed on.**
+
+
+## Best Practices
+1. Regularly monitor your sponsorship account balances.
+2. Consider the transaction volume and gas prices on each chain when funding your sponsorship accounts.
+3. Periodically review your sponsorship strategy to ensure it aligns with your application's needs and user behavior.
+
+For more detailed information or to manage your sponsorship settings, please visit the [Okto Developer Dashboard](https://dashboard.okto.tech/paymaster).
