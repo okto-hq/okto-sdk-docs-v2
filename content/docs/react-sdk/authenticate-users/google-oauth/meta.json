@@ -1,7 +1,7 @@
 {
     "title": "Google ID Token",
     "pages": [
-      "learn",
+      "!learn",
       "get-token-id",
       "google-console-setup"
     ]
