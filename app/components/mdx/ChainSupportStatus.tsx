@@ -35,13 +35,13 @@ export default function ChainSupportStatus({ unsupportedChains = [] }: ChainSupp
   );
 
   return (
-    <div className="grid grid-cols-2 bg-[#f5f6fe] rounded-lg border border-[#e2e8f0] overflow-hidden [&_*]:!m-0">
-      <div className="p-2.5 border-r border-[#e2e8f0]">
-        <p className="font-medium text-[11px] uppercase tracking-wider text-gray-500 pb-2">Available on</p>
+    <div className="grid grid-cols-2 bg-[#F5F6FE] dark:bg-[#121212] rounded-lg border border-[#e2e8f0] dark:border-gray-700 overflow-hidden [&_*]:!m-0">
+      <div className="p-2.5 border-r border-[#e2e8f0] dark:border-gray-700">
+        <p className="font-medium text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400 pb-2">Available on</p>
         <div className="flex flex-wrap gap-1.5">
           {supportedChains.map((chain) => (
             <div key={chain.name} className="relative group inline-flex mr-1.5 mb-1.5">
-              <div className="w-5 h-5 rounded-full bg-white flex items-center justify-center p-0.5">
+              <div className="w-5 h-5 rounded-full bg-white dark:bg-[#1a1a1a] flex items-center justify-center p-0.5">
                 <img
                   src={chain.icon}
                   alt={chain.name}
@@ -55,18 +55,26 @@ export default function ChainSupportStatus({ unsupportedChains = [] }: ChainSupp
           ))}
         </div>
         {supportedChains.length > 0 && (
-          <p className="text-xs text-gray-500 mt-3 italic">
-            To enable these chains for your application, please configure them in the Okto Dashboard.
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-3 italic">
+            To enable these chains for your application, please configure them in the{' '}
+            <a 
+              href="https://dashboard.okto.tech/login" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-[#5166EE] dark:text-[#7C8FFF] hover:underline"
+            >
+              Okto Dashboard
+            </a>.
           </p>
         )}
       </div>
 
       <div className="p-2.5">
-        <p className="font-medium text-[11px] uppercase tracking-wider text-gray-500 pb-2">Not available on</p>
+        <p className="font-medium text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400 pb-2">Not available on</p>
         <div className="flex flex-wrap">
           {unsupportedChainsList.map((chain) => (
             <div key={chain.name} className="relative group inline-flex mr-1.5 mb-1.5">
-              <div className="w-5 h-5 rounded-full bg-white flex items-center justify-center p-0.5">
+              <div className="w-5 h-5 rounded-full bg-white dark:bg-[#1a1a1a] flex items-center justify-center p-0.5">
                 <img 
                   src={chain.icon} 
                   alt={chain.name} 
