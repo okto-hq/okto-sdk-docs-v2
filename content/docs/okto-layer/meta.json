@@ -8,6 +8,6 @@
         "dtn",
         "ull",
         "okto-token",
-        "blocs"
+        "!blocs"
     ]
   }
