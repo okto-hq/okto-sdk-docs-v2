@@ -1,11 +1,30 @@
 ---
 title: Supported SDK Platforms
-description: Okto provides a suite of SDKs tailored to different environments, enabling you to integrate Web3 functionalities effortlessly. TypeScript is currently live and production-ready, while other SDKs are coming soon. Here’s an overview.
+description: Okto provides a suite of SDKs tailored to different environments, enabling you to integrate Web3 functionalities effortlessly. TypeScript is currently live and production-ready, while other SDKs are coming soon. Here's an overview.
 full: false
 ---
 
 import TechnologyCard from "app/components/mdx/TechnologyCard";
 import { IoBookOutline, IoCodeSlashOutline, IoRocketOutline, IoAppsOutline } from "react-icons/io5";
+
+## 0. **Setup the Dashboard**
+Before getting started with any SDK, you'll need to set up your Okto Dashboard. Visit our [Dashboard Overview](/docs/developer-admin-dashboard) to:
+
+- [Setup your dashboard account](/docs/developer-admin-dashboard/dashboard-account)
+- [Get Okto tokens](/docs/developer-admin-dashboard/okto-faucet) (for testnet, claim from faucet)
+- [Get Client SWA and Client API Key](/docs/developer-admin-dashboard/api-key)
+- Enable chains, tokens and sponsorship (optional)
+
+<iframe 
+  src="https://www.loom.com/share/7af00e073f2446658a02370d378570a1" 
+  width="100%" 
+  height="400" 
+  frameborder="0" 
+  allowfullscreen
+>
+</iframe>
+
+---
 
 ## 1. **React SDK**
 The React SDK is designed for developers building Web3 applications for the web. It simplifies blockchain interactions, enabling seamless onboarding and smooth user experiences.
@@ -79,14 +98,15 @@ The NextJS SDK is designed for developers building Web3 applications for the web
   />
 </div>
 
+{/*
 ---
 
 ## 3. **React Native SDK** (Coming Soon)
-If you’re developing mobile-first Web3 applications, the React Native SDK is your go-to option. It provides all the tools necessary to onboard users to Web3 seamlessly.
+If you're developing mobile-first Web3 applications, the React Native SDK is your go-to option. It provides all the tools necessary to onboard users to Web3 seamlessly.
 
 **Use Case**: Mobile applications for iOS and Android
 
-{/*
+
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
   <TechnologyCard
     icon={<IoBookOutline size={"1.5rem"} />}
@@ -111,14 +131,14 @@ If you’re developing mobile-first Web3 applications, the React Native SDK is y
 </div>
 */}
 
+{/*
 ---
-
 ## 4. **Flutter SDK** (Coming Soon)
 The Flutter SDK caters to developers using Flutter and Dart to build cross-platform mobile applications. It reduces setup complexity and enhances user experiences.
 
 **Use Case**: Cross-platform mobile applications (Android and iOS)
 
-{/*
+
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
     <TechnologyCard
         icon={<IoBookOutline size={"1.5rem"} />}
@@ -148,7 +168,6 @@ The Flutter SDK caters to developers using Flutter and Dart to build cross-platf
         link="https://github.com/okto-hq/okto-sdk-flutter-template-app"
     />
 </div>
-*/}
 
 
 ---
@@ -158,13 +177,13 @@ The Flutter SDK caters to developers using Flutter and Dart to build cross-platf
 The Unity SDK will empower game developers to integrate Web3 features into their games across platforms such as web, mobile, and desktop.
 
 **Use Case**: Web3-enabled gaming experiences
-
+*/}
 ---
 
-## 6. **Typescript SDK**
+## 3. **Typescript SDK**
 The Typescript SDK is designed for developers building Web3 applications with TypeScript. It simplifies blockchain interactions, enabling seamless onboarding and smooth user experiences.
 
-**Use Case**: Client-side web apps that don’t require a React-based solution
+**Use Case**: Client-side web apps that don't require a React-based solution
 
 <Callout title="Important Note">
 The Okto TypeScript SDK is built exclusively for client-side (frontend) usage. Do not use this SDK in server-side applications or backend services.
@@ -201,6 +220,10 @@ The Okto TypeScript SDK is built exclusively for client-side (frontend) usage. D
 </div>
 
 ---
+
+<Callout type="info">
+React Native, Flutter, and Unity SDKs coming soon. 
+</Callout>
 
 ## Get Started Today
 
