@@ -1,6 +1,6 @@
 ---
 title: Raw Transaction
-description: Learn how to create raw EVM transactions using the Okto SDK.
+description: Learn how to create raw EVM transactions using the Okto TypeScript SDK.
 full: false
 ---
 
@@ -16,61 +16,45 @@ The `evmRawTransaction()` function creates a user operation for executing raw EV
 <ChainSupportStatus 
 />
 
-### Method Overview
+<Callout>
+There are two ways to implement raw transactions:
 
-| Method | Description |
-|---------|-------------|
-| <sub><i>async</i></sub> [`evmRawTransaction`](#evm-raw-transaction) | Create a user operation for raw EVM transaction |
-
-<div className="method-box">
-
-## EVM Raw Transaction
-
-<Callout title="Note">
-Before using this function, ensure your target chain is an EVM-compatible chain by checking the [Supported Chains and Tokens](/docs/system-capabilities/supported-chains) documentation.
-</Callout>
-
-<sub><i>async</i></sub> `evmRawTransaction(oktoClient: OktoClient, data: RawTransactionIntentParams)` creates a user operation for raw EVM transactions.
-
-### Parameters
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
-| `data` | `RawTransactionIntentParams` | Parameters for the raw transaction |
-
-Where `RawTransactionIntentParams` contains:
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `caip2Id` | `string` | The network identifier (e.g., eip155:1 for Ethereum) |
-| `transaction` | `EVMRawTransaction` | The raw transaction parameters |
-
-And `EVMRawTransaction` contains:
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `from` | `Address` | The sender's address |
-| `to` | `Address` | The recipient's address |
-| `data` | `Hash` | The transaction data (optional) |
-| `value` | `number \| bigint` | The amount of native currency to send (optional) |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `result` | `Promise<UserOp>` | Returns the user operation for the raw transaction |
-
+- **Abstracted Flow**: A simplified approach where the user operation is automatically created, signed, and executed in a single step. Perfect for most applications.
+- **UserOp Flow**: A granular approach where you manually control the creation, signing, and execution of the user operation. Useful for custom implementations or advanced use cases.
 </Callout>
 
 ### Example
 
-<Accordions>
+<Accordions defaultValue="Usage">
 <Accordion title="Usage">
-<Tabs items={['TypeScript']}>
-<Tab value="TypeScript">
+
+<Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+<Tab value="Abstracted Flow">
+```typescript
+import { evmRawTransaction } from "@okto_web3/core-js-sdk";
+
+async function handleRawTransaction() {
+    try {
+        const rawTxParams = {
+            caip2Id: "eip155:1", // Ethereum Mainnet
+            transaction: {
+                from: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+                to: "0x23581767a106ae21c074b2276D25e5C3e136a68b",
+                data: "0x", // Optional transaction data
+                value: BigInt("1000000000000000000") // 1 ETH
+            }
+        };
+        
+        // Execute the transaction
+        const jobId = await evmRawTransaction(oktoClient, rawTxParams);
+        console.log('Transaction jobId:', jobId);
+    } catch (error) {
+        console.error('Error in raw transaction:', error);
+    }
+}
+```
+</Tab>
+<Tab value="UserOp Flow">
 ```typescript
 import { evmRawTransaction } from "@okto_web3/core-js-sdk/userop";
 
@@ -93,11 +77,42 @@ async function handleRawTransaction() {
         const signedOp = await oktoClient.signUserOp(userOp);
         
         // Execute the transaction
-        const txHash = await oktoClient.executeUserOp(signedOp);
-        console.log('Raw transaction hash:', txHash);
+        const jobId = await oktoClient.executeUserOp(signedOp);
+        console.log('Transaction jobId:', jobId);
     } catch (error) {
         console.error('Error in raw transaction:', error);
     }
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Sample Response">
+<Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+<Tab value="Abstracted Flow">
+```typescript
+// JobId returned
+"3ee33731-9e96-4ab9-892c-ea476b36295d"
+```
+</Tab>
+<Tab value="UserOp Flow">
+```typescript
+// UserOp returned from evmRawTransaction
+{
+    "sender": "0xa9F6b3A5a718754979dbA78113f3614Dd4524c53",
+    "nonce": "0x000000000000000000000000000000003ee337319e964ab9892cea476b36295d",
+    "paymaster": "0x5408fAa7F005c46B85d82060c532b820F534437c",
+    "callGasLimit": "0x493e0",
+    "verificationGasLimit": "0x30d40",
+    "preVerificationGas": "0xc350",
+    "maxFeePerGas": "0x77359400",
+    "maxPriorityFeePerGas": "0x77359400",
+    "paymasterPostOpGasLimit": "0x186a0",
+    "paymasterVerificationGasLimit": "0x186a0",
+    "callData": "0x8dd7712f...", // truncated for brevity
+    "paymasterData": "0x000000...", // truncated for brevity
+    "signature": "0x6bf06e6d..." // truncated for brevity
 }
 ```
 </Tab>
@@ -174,10 +189,162 @@ const rawTxParams = {
 </Tab>
 </Tabs>
 </Accordion>
+
+
+<Accordion title="Suggested Post Implementation">
+
+```typescript
+import { getOrdersHistory } from '@okto_web3/core-js-sdk';
+
+async function getRawTransactionOrder(jobId: string) {
+    try {
+        // Get order history with filter for specific jobId
+        const orders = await getOrdersHistory(oktoClient, {
+            intentId: jobId,                    // Filter by specific order/transaction
+            intentType: "RAW_TRANSACTION",      // Filter for raw transaction orders
+            status: "SUCCESSFUL"                // Filter by status: "SUCCESSFUL" | "FAILED" | "PENDING" | "REJECTED"
+        });
+        return orders?.[0] || null;
+    } catch (error) {
+        console.error('Error fetching transaction order:', error);
+        throw error;
+    }
+}
+
+// Usage example:
+const order = await getRawTransactionOrder(jobId);
+console.log('Order Status:', order?.status);
+```
+<Callout title="Important: Transaction Lifecycle">
+The `getOrderHistory` function fetches the current status of a transaction on the Okto chain. However, the transaction status will continue to update on the Okto chain as it progresses through various stages in the [Distributed Transaction Network (DTN)](/docs/okto-layer/dtn).
+
+To track a transaction to completion:
+- Keep fetching the order history for your specific `jobId` until the status shows "SUCCESSFUL"
+- Once successful, the transaction hash will be available in the response
+- Use this transaction hash to verify the transaction on the destination chain's explorer
+</Callout>
+</Accordion>
+
+<Accordion title="Corresponding jobId Response">
+```typescript
+// Order returned from getOrdersHistory
+{
+    "downstream_transaction_hash": ["0x742d35Cc6634C0532925a3b844Bc454e4438f44e"],
+    "transaction_hash": ["0x8dd7712f5f95ad24ddc0c2b90ea7f2f879680ec350fe4f373068b0e3370b9187"],
+    "status": "SUCCESSFUL",
+    "intent_id": "3ee33731-9e96-4ab9-892c-ea476b36295d",
+    "intent_type": "RAW_TRANSACTION",
+    "network_name": "Ethereum",
+    "caip_id": "eip155:1",
+    "details": {
+        "from": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+        "to": "0x23581767a106ae21c074b2276D25e5C3e136a68b",
+        "data": "0x8dd7712f...", // truncated for brevity
+        "value": "1000000000000000000"
+    },
+    "reason": "",
+    "block_timestamp": 1677721600
+}
+```
+</Accordion>
 </Accordions>
 
-</div>
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/typescript-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/typescript-sdk/troubleshooting) to contact support
+</Callout>
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`evmRawTransaction`](#evm-raw-transaction) | Create a user operation for raw EVM transaction |
+
+<div className="method-box">
+
+## EVM Raw Transaction
 
 <Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/typescript-sdk/sdk-error-warnings) documentation for more details.
+Before using this function, ensure your target chain is an EVM-compatible chain by checking the [Supported Chains and Tokens](/docs/system-capabilities/supported-chains) documentation.
 </Callout>
+
+<sub><i>async</i></sub> `evmRawTransaction(oktoClient: OktoClient, data: RawTransactionIntentParams)` creates a user operation for raw EVM transactions.
+
+### Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|----------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient | Yes |
+| `data` | `RawTransactionIntentParams` | Parameters for the raw transaction | Yes |
+
+Where `RawTransactionIntentParams` contains:
+
+| Field | Type | Description | Required |
+|-------|------|-------------|----------|
+| `caip2Id` | `string` | The network identifier (e.g., eip155:1 for Ethereum) | Yes |
+| `transaction` | `EVMRawTransaction` | The raw transaction parameters | Yes |
+
+And `EVMRawTransaction` contains:
+
+| Field | Type | Description | Required |
+|-------|------|-------------|----------|
+| `from` | `Address` | The sender's address | Yes |
+| `to` | `Address` | The recipient's address | Yes |
+| `data` | `Hash` | The transaction data | No |
+| `value` | `Hash` | The amount of native currency to send | Yes |
+
+### Response
+
+<Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+<Tab value="Abstracted Flow">
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | `Promise<string>` | Returns the jobId for the raw transaction |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface {
+            jobId: string;  
+        }
+        ```
+    </Accordion>
+</Accordions>
+</Callout>
+</Tab>
+<Tab value="UserOp Flow">
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | [`Promise<UserOp>`](/docs/typescript-sdk/technical-reference#models) | Returns the user operation for the raw transaction |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface UserOp {
+            sender: string;
+            nonce: string;
+            paymaster: string;
+            callGasLimit: string;
+            verificationGasLimit: string;
+            preVerificationGas: string;
+            maxFeePerGas: string;
+            maxPriorityFeePerGas: string;
+            paymasterPostOpGasLimit: string;
+            paymasterVerificationGasLimit: string;
+            callData: string;
+            paymasterData: string;
+            signature: string;
+        }
+        ```
+    </Accordion>
+</Accordions>
+</Callout>
+</Tab>
+</Tabs>
+
+</div>

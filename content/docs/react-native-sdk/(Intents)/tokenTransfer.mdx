@@ -1,6 +1,6 @@
 ---
 title: Token Transfer
-description: Learn how to create token transfer operations using the Okto SDK.
+description: Learn how to create token transfer operations using the Okto React Native SDK.
 full: false
 ---
 
@@ -9,57 +9,64 @@ import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import { Icon as IIcon } from '@iconify/react';
+import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
 
 The `tokenTransfer()` function creates a user operation for transferring tokens. This function initiates the process of transferring a token by encoding the necessary parameters into a User Operation, which can then be signed and executed using the OktoClient.
 
-### Method Overview
+<ChainSupportStatus 
+/>
 
-| Method | Description |
-|---------|-------------|
-| <sub><i>async</i></sub> [`tokenTransfer`](#token-transfer) | Create a user operation for token transfer |
+<Callout>
+There are two ways to implement token transfers:
 
-<div className="method-box">
-
-## Token Transfer
-
-<sub><i>async</i></sub> `tokenTransfer(oktoClient: OktoClient, data: TokenTransferIntentParams)` creates a user operation for transferring tokens.
-
-### Parameters
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
-| `data` | [`TokenTransferIntentParams`](./technical-reference#models) | Parameters for the token transfer |
-
-Where `TokenTransferIntentParams` contains:
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `amount` | `number \| bigint` | Amount to send, in the smallest unit (e.g., gwei for ETH) |
-| `recipient` | `Address` | Wallet address of the recipient |
-| `token` | `Address \| ''` | The token address for the transaction |
-| `caip2Id` | `string` | The network ID (e.g., Ethereum - eip155:1, Polygon - eip155:137) |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `caip2Id` | [`Promise<UserOp>`](./technical-reference#models) | Returns the user operation for the token transfer |
-
+- **Abstracted Flow**: A simplified approach where the user operation is automatically created, signed, and executed in a single step. Perfect for most applications.
+- **UserOp Flow**: A granular approach where you manually control the creation, signing, and execution of the user operation. Useful for custom implementations or advanced use cases.
 </Callout>
 
 ### Example
 
-<Accordions>
+<Accordions defaultValue="Usage">
 <Accordion title="Usage">
-<Tabs items={['TypeScript']}>
-<Tab value="TypeScript">
+
+<Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+<Tab value="Abstracted Flow">
 ```typescript
 import { useOkto } from '@okto_web3/react-native-sdk';
 import { tokenTransfer } from '@okto_web3/react-native-sdk';
-import { View, Text, Pressable } from 'react-native';
+import { TouchableOpacity, Text, View } from 'react-native';
+
+function TokenTransfer() {
+    const oktoClient = useOkto();
+
+    async function handleTokenTransfer() {
+        try {
+            const transferParams = {
+                amount: BigInt("1000000000000000000"), // 1 token with 18 decimals
+                recipient: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+                token: "0x2170ed0880ac9a755fd29b2688956bd959f933f8", // Token contract address
+                caip2Id: "eip155:1"
+            };
+            // Execute the transfer
+            const jobId = await tokenTransfer(oktoClient, transferParams);
+            console.log('Transfer jobId:', jobId);
+        } catch (error:any) {
+            console.error('Error in token transfer:', error);
+        }
+    }
+
+    return (
+        <TouchableOpacity onPress={handleTokenTransfer}>
+            <Text>Transfer Token</Text>
+        </TouchableOpacity>
+    );
+}
+```
+</Tab>
+<Tab value="UserOp Flow">
+```typescript
+import { useOkto } from '@okto_web3/react-native-sdk';
+import { tokenTransfer } from '@okto_web3/react-native-sdk/userop';
+import { TouchableOpacity, Text, View } from 'react-native';
 
 function TokenTransfer() {
     const oktoClient = useOkto();
@@ -80,29 +87,203 @@ function TokenTransfer() {
             const signedOp = await oktoClient.signUserOp(userOp);
             
             // Execute the transfer
-            const txHash = await oktoClient.executeUserOp(signedOp);
-            console.log('Transfer transaction hash:', txHash);
-        } catch (error) {
+            const jobId = await oktoClient.executeUserOp(signedOp);
+            console.log('Transfer jobId:', jobId);
+        } catch (error:any) {
             console.error('Error in token transfer:', error);
         }
     }
 
     return (
-        <View>
-            <Pressable onPress={handleTokenTransfer}>
-                <Text>Transfer Token</Text>
-            </Pressable>
-        </View>
+        <TouchableOpacity onPress={handleTokenTransfer}>
+            <Text>Transfer Token</Text>
+        </TouchableOpacity>
     );
 }
 ```
 </Tab>
 </Tabs>
 </Accordion>
+
+<Accordion title="Sample Response">
+
+<Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+<Tab value="Abstracted Flow">
+```typescript
+// JobId returned
+"3ee33731-9e96-4ab9-892c-ea476b36295d"
+```
+</Tab>
+<Tab value="UserOp Flow">
+```typescript
+// UserOp returned from tokenTransfer
+{
+    "sender": "0xa9F6b3A5a718754979dbA78113f3614Dd4524c53",
+    "nonce": "0x000000000000000000000000000000003ee337319e964ab9892cea476b36295d",
+    "paymaster": "0x5408fAa7F005c46B85d82060c532b820F534437c",
+    "callGasLimit": "0x493e0",
+    "verificationGasLimit": "0x30d40",
+    "preVerificationGas": "0xc350",
+    "maxFeePerGas": "0x77359400",
+    "maxPriorityFeePerGas": "0x77359400",
+    "paymasterPostOpGasLimit": "0x186a0",
+    "paymasterVerificationGasLimit": "0x186a0",
+    "callData": "0x8dd7712f...", // truncated for brevity
+    "paymasterData": "0x000000...", // truncated for brevity
+    "signature": "0x6bf06e6d..." // truncated for brevity
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Suggested Post Implementation">
+
+```typescript
+import { useOkto } from '@okto_web3/react-native-sdk';
+import { getOrdersHistory } from '@okto_web3/react-native-sdk';
+
+async function getTokenOrder(jobId: string) {
+    const oktoClient = useOkto();
+    try {
+        // Get order history with filter for specific jobId
+        const orders = await getOrdersHistory(oktoClient, {
+            intentId: jobId,                    // Filter by specific order/transaction
+            intentType: "TOKEN_TRANSFER",       // Filter for token transfer orders
+            status: "SUCCESSFUL"                // Filter by status: "SUCCESSFUL" | "FAILED" | "PENDING" | "REJECTED"
+        });
+        return orders?.[0] || null;
+    } catch (error) {
+        console.error('Error fetching token order:', error);
+        throw error;
+    }
+}
+
+// Usage example:
+const order = await getTokenOrder(jobId);
+console.log('Order Status:', order?.status);
+```
+<Callout title="Important: Transaction Lifecycle">
+The `getOrderHistory` function fetches the current status of a transaction on the Okto chain. However, the transaction status will continue to update on the Okto chain as it progresses through various stages in the [Distributed Transaction Network (DTN)](/docs/okto-layer/dtn).
+
+To track a transaction to completion:
+- Keep fetching the order history for your specific `jobId` until the status shows "SUCCESSFUL"
+- Once successful, the transaction hash will be available in the response
+- Use this transaction hash to verify the transaction on the destination chain's explorer
+</Callout>
+</Accordion>
+
+<Accordion title="Corresponding jobId Response">
+```typescript
+// Order returned from getOrdersHistory
+{
+    "downstream_transaction_hash": ["0x742d35Cc6634C0532925a3b844Bc454e4438f44e"],
+    "transaction_hash": ["0x8dd7712f5f95ad24ddc0c2b90ea7f2f879680ec350fe4f373068b0e3370b9187"],
+    "status": "SUCCESSFUL",
+    "intent_id": "3ee33731-9e96-4ab9-892c-ea476b36295d",
+    "intent_type": "TOKEN_TRANSFER",
+    "network_name": "Ethereum",
+    "caip_id": "eip155:1",
+    "details": {
+        "amount": "1000000000000000000",
+        "recipient": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+        "token": "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+        "token_name": "Ethereum",
+        "token_symbol": "ETH",
+        "token_decimals": 18
+    },
+    "reason": "",
+    "block_timestamp": 1677721600
+}
+```
+</Accordion>
 </Accordions>
 
-</div>
-
-<Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](./sdk-error-warnings) documentation for more details.
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-native-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-native-sdk/troubleshooting) to contact support
 </Callout>
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`tokenTransfer`](#token-transfer) | Create a user operation for token transfer |
+
+<div className="method-box">
+
+## Token Transfer
+
+<sub><i>async</i></sub> `tokenTransfer(oktoClient: OktoClient, data: TokenTransferIntentParams)` creates a user operation for transferring tokens.
+
+### Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|----------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+| `data` | [`TokenTransferIntentParams`](/docs/react-native-sdk/technical-reference#models) | Parameters for the token transfer | Yes |
+
+Where `TokenTransferIntentParams` contains:
+
+| Field | Type | Description | Required |
+|-------|------|-------------|----------|
+| `amount` | `number \| bigint` | Amount to send, in the smallest unit (e.g., gwei for ETH) | Yes |
+| `recipient` | `Address` | Wallet address of the recipient | Yes |
+| `token` | `Address \| ''` | The token address for the transaction | Yes |
+| `caip2Id` | `string` | The network ID (e.g., Ethereum - eip155:1, Polygon - eip155:137) | Yes |   
+
+### Response
+
+<Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+<Tab value="Abstracted Flow">
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | `Promise<string>` | Returns the jobId for the token transfer |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface {
+            jobId: string;  
+        }
+        ```
+    </Accordion>
+</Accordions>
+</Callout>
+</Tab>
+<Tab value="UserOp Flow">
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | [`Promise<UserOp>`](/docs/react-native-sdk/technical-reference#models) | Returns the user operation for the token transfer |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface UserOp {
+            sender: string;
+            nonce: string;
+            paymaster: string;
+            callGasLimit: string;
+            verificationGasLimit: string;
+            preVerificationGas: string;
+            maxFeePerGas: string;
+            maxPriorityFeePerGas: string;
+            paymasterPostOpGasLimit: string;
+            paymasterVerificationGasLimit: string;
+            callData: string;
+            paymasterData: string;
+            signature: string;
+        }
+        ```
+    </Accordion>
+</Accordions>
+</Callout>
+</Tab>
+</Tabs>
+
+</div>

@@ -105,6 +105,15 @@ function OrderHistory() {
 
 </div>
 
+<Callout title="Important: Transaction Lifecycle">
+The `getOrderHistory` function fetches the current status of a transaction on the Okto chain. However, the transaction status will continue to update on the Okto chain as it progresses through various stages in the [Distributed Transaction Network (DTN)](/docs/okto-layer/dtn).
+
+To track a transaction to completion:
+- Keep fetching the order history for your specific `jobId` until the status shows "SUCCESSFUL"
+- Once successful, the transaction hash will be available in the response
+- Use this transaction hash to verify the transaction on the destination chain's explorer
+</Callout>
+
 <Callout title="Note">
 In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](./sdk-error-warnings) documentation for more details.
 </Callout> 

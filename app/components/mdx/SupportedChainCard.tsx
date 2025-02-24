@@ -86,6 +86,22 @@ export default function SupportedChainCard({
             <div className="text-xl sm:text-2xl font-semibold">
               {chainName}
             </div>
+            <div className="flex items-center">
+              <div className="relative italic group flex items-center space-x-1">
+                <span className="text-sm">( belongs to</span>
+                <div className="bg-white dark:bg-[#1a1a1a] mx-1 flex items-center justify-center h-4 w-4">
+                  <img
+                    src="/images/eth-icon.svg"
+                    alt="Ethereum"
+                    className="h-5 w-5"
+                  />
+                </div>
+                <span className="text-sm">)</span>
+                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1 text-[10px] bg-gray-800 text-white rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 ">
+                  belongs to family of evm chains and all the evm actions are supported
+                </span>
+              </div>
+            </div>
           </div>
 
           {/* Right (Tokens, Testnets, Resources, Network Info) */}
