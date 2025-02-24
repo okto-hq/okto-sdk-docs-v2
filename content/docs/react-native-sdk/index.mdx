@@ -9,6 +9,7 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
 import ExternalLink from 'app/components/mdx/ExternalLink';
 import TemplateRepoBanner from 'app/components/mdx/TemplateRepoBanner';
+import ViewOnGithub from 'app/components/mdx/ViewOnGithub';
 
 <TemplateRepoBanner sdk="react-native" />
 
@@ -112,15 +113,15 @@ Without completing these steps first, your application won't be able to interact
     Initialize the Okto SDK by wrapping your app with OktoProvider. This provides the SDK context throughout your app:
 
     ```typescript title="app/_layout.tsx"
-    import { OktoProvider } from '@okto_web3/react-native-sdk';
+    import { Hash, Hex, OktoProvider } from '@okto_web3/react-native-sdk';
     import { ThemeProvider } from '@react-navigation/native';
     import { Stack } from 'expo-router';
     import { StatusBar } from 'expo-status-bar';
 
     const config = {
         environment: "sandbox",
-        clientPrivateKey: "YOUR_CLIENT_PRIVATE_KEY",  // Replace with your actual private key
-        clientSWA: "YOUR_CLIENT_SWA",             // Replace with your actual SWA
+        clientPrivateKey: "YOUR_CLIENT_PRIVATE_KEY" as Hash,  // Replace with your actual private key
+        clientSWA: "YOUR_CLIENT_SWA" as Hex,             // Replace with your actual SWA
     };
 
     export default function RootLayout() {
@@ -137,6 +138,7 @@ Without completing these steps first, your application won't be able to interact
         );
     }
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-react-native-template-app/blob/main/app/_layout.tsx" />
 </Step>
 
 <Step>
@@ -195,6 +197,7 @@ Without completing these steps first, your application won't be able to interact
         );
     }
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-react-native-template-app/blob/main/app/screens/LoginScreen.tsx" />
 
     <CollapsibleCallout type="tip" title="Setting up Google OAuth">
         You'll need to set up OAuth 2.0 credentials in the Google Cloud Console:
@@ -253,6 +256,7 @@ Without completing these steps first, your application won't be able to interact
         );
     }
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-react-native-template-app/blob/main/app/screens/HomeScreen.tsx" />
 </Step>
 
 <Step>
@@ -642,6 +646,7 @@ Let's implement a token transfer on Polygon Testnet Amoy to understand how user 
         );
     }
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-react-native-template-app/blob/main/app/screens/TransferToken.tsx" />
 </Step>
 
 <Step>
@@ -691,6 +696,7 @@ const transferParams = {
 };
 const result = await tokenTransfer(oktoClient, transferParams);
 ```
+<ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-react-native-template-app/blob/main/app/screens/TransferToken.tsx" />
 
 #### 2. NFT Transfer
 Transfer NFTs between addresses. <ExternalLink href="/docs/react-native-sdk/nftTransfer">Learn more</ExternalLink>
@@ -706,7 +712,7 @@ const nftParams = {
 };
 const result = await nftTransfer(oktoClient, nftParams);
 ```
-
+<ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-react-native-template-app/blob/main/app/screens/TransferNFT.tsx" />
 #### 3. Raw Transaction (EVM)
 Execute custom EVM contract calls. <ExternalLink href="/docs/react-native-sdk/rawTransaction">Learn more</ExternalLink>
 
@@ -743,6 +749,7 @@ const rawTxParams = {
 };
 const result = await evmRawTransaction(oktoClient, rawTxParams);
 ```
+<ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-react-native-template-app/blob/main/app/screens/RawTransaction.tsx" />
 
 ---
 

@@ -10,6 +10,8 @@ import { Callout } from 'fumadocs-ui/components/callout';
 import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
 import ExternalLink from 'app/components/mdx/ExternalLink';
 import TemplateRepoBanner from 'app/components/mdx/TemplateRepoBanner';
+import { FaGithub } from 'react-icons/fa';
+import ViewOnGithub from 'app/components/mdx/ViewOnGithub';
 
 <TemplateRepoBanner sdk="react" />
 
@@ -75,6 +77,7 @@ Without completing these steps first, your application won't be able to interact
       }
     })
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-react-template-app/blob/main/vite.config.ts" />
 
     Don't forget to install the required package:
     ```bash
@@ -122,6 +125,7 @@ Without completing these steps first, your application won't be able to interact
     # Google OAuth credentials (Required only if you want to enable Google Sign-In)
     VITE_GOOGLE_CLIENT_ID="YOUR_GOOGLE_CLIENT_ID"
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-react-template-app/blob/main/.env.sample" />
 
     Replace the placeholders with your actual credentials.
     <CollapsibleCallout type="warning" title="Important">
@@ -164,6 +168,7 @@ Without completing these steps first, your application won't be able to interact
         </React.StrictMode>
     );
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-react-template-app/blob/main/src/main.tsx" />
 
 </Step>
 
@@ -177,12 +182,12 @@ Without completing these steps first, your application won't be able to interact
     import ReactDOM from "react-dom/client";
     import App from "./App";
     import { GoogleOAuthProvider } from "@react-oauth/google";
-    import { OktoProvider } from "@okto_web3/react-sdk";
+    import { Hash, Hex, OktoProvider } from "@okto_web3/react-sdk";
 
     const config = {
         environment: "sandbox",
-        clientPrivateKey: import.meta.env.VITE_CLIENT_PRIV_KEY,
-        clientSWA: import.meta.env.VITE_CLIENT_SWA,
+        clientPrivateKey: import.meta.env.VITE_CLIENT_PRIV_KEY as Hash,
+        clientSWA: import.meta.env.VITE_CLIENT_SWA as Hex,
     };
 
     ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -195,6 +200,7 @@ Without completing these steps first, your application won't be able to interact
         </React.StrictMode>
     );
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-react-template-app/blob/main/src/main.tsx" />
 
 </Step>
 
@@ -244,6 +250,7 @@ Without completing these steps first, your application won't be able to interact
 
     export default App;
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-react-template-app/blob/main/src/LoginPage.tsx" />
 
     2. After successful authentication, an Okto session is created and an Okto auth token is returned. The Okto Auth token is a JWT token similar to Google ID token and can be verified.
 
@@ -302,6 +309,7 @@ Without completing these steps first, your application won't be able to interact
         );
     }
     ```
+     <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-react-template-app/blob/main/src/Homepage.tsx" />
 
 </Step>
 
@@ -346,6 +354,7 @@ Now that we have our basic setup complete, let's implement a token transfer on S
     const polygonAccount = accounts.data.find(account => account.network_name === "POLYGON_TESTNET_AMOY");
     console.log("Your Polygon Amoy address:", polygonAccount.address);
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-react-template-app/blob/main/src/pages/TransferTokens.tsx" />
 
 </Step>
 
@@ -386,15 +395,9 @@ Now that we have our basic setup complete, let's implement a token transfer on S
                     caip2Id: "eip155:80002" // Polygon Amoy Testnet chain ID
                 };
 
-                //create the userop
-                const userOp = await tokenTransfer(oktoClient, transferParams);
-
-                //sign the userop
-                const signedUserop = await oktoClient.signUserop(userOp);
-
-                //execute the userop
-                const txHash = await oktoClient.executeUserop(signedUserop);
-                setStatus(`Transfer executed! Result: ${txHash}`);
+                // Execute the transfer
+                const jobId = await tokenTransfer(oktoClient, transferParams);
+                setStatus(`Transfer jobId! Result: ${jobId}`);
             } catch (error) {
                 console.error("Transfer failed:", error);
                 setStatus(`Transfer failed: ${error.message}`);
@@ -412,6 +415,7 @@ Now that we have our basic setup complete, let's implement a token transfer on S
         );
     }
     ```
+     <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-react-template-app/blob/main/src/pages/TransferTokens.tsx" />
 
 </Step>
 
@@ -463,6 +467,7 @@ const transferParams = {
 };
 const result = await tokenTransfer(oktoClient, transferParams);
 ```
+<ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-react-template-app/blob/main/src/pages/TransferTokens.tsx" />
 
 #### 2. NFT Transfer
 Transfer NFTs between addresses. <ExternalLink href="/docs/react-sdk/nftTransfer">Learn more</ExternalLink>
@@ -478,6 +483,7 @@ const nftParams = {
 };
 const result = await nftTransfer(oktoClient, nftParams);
 ```
+<ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-react-template-app/blob/main/src/pages/TransferNFT.tsx" />
 
 #### 3. Raw Transaction (EVM)
 Execute custom EVM contract calls. <ExternalLink href="/docs/react-sdk/evmRawTransaction">Learn more</ExternalLink>
@@ -515,6 +521,7 @@ const rawTxParams = {
 };
 const result = await evmRawTransaction(oktoClient, rawTxParams);
 ```
+<ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-react-template-app/blob/main/src/pages/RawTransaction.tsx" />
 
 ---
 

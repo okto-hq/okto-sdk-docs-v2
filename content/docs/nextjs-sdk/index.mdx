@@ -10,6 +10,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
 import ExternalLink from 'app/components/mdx/ExternalLink';
 import TemplateRepoBanner from 'app/components/mdx/TemplateRepoBanner';
+import ViewOnGithub from 'app/components/mdx/ViewOnGithub';
 
 <TemplateRepoBanner sdk="nextjs" />
 
@@ -121,6 +122,7 @@ If you need help, see our <ExternalLink href="/docs/developer-admin-dashboard/ov
     GOOGLE_CLIENT_SECRET = YOUR_GOOGLE_CLIENT_SECRET
     GOOGLE_CLIENT_ID = YOUR_GOOGLE_CLIENT_ID
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-nextjs-template-app/blob/main/.env.sample" />
 
     <CollapsibleCallout type="warning" title="Important">
         - Replace all placeholder values (`YOUR_...`) with your actual keys.
@@ -157,6 +159,7 @@ If you need help, see our <ExternalLink href="/docs/developer-admin-dashboard/ov
     }
     export default AppProvider;
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-nextjs-template-app/blob/main/app/components/providers.jsx" />
 
     <CollapsibleCallout type="info" title="Understanding the Provider">
         The `AppProvider` wraps your app with:
@@ -218,6 +221,8 @@ If you need help, see our <ExternalLink href="/docs/developer-admin-dashboard/ov
 
     export { handler as GET, handler as POST };
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-nextjs-template-app/blob/main/app/api/auth/%5B...nextauth%5D/route.ts" />
+
     <CollapsibleCallout type="info" title="Authentication Overview">
         This configuration:
         - Sets up NextAuth to use Google for authentication.
@@ -262,6 +267,7 @@ If you need help, see our <ExternalLink href="/docs/developer-admin-dashboard/ov
       );
     }
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-nextjs-template-app/blob/main/app/layout.tsx" />
     <CollapsibleCallout type="note" title="Layout Details">
         Using `AppProvider` ensures that every page in your application has access to both the session and Okto context.
     </CollapsibleCallout>
@@ -302,6 +308,8 @@ If you need help, see our <ExternalLink href="/docs/developer-admin-dashboard/ov
         );
     }
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-nextjs-template-app/blob/main/app/components/LoginButton.tsx" />
+
     <CollapsibleCallout type="note" title="About the Login Button">
         Using the `signIn` method from NextAuth, this button starts the Google authentication flow. No extra configuration is required on the client side.
     </CollapsibleCallout>
@@ -387,6 +395,8 @@ If you need help, see our <ExternalLink href="/docs/developer-admin-dashboard/ov
 
     export default GetButton;
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-nextjs-template-app/blob/main/app/components/GetButton.tsx" />
+
     <CollapsibleCallout type="note" title="About the Get Button">
         This component accepts a SDK function as a prop. When clicked, it calls the function with the Okto client, displays the JSON response in a modal, and handles any errors.
     </CollapsibleCallout>
@@ -452,6 +462,7 @@ If you need help, see our <ExternalLink href="/docs/developer-admin-dashboard/ov
         );
     }
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-nextjs-template-app/blob/main/app/page.tsx" />
 
     <CollapsibleCallout type="tip" title="Testing Your Login Page">
         After launching the app, use these buttons to:
@@ -587,6 +598,8 @@ Let's implement a token transfer on Polygon Testnet Amoy to understand how user 
         );
     }
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-nextjs-template-app/blob/main/app/components/TransferTokens.tsx" />
+
     <CollapsibleCallout type="warning" title="Before Executing">
         Before executing the transfer, verify:
         - That you have replaced `"YOUR_RECIPIENT_ADDRESS"` with an actual wallet address.
@@ -608,6 +621,7 @@ Let's implement a token transfer on Polygon Testnet Amoy to understand how user 
             <TokenTransfer />
         </div>
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-nextjs-template-app/blob/main/app/page.tsx" />
 </Step>
 
 <Step>
@@ -663,6 +677,7 @@ const transferParams = {
 };
 const result = await tokenTransfer(oktoClient, transferParams);
 ```
+<ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-nextjs-template-app/blob/main/app/components/TransferTokens.tsx" />
 
 #### 2. NFT Transfer
 Transfer NFTs between addresses. <ExternalLink href="/docs/nextjs-sdk/nftTransfer">Learn more</ExternalLink>
@@ -678,6 +693,7 @@ const nftParams = {
 };
 const result = await nftTransfer(oktoClient, nftParams);
 ```
+<ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-nextjs-template-app/blob/main/app/components/TransferNFT.tsx" />
 
 #### 3. Raw Transaction (EVM)
 Execute custom EVM contract calls. <ExternalLink href="/docs/nextjs-sdk/evmRawTransaction">Learn more</ExternalLink>
@@ -715,6 +731,7 @@ const rawTxParams = {
 };
 const result = await evmRawTransaction(oktoClient, rawTxParams);
 ```
+<ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-nextjs-template-app/blob/main/app/components/EVMRawTransaction.tsx" />
 
 ---
 

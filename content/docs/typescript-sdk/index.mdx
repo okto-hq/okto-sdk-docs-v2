@@ -10,6 +10,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
 import ExternalLink from 'app/components/mdx/ExternalLink';
 import TemplateRepoBanner from 'app/components/mdx/TemplateRepoBanner';
+import ViewOnGithub from 'app/components/mdx/ViewOnGithub';
 
 <TemplateRepoBanner sdk="typescript" />
 
@@ -99,6 +100,7 @@ This approach shows how to create a TypeScript application and manually configur
     CLIENT_SWA=YOUR_CLIENT_SWA
     ENVIRONMENT=sandbox
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/.env.sample" />
 
     Create a configuration file to load these variables:
 
@@ -108,10 +110,11 @@ This approach shows how to create a TypeScript application and manually configur
 
     export const config = {
         environment: process.env.ENVIRONMENT || 'sandbox',
-        clientPrivateKey: process.env.CLIENT_PRIVATE_KEY!,
+        clientPrivateKey: process.env.CLIENT_PRIVATE_KEY! ,
         clientSWA: process.env.CLIENT_SWA!,
     };
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/index.ts" />
 </Step>
 
 <Step>
@@ -120,13 +123,13 @@ This approach shows how to create a TypeScript application and manually configur
     Create your main file:
 
     ```typescript title="index.ts"
-    import { OktoClient } from '@okto_web3/core-js-sdk';
+    import { Hash, Hex, OktoClient } from '@okto_web3/core-js-sdk';
     import { config } from './config';
 
     const oktoClient = new OktoClient({
         environment: config.environment,
-        clientPrivateKey: config.clientPrivateKey,
-        clientSWA: config.clientSWA,
+        clientPrivateKey: config.clientPrivateKey as Hash,
+        clientSWA: config.clientSWA as Hex,
     });
 
     async function main() {
@@ -136,6 +139,8 @@ This approach shows how to create a TypeScript application and manually configur
 
     main().catch(console.error);
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/index.ts" />
+
 </Step>
 
 <Step>
@@ -160,6 +165,7 @@ This approach shows how to create a TypeScript application and manually configur
         }
     }
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/index.ts" />
 </Step>
 
 <Step>
@@ -188,33 +194,37 @@ Now that we have our basic setup complete, let's implement a token transfer on S
 <Steps>
 
 <Step>
-    ## Get Your Wallet Address
+    ### 1. Get Your Wallet Address
 
-    First, get your Solana wallet address:
+    First, get your Polygon wallet address:
 
-    ```typescript
-    import { getAccounts } from "@okto_web3/core-js-sdk";
-    
-    const accounts = await getAccounts(oktoClient);
-    const solanaAccount = accounts.find(account => account.chain === "solana:devnet");
-    console.log("Your Solana address:", solanaAccount.address);
+    ```tsx
+    import { getAccount } from "@okto_web3/react-sdk";
+
+    const accounts = await getAccount(oktoClient);
+    const polygonAccount = accounts.data.find(account => account.network_name === "POLYGON_TESTNET_AMOY");
+    console.log("Your Polygon Amoy address:", polygonAccount.address);
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/index.ts" />
+
 </Step>
 
 <Step>
-    ## Fund Your Wallet
+    ### 2. Fund Your Wallet
 
-    To perform a token transfer, you'll need some funds in your wallet. Add funds to this address using the [Solana Devnet Faucet](https://faucet.solana.com).
+    To perform a token transfer, you'll need some funds in your wallet. Add funds to this address using the [Polygon Amoy Faucet](https://faucet.polygon.technology/).
+
 </Step>
 
 <Step>
-    ## Check Network Information
+    ### 3. Check Network Information
 
-    Before creating the user operation, check the <ExternalLink href="/docs/typescript-sdk/technical-reference#network-information">Network Information Guide</ExternalLink> for getting the correct CAIP-2 IDs of chains.
+    Before creating the user operation, check the [Network Information Guide](/docs/typescript-sdk/technical-reference#network-information) for getting the correct CAIP-2 IDs of chains.
+
 </Step>
 
 <Step>
-    ## Implement Token Transfer
+    ### 4. Implement Token Transfer
 
     Add this function to your main file:
 
@@ -223,29 +233,24 @@ Now that we have our basic setup complete, let's implement a token transfer on S
 
     async function handleTransfer() {
         try {
-            console.log("Creating transfer...");
-            
-            const userOp = await tokenTransfer(oktoClient, {
-                amount: BigInt("1000000000"), // 1 SOL
-                recipient: "YOUR_RECIPIENT_ADDRESS",
-                token: "", // Empty string for native token
-                caip2Id: "SOLANA_CHAIN_ID" // caip2id of Solana devnet from step 3
-            });
+            const transferParams = {
+                    amount: BigInt("1000000000000000000"), // 1 POL (18 decimals)
+                    recipient: "RECIPIENT_ADDRESS",
+                    token: "", // Empty string for native token
+                    caip2Id: "eip155:80002" // Polygon Amoy Testnet chain ID
+                };
 
-            console.log("Signing operation...");
-            const signedOp = await oktoClient.signUserOp(userOp);
+            // Execute the transfer
+            const jobId = await tokenTransfer(oktoClient, transferParams);
+            console.log(`Transfer jobId! Result: ${jobId}`);
 
-            console.log("Executing transfer...");
-            const txHash = await oktoClient.executeUserOp(signedOp);
-            
-            console.log(`Transfer complete! Hash: ${txHash}`);
-            return txHash;
         } catch (error) {
             console.error("Transfer failed:", error);
             throw error;
         }
     }
     ```
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/index.ts" />
 </Step>
 
 <Step>
@@ -293,6 +298,7 @@ const transferParams = {
 };
 const result = await tokenTransfer(oktoClient, transferParams);
 ```
+<ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/index.ts" />
 
 #### 2. NFT Transfer
 Transfer NFTs between addresses. <ExternalLink href="/docs/typescript-sdk/(Intents)/nftTransfer">Learn more</ExternalLink>
@@ -308,6 +314,7 @@ const nftParams = {
 };
 const result = await nftTransfer(oktoClient, nftParams);
 ```
+<ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/index.ts" />
 
 #### 3. Raw Transaction (EVM)
 Execute custom EVM contract calls. <ExternalLink href="/docs/typescript-sdk/(Intents)/evmRawTransaction">Learn more</ExternalLink>
