@@ -1,6 +1,6 @@
 ---
-title: Token Transfer
-description: Learn how to create token transfer operations using the Okto SDK.
+title: Raw Transaction
+description: Learn how to create raw EVM transactions using the Okto React Native SDK.
 full: false
 ---
 
@@ -8,16 +8,16 @@ import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
+import { Icon as IIcon } from '@iconify/react';
 import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
 
-The `tokenTransfer()` function creates a user operation for transferring tokens. This function initiates the process of transferring a token by encoding the necessary parameters into a User Operation, which can then be signed and executed using the OktoClient.
+The `evmRawTransaction()` function creates a user operation for executing raw EVM transactions. This function allows you to create custom transactions by specifying the raw transaction parameters.
 
 <ChainSupportStatus 
 />
 
 <Callout>
-There are two ways to implement token transfers:
+There are two ways to implement raw transactions:
 
 - **Abstracted Flow**: A simplified approach where the user operation is automatically created, signed, and executed in a single step. Perfect for most applications.
 - **UserOp Flow**: A granular approach where you manually control the creation, signing, and execution of the user operation. Useful for custom implementations or advanced use cases.
@@ -31,71 +31,80 @@ There are two ways to implement token transfers:
 <Tabs items={['Abstracted Flow', 'UserOp Flow']}>
 <Tab value="Abstracted Flow">
 ```typescript
-import { useOkto } from '@okto_web3/react-sdk';
-import { tokenTransfer } from '@okto_web3/react-sdk';
+import { useOkto } from '@okto_web3/react-native-sdk';
+import { evmRawTransaction } from '@okto_web3/react-native-sdk';
+import { TouchableOpacity, Text } from 'react-native';
 
-function TokenTransfer() {
+function RawTransaction() {
     const oktoClient = useOkto();
 
-    async function handleTokenTransfer() {
+    async function handleRawTransaction() {
         try {
-            const transferParams = {
-                amount: BigInt("1000000000000000000"), // 1 token with 18 decimals
-                recipient: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-                token: "0x2170ed0880ac9a755fd29b2688956bd959f933f8", // Token contract address
-                caip2Id: "eip155:1"
+            const rawTxParams = {
+                caip2Id: "eip155:1", // Ethereum Mainnet
+                transaction: {
+                    from: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+                    to: "0x23581767a106ae21c074b2276D25e5C3e136a68b",
+                    data: "0x", // Optional transaction data
+                    value: BigInt("1000000000000000000") // 1 ETH
+                }
             };
-            // Execute the transfer
-            const jobId = await tokenTransfer(oktoClient, transferParams);
-            console.log('Transfer jobId:', jobId);
-        } catch (error:any) {
-            console.error('Error in token transfer:', error);
+            
+            // Execute the transaction
+            const jobId = await evmRawTransaction(oktoClient, rawTxParams);
+            console.log('Transaction jobId:', jobId);
+        } catch (error) {
+            console.error('Error in raw transaction:', error);
         }
     }
 
     return (
-        <button onClick={handleTokenTransfer}>
-            Transfer Token
-        </button>
+        <TouchableOpacity onPress={handleRawTransaction}>
+            <Text>Execute Raw Transaction</Text>
+        </TouchableOpacity>
     );
 }
 ```
 </Tab>
 <Tab value="UserOp Flow">
 ```typescript
-import { useOkto } from '@okto_web3/react-sdk';
-import { tokenTransfer } from '@okto_web3/react-sdk/userop';
+import { useOkto } from '@okto_web3/react-native-sdk';
+import { evmRawTransaction } from '@okto_web3/react-native-sdk/userop';
+import { TouchableOpacity, Text } from 'react-native';
 
-function TokenTransfer() {
+function RawTransaction() {
     const oktoClient = useOkto();
 
-    async function handleTokenTransfer() {
+    async function handleRawTransaction() {
         try {
-            const transferParams = {
-                amount: BigInt("1000000000000000000"), // 1 token with 18 decimals
-                recipient: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-                token: "0x2170ed0880ac9a755fd29b2688956bd959f933f8", // Token contract address
-                caip2Id: "eip155:1"
+            const rawTxParams = {
+                caip2Id: "eip155:1", // Ethereum Mainnet
+                transaction: {
+                    from: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+                    to: "0x23581767a106ae21c074b2276D25e5C3e136a68b",
+                    data: "0x", // Optional transaction data
+                    value: BigInt("1000000000000000000") // 1 ETH
+                }
             };
 
             // Create the user operation
-            const userOp = await tokenTransfer(oktoClient, transferParams);
+            const userOp = await evmRawTransaction(oktoClient, rawTxParams);
             
             // Sign the operation
             const signedOp = await oktoClient.signUserOp(userOp);
             
-            // Execute the transfer
+            // Execute the transaction
             const jobId = await oktoClient.executeUserOp(signedOp);
-            console.log('Transfer jobId:', jobId);
-        } catch (error:any) {
-            console.error('Error in token transfer:', error);
+            console.log('Transaction jobId:', jobId);
+        } catch (error) {
+            console.error('Error in raw transaction:', error);
         }
     }
 
     return (
-        <button onClick={handleTokenTransfer}>
-            Transfer Token
-        </button>
+        <TouchableOpacity onPress={handleRawTransaction}>
+            <Text>Execute Raw Transaction</Text>
+        </TouchableOpacity>
     );
 }
 ```
@@ -113,7 +122,7 @@ function TokenTransfer() {
 </Tab>
 <Tab value="UserOp Flow">
 ```typescript
-// UserOp returned from tokenTransfer
+// UserOp returned from evmRawTransaction
 {
     "sender": "0xa9F6b3A5a718754979dbA78113f3614Dd4524c53",
     "nonce": "0x000000000000000000000000000000003ee337319e964ab9892cea476b36295d",
@@ -134,31 +143,30 @@ function TokenTransfer() {
 </Tabs>
 </Accordion>
 
-
 <Accordion title="Suggested Post Implementation">
 
 ```typescript
-import { useOkto } from '@okto_web3/react-sdk';
-import { getOrdersHistory } from '@okto_web3/react-sdk';
+import { useOkto } from '@okto_web3/react-native-sdk';
+import { getOrdersHistory } from '@okto_web3/react-native-sdk';
 
-async function getTokenOrder(jobId: string) {
+async function getRawTransactionOrder(jobId: string) {
     const oktoClient = useOkto();
     try {
         // Get order history with filter for specific jobId
         const orders = await getOrdersHistory(oktoClient, {
             intentId: jobId,                    // Filter by specific order/transaction
-            intentType: "TOKEN_TRANSFER",       // Filter for token transfer orders
+            intentType: "RAW_TRANSACTION",      // Filter for raw transaction orders
             status: "SUCCESSFUL"                // Filter by status: "SUCCESSFUL" | "FAILED" | "PENDING" | "REJECTED"
         });
         return orders?.[0] || null;
     } catch (error) {
-        console.error('Error fetching token order:', error);
+        console.error('Error fetching transaction order:', error);
         throw error;
     }
 }
 
 // Usage example:
-const order = await getTokenOrder(jobId);
+const order = await getRawTransactionOrder(jobId);
 console.log('Order Status:', order?.status);
 ```
 <Callout title="Important: Transaction Lifecycle">
@@ -171,7 +179,6 @@ To track a transaction to completion:
 </Callout>
 </Accordion>
 
-
 <Accordion title="Corresponding jobId Response">
 ```typescript
 // Order returned from getOrdersHistory
@@ -180,58 +187,66 @@ To track a transaction to completion:
     "transaction_hash": ["0x8dd7712f5f95ad24ddc0c2b90ea7f2f879680ec350fe4f373068b0e3370b9187"],
     "status": "SUCCESSFUL",
     "intent_id": "3ee33731-9e96-4ab9-892c-ea476b36295d",
-    "intent_type": "TOKEN_TRANSFER",
+    "intent_type": "RAW_TRANSACTION",
     "network_name": "Ethereum",
     "caip_id": "eip155:1",
     "details": {
-        "amount": "1000000000000000000",
-        "recipient": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-        "token": "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
-        "token_name": "Ethereum",
-        "token_symbol": "ETH",
-        "token_decimals": 18
+        "from": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+        "to": "0x23581767a106ae21c074b2276D25e5C3e136a68b",
+        "data": "0x8dd7712f...", // truncated for brevity
+        "value": "1000000000000000000"
     },
     "reason": "",
     "block_timestamp": 1677721600
 }
 ```
 </Accordion>
-
 </Accordions>
 
 <Callout title="Note" type="info">
 For error handling:
-- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/nextjs-sdk/sdk-error-warnings) documentation
-- For help, navigate to the [troubleshooting guide](/docs/nextjs-sdk/troubleshooting) to contact support
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-native-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-native-sdk/troubleshooting) to contact support
 </Callout>
 
 ### Method Overview
 
 | Method | Description |
 |---------|-------------|
-| <sub><i>async</i></sub> [`tokenTransfer`](#token-transfer) | Create a user operation for token transfer |
+| <sub><i>async</i></sub> [`evmRawTransaction`](#evm-raw-transaction) | Create a user operation for raw EVM transaction |
 
 <div className="method-box">
 
-## Token Transfer
+## EVM Raw Transaction
 
-<sub><i>async</i></sub> `tokenTransfer(oktoClient: OktoClient, data: TokenTransferIntentParams)` creates a user operation for transferring tokens.
+<Callout title="Note">
+Before using this function, ensure your target chain is an EVM-compatible chain by checking the [Supported Chains and Tokens](/docs/system-capabilities/supported-chains) documentation.
+</Callout>
+
+<sub><i>async</i></sub> `evmRawTransaction(oktoClient: OktoClient, data: RawTransactionIntentParams)` creates a user operation for raw EVM transactions.
 
 ### Parameters
 
 | Parameter | Type | Description | Required |
 |-----------|------|-------------|----------|
 | `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
-| `data` | [`TokenTransferIntentParams`](/docs/nextjs-sdk/technical-reference#models) | Parameters for the token transfer | Yes |
+| `data` | `RawTransactionIntentParams` | Parameters for the raw transaction | Yes |
 
-Where `TokenTransferIntentParams` contains:
+Where `RawTransactionIntentParams` contains:
 
 | Field | Type | Description | Required |
 |-------|------|-------------|----------|
-| `amount` | `number \| bigint` | Amount to send, in the smallest unit (e.g., gwei for ETH) | Yes |
-| `recipient` | `Address` | Wallet address of the recipient | Yes |
-| `token` | `Address \| ''` | The token address for the transaction | Yes |
-| `caip2Id` | `string` | The network ID (e.g., Ethereum - eip155:1, Polygon - eip155:137) | Yes |   
+| `caip2Id` | `string` | The network identifier (e.g., eip155:1 for Ethereum) | Yes |
+| `transaction` | `EVMRawTransaction` | The raw transaction parameters | Yes |
+
+And `EVMRawTransaction` contains:
+
+| Field | Type | Description | Required |
+|-------|------|-------------|----------|
+| `from` | `Address` | The sender's address | Yes |
+| `to` | `Address` | The recipient's address | Yes |
+| `data` | `Hash` | The transaction data | No |
+| `value` | `Hash` | The amount of native currency to send | Yes |
 
 ### Response
 
@@ -241,7 +256,7 @@ Where `TokenTransferIntentParams` contains:
 
 | Field Name | Type | Description |
 |------------|------|-------------|
-| `result` | `Promise<string>` | Returns the jobId for the token transfer |
+| `result` | `Promise<string>` | Returns the jobId for the raw transaction |
 
 <Accordions>
     <Accordion title="Response Type">
@@ -259,7 +274,7 @@ Where `TokenTransferIntentParams` contains:
 
 | Field Name | Type | Description |
 |------------|------|-------------|
-| `result` | [`Promise<UserOp>`](/docs/nextjs-sdk/technical-reference#models) | Returns the user operation for the token transfer |
+| `result` | [`Promise<UserOp>`](/docs/react-native-sdk/technical-reference#models) | Returns the user operation for the raw transaction |
 
 <Accordions>
     <Accordion title="Response Type">
@@ -283,7 +298,6 @@ Where `TokenTransferIntentParams` contains:
     </Accordion>
 </Accordions>
 </Callout>
-
 </Tab>
 </Tabs>
 

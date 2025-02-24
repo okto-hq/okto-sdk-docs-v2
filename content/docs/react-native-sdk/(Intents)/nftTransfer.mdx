@@ -1,6 +1,6 @@
 ---
 title: NFT Transfer
-description: Learn how to create NFT transfer operations using the Okto SDK.
+description: Learn how to create NFT transfer operations using the Okto React Native SDK.
 full: false
 ---
 
@@ -9,68 +9,71 @@ import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import { Icon as IIcon } from '@iconify/react';
+import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
 
 The `nftTransfer()` function creates a user operation for transferring NFTs. This function initiates the process of transferring an NFT by encoding the necessary parameters into a User Operation, which can then be signed and executed using the OktoClient.
 
-<Callout 
-  title="Note" 
-  style={{ backgroundColor: '#f8d7da', color: '#842029', margin: 0, border: '1px solid #f5c2c7' }}
->
-  This function is currently **not supported** for the following chains:
-  - Base Sepolia    
-  - HyperEVM
-</Callout>
+<ChainSupportStatus 
+  unsupportedChains={[
+    "Base Sepolia",
+    "HyperEVM Testnet"
+  ]}
+/>
 
-### Method Overview
+<Callout>
+There are two ways to implement NFT transfers:
 
-| Method | Description |
-|---------|-------------|
-| <sub><i>async</i></sub> [`nftTransfer`](#nft-transfer) | Create a user operation for NFT transfer |
-
-<div className="method-box">
-
-## NFT Transfer
-
-<sub><i>async</i></sub> `nftTransfer(oktoClient: OktoClient, data: NFTTransferIntentParams)` creates a user operation for transferring NFTs.
-
-### Parameters
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
-| `data` | [`NFTTransferIntentParams`](/docs/react-native-sdk/technical-reference#models) | Parameters for the NFT transfer |
-
-Where `NFTTransferIntentParams` contains:
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `caip2Id` | `string` | The network identifier, formatted as a CAIP network ID |
-| `collectionAddress` | `Address` | The address of the NFT collection |
-| `nftId` | `string` | The unique identifier of the NFT |
-| `recipientWalletAddress` | `Address` | The wallet address of the recipient |
-| `amount` | `number \| bigint` | The amount of NFTs to transfer, typically "1" |
-| `nftType` | `'ERC721' \| 'ERC1155'` | The type of NFT standard |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `result` | [`Promise<UserOp>`](/docs/react-native-sdk/technical-reference#models) | Returns the user operation for the NFT transfer |
-
+- **Abstracted Flow**: A simplified approach where the user operation is automatically created, signed, and executed in a single step. Perfect for most applications.
+- **UserOp Flow**: A granular approach where you manually control the creation, signing, and execution of the user operation. Useful for custom implementations or advanced use cases.
 </Callout>
 
 ### Example
 
-<Accordions>
+<Accordions defaultValue="Usage">
 <Accordion title="Usage">
-<Tabs items={['TypeScript']}>
-<Tab value="TypeScript">
+
+<Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+<Tab value="Abstracted Flow">
 ```typescript
 import { useOkto } from '@okto_web3/react-native-sdk';
 import { nftTransfer } from '@okto_web3/react-native-sdk';
-import { View, Text, Pressable } from 'react-native';
+import { TouchableOpacity, Text, View } from 'react-native';
+
+function NFTTransfer() {
+    const oktoClient = useOkto();
+
+    async function handleNFTTransfer() {
+        try {
+            const transferParams = {
+                caip2Id: "eip155:1", // Ethereum Mainnet
+                collectionAddress: "0x23581767a106ae21c074b2276D25e5C3e136a68b",
+                nftId: "123", // NFT token ID
+                recipientWalletAddress: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+                amount: 1,
+                nftType: 'ERC721'
+            };
+            
+            // Execute the transfer
+            const jobId = await nftTransfer(oktoClient, transferParams);
+            console.log('Transfer jobId:', jobId);
+        } catch (error) {
+            console.error('Error in NFT transfer:', error);
+        }
+    }
+
+    return (
+        <TouchableOpacity onPress={handleNFTTransfer}>
+            <Text>Transfer NFT</Text>
+        </TouchableOpacity>
+    );
+}
+```
+</Tab>
+<Tab value="UserOp Flow">
+```typescript
+import { useOkto } from '@okto_web3/react-native-sdk';
+import { nftTransfer } from '@okto_web3/react-native-sdk/userop';
+import { TouchableOpacity, Text, View } from 'react-native';
 
 function NFTTransfer() {
     const oktoClient = useOkto();
@@ -93,29 +96,205 @@ function NFTTransfer() {
             const signedOp = await oktoClient.signUserOp(userOp);
             
             // Execute the transfer
-            const txHash = await oktoClient.executeUserOp(signedOp);
-            console.log('NFT Transfer transaction hash:', txHash);
+            const jobId = await oktoClient.executeUserOp(signedOp);
+            console.log('Transfer jobId:', jobId);
         } catch (error) {
             console.error('Error in NFT transfer:', error);
         }
     }
 
     return (
-        <View>
-            <Pressable onPress={handleNFTTransfer}>
-                <Text>Transfer NFT</Text>
-            </Pressable>
-        </View>
+        <TouchableOpacity onPress={handleNFTTransfer}>
+            <Text>Transfer NFT</Text>
+        </TouchableOpacity>
     );
 }
 ```
 </Tab>
 </Tabs>
 </Accordion>
+
+<Accordion title="Sample Response">
+<Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+<Tab value="Abstracted Flow">
+```typescript
+// JobId returned
+"3ee33731-9e96-4ab9-892c-ea476b36295d"
+```
+</Tab>
+<Tab value="UserOp Flow">
+```typescript
+// UserOp returned from nftTransfer
+{
+    "sender": "0xa9F6b3A5a718754979dbA78113f3614Dd4524c53",
+    "nonce": "0x000000000000000000000000000000003ee337319e964ab9892cea476b36295d",
+    "paymaster": "0x5408fAa7F005c46B85d82060c532b820F534437c",
+    "callGasLimit": "0x493e0",
+    "verificationGasLimit": "0x30d40",
+    "preVerificationGas": "0xc350",
+    "maxFeePerGas": "0x77359400",
+    "maxPriorityFeePerGas": "0x77359400",
+    "paymasterPostOpGasLimit": "0x186a0",
+    "paymasterVerificationGasLimit": "0x186a0",
+    "callData": "0x8dd7712f...", // truncated for brevity
+    "paymasterData": "0x000000...", // truncated for brevity
+    "signature": "0x6bf06e6d..." // truncated for brevity
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Suggested Post Implementation">
+
+```typescript
+import { useOkto } from '@okto_web3/react-native-sdk';
+import { getOrdersHistory } from '@okto_web3/react-native-sdk';
+
+async function getNFTOrder(jobId: string) {
+    const oktoClient = useOkto();
+    try {
+        // Get order history with filter for specific jobId
+        const orders = await getOrdersHistory(oktoClient, {
+            intentId: jobId,                    // Filter by specific order/transaction
+            intentType: "NFT_TRANSFER",         // Filter for NFT transfer orders
+            status: "SUCCESSFUL"                // Filter by status: "SUCCESSFUL" | "FAILED" | "PENDING" | "REJECTED"
+        });
+        return orders?.[0] || null;
+    } catch (error) {
+        console.error('Error fetching NFT order:', error);
+        throw error;
+    }
+}
+
+// Usage example:
+const order = await getNFTOrder(jobId);
+console.log('Order Status:', order?.status);
+```
+<Callout title="Important: Transaction Lifecycle">
+The `getOrderHistory` function fetches the current status of a transaction on the Okto chain. However, the transaction status will continue to update on the Okto chain as it progresses through various stages in the [Distributed Transaction Network (DTN)](/docs/okto-layer/dtn).
+
+To track a transaction to completion:
+- Keep fetching the order history for your specific `jobId` until the status shows "SUCCESSFUL"
+- Once successful, the transaction hash will be available in the response
+- Use this transaction hash to verify the transaction on the destination chain's explorer
+</Callout>
+</Accordion>
+
+<Accordion title="Corresponding jobId Response">
+```typescript
+// Order returned from getOrdersHistory
+{
+    "downstream_transaction_hash": ["0x742d35Cc6634C0532925a3b844Bc454e4438f44e"],
+    "transaction_hash": ["0x8dd7712f5f95ad24ddc0c2b90ea7f2f879680ec350fe4f373068b0e3370b9187"],
+    "status": "SUCCESSFUL",
+    "intent_id": "3ee33731-9e96-4ab9-892c-ea476b36295d",
+    "intent_type": "NFT_TRANSFER",
+    "network_name": "Ethereum",
+    "caip_id": "eip155:1",
+    "details": {
+        "collection_address": "0x23581767a106ae21c074b2276D25e5C3e136a68b",
+        "nft_id": "123",
+        "recipient": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+        "amount": "1",
+        "nft_type": "ERC721",
+        "collection_name": "Example NFT Collection",
+        "token_uri": "https://api.example.com/nft/123"
+    },
+    "reason": "",
+    "block_timestamp": 1677721600
+}
+```
+</Accordion>
 </Accordions>
 
-</div>
-
-<Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](./sdk-error-warnings) documentation for more details.
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-native-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-native-sdk/troubleshooting) to contact support
 </Callout>
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`nftTransfer`](#nft-transfer) | Create a user operation for NFT transfer |
+
+<div className="method-box">
+
+## NFT Transfer
+
+<sub><i>async</i></sub> `nftTransfer(oktoClient: OktoClient, data: NFTTransferIntentParams)` creates a user operation for transferring NFTs.
+
+### Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|----------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+| `data` | [`NFTTransferIntentParams`](/docs/react-native-sdk/technical-reference#models) | Parameters for the NFT transfer | Yes |
+
+Where `NFTTransferIntentParams` contains:
+
+| Field | Type | Description | Required |
+|-------|------|-------------|----------|
+| `caip2Id` | `string` | The network identifier, formatted as a CAIP network ID | Yes |
+| `collectionAddress` | `Address` | The address of the NFT collection | Yes |
+| `nftId` | `string` | The unique identifier of the NFT | Yes |
+| `recipientWalletAddress` | `Address` | The wallet address of the recipient | Yes |
+| `amount` | `number \| bigint` | The amount of NFTs to transfer, typically "1" | Yes |
+| `nftType` | `'ERC721' \| 'ERC1155'` | The type of NFT standard | Yes |
+
+### Response
+
+<Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+<Tab value="Abstracted Flow">
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | `Promise<string>` | Returns the jobId for the NFT transfer |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface {
+            jobId: string;  
+        }
+        ```
+    </Accordion>
+</Accordions>
+</Callout>
+</Tab>
+<Tab value="UserOp Flow">
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | [`Promise<UserOp>`](/docs/react-native-sdk/technical-reference#models) | Returns the user operation for the NFT transfer |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface UserOp {
+            sender: string;
+            nonce: string;
+            paymaster: string;
+            callGasLimit: string;
+            verificationGasLimit: string;
+            preVerificationGas: string;
+            maxFeePerGas: string;
+            maxPriorityFeePerGas: string;
+            paymasterPostOpGasLimit: string;
+            paymasterVerificationGasLimit: string;
+            callData: string;
+            paymasterData: string;
+            signature: string;
+        }
+        ```
+    </Accordion>
+</Accordions>
+</Callout>
+</Tab>
+</Tabs>
+
+</div>
