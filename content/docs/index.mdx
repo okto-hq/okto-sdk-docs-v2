@@ -21,46 +21,52 @@ import { MousePointer2 } from 'lucide-react';
 
 ## What is Okto SDK?
 
-The **Okto SDK** is your game-changer for Web3 development. This **plug-and-play toolkit** eliminates blockchain complexity, providing a unified solution for onboarding, login, gasless transactions, and complex Web3 intents. Build intuitive, user-friendly experiences and simplify Web3 from start to finish – we’ve got it ALL.
+The **Okto SDK** is your game-changer for Web3 development. This **plug-and-play toolkit** eliminates blockchain complexity, providing a unified solution for onboarding, login, gasless transactions, and complex Web3 intents. Build intuitive, user-friendly experiences and simplify Web3 from start to finish – we've got it ALL.
 
 ## Key Features
 
-<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6 min-h-[200px] [&>*]:h-[140px] [&>*>div]:h-full [&>*>div]:flex [&>*>div]:flex-col">
   <FeatureCard
     icon={<LuKey size={20} />}
-    title="Social Logins"
-    description="Seamless authentication with popular social providers"
+    title="Abstracted Smart Wallets"
+    description="Unified multi-chain wallets with Web2-style authentication powered by MPC security"
     iconColor="text-blue-500"
+    link="/docs/okto-layer/dwn"
   />
   <FeatureCard
     icon={<LuArrowRightLeft size={20} />}
-    title="Automated Transactions"
-    description="Simplified transaction handling and gas management"
+    title="Cross-Chain Liquidity"
+    description="Optimized asset bridging and routing across multiple chains and protocols"
     iconColor="text-green-500"
+    link="/docs/okto-layer/ull"
+  />
+  <FeatureCard
+    icon={<LuMousePointerClick size={20} />}
+    title="Intent-Based Actions"
+    description="Simple, user-focused transaction flows across chains with automated execution"
+    iconColor="text-orange-500"
+    link="/docs/okto-layer/dtn"
+  />
+  <FeatureCard
+    icon={<LuMousePointerClick size={20} />}
+    title="Policy-Driven Controls"
+    description="Granular control over multi-chain transactions and permissions"
+    iconColor="text-orange-500"
+    link="/docs/system-capabilities/policy-engine"
+  />
+  <FeatureCard
+    icon={<LuUserPlus size={20} />}
+    title="Multi-Platform SDKs"
+    description="Multi-platform SDKs for seamless Web3 integration"
+    iconColor="text-teal-500"
+    link="/docs/okto-sdk/supported-sdk-platforms"
   />
   <FeatureCard
     icon={<LuNetwork size={20} />}
     title="Multi-chain Support"
-    description="Seamless interaction across different blockchains"
+    description="Seamless interaction across different blockchains including EVM and non-EVM chains"
     iconColor="text-purple-500"
-  />
-  <FeatureCard
-    icon={<LuMousePointerClick size={20} />}
-    title="One-click Transactions"
-    description="Simplified user experience for multi chain transactions"
-    iconColor="text-orange-500"
-  />
-  <FeatureCard
-    icon={<LuWallet size={20} />}
-    title="Asset Management"
-    description="Cross-chain asset handling and portfolio management"
-    iconColor="text-red-500"
-  />
-  <FeatureCard
-    icon={<LuUserPlus size={20} />}
-    title="Easy Onboarding"
-    description="Simplified user onboarding for Web3 applications"
-    iconColor="text-teal-500"
+    link="/docs/supported-chains"
   />
 </div>
 
@@ -69,21 +75,24 @@ The **Okto SDK** is your game-changer for Web3 development. This **plug-and-play
 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
   <FeatureCard
     icon={<LuShoppingCart size={20} />}
-    title="E-commerce"
-    description="Integrate crypto payments and NFT loyalty rewards without backend rework"
+    title="DeFi Applications"
+    description="Power next-gen DeFi with cross-chain composability and simplified user access"
     iconColor="text-blue-500"
+    link="/docs/okto-sdk/use-cases/defi-apps"
   />
   <FeatureCard
     icon={<LuGamepad2 size={20} />}
     title="Gaming"
-    description="Enable seamless cross-chain asset trading in gaming environments"
+    description="Enable true cross-chain gaming economies with seamless asset trading and ownership"
     iconColor="text-purple-500"
+    link="/docs/okto-sdk/use-cases/on-chain-gaming"
   />
   <FeatureCard
     icon={<LuBoxes size={20} />}
-    title="Web3 Projects"
-    description="Scale across multiple chains with abstracted gas management"
+    title="Consumer Applications"
+    description="Build Web3-powered social and consumer apps with familiar Web2 experiences"
     iconColor="text-green-500"
+    link="/docs/okto-sdk/use-cases/consumer-apps"
   />
 </div>
 
