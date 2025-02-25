@@ -167,17 +167,17 @@ In V2, authentication remains backward-compatible with V1.
 <Tab value="Updated Implementation">
 ```tsx
 // Using Google OAuth
-async function handleGoogleLogin(credentialResponse: any) {
+const handleAuthenticate = async (idToken: string) => {
     try {
-        const user = await oktoClient.loginUsingOAuth({
-            idToken: credentialResponse.credential,
-            provider: "google",
+        const response = await oktoClient.loginUsingOAuth({
+            idToken: idToken,
+            provider: 'google',
         });
-        console.log("Login successful:", user);
+        console.log("Authenticated with Okto", response);
     } catch (error) {
-        console.error("Login failed:", error);
+        console.error("Authentication failed:", error);
     }
-}
+};
 ```
 </Tab>
 </div>
