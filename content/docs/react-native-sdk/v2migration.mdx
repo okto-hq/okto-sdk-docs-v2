@@ -24,15 +24,20 @@ This guide provides a detailed walkthrough for migrating your React Native appli
 | Wallet Management | Automated wallet creation across all enabled chains |
 | Package Structure | Migration to scoped packages under @okto_web3 namespace |
 
-## Migration Steps
-
-Previously, Okto integration in React Native required one of the following methods:
-- Manual Configuration using the React Native Community CLI.
-- Streamlined Okto React Native Setup for simplified integration.
-With Okto SDK V2, an optimized Expo setup is now available, enhancing the onboarding process.
 <Callout title="Note">
 This guide assumes that you have already set up a fully functional react dapp using Okto SDK V1.
 </Callout>
+
+## Migration Steps
+
+Previously, Okto integration in React Native required one of the following methods:
+- Manual Configuration using the React Native Community CLI. i.e. `npx @react-native-community/cli@latest init OktoApp`
+- Streamlined Okto React Native Setup for simplified integration. i.e. `npx create-okto-app@latest`
+
+Now as per the updated docs for React Native we have:
+```bash
+npx create-expo-app@latest my-okto-app
+```
 
 ### 1. Installing Dependencies
 
@@ -42,17 +47,17 @@ Previously, it was `okto-sdk-react`; it has now been updated to:
 <Tabs items={['npm','pnpm', 'yarn']} defaultValue="npm">
 <Tab value="npm">
 ```bash
-npm i @okto_web3/react-native-sdk@latest expo-auth-session expo-web-browser
+npm i @okto_web3/react-native-sdk@latest expo-auth-session expo-web-browser react-native-mmkv
 ```
 </Tab>
 <Tab value="pnpm">
 ```bash
-pnpm add @okto_web3/react-native-sdk@latest expo-auth-session expo-web-browser 
+pnpm add @okto_web3/react-native-sdk@latest expo-auth-session expo-web-browser react-native-mmkv
 ```
 </Tab>
 <Tab value="yarn">
 ```bash
-yarn add @okto_web3/react-native-sdk@latest expo-auth-session expo-web-browser
+yarn add @okto_web3/react-native-sdk@latest expo-auth-session expo-web-browser react-native-mmkv
 ```
 </Tab>
 </Tabs>
@@ -67,9 +72,6 @@ In Okto V1, only one environment variable was needed: `OKTO_CLIENT_API_KEY`. How
 ```env
 CLIENT_PRIVATE_KEY="YOUR_CLIENT_PRIVATE_KEY"
 CLIENT_SWA="YOUR_CLIENT_SWA"
-
-# Optional - Required only for Google Sign-In
-GOOGLE_CLIENT_ID="YOUR_GOOGLE_CLIENT_ID"
 ```
 </Tab>
 </div>
@@ -102,15 +104,15 @@ In V1, the provider required `OKTO_CLIENT_API_KEY` and `buildType` as parameters
 <div>
 <Tab value="Updated Implementation" >
 ```tsx 
-import { OktoProvider } from '@okto_web3/react-native-sdk';
+import { Hash, Hex, OktoProvider } from '@okto_web3/react-native-sdk';
 import { ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
  
 const config = {
     environment: "sandbox",
-    clientPrivateKey: "YOUR_CLIENT_PRIVATE_KEY",  // Replace with your actual private key
-    clientSWA: "YOUR_CLIENT_SWA",             // Replace with your actual SWA
+    clientPrivateKey: "YOUR_CLIENT_PRIVATE_KEY" as Hash,  // Replace with your actual private key
+    clientSWA: "YOUR_CLIENT_SWA" as Hex,             // Replace with your actual SWA
 };
  
 export default function RootLayout() {
@@ -132,10 +134,6 @@ export default function RootLayout() {
 <div className="no-copy-code">
 <Tab value="Old Implementation"> 
 ```tsx
-/**
-* @format
-*/
-
 import { AppRegistry } from 'react-native';
 import App from './src/App';
 import { name as appName } from './app.json';
@@ -159,7 +157,7 @@ AppRegistry.registerComponent(appName, () => Root);
 
 ### 5. Authentication Implementation
 
-In V1, Okto supports multiple authentication methods, including [`Google-Auth (GAuth)`](https://docs.okto.tech/docs/react-sdk/authenticate-users/google-oauth/auth-user-via-code#authenticate-a-user), [`email-OTP`](https://docs.okto.tech/docs/react-sdk/authenticate-users/email-otp/auth-user-via-email), [`phone-OTP`](https://docs.okto.tech/docs/react-sdk/authenticate-users/phone-otp/auth-user-via-phone), and [`JWT-custom-auth`](https://docs.okto.tech/docs/react-sdk/authenticate-users/jwt-closed-loop/learn). Upon successful authentication, Okto generates an AuthToken, which is used for delegated access.
+In V1, Okto supports multiple authentication methods, including [`Google-Auth (GAuth)`](https://docs.okto.tech/docs/react-native-sdk/authenticate-users/google-oauth/auth-user-via-code#authenticate-a-user), [`email-OTP`](https://docs.okto.tech/docs/react-native-sdk/authenticate-users/email-otp/auth-user-via-email), and [`phone-OTP`](https://docs.okto.tech/docs/react-native-sdk/authenticate-users/phone-otp/auth-user-via-phone). Upon successful authentication, Okto generates an AuthToken, which is used for delegated access.
 
 In V2, authentication remains backward-compatible with V1.
 - **Using Google Authentication (Google OAuth)**; V2 continues to support direct authentication with Google OAuth, maintaining seamless integration with Google's trusted authentication infrastructure within the Okto React SDK.
@@ -252,7 +250,7 @@ authenticate(idToken, (result, error) => {
 
 #### **Wallet Creation in V2**
 
-In V1, wallets had to be manually created using [`createWallet()`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/setup-embedded-wallets/create-embedded-wallets#create-a-new-wallet-for-current-user). In V2, after successful authentication:
+In V1, wallets had to be manually created using [`createWallet()`](https://docs.okto.tech/docs/react-native-sdk/okto-embedded-wallet/setup-embedded-wallets/create-embedded-wallets#create-a-new-wallet-for-current-user). In V2, after successful authentication:
 - A session is created for the user and client, with a default validity of 7 days. However, this duration can be customized as needed
 - Wallets are automatically retrieved for the user or created if none exist
 - Users automatically have wallets in all enabled chains of the client
@@ -273,14 +271,14 @@ In V1, the AuthToken was a combination of the user login method and the client A
 
 | V1 Function | V2 Function | Changes |
 |------------|-------------|----------|
-| [`getWallets()`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/get-embedded-wallet-details) | [`getAccount()`](/docs/react-sdk/getAccount) | - Now returns enhanced wallet details<br/>- Includes network symbol and comprehensive chain data |
-| [`getSupportedNetworks()`](https://docs.okto.tech/docs/react-sdk/chains-tokens/supported-networks#get-all-supported-networks) | [`getChains(oktoClient)`](/docs/react-sdk/getChains) | - Renamed for clarity<br/>- Retrieves the list of all blockchain networks supported by Okto |
-| [`getSupportedTokens()`](https://docs.okto.tech/docs/react-sdk/chains-tokens/supported-networks#get-all-supported-tokens) | [`getTokens(oktoClient)`](/docs/react-sdk/getTokens) | - Returns supported token list |
-| [`getPortfolio()`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/get-user-balance-portfolio) | [`getPortfolio(oktoClient)`](/docs/react-sdk/getPortfolio) | - Now retrieves the user's aggregated portfolio data |
-| - | [`getPortfolioActivity(oktoClient)`](/docs/react-sdk/getPortfolioActivity) | - Get user's portfolio activity |
-| - | [`getPortfolioNFT(oktoClient)`](/docs/react-sdk/getPortfolioNFT) | - Get user's NFT portfolio |
-| - | [`getNftCollections(oktoClient)`](https://docsv2.okto.tech/docs/react-sdk/getNftCollections) | - Retrieves NFT collection metadata |
-| [`orderHistory(query)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-tokens#fetch-order-history) <br/> [`getNftOrderDetails(query)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-nfts#get-nft-order-details) <br/> [`getRawTransactionStatus(query)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/raw-transactions#get-raw-transactions) | [`getOrdersHistory(oktoClient, filters?)`](/docs/react-sdk/getOrdersHistory) | - All order history functions are now combined into one<br/>- Retrieves order history for token transfers, NFT transfers, and raw transactions using filter parameters |
+| [`getWallets()`](https://docs.okto.tech/docs/react-native-sdk/okto-embedded-wallet/use-user-embedded-wallet/get-embedded-wallet-details) | [`getAccount()`](/docs/react-native-sdk/getAccount) | - Now returns enhanced wallet details<br/>- Includes network symbol and comprehensive chain data |
+| [`getSupportedNetworks()`](https://docs.okto.tech/docs/react-native-sdk/chains-tokens/supported-networks#get-all-supported-networks) | [`getChains(oktoClient)`](/docs/react-native-sdk/getChains) | - Renamed for clarity<br/>- Retrieves the list of all blockchain networks supported by Okto |
+| [`getSupportedTokens()`](https://docs.okto.tech/docs/react-native-sdk/chains-tokens/supported-networks#get-all-supported-tokens) | [`getTokens(oktoClient)`](/docs/react-native-sdk/getTokens) | - Returns supported token list |
+| [`getPortfolio()`](https://docs.okto.tech/docs/react-native-sdk/okto-embedded-wallet/use-user-embedded-wallet/get-user-balance-portfolio) | [`getPortfolio(oktoClient)`](/docs/react-native-sdk/getPortfolio) | - Now retrieves the user's aggregated portfolio data |
+| - | [`getPortfolioActivity(oktoClient)`](/docs/react-native-sdk/getPortfolioActivity) | - Get user's portfolio activity |
+| - | [`getPortfolioNFT(oktoClient)`](/docs/react-native-sdk/getPortfolioNFT) | - Get user's NFT portfolio |
+| - | [`getNftCollections(oktoClient)`](https://docsv2.okto.tech/docs/react-native-sdk/getNftCollections) | - Retrieves NFT collection metadata |
+| [`orderHistory(query)`](https://docs.okto.tech/docs/react-native-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-tokens#fetch-order-history) <br/> [`getNftOrderDetails(query)`](https://docs.okto.tech/docs/react-native-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-nfts#get-nft-order-details) <br/> [`getRawTransactionStatus(query)`](https://docs.okto.tech/docs/react-native-sdk/okto-embedded-wallet/use-user-embedded-wallet/raw-transactions#get-raw-transactions) | [`getOrdersHistory(oktoClient, filters?)`](/docs/react-native-sdk/getOrderHistory) | - All order history functions are now combined into one<br/>- Retrieves order history for token transfers, NFT transfers, and raw transactions using filter parameters |
 
 ### Intent Functions
 
@@ -288,16 +286,16 @@ All intents are available in both abstracted and detailed flows. In the detailed
 
 | V1 Function | V2 Function | Changes |
 |------------|-------------|----------|
-| [`transferTokens(data)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-tokens#transfer-tokens) | [`tokenTransfer(oktoClient, data)`](/docs/react-sdk/tokenTransfer) | - Switched to UserOp-based transfer model<br/>- Added transaction simulation<br/>- Improved gas optimization options |
-| [`transferNft(data)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-nfts#transfer-nfts) | [`nftTransfer(oktoClient, data)`](/docs/react-sdk/nftTransfer) | - Converted to UserOp-based transfer model<br/>- Consolidated multiple NFT functions into one<br/>- Added chain compatibility checks<br/> |
-| [`executeRawTransaction()`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/raw-transactions#execute-raw-transaction) | [`evmRawTransaction(oktoClient, data)`](/docs/react-sdk/evmRawTransaction) | - Now creates a UserOp for executing raw EVM transactions.|
+| [`transferTokens(data)`](https://docs.okto.tech/docs/react-native-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-tokens#transfer-tokens) | [`tokenTransfer(oktoClient, data)`](/docs/react-native-sdk/tokenTransfer) | - Switched to UserOp-based transfer model<br/>- Added transaction simulation<br/>- Improved gas optimization options |
+| [`transferNft(data)`](https://docs.okto.tech/docs/react-native-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-nfts#transfer-nfts) | [`nftTransfer(oktoClient, data)`](/docs/react-native-sdk/nftTransfer) | - Converted to UserOp-based transfer model<br/>- Consolidated multiple NFT functions into one<br/>- Added chain compatibility checks<br/> |
+| [`executeRawTransaction()`](https://docs.okto.tech/docs/react-native-sdk/okto-embedded-wallet/use-user-embedded-wallet/raw-transactions#execute-raw-transaction) | [`evmRawTransaction(oktoClient, data)`](/docs/react-native-sdk/evmRawTransaction) | - Now creates a UserOp for executing raw EVM transactions.|
 
 ### V2 Functions
 
 | Function | Description |
 |----------|-------------|
-| [`signUserOp(userop)`](/docs/react-sdk/signUserOp) | - Signs user operations<br/>- Validates operation parameters<br/>- Includes policy checks |
-| [`executeUserOp(userop)`](/docs/react-sdk/executeUserOp) | - Executes signed operations<br/>- Handles transaction bundling<br/>|
+| [`signUserOp(userop)`](/docs/react-native-sdk/signUserOp) | - Signs user operations<br/>- Validates operation parameters<br/>- Includes policy checks |
+| [`executeUserOp(userop)`](/docs/react-native-sdk/executeUserOp) | - Executes signed operations<br/>- Handles transaction bundling<br/>|
 
 <Callout title="Migration Support">
 For additional help:
