@@ -8,6 +8,8 @@ import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { Callout } from 'fumadocs-ui/components/callout';
 import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
+import ExternalLink from 'app/components/mdx/ExternalLink';
+
 
 This guide provides a detailed walkthrough for migrating a NextJS application from [Okto SDK V1](https://docs.okto.tech/docs/react-sdk) to [Okto SDK V2](https://docsv2.okto.tech/docs/nextjs-sdk).  
 
@@ -310,14 +312,14 @@ In V1, the AuthToken was a combination of the user login method and the client A
 
 | V1 Function | V2 Function | Changes |
 |------------|-------------|----------|
-| [`getWallets()`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/get-embedded-wallet-details) | [getAccount()](/docs/nextjs-sdk/getAccount)| - Now returns enhanced wallet details<br/>- Includes network symbol and comprehensive chain data |
-| [`getSupportedNetworks()`](https://docs.okto.tech/docs/react-sdk/chains-tokens/supported-networks#get-all-supported-networks) | [`getChains(oktoClient)`](/docs/nextjs-sdk/getChains) | - Renamed for clarity<br/>- Retrieves the list of all blockchain networks supported by Okto |
-| [`getSupportedTokens()`](https://docs.okto.tech/docs/react-sdk/chains-tokens/supported-networks#get-all-supported-tokens) | [`getTokens(oktoClient)`](/docs/nextjs-sdk/getTokens) | - Returns supported token list |
-| [`getPortfolio()`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/get-user-balance-portfolio) | [`getPortfolio(oktoClient)`](/docs/nextjs-sdk/getPortfolio) | - Now retrieves the user's aggregated portfolio data |
-| - | [`getPortfolioActivity(oktoClient)`](/docs/nextjs-sdk/getPortfolioActivity) | - Get user's portfolio activity |
-| - | [`getPortfolioNFT(oktoClient)`](/docs/nextjs-sdk/getPortfolioNFT) | - Get user's NFT portfolio |
-| - | [`getNftCollections(oktoClient)`](https://docsv2.okto.tech/docs/nextjs-sdk/getNftCollections) | - Retrieves NFT collection metadata |
-| [`orderHistory(query)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-tokens#fetch-order-history) <br/> [`getNftOrderDetails(query)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-nfts#get-nft-order-details) <br/> [`getRawTransactionStatus(query)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/raw-transactions#get-raw-transactions) | [`getOrdersHistory(oktoClient, filters?)`](/docs/nextjs-sdk/getOrdersHistory) | - All order history functions are now combined into one<br/>- Retrieves order history for token transfers, NFT transfers, and raw transactions using filter parameters |
+| [`getWallets()`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/get-embedded-wallet-details) | <ExternalLink href="/docs/nextjs-sdk/getAccount#get-account">`getAccount()`</ExternalLink> | - Now returns enhanced wallet details<br/>- Includes network symbol and comprehensive chain data |
+| [`getSupportedNetworks()`](https://docs.okto.tech/docs/react-sdk/chains-tokens/supported-networks#get-all-supported-networks) | <ExternalLink href="/docs/nextjs-sdk/getChains#get-chains">`getChains(oktoClient)`</ExternalLink> | - Renamed for clarity<br/>- Retrieves the list of all blockchain networks supported by Okto |
+| [`getSupportedTokens()`](https://docs.okto.tech/docs/react-sdk/chains-tokens/supported-networks#get-all-supported-tokens) | <ExternalLink href="/docs/nextjs-sdk/getTokens#get-tokens">`getTokens(oktoClient)`</ExternalLink> | - Returns supported token list |
+| [`getPortfolio()`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/get-user-balance-portfolio) | <ExternalLink href="/docs/nextjs-sdk/getPortfolio#get-portfolio">`getPortfolio(oktoClient)`</ExternalLink> | - Now retrieves the user's aggregated portfolio data |
+| - | <ExternalLink href="/docs/nextjs-sdk/getPortfolioActivity#get-portfolio-activity">`getPortfolioActivity(oktoClient)`</ExternalLink> | - Get user's portfolio activity |
+| - | <ExternalLink href="/docs/nextjs-sdk/getPortfolioNFT#get-portfolio-nft">`getPortfolioNFT(oktoClient)`</ExternalLink> | - Get user's NFT portfolio |
+| - | <ExternalLink href="https://docsv2.okto.tech/docs/nextjs-sdk/getNftCollections#get-nft-collections">`getNftCollections(oktoClient)`</ExternalLink> | - Retrieves NFT collection metadata |
+| [`orderHistory(query)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-tokens#fetch-order-history) <br/> [`getNftOrderDetails(query)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-nfts#get-nft-order-details) <br/> [`getRawTransactionStatus(query)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/raw-transactions#get-raw-transactions) | <ExternalLink href="/docs/nextjs-sdk/getOrdersHistory#get-orders-history">`getOrdersHistory(oktoClient, filters?)`</ExternalLink> | - All order history functions are now combined into one<br/>- Retrieves order history for token transfers, NFT transfers, and raw transactions using filter parameters |
 
 ### Intent Functions
 
@@ -325,16 +327,16 @@ All intents are available in both abstracted and detailed flows. In the detailed
 
 | V1 Function | V2 Function | Changes |
 |------------|-------------|----------|
-| [`transferTokens(data)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-tokens#transfer-tokens) | [`tokenTransfer(oktoClient, data)`](/docs/nextjs-sdk/tokenTransfer) | - Switched to UserOp-based transfer model<br/>- Added transaction simulation<br/>- Improved gas optimization options |
-| [`transferNft(data)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-nfts#transfer-nfts) | [`nftTransfer(oktoClient, data)`](/docs/nextjs-sdk/nftTransfer) | - Converted to UserOp-based transfer model<br/>- Consolidated multiple NFT functions into one<br/>- Added chain compatibility checks<br/> |
-| [`executeRawTransaction()`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/raw-transactions#execute-raw-transaction) | [`evmRawTransaction(oktoClient, data)`](/docs/nextjs-sdk/evmRawTransaction) | - Now creates a UserOp for executing raw EVM transactions.|
+| [`transferTokens(data)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-tokens#transfer-tokens) | <ExternalLink href="/docs/nextjs-sdk/tokenTransfer#token-transfer">`tokenTransfer(oktoClient, data)`</ExternalLink> | - Switched to UserOp-based transfer model<br/>- Added transaction simulation<br/>- Improved gas optimization options |
+| [`transferNft(data)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-nfts#transfer-nfts) | <ExternalLink href="/docs/nextjs-sdk/nftTransfer#nft-transfer">`nftTransfer(oktoClient, data)`</ExternalLink> | - Converted to UserOp-based transfer model<br/>- Consolidated multiple NFT functions into one<br/>- Added chain compatibility checks |
+| [`executeRawTransaction()`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/raw-transactions#execute-raw-transaction) | <ExternalLink href="/docs/nextjs-sdk/evmRawTransaction#evm-raw-transaction">`evmRawTransaction(oktoClient, data)`</ExternalLink> | - Now creates a UserOp for executing raw EVM transactions. |
 
 ### V2 Functions
 
 | Function | Description |
 |----------|-------------|
-| [`signUserOp(userop)`](/docs/nextjs-sdk/signUserOp) | - Signs user operations<br/>- Validates operation parameters<br/>- Includes policy checks |
-| [`executeUserOp(userop)`](/docs/nextjs-sdk/executeUserOp) | - Executes signed operations<br/>- Handles transaction bundling<br/>|
+| <ExternalLink href="/docs/nextjs-sdk/signUserOp#sign-userop">`signUserOp(userop)`</ExternalLink> | - Signs user operations<br/>- Validates operation parameters<br/>- Includes policy checks |
+| <ExternalLink href="/docs/nextjs-sdk/executeUserOp#execute-userop">`executeUserOp(userop)`</ExternalLink> | - Executes signed operations<br/>- Handles transaction bundling |
 
 <Callout title="Migration Support">
 For additional help:
