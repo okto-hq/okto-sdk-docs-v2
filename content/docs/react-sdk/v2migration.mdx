@@ -284,8 +284,6 @@ In V1, the AuthToken was a combination of the user login method and the client A
 | - | <ExternalLink href="https://docsv2.okto.tech/docs/react-sdk/getNftCollections#get-nft-collections">`getNftCollections(oktoClient)`</ExternalLink> | - Retrieves NFT collection metadata |
 | [`orderHistory(query)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-tokens#fetch-order-history) <br/> [`getNftOrderDetails(query)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-nfts#get-nft-order-details) <br/> [`getRawTransactionStatus(query)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/raw-transactions#get-raw-transactions) | <ExternalLink href="/docs/react-sdk/getOrdersHistory#get-orders-history">`getOrdersHistory(oktoClient, filters?)`</ExternalLink> | - All order history functions are now combined into one<br/>- Retrieves order history for token transfers, NFT transfers, and raw transactions using filter parameters |
 
----
-
 ### Intent Functions
 
 All intents are available in both abstracted and detailed flows. In the detailed flow, intents can be converted into a user operation (UserOp), signed, and executed on the Okto chain as separate calls. In the abstracted flow, these three steps are combined into a single call for a more seamless experience.
@@ -295,8 +293,6 @@ All intents are available in both abstracted and detailed flows. In the detailed
 | [`transferTokens(data)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-tokens#transfer-tokens) | <ExternalLink href="/docs/react-sdk/tokenTransfer#token-transfer">`tokenTransfer(oktoClient, data)`</ExternalLink> | - Switched to UserOp-based transfer model<br/>- Added transaction simulation<br/>- Improved gas optimization options |
 | [`transferNft(data)`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-nfts#transfer-nfts) | <ExternalLink href="/docs/react-sdk/nftTransfer#nft-transfer">`nftTransfer(oktoClient, data)`</ExternalLink> | - Converted to UserOp-based transfer model<br/>- Consolidated multiple NFT functions into one<br/>- Added chain compatibility checks |
 | [`executeRawTransaction()`](https://docs.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/raw-transactions#execute-raw-transaction) | <ExternalLink href="/docs/react-sdk/evmRawTransaction#evm-raw-transaction">`evmRawTransaction(oktoClient, data)`</ExternalLink> | - Now creates a UserOp for executing raw EVM transactions. |
-
----
 
 ### V2 Functions
 
