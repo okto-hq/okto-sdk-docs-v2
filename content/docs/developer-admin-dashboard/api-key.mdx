@@ -1,10 +1,19 @@
 ---
 title: API Keys
-description: API keys are essential for integrating Okto into your application. They authenticate your requests and associate them with your Okto Dashboard account. This guide will help you locate, generate, and manage your API keys safely.
+description: Securely manage authentication credentials for your Okto integration
 full: false
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
+
+## Understanding Okto API Credentials
+
+The Okto API credentials are essential for integrating Okto into your application. They authenticate your requests and associate them with your Okto Dashboard account. Okto provides two essential credentials for integrating with your application:
+
+1. **[App ID](/docs/developer-admin-dashboard/api-key#app-id-client-id-client-swa) (Client ID / Client SWA)**: A public identifier for your application
+2. **[App Secret](/docs/developer-admin-dashboard/api-key#app-secret-client-api-key-client-private-key) (Client API Key / Client Private Key)**: A confidential key for secure authentication
+
+These credentials work together to authenticate your requests to the Okto platform and ensure secure communication between your application and Okto's services.
 
 ## App ID / Client ID / Client SWA
 
@@ -89,7 +98,7 @@ If you lose your App Secret or suspect unauthorized use:
 
 - App ID: A public identifier for your application used to associate your client with Okto. It also the contract address of your client SWA on the okto chain.
 
-- App Secret: A private key used to authenticate requests from your application to Okto's servers. It is also referred to as OKTO API KEY in the docs.
+- App Secret: A private key used to authenticate requests from your application to Okto's servers. It is also referred to as CLIENT PRIVATE KEY/ CLIENT API KEY in the docs.
 
 **2. How do I know which environment (sandbox/production) my API keys belong to?**
 
@@ -98,3 +107,17 @@ Each environment’s keys are managed separately. Ensure the environment is indi
 **3. What should I do if I accidentally expose my App Secret?**
 
 Immediately reset your App Secret through the dashboard and update it in your applications to prevent unauthorized access.
+
+**4. Can I use the same credentials across multiple applications?**
+
+While technically possible, we recommend using separate credentials for each application for better security and management.
+
+---
+
+## Next Steps
+
+With your Okto credentials in hand, you're ready to:
+
+1. [Enable Chains and Tokens](/docs/developer-admin-dashboard/wallet-control) for your application
+2. [Configure Sponsorship](/docs/developer-admin-dashboard/sponsorship) (optional)
+3. [Integrate with the Okto SDK](/docs/okto-sdk/supported-sdk-platforms)
