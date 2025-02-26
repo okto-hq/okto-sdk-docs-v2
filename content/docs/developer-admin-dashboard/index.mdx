@@ -12,7 +12,8 @@ import {
   LuPaintbrush, 
   LuWallet,
   LuCircleDollarSign,
-  LuClipboardList
+  LuClipboardList,
+  LuCoins
 } from "react-icons/lu";
 
 ## **Video Walkthrough**
@@ -30,12 +31,12 @@ import {
 
 The Okto Developer Dashboard is a powerful, user-friendly interface designed to help you manage and monitor your Okto integration. It serves as a central hub for controlling various aspects of your application's interaction with the Okto platform, from user management to transaction monitoring and customization.
 
-### Key features of the Okto Developer Dashboard include:
+### Key Features
    
-* API key management  
-* Wallet controls for chains and tokens  
-* Sponsorship management for gas fees
-* Okto Testnet Faucet
+* **API Key Management**: Generate and manage secure API keys for your integration
+* **Chain & Token Controls**: Configure blockchain networks and tokens for your application
+* **Gas Fee Sponsorship**: Set up and manage gas fee sponsorship for a seamless user experience
+* **Okto Testnet Faucet**: Access testnet tokens for development and testing
 
 ## **Discover Okto Dashboard**
 
@@ -82,6 +83,13 @@ Explore our documentation to learn about the Okto Dashboard and its features. He
         title="Sponsorship" 
         subtitle="Set up and manage gas fee sponsorship for users"
         link="./sponsorship/overview"
+    />
+
+    <TechnologyCard 
+        icon={<LuCoins size={"1.5rem"}/>}
+        title="Okto Faucet" 
+        subtitle="Get testnet tokens for development and testing"
+        link="./okto-faucet"
     />
 
     {/*<TechnologyCard 
