@@ -1,13 +1,13 @@
-import './global.css';
-import { RootProvider } from 'fumadocs-ui/provider';
-import { Inter } from 'next/font/google';
-import type { ReactNode } from 'react';
+import "./global.css";
+import { RootProvider } from "fumadocs-ui/provider";
+import { Inter } from "next/font/google";
+import type { ReactNode } from "react";
 import { Providers } from "./providers";
-import NavbarComponent from './components/Navbar';
+import NavbarComponent from "./components/Navbar";
 import AskCookbook from "./components/AskCookbook";
 
 const inter = Inter({
-  subsets: ['latin'],
+  subsets: ["latin"],
 });
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -23,7 +23,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             {children}
           </Providers>
         </RootProvider>
-        {/* <AskCookbook /> */}
+        <AskCookbook />
       </body>
     </html>
   );
