@@ -5,10 +5,10 @@ full: false
 
 import { Step, Steps } from "fumadocs-ui/components/steps";
 
-[Wagmi](https://wagmi.sh/) is a collection of React hooks for Ethereum, making it easy to interact with wallets and smart contracts. Okto provides seamless integration with Wagmi through its adapter package, allowing you to leverage Wagmi's capabilities while maintaining Okto's wallet management features.
+[Wagmi](https://wagmi.sh/) is a collection of React hooks for Ethereum, making it easy to interact with wallets and smart contracts. Okto provides seamless integration with Wagmi through its adapter package, allowing you to add social login options via Okto to your existing Wagmi application.
 
 <Callout>
-This guide shows how to add Okto wallet support to an existing wagmi application. 
+This guide shows how to add Okto wallet support to an existing wagmi application, enabling social login options for your users.
 
 If you're starting from scratch, you have two options:
 - Build with an <a href="/docs/okto-sdk/supported-sdk-platforms" target="_blank" rel="noopener noreferrer">Okto SDK</a> directly
@@ -85,8 +85,10 @@ Update your app's root component to include the necessary providers:
 
 ```tsx title="providers.tsx"
 import { headers } from 'next/headers';
+import { useState } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { ReactNode } from 'react';
-import { cookieToInitialState } from 'wagmi';
+import { WagmiProvider, cookieToInitialState } from 'wagmi';
 import { getConfig } from '../wagmi';
 
 export default async function RootLayout(props: { children: ReactNode }) {
@@ -128,7 +130,7 @@ Make sure to add the Google Sign-In script to your HTML head for authentication:
 
 ## Usage with wagmi Hooks
 
-Once configured, you can use wagmi hooks to interact with wallets:
+Once configured, you can use wagmi hooks to offer Okto social login to your users:
 
 ```typescript
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
