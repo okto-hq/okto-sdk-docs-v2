@@ -11,7 +11,7 @@
     "overview",
     "feature-support",
     "---Authentication---",
-    "./authenticate-users/okto-auth",
+    "./authenticate-users/okto-auth-session",
     "./authenticate-users/google-oauth",
     "!./authenticate-users/email-otp",
     "!./authenticate-users/phone-otp",
