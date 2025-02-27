@@ -1,0 +1,180 @@
+---
+title: Authorization and Session Keys
+description: Learn about session-based authorization in Okto SDK
+full: false
+---
+
+## Authorization in Okto SDK
+
+Authorization in Okto SDK revolves around Session Keys - ephemeral cryptographic key pairs used to authenticate and authorize requests from your application to Okto services. Understanding how session keys are generated, managed, and used is crucial for building secure Okto-powered Web3 applications.
+
+### What is Session-Based Authentication?
+
+Session management is a critical component of the Okto Ecosystem that provides a mechanism for applications to interact with Okto services without requiring the user's private key for every transaction. By employing ephemeral session keys, Okto minimizes the exposure of long-term credentials while enabling a seamless Web2-like experience.
+
+<Callout title="Note">
+  Session keys are valid for 10 days. If a user logs out or the session expires, new session keys must be generated.
+</Callout>
+
+### How Session Key Authentication Works
+
+1. **Client-Side Session Key Generation:** When a user initiates a login through your application, the SDK automatically generates a unique session key pair behind the scenes.
+
+2. **Authentication Request:** The SDK constructs an authentication payload containing the user's credentials and necessary session information.
+
+3. **Session Establishment:** Upon successful authentication, the session is established and linked to the user's Smart Wallet Account (SWA).
+
+4. **Authorization for Operations:** For subsequent operations, the session key is used automatically to authenticate requests.
+
+This approach enhances security by using ephemeral session keys rather than permanent credentials for most operations. Let's see how this works in practice:
+
+### Initializing the Okto Client
+
+Before you can work with the Okto SDK, you'll need to initialize the app with your credentials. This establishes the foundational connection between your application and the Okto platform.
+
+```typescript
+import { OktoClient } from "@okto_web3/core-js-sdk";
+import { Env } from "@okto_web3/core-js-sdk/dist/core/types";
+
+// Initialize OktoClient with your app credentials
+const oktoClient = new OktoClient({
+  environment: "sandbox", // or "staging"
+  clientPrivateKey: "0x...", // Your application's private key
+  clientSWA: "0x..."         // Your application's Smart Wallet Account
+});
+```
+
+### User Authentication with Google OAuth
+
+Okto currently supports Google OAuth as its primary authentication method. This implementation utilizes Google's secure ID token system to verify user identity. Additional authentication methods like Email OTP and Phone OTP are planned for future releases, but are not yet available in the public SDK.
+
+```typescript
+// Example with Google OAuth integration
+async function handleGoogleLogin(credentialResponse: any) {
+  try {
+    // Pass the Google credential to Okto's authentication method
+    await oktoClient.loginUsingOAuth({
+      idToken: credentialResponse.credential,
+      provider: "google",
+    });
+    
+    console.log("Authentication successful");
+  } catch (error) {
+    console.error("Authentication failed:", error);
+  }
+}
+```
+
+### Checking Authentication Status
+
+For optimal user experience, your application should be able to verify the user's authentication status. This is particularly useful when users refresh the page or return to your application after some time.
+
+```typescript
+async function checkLoginStatus() {
+  try {
+    const loginStatus = await oktoClient.verifyLogin();
+    
+    if (loginStatus) {
+      console.log("User SWA:", oktoClient.userSWA);
+      return true;
+    } else {
+      console.log("User is not logged in");
+      return false;
+    }
+  } catch (error) {
+    console.error("Verification failed:", error);
+    return false;
+  }
+}
+```
+
+### Signing Operations with Session Keys
+
+One of the most powerful features of the Okto SDK is the ability to sign blockchain operations using session keys. This eliminates the need for users to sign each transaction individually, creating a much smoother user experience.
+
+```typescript
+// Sample UserOp before signing
+const userOp = {
+  sender: "0xa9F6b3A5a718754979dbA78113f3614Dd4524c53",
+  nonce: "0x000000000000000000000000000000006c3581e0bd4f42d4a16294410c439e7a",
+  paymaster: "0x5408fAa7F005c46B85d82060c532b820F534437c",
+  callGasLimit: "0x493e0",
+  verificationGasLimit: "0x30d40",
+  preVerificationGas: "0xc350",
+  maxFeePerGas: "0x77359400",
+  maxPriorityFeePerGas: "0x77359400",
+  paymasterPostOpGasLimit: "0x186a0",
+  paymasterVerificationGasLimit: "0x186a0",
+  callData: "0x8dd7712f000...", // truncated for brevity
+  paymasterData: "0x000000000..." // truncated for brevity
+};
+
+async function signOperation(userOp: any) {
+  try {
+    const signedOp = await oktoClient.signUserOp(userOp);
+    console.log('Signed operation:', signedOp);
+    return signedOp;
+  } catch (error) {
+    console.error('Error signing operation:', error);
+    throw error;
+  }
+}
+```
+
+### Ending a Session
+
+It's important to provide users with the ability to end their session securely. This helps maintain security and privacy, especially on shared devices.
+
+```typescript
+function endSession() {
+  try {
+    // Clear the session data
+    oktoClient.sessionClear();
+    console.log("User logged out");
+    return true;
+  } catch (error) {
+    console.error("Error ending session:", error);
+    return false;
+  }
+}
+```
+
+## Security Benefits of Session Keys
+
+The session key architecture in Okto provides several security benefits:
+
+1. **Client-Side Session Key Generation:** When a user initiates a login through an Okto-integrated dApp, the client application generates a unique session key pair. This key pair is ephemeral and specific to the user's current session. The private key is securely stored locally on the user's device, while the public key is used for signing.
+
+2. **Decentralized Verification:** The Okto system independently verifies the user's login credentials against the respective authentication provider (e.g., Google Auth service).
+
+3. **Key Generation and User Setup:** Upon successful authentication, the system generates or retrieves the user's blockchain identity and associates it with the session keys.
+
+4. **On-Chain Registration:** The final step involves registering the session with the user's Smart Wallet Account (SWA).
+
+## Advanced Applications of Session Key Authentication
+
+Session key authentication enables several advanced capabilities beyond basic authentication, particularly in the areas of delegated actions and policy-based access control. These features allow applications to create sophisticated user experiences while maintaining strong security boundaries.
+
+### Delegated Actions
+
+Session keys enable applications to perform actions on behalf of users without requiring their constant approval, creating a seamless user experience for complex Web3 operations.
+
+Key benefits of delegated actions:
+- **Improved UX:** Users authorize complex operations once, rather than signing each transaction
+- **Conditional Execution:** Actions can be executed automatically when specific conditions are met
+- **Bounded Authority:** Delegations can be limited by time, value, or number of executions
+
+### Policy-Based Access Control
+
+Session keys can be associated with specific policies that define what actions an application can perform with the user's wallet. This allows granular control over application permissions.
+
+Applications of policy-based session control:
+- **Daily transaction value limits:** Restricts total token outflow (in USD or token terms) over a 24-hour period. Useful for client accounts that sponsor gas or want to mitigate risk.
+- **Per-transaction value limits:** Sets a cap on the value of each individual transaction. This prevents any single operation from exceeding a defined threshold, thereby reducing the risk of large, unauthorized outflows.
+
+## Next Steps
+
+Learn more about authentication methods and session management:
+
+- [Google OAuth Authentication](./google-oauth/google-console-setup) - Implement secure authentication using Google OAuth
+- [Session Management](./session-management/loginUsingOAuth) - Handle user sessions and state management 
