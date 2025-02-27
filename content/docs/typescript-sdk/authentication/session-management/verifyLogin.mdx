@@ -8,9 +8,53 @@ import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-import { Icon as IIcon } from '@iconify/react';
 
 The `verifyLogin()` method checks if a user is currently logged in. If the user is not logged in, it automatically clears the auth options to maintain consistency.
+
+### Example
+
+<Accordions defaultValue="Usage">
+<Accordion title="Usage"> 
+<Tabs items={['Typescript']}>
+  <Tab value="Typescript">
+    ```typescript
+    import { OktoClient } from "@okto_web3/core-js-sdk";
+
+    function AuthCheck() {
+        // Initialize OktoClient
+        const oktoClient = new OktoClient({
+          environment: process.env.ENVIRONMENT,
+          clientPrivateKey: process.env.CLIENT_PRIVATE_KEY,
+          clientSWA: process.env.CLIENT_SWA,
+        });
+
+        async function checkLoginStatus() {
+            try {
+                const isLoggedIn = await oktoClient.verifyLogin();
+                console.log("Login status:", isLoggedIn);
+            } catch (error) {
+                console.error("Verification failed:", error);
+            }
+        }
+
+        return <button onClick={checkLoginStatus}>Check Login Status</button>;
+    }
+    ```
+  </Tab>
+</Tabs>
+</Accordion>
+<Accordion title="Success Response">
+```typescript
+true
+```
+</Accordion>
+</Accordions>
+
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/typescript-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/typescript-sdk/troubleshooting) to contact support
+</Callout>
 
 ### Method Overview
 
@@ -38,41 +82,4 @@ This method doesn't take any parameters.
 
 </Callout>
 
-<Accordions>
-<Accordion title="Example">
-<Tabs items={['Typescript']}>
-  <Tab value="Typescript">
-    ```typescript
-    import { OktoClient } from "@okto_web3/core-js-sdk";
-    import { Env } from "@okto_web3/core-js-sdk/dist/core/types";
-
-    function AuthCheck() {
-        // Initialize OktoClient
-        const oktoClient = new OktoClient({
-          environment: process.env.ENVIRONMENT as Env,
-          clientPrivateKey: process.env.CLIENT_PRIVATE_KEY as Env,
-          clientSWA: process.env.CLIENT_SWA as Env,
-        });
-
-        async function checkLoginStatus() {
-            try {
-                const isLoggedIn = await oktoClient.verifyLogin();
-                console.log("Login status:", isLoggedIn);
-            } catch (error) {
-                console.error("Verification failed:", error);
-            }
-        }
-
-        return <button onClick={checkLoginStatus}>Check Login Status</button>;
-    }
-    ```
-  </Tab>
-</Tabs>
-</Accordion>
-</Accordions>
-
 </div>
-
-<Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/typescript-sdk/sdk-error-warnings) documentation for more details.
-</Callout>

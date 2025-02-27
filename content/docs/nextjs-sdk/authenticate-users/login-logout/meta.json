@@ -3,6 +3,6 @@
     "pages": [
       "loginUsingOAuth",
       "verifyLogin",
-      "getAuthToken"
+      "!getAuthToken"
     ]
   }

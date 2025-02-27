@@ -10,7 +10,7 @@ import QuickStartBanner from "app/components/mdx/QuickStartBanner";
 import { 
   LuLayoutDashboard, LuToggleLeft, LuCode, LuWallet, LuBookOpen, 
   LuKey, LuArrowRightLeft, LuNetwork, LuMousePointerClick, 
-  LuUserPlus, LuShoppingCart, LuGamepad2, LuBoxes
+  LuUserPlus, LuShoppingCart, LuGamepad2, LuBoxes, LuUsers, LuCircleDollarSign
 } from "react-icons/lu";
 import { FaDiscord } from "react-icons/fa6";
 import { MousePointer2 } from 'lucide-react';
@@ -21,13 +21,13 @@ import { MousePointer2 } from 'lucide-react';
 
 ## What is Okto SDK?
 
-The **Okto SDK** is your game-changer for Web3 development. This **plug-and-play toolkit** eliminates blockchain complexity, providing a unified solution for onboarding, login, gasless transactions, and complex Web3 intents. Build intuitive, user-friendly experiences and simplify Web3 from start to finish – we've got it ALL.
+The **Okto SDK** is your game-changer for Web3 development. This **plug-and-play toolkit** eliminates blockchain complexity, providing a unified solution for onboarding, login, gasless transactions, and complex Web3 intents on the destination blockchain of your choice. Build intuitive, user-friendly experiences and simplify Web3 from start to finish – we've got it ALL.
 
 ## Key Features
 
 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 min-h-[200px] [&>*]:h-[140px] [&>*>div]:h-full [&>*>div]:flex [&>*>div]:flex-col">
   <FeatureCard
-    icon={<LuKey size={20} />}
+    icon={<LuWallet size={20} />}
     title="Abstracted Smart Wallets"
     description="Unified multi-chain wallets with Web2-style authentication powered by MPC security"
     iconColor="text-blue-500"
@@ -48,7 +48,7 @@ The **Okto SDK** is your game-changer for Web3 development. This **plug-and-play
     link="/docs/okto-layer/dtn"
   />
   <FeatureCard
-    icon={<LuMousePointerClick size={20} />}
+    icon={<LuToggleLeft size={20} />}
     title="Policy-Driven Controls"
     description="Granular control over multi-chain transactions and permissions"
     iconColor="text-orange-500"
@@ -74,7 +74,7 @@ The **Okto SDK** is your game-changer for Web3 development. This **plug-and-play
 
 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
   <FeatureCard
-    icon={<LuShoppingCart size={20} />}
+    icon={<LuCircleDollarSign size={20} />}
     title="DeFi Applications"
     description="Power next-gen DeFi with cross-chain composability and simplified user access"
     iconColor="text-blue-500"
@@ -88,7 +88,7 @@ The **Okto SDK** is your game-changer for Web3 development. This **plug-and-play
     link="/docs/okto-sdk/use-cases/on-chain-gaming"
   />
   <FeatureCard
-    icon={<LuBoxes size={20} />}
+    icon={<LuUsers size={20} />}
     title="Consumer Applications"
     description="Build Web3-powered social and consumer apps with familiar Web2 experiences"
     iconColor="text-green-500"
