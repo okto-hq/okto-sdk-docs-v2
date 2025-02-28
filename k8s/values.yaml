@@ -47,6 +47,7 @@ okto-sdk-docs-v2-staging:
     scheme: http
     hosts:
       - host: docsv2-staging.okto.tech
+      - host: docs-staging.okto.tech
   autoscaling:
     enabled: true
     minReplicas: 2
