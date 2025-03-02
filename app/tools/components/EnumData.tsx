@@ -3,8 +3,8 @@ export const enumData = [
         key: "ORDER_TYPE",
         keyDesc: "Specifies the type of order.",
         apiUrls: [
-            "https://docs.okto.tech/api-docs#tag/client/GET/api/v1/orders",
-            "https://docs.okto.tech/api-docs#tag/client/GET/api/v1/nft/order_details"
+            "https://docsv1.okto.tech/api-docs#tag/client/GET/api/v1/orders",
+            "https://docsv1.okto.tech/api-docs#tag/client/GET/api/v1/nft/order_details"
         ],
         values: [
             { value: "MINT", desc: "Indicates that the order is for minting a new NFT." },
@@ -17,7 +17,7 @@ export const enumData = [
         key: "OPERATION_TYPE",
         keyDesc: "Specifies the type of operation being performed.",
         apiUrls: [
-            "https://docs.okto.tech/api-docs#tag/client/POST/api/v1/nft/transfer"
+            "https://docsv1.okto.tech/api-docs#tag/client/POST/api/v1/nft/transfer"
         ],
         values: [
             { value: "MINT", desc: "Indicates that the order is for minting a new NFT." },
@@ -30,9 +30,9 @@ export const enumData = [
         key: "STATUS",
         keyDesc: "Represents the current status of the order or transaction.",
         apiUrls: [
-            "https://docs.okto.tech/api-docs#tag/client/GET/api/v1/orders",
-            "https://docs.okto.tech/api-docs#tag/client/GET/api/v1/nft/order_details",
-            "https://docs.okto.tech/api-docs#tag/client/GET/api/v1/rawtransaction/status"
+            "https://docsv1.okto.tech/api-docs#tag/client/GET/api/v1/orders",
+            "https://docsv1.okto.tech/api-docs#tag/client/GET/api/v1/nft/order_details",
+            "https://docsv1.okto.tech/api-docs#tag/client/GET/api/v1/rawtransaction/status"
         ],
         values: [
             { value: "WAITING_INITIALIZATION", desc: "The order is in queue and has not yet started processing." },
@@ -48,7 +48,7 @@ export const enumData = [
         key: "ENTITY_TYPE",
         keyDesc: "Defines the type of NFT or asset involved in the transaction.",
         apiUrls: [
-            "https://docs.okto.tech/api-docs#tag/client/GET/api/v1/nft/order_details"
+            "https://docsv1.okto.tech/api-docs#tag/client/GET/api/v1/nft/order_details"
         ],
         values: [
             { value: "ERC721", desc: "An ERC-721 standard NFT on EVM-compatible blockchains." },
