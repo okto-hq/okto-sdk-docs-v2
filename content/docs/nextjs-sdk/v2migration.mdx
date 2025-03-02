@@ -11,9 +11,9 @@ import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
 import ExternalLink from 'app/components/mdx/ExternalLink';
 
 
-This guide provides a detailed walkthrough for migrating a NextJS application from [Okto SDK V1](https://docsv1.okto.tech/docs/react-sdk) to [Okto SDK V2](https://docsv2.okto.tech/docs/nextjs-sdk).  
+This guide provides a detailed walkthrough for migrating a NextJS application from [Okto SDK V1](https://docsv1.okto.tech/docs/react-sdk) to [Okto SDK V2](https://docs.okto.tech/docs/nextjs-sdk).  
 
-Previously, a streamlined Okto NextJS-based setup was available; however, V2 introduces a traditional [**Create Next App**](https://docsv2.okto.tech/docs/nextjs-sdk) setup. While the core functionality remains unchanged, V2 adopts a more decentralized architecture, enhancing security and providing comprehensive developer controls.
+Previously, a streamlined Okto NextJS-based setup was available; however, V2 introduces a traditional [**Create Next App**](https://docs.okto.tech/docs/nextjs-sdk) setup. While the core functionality remains unchanged, V2 adopts a more decentralized architecture, enhancing security and providing comprehensive developer controls.
 
 ### Key Changes Overview
 
@@ -318,7 +318,7 @@ In V1, the AuthToken was a combination of the user login method and the client A
 | [`getPortfolio()`](https://docsv1.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/get-user-balance-portfolio) | <ExternalLink href="/docs/nextjs-sdk/getPortfolio#get-portfolio">`getPortfolio(oktoClient)`</ExternalLink> | - Now retrieves the user's aggregated portfolio data |
 | - | <ExternalLink href="/docs/nextjs-sdk/getPortfolioActivity#get-portfolio-activity">`getPortfolioActivity(oktoClient)`</ExternalLink> | - Get user's portfolio activity |
 | - | <ExternalLink href="/docs/nextjs-sdk/getPortfolioNFT#get-portfolio-nft">`getPortfolioNFT(oktoClient)`</ExternalLink> | - Get user's NFT portfolio |
-| - | <ExternalLink href="https://docsv2.okto.tech/docs/nextjs-sdk/getNftCollections#get-nft-collections">`getNftCollections(oktoClient)`</ExternalLink> | - Retrieves NFT collection metadata |
+| - | <ExternalLink href="/docs/nextjs-sdk/getNftCollections#get-nft-collections">`getNftCollections(oktoClient)`</ExternalLink> | - Retrieves NFT collection metadata |
 | [`orderHistory(query)`](https://docsv1.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-tokens#fetch-order-history) <br/> [`getNftOrderDetails(query)`](https://docsv1.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-nfts#get-nft-order-details) <br/> [`getRawTransactionStatus(query)`](https://docsv1.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/raw-transactions#get-raw-transactions) | <ExternalLink href="/docs/nextjs-sdk/getOrdersHistory#get-orders-history">`getOrdersHistory(oktoClient, filters?)`</ExternalLink> | - All order history functions are now combined into one<br/>- Retrieves order history for token transfers, NFT transfers, and raw transactions using filter parameters |
 
 ### Intent Functions
@@ -341,6 +341,6 @@ All intents are available in both abstracted and detailed flows. In the detailed
 <Callout title="Migration Support">
 For additional help:
 - [Okto V1 Docs for NextJS](https://docsv1.okto.tech/docs/react-sdk)
-- [Okto V2 Docs for NextJS](https://docsV2.okto.tech/docs/react-sdk/quickstart/new-okto-react-setup)
+- [Okto V2 Docs for NextJS](https://docs.okto.tech/docs/react-sdk/quickstart/new-okto-react-setup)
 - [V2 Developer Dashboard](/docs/developer-admin-dashboard)
 </Callout>
