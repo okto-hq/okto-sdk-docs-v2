@@ -1,0 +1,168 @@
+---
+title: Overview
+description: A comprehensive guide to using the Okto React SDK and its features
+full: false
+---
+
+import TechnologyCard from "app/components/mdx/TechnologyCard";
+import { 
+  IoKeyOutline,
+  IoWalletOutline,
+  IoSearchOutline,
+  IoSwapHorizontalOutline,
+  IoCodeSlashOutline,
+  IoServerOutline,
+  IoAppsOutline,
+  IoListOutline,
+  IoRocketOutline
+} from "react-icons/io5";
+
+The Okto React SDK provides a comprehensive set of tools and hooks for integrating blockchain functionality into your React applications. This guide will help you understand the main components and features available in the SDK.
+
+## Core Functions
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+  <TechnologyCard
+    icon={<IoKeyOutline size={"1.5rem"} />}
+    title="useOkto Hook"
+    subtitle="Primary hook that provides access to the OktoClient instance"
+    link="/docs/react-sdk/useOkto"
+  />
+</div>
+
+## Account Operations
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+  <TechnologyCard
+    icon={<IoCodeSlashOutline size={"1.5rem"} />}
+    title="Understanding UserOp"
+    subtitle="Learn about user operations and best practices"
+    link="/docs/react-sdk/userop-learn"
+  />
+
+  <TechnologyCard
+    icon={<IoKeyOutline size={"1.5rem"} />}
+    title="signUserOp"
+    subtitle="Sign user operations for transaction integrity"
+    link="/docs/react-sdk/signUserOp"
+  />
+
+  <TechnologyCard
+    icon={<IoSwapHorizontalOutline size={"1.5rem"} />}
+    title="executeUserOp"
+    subtitle="Submit signed operations to the blockchain"
+    link="/docs/react-sdk/executeUserOp"
+  />
+
+  <TechnologyCard
+    icon={<IoServerOutline size={"1.5rem"} />}
+    title="estimate"
+    subtitle="Calculate gas and fee estimates for transactions"
+    link="/docs/react-sdk/estimate"
+  />
+</div>
+
+## Explorer Functions
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+  <TechnologyCard
+    icon={<IoWalletOutline size={"1.5rem"} />}
+    title="getAccount"
+    subtitle="Retrieve detailed account and wallet information"
+    link="/docs/react-sdk/getAccount"
+  />
+
+  <TechnologyCard
+    icon={<IoListOutline size={"1.5rem"} />}
+    title="getChains"
+    subtitle="Get list of supported blockchain networks"
+    link="/docs/react-sdk/getChains"
+  />
+
+  <TechnologyCard
+    icon={<IoAppsOutline size={"1.5rem"} />}
+    title="getNftCollections"
+    subtitle="Browse and verify NFT collections"
+    link="/docs/react-sdk/getNFTCollections"
+  />
+
+  <TechnologyCard
+    icon={<IoSearchOutline size={"1.5rem"} />}
+    title="getOrdersHistory"
+    subtitle="View historical transactions and orders"
+    link="/docs/react-sdk/getOrdersHistory"
+  />
+
+  <TechnologyCard
+    icon={<IoWalletOutline size={"1.5rem"} />}
+    title="getPortfolio"
+    subtitle="Get aggregated token holdings across chains"
+    link="/docs/react-sdk/getPortfolio"
+  />
+
+  <TechnologyCard
+    icon={<IoListOutline size={"1.5rem"} />}
+    title="getPortfolioActivity"
+    subtitle="Track recent portfolio changes and transactions"
+    link="/docs/react-sdk/getPortfolioActivity"
+  />
+
+  <TechnologyCard
+    icon={<IoAppsOutline size={"1.5rem"} />}
+    title="getPortfolioNFT"
+    subtitle="View NFT holdings and metadata"
+    link="/docs/react-sdk/getPortfolioNFT"
+  />
+
+  <TechnologyCard
+    icon={<IoListOutline size={"1.5rem"} />}
+    title="getTokens"
+    subtitle="List available tokens and their details"
+    link="/docs/react-sdk/getTokens"
+  />
+</div>
+
+## Intents
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+  <TechnologyCard
+    icon={<IoRocketOutline size={"1.5rem"} />}
+    title="Understanding Intents"
+    subtitle="Learn about Okto's simplified blockchain interactions"
+    link="/docs/react-sdk/intents"
+  />
+
+  <TechnologyCard
+    icon={<IoSwapHorizontalOutline size={"1.5rem"} />}
+    title="tokenTransfer"
+    subtitle="Transfer fungible tokens between wallets"
+    link="/docs/react-sdk/tokenTransfer"
+  />
+
+  <TechnologyCard
+    icon={<IoSwapHorizontalOutline size={"1.5rem"} />}
+    title="nftTransfer"
+    subtitle="Transfer NFTs between wallets"
+    link="/docs/react-sdk/nftTransfer"
+  />
+
+  <TechnologyCard
+    icon={<IoCodeSlashOutline size={"1.5rem"} />}
+    title="rawTransaction"
+    subtitle="Create custom EVM transactions"
+    link="/docs/react-sdk/evmRawTransaction"
+  />
+</div>
+
+## Transaction Flow
+
+<Callout type="info">
+Most operations in the SDK follow this pattern:
+
+1. Get the OktoClient instance using useOkto hook
+2. Create a user operation using intent functions
+3. Sign the operation using signUserOp
+4. Execute the operation using executeUserOp
+</Callout>
+
+For installation, initialization, and example implementations, refer to our [React](/docs/react-sdk) setup guides.

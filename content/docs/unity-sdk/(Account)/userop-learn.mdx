@@ -1,0 +1,75 @@
+---
+title: Understanding UserOp
+description: Learn about User Operations (UserOp) in the context of Account Abstraction and the Okto SDK.
+full: false
+---
+
+## What is a User Operation?
+
+User Operations (UserOps) are fundamental to [**ERC-4337 Account Abstraction**](https://eips.ethereum.org/EIPS/eip-4337). They are **pseudo-transaction objects** utilized for interacting with smart contract accounts.  Unlike traditional transactions initiated by Externally Owned Accounts (EOAs), UserOps serve as structured instructions directed to a smart contract account to perform a blockchain action.  Okto SDK provides tools to facilitate the creation, signing, and submission of UserOps.
+
+## How ERC-4337 Works
+
+ERC-4337 is the leading standard for account abstraction, enabling permissionless smart contract wallet functionality. The standard introduces several key components that work together to execute transactions:
+
+![ERC-4337 Flow Diagram](/images/erc4337-flow.png)
+
+The transaction flow works as follows:
+
+1. When a user wants to execute an action, they create a **User Operation** instead of a regular transaction. This structured object contains all necessary information about the intended transaction.
+
+2. The User Operation enters a special **mempool** where **Bundlers** (decentralized network participants) monitor for valid operations. Bundlers validate these operations and bundle them together for efficiency.
+
+3. The **Entry Point** contract serves as the central gateway, coordinating with the user's **Account** contract through two phases:
+    - First, it validates the operation's legitimacy through the validation loop
+    - Then, if valid, it executes the actual transaction data via the execution loop
+
+4. **Paymasters** can optionally sponsor gas fees, allowing for flexible payment arrangements and improved user experience.
+
+This architecture enables powerful features like batched transactions, sponsored gas fees, and custom validation logic while maintaining security and decentralization.
+
+## User Operation Structure
+
+In the traditional EOA model, transactions are signed and broadcast directly to the network.  ERC-4337 introduces smart contract wallets and the concept of **UserOperation** to modify this process. Instead of directly sending transactions, users construct a **UserOperation**, a structured object detailing the intended action.
+
+The UserOperation object comprises specific fields that define transaction details and instructions for the smart contract account:
+
+| Field                   | Type      | Description                                                                                                                                                                                             |
+| :---------------------- | :-------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sender`                | `address` | The address of the smart contract account. This account is designated to initiate the action.                                         |
+| `nonce`                 | `uint256` | Anti-replay mechanism. Ensures each UserOperation is unique and cannot be replayed. Also functions as a salt for initial account deployment. |
+| `initCode`              | `bytes`   | Code for deploying the smart contract account (`sender`) if it is not yet deployed on-chain. Relevant for the initial interaction with a new smart contract wallet.   |
+| `callData`              | `bytes`   | Encoded function call data and parameters intended for execution by the smart contract account (`sender`).  Defines the action to be performed.        |
+| `callGasLimit`          | `uint256` | Gas limit allocated for the execution phase of the `callData` within the smart contract account.                                  |
+| `verificationGasLimit`  | `uint256` | Gas limit allocated for the verification phase of the UserOperation, encompassing signature checks and policy validations.              |
+| `preVerificationGas`    | `uint256` | Gas units to compensate the Bundler for the overhead of UserOperation submission. Bundlers are responsible for upfront gas payment.           |
+| `maxFeePerGas`          | `uint256` | Maximum fee per gas willing to be paid for the UserOperation, analogous to `maxFeePerGas` in EIP-1559 transactions.            |
+| `maxPriorityFeePerGas`  | `uint256` | Maximum priority fee per gas willing to be paid, analogous to `maxPriorityFeePerGas` in EIP-1559 transactions.  Incentivizes Bundler prioritization.            |
+| `paymasterAndData`      | `bytes`   | Optional field for Paymaster contract integration. Contains the Paymaster contract address and data required for verification and execution. Enables gas sponsorship scenarios. |
+| `signature`             | `bytes`   | Cryptographic signature for UserOperation authorization. Validated during the verification phase by the EntryPoint contract.             |
+
+Understanding the UserOperation structure is essential for working with ERC-4337 Account Abstraction. It provides a framework for executing actions via smart contract accounts.
+
+## Okto SDK Abstraction
+
+The Okto SDK simplifies working with UserOperations by abstracting away some of the more complex fields.  Specifically, Okto often handles:
+
+*   **Gas Limits:**  `callGasLimit`, `verificationGasLimit`
+*   **Gas Fees:** `maxFeePerGas`, `maxPriorityFeePerGas`
+*   **Paymaster Interaction:** `paymasterAndData` (depending on client configuration)
+*   **PreVerification Gas:** `preVerificationGas`
+
+Okto SDK intelligently estimates and sets these values for you in most common scenarios, making it easier to create and execute UserOperations without needing to manually calculate all the gas parameters.  However, for advanced use cases, you might still have the option to customize these fields.
+
+**With Okto SDK, developers primarily focus on specifying:**
+
+*   `sender` address (Smart Account).
+*   `callData` (Function call and parameters).
+
+Okto SDK manages the construction of a valid UserOperation, including gas parameters and signature, to facilitate account abstraction implementation.
+
+## Learn More
+
+For a deeper dive into User Operations and the ERC-4337 standard, refer to the official documentation:
+
+[ERC-4337 User Operation Documentation](https://www.erc4337.io/docs/understanding-ERC-4337/user-operation)

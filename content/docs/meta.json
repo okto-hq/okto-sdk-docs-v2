@@ -17,6 +17,7 @@
       "!unity-sdk",
       "typescript-sdk",
       "okto-eliza-plugin",
+      "unity-sdk",
       "---About Okto SDK---",
       "okto-sdk/overview",
       "okto-sdk/sdk-introduction",

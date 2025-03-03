@@ -1,0 +1,149 @@
+---
+title: Get Portfolio Activity
+description: Learn how to retrieve portfolio activity using the Okto SDK.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
+
+The `getPortfolioActivity` function retrieves the user's portfolio activity history, including transactions, trades, and other relevant activities across all supported chains.
+
+<ChainSupportStatus 
+/>
+
+### Example
+
+<Accordions defaultValue="Usage">
+<Accordion title="Usage">
+<Tabs items={['TypeScript']}>
+<Tab value="TypeScript">
+```typescript
+import { useOkto } from '@okto_web3/react-sdk';
+import { getPortfolioActivity } from '@okto_web3/react-sdk';
+
+function PortfolioActivity() {
+    const oktoClient = useOkto();
+
+    async function fetchActivity() {
+        try {
+            const activity = await getPortfolioActivity(oktoClient);
+            console.log('Portfolio activity:', activity);
+        } catch (error) {
+            console.error('Error fetching portfolio activity:', error);
+        }
+    }
+
+    return (
+        <button onClick={fetchActivity}>
+            Fetch Portfolio Activity
+        </button>
+    );
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": {
+        "count": 2,
+        "activity": [
+            {
+                "symbol": "ETH",
+                "image": "https://example.com/eth.png",
+                "name": "Ethereum",
+                "short_name": "ETH",
+                "id": "eth_transfer_1",
+                "group_id": "eth_group",
+                "description": "Token Transfer",
+                "quantity": "1.000000000000000000",
+                "amount": "1000000000000000000",
+                "order_type": "TOKEN_TRANSFER",
+                "transfer_type": "SEND",
+                "status": true,
+                "created_at": 1739176632,
+                "updated_at": 1739176632,
+                "timestamp": 1739176632,
+                "tx_hash": "0x4e20af759a50080e548cc40f2504e569935ce0f3255bed9c9121e3fdaebc36d1",
+                "network_id": "ae506585-0ba7-32f3-8b92-120ddf940198",
+                "network_name": "POLYGON",
+                "network_explorer_url": "https://polygonscan.com/",
+                "network_symbol": "MATIC",
+                "caip_id": "eip155:137"
+            }
+        ]
+    }
+}
+```
+</Accordion>
+</Accordions>
+
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
+</Callout>
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`getPortfolioActivity`](#get-portfolio-activity) | Get portfolio activity history |
+
+<div className="method-box">
+
+## Get Portfolio Activity
+
+<sub><i>async</i></sub> `getPortfolioActivity(oktoClient: OktoClient)` retrieves the user's portfolio activity history.
+
+### Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|-----------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `activities` | [`Promise<UserPortfolioActivity[]>`](/docs/react-sdk/technical-reference#models) | Array of user's portfolio activities |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface UserPortfolioActivity {
+            symbol: string;
+            image: string;
+            name: string;
+            shortName: string;
+            id: string;
+            groupId: string;
+            description: string;
+            quantity: string;
+            orderType: string;
+            transferType: string;
+            status: string;
+            timestamp: number;
+            txHash: string;
+            caip2Id: string;
+            networkName: string;
+            networkExplorerUrl: string;
+            networkSymbol: string;
+            caipId: string;
+        }
+        ```
+    </Accordion>
+</Accordions>
+
+</Callout>
+
+</div>
