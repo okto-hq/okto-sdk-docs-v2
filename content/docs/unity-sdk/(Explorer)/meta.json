@@ -1,0 +1,13 @@
+{
+  "title": "Explorer",
+  "pages": [
+    "getAccount",
+    "getChains",
+    "getTokens",
+    "getPortfolio",
+    "getPortfolioActivity",
+    "getPortfolioNFT",
+    "getNftCollections",
+    "getOrdersHistory"
+  ]
+}

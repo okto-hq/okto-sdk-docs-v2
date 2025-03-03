@@ -133,7 +133,7 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
     <CollapsibleCallout type="tip" title="Setting up Google OAuth">
         1. Go to <ExternalLink href="https://console.cloud.google.com/">Google Cloud Console</ExternalLink>.
         2. Create OAuth 2.0 credentials for your project.
-        3. Set the redirect URI to: `[YOUR_APP_URL]/auth/google` (for example, `http://localhost:5173/auth/google` during local development).
+        3. Set the redirect URI to: `[YOUR_APP_URL]/auth/google` (for example, `http://localhost:3000/auth/google` during local development).
         4. Save your Client ID and Client Secret.
 
         Need detailed instructions? Check our <ExternalLink href="/docs/react-sdk/authenticate-users/google-oauth/google-console-setup">Google Console Setup Guide</ExternalLink>.
@@ -150,19 +150,19 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
     import React from "react";
     import ReactDOM from "react-dom/client";
     import App from "./App";
-    import { OktoProvider } from "@okto_web3/react-sdk";
+    import { OktoProvider } from "@okto_web3/react-sdk"; // [!code highlight]
 
-    const config = {
-        environment: "sandbox",
-        clientPrivateKey: import.meta.env.VITE_CLIENT_PRIV_KEY,
-        clientSWA: import.meta.env.VITE_CLIENT_SWA,
-    };
+    const config = { // [!code highlight]
+        environment: "sandbox", // [!code highlight]
+        clientPrivateKey: import.meta.env.VITE_CLIENT_PRIV_KEY, // [!code highlight]
+        clientSWA: import.meta.env.VITE_CLIENT_SWA, // [!code highlight]
+    }; // [!code highlight]
 
     ReactDOM.createRoot(document.getElementById("root")!).render(
         <React.StrictMode>
-            <OktoProvider config={config}>
+            <OktoProvider config={config}>  // [!code highlight]
                 <App />
-            </OktoProvider>
+            </OktoProvider> // [!code highlight]
         </React.StrictMode>
     );
     ```
@@ -179,7 +179,7 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
     import React from "react";
     import ReactDOM from "react-dom/client";
     import App from "./App";
-    import { GoogleOAuthProvider } from "@react-oauth/google";
+    import { GoogleOAuthProvider } from "@react-oauth/google"; // [!code highlight]
     import { Hash, Hex, OktoProvider } from "@okto_web3/react-sdk";
 
     const config = {
@@ -190,11 +190,11 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
 
     ReactDOM.createRoot(document.getElementById("root")!).render(
         <React.StrictMode>
-            <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+            <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}> // [!code highlight]
                 <OktoProvider config={config}>
                     <App />
                 </OktoProvider>
-            </GoogleOAuthProvider>
+            </GoogleOAuthProvider> // [!code highlight]
         </React.StrictMode>
     );
     ```
@@ -207,25 +207,23 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
 
     Currently, you can onboard users and support on-chain interaction via the Okto Embedded wallet. To do this you must first authenticate your user via social login. We currently support Google OAuth.
 
-    1. Create the basic authentication component:
-
     ```tsx title="App.tsx"
     import { useState } from "react";
     import { useOkto } from "@okto_web3/react-sdk";
-    import { GoogleLogin } from "@react-oauth/google";
+    import { GoogleLogin } from "@react-oauth/google"; // [!code highlight]
     import { UserDashboard } from "./components/UserDashboard";
     
     function App() {
         const oktoClient = useOkto();
         const [isLoading, setIsLoading] = useState(false);
 
-        async function handleGoogleLogin(credentialResponse: any) {
-            try {
-                setIsLoading(true);
-                await oktoClient.loginUsingOAuth({
-                    idToken: credentialResponse.credential,
-                    provider: "google",
-                });
+        async function handleGoogleLogin(credentialResponse: any) { // [!code highlight]
+            try { // [!code highlight]
+                setIsLoading(true); // [!code highlight]
+                await oktoClient.loginUsingOAuth({ // [!code highlight]
+                    idToken: credentialResponse.credential, // [!code highlight]
+                    provider: "google", // [!code highlight]
+                }); // [!code highlight]
             } catch (error) {
                 console.error("Authentication error:", error);
             } finally {
@@ -240,7 +238,7 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
                 ) : oktoClient.userSWA ? (
                     <UserDashboard />
                 ) : (
-                    <GoogleLogin onSuccess={handleGoogleLogin} />
+                    <GoogleLogin onSuccess={handleGoogleLogin} /> // [!code highlight]
                 )}
             </div>
         );
@@ -249,14 +247,6 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
     export default App;
     ```
     <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-react-template-app/blob/main/src/LoginPage.tsx" />
-
-    2. After successful authentication, an Okto session is created and an Okto auth token is returned. The Okto Auth token is a JWT token similar to Google ID token and can be verified.
-
-    3. You can retrieve the auth token after login using:
-
-    ```tsx
-    const authToken = await oktoClient.getAuthToken();
-    ```
 
     The user's embedded wallet is automatically created or retrieved once the session is created and can be accessed via TypeScript and React.
 
@@ -268,7 +258,7 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
     Create a UserDashboard component to display user information:
 
     ```tsx title="UserDashboard.tsx"
-    import { useOkto, getAccount, getPortfolio } from "@okto_web3/react-sdk";
+    import { useOkto, getAccount, getPortfolio } from "@okto_web3/react-sdk"; // [!code highlight]
     import { useEffect, useState } from "react";
     
     export function UserDashboard() {
@@ -277,14 +267,14 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
         const [portfolio, setPortfolio] = useState(null);
     
         useEffect(() => {
-            async function fetchUserData() {
+            async function fetchUserData() { // [!code highlight]
                 // Get user's accounts/wallets
-                const userAccounts = await getAccount(oktoClient);
-                setAccounts(userAccounts);
+                const userAccounts = await getAccount(oktoClient); // [!code highlight]
+                setAccounts(userAccounts); // [!code highlight]
     
                 // Get user's portfolio
-                const userPortfolio = await getPortfolio(oktoClient);
-                setPortfolio(userPortfolio);
+                const userPortfolio = await getPortfolio(oktoClient); // [!code highlight]
+                setPortfolio(userPortfolio); // [!code highlight]
             }
     
             fetchUserData();
@@ -320,7 +310,7 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
     npm run dev
     ```
 
-    Visit `http://localhost:5173` in your browser.
+    Visit `http://localhost:3000` in your browser.
 
 </Step>
 
@@ -377,7 +367,7 @@ Now that we have our basic setup complete, let's implement a token transfer on S
 
     ```tsx title="TokenTransfer.tsx"
     import { useOkto } from "@okto_web3/react-sdk";
-    import { tokenTransfer } from "@okto_web3/react-sdk";
+    import { tokenTransfer } from "@okto_web3/react-sdk"; // [!code highlight]
     import { useState } from "react";
 
     export function TokenTransfer() {
@@ -386,15 +376,15 @@ Now that we have our basic setup complete, let's implement a token transfer on S
 
         async function handleTransfer() {
             try {
-                const transferParams = {
-                    amount: BigInt("1000000000000000000"), // 1 POL (18 decimals)
-                    recipient: "RECIPIENT_ADDRESS",
-                    token: "", // Empty string for native token
-                    caip2Id: "eip155:80002" // Polygon Amoy Testnet chain ID
+                const transferParams = { // [!code highlight]
+                    amount: BigInt("1000000000000000000"), // 1 POL (18 decimals) // [!code highlight]
+                    recipient: "RECIPIENT_ADDRESS", // [!code highlight]
+                    token: "", // Empty string for native token // [!code highlight]
+                    caip2Id: "eip155:80002" // Polygon Amoy Testnet chain ID // [!code highlight]
                 };
 
                 // Execute the transfer
-                const jobId = await tokenTransfer(oktoClient, transferParams);
+                const jobId = await tokenTransfer(oktoClient, transferParams); // [!code highlight]
                 setStatus(`Transfer jobId! Result: ${jobId}`);
             } catch (error) {
                 console.error("Transfer failed:", error);

@@ -1,9 +1,9 @@
 import { FaReact, FaGithub, FaCode } from "react-icons/fa6";
 import { TbBrandNextjs, TbBrandReactNative } from "react-icons/tb";
-import { SiTypescript } from "react-icons/si";
+import { SiTypescript, SiUnity } from "react-icons/si";
 import Link from "next/link";
 
-type SDKType = 'react' | 'nextjs' | 'react-native' | 'typescript' | 'eliza-okto-plugin';
+type SDKType = 'react' | 'nextjs' | 'react-native' | 'typescript' | 'eliza-okto-plugin' | 'unity';
 
 interface TemplateRepoBannerProps {
   sdk: SDKType;
@@ -38,6 +38,11 @@ const SDK_CONFIG = {
     icon: <FaCode size={24} className="text-[#3178c6] flex-shrink-0" />,
     defaultRepo: "https://github.com/okto-hq/okto-eliza-ai-agent-example",
     defaultTemplateUrl: "/docs/okto-eliza-plugin/integrating-into-dapp/eliza-okto-sample-agent"
+  },
+  unity: {
+    icon: <SiUnity size={24} className="text-black dark:text-white flex-shrink-0" />,
+    defaultRepo: "https://github.com/okto-hq/okto-sdkv2-unity-template-app",
+    defaultTemplateUrl: "/docs/unity-sdk/templateRepo"
   }
 };
 

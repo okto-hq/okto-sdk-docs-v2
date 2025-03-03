@@ -1,0 +1,158 @@
+---
+title: Get Orders History
+description: Learn how to retrieve order history using the Okto SDK.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
+
+The `getOrdersHistory` function retrieves the transaction history of orders placed by the authenticated user.
+
+<ChainSupportStatus 
+/>
+
+### Example
+
+<Accordions defaultValue="Usage">
+<Accordion title="Usage">
+<Tabs items={['TypeScript']}>
+<Tab value="TypeScript">
+```typescript
+import { useOkto } from '@okto_web3/react-sdk';
+import { getOrdersHistory } from '@okto_web3/react-sdk';
+
+function OrderHistory() {
+    const oktoClient = useOkto();
+
+    async function fetchOrderHistory() {
+        try {
+            const history = await getOrdersHistory(oktoClient);
+            console.log('Order history:', history);
+        } catch (error) {
+            console.error('Error fetching order history:', error);
+        }
+    }
+
+    return (
+        <button onClick={fetchOrderHistory}>
+            Fetch Order History
+        </button>
+    );
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": {
+        "count": 1,
+        "items": [
+            {
+                "downstream_transaction_hash": [
+                    "0xb30aacea6ee3883939255195172a62110b02aeb03dc590e0cd4d878995bc958b"
+                ],
+                "transaction_hash": [
+                    "0x1378f79faffa6ff1242c5d4ebdbc8fffc4bdbc44723cb63041d54fc67c671f97",
+                    "0xd6f8416207f1589a600ce1c1a1b492b28f0ab5e9bcb499eb0886f886d4daed75"
+                ],
+                "status": "SUCCESSFUL",
+                "intent_id": "21260b29-2e72-4337-b494-c69d62dd3c92",
+                "intent_type": "TOKEN_TRANSFER",
+                "network_name": "OKTO_DEVNET",
+                "caip_id": "eip155:24879",
+                "details": {
+                    "amount": "164060000",
+                    "networkId": "eip155:137",
+                    "recipientWalletAddress": "0x08a51013e6db8CE4594e0F9c0D13c96772d24336",
+                    "tokenAddress": ""
+                },
+                "reason": "",
+                "block_timestamp": 1738761051000
+            }
+        ]
+    }
+}
+```
+</Accordion>
+</Accordions>
+
+<Callout title="Important: Transaction Lifecycle">
+The `getOrderHistory` function fetches the current status of a transaction on the Okto chain. However, the transaction status will continue to update on the Okto chain as it progresses through various stages in the [Distributed Transaction Network (DTN)](/docs/okto-layer/dtn).
+
+To track a transaction to completion:
+- Keep fetching the order history for your specific `jobId` until the status shows "SUCCESSFUL"
+- Once successful, the transaction hash will be available in the response
+- Use this transaction hash to verify the transaction on the destination chain's explorer
+</Callout>
+
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
+</Callout>
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`getOrdersHistory`](#get-orders-history) | Get order history for the user |
+
+<div className="method-box">
+
+## Get Orders History
+
+<sub><i>async</i></sub> `getOrdersHistory(oktoClient: OktoClient, filters?: OrderFilterRequest)` retrieves the transaction history of orders placed by the user.
+
+### Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|-----------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+| `filters` | `OrderFilterRequest` | Optional filters for the orders query | No |
+
+Where `OrderFilterRequest` contains:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `intentId` | `string` | Optional ID to filter specific order/transaction |
+| `status` | `STATUS_TYPE` | Optional status to filter orders by (e.g., "SUCCESSFUL", "FAILED", "PENDING", "REJECTED") |
+| `intentType` | `INTENT_TYPE` | Optional type to filter orders by (e.g., "TOKEN_TRANSFER", "NFT_TRANSFER", "RAW_TRANSACTION") |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `orders` | [`Promise<Order[]>`](/docs/react-sdk/technical-reference#models) | Array of order history items |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface Order {
+            downstream_transaction_hash: string[];
+            transaction_hash: string[];
+            status: "SUCCESSFUL" | "FAILED" | "PENDING" | "REJECTED";
+            intent_id: string;
+            intent_type: "TOKEN_TRANSFER" | "NFT_TRANSFER" | "RAW_TRANSACTION";
+            network_name: string;
+            caip_id: string;
+            details: OrderDetails;
+            reason: string;
+            block_timestamp: number;
+        }
+        ```
+    </Accordion>
+</Accordions>
+
+</Callout>
+
+</div>
