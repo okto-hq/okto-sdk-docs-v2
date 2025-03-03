@@ -23,7 +23,6 @@
     "./wallets/(embedded-wallets)/index",
     "./wallets/(embedded-wallets)/delegated-actions",
     "!./wallets/external-wallets",
-    "./wallets/wagmi-integration",
     "---Usage---",
     "usage-overview",
     "(hooks)",

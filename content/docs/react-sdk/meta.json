@@ -29,7 +29,6 @@
     "./wallets/(embedded-wallets)/index",
     "./wallets/(embedded-wallets)/delegated-actions",
     "!./wallets/external-wallets",
-    "./wallets/wagmi-integration",
     "---Resources---",
     "v2migration",
     "technical-reference",

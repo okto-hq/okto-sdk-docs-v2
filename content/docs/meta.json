@@ -16,6 +16,7 @@
       "!flutter-sdk", 
       "unity-sdk",
       "typescript-sdk",
+      "wagmi-integration",
       "okto-eliza-plugin",
       "---About Okto SDK---",
       "okto-sdk/overview",
