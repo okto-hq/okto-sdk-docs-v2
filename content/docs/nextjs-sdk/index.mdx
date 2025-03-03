@@ -137,21 +137,21 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
     ```tsx title="app/components/providers.tsx"
     "use client";
     import { SessionProvider } from "next-auth/react";
-    import { Hex, Hash, OktoProvider } from "@okto_web3/react-sdk";
+    import { Hex, Hash, OktoProvider } from "@okto_web3/react-sdk"; // [!code highlight]
     import React from "react";
     
     function AppProvider({ children, session }) {
         return (
             <SessionProvider session={session}>
-            <OktoProvider
-                config={{
-                    environment: "sandbox",
-                    clientPrivateKey: process.env.NEXT_PUBLIC_CLIENT_PRIVATE_KEY as Hash,
-                    clientSWA: process.env.NEXT_PUBLIC_CLIENT_SWA as Hex,
-                }}
-            >
+            <OktoProvider // [!code highlight]
+                config={{ // [!code highlight]
+                    environment: "sandbox", // [!code highlight]
+                    clientPrivateKey: process.env.NEXT_PUBLIC_CLIENT_PRIVATE_KEY as Hash, // [!code highlight]
+                    clientSWA: process.env.NEXT_PUBLIC_CLIENT_SWA as Hex, // [!code highlight]
+                }} // [!code highlight]
+            > // [!code highlight]
                 {children}
-            </OktoProvider>
+            </OktoProvider> // [!code highlight]
             </SessionProvider>
         );
     }
@@ -185,17 +185,17 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
     </CollapsibleCallout>
 
     ```tsx title="app/api/auth/[...nextauth]/route.ts"
-    import NextAuth from "next-auth";
-    import GoogleProvider from "next-auth/providers/google";
+    import NextAuth from "next-auth"; // [!code highlight]
+    import GoogleProvider from "next-auth/providers/google"; // [!code highlight]
     import type { AuthOptions } from "next-auth";
 
     export const authOptions: AuthOptions = {
-      secret: process.env.AUTH_SECRET,
-      providers: [
-        GoogleProvider({ // Configure Google Provider
-          clientId: process.env.GOOGLE_CLIENT_ID!, // From .env
-          clientSecret: process.env.GOOGLE_CLIENT_SECRET!, // From .env
-        }),
+      secret: process.env.AUTH_SECRET, // [!code highlight]
+      providers: [ // [!code highlight]
+        GoogleProvider({ // Configure Google Provider // [!code highlight]
+          clientId: process.env.GOOGLE_CLIENT_ID!, // From .env // [!code highlight]
+          clientSecret: process.env.GOOGLE_CLIENT_SECRET!, // From .env // [!code highlight]
+        }), // [!code highlight]
       ],
       session: {
         strategy: "jwt",
@@ -203,13 +203,13 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
       callbacks: {
         async jwt({ token, user, account }) {
           if (account) {
-            token.id_token = account.id_token;
+            token.id_token = account.id_token; // [!code highlight]
           }
           return token;
         },
         async session({ session, token }) {
           //@ts-ignore
-          session.id_token = token.id_token;
+          session.id_token = token.id_token; // [!code highlight]
           return session;
         },
       },
@@ -239,7 +239,7 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
     import type { Metadata } from "next";
     import { Inter } from "next/font/google";
     import "./globals.css";
-    import AppProvider from "./components/providers";
+    import AppProvider from "./components/providers"; // [!code highlight]
     import { getServerSession } from "next-auth";
     import { authOptions } from "./api/auth/[...nextauth]/route";
 
@@ -259,7 +259,7 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
       return (
         <html lang="en">
           <body className={inter.className}>
-            <AppProvider session={session}>{children}</AppProvider>
+            <AppProvider session={session}>{children}</AppProvider> // [!code highlight]
           </body>
         </html>
       );
@@ -283,14 +283,14 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
 
     ```tsx title="components/LoginButton.tsx"
     "use client";
-    import { useSession, signIn, signOut } from "next-auth/react";
+    import { useSession, signIn, signOut } from "next-auth/react"; // [!code highlight]
 
     export function LoginButton() {
         const { data: session } = useSession(); // Get session data
 
-        const handleLogin = () => {
-            signIn("google");   // Trigger Google sign-in
-        };
+        const handleLogin = () => { // [!code highlight]
+            signIn("google");   // Trigger Google sign-in // [!code highlight]
+        }; // [!code highlight]
 
         return (
             <button
@@ -299,7 +299,7 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
                     ? "bg-blue-500 hover:bg-blue-700 text-white"
                     : "bg-blue-500 hover:bg-blue-700 text-white"
                 }`}
-                onClick={handleLogin}
+                onClick={handleLogin} // [!code highlight]
             >
                 Authenticate
             </button>
@@ -321,7 +321,7 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
     ```tsx title="components/GetButton.tsx"
     "use client";
     import React, { useState } from "react";
-    import { useOkto } from "@okto_web3/react-sdk";
+    import { useOkto } from "@okto_web3/react-sdk"; // [!code highlight]
 
     interface GetButtonProps {
         title: string;
@@ -334,12 +334,12 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
         const oktoClient = useOkto();
 
         const handleButtonClick = () => {
-            apiFn(oktoClient)
-            .then((result: any) => {
-                console.log(`${title}:`, result);
-                const resultData = JSON.stringify(result, null, 2);
-                setResultData(resultData !== "null" ? resultData : "No result");
-                setModalVisible(true);
+            apiFn(oktoClient) // [!code highlight]
+            .then((result: any) => { // [!code highlight]
+                console.log(`${title}:`, result); // [!code highlight]
+                const resultData = JSON.stringify(result, null, 2); // [!code highlight]
+                setResultData(resultData !== "null" ? resultData : "No result"); // [!code highlight]
+                setModalVisible(true); // [!code highlight]
             })
             .catch((error: any) => {
                 console.error(`${title} error:`, error);
@@ -408,14 +408,14 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
     "use client";
     import React, { useEffect, useMemo } from "react";
     import { useSession, signOut } from "next-auth/react";
-    import { LoginButton } from "@/app/components/LoginButton";
-    import GetButton from "@/app/components/GetButton";
-    import {getAccount, useOkto } from '@okto_web3/react-sdk';
+    import { LoginButton } from "@/app/components/LoginButton"; // [!code highlight]
+    import GetButton from "@/app/components/GetButton"; // [!code highlight]
+    import {getAccount, useOkto } from '@okto_web3/react-sdk'; // [!code highlight]
 
 
     export default function Home() {
-        const { data: session } = useSession();
-        const oktoClient = useOkto();
+        const { data: session } = useSession(); // [!code highlight]
+        const oktoClient = useOkto(); // [!code highlight]
 
         //@ts-ignore
         const idToken = useMemo(() => (session ? session.id_token : null), [session]);
@@ -424,11 +424,11 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
             if (!idToken) {
                 return { result: false, error: "No google login" };
             }
-            const user = await oktoClient.loginUsingOAuth({
-                idToken: idToken,
-                provider: 'google',
-            });
-            console.log("Authentication Success", user);
+            const user = await oktoClient.loginUsingOAuth({ // [!code highlight]
+                idToken: idToken, // [!code highlight]
+                provider: 'google', // [!code highlight]
+            }); // [!code highlight]
+            console.log("Authentication Success", user); // [!code highlight]
             return JSON.stringify(user);
         }
 
@@ -551,7 +551,7 @@ Let's implement a token transfer on Polygon Testnet Amoy to understand how user 
     "use client";
 
     import { useOkto } from "@okto_web3/react-sdk";
-    import { tokenTransfer } from "@okto_web3/react-sdk";
+    import { tokenTransfer } from "@okto_web3/react-sdk"; // [!code highlight]
     import { useState } from "react";
 
     export function TokenTransfer() {
@@ -560,22 +560,15 @@ Let's implement a token transfer on Polygon Testnet Amoy to understand how user 
 
         async function handleTransfer() {
             try {
-                const transferParams = {
-                    amount: BigInt("1000000000000000000"), // 1 POL (18 decimals)
-                    recipient: "RECIPIENT_ADDRESS",
-                    token: "", // Empty string for native token
-                    caip2Id: "eip155:80002" // Polygon Amoy Testnet chain ID
-                };
-                const userOp = await tokenTransfer(oktoClient, transferParams);
-                setStatus(`Transfer userop created! Result: ${userOp}`);
+                const transferParams = { // [!code highlight]
+                    amount: BigInt("1000000000000000000"), // 1 POL (18 decimals) // [!code highlight]
+                    recipient: "RECIPIENT_ADDRESS", // [!code highlight]
+                    token: "", // Empty string for native token // [!code highlight]
+                    caip2Id: "eip155:80002" // Polygon Amoy Testnet chain ID // [!code highlight]
+                }; // [!code highlight]
+                const jobId = await tokenTransfer(oktoClient, transferParams); // [!code highlight]
 
-                //sign the userop
-                const signedUserop = await oktoClient.signUserop(userOp);
-
-                //execute the userop
-                const txHash = await oktoClient.executeUserop(signedUserop);
-
-                setStatus(`Transfer executed! Result: ${txHash}`);
+                setStatus(`Transfer jobId! Result: ${jobId}`);
             } catch (error) {
                 console.error("Transfer failed:", error);
                 setStatus(`Transfer failed: ${error.message}`);
