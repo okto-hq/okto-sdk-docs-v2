@@ -1,0 +1,151 @@
+---
+title: Get Tokens
+description: Learn how to retrieve token information using the Okto SDK.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
+
+The `getTokens` function fetches the list of supported tokens from the backend.
+
+<ChainSupportStatus 
+/>
+
+### Example
+
+<Accordions defaultValue="Usage">
+<Accordion title="Usage">
+<Tabs items={['TypeScript']}>
+<Tab value="TypeScript">
+```typescript
+import { useOkto } from '@okto_web3/react-sdk';
+import { getTokens } from '@okto_web3/react-sdk';
+
+function TokensList() {
+    const oktoClient = useOkto();
+
+    async function fetchTokens() {
+        try {
+            const tokens = await getTokens(oktoClient);
+            console.log('Supported tokens:', tokens);
+        } catch (error) {
+            console.error('Error fetching tokens:', error);
+        }
+    }
+
+    return (
+        <button onClick={fetchTokens}>
+            Fetch Supported Tokens
+        </button>
+    );
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": {
+        "count": 24,
+        "tokens": [
+            {
+                "address": "0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2",
+                "caip_id": "eip155:8453",
+                "symbol": "USDT",
+                "image": "https://images.okto.tech/token_logos/USDT.png",
+                "name": "",
+                "short_name": "Tether USD",
+                "id": "a060dd71-4ab2-3865-9530-5c4288f40506",
+                "group_id": "83e77d34-88e9-3e59-a678-231fbf336b08",
+                "is_primary": false,
+                "network_id": "9400de12-efc6-3e69-ab02-0eaf5aaf21e5",
+                "network_name": "BASE",
+                "onramp_enabled": false,
+                "whitelisted": true
+            },
+            {
+                "address": "",
+                "caip_id": "eip155:56",
+                "symbol": "BNB",
+                "image": "https://images.okto.tech/token_logos/BNB.png",
+                "name": "BNB",
+                "short_name": "BNB",
+                "id": "d34383bb-b6b1-3d10-ad7f-60aef8d548fa",
+                "group_id": "9fc268f9-2a56-315a-bd6e-b6a91aceb79c",
+                "is_primary": true,
+                "network_id": "9a26afcf-ed62-43d8-91ea-42dc7cd55890",
+                "network_name": "BSC",
+                "onramp_enabled": false,
+                "whitelisted": true
+            }
+        ]
+    }
+}
+```
+</Accordion>
+</Accordions>
+
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
+</Callout>
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`getTokens`](#get-tokens) | Get supported token information |
+
+<div className="method-box">
+
+## Get Tokens
+
+<sub><i>async</i></sub> `getTokens(oktoClient: OktoClient)` retrieves information about all supported tokens.
+
+### Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|-----------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `tokens` | [`Promise<Token[]>`](/docs/react-sdk/technical-reference#models) | Array of supported tokens |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface Token {
+            address: string;
+            caip_id: string;
+            symbol: string;
+            image: string;
+            name: string;
+            short_name: string;
+            id: string;
+            group_id: string;
+            is_primary: boolean;
+            network_id: string;
+            network_name: string;
+            onramp_enabled: boolean;
+            whitelisted: boolean;
+        }
+        ```
+    </Accordion>
+</Accordions>
+
+</Callout>
+
+</div>

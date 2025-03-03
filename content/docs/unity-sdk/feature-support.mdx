@@ -1,0 +1,98 @@
+---
+title: Feature Support
+full: false
+---
+
+<style jsx>
+{`
+.feature-supported-version {
+    display: inline-block;
+    padding: 2px 8px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-align: center;
+}
+`}
+</style>
+
+Okto provides a seamless and secure way to integrate blockchain functionality into your applications. The Okto SDK enables developers to onboard users, manage wallets, interact with multiple chains, and facilitate smooth crypto transactions within the platform environments.
+
+---
+
+## Feature Matrix
+
+Check out the matrix below to determine which features are supported in each Okto SDK.
+
+**Legend:**
+
+*   ✅ - Feature Currently Supported
+*   🔜 - Feature Coming Soon
+*   <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="EVM" /> - EVM Chains (To see the list of supported chains, click [here](/docs/supported-chains))
+*   <img src="https://cdn3.emoji.gg/emojis/7187-solana.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Solana" /> - Solana Chain
+*   <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> - Aptos Chain
+
+### Authentication
+
+| Feature               | Supported in Version |
+| --------------------- | -------------------- |
+| Google OAuth          | <span className="feature-supported-version">v0.1.0</span>        |
+| Email OTP             | 🔜                    |
+| Phone OTP             | 🔜                    |
+| Whatsapp OTP          | 🔜                    |
+| Custom Authentication |  🔜                   |
+
+### Okto Smart Wallets
+
+| Feature                   | Supported in Version |
+| ------------------------- | -------------------- |
+| Embedded Wallets          | <span className="feature-supported-version">v0.1.0</span>         |
+| Signing Transactions      | <span className="feature-supported-version">v0.1.0</span>         |
+| Broadcasting Transactions | <span className="feature-supported-version">v0.1.0</span>         |
+| Transaction MFA           | 🔜                      |
+| Wallet Key Export         | 🔜                      |
+
+### Custom Blockchain Support
+
+| Feature                     | Supported in Version |
+| --------------------------- | -------------------- |
+| EVM Chains Support    | <span className="feature-supported-version">v0.1.0</span>         |
+| Custom EVM Chains Support    | <span className="feature-supported-version">v0.1.0</span>         |
+| Solana Chain Support |    🔜      |
+| Aptos Chain Support |  🔜         |
+
+### Connectors
+
+| Feature                                          | Supported in Version |
+| ------------------------------------------------ | -------------------- |
+| Wagmi                                          | <span className="feature-supported-version">v0.1.0</span>         |
+| Ethers.js                              | 🔜                     |
+| External Wallets (MetaMask, WalletConnect, etc.)                                            | 🔜                      |
+| Viem                                             | 🔜                      |
+| @solana/web3.js                                  | 🔜                      |
+
+### Funding & Payments
+
+| Feature                | Supported in Version |
+| ---------------------- | -------------------- |
+| Transfer from Wallet   |  <span className="feature-supported-version">v0.1.0</span>  |
+| On-Ramp |  🔜                      |
+| Cross-Chain Liquidity | 🔜                      |
+| Cross-Chain Swaps   | 🔜                      |
+
+### NFTs
+
+| Feature             | Supported in Version |
+| ------------------- | -------------------- |
+| Transfers | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" />  |
+| Minting             | 🔜 |
+| Collection Creation           | 🔜 |
+
+### Smart Contract Interactions
+
+| Feature                     | Supported in Version |
+| --------------------------- | -------------------- |
+| RawWrite (Write to Smart Contract)    | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" />  |
+| RawRead (Read from Smart Contract)   | 🔜 |

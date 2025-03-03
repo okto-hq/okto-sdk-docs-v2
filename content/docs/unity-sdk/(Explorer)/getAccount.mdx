@@ -1,0 +1,119 @@
+---
+title: Get Account
+description: Learn how to get the account of a user using the Okto SDK.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
+
+Okto SDK provides the `getAccount()` method to retrieve details of wallets connected to the current user's Okto account. This includes both embedded wallets created via Okto and external wallets connected by the user (e.g., MetaMask, Phantom).
+
+<ChainSupportStatus 
+/>
+
+### Example
+
+<Accordions defaultValue="Usage">
+<Accordion title="Usage">
+<Tabs items={['Typescript']}>
+  <Tab value="Typescript">
+    ```typescript
+    import { useOkto } from '@okto_web3/react-sdk';
+    import { getAccount } from '@okto_web3/react-sdk';
+
+    function Account() {
+        const oktoClient = useOkto();
+
+        async function fetchAccount() {
+            try {
+                const account = await getAccount(oktoClient);
+                console.log('Account data:', account);
+            } catch (error) {
+                console.error('Error fetching user account:', error);
+            }
+        }
+
+        return (
+            <button onClick={fetchAccount}>
+                Fetch User Account
+            </button>
+        );
+    }
+    ```
+  </Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": [
+        {
+            "caip_id": "eip155:10",
+            "network_name": "OPTIMISM",
+            "address": "0x6698c56f99EaF4662cD70f974Cf787926e47781b",
+            "network_id": "f0620691-ce05-3d5c-94c7-1f2cf275c781",
+            "network_symbol": "OP"
+        }
+    ]
+}
+```
+</Accordion>
+</Accordions>
+
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
+</Callout>
+
+### Method Overview
+
+| Methods                                              | Description                          |                 
+|------------------------------------------------------|--------------------------------------|
+| <sub><i>async</i></sub> [`getAccount`](#get-account) | Get the account of a user            |
+
+<div className="method-box">
+
+## Get Account
+
+<sub><i>async</i></sub> `getAccount()` retrieves the list of all wallets associated with the currently authenticated user. 
+
+In Okto, an **account** represents the user's identity in the Okto ecosystem, encompassing both embedded wallets seamlessly created by Okto and external wallets users choose to connect.
+
+### Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|-----------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type                  | Description                                   | 
+|------------|-----------------------|-----------------------------------------------|
+| `result`   | [`Promise<Wallet[]>`](/docs/react-sdk/technical-reference#models) | Returns the list of wallet of the user | 
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface Wallet {
+            caip_id: string;
+            network_name: string;
+            address: string;
+            network_id: string;
+            network_symbol: string;
+        }
+        ```
+    </Accordion>
+</Accordions>
+
+</Callout>
+
+</div>

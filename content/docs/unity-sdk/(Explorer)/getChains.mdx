@@ -1,0 +1,129 @@
+---
+title: Get Chains
+description: Learn how to retrieve supported blockchain networks using the Okto SDK.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
+
+The `getChains` function retrieves a list of all blockchain networks supported by Okto. This includes information about each chain's configuration, network details, and supported features.
+
+<ChainSupportStatus 
+/>
+
+### Example
+
+<Accordions defaultValue="Usage">
+<Accordion title="Usage">
+<Tabs items={['TypeScript']}>
+<Tab value="TypeScript">
+```typescript
+import { useOkto } from '@okto_web3/react-sdk';
+import { getChains } from '@okto_web3/react-sdk';
+
+function ChainsList() {
+    const oktoClient = useOkto();
+
+    async function fetchChains() {
+        try {
+            const chains = await getChains(oktoClient);
+            console.log('Supported chains:', chains);
+        } catch (error) {
+            console.error('Error fetching chains:', error);
+        }
+    }
+
+    return (
+        <button onClick={fetchChains}>
+            Fetch Supported Chains
+        </button>
+    );
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": {
+        "network": [
+            {
+                "caip_id": "eip155:56",
+                "network_name": "BSC",
+                "chain_id": "56",
+                "logo": "BSC",
+                "sponsorship_enabled": true,
+                "gsn_enabled": false,
+                "type": "EVM",
+                "network_id": "9a26afcf-ed62-43d8-91ea-42dc7cd55890",
+                "onramp_enabled": false,
+                "whitelisted": true
+            }
+        ]
+    }
+}
+```
+</Accordion>
+</Accordions>
+
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
+</Callout>
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`getChains`](#get-chains) | Get all supported blockchain networks |
+
+<div className="method-box">
+
+## Get Chains
+
+<sub><i>async</i></sub> `getChains(oktoClient: OktoClient)` retrieves the list of all blockchain networks supported by Okto.
+
+### Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|-----------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `chains` | [`Promise<GetSupportedNetworksResponseData[]>`](/docs/react-sdk/technical-reference#models) | Array of supported blockchain networks |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface GetSupportedNetworksResponseData {
+            caip_id: string;
+            network_name: string;
+            chain_id: string;
+            logo: string;
+            sponsorship_enabled: boolean;
+            gsn_enabled: boolean;
+            type: string;
+            network_id: string;
+            onramp_enabled: boolean;
+            whitelisted: boolean;
+        }
+        ```
+    </Accordion>
+</Accordions>
+
+</Callout>
+
+</div>

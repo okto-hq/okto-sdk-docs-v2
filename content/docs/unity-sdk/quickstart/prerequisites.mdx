@@ -1,0 +1,39 @@
+---
+title: Prerequisites
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+## Setup Requirements
+
+1. **React Environment**
+   - A React project (version 16.8 or higher)
+   - Node.js (version 14 or higher)
+   - npm or yarn package manager
+   - For a complete list of dependencies, check our [`package.json`](https://github.com/okto-hq/okto-sdkv2-react-template-app/blob/main/package.json)
+
+2. **Okto Dashboard Setup**
+   - Create an account on the [Okto Dashboard](https://dashboard.okto.tech/login)
+   - Get your [Okto credits](https://dashboard.okto.tech/okto-credits) from the dashboard
+   - Obtain your [API keys](https://dashboard.okto.tech/api-keys) from the dashboard
+   - Enable the specific [chains and tokens](https://dashboard.okto.tech/wallet-controls) you plan to use in your application
+   - Optional: Enable [sponsorship](https://dashboard.okto.tech/paymaster) for the desired chains
+
+3. **Google OAuth Configuration**
+   - Set up a [Google Console Project](https://console.cloud.google.com) for authentication
+   - Create OAuth 2.0 client credentials
+   - Follow our guide to [set up Google OAuth](/docs/react-sdk/authenticate-users/google-oauth/google-console-setup)
+
+<Callout type="info">
+Additional authentication methods like Email OTP and Phone OTP will be available soon. If you are already using Email OTP, Phone OTP from [Okto V1](https://docs.okto.tech/) you may continue to use the same auth in V2. Refer our [Migration Guide](/docs/react-sdk/v2migration)
+</Callout>
+
+<Callout title="Environment Configuration">
+Your project will use the **Sandbox** environment by default. For production deployment, please refer to our [Developer Dashboard Documentation](/docs/developer-admin-dashboard) for upgrade instructions.
+</Callout>
+
+## Next Steps
+
+Once you've completed these prerequisites, proceed to the [Quickstart Guide](/docs/react-sdk) to integrate the Okto SDK into your React project.
+
+Need help? Check our [troubleshooting guide](/docs/react-sdk/troubleshooting) or reach out to our support team at `devrel@coindcx.com`.

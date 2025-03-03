@@ -1,0 +1,289 @@
+---
+title: Token Transfer
+description: Learn how to create token transfer operations using the Okto SDK.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
+
+The `tokenTransfer()` function creates a user operation for transferring tokens. This function initiates the process of transferring a token by encoding the necessary parameters into a User Operation, which can then be signed and executed using the OktoClient.
+
+<ChainSupportStatus 
+/>
+
+<Callout>
+There are two ways to implement token transfers:
+
+- **Abstracted Flow**: A simplified approach where the user operation is automatically created, signed, and executed in a single step. Perfect for most applications.
+- **UserOp Flow**: A granular approach where you manually control the creation, signing, and execution of the user operation. Useful for custom implementations or advanced use cases.
+</Callout>
+
+### Example
+
+<Accordions defaultValue="Usage">
+<Accordion title="Usage">
+
+<Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+<Tab value="Abstracted Flow">
+```typescript
+import { useOkto } from '@okto_web3/react-sdk';
+import { tokenTransfer } from '@okto_web3/react-sdk';
+
+function TokenTransfer() {
+    const oktoClient = useOkto();
+
+    async function handleTokenTransfer() {
+        try {
+            const transferParams = {
+                amount: BigInt("1000000000000000000"), // 1 token with 18 decimals
+                recipient: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+                token: "0x2170ed0880ac9a755fd29b2688956bd959f933f8", // Token contract address
+                caip2Id: "eip155:1"
+            };
+            // Execute the transfer
+            const jobId = await tokenTransfer(oktoClient, transferParams);
+            console.log('Transfer jobId:', jobId);
+        } catch (error:any) {
+            console.error('Error in token transfer:', error);
+        }
+    }
+
+    return (
+        <button onClick={handleTokenTransfer}>
+            Transfer Token
+        </button>
+    );
+}
+```
+</Tab>
+<Tab value="UserOp Flow">
+```typescript
+import { useOkto } from '@okto_web3/react-sdk';
+import { tokenTransfer } from '@okto_web3/react-sdk/userop';
+
+function TokenTransfer() {
+    const oktoClient = useOkto();
+
+    async function handleTokenTransfer() {
+        try {
+            const transferParams = {
+                amount: BigInt("1000000000000000000"), // 1 token with 18 decimals
+                recipient: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+                token: "0x2170ed0880ac9a755fd29b2688956bd959f933f8", // Token contract address
+                caip2Id: "eip155:1"
+            };
+
+            // Create the user operation
+            const userOp = await tokenTransfer(oktoClient, transferParams);
+            
+            // Sign the operation
+            const signedOp = await oktoClient.signUserOp(userOp);
+            
+            // Execute the transfer
+            const jobId = await oktoClient.executeUserOp(signedOp);
+            console.log('Transfer jobId:', jobId);
+        } catch (error:any) {
+            console.error('Error in token transfer:', error);
+        }
+    }
+
+    return (
+        <button onClick={handleTokenTransfer}>
+            Transfer Token
+        </button>
+    );
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Sample Response">
+<Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+<Tab value="Abstracted Flow">
+```typescript
+// JobId returned
+"3ee33731-9e96-4ab9-892c-ea476b36295d"
+```
+</Tab>
+<Tab value="UserOp Flow">
+```typescript
+// UserOp returned from tokenTransfer
+{
+    "sender": "0xa9F6b3A5a718754979dbA78113f3614Dd4524c53",
+    "nonce": "0x000000000000000000000000000000003ee337319e964ab9892cea476b36295d",
+    "paymaster": "0x5408fAa7F005c46B85d82060c532b820F534437c",
+    "callGasLimit": "0x493e0",
+    "verificationGasLimit": "0x30d40",
+    "preVerificationGas": "0xc350",
+    "maxFeePerGas": "0x77359400",
+    "maxPriorityFeePerGas": "0x77359400",
+    "paymasterPostOpGasLimit": "0x186a0",
+    "paymasterVerificationGasLimit": "0x186a0",
+    "callData": "0x8dd7712f...", // truncated for brevity
+    "paymasterData": "0x000000...", // truncated for brevity
+    "signature": "0x6bf06e6d..." // truncated for brevity
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Suggested Post Implementation">
+
+```typescript
+import { useOkto } from '@okto_web3/react-sdk';
+import { getOrdersHistory } from '@okto_web3/react-sdk';
+
+async function getTokenOrder(jobId: string) {
+    const oktoClient = useOkto();
+    try {
+        // Get order history with filter for specific jobId
+        const orders = await getOrdersHistory(oktoClient, {
+            intentId: jobId,                    // Filter by specific order/transaction
+            intentType: "TOKEN_TRANSFER",       // Filter for token transfer orders
+            status: "SUCCESSFUL"                // Filter by status: "SUCCESSFUL" | "FAILED" | "PENDING" | "REJECTED"
+        });
+        return orders?.[0] || null;
+    } catch (error) {
+        console.error('Error fetching token order:', error);
+        throw error;
+    }
+}
+
+// Usage example:
+const order = await getTokenOrder(jobId);
+console.log('Order Status:', order?.status);
+```
+<Callout title="Important: Transaction Lifecycle">
+The `getOrderHistory` function fetches the current status of a transaction on the Okto chain. However, the transaction status will continue to update on the Okto chain as it progresses through various stages in the [Distributed Transaction Network (DTN)](/docs/okto-layer/dtn).
+
+To track a transaction to completion:
+- Keep fetching the order history for your specific `jobId` until the status shows "SUCCESSFUL"
+- Once successful, the transaction hash will be available in the response
+- Use this transaction hash to verify the transaction on the destination chain's explorer
+</Callout>
+</Accordion>
+
+
+<Accordion title="Corresponding jobId Response">
+```typescript
+// Order returned from getOrdersHistory
+{
+    "downstream_transaction_hash": ["0x742d35Cc6634C0532925a3b844Bc454e4438f44e"],
+    "transaction_hash": ["0x8dd7712f5f95ad24ddc0c2b90ea7f2f879680ec350fe4f373068b0e3370b9187"],
+    "status": "SUCCESSFUL",
+    "intent_id": "3ee33731-9e96-4ab9-892c-ea476b36295d",
+    "intent_type": "TOKEN_TRANSFER",
+    "network_name": "Ethereum",
+    "caip_id": "eip155:1",
+    "details": {
+        "amount": "1000000000000000000",
+        "recipient": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+        "token": "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+        "token_name": "Ethereum",
+        "token_symbol": "ETH",
+        "token_decimals": 18
+    },
+    "reason": "",
+    "block_timestamp": 1677721600
+}
+```
+</Accordion>
+
+</Accordions>
+
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
+</Callout>
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`tokenTransfer`](#token-transfer) | Create a user operation for token transfer |
+
+<div className="method-box">
+
+## Token Transfer
+
+<sub><i>async</i></sub> `tokenTransfer(oktoClient: OktoClient, data: TokenTransferIntentParams)` creates a user operation for transferring tokens.
+
+### Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|----------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+| `data` | [`TokenTransferIntentParams`](/docs/react-sdk/technical-reference#models) | Parameters for the token transfer | Yes |
+
+Where `TokenTransferIntentParams` contains:
+
+| Field | Type | Description | Required |
+|-------|------|-------------|----------|
+| `amount` | `number \| bigint` | Amount to send, in the smallest unit (e.g., gwei for ETH) | Yes |
+| `recipient` | `Address` | Wallet address of the recipient | Yes |
+| `token` | `Address \| ''` | The token address for the transaction | Yes |
+| `caip2Id` | `string` | The network ID (e.g., Ethereum - eip155:1, Polygon - eip155:137) | Yes |   
+
+### Response
+
+<Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+<Tab value="Abstracted Flow">
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | `Promise<string>` | Returns the jobId for the token transfer |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface {
+            jobId: string;  
+        }
+        ```
+    </Accordion>
+</Accordions>
+</Callout>
+</Tab>
+<Tab value="UserOp Flow">
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | [`Promise<UserOp>`](/docs/react-sdk/technical-reference#models) | Returns the user operation for the token transfer |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface UserOp {
+            sender: string;
+            nonce: string;
+            paymaster: string;
+            callGasLimit: string;
+            verificationGasLimit: string;
+            preVerificationGas: string;
+            maxFeePerGas: string;
+            maxPriorityFeePerGas: string;
+            paymasterPostOpGasLimit: string;
+            paymasterVerificationGasLimit: string;
+            callData: string;
+            paymasterData: string;
+            signature: string;
+        }
+        ```
+    </Accordion>
+</Accordions>
+</Callout>
+
+</Tab>
+</Tabs>
+
+</div>
