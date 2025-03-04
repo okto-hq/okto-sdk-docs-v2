@@ -29,11 +29,13 @@ security:
 tags:
   - name: Client
     description: Everything related to client side
+  - name: Authenticate
+    description: Everything related to authentication
 paths:
   "/api/v2/authenticate":
     post:
       tags:
-        - Client
+        - Authenticate
       summary: Authenticate a user via Google ID Token
       description:
         Authenticates the user using Google ID Token and on successfull authentication, it will return the token of the user. Checkout the documentation here.
@@ -69,227 +71,6 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/responses/BadRequest"
-  "/api/v1/authenticate/email":
-    post:
-      tags:
-        - Client
-      summary: Send Email OTP
-      description:
-        Sends an OTP to the specified email address to authenticate the user. Checkout the documentation here.
-
-        * [Email OTP Authenticate](/docs/react-sdk/advanced-sdk-config/authenticate-users/email-otp/learn)
-      operationId: sendEmailOTP
-      security:
-        - apiKeyHeader: []
-      parameters:
-        - "$ref": "#/components/parameters/x_api_key"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  required: true
-                  description: The email address to which the OTP will be sent.
-                  example: "abc@xyz.com"
-      responses:
-        "201":
-          description: OTP Sent
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ClientSendEmailOTPResponse"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/responses/BadRequest"
-
-  "/api/v1/authenticate/email/verify":
-    post:
-      tags:
-        - Client
-      summary: Verify Email OTP
-      description:
-        Verifies the OTP sent to the email and returns Okto authentication tokens upon successful verification. Checkout the documentation here.
-
-        * [Email OTP Authenticate](/docs/react-sdk/advanced-sdk-config/authenticate-users/email-otp/learn)
-      operationId: verifyEmailOTP
-      security:
-        - apiKeyHeader: []
-      parameters:
-        - "$ref": "#/components/parameters/x_api_key"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  description: The email address used for the OTP verification.
-                  example: "abc@xyz.com"
-                  required: true
-                otp:
-                  type: string
-                  description: The OTP to verify.
-                  example: "12345"
-                  required: true
-                token:
-                  type: string
-                  description: Token received from the Send Email OTP API.
-                  example: "a9d7a6be-2130-4857-93a2-ff62d3598a80"
-                  required: true
-      responses:
-        "201":
-          description: OTP Verified
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ClientVerifyEmailOTPResponse"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/responses/BadRequest"
-
-  "/api/v1/authenticate/phone":
-    post:
-      tags:
-        - Client
-      summary: Send Phone OTP
-      description:
-        Sends an OTP to the specified phone number to authenticate the user. Checkout the documentation here.
-
-        * [Phone OTP Authenticate](/docs/react-sdk/advanced-sdk-config/authenticate-users/phone-otp/learn)
-      operationId: sendPhoneOTP
-      security:
-        - apiKeyHeader: []
-      parameters:
-        - "$ref": "#/components/parameters/x_api_key"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                phone_number:
-                  type: string
-                  description: The phone number to which the OTP will be sent.
-                  example: "635XXXX485"
-                  required: true
-                country_short_name:
-                  type: string
-                  description: The country code of the phone number.
-                  example: "IN"
-                  required: true
-      responses:
-        "201":
-          description: OTP Sent
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ClientSendPhoneOTPResponse"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/responses/BadRequest"
-
-  "/api/v1/authenticate/phone/verify":
-    post:
-      tags:
-        - Client
-      summary: Verify Phone OTP
-      description:
-        Verifies the OTP sent to the phone number and returns Okto authentication tokens upon successful verification. Checkout the documentation here.
-
-        * [Phone OTP Authenticate](/docs/react-sdk/advanced-sdk-config/authenticate-users/phone-otp/learn)
-      operationId: verifyPhoneOTP
-      security:
-        - apiKeyHeader: []
-      parameters:
-        - "$ref": "#/components/parameters/x_api_key"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                phone_number:
-                  type: string
-                  description: The phone number used for the OTP verification.
-                  example: "635XXXX485"
-                  required: true
-                country_short_name:
-                  type: string
-                  description: The country code of the phone number.
-                  example: "IN"
-                  required: true
-                otp:
-                  type: string
-                  description: The OTP to verify.
-                  example: "12345"
-                  required: true
-                token:
-                  type: string
-                  description: Token received from the Send Phone OTP API.
-                  example: "1d35c1c3-8330-42e7-87c1-5a271c10128a"
-                  required: true
-      responses:
-        "201":
-          description: OTP Verified
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ClientVerifyPhoneOTPResponse"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/responses/BadRequest"
-  "/api/v1/authenticate/jwt":
-    post:
-      tags:
-        - Client
-      summary: JWT Authenticate for closed loop wallets
-      description: |
-        Authenticates a user using a vendor-provided JWT token. This endpoint verifies the JWT token 
-        with the vendor's verification API and returns Okto authentication tokens upon successful verification.
-
-        The vendor JWT should be provided in the Authorization header as a Bearer token. 
-
-        Checkout the documentation for JWT authenticate here.
-          * [JWT Authenticate](/docs/react-sdk/advanced-sdk-config/authenticate-users/jwt-closed-loop/learn)
-      operationId: jwtAuthenticate
-      security:
-        - apiKeyHeader: []
-      parameters:
-        - "$ref": "#/components/parameters/x_api_key"
-        - "$ref": "#/components/parameters/vendor_jwt"
-      responses:
-        "201":
-          description: Authenticated
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ClientJWTAuthResponse"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/responses/BadRequest"
   "/api/v1/wallet":
     get:
       tags:
@@ -312,109 +93,13 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/responses/BadRequest"
-    post:
-      tags:
-        - Client
-      summary: Create a wallet
-      description: Creates a new wallet for the user. The wallet is created for all the whitelisted networks for your API key.
-      operationId: createWallet
-      parameters:
-        - "$ref": "#/components/parameters/bearer_auth"
-      responses:
-        "201":
-          description: Created
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ClientCreateWalletResponse"
-        "200":
-          description: if wallets already created
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ClientCreateWalletResponse"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/responses/BadRequest"
-  "/api/v1/refresh_token":
-    post:
-      tags:
-        - Client
-      summary: Refresh token
-      description: Get fresh pair of access and refresh tokens for the user using the previous obtained refresh_token, auth_token and device_token.
-      operationId: refreshToken
-      parameters:
-        - "$ref": "#/components/parameters/bearer_auth"
-        - "$ref": "#/components/parameters/refresh_auth"
-        - "$ref": "#/components/parameters/device_token_header"
-      responses:
-        "201":
-          description: Fetched
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ClientRefreshTokenResponse"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/responses/BadRequest"
-  "/api/v1/logout":
-    post:
-      tags:
-        - Client
-      summary: Logout
-      description: Logout the user from the current Okto session. This will remove the user's session from the Okto server and the user will have to login again to access the resources.
-      operationId: logout
-      parameters:
-        - "$ref": "#/components/parameters/bearer_auth"
-      responses:
-        "201":
-          description: Logged out
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ClientLogoutResponse"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/responses/BadRequest"
-  "/api/v1/user_from_token":
-    get:
-      tags:
-        - Client
-      summary: Get user details
-      description: Get user details using token received from Okto.
-      operationId: getUserDetails
-      parameters:
-        - "$ref": "#/components/parameters/bearer_auth"
-      responses:
-        "200":
-          description: Fetched
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ClientUserDetailsResponse"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/responses/BadRequest"
-  "/api/v1/supported/networks":
+  "/api/oc/v1/supported/networks":
     get:
       tags:
         - Client
       summary: Get supported networks
       description: |
         Get an array of all the whitelisted networks on your API key. Checkout all possible values of `network_name` here.
-          * [network_name](/tools/technical-reference)
       operationId: getSupportedNetworks
       parameters:
         - "$ref": "#/components/parameters/bearer_auth"
@@ -424,26 +109,23 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ClientSupportedNetworksResponse"
+                "$ref": "#/components/schemas/GetSupportedNetworksResponse"
         "400":
           description: Bad Request
           content:
             application/json:
               schema:
                 "$ref": "#/components/responses/BadRequest"
-  "/api/v1/supported/tokens":
+  "/api/oc/v1/supported/tokens":
     get:
       tags:
         - Client
       summary: Get supported tokens
       description: |
         Get an array of all the whitelisted tokens on your API key. Checkout all possible values of `token_name` here.
-          * [token_name](/tools/technical-reference)
       operationId: getSupportedTokens
       parameters:
         - "$ref": "#/components/parameters/bearer_auth"
-        - "$ref": "#/components/parameters/page"
-        - "$ref": "#/components/parameters/size"
       responses:
         "201":
           description: Fetched
@@ -457,7 +139,7 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/responses/BadRequest"
-  "/api/v1/portfolio":
+  "/api/v1/aggregated-portfolio":
     get:
       tags:
         - Client
@@ -510,50 +192,23 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/responses/BadRequest"
-  "/api/v1/transfer/tokens/execute":
-    post:
+  "/api/v1/portfolio/nft":
+    get:
       tags:
         - Client
-      summary: Transfer tokens
-      description: Place an order by executing a token transfer. This will transfer the specified quantity of tokens to the recipient address. The order ID will be returned in the response. The order ID can be used to track the status of the order.
-      operationId: transferTokens
+      summary: Get NFT Portfolio
+      description: |
+        Get the details of all the NFTs owned by the authenticated user across all networks.
+      operationId: getNftPortfolio
       parameters:
         - "$ref": "#/components/parameters/bearer_auth"
-      requestBody:
-        description: Transfer token details.
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                network_name:
-                  type: string
-                  required: true
-                  description: Network used for the transfer.
-                  example: "POLYGON"
-                token_address:
-                  type: string
-                  required: true
-                  description: Address of the token to be transferred. Native token address is an empty string.
-                  example: ""
-                quantity:
-                  type: string
-                  required: true
-                  description: Quantity of tokens to be transferred.
-                  example: "0.1"
-                recipient_address:
-                  type: string
-                  required: true
-                  description: Address of the recipient address to send tokens to.
-                  example: "0xCDAC489b062A5d057Bd15DdE758829eCF3A14e5B"
       responses:
         "201":
           description: Fetched
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ClientTransferTokensResponse"
+                "$ref": "#/components/schemas/ClientNFTPortfolioResponse"
         "400":
           description: Bad Request
           content:
@@ -590,96 +245,6 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/responses/BadRequest"
-  "/api/v1/portfolio/nft":
-    get:
-      tags:
-        - Client
-      summary: Get NFT Portfolio
-      description: |
-        Get the details of all the NFTs owned by the authenticated user across all networks.
-      operationId: getNftPortfolio
-      parameters:
-        - "$ref": "#/components/parameters/bearer_auth"
-      responses:
-        "201":
-          description: Fetched
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ClientNFTPortfolioResponse"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/responses/BadRequest"
-  "/api/v1/nft/transfer":
-    post:
-      tags:
-        - Client
-      summary: Transfer NFT
-      description: |
-        Used to transfer nft from user wallet address to recipient address. The order ID will be returned in the response. The order ID can be used to track the status of the order. Checkout all possible values of `operation_type` and `network_name` here.
-          * [operation_type](/tools/technical-reference#operation_type)
-          * [network_name](/tools/technical-reference)
-      operationId: transferNft
-      parameters:
-        - "$ref": "#/components/parameters/bearer_auth"
-      requestBody:
-        description: Raw transaction details
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                opteration_type:
-                  type: string
-                  description: Type of operation to be performed.
-                  required: true
-                  example: "NFT_TRANSFER"
-                network_name:
-                  type: string
-                  description: Name of the network to perform tranfer on.
-                  required: true
-                  example: "POLYGON"
-                collection_address:
-                  type: string
-                  description: Address of the collection which needs to be transferred.
-                  required: true
-                  example: "0x68ee2dddcbb1c03df5fc4b6235d993b8b4d1d0e5"
-                collection_name:
-                  type: string
-                  description: Name of the collection which needs to be transferred.
-                  example: "super orchestrators"
-                quantity:
-                  type: string
-                  description: Quantity of the NFT to be transferred.
-                  required: true
-                  example: "1"
-                recipient_address:
-                  type: string
-                  description: Address of the recipient to whom NFT needs to be transferred.
-                  required: true
-                  example: "0xCDAC489b062A5d057Bd15DdE758829eCF3A14e5B"
-                nft_address:
-                  type: string
-                  description: Address of the NFT which needs to be transferred.
-                  required: true
-                  example: "56"
-      responses:
-        "201":
-          description: Fetched
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ClientTransferNftResponse"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/responses/BadRequest"
   "/api/v1/nft/order_details":
     get:
       tags:
@@ -704,263 +269,6 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/ClientOrderDetailsNFTResponse"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/responses/BadRequest"
-  "/api/v1/readContractData":
-    post:
-      tags:
-        - Client
-      summary: Read Contract Data
-      description: |
-        Read data from a smart contract on a specified network. The API returns the data from the contract based on the input parameters. Supports both EVM and Aptos networks.
-      operationId: readContractData
-      parameters:
-        - "$ref": "#/components/parameters/bearer_auth"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - network_name
-                - data
-              properties:
-                network_name:
-                  type: string
-                  description: "The network on which to read the contract data"
-                  example: "POLYGON"
-                data:
-                  type: object
-                  description: "The contract data parameters"
-                  required:
-                    - contractAddress
-                    - abi
-                  oneOf:
-                    - type: object
-                      description: "EVM Contract Read Data"
-                      properties:
-                        contractAddress:
-                          type: string
-                          description: "The address of the contract to read from"
-                          example: "0x3BA4c387f786bFEE076A58914F5Bd38d668B42c3"
-                        abi:
-                          type: object
-                          properties:
-                            inputs:
-                              type: array
-                              items:
-                                type: object
-                              example: []
-                            name:
-                              type: string
-                              example: "totalSupply"
-                            outputs:
-                              type: array
-                              items:
-                                type: object
-                                properties:
-                                  internalType:
-                                    type: string
-                                  name:
-                                    type: string
-                                  type:
-                                    type: string
-                              example: [
-                                {
-                                  "internalType": "uint256",
-                                  "name": "",
-                                  "type": "uint256"
-                                }
-                              ]
-                            stateMutability:
-                              type: string
-                              example: "view"
-                            type:
-                              type: string
-                              example: "function"
-                        args:
-                          type: object
-                          description: "Arguments to pass to the function"
-                          example: {}
-                    - type: object
-                      description: "Aptos Contract Read Data"
-                      properties:
-                        function:
-                          type: string
-                          description: "The full function path to call"
-                          example: "0x1::chain_id::get"
-                        typeArguments:
-                          type: array
-                          description: "Type arguments for the function"
-                          items:
-                            type: string
-                          example: []
-                        functionArguments:
-                          type: array
-                          description: "Arguments to pass to the function"
-                          items:
-                            type: string
-                          example: []
-      responses:
-        "200":
-          description: Contract data read successfully
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ClientReadContractDataResponse"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/Error"
-  "/api/v1/rawtransaction/execute":
-    post:
-      tags:
-        - Client
-      summary: Execute raw transactions
-      description: |
-        Execute a raw transaction on a network. The API returns a jobId which can be used to track the status of the transaction. Checkout all possible values of `status`, `network_name`, `entity_type` and `order_type` here.
-          * [status](/tools/technical-reference#status)
-          * [network_name](/tools/technical-reference)
-          * [entity_type](/tools/technical-reference#entity_type)
-          * [order_type](/tools/technical-reference#order_type)
-      operationId: executeRawTransactions
-      parameters:
-        - "$ref": "#/components/parameters/bearer_auth"
-      requestBody:
-        description: Raw transaction details
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required: ["network_name", "transaction"]
-              properties:
-                network_name:
-                  type: string
-                  description: Name of network to execute transaction on.
-                  example: "POLYGON"
-                transaction:
-                  type: object
-                  description: |
-                    Execute a raw transaction on a network. The API returns a `jobId` which can be used to track the status of the transaction. Choose the appropriate transaction object based on the ecosystem it is meant for, such as `EVM`, `SOL`, or `APT`.
-                    See schema details below:
-                    <details>
-                    <summary>EVM Transaction</summary>
-                    Use this transaction object if <code>network_name</code> is any <code>BASE</code>, <code>POLYGON</code> or <code>POLYGON_TESTNET_AMOY</code>.
-
-                    - **from** `string` *Required* :
-                    The address for the sending account.
-
-                    - **to** `string` *Required* :
-                    The destination address of the message, left undefined for a contract-creation transaction.
-
-                    - **data** `string` *Required* :
-                    Either a ABI byte string containing the data of the function call on a contract, or in the case of a contract-creation transaction the initialisation code.
-
-                    - **value** `string` *Required* :
-                    The value transferred for the transaction in wei, also the endowment if it's a contract-creation transaction.
-                    </details>
-
-                    <details>
-                    <summary>Solana Transaction</summary>
-                    Use this transaction object if <code>network_name</code> is <code>SOLANA</code> or <code>SOLANA_DEVNET</code>.
-
-                    - **instructions** `object` *Required* :
-                    The instructions to atomically execute
-                      
-                      <details>
-                      <summary>instructions</summary>
-                      <ul><li><b>keys</b> <code>array object[]</code> <i>Required</i> </li>
-                      Includes the AccountMeta for each account required by an instruction.
-                        <details>
-                        <summary>keys</summary>
-                        <ul>
-                        <li><b>pubkey</b><code>string</code> <i>Required</i></li>
-                        <li><b>isSigner</b><code>boolean</code> <i>Required</i></li>
-                        <li><b>isWritable</b><code>boolean</code> <i>Required</i></li>
-                        </ul>
-                        </details>
-                      
-                      <li><b>programId</b> <code>string</code> <i>Required</i></li>
-                      The address of the program which contains the execution logic for the instruction invoked.
-
-                      <li><b>data</b> <code>array</code> <i>Required</i></li>
-                      The instruction data for the instruction as a buffer of bytes
-                      </ul>
-                      </details>
-                    - **signer** `string` *Required*
-                    </details>
-
-                    <details>
-                    <summary>Aptos Transaction</summary>
-                    Use this transaction object if <code>network_name</code> is <code>APTOS</code> or <code>APTOS_TESTNET</code>.
-                    <details>
-                    <summary><b>transactions</b> <code>array object[]</code> <i>Required</i></summary>
-                    <ul>
-                    <li><b>function</b> <code>function</code> <i>Required</i>:
-                    This is the identifier for the smart contract entry function on-chain that will trigger when you execute this transaction.</li>
-                    <li><b>typeArugements</b> <code>array</code> <i>Required</i>:
-                    Data type for each function arguement in the same order.</li>
-
-                    <li><b>fuctionArugements</b> <code>array</code> <i>Required</i>:
-                    This is any data the function needs to run.</li>
-                    </ul>
-                    </details>
-                    </details>
-                  properties:
-                    from:
-                      type: string
-                      example: "0xdca7F8E25091B927DB769337d7eFDedBf772bb9A"
-                    to:
-                      type: string
-                      example: "0xCDAC489b062A5d057Bd15DdE758829eCF3A14e5B"
-                    data:
-                      type: string
-                      example: "0x"
-                    value:
-                      type: string
-                      example: "0x100000"
-      responses:
-        "201":
-          description: Fetched
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ClientExecuteRawTransactionResponse"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/responses/BadRequest"
-  "/api/v1/rawtransaction/status":
-    get:
-      tags:
-        - Client
-      summary: Get raw transaction status
-      description: |
-        Get the details of the raw transaction status by providing the order_id of the transaction. The response will contain the status of the transaction and the transaction hash if the transaction is successful.
-        Checkout all possible values of `status` and `network_name` here.
-          * [network_name](/tools/technical-reference)
-          * [status](/tools/technical-reference#status)
-      operationId: getRawTransaction
-      parameters:
-        - "$ref": "#/components/parameters/bearer_auth"
-        - "$ref": "#/components/parameters/order_id_txn"
-      responses:
-        "201":
-          description: Fetched
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ClientRawTransactionStatusResponse"
         "400":
           description: Bad Request
           content:
@@ -1319,18 +627,58 @@ components:
           schema:
             "$ref": "#/components/schemas/Error"
   schemas:
+    GetSupportedNetworksResponse:
+      type: object
+      required:
+        - status
+        - data
+      properties:
+        status:
+          type: string
+          example: "success"
+        data:
+          type: object
+          properties:
+            network:
+              type: array
+              items:
+                $ref: "#/components/schemas/Network"
+    GetSupportedTokensResponse:
+      type: object
+      required:
+        - status
+        - data
+      properties:
+        status:
+          type: string
+          example: "success"
+        data:
+          type: object
+          properties:
+            token:
+              type: array
+              items:
+                $ref: "#/components/schemas/Token"
     Network:
       type: object
       required:
-        - chain_id
+        - caip_id
         - network_name
+        - chain_id
+        - logo
       properties:
+        caip_id:
+          type: string
+          example: "eip::"
         network_name:
           type: string
-          example: "Mainnet"
+          example: "APTOS"
         chain_id:
           type: string
           example: "1"
+        logo:
+          type: string
+          example: "https://s2.coinmarketcap.com/static/img/coins/64x64/21794.png"
     Portfolio:
       type: object
       required:
@@ -1467,19 +815,55 @@ components:
     Tokens:
       type: object
       required:
-        - network_name
-        - token_name
-        - token_address
+        - decimals
+        - precision
+        - address
+        - caip_id
+        - symbol
+        - image
+        - name
+        - short_name
+        - id
+        - group_id
+        - is_primary
+        - network_id
       properties:
-        network_name:
+        decimals:
           type: string
-          example: "Mainnet"
-        token_name:
+          example: "18"
+        precision:
           type: string
-          example: "1"
-        token_address:
+          example: "18"
+        address:
           type: string
-          example: "0x..."
+          example: ""
+        caip_id:
+          type: string
+          example: ""
+        symbol:
+          type: string
+          example: "APT"
+        image:
+          type: string
+          example: "https://s2.coinmarketcap.com/static/img/coins/64x64/21794.png"
+        name:
+          type: string
+          example: "APT"
+        short_name:
+          type: string
+          example: "APT"
+        id:
+          type: string
+          example: "286e53ec-8991-3f7d-a276-1484a5800ea4"
+        group_id:
+          type: string
+          example: ""
+        is_primary:
+          type: boolean
+          example: false
+        network_id:
+          type: string
+          example: "dd50ef5f-58f4-3133-8e25-9c2673a9122f"
     TokensData:
       type: array
       items:

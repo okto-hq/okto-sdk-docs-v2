@@ -1,4 +1,4 @@
-import { source } from '@/app/source';
+import { source , openapi} from '@/app/source';
 import type { Metadata } from 'next';
 import {
   DocsPage,
@@ -24,7 +24,7 @@ export default async function Page({
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
-        <MDX components={{ ...defaultMdxComponents }} />
+        <MDX components={{ ...defaultMdxComponents, APIPage: openapi.APIPage  }} />
       </DocsBody>
     </DocsPage>
   );
