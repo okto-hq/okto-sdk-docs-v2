@@ -1,0 +1,71 @@
+---
+id: migration-doc
+title: API V2 Migration Guide
+description: A comprehensive guide for migration from Okto V1 APIs to Okto V2 APIs.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
+import ExternalLink from 'app/components/mdx/ExternalLink';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react';
+
+This guide provides a detailed walkthrough for migrating your application from [Okto V1 APIs](https://docsv1.okto.tech/server-api-docs) to [Okto V2 APIs](). While the core API functionality remains unchanged, V2 implements a more decentralized architecture, and offering developers enhanced configurability and control over their integrations.
+
+
+## Key Changes Overview
+
+| Area | Changes |
+|------|---------|
+| Base URL | `https://docsv1.okto.tech/server-api-docs` -> `https://docs.okto.tech/server-api-docs` |
+
+## Client-Side API Migration Table
+
+| V1 API Requests | V2 API Requests | Changes |
+|-----------------|-----------------|---------|
+| POST `/api/v1/authenticate/email` |  |  |
+| POST `/api/v1/authenticate/email/verify` |  |  |
+| POST `/api/v1/authenticate/phone` |  |  |
+| POST `/api/v1/authenticate/phone/verify` |  |  |
+| POST `/api/v1/authenticate/whatsapp` |  |  |
+| POST `/api/v1/authenticate/whatsapp/verify` |  |  |
+| POST `/api/v1/authenticate/jwt` |  |  |
+| GET `/api/v1/wallet` |  |  |
+| POST `/api/v1/wallet` |  |  |
+| POST `/api/v1/refresh_token `|  |  |
+| POST `/api/v1/logout` |  |  |
+| GET `/api/v1/user_from_token` |  |  |
+| GET `/api/v1/supported/networks` |  |  |
+| GET `/api/v1/supported/tokens` |  |  |
+| GET `/api/v1/portfolio` |  |  |
+| GET `/api/v1/portfolio/activity` |  |  |
+| POST `/api/v1/transfer/tokens/execute` |  |  |
+| GET `/api/v1/orders` |  |  |
+| GET `/api/v1/portfolio/nft` |  |  |
+| POST `/api/v1/nft/transfer` |  |  |
+| GET `/api/v1/nft/order_details` |  |  |
+| POST `/api/v1/readContractData` |  |  |
+| POST `/api/v1/rawtransaction/execute` |  |  |
+| GET `/api/v1/rawtransaction/status` |  |  |
+
+## Server API Reference
+
+| V1 API Requests | V2 API Requests | Changes |
+|-----------------|-----------------|---------|
+| GET `/s2s/api/v1/wallet` |  |  |
+| POST `/s2s/api/v1/wallet` |  |  |
+| GET `/s2s/api/v1/portfolio` |  |  |
+| GET `/s2s/api/v1/portfolio/nft` |  |  |
+| GET `/s2s/api/v1/portfolio/activity` |  |  |
+| GET `/s2s/api/v1/supported/tokens` |  |  |
+| POST `/s2s/api/v1/bulk-wallets` |  |  |
+| POST `/s2s/api/v2/nft/mint` | POST `/s2s/api/v2/nft/mint` | No change |
+| POST `/s2s/api/v2/nft/transfer` | POST `/s2s/api/v2/nft/transfer` | No change |
+| POST `/s2s/api/v2/transfer/tokens/execute/{userId}` | POST `/s2s/api/v2/transfer/tokens/execute/{userId}` | No change |
+| GET `/s2s/api/v2/bulk_order_details/{TW_USER_ID}` | GET `/s2s/api/v2/bulk_order_details/{TW_USER_ID}` | No change |
+| POST `/s2s/api/v1/readContractData` |  |  |
+| POST `/s2s/api/v1/rawtransaction/execute/{TW_USER_ID}` |  |  |
+| GET `/s2s/api/v1/rawtransaction/status/{TW_USER_ID}` |  |  |

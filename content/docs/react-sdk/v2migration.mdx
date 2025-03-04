@@ -163,7 +163,8 @@ export default App;
 
 In V1, Okto supports multiple authentication methods, including [`Google-Auth (GAuth)`](https://docsv1.okto.tech/docs/react-sdk/authenticate-users/google-oauth/auth-user-via-code#authenticate-a-user), [`email-OTP`](https://docsv1.okto.tech/docs/react-sdk/authenticate-users/email-otp/auth-user-via-email), [`phone-OTP`](https://docsv1.okto.tech/docs/react-sdk/authenticate-users/phone-otp/auth-user-via-phone), and [`JWT-custom-auth`](https://docsv1.okto.tech/docs/react-sdk/authenticate-users/jwt-closed-loop/learn). Upon successful authentication, Okto generates an AuthToken, which is used for delegated access.
 
-In V2, authentication remains backward-compatible with V1.
+In V2, Google Authentication (GAuth) is currently the only supported authentication method. Support for other methods, including email OTP, phone OTP, and JWT custom authentication, will be added soon.
+
 - **Using Google Authentication (Google OAuth)**; V2 continues to support direct authentication with Google OAuth, maintaining seamless integration with Google's trusted authentication infrastructure within the Okto React SDK.
 
 <Tabs items={["Updated Implementation", "Old Implementation"]} defaultValue="Updated Implementation">
@@ -208,6 +209,7 @@ authenticate(idToken, (result, error) => {
 </div>
 </Tabs>
 
+{/*
 - **Using Other Authentication Methods**; All authentication methods from V1 remain supported in V2. The authToken retrieved from successful authentication in V1 can still be used in V2 without modification.
 
 <Tabs items={["Updated Implementation", "Old Implementation"]} defaultValue="Old Implementation">
@@ -250,7 +252,7 @@ authenticate(idToken, (result, error) => {
 ```
 </Tab>
 </div>
-</Tabs>
+</Tabs> */}
 
 #### **Wallet Creation in V2**
 
