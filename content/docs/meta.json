@@ -18,6 +18,7 @@
       "typescript-sdk",
       "wagmi-integration",
       "okto-eliza-plugin",
+      "!api-migration",
       "---About Okto SDK---",
       "okto-sdk/overview",
       "okto-sdk/sdk-introduction",
