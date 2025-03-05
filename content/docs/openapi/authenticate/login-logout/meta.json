@@ -1,0 +1,8 @@
+{
+    "title": "Session Management",
+    "pages": [
+      "loginUsingOktoAuth",
+      "!verifyLogin",
+      "!getAuthToken"
+    ]
+  }

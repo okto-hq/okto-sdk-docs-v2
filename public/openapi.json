@@ -22,88 +22,14 @@
   ],
   "tags": [
     {
-      "name": "Client",
-      "description": "Everything related to client side"
-    },
-    {
-      "name": "Authenticate",
-      "description": "Everything related to authentication"
+      "name": "Explorer",
+      "description": "All the explorer related APIs"
     }
   ],
   "paths": {
-    "/api/v2/authenticate": {
-      "servers": [
-        {
-          "url": "https://sandbox-okto-gateway.oktostage.com",
-          "description": "Sandbox Gateway URL"
-        }
-      ],
-      "post": {
-        "servers": [
-          {
-            "url": "https://sandbox-okto-gateway.oktostage.com",
-            "description": "Sandbox Gateway URL"
-          }
-        ],
-        "tags": ["Authenticate"],
-        "summary": "Authenticate a user via Google ID Token",
-        "description": "Authenticates the user using Google ID Token and Session",
-        "operationId": "authenticateUser",
-        "security": [
-          {
-            "apiKeyHeader": []
-          }
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/x_api_key"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "id_token": {
-                    "type": "string",
-                    "description": "The ID Token of the user received from the google OAuth2 provider.",
-                    "required": true,
-                    "example": "GOOGLE_OAUTH2_TOKEN_ID"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClientAuthenticateResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/responses/BadRequest"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/oc/v1/wallets": {
       "get": {
-        "tags": ["Client"],
+        "tags": ["Explorer"],
         "summary": "Get wallet",
         "description": "Fetch all the wallets created by the user.",
         "operationId": "getWallets",
@@ -138,7 +64,7 @@
     },
     "/api/oc/v1/supported/networks": {
       "get": {
-        "tags": ["Client"],
+        "tags": ["Explorer"],
         "summary": "Get supported networks",
         "description": "Get an array of all the whitelisted networks on your API key.",
         "operationId": "getSupportedNetworks",
@@ -173,7 +99,7 @@
     },
     "/api/oc/v1/supported/tokens": {
       "get": {
-        "tags": ["Client"],
+        "tags": ["Explorer"],
         "summary": "Get supported tokens",
         "description": "Get an array of all the whitelisted tokens on your API key.",
         "operationId": "getSupportedTokens",
@@ -208,7 +134,7 @@
     },
     "/api/oc/v1/aggregated-portfolio": {
       "get": {
-        "tags": ["Client"],
+        "tags": ["Explorer"],
         "summary": "Get portfolio",
         "description": "Get the portfolio data of the user, which includes all the tokens owned by the user across all the networks.",
         "operationId": "getPortfolio",
@@ -243,7 +169,7 @@
     },
     "/api/oc/v1/portfolio/activity": {
       "get": {
-        "tags": ["Client"],
+        "tags": ["Explorer"],
         "summary": "Get portfolio activity",
         "description": "Get user's portfolio activity.",
         "operationId": "getPortfolioActivity",
@@ -286,7 +212,7 @@
     },
     "/api/oc/v1/portfolio/nft": {
       "get": {
-        "tags": ["Client"],
+        "tags": ["Explorer"],
         "summary": "Get NFT Portfolio",
         "description": "Get the details of all the NFTs owned by the authenticated user across all networks.",
         "operationId": "getNftPortfolio",
@@ -321,7 +247,7 @@
     },
     "/api/oc/v1/orders": {
       "get": {
-        "tags": ["Client"],
+        "tags": ["Explorer"],
         "summary": "Get order history",
         "description": "Fetch all the orders of the user, which includes the history of tokens sent and received.",
         "operationId": "getOrderHistory",
@@ -373,7 +299,7 @@
     },
     "/api/oc/v1/gas-values": {
       "get": {
-        "tags": ["Client"],
+        "tags": ["Explorer"],
         "summary": "Get gas values",
         "description": "Get the gas fee values.",
         "operationId": "getGasFeeValues",
@@ -408,7 +334,7 @@
     },
     "/api/oc/v1/verify-session": {
       "get": {
-        "tags": ["Client"],
+        "tags": ["Explorer"],
         "summary": "Verify session",
         "description": "Verify the session of the user.",
         "operationId": "userSessionVerify",
@@ -444,7 +370,7 @@
     },
     "/api/oc/v1/estimate": {
       "post": {
-        "tags": ["Client"],
+        "tags": ["Explorer"],
         "summary": "Estimate",
         "description": "Order Estimate",
         "operationId": "OrderEstimate",
@@ -2840,7 +2766,7 @@
               },
               "device_token": {
                 "type": "string",
-                "description": "Unique token associated with the client device",
+                "description": "Unique token associated with the Client device",
                 "example": "2345...7e4a"
               }
             },

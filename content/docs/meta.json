@@ -32,7 +32,7 @@
       "brand-kit",
       "faq",
       "glossary",
-      "[Dev Tools](https://docsv2-staging.okto.tech/tools)"
+      "[Dev Tools](/tools)"
     ],
     "root": true
   }
