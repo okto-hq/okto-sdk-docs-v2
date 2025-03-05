@@ -37,7 +37,7 @@ The `executeUserOp` function submits a signed user operation to the blockchain f
 
 | Field Name | Type | Description |
 |------------|------|-------------|
-| `hash` | `Promise<string>` | Transaction hash of the executed operation |
+| `result` | `Promise<string>` | Job Id of the executed operation |
 
 </Callout>
 
@@ -57,8 +57,8 @@ function ExecuteOperation() {
 
     async function handleExecute(signedUserOp) {
         try {
-            const txHash = await executeUserOp(oktoClient, signedUserOp);
-            console.log('Operation executed:', txHash);
+            const jobId = await executeUserOp(oktoClient, signedUserOp);
+            console.log('Operation executed:', jobId);
         } catch (error) {
             console.error('Error executing operation:', error);
         }

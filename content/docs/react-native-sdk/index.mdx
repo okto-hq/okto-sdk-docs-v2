@@ -628,9 +628,9 @@ Let's implement a token transfer on Polygon Testnet Amoy to understand how user 
                 const signedOp = await oktoClient.signUserOp(userOp);
 
                 //send the user operation
-                const txHash = await oktoClient.executeUserOp(signedOp);
+                const jobId = await oktoClient.executeUserOp(signedOp);
 
-                setStatus(`Transfer complete! Hash: ${txHash}`);
+                setStatus(`Transfer complete! JobId: ${jobId}`);
             } catch (error) {
                 console.error("Transfer failed:", error);
                 setStatus(`Transfer failed: ${error.message}`);
@@ -656,7 +656,7 @@ Let's implement a token transfer on Polygon Testnet Amoy to understand how user 
 
     After the transfer is complete, you can verify it through:
     - The `getPortfolio` method to check your updated balance
-    - The [Polygon Amoy Explorer](https://amoy.polygonscan.com/) using the transaction hash
+    - The [Polygon Amoy Explorer](https://amoy.polygonscan.com/) using the transaction hash which can be fetched using the `getOrdersHistory` method using the `jobId`.
 </Step>
 
 </Steps>
