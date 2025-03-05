@@ -3,96 +3,414 @@ title: Feature Support
 full: false
 ---
 
+import FeatureSupportTable from 'app/components/mdx/FeatureSupportTable';
+
 Okto provides a seamless and secure way to integrate blockchain functionality into your applications. The Okto SDK enables developers to onboard users, manage wallets, interact with multiple chains, and facilitate smooth crypto transactions.
 
 ---
 
-## SDK Support
+## Platform Support
 
-Okto offers a range of SDKs tailored to diverse development platforms, ensuring you have the right tools for your project:
-
+Okto offers a range of integration options tailored to diverse development platforms, ensuring you have the right tools for your project:
 - [**React**](/docs/react-sdk) – A React library for integrating Okto into web applications.
 - [**NextJS**](/docs/nextjs-sdk) – A NextJS library for integrating Okto into web applications.
 - [**React Native**](/docs/react-native-sdk) – A React Native SDK for mobile applications.
-- [**Flutter**](/docs/flutter-sdk) **(Coming Soon)** – A Flutter SDK for cross-platform applications.
+- [**TypeScript**](/docs/typescript-sdk) – A TypeScript SDK for building Web3 applications. 
 - [**Unity**](/docs/unity-sdk) – A Unity SDK for blockchain-based gaming apps.
-- [**TypeScript**](/docs/typescript-sdk) – A TypeScript SDK for building Web3 applications.
+- [**Wagmi Adapter**](/docs/wagmi-integration) – A connector to use Okto with the Wagmi hooks ecosystem.
+- APIs – For custom backend integrations.
 
-The Okto SDK supports multiple chains like **EVM, Solana and Aptos**, enabling seamless cross-chain interactions.
+The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solana, and Aptos, enabling seamless cross-chain interactions.
 
 ---
 
 ## Feature Matrix
 
-Check out the matrix below to determine which features are supported in each Okto SDK.
-
 **Legend:**
 
-*   ✅ - Feature Currently Supported
-*   🔜 - Feature Coming Soon
-*   <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="EVM" /> - EVM Chains (To see the list of supported chains, click [here](/docs/supported-chains))
-*   <img src="https://cdn3.emoji.gg/emojis/7187-solana.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Solana" /> - Solana Chain
-*   <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> - Aptos Chain
+-   ✅ - Feature Currently Supported Across SDKs
+-   🔜 - Feature Coming Soon to All SDKs
+-   🔄 - Feature Support Possible via [V1 SDK](/docs/react-sdk/v2migration)
+-   🔌 - Feature Available via Adapter
+-   ❌ - Feature Not Supported
+-   <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="EVM" /> - EVM Chains (To see the list of supported EVM chains, click [here](/docs/supported-chains))
+-   <img src="https://cdn3.emoji.gg/emojis/7187-solana.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Solana" /> - Solana Chain
+-   <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> - Aptos Chain
+
+<Callout type="info">
+  - **SDKs and APIs**: Shows combined support status across React, NextJS, React Native, Unity, and TypeScript SDKs and APIs. For detailed documentation, please refer to the individual documentation pages.
+  - **Chain Types**: Indicates which blockchain networks are supported for each feature. For a detailed list of supported chains and tokens, please visit our [Supported Chains and Tokens](/docs/supported-chains) page.
+</Callout>
 
 ### Authentication
 
-| Feature               | React | NextJS | React Native | Typescript |
-| --------------------- | ---------- | ----- | ------ | ------------ |
-| Google OAuth          | ✅        | ✅    | ✅     | ✅          |
-| Email OTP             | 🔜         | 🔜    | 🔜     | 🔜          |
-| Phone OTP             | 🔜         | 🔜    | 🔜     | 🔜          |
-| Whatsapp OTP          | 🔜         | 🔜    | 🔜     | 🔜          |
-| Custom Authentication |  🔜         |  🔜   |  🔜    |  🔜         |
+<FeatureSupportTable
+  features={[
+    {
+      name: "Google OAuth",
+      description: "Users can create an Okto session on the client app using their Google account",
+      support: {
+        SDKs: "✅",
+        "Wagmi Adapter": "✅",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Email OTP",
+      description: "Authentication using one-time passwords sent via email",
+      support: {
+        SDKs: "🔄",
+        "Wagmi Adapter": "🔜",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Whatsapp OTP",
+      description: "Authentication using one-time passwords sent via WhatsApp",
+      support: {
+        SDKs: "🔄",
+        "Wagmi Adapter": "🔜",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Custom Auth - JWT",
+      description: "Custom authentication flow using JSON Web Tokens",
+      support: {
+        SDKs: "🔄",
+        "Wagmi Adapter": "🔜",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "OAuth (Apple, Twitter, Steam, Epic)",
+      description: "Authentication using various OAuth providers including Apple, Twitter, Steam, and Epic Games",
+      support: {
+        SDKs: "🔜",
+        "Wagmi Adapter": "🔜",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "SIWE (Sign In with Ethereum)",
+      description: "Authentication using Ethereum wallet signatures following the SIWE standard",
+      support: {
+        SDKs: "🔜",
+        "Wagmi Adapter": "🔜",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "SIWS (Sign In with Solana)",
+      description: "Authentication using Solana wallet signatures",
+      support: {
+        SDKs: "🔜",
+        "Wagmi Adapter": "🔜",
+        Chains: ["EVM"]
+      }
+    }
+  ]}
+/>
 
-### Okto Smart Wallets
+### Embedded Wallets
 
-| Feature                   | React | NextJS | React Native | Typescript |
-| ------------------------- | ---------- | ----- | ------ | ------------ |
-| Embedded Wallets          | ✅         | ✅    | ✅     | ✅          |
-| Signing Transactions      | ✅         | ✅    | ✅     | ✅          |
-| Broadcasting Transactions | ✅         | ✅    | ✅     | ✅          |
-| Transaction MFA           | 🔜           | 🔜       | 🔜     | 🔜          |
-| Wallet Key Export         | 🔜           | 🔜         | 🔜     | 🔜          |
+<FeatureSupportTable
+  features={[
+    {
+      name: "Automatic Wallet Generation",
+      description: "Automatically create and manage blockchain wallets for users upon authentication",
+      support: {
+        SDKs: "✅",
+        "Wagmi Adapter": "✅",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Sign User Op",
+      description: "Sign EIP-4337 compliant user operations for account abstraction",
+      support: {
+        SDKs: "✅",
+        "Wagmi Adapter": "❌",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Send User Op",
+      description: "Send signed user operations to the blockchain network",
+      support: {
+        SDKs: "✅",
+        "Wagmi Adapter": "❌",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Message Signing",
+      description: "Sign arbitrary messages using the wallet's private key",
+      support: {
+        SDKs: "🔜",
+        "Wagmi Adapter": "🔜",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Delegated Actions",
+      description: "Allow third-party services to perform actions on behalf of the user with specific permissions",
+      support: {
+        SDKs: "✅",
+        "Wagmi Adapter": "❌",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Wallet Recovery/Account Linking",
+      description: "Recover wallet access or link multiple authentication methods to the same wallet",
+      support: {
+        SDKs: "🔜",
+        "Wagmi Adapter": "❌",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Transaction MFA",
+      description: "Additional security layer requiring multi-factor authentication for transactions",
+      support: {
+        SDKs: "🔜",
+        "Wagmi Adapter": "❌",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Key Export",
+      description: "Export wallet private keys for backup or external use",
+      support: {
+        SDKs: "🔜",
+        "Wagmi Adapter": "❌",
+        Chains: ["EVM"]
+      }
+    }
+  ]}
+/>
 
-### Custom Blockchain Support
+### Abstraction Features
 
-| Feature                     | React | NextJS | React Native | Typescript |
-| --------------------------- | ---------- | ----- | ------ | ------------ |
-| EVM Chains Support    | ✅         | ✅    | ✅     | ✅          |
-| Custom EVM Chains Support    | ✅         | ✅    | ✅     | ✅          |
-| Solana Chain Support | 🔜         | 🔜    | 🔜     | 🔜          |
-| Aptos Chain Support |  🔜         |  🔜    |  🔜    |  🔜    |
+<FeatureSupportTable
+  features={[
+    {
+      name: "Cross Chain Liquidity",
+      description: "Access and manage liquidity across multiple blockchain networks",
+      support: {
+        SDKs: "🔜",
+        "Wagmi Adapter": "❌",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Cross Chain Swaps",
+      description: "Perform token swaps between different blockchain networks",
+      support: {
+        SDKs: "🔜",
+        "Wagmi Adapter": "❌",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Unified Balance",
+      description: "View aggregated token balances across all supported chains in a single view",
+      support: {
+        SDKs: "🔜",
+        "Wagmi Adapter": "❌",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Sponsored Transactions",
+      description: "Execute transactions without requiring users to hold native tokens for gas fees",
+      support: {
+        SDKs: "✅",
+        "Wagmi Adapter": "❌",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Gas Station",
+      description: "Pay transaction gas fees using any supported token instead of native chain tokens",
+      support: {
+        SDKs: "🔜",
+        "Wagmi Adapter": "❌",
+        Chains: ["EVM"]
+      }
+    }
+  ]}
+/>
 
 ### Connectors
 
-| Feature                                          | React | NextJS | React Native | Typescript |
-| ------------------------------------------------ | ---------- | ----- | ------ | ------------ |
-| Wagmi                                          | ✅         |  ✅    | 🔜     | ✅          |
-| Ethers.js                                        |   🔜       |  🔜    | 🔜     | 🔜          |
-|  External Wallets (MetaMask, WalletConnect, etc.)      | 🔜          |  🔜    | 🔜     | 🔜          |
-| Viem                                             | 🔜          |  🔜    | 🔜     | 🔜          |
-| @solana/web3.js                                  | 🔜          |  🔜    | 🔜     | 🔜          |
+<FeatureSupportTable
+  features={[
+    {
+      name: "Import External Wallet in Okto",
+      description: "Import and manage external wallets within the Okto ecosystem",
+      support: {
+        SDKs: "🔜",
+        "Wagmi Adapter": "❌",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Wagmi (connect external wallet)",
+      description: "Connect and interact with external wallets using the Wagmi hooks ecosystem",
+      support: {
+        SDKs: "🔌",
+        "Wagmi Adapter": "✅",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Viem",
+      description: "Interact with EVM chains using the Viem TypeScript library",
+      support: {
+        SDKs: "🔌",
+        "Wagmi Adapter": "✅",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Ethers",
+      description: "Interact with EVM chains using the Ethers.js library",
+      support: {
+        SDKs: "🔌",
+        "Wagmi Adapter": "✅",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "@solana/web3.js",
+      description: "Interact with Solana blockchain using the official Solana web3.js library",
+      support: {
+        SDKs: "🔜",
+        "Wagmi Adapter": "❌",
+        Chains: ["Solana"]
+      }
+    }
+  ]}
+/>
 
-### Funding & Payments
+### Funding
 
-| Feature                | React | NextJS | React Native | Typescript |
-| ---------------------- | ---------- | ----- | ------ | ------------ |
-| Transfer from Wallet   | ✅    | ✅    | ✅     | ✅          |
-| On-Ramp |  🔜             |  🔜    | 🔜     | 🔜          |
-| Cross-Chain Liquidity | 🔜 | 🔜 | 🔜 | 🔜 |
-| Cross-Chain Swaps   | 🔜 | 🔜 | 🔜 | 🔜 |
+<FeatureSupportTable
+  features={[
+    {
+      name: "On-ramp via Onmeta/Saber",
+      description: "Purchase crypto using fiat currency through Onmeta or Saber integration",
+      support: {
+        SDKs: "🔜",
+        "Wagmi Adapter": "❌",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Off-ramp with KYC",
+      description: "Convert crypto to fiat currency with KYC verification",
+      support: {
+        SDKs: "🔜",
+        "Wagmi Adapter": "❌",
+        Chains: ["EVM"]
+      }
+    }
+  ]}
+/>
 
-### NFTs
+## Intents
 
-| Feature             | React | NextJS | React Native | Typescript |
-| ------------------- | ---------- | ----- | ------ | ------------ |
-| Transfers | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> |    
-| Minting             | 🔜 | 🔜 | 🔜 | 🔜 |
-| Collection Creation           | 🔜 | 🔜 | 🔜 | 🔜 |
+### Token Operations
+
+<FeatureSupportTable
+  features={[
+    {
+      name: "Token Portfolio",
+      description: "View and manage all token holdings across supported chains",
+      support: {
+        SDKs: "✅",
+        "Wagmi Adapter": "❌",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Token Transfer",
+      description: "Send tokens to other addresses across supported chains",
+      support: {
+        SDKs: "✅",
+        "Wagmi Adapter": "❌",
+        Chains: ["EVM"]
+      }
+    }
+  ]}
+/>
+
+### NFT Operations
+
+<FeatureSupportTable
+  features={[
+    {
+      name: "Collection Creation",
+      description: "Create and deploy new NFT collections",
+      support: {
+        SDKs: "🔜",
+        "Wagmi Adapter": "❌",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "NFT Transfer",
+      description: "Transfer NFTs between addresses",
+      support: {
+        SDKs: "✅",
+        "Wagmi Adapter": "❌",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "NFT Portfolio",
+      description: "View and manage NFT holdings across supported chains",
+      support: {
+        SDKs: "✅",
+        "Wagmi Adapter": "❌",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "NFT Minting",
+      description: "Mint new NFTs from supported collections",
+      support: {
+        SDKs: "🔜",
+        "Wagmi Adapter": "❌",
+        Chains: ["EVM"]
+      }
+    }
+  ]}
+/>
 
 ### Smart Contract Interactions
 
-| Feature                     | React         | NextJS        | React Native | Typescript |
-| --------------------------- | --------------- | ------------- | ------------ | ------------ |
-| RawWrite (Write to Smart Contract)    | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> |
-|  RawRead (Read from Smart Contract)  | 🔜 | 🔜 | 🔜 | 🔜 |
+<FeatureSupportTable
+  features={[
+    {
+      name: "Raw Write",
+      description: "Execute write operations on smart contracts",
+      support: {
+        SDKs: "✅",
+        "Wagmi Adapter": "✅",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Raw Read",
+      description: "Read data from smart contracts",
+      support: {
+        SDKs: "🔜",
+        "Wagmi Adapter": "✅",
+        Chains: ["EVM"]
+      }
+    }
+  ]}
+/>
