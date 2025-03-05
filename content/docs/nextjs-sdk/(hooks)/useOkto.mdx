@@ -78,8 +78,8 @@ export default function Sample() {
     async function handleTransaction(userOp) {
         try {
             const signedOp = await oktoClient.signUserOp(userOp);
-            const txHash = await oktoClient.executeUserOp(signedOp);
-            console.log('Transaction hash:', txHash);
+            const jobId = await oktoClient.executeUserOp(signedOp);
+            console.log(' JobId:', jobId);
         } catch (error) {
             console.error('Transaction failed:', error);
         }
