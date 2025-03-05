@@ -1,0 +1,11 @@
+{
+    "title": "API Reference",
+    "description": "API reference for Okto SDK V2",
+    "root": true,
+    "icon": "Rocket",
+    "pages": [
+        "[← Back to Home](/)",
+        "------",
+        "..."
+    ]
+}
