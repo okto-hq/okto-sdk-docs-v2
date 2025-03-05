@@ -6,6 +6,8 @@
     "pages": [
         "[← Back to Home](/)",
         "------",
+        "index",
+        "api-migration",
         "..."
     ]
 }

@@ -6,7 +6,7 @@ const out = './content/docs/openapi';
 // clean generated files
 rimrafSync(out, {
   filter(v) {
-    return !v.endsWith('index.mdx') && !v.endsWith('meta.json');
+    return !v.endsWith('index.mdx') && !v.endsWith('meta.json') && !v.endsWith('api-migration.mdx');
   },
 });
 

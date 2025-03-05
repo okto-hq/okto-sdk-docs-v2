@@ -1,0 +1,72 @@
+---
+id: migration-doc
+title: API V2 Migration Guide
+description: A comprehensive guide for migration from Okto V1 APIs to Okto V2 APIs.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
+import ExternalLink from 'app/components/mdx/ExternalLink';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react';
+
+This guide provides a detailed walkthrough for migrating your application from [Okto V1 APIs](https://docsv1.okto.tech/server-api-docs) to [Okto V2 APIs](). While the core API functionality remains unchanged, V2 implements a more decentralized architecture, and offering developers enhanced configurability and control over their integrations.
+
+
+## Key Changes Overview
+
+| Area | Changes |
+|------|---------|
+| Architecture | Moved to a more decentralized system with smart contracts on the Okto chain |
+| Authentication | OAuth-first approach with session key implementation |
+| Wallet Management | Automated wallet creation across all enabled chains |
+
+## Client-Side API Migration Table
+
+| V1 API Requests | V2 API Requests | Changes |
+|-----------------|-----------------|---------|
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/POST/api/v2/authenticate">POST `/api/v2/authenticate`</ExternalLink> | <ExternalLink href="docs/openapi/authenticate/authenticate-user">POST `/api/v2/authenticate`</ExternalLink> | Returns session key on successful authentication |
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/POST/api/v1/authenticate/email">POST `/api/v1/authenticate/email`</ExternalLink> | Coming Soon | - |
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/POST/api/v1/authenticate/email/verify">POST `/api/v1/authenticate/email/verify`</ExternalLink> | Coming Soon | - |
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/POST/api/v1/authenticate/phone">POST `/api/v1/authenticate/phone`</ExternalLink> | Coming Soon | - |
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/POST/api/v1/authenticate/phone/verify">POST `/api/v1/authenticate/phone/verify`</ExternalLink> | Coming Soon | - |
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/POST/api/v1/authenticate/whatsapp">POST `/api/v1/authenticate/whatsapp`</ExternalLink> | Coming Soon | - |
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/POST/api/v1/authenticate/whatsapp/verify">POST `/api/v1/authenticate/whatsapp/verify`</ExternalLink> | Coming Soon | - |
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/POST/api/v1/authenticate/jwt">POST `/api/v1/authenticate/jwt`</ExternalLink> | Coming Soon | - |
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/GET/api/v1/wallet">GET `/api/v1/wallet`</ExternalLink> | <ExternalLink href="docs/openapi/client/get-wallets">GET `/api/oc/v1/wallets`</ExternalLink> | Fetches all user wallets |
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/POST/api/v1/wallet">POST `/api/v1/wallet`</ExternalLink> | Deprecated | Wallets are auto-created. |
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/POST/api/v1/refresh_token">POST `/api/v1/refresh_token`</ExternalLink> | Coming Soon | - |
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/POST/api/v1/logout">POST `/api/v1/logout`</ExternalLink> | Deprecated | The session key expires after 7 days. |
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/GET/api/v1/user_from_token">GET `/api/v1/user_from_token`</ExternalLink> | <ExternalLink href="docs/openapi/client/user-session-verify">GET `/api/oc/v1/verify-session`</ExternalLink> | Now returns detailed user information |
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/GET/api/v1/supported/networks">GET `/api/v1/supported/networks`</ExternalLink> | <ExternalLink href="docs/openapi/client/get-supported-networks">GET `/api/oc/v1/supported/networks`</ExternalLink> | Fetches details of all the enabled networks |
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/GET/api/v1/supported/tokens">GET `/api/v1/supported/tokens`</ExternalLink> | <ExternalLink href="docs/openapi/client/get-supported-tokens">GET `/api/oc/v1/supported/tokens`</ExternalLink> | Fetches details of all available tokens |
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/GET/api/v1/portfolio">GET `/api/v1/portfolio`</ExternalLink> | <ExternalLink href="docs/openapi/client/get-portfolio">GET `/api/oc/v1/aggregated-portfolio`</ExternalLink> | - |
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/GET/api/v1/portfolio/activity">GET `/api/v1/portfolio/activity`</ExternalLink> | <ExternalLink href="docs/openapi/client/get-portfolio-activity">GET `/api/oc/v1/portfolio/activity`</ExternalLink> | - |
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/POST/api/v1/transfer/tokens/execute">POST `/api/v1/transfer/tokens/execute`</ExternalLink> | Coming Soon | - |
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/GET/api/v1/orders">GET `/api/v1/orders`</ExternalLink> | <ExternalLink href="docs/openapi/client/get-order-history">GET `/api/oc/v1/orders`</ExternalLink> | Fetch all the orders for all transactions |
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/GET/api/v1/portfolio/nft">GET `/api/v1/portfolio/nft`</ExternalLink> | <ExternalLink href="docs/openapi/client/get-nft-portfolio">GET `/api/oc/v1/portfolio/nft`</ExternalLink> | - |
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/POST/api/v1/nft/transfer">POST `/api/v1/nft/transfer`</ExternalLink> | Coming Soon | - |
+| <ExternalLink href="https://docsv1.okto.tech/api-docs#tag/client/GET/api/v1/nft/order_details">GET `/api/v1/nft/order_details`</ExternalLink> | <ExternalLink href="docs/openapi/client/get-order-history">GET `/api/oc/v1/orders`</ExternalLink> | Fetch all the orders for all transactions |
+
+## Server API Reference
+
+| V1 API Requests | V2 API Requests | Changes |
+|-----------------|-----------------|---------|
+| <ExternalLink href="https://docsv1.okto.tech/server-api-docs#tag/server/GET/s2s/api/v1/wallet">GET /s2s/api/v1/wallet`</ExternalLink> | Coming Soon  | - |
+| <ExternalLink href="https://docsv1.okto.tech/server-api-docs#tag/server/POST/s2s/api/v1/wallet">POST /s2s/api/v1/wallet`</ExternalLink> | Coming Soon  | - |
+| <ExternalLink href="https://docsv1.okto.tech/server-api-docs#tag/server/GET/s2s/api/v1/portfolio">GET /s2s/api/v1/portfolio`</ExternalLink> | Coming Soon  | - |
+| <ExternalLink href="https://docsv1.okto.tech/server-api-docs#tag/server/GET/s2s/api/v1/portfolio/nft">GET /s2s/api/v1/portfolio/nft`</ExternalLink> | Coming Soon  | - |
+| <ExternalLink href="https://docsv1.okto.tech/server-api-docs#tag/server/GET/s2s/api/v1/portfolio/activity">GET /s2s/api/v1/portfolio/activity`</ExternalLink> | Coming Soon  | - |
+| <ExternalLink href="https://docsv1.okto.tech/server-api-docs#tag/server/GET/s2s/api/v1/supported/tokens">GET /s2s/api/v1/supported/tokens`</ExternalLink> | Coming Soon  | - |
+| <ExternalLink href="https://docsv1.okto.tech/server-api-docs#tag/server/POST/s2s/api/v1/bulk-wallets">POST /s2s/api/v1/bulk-wallets`</ExternalLink> | Coming Soon  | - |
+| <ExternalLink href="https://docsv1.okto.tech/server-api-docs#tag/server/POSTs2s/api/v2/nft/mint">POST `/s2s/api/v2/nft/mint`</ExternalLink> | Coming Soon | - |
+| <ExternalLink href="https://docsv1.okto.tech/server-api-docs#tag/server/POSTs2s/api/v2/nft/transfer">POST `/s2s/api/v2/nft/transfer`</ExternalLink> | Coming Soon  | - |
+| <ExternalLink href="https://docsv1.okto.tech/server-api-docs#tag/server/POSTs2s/api/v2/transfer/tokens/execute/">POST `/s2s/api/v2/transfer/tokens/execute/`</ExternalLink> | Coming Soon | - |
+| <ExternalLink href="https://docsv1.okto.tech/server-api-docs#tag/server/GET/s2s/api/v2/bulk_order_details/">GET `/s2s/api/v2/bulk_order_details/`</ExternalLink> | Coming Soon | - |
+| <ExternalLink href="https://docsv1.okto.tech/server-api-docs#tag/server/POST/s2s/api/v1/readContractData">POST /s2s/api/v1/readContractData`</ExternalLink> | Coming Soon  | - |
+| <ExternalLink href="https://docsv1.okto.tech/server-api-docs#tag/server/POST/s2s/api/v1/rawtransaction/execute/">POST /s2s/api/v1/rawtransaction/execute/`</ExternalLink> | Coming Soon  | - |
+| <ExternalLink href="https://docsv1.okto.tech/server-api-docs#tag/server/GET/s2s/api/v1/rawtransaction/status/">GET /s2s/api/v1/rawtransaction/status/`</ExternalLink> | Coming Soon | - |
+
