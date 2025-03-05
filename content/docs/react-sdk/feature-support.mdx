@@ -3,96 +3,393 @@ title: Feature Support
 full: false
 ---
 
-<style jsx>
-{`
-.feature-supported-version {
-    display: inline-block;
-    padding: 2px 8px;
-    background-color: #4CAF50;
-    color: white;
-    border-radius: 4px;
-    font-size: 0.8em;
-    font-weight: bold;
-    text-align: center;
-}
-`}
-</style>
+import FeatureSupportTable from 'app/components/mdx/FeatureSupportTable';
 
-Okto provides a seamless and secure way to integrate blockchain functionality into your applications. The Okto SDK enables developers to onboard users, manage wallets, interact with multiple chains, and facilitate smooth crypto transactions within the platform environments.
+Okto provides a seamless and secure way to integrate blockchain functionality into your applications. The Okto React SDK enables developers to onboard users, manage wallets, interact with multiple chains, and facilitate smooth crypto transactions within React applications.
 
 ---
 
 ## Feature Matrix
 
-Check out the matrix below to determine which features are supported in each Okto SDK.
-
 **Legend:**
+-   ✅ - Feature Currently Supported
+-   🔜 - Feature Coming Soon
+-   🔌 - Feature Supported via Adapter
+-   ❌ - Feature Not Supported
+-   <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="EVM" /> - EVM Chains (To see the list of supported EVM chains, click [here](/docs/supported-chains))
+-   <img src="https://cdn3.emoji.gg/emojis/7187-solana.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Solana" /> - Solana Chain
+-   <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> - Aptos Chain
 
-*   ✅ - Feature Currently Supported
-*   🔜 - Feature Coming Soon
-*   <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="EVM" /> - EVM Chains (To see the list of supported chains, click [here](/docs/supported-chains))
-*   <img src="https://cdn3.emoji.gg/emojis/7187-solana.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Solana" /> - Solana Chain
-*   <img src="/images/aptos-icon.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" /> - Aptos Chain
+<Callout type="info">
+  For a detailed list of supported chains and tokens, please visit our [Supported Chains and Tokens](/docs/supported-chains) page.
+</Callout>
 
 ### Authentication
 
-| Feature               | Supported in Version |
-| --------------------- | -------------------- |
-| Google OAuth          | <span className="feature-supported-version">v0.1.0</span>        |
-| Email OTP             | 🔜                    |
-| Phone OTP             | 🔜                    |
-| Whatsapp OTP          | 🔜                    |
-| Custom Authentication |  🔜                   |
+<FeatureSupportTable
+  features={[
+    {
+      name: "Google OAuth",
+      description: "Users can create an Okto session on the client app using their Google account",
+      support: {
+        Status: "✅",
+        "Version": "v0.1.0",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Email OTP",
+      description: "Authentication using one-time passwords sent via email",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Whatsapp OTP",
+      description: "Authentication using one-time passwords sent via WhatsApp",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Custom Auth - JWT",
+      description: "Custom authentication flow using JSON Web Tokens",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "OAuth (Apple, Twitter, Steam, Epic)",
+      description: "Authentication using various OAuth providers including Apple, Twitter, Steam, and Epic Games",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "SIWE (Sign In with Ethereum)",
+      description: "Authentication using Ethereum wallet signatures following the SIWE standard",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "SIWS (Sign In with Solana)",
+      description: "Authentication using Solana wallet signatures",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM"]
+      }
+    }
+  ]}
+/>
 
-### Okto Smart Wallets
+### Embedded Wallets
 
-| Feature                   | Supported in Version |
-| ------------------------- | -------------------- |
-| Embedded Wallets          | <span className="feature-supported-version">v0.1.0</span>         |
-| Signing Transactions      | <span className="feature-supported-version">v0.1.0</span>         |
-| Broadcasting Transactions | <span className="feature-supported-version">v0.1.0</span>         |
-| Transaction MFA           | 🔜                      |
-| Wallet Key Export         | 🔜                      |
+<FeatureSupportTable
+  features={[
+    {
+      name: "Automatic Wallet Generation",
+      description: "Automatically create and manage blockchain wallets for users upon authentication",
+      support: {
+        Status: "✅",
+        "Version": "v0.1.0",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Sign User Op",
+      description: "Sign EIP-4337 compliant user operations for account abstraction",
+      support: {
+        Status: "✅",
+        "Version": "v0.1.0",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Send User Op",
+      description: "Send signed user operations to the blockchain network",
+      support: {
+        Status: "✅",
+        "Version": "v0.1.0",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Message Signing",
+      description: "Sign arbitrary messages using the wallet's private key",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Delegated Actions",
+      description: "Allow third-party services to perform actions on behalf of the user with specific permissions",
+      support: {
+        Status: "✅",
+        "Version": "v0.1.0",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Wallet Recovery/Account Linking",
+      description: "Recover wallet access or link multiple authentication methods to the same wallet",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Transaction MFA",
+      description: "Additional security layer requiring multi-factor authentication for transactions",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Key Export",
+      description: "Export wallet private keys for backup or external use",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM"]
+      }
+    }
+  ]}
+/>
 
-### Custom Blockchain Support
+### Abstraction Features
 
-| Feature                     | Supported in Version |
-| --------------------------- | -------------------- |
-| EVM Chains Support    | <span className="feature-supported-version">v0.1.0</span>         |
-| Custom EVM Chains Support    | <span className="feature-supported-version">v0.1.0</span>         |
-| Solana Chain Support |    🔜      |
-| Aptos Chain Support |  🔜         |
+<FeatureSupportTable
+  features={[
+    {
+      name: "Cross Chain Liquidity",
+      description: "Access and manage liquidity across multiple blockchain networks",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Cross Chain Swaps",
+      description: "Perform token swaps between different blockchain networks",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Unified Balance",
+      description: "View aggregated token balances across all supported chains in a single view",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Sponsored Transactions",
+      description: "Execute transactions without requiring users to hold native tokens for gas fees",
+      support: {
+        Status: "✅",
+        "Version": "v0.1.0",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Gas Station",
+      description: "Pay transaction gas fees using any supported token instead of native chain tokens",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM"]
+      }
+    }
+  ]}
+/>
 
 ### Connectors
 
-| Feature                                          | Supported in Version |
-| ------------------------------------------------ | -------------------- |
-| Wagmi                                          | <span className="feature-supported-version">v0.1.0</span>         |
-| Ethers.js                              | 🔜                     |
-| External Wallets (MetaMask, WalletConnect, etc.)                                            | 🔜                      |
-| Viem                                             | 🔜                      |
-| @solana/web3.js                                  | 🔜                      |
+<FeatureSupportTable
+  features={[
+    {
+      name: "Import External Wallet in Okto",
+      description: "Import and manage external wallets within the Okto ecosystem",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Wagmi (connect external wallet)",
+      description: "Connect and interact with external wallets using the Wagmi hooks ecosystem",
+      support: {
+        Status: "🔌",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Viem",
+      description: "Interact with EVM chains using the Viem TypeScript library",
+      support: {
+        Status: "🔌",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Ethers",
+      description: "Interact with EVM chains using the Ethers.js library",
+      support: {
+        Status: "🔌",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "@solana/web3.js",
+      description: "Interact with Solana blockchain using the official Solana web3.js library",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["Solana"]
+      }
+    }
+  ]}
+/>
 
-### Funding & Payments
+### Funding
 
-| Feature                | Supported in Version |
-| ---------------------- | -------------------- |
-| Transfer from Wallet   |  <span className="feature-supported-version">v0.1.0</span>  |
-| On-Ramp |  🔜                      |
-| Cross-Chain Liquidity | 🔜                      |
-| Cross-Chain Swaps   | 🔜                      |
+<FeatureSupportTable
+  features={[
+    {
+      name: "On-ramp via Onmeta/Saber",
+      description: "Purchase crypto using fiat currency through Onmeta or Saber integration",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Off-ramp with KYC",
+      description: "Convert crypto to fiat currency with KYC verification",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM"]
+      }
+    }
+  ]}
+/>
 
-### NFTs
+## Intents
 
-| Feature             | Supported in Version |
-| ------------------- | -------------------- |
-| Transfers | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" />  |
-| Minting             | 🔜 |
-| Collection Creation           | 🔜 |
+### Token Operations
+
+<FeatureSupportTable
+  features={[
+    {
+      name: "Token Portfolio",
+      description: "View and manage all token holdings across supported chains",
+      support: {
+        Status: "✅",
+        "Version": "v0.1.0",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Token Transfer",
+      description: "Send tokens to other addresses across supported chains",
+      support: {
+        Status: "✅",
+        "Version": "v0.1.0",
+        Chains: ["EVM"]
+      }
+    }
+  ]}
+/>
+
+### NFT Operations
+
+<FeatureSupportTable
+  features={[
+    {
+      name: "Collection Creation",
+      description: "Create and deploy new NFT collections",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "NFT Transfer",
+      description: "Transfer NFTs between addresses",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "NFT Portfolio",
+      description: "View and manage NFT holdings across supported chains",
+      support: {
+        Status: "✅",
+        "Version": "v0.1.0",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "NFT Minting",
+      description: "Mint new NFTs from supported collections",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM"]
+      }
+    }
+  ]}
+/>
 
 ### Smart Contract Interactions
 
-| Feature                     | Supported in Version |
-| --------------------------- | -------------------- |
-| RawWrite (Write to Smart Contract)    | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" />  |
-| RawRead (Read from Smart Contract)   | 🔜 |
+<FeatureSupportTable
+  features={[
+    {
+      name: "Raw Write",
+      description: "Execute write operations on smart contracts",
+      support: {
+        Status: "✅",
+        "Version": "v0.1.0",
+        Chains: ["EVM"]
+      }
+    },
+    {
+      name: "Raw Read",
+      description: "Read data from smart contracts",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM"]
+      }
+    }
+  ]}
+/>

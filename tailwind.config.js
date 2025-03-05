@@ -11,7 +11,8 @@ export default {
 		'./mdx-components.{ts,tsx}',
 		'./node_modules/fumadocs-ui/dist/**/*.js',
 		'./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
-	],
+        "./node_modules/fumadocs-openapi/dist/**/*.js"
+    ],
 	darkMode: "class",
 	plugins: [nextui()],
 	presets: [createPreset({
