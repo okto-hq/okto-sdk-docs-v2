@@ -28,11 +28,11 @@
       "okto-sdk/rate-limits",
       "okto-sdk/use-cases",
       "---Resources---",
+      "[Dev Tools](/tools)",
       "troubleshooting",
       "brand-kit",
       "faq",
-      "glossary",
-      "[Dev Tools](/tools)"
+      "glossary"
     ],
     "root": true
   }
