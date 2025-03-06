@@ -33,18 +33,19 @@ There are two ways to implement token transfers:
 <Tabs items={['Abstracted Flow', 'UserOp Flow']}>
 <Tab value="Abstracted Flow">
 ```typescript
-import { tokenTransfer } from "@okto_web3/core-js-sdk";
+import { tokenTransfer } from "@okto_web3/core-js-sdk"; // [!code highlight]
 
 async function handleTokenTransfer() {
     try {
-        const transferParams = {
-            amount: BigInt("1000000000000000000"), // 1 token with 18 decimals
-            recipient: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-            token: "0x2170ed0880ac9a755fd29b2688956bd959f933f8", // Token contract address
-            caip2Id: "eip155:1"
-        };
+        const transferParams = { // [!code highlight]
+            amount: BigInt("1000000000000000000"), // 1 token with 18 decimals // [!code highlight]
+            recipient: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e", // [!code highlight]
+            token: "0x2170ed0880ac9a755fd29b2688956bd959f933f8", // Token contract address // [!code highlight]
+            caip2Id: "eip155:1" // [!code highlight]
+        }; // [!code highlight]
+
         // Execute the transfer
-        const jobId = await tokenTransfer(oktoClient, transferParams);
+        const jobId = await tokenTransfer(oktoClient, transferParams); // [!code highlight]
         console.log('Transfer jobId:', jobId);
     } catch (error) {
         console.error('Error in token transfer:', error);
@@ -54,25 +55,25 @@ async function handleTokenTransfer() {
 </Tab>
 <Tab value="UserOp Flow">
 ```typescript
-import { tokenTransfer } from "@okto_web3/core-js-sdk/userop";
+import { tokenTransfer } from "@okto_web3/core-js-sdk/userop"; // [!code highlight]
 
 async function handleTokenTransfer() {
     try {
-        const transferParams = {
-            amount: BigInt("1000000000000000000"), // 1 token with 18 decimals
-            recipient: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-            token: "0x2170ed0880ac9a755fd29b2688956bd959f933f8", // Token contract address
-            caip2Id: "eip155:1"
-        };
+        const transferParams = { // [!code highlight]
+            amount: BigInt("1000000000000000000"), // 1 token with 18 decimals // [!code highlight]
+            recipient: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e", // [!code highlight]
+            token: "0x2170ed0880ac9a755fd29b2688956bd959f933f8", // Token contract address // [!code highlight]
+            caip2Id: "eip155:1" // [!code highlight]
+        }; // [!code highlight]
 
         // Create the user operation
-        const userOp = await tokenTransfer(oktoClient, transferParams);
+        const userOp = await tokenTransfer(oktoClient, transferParams); // [!code highlight]
         
         // Sign the operation
-        const signedOp = await oktoClient.signUserOp(userOp);
+        const signedOp = await oktoClient.signUserOp(userOp); // [!code highlight]
         
         // Execute the transfer
-        const jobId = await oktoClient.executeUserOp(signedOp);
+        const jobId = await oktoClient.executeUserOp(signedOp); // [!code highlight]
         console.log('Transfer jobId:', jobId);
     } catch (error) {
         console.error('Error in token transfer:', error);
