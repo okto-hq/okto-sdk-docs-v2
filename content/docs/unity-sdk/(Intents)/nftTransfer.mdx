@@ -68,44 +68,33 @@ function NFTTransfer() {
 ```
 </Tab>
 <Tab value="UserOp Flow">
-```typescript
-import { useOkto } from '@okto_web3/react-sdk';
-import { nftTransfer } from '@okto_web3/react-sdk/userop';
-
-function NFTTransfer() {
-    const oktoClient = useOkto();
-
-    async function handleNFTTransfer() {
-        try {
-            const transferParams = {
-                caip2Id: "eip155:1", // Ethereum Mainnet
-                collectionAddress: "0x23581767a106ae21c074b2276D25e5C3e136a68b",
-                nftId: "123", // NFT token ID
-                recipientWalletAddress: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-                amount: 1,
-                nftType: 'ERC721'
+```csharp
+        public async Task<string> ExecuteNFTTransaction(string recipientWalletAddress,
+            string collectionAddress,
+            string nftId, int amount, string type, string network)
+        {
+            var data = new NFTTransferIntentParams
+            {
+                recipientWalletAddress = recipientWalletAddress,
+                collectionAddress = collectionAddress,
+                nftId = nftId,
+                amount = amount,
+                nftType = type,
+                caip2Id = network
             };
 
-            // Create the user operation
-            const userOp = await nftTransfer(oktoClient, transferParams);
-            
-            // Sign the operation
-            const signedOp = await oktoClient.signUserOp(userOp);
-            
-            // Execute the transfer
-            const jobId = await oktoClient.executeUserOp(signedOp);
-            console.log('Transfer jobId:', jobId);
-        } catch (error) {
-            console.error('Error in NFT transfer:', error);
-        }
-    }
+            userOp = await CreateUserOp(data);
+            string userOpStr = JsonConvert.SerializeObject(userOp, Formatting.Indented);
+            Debug.Log($"UserOp created: {JsonConvert.SerializeObject(userOp, Formatting.Indented)}");
 
-    return (
-        <button onClick={handleNFTTransfer}>
-            Transfer NFT
-        </button>
-    );
-}
+            userOp = SignUserOp(userOp);
+            Debug.Log($"UserOp Signed: {JsonConvert.SerializeObject(userOp, Formatting.Indented)}");
+
+            JsonRpcResponse<ExecuteResult> txHash = await ExecuteUserOp(userOp);
+            string txHashStr = JsonConvert.SerializeObject(txHash, Formatting.Indented);
+
+            return txHashStr;
+        }
 ```
 </Tab>
 </Tabs>

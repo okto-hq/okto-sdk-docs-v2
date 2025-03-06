@@ -19,30 +19,36 @@ Okto SDK provides the `getAccount()` method to retrieve details of wallets conne
 
 <Accordions defaultValue="Usage">
 <Accordion title="Usage">
-<Tabs items={['Typescript']}>
-  <Tab value="Typescript">
-    ```typescript
-    import { useOkto } from '@okto_web3/react-sdk';
-    import { getAccount } from '@okto_web3/react-sdk';
-
-    function Account() {
-        const oktoClient = useOkto();
-
-        async function fetchAccount() {
-            try {
-                const account = await getAccount(oktoClient);
-                console.log('Account data:', account);
-            } catch (error) {
-                console.error('Error fetching user account:', error);
+<Tabs items={['C#']}>
+  <Tab value="C#">
+    ```csharp
+        using System;
+        using System.Threading.Tasks;
+        using UnityEngine;
+        //This is an independent script which called GetWallets() Api
+        namespace OktoSDK
+        {
+            public class Account : MonoBehaviour
+            {
+                public async Task<object> GetAccount(OktoClient oc)
+                {
+                    if (!oc.IsLoggedIn())
+                    {
+                        ResponsePanel.SetResponse("You are not logged In!");
+                        return "You are not logged In!";
+                    }
+                    try
+                    {
+                        return await BffClientRepository.GetBffClientRepository().GetWallets();
+                    }
+                    catch (Exception error)
+                    {
+                        Debug.LogError($"Failed to retrieve wallets: {error}");
+                        throw;
+                    }
+                }
             }
         }
-
-        return (
-            <button onClick={fetchAccount}>
-                Fetch User Account
-            </button>
-        );
-    }
     ```
   </Tab>
 </Tabs>
@@ -68,8 +74,8 @@ Okto SDK provides the `getAccount()` method to retrieve details of wallets conne
 
 <Callout title="Note" type="info">
 For error handling:
-- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
-- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/unity-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/unity-sdk/troubleshooting) to contact support
 </Callout>
 
 ### Method Overview
@@ -90,7 +96,7 @@ In Okto, an **account** represents the user's identity in the Okto ecosystem, en
 
 | Parameter | Type | Description | Required |
 |-----------|------|-------------|-----------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from OktoClient.cs | Yes |
 
 ### Response
 
@@ -98,17 +104,27 @@ In Okto, an **account** represents the user's identity in the Okto ecosystem, en
 
 | Field Name | Type                  | Description                                   | 
 |------------|-----------------------|-----------------------------------------------|
-| `result`   | [`Promise<Wallet[]>`](/docs/react-sdk/technical-reference#models) | Returns the list of wallet of the user | 
+| `result`   | [`Task<List<Wallet>>`](/docs/react-sdk/technical-reference#models) | Returns the list of wallet of the user | 
 
 <Accordions>
     <Accordion title="Response Type">
-        ```typescript
-        interface Wallet {
-            caip_id: string;
-            network_name: string;
-            address: string;
-            network_id: string;
-            network_symbol: string;
+        ```csharp
+        public class Wallet
+        {
+            [JsonProperty("caip_id")]
+            public string capId { get; set; }
+
+            [JsonProperty("network_name")]
+            public string networkName { get; set; }
+
+            [JsonProperty("address")]
+            public string address { get; set; }
+
+            [JsonProperty("network_id")]
+            public string cap2Id { get; set; }
+
+            [JsonProperty("network_symbol")]
+            public string networkSymbol { get; set; }
         }
         ```
     </Accordion>
