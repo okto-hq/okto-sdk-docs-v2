@@ -19,6 +19,9 @@ rimrafSync(out, {
       !v.endsWith('index.mdx') &&
       !v.endsWith('meta.json') &&
       !v.endsWith('api-migration.mdx') &&
+      !v.endsWith('technical-reference.mdx') &&
+      !v.endsWith('sdk-error-warnings.mdx') &&
+      !v.endsWith('troubleshooting.mdx') &&
       !isInAuthenticateFolder &&
       !isInIntentsFolder &&
       !isInWalletsFolder

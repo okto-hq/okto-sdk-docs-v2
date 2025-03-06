@@ -20,6 +20,9 @@
         "./wallets/(embedded-wallets)/delegated-actions",
         "!./wallets/external-wallets",
         "---Resources---",
-        "api-migration"
+        "api-migration",
+        "technical-reference",
+        "sdk-error-warnings",
+        "troubleshooting"
     ]
 }
