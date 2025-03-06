@@ -48,7 +48,7 @@ The `getPortfolio` function retrieves the user's complete portfolio, including t
 <Tab value="TypeScript">
 ```typescript
 import { useOkto } from '@okto_web3/react-native-sdk';
-import { getPortfolio } from '@okto_web3/react-native-sdk';
+import { getPortfolio } from '@okto_web3/react-native-sdk'; // [!code highlight]
 import { View, Text, Pressable } from 'react-native';
 
 function Portfolio() {
@@ -56,7 +56,7 @@ function Portfolio() {
 
     async function fetchPortfolio() {
         try {
-            const portfolio = await getPortfolio(oktoClient);
+            const portfolio = await getPortfolio(oktoClient); // [!code highlight]
             console.log('Portfolio data:', portfolio);
         } catch (error) {
             console.error('Error fetching portfolio:', error);

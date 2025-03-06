@@ -49,14 +49,14 @@ The `getOrderHistory` function retrieves the user's transaction order history.
 ```typescript
 import { useOkto } from '@okto_web3/react-native-sdk';
 import { getOrderHistory } from '@okto_web3/react-native-sdk';
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, Pressable } from 'react-native'; // [!code highlight]
 
 function OrderHistory() {
     const oktoClient = useOkto();
 
     async function fetchOrders() {
         try {
-            const orders = await getOrderHistory(oktoClient);
+            const orders = await getOrderHistory(oktoClient); // [!code highlight]
             console.log('Order history:', orders);
         } catch (error) {
             console.error('Error fetching orders:', error);

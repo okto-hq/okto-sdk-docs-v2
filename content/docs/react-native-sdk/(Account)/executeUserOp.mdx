@@ -49,7 +49,7 @@ The `executeUserOp` function submits a signed user operation to the blockchain f
 <Tab value="TypeScript">
 ```typescript
 import { useOkto } from '@okto_web3/react-native-sdk';
-import { executeUserOp } from '@okto_web3/react-native-sdk';
+import { executeUserOp } from '@okto_web3/react-native-sdk'; // [!code highlight]
 import { View, Text, Pressable } from 'react-native';
 
 function ExecuteOperation() {
@@ -57,7 +57,7 @@ function ExecuteOperation() {
 
     async function handleExecute(signedUserOp) {
         try {
-            const jobId = await executeUserOp(oktoClient, signedUserOp);
+            const jobId = await executeUserOp(oktoClient, signedUserOp); // [!code highlight]
             console.log('Operation executed:', jobId);
         } catch (error) {
             console.error('Error executing operation:', error);

@@ -57,7 +57,7 @@ The `getNFTCollections` function retrieves information about supported NFT colle
 <Tab value="TypeScript">
 ```typescript
 import { useOkto } from '@okto_web3/react-native-sdk';
-import { getNFTCollections } from '@okto_web3/react-native-sdk';
+import { getNFTCollections } from '@okto_web3/react-native-sdk'; // [!code highlight]
 import { View, Text, Pressable } from 'react-native';
 
 function NFTCollections() {
@@ -65,7 +65,7 @@ function NFTCollections() {
 
     async function fetchCollections() {
         try {
-            const collections = await getNFTCollections(oktoClient);
+            const collections = await getNFTCollections(oktoClient); // [!code highlight]
             console.log('NFT collections:', collections);
         } catch (error) {
             console.error('Error fetching collections:', error);
