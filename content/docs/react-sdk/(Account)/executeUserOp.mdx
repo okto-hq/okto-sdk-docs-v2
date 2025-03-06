@@ -19,14 +19,14 @@ The `executeUserOp()` method is available on the OktoClient instance and is used
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
 ```typescript
-import { useOkto } from '@okto_web3/react-sdk';
+import { useOkto } from '@okto_web3/react-sdk'; // [!code highlight]
 
 function ExecuteOperation() {
-    const oktoClient = useOkto();
-
+    const oktoClient = useOkto(); // [!code highlight]
+ 
     async function handleExecuteOperation(signedUserOp) {
         try {
-            const result = await oktoClient.executeUserOp(signedUserOp);
+            const result = await oktoClient.executeUserOp(signedUserOp); // [!code highlight]
             console.log('Job ID:', result);
             return result;
         } catch (error) {

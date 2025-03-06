@@ -23,14 +23,14 @@ The `getTokens` function fetches the list of supported tokens from the backend.
 <Tab value="TypeScript">
 ```typescript
 import { useOkto } from '@okto_web3/react-sdk';
-import { getTokens } from '@okto_web3/react-sdk';
+import { getTokens } from '@okto_web3/react-sdk'; // [!code highlight]
 
 function TokensList() {
     const oktoClient = useOkto();
 
     async function fetchTokens() {
         try {
-            const tokens = await getTokens(oktoClient);
+            const tokens = await getTokens(oktoClient); // [!code highlight]
             console.log('Supported tokens:', tokens);
         } catch (error) {
             console.error('Error fetching tokens:', error);
