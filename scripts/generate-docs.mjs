@@ -13,13 +13,15 @@ rimrafSync(out, {
     // Check if file is inside the "authenticate" folder
     const isInAuthenticateFolder = relativePath.startsWith('authenticate');
     const isInIntentsFolder = relativePath.startsWith('(Intents)');
-
+    const isInWalletsFolder = relativePath.startsWith('wallets');
+    
     return (
       !v.endsWith('index.mdx') &&
       !v.endsWith('meta.json') &&
       !v.endsWith('api-migration.mdx') &&
       !isInAuthenticateFolder &&
-      !isInIntentsFolder
+      !isInIntentsFolder &&
+      !isInWalletsFolder
     );
   }
 });

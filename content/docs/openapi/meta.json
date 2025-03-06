@@ -7,13 +7,19 @@
         "[← Back to Home](/)",
         "------",
         "index",
-        "api-migration",
         "---Authentication---",
         "./authenticate/okto-auth-session",
         "./authenticate/google-oauth",
         "./authenticate/login-logout",
         "---Usage---",
         "(Intents)",
-        "explorer"
+        "explorer",
+        "---Wallets---",
+        "./wallets/overview",
+        "./wallets/(embedded-wallets)/index",
+        "./wallets/(embedded-wallets)/delegated-actions",
+        "!./wallets/external-wallets",
+        "---Resources---",
+        "api-migration"
     ]
 }
