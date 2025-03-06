@@ -30,6 +30,7 @@
     "./wallets/(embedded-wallets)/delegated-actions",
     "!./wallets/external-wallets",
     "---Resources---",
+    "[Dev Tools](/tools)",
     "v2migration",
     "technical-reference",
     "sdk-error-warnings",

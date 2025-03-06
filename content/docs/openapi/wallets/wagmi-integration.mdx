@@ -1,0 +1,169 @@
+---
+title: 'Integrating with wagmi'
+full: false
+---
+
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
+[Wagmi](https://wagmi.sh/) is a collection of React hooks for Ethereum, making it easy to interact with wallets and smart contracts. Okto provides seamless integration with Wagmi through its adapter package, allowing you to add social login options via Okto to your existing Wagmi application.
+
+<Callout>
+This guide shows how to add Okto wallet support to an existing wagmi application, enabling social login options for your users.
+
+If you're starting from scratch, you have two options:
+- Build with an <a href="/docs/okto-sdk/supported-sdk-platforms" target="_blank" rel="noopener noreferrer">Okto SDK</a> directly
+- Follow the <a href="https://wagmi.sh/react/getting-started" target="_blank" rel="noopener noreferrer">wagmi getting started guide</a> first, then return here to add Okto support
+</Callout>
+
+<Steps>
+
+<Step>
+
+## Installation
+
+Install the Okto wagmi adapter [package](https://www.npmjs.com/package/@okto_web3/wagmi-adapter) and other dependencies:
+
+```bash
+npm i @okto_web3/wagmi-adapter wagmi @tanstack/react-query
+```
+
+</Step>
+
+<Step>
+
+### Configure Wagmi
+
+Create a configuration file to set up wagmi with the Okto connector:
+
+```typescript title="wagmi.config.ts"
+import { okto } from '@okto_web3/wagmi-adapter';
+import { cookieStorage, createConfig, createStorage, http } from 'wagmi';
+import { mainnet, optimism, polygon } from 'wagmi/chains';
+
+export function getConfig() {
+  return createConfig({
+    chains: [polygon],
+    connectors: [
+      okto({
+        environment: 'sandbox',
+        clientPrivateKey: '0xprivatekey',
+        clientSWA: '0xswa',
+      }),
+    ],
+    storage: createStorage({
+      storage: cookieStorage,
+    }),
+    ssr: true,
+    transports: {
+      [polygon.id]: http(),
+    },
+  });
+}
+
+declare module 'wagmi' {
+  interface Register {
+    config: ReturnType<typeof getConfig>;
+  }
+}
+```
+
+#### Okto Configuration Parameters
+
+| Parameter | Description | Type | Required |
+|-----------|-------------|------|----------|
+| `environment` | Environment to use for the SDK | `'sandbox'` \| `'production'` | Yes |
+| `clientPrivateKey` | Your client private key | `string` | Yes |
+| `clientSWA` | Your client SWA | `string` | Yes |
+
+</Step>
+
+<Step>
+
+### Set Up Providers
+
+Update your app's root component to include the necessary providers:
+
+```tsx title="providers.tsx"
+import { headers } from 'next/headers';
+import { useState } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import type { ReactNode } from 'react';
+import { WagmiProvider, cookieToInitialState } from 'wagmi';
+import { getConfig } from '../wagmi';
+
+export default async function RootLayout(props: { children: ReactNode }) {
+  const initialState = cookieToInitialState(
+    getConfig(),
+    (await headers()).get('cookie'),
+  );
+
+  const [config] = useState(() => getConfig());
+  const [queryClient] = useState(() => new QueryClient());
+
+  return (
+    <html lang="en">
+      <head>
+        <script src="https://accounts.google.com/gsi/client" async defer />
+      </head>
+      <body>
+        <WagmiProvider config={config} initialState={initialState}>
+          <QueryClientProvider client={queryClient}>
+            {props.children}
+          </QueryClientProvider>
+        </WagmiProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+<Callout title="Note">
+Make sure to add the Google Sign-In script to your HTML head for authentication:
+```html
+<script src="https://accounts.google.com/gsi/client" async defer />
+```
+</Callout>
+
+</Step>
+
+<Step>
+
+## Usage with wagmi Hooks
+
+Once configured, you can use wagmi hooks to offer Okto social login to your users:
+
+```typescript
+import { useAccount, useConnect, useDisconnect } from 'wagmi';
+
+function WalletConnection() {
+  const { address, isConnected } = useAccount();
+  const { connect, connectors } = useConnect();
+  const { disconnect } = useDisconnect();
+
+  if (isConnected) {
+    return (
+      <div>
+        Connected to {address}
+        <button onClick={() => disconnect()}>Disconnect</button>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      {connectors.map((connector) => (
+        <button
+          key={connector.id}
+          onClick={() => connect({ connector })}
+        >
+          Connect with {connector.name}
+        </button>
+      ))}
+    </div>
+  );
+}
+```
+
+</Step>
+
+</Steps>

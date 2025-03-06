@@ -31,6 +31,7 @@
     "!./wallets/external-wallets",
     "./wallets/wagmi-integration",
     "---Resources---",
+    "[Dev Tools](/tools)",
     "v2migration",
     "technical-reference",
     "sdk-error-warnings",

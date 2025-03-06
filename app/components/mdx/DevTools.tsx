@@ -22,7 +22,7 @@ export default function DevTools() {
         >
           <span className="flex items-center gap-2 text-zinc-800 dark:text-zinc-200 font-medium">
             <FaTools size={20} />
-            Okto Auth Token Generator
+            Session & OAuth Token Generator
           </span>
         </Link>
       </div>
