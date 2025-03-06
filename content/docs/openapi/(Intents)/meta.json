@@ -1,0 +1,6 @@
+{
+    "title": "Intents",
+    "pages": [
+        "!createNFTCollection" , "intents", "tokenTransfer", "nftTransfer",  "evmRawTransaction"
+    ]
+}

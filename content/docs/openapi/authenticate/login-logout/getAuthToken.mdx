@@ -1,0 +1,76 @@
+---
+title: Get Auth Token
+description: Learn how to retrieve the authorization token using the Okto SDK.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react';
+
+The `getAuthorizationToken()` method retrieves the current user's authorization token for authenticated operations.
+
+### Method Overview
+
+| Methods | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> `OktoClient.getAuthorizationToken` | Get the current authorization token |
+
+<div className="method-box">
+
+## Get Authorization Token
+
+<sub><i>async</i></sub> `OktoClient.getAuthorizationToken()` retrieves the current authorization token for the authenticated user.
+
+### Parameters
+
+This method doesn't take any parameters.
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | `Promise<string>` | Returns the authorization token |
+
+</Callout>
+
+<Accordions>
+<Accordion title="Example">
+<Tabs items={['Typescript']}>
+  <Tab value="Typescript">
+    ```typescript
+    import { useOkto } from '@okto_web3/react-sdk';
+
+    function TokenRetrieval() {
+        const oktoClient = useOkto();
+
+        async function getToken() {
+            try {
+                const token = await oktoClient.getAuthorizationToken();
+                console.log("Auth token retrieved");
+            } catch (error) {
+                console.error("Failed to get token:", error);
+            }
+        }
+
+        return <button onClick={getToken}>Get Auth Token</button>;
+    }
+    ```
+  </Tab>
+</Tabs>
+</Accordion>
+</Accordions>
+
+</div>
+
+<Callout>
+The authorization token is a JWT that can be used to authenticate requests to Okto services. This token is automatically managed by the SDK for internal operations.
+</Callout>
+
+<Callout title="Note">
+In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation for more details.
+</Callout>
