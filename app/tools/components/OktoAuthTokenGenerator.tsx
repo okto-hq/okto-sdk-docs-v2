@@ -190,6 +190,7 @@ export default function OktoAuthTokenGenerator() {
   const [clientSWA, setClientSWA] = useState('')
   const [clientPrivateKey, setClientPrivateKey] = useState('')
   const [googleIdToken, setGoogleIdToken] = useState('')
+  const [sessionConfig, setSessionConfig] = useState({})
   const [authToken, setAuthToken] = useState('')
   const [error, setError] = useState('')
   const [isCopied, setIsCopied] = useState(false)
@@ -233,6 +234,7 @@ export default function OktoAuthTokenGenerator() {
           sessionPubKey: session.uncompressedPublicKeyHexWith0x,
           userSWA: response.data.result.userSWA
         }
+        setSessionConfig(sessionConfig);
         const authToken = await getAuthorizationToken(sessionConfig);
         setAuthToken(authToken);
         setError('')
@@ -288,12 +290,24 @@ export default function OktoAuthTokenGenerator() {
       </Button>
       {authToken && (
         <div className="mt-4">
+          <div>
+          <h3>Okto Auth Token</h3>
           <div className="my-3 p-2 bg-gray-100 dark:bg-slate-800 rounded-md break-all max-w-full overflow-x-auto" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
             {authToken}
           </div>
           <Button type="button" onClick={copyToClipboard}>
             {isCopied ? 'Copied!' : 'Copy Okto Auth Token to Clipboard'}
           </Button>
+          </div>
+          <div className='mt-4'>
+          <h3>Session Config</h3>
+          <div className="my-3 p-2 bg-gray-100 dark:bg-slate-800 rounded-md break-all max-w-full overflow-x-auto" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
+            {JSON.stringify(sessionConfig)}
+          </div>
+          <Button type="button" onClick={copyToClipboard}>
+            {isCopied ? 'Copied!' : 'Copy Session Config to Clipboard'}
+          </Button>
+          </div>
         </div>
       )}
     </div>
