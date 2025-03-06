@@ -187,7 +187,7 @@ html {
   animation: spin-slow 3s linear infinite;
 }
 
-#nd-sidebar > div.overflow-hidden.flex-1 > div > div > div > div:nth-child(9) > div > div > a:nth-child(1),
+/* #nd-sidebar > div.overflow-hidden.flex-1 > div > div > div > div:nth-child(9) > div > div > a:nth-child(1),
 #nd-sidebar > div.overflow-hidden.flex-1 > div > div > div > div:nth-child(9) > div > div > p:nth-child(2),
 #nd-sidebar > div.overflow-hidden.flex-1 > div > div > div > div:nth-child(10) > div > div > a:nth-child(1),
 #nd-sidebar > div.overflow-hidden.flex-1 > div > div > div > div:nth-child(10) > div > div > p:nth-child(2),
@@ -204,4 +204,4 @@ html {
 #nd-sidebar > div.overflow-hidden.flex-1 > div > div > div > div:nth-child(16) > div > div > a:nth-child(1),
 #nd-sidebar > div.overflow-hidden.flex-1 > div > div > div > div:nth-child(16) > div > div > p:nth-child(2) {
   display: none;
-}
+} */

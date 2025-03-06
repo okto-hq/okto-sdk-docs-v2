@@ -8,6 +8,12 @@
         "------",
         "index",
         "api-migration",
-        "..."
+        "---Authentication---",
+        "./authenticate/okto-auth-session",
+        "./authenticate/google-oauth",
+        "./authenticate/login-logout",
+        "---Usage---",
+        "(Intents)",
+        "explorer"
     ]
 }

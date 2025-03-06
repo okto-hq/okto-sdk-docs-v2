@@ -28,11 +28,11 @@ const tools: Tool[] = [
     description: 'Generate Google ID Tokens for testing purposes.',
     component: <GoogleIdTokenGenerator />,
   },
-  // {
-  //   title: 'Okto OAuth Token Generator',
-  //   description: 'Generate Okto Auth Tokens using your Google ID Token.',
-  //   component: <OktoAuthTokenGenerator />,
-  // },
+  {
+    title: 'Okto Auth Token Generator',
+    description: 'Generate Okto Auth Token.',
+    component: <OktoAuthTokenGenerator />,
+  },
   // {
   //   title: 'Okto Quickstart CLI',
   //   description: 'Step-by-step guide to properly configure the SDK for your project.',
