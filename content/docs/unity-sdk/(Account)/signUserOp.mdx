@@ -16,46 +16,26 @@ The `signUserOp()` method is available on the OktoClient instance and is used to
 
 <Accordions defaultValue="Usage">
 <Accordion title="Usage">
-<Tabs items={['TypeScript']}>
-<Tab value="TypeScript">
-```typescript
-import { useOkto } from '@okto_web3/react-sdk';
+<Tabs items={['C#']}>
+<Tab value="C#">
+```csharp
+        public UserOp SignUserOp(UserOp userOp)
+        {
+            var userOpForSigning = userOp.Clone();
 
-function SignOperation() {
-    const oktoClient = useOkto();
+            // Sign UserOp
+            var signedUserOp = UserOpSign.SignUserOp(
+                userOp: userOpForSigning,
+                privateKey: OktoAuthExample.GetSession().SessionPrivKey,
+                entryPointAddress: OktoAuthExample.getOktoClient().Env.EntryPointContractAdress,
+                chainId: OktoAuthExample.getOktoClient().Env.ChainId
+            );
 
-    // Sample UserOp before signing
-    const userOp = {
-        sender: "0xa9F6b3A5a718754979dbA78113f3614Dd4524c53",
-        nonce: "0x000000000000000000000000000000006c3581e0bd4f42d4a16294410c439e7a",
-        paymaster: "0x5408fAa7F005c46B85d82060c532b820F534437c",
-        callGasLimit: "0x493e0",
-        verificationGasLimit: "0x30d40",
-        preVerificationGas: "0xc350",
-        maxFeePerGas: "0x77359400",
-        maxPriorityFeePerGas: "0x77359400",
-        paymasterPostOpGasLimit: "0x186a0",
-        paymasterVerificationGasLimit: "0x186a0",
-        callData: "0x8dd7712f000...", // truncated for brevity
-        paymasterData: "0x000000000..." // truncated for brevity
-    };
+            userOp.signature = signedUserOp.signature;
 
-    async function handleSignOperation(userOp) {
-        try {
-            const signedOp = await oktoClient.signUserOp(userOp);
-            console.log('Signed operation:', signedOp);
-            return signedOp;
-        } catch (error) {
-            console.error('Error signing operation:', error);
+
+            return signedUserOp;
         }
-    }
-
-    return (
-        <button onClick={() => handleSignOperation(userOp)}>
-            Sign Operation
-        </button>
-    );
-}
 ```
 </Tab>
 </Tabs>
@@ -84,8 +64,8 @@ function SignOperation() {
 
 <Callout title="Note" type="info">
 For error handling:
-- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
-- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/unity-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/unity-sdk/troubleshooting) to contact support
 </Callout>
 
 ### Method Overview
@@ -104,33 +84,35 @@ For error handling:
 
 | Parameter | Type | Description | Required |
 |-----------|------|-------------|-----------|
-| `userop` | [`UserOp`](/docs/react-sdk/technical-reference#models) | The user operation to be signed | Yes |
+| `userop` | [`UserOp`](/docs/unity-sdk/technical-reference#models) | The user operation to be signed | Yes |
 
 ### Response
 
 <Callout title="Success Response">
 | Field Name | Type | Description |
 |------------|------|-------------|
-| `result` | [`Promise<SignedUserOp>`](/docs/react-sdk/technical-reference#models) | Returns the signed user operation |
+| `result` | [`UserOp`](/docs/unity-sdk/technical-reference#models) | Returns the signed user operation |
 
 <Accordions>
 <Accordion title="Response Type">
-```typescript
-interface SignedUserOp {
-    sender: string;
-    nonce: string;
-    paymaster: string;
-    callGasLimit: string;
-    verificationGasLimit: string;
-    preVerificationGas: string;
-    maxFeePerGas: string;
-    maxPriorityFeePerGas: string;
-    paymasterPostOpGasLimit: string;
-    paymasterVerificationGasLimit: string;
-    callData: string;
-    paymasterData: string;
-    signature: string;
-}
+```csharp
+    public class UserOp
+    {
+        public string sender { get; set; }
+        public string nonce { get; set; }
+        public string paymaster { get; set; }
+        public string callGasLimit { get; set; }
+        public string verificationGasLimit { get; set; }
+        public string preVerificationGas { get; set; }
+        public string maxFeePerGas { get; set; }
+        public string maxPriorityFeePerGas { get; set; }
+        public string paymasterPostOpGasLimit { get; set; }
+        public string paymasterVerificationGasLimit { get; set; }
+        public string callData { get; set; }
+        public string paymasterData { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string signature { get; set; }
+    }          
 ```
 </Accordion>
 </Accordions>

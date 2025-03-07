@@ -19,29 +19,38 @@ The `getPortfolioActivity` function retrieves the user's portfolio activity hist
 
 <Accordions defaultValue="Usage">
 <Accordion title="Usage">
-<Tabs items={['TypeScript']}>
-<Tab value="TypeScript">
-```typescript
-import { useOkto } from '@okto_web3/react-sdk';
-import { getPortfolioActivity } from '@okto_web3/react-sdk';
+<Tabs items={['C#']}>
+<Tab value="C#">
+```csharp
+using System;
+using System.Threading.Tasks;
+using UnityEngine;
 
-function PortfolioActivity() {
-    const oktoClient = useOkto();
+//This is an independent script which calls GetPortfolio() Api
+namespace OktoSDK
+{
+    public class Portfolio : MonoBehaviour
+    {
+        public async Task<object> GetPortfolioActivity(OktoClient oc)
+        {
+            Loader.ShowLoader();
 
-    async function fetchActivity() {
-        try {
-            const activity = await getPortfolioActivity(oktoClient);
-            console.log('Portfolio activity:', activity);
-        } catch (error) {
-            console.error('Error fetching portfolio activity:', error);
+            if (!oc.IsLoggedIn())
+            {
+                ResponsePanel.SetResponse("You are not logged In!");
+                return "You are not logged In!";
+            }
+            try
+            {
+                return await BffClientRepository.GetBffClientRepository().GetPortfolioActivity();
+            }
+            catch (Exception error)
+            {
+                Debug.LogError($"Failed to retrieve portfolio: {error}");
+                throw;
+            }
         }
     }
-
-    return (
-        <button onClick={fetchActivity}>
-            Fetch Portfolio Activity
-        </button>
-    );
 }
 ```
 </Tab>
@@ -107,7 +116,7 @@ For error handling:
 
 | Parameter | Type | Description | Required |
 |-----------|------|-------------|-----------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from OktoClient.cs| Yes |
 
 ### Response
 
@@ -119,27 +128,73 @@ For error handling:
 
 <Accordions>
     <Accordion title="Response Type">
-        ```typescript
-        interface UserPortfolioActivity {
-            symbol: string;
-            image: string;
-            name: string;
-            shortName: string;
-            id: string;
-            groupId: string;
-            description: string;
-            quantity: string;
-            orderType: string;
-            transferType: string;
-            status: string;
-            timestamp: number;
-            txHash: string;
-            caip2Id: string;
-            networkName: string;
-            networkExplorerUrl: string;
-            networkSymbol: string;
-            caipId: string;
-        }
+        ```csharp
+    [Serializable]
+    public class UserPortfolioActivity
+    {
+        [JsonProperty("symbol")]
+        public string symbol { get; set; }
+
+        [JsonProperty("image")]
+        public string image { get; set; }
+
+        [JsonProperty("name")]
+        public string name { get; set; }
+
+        [JsonProperty("short_name")]
+        public string shortName { get; set; }
+
+        [JsonProperty("id")]
+        public string id { get; set; }
+
+        [JsonProperty("group_id")]
+        public string groupId { get; set; }
+
+        [JsonProperty("description")]
+        public string description { get; set; }
+
+        [JsonProperty("quantity")]
+        public string quantity { get; set; }
+
+        [JsonProperty("amount")]
+        public string amount { get; set; }
+
+        [JsonProperty("order_type")]
+        public string orderType { get; set; }
+
+        [JsonProperty("transfer_type")]
+        public string transferType { get; set; }
+
+        [JsonProperty("status")]
+        public bool status { get; set; }
+
+        [JsonProperty("created_at")]
+        public int createdAt { get; set; }
+
+        [JsonProperty("updated_at")]
+        public int updatedAt { get; set; }
+
+        [JsonProperty("timestamp")]
+        public int timestamp { get; set; }
+
+        [JsonProperty("tx_hash")]
+        public string txHash { get; set; }
+
+        [JsonProperty("network_id")]
+        public string networkId { get; set; }
+
+        [JsonProperty("network_name")]
+        public string networkName { get; set; }
+
+        [JsonProperty("network_explorer_url")]
+        public string networkExplorerUrl { get; set; }
+
+        [JsonProperty("network_symbol")]
+        public string networkSymbol { get; set; }
+
+        [JsonProperty("caip_id")]
+        public string caipId { get; set; }
+    }
         ```
     </Accordion>
 </Accordions>
