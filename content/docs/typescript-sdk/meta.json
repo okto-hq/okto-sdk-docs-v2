@@ -29,10 +29,11 @@
         "./wallets/(embedded-wallets)/delegated-actions",
         "!./wallets/external-wallets",
         "---Resources---",
+        "[Dev Tools](/tools)",
+        "v2-migration-guide",
         "technical-reference",
         "sdk-error-warnings",
         "troubleshooting",
-        "v2-migration-guide",
         "!changelog"
     ],
     "root": true

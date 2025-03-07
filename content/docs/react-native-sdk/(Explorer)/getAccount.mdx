@@ -50,7 +50,7 @@ In Okto, an **account** represents the user's identity in the Okto ecosystem, en
   <Tab value="TypeScript">
     ```typescript
     import { useOkto } from '@okto_web3/react-native-sdk';
-    import { getAccount } from '@okto_web3/react-native-sdk';
+    import { getAccount } from '@okto_web3/react-native-sdk'; // [!code highlight]
     import { View, Text, Pressable } from 'react-native';
 
     function Account() {
@@ -58,7 +58,7 @@ In Okto, an **account** represents the user's identity in the Okto ecosystem, en
 
         async function fetchAccount() {
             try {
-                const account = await getAccount(oktoClient);
+                const account = await getAccount(oktoClient); // [!code highlight]
                 console.log('Account data:', account);
             } catch (error) {
                 console.error('Error fetching user account:', error);

@@ -54,21 +54,21 @@ This hook must be used within components wrapped by the `OktoProvider`.
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
 ```tsx
-import { useOkto } from "@okto_web3/react-sdk";
+import { useOkto } from "@okto_web3/react-sdk"; // [!code highlight]
 
 export default function Sample() {
-    const oktoClient = useOkto();
+    const oktoClient = useOkto(); // [!code highlight]
     
     // Access user state
-    const isLoggedIn = !!oktoClient.userSWA;
+    const isLoggedIn = !!oktoClient.userSWA; // [!code highlight]
     
     // Example authentication
     async function handleLogin(googleCredential) {
         try {
-            await oktoClient.loginUsingOAuth({
-                idToken: googleCredential,
-                provider: "google"
-            });
+            await oktoClient.loginUsingOAuth({ // [!code highlight]
+                idToken: googleCredential, // [!code highlight]
+                provider: "google" // [!code highlight]
+            }); // [!code highlight]
         } catch (error) {
             console.error("Login failed:", error);
         }
@@ -77,8 +77,8 @@ export default function Sample() {
     // Example user operation
     async function handleTransaction(userOp) {
         try {
-            const signedOp = await oktoClient.signUserOp(userOp);
-            const jobId = await oktoClient.executeUserOp(signedOp);
+            const signedOp = await oktoClient.signUserOp(userOp); // [!code highlight]
+            const jobId = await oktoClient.executeUserOp(signedOp); // [!code highlight]
             console.log('JobId:', jobId);
         } catch (error) {
             console.error('Transaction failed:', error);

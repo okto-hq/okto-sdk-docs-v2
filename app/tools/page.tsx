@@ -29,7 +29,7 @@ const tools: Tool[] = [
     component: <GoogleIdTokenGenerator />,
   },
   {
-    title: 'Okto Auth Token Generator',
+    title: 'Session & Okto Auth Token Generator',
     description: 'Generate Okto Auth Token.',
     component: <OktoAuthTokenGenerator />,
   },

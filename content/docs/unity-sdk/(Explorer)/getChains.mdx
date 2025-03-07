@@ -19,29 +19,37 @@ The `getChains` function retrieves a list of all blockchain networks supported b
 
 <Accordions defaultValue="Usage">
 <Accordion title="Usage">
-<Tabs items={['TypeScript']}>
-<Tab value="TypeScript">
-```typescript
-import { useOkto } from '@okto_web3/react-sdk';
-import { getChains } from '@okto_web3/react-sdk';
+<Tabs items={['C#']}>
+<Tab value="C#">
+```csharp
+using System;
+using System.Threading.Tasks;
+using UnityEngine;
 
-function ChainsList() {
-    const oktoClient = useOkto();
-
-    async function fetchChains() {
-        try {
-            const chains = await getChains(oktoClient);
-            console.log('Supported chains:', chains);
-        } catch (error) {
-            console.error('Error fetching chains:', error);
+//This is an independent script which called GetChain() Api
+namespace OktoSDK
+{
+    public class Chain : MonoBehaviour
+    {
+        public async Task<object> GetChains(OktoClient oc)
+        {
+            if (!oc.IsLoggedIn())
+            {
+                ResponsePanel.SetResponse("You are not logged In!");
+                return "You are not logged In!";
+            }
+            try
+            {
+                var supportedNetworks = await BffClientRepository.GetBffClientRepository().GetSupportedNetworks();
+                return supportedNetworks;
+            }
+            catch (Exception error)
+            {
+                Debug.LogError($"Failed to retrieve supported networks: {error}");
+                throw new Exception("Unable to fetch supported networks");
+            }
         }
     }
-
-    return (
-        <button onClick={fetchChains}>
-            Fetch Supported Chains
-        </button>
-    );
 }
 ```
 </Tab>
@@ -75,8 +83,8 @@ function ChainsList() {
 
 <Callout title="Note" type="info">
 For error handling:
-- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
-- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/unity-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/unity-sdk/troubleshooting) to contact support
 </Callout>
 
 ### Method Overview
@@ -95,7 +103,7 @@ For error handling:
 
 | Parameter | Type | Description | Required |
 |-----------|------|-------------|-----------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from OktoClient.cs | Yes |
 
 ### Response
 
@@ -103,22 +111,50 @@ For error handling:
 
 | Field Name | Type | Description |
 |------------|------|-------------|
-| `chains` | [`Promise<GetSupportedNetworksResponseData[]>`](/docs/react-sdk/technical-reference#models) | Array of supported blockchain networks |
+| `chains` | [`Task<List<NetworkData>>`](/docs/unity-sdk/technical-reference#models) | List of supported blockchain networks |
 
 <Accordions>
     <Accordion title="Response Type">
-        ```typescript
-        interface GetSupportedNetworksResponseData {
-            caip_id: string;
-            network_name: string;
-            chain_id: string;
-            logo: string;
-            sponsorship_enabled: boolean;
-            gsn_enabled: boolean;
-            type: string;
-            network_id: string;
-            onramp_enabled: boolean;
-            whitelisted: boolean;
+        ```csharp
+        [Serializable]
+        public class NetworkData
+        {
+            [JsonProperty("caip_id")]
+            public string caipId { get; set; }
+
+            [JsonProperty("network_name")]
+            public string networkName { get; set; }
+
+            [JsonProperty("chain_id")]
+            public string chainId { get; set; }
+
+            [JsonProperty("logo")]
+            public string logo { get; set; }
+
+            [JsonProperty("sponsorship_enabled")]
+            public bool sponsorshipEnabled { get; set; }
+
+            [JsonProperty("gsn_enabled")]
+            public bool gsnEnabled { get; set; }
+
+            [JsonProperty("type")]
+            public ChainType? type { get; set; }
+
+            [JsonProperty("network_id")]
+            public string networkId { get; set; }
+
+            [JsonProperty("onramp_enabled")]
+            public bool onRampEnabled { get; set; }
+
+            [JsonProperty("whitelisted")]
+            public bool whitelisted { get; set; }
+        }
+
+        public enum ChainType
+        {
+            EVM,
+            SVM,
+            APT
         }
         ```
     </Accordion>

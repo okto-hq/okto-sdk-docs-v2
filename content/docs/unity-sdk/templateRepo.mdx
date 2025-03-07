@@ -3,25 +3,25 @@ title: Template Repository
 full: false
 ---
 
-A comprehensive walkthrough of the Okto SDK Template Apps designed for React. This template demonstrates core Okto functionality—including authentication, wallet management, and blockchain interactions—so you can quickly get started building with Okto.
+A comprehensive walkthrough of the Okto SDK Template Apps designed for Unity. This template demonstrates core Okto functionality—including authentication, wallet management, and blockchain interactions—so you can quickly get started building with Okto.
 
 import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
 import { Callout } from 'fumadocs-ui/components/callout';
 
 <div className="bg-white dark:bg-[#1a1a1e] rounded-lg shadow-sm border border-gray-200 dark:border-[#2b2b2c] p-4 w-full my-4">
   <div className="flex items-center justify-between">
-    <span className="text-base font-semibold text-gray-900 dark:text-gray-100">React Template Repository</span>
+    <span className="text-base font-semibold text-gray-900 dark:text-gray-100">Unity Template Repository</span>
     <div className="flex gap-3">
       <a
-        href="https://v2-react-sdk-sample-app.vercel.app/"
+        href="https://github.com/okto-hq/okto-sdkv2-unity-template-app/Android_Build_Latest"
         target="_blank"
         rel="noopener noreferrer"
         className="no-underline px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-colors min-w-[120px] text-center"
       >
-        Live Demo
+        APK Demo
       </a>
       <a
-        href="https://github.com/okto-hq/okto-sdkv2-react-template-app"
+        href="https://github.com/okto-hq/okto-sdkv2-unity-template-app"
         target="_blank"
         rel="noopener noreferrer"
         className="no-underline px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors min-w-[120px] text-center"
@@ -36,41 +36,46 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 For detailed installation instructions, select your framework below:
 
-<Tabs items={["React"]}>
-  <Tab value="React" label="React">
+<Tabs items={["Unity"]}>
+  <Tab value="Unity" label="Unity">
 
   <div className="max-w-[450px] my-5 mx-auto">
       <img 
-          src="/images/react-template.png" 
-          alt="React Template App" 
+          src="/images/unity-quickstart-images/unity-template.png" 
+          alt="Unity Template App" 
           className="w-full rounded-lg shadow-sm"
       />
   </div>
 
   1. Clone the repository:
   ```bash
-  git clone https://github.com/okto-hq/okto-sdkv2-react-template-app.git
+  git clone https://github.com/okto-hq/okto-sdkv2-unity-template-app.git
   ```
 
   2. Change into the project directory and install dependencies:
-  ```bash
-  cd okto-sdkv2-react-template-app
-  npm install
-  ```
+
+<Tabs items={['Google Sign-In', 'Play Services Resolver', 'Newtonsoft.Json']}>
+    <Tab value="Google Sign-In">
+         https://github.com/googlesamples/google-signin-unity/releases
+    </Tab>
+    <Tab value="Play Services Resolver">
+        https://github.com/googlesamples/unity-jar-resolver
+    </Tab>
+    <Tab value="Newtonsoft.Json">
+       "com.unity.nuget.newtonsoft-json": "3.0.2"
+    </Tab>
+</Tabs>
 
   3. Set up environment variables:
-  ```bash
-  cp .env.sample .env
-  ```
+    ```csharp title="Login.cs"
+    webClientId="Google_Web_OAuth"
+    ```
 
   4. Add your API keys to the `.env` file:
-  ```
-  VITE_CLIENT_PRIVATE_KEY="YOUR_CLIENT_PRIVATE_KEY"
-  VITE_CLIENT_SWA="YOUR_CLIENT_SWA"
-
-  VITE_GOOGLE_CLIENT_SECRET="YOUR_GOOGLE_CLIENT_SECRET"
-  VITE_GOOGLE_CLIENT_ID="YOUR_GOOGLE_CLIENT_ID"
-  ```
+    ```csharp title="OktoClient.cs"
+    clientPrivateKey="YOUR_CLIENT_PRIVATE_KEY"
+    clientSwa="YOUR_CLIENT_SWA"
+    ```
 
   <Callout title="Note">
     To obtain these credentials:
@@ -83,10 +88,7 @@ For detailed installation instructions, select your framework below:
       3. Follow our [Google Console Setup Guide](/docs/react-sdk/authenticate-users/google-oauth/google-console-setup) for detailed instructions
   </Callout>
 
-  5. Start the development server:
-  ```bash
-  npm start
-  ```
+  5. Start the Unity Project by running play.
   
   </Tab>
 </Tabs>

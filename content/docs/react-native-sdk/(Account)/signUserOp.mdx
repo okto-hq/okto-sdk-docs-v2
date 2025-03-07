@@ -49,7 +49,7 @@ The `signUserOp` function signs a user operation for execution on the blockchain
 <Tab value="TypeScript">
 ```typescript
 import { useOkto } from '@okto_web3/react-native-sdk';
-import { signUserOp } from '@okto_web3/react-native-sdk';
+import { signUserOp } from '@okto_web3/react-native-sdk'; // [!code highlight]
 import { View, Text, Pressable } from 'react-native';
 
 function SignOperation() {
@@ -57,7 +57,7 @@ function SignOperation() {
 
     async function handleSign(userOp) {
         try {
-            const signature = await signUserOp(oktoClient, userOp);
+            const signature = await signUserOp(oktoClient, userOp); // [!code highlight]
             console.log('Operation signed:', signature);
         } catch (error) {
             console.error('Error signing operation:', error);

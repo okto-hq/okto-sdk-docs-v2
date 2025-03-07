@@ -53,8 +53,9 @@ The `getTokens` function fetches the list of supported tokens from the backend.
 <Tabs items={['Typescript']}>
   <Tab value="Typescript">
     ```typescript
-    import { getTokens } from "@okto_web3/core-js-sdk/explorer";
-    const tokens = await getTokens(oktoClient);
+    import { getTokens } from "@okto_web3/core-js-sdk/explorer"; // [!code highlight]
+
+    const tokens = await getTokens(oktoClient); // [!code highlight]
     ```
   </Tab>
 </Tabs>

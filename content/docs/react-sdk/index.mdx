@@ -160,9 +160,9 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
 
     ReactDOM.createRoot(document.getElementById("root")!).render(
         <React.StrictMode>
-            <OktoProvider config={config}>  // [!code highlight]
+            <OktoProvider config={config}> 
                 <App />
-            </OktoProvider> // [!code highlight]
+            </OktoProvider> 
         </React.StrictMode>
     );
     ```
@@ -190,11 +190,11 @@ If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/tro
 
     ReactDOM.createRoot(document.getElementById("root")!).render(
         <React.StrictMode>
-            <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}> // [!code highlight]
+            <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>  
                 <OktoProvider config={config}>
                     <App />
                 </OktoProvider>
-            </GoogleOAuthProvider> // [!code highlight]
+            </GoogleOAuthProvider>  
         </React.StrictMode>
     );
     ```

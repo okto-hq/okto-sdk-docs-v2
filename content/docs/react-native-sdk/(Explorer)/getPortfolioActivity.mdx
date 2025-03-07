@@ -48,7 +48,7 @@ The `getPortfolioActivity` function retrieves the user's recent portfolio activi
 <Tab value="TypeScript">
 ```typescript
 import { useOkto } from '@okto_web3/react-native-sdk';
-import { getPortfolioActivity } from '@okto_web3/react-native-sdk';
+import { getPortfolioActivity } from '@okto_web3/react-native-sdk'; // [!code highlight]
 import { View, Text, Pressable } from 'react-native';
 
 function PortfolioActivity() {
@@ -56,7 +56,7 @@ function PortfolioActivity() {
 
     async function fetchActivity() {
         try {
-            const activity = await getPortfolioActivity(oktoClient);
+            const activity = await getPortfolioActivity(oktoClient); // [!code highlight]
             console.log('Portfolio activity:', activity);
         } catch (error) {
             console.error('Error fetching activity:', error);

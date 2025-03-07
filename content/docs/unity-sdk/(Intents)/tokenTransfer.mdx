@@ -62,42 +62,35 @@ function TokenTransfer() {
 ```
 </Tab>
 <Tab value="UserOp Flow">
-```typescript
-import { useOkto } from '@okto_web3/react-sdk';
-import { tokenTransfer } from '@okto_web3/react-sdk/userop';
-
-function TokenTransfer() {
-    const oktoClient = useOkto();
-
-    async function handleTokenTransfer() {
-        try {
-            const transferParams = {
-                amount: BigInt("1000000000000000000"), // 1 token with 18 decimals
-                recipient: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-                token: "0x2170ed0880ac9a755fd29b2688956bd959f933f8", // Token contract address
-                caip2Id: "eip155:1"
+```csharp
+        public async Task<string> ExecuteTokenTransfer(string receiptAddress, BigInteger amount, string network, string tokenAddress)
+        {
+            var transaction = new TokenTransferIntentParams
+            {
+                recipientWalletAddress = receiptAddress,
+                tokenAddress = tokenAddress,
+                amount = amount,
+                caip2Id = network
             };
 
-            // Create the user operation
-            const userOp = await tokenTransfer(oktoClient, transferParams);
-            
-            // Sign the operation
-            const signedOp = await oktoClient.signUserOp(userOp);
-            
-            // Execute the transfer
-            const jobId = await oktoClient.executeUserOp(signedOp);
-            console.log('Transfer jobId:', jobId);
-        } catch (error:any) {
-            console.error('Error in token transfer:', error);
-        }
-    }
+            Debug.Log($"Generated transaction: {JsonConvert.SerializeObject(transaction, Formatting.Indented)}");
 
-    return (
-        <button onClick={handleTokenTransfer}>
-            Transfer Token
-        </button>
-    );
-}
+            userOp = await CreateUserOp(transaction);
+            string userOpStr = JsonConvert.SerializeObject(userOp, Formatting.Indented);
+            Debug.Log($"UserOp created: {JsonConvert.SerializeObject(userOp, Formatting.Indented)}");
+
+
+            userOp = SignUserOp(userOp, network);
+            userOpStr = JsonConvert.SerializeObject(userOp, Formatting.Indented);
+            Debug.Log($"UserOp Signed: {JsonConvert.SerializeObject(userOp, Formatting.Indented)}");
+
+            JsonRpcResponse<ExecuteResult> txHash = await ExecuteUserOp(userOp);
+            string txHashStr = JsonConvert.SerializeObject(txHash, Formatting.Indented);
+
+            Debug.Log($"Transaction executed. Hash: {txHashStr}");
+
+            return txHashStr;
+        }
 ```
 </Tab>
 </Tabs>

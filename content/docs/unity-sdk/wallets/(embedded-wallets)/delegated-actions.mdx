@@ -27,21 +27,32 @@ To implement delegated actions in your application:
 2. **Implementation Example**:
    Here's how to capture the session key during Google OAuth login:
 
-   ```typescript
-   // Using Google OAuth
-   async function handleGoogleLogin(credentialResponse: any) {
-       try {
-           const user = await oktoClient.loginUsingOAuth({
-               idToken: credentialResponse.credential,
-               provider: "google",
-           }, (sessionPrivateKey: string) => {
-               console.log("Session Private Key:", sessionPrivateKey);
-           });
-
-           console.log("Login successful:", user);
-       } catch (error) {
-           console.error("Login failed:", error);
+   ```csharp
+   public async Task<(string result, Exception error)> LoginGoogle()
+   {
+       try
+       {
+           GoogleSignInUser user = await GoogleSignIn.DefaultInstance.SignIn();
+           if (user != null)
+           {
+               Debug.Log($"Signed in successfully! Welcome: {user.DisplayName}");
+               Debug.Log($"ID Token: {user.IdToken}");
+               // Authenticate with Okto and get session key
+               var authResult = await OktoSDK.LoginWithGoogle(user.IdToken);
+               if (authResult.Success)
+               {
+                   // Store session key securely
+                   string sessionKey = authResult.SessionKey;
+                   return (sessionKey, null);
+               }
+           }
        }
+       catch (Exception ex)
+       {
+           Debug.LogError($"Login Error: {ex.Message}");
+           return (null, ex);
+       }
+       return (null, null);
    }
    ```
 

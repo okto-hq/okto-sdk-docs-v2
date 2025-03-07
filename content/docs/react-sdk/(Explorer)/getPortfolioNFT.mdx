@@ -27,14 +27,14 @@ The `getPortfolioNFT` function retrieves the list of NFTs in the authenticated u
 <Tab value="TypeScript">
 ```typescript
 import { useOkto } from '@okto_web3/react-sdk';
-import { getPortfolioNFT } from '@okto_web3/react-sdk';
+import { getPortfolioNFT } from '@okto_web3/react-sdk'; // [!code highlight]
 
 function NFTPortfolio() {
     const oktoClient = useOkto();
 
     async function fetchNFTPortfolio() {
         try {
-            const nftPortfolio = await getPortfolioNFT(oktoClient);
+            const nftPortfolio = await getPortfolioNFT(oktoClient); // [!code highlight]
             console.log('NFT Portfolio:', nftPortfolio);
         } catch (error) {
             console.error('Error fetching NFT portfolio:', error);

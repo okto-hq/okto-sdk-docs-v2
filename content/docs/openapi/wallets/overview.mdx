@@ -1,0 +1,42 @@
+---
+title: Overview
+description: Learn about embedded and external wallets within the Okto SDK ecosystem and their functionalities.
+full: false
+---
+
+## Wallets in Okto SDK
+
+Okto provides robust wallet management capabilities that enable users to interact with blockchain networks through both embedded wallets and external wallets. This flexibility allows developers to create seamless Web3 experiences while supporting users' existing wallet preferences.
+
+With either approach, you can request on-chain actions—such as signatures and transactions—from your users. Although the basic logic for requesting these actions is the same across both wallet types, embedded wallets unlock additional customization options for how and when your users see signature or transaction prompts, offering a more streamlined in-app experience.
+
+## Wallet Types
+
+### **Embedded Wallets**
+
+Embedded wallets are self-custodial wallets directly integrated into your application through the Okto SDK. They offer a seamless user experience as they eliminate the need for external wallet clients or browser extensions. Key characteristics of embedded wallets in Okto:
+
+- **Self-Custodial:** Users have full control over their keys.
+- **Seamless Integration:** Wallets are created and managed within your application's interface.
+- **Simplified Onboarding:** Ideal for new Web3 users, offering a Web2-like experience.
+
+### **External Wallets**
+
+External wallets are managed by third-party clients—for example, MetaMask, Phantom, or Rainbow. These can be browser extensions, hardware wallets, or mobile wallets. Key characteristics of external wallets in Okto:
+
+- **User Managed:** Users bring their existing wallets to your application.
+- **Integration Flexibility:** Okto SDK can be integrated alongside libraries like `ethers.js`, `web3.js`, `viem`, `wagmi`, or `@solana/web3.js` to interact with external wallets.
+
+## **Choosing the Right Wallet Type**
+
+*   **Embedded Wallets:** Best for applications aiming for a streamlined, integrated user experience, especially for users new to Web3. Okto manages the wallet infrastructure, allowing you to focus on your application logic.
+*   **External Wallets:** Ideal for applications targeting experienced Web3 users who prefer to use their existing wallets and maintain full control and portability across different dApps.
+
+Both embedded and external wallets within Okto enable you to easily request signatures and transactions, allowing your users to interact with your application on-chain. The choice depends on your target audience and the desired user experience.
+
+---
+
+### Next Steps
+
+- Learn more about [Embedded Wallets](/docs/openapi/wallets/wallets)
+- Explore [External Wallet](/docs/openapi/wallets/external-wallets) integration

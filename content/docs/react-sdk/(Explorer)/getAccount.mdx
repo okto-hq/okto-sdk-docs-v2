@@ -23,14 +23,14 @@ Okto SDK provides the `getAccount()` method to retrieve details of wallets conne
   <Tab value="Typescript">
     ```typescript
     import { useOkto } from '@okto_web3/react-sdk';
-    import { getAccount } from '@okto_web3/react-sdk';
+    import { getAccount } from '@okto_web3/react-sdk'; // [!code highlight]
 
     function Account() {
         const oktoClient = useOkto();
 
         async function fetchAccount() {
             try {
-                const account = await getAccount(oktoClient);
+                const account = await getAccount(oktoClient); // [!code highlight]
                 console.log('Account data:', account);
             } catch (error) {
                 console.error('Error fetching user account:', error);

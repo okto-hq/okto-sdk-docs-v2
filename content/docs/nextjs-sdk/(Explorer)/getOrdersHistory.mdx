@@ -23,14 +23,14 @@ The `getOrdersHistory` function retrieves the transaction history of orders plac
 <Tab value="TypeScript">
 ```typescript
 import { useOkto } from '@okto_web3/react-sdk';
-import { getOrdersHistory } from '@okto_web3/react-sdk';
+import { getOrdersHistory } from '@okto_web3/react-sdk'; // [!code highlight]
 
 function OrderHistory() {
     const oktoClient = useOkto();
 
     async function fetchOrderHistory() {
         try {
-            const history = await getOrdersHistory(oktoClient);
+            const history = await getOrdersHistory(oktoClient); // [!code highlight]
             console.log('Order history:', history);
         } catch (error) {
             console.error('Error fetching order history:', error);
