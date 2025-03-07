@@ -17,10 +17,12 @@ import {
 } from "react-icons/io5";
 import { FaReact, FaBook, FaTools, FaExchangeAlt } from "react-icons/fa6";
 import { VscDebugConsole } from "react-icons/vsc";
+import FullscreenImage from 'app/components/mdx/FullscreenImage';
+import {Step, Steps} from 'fumadocs-ui/components/steps';
 
 ## Introduction to Okto API
 
-**Okto API** is a comprehensive toolkit designed to seamlessly integrate Web3 functionality into any application. With minimal setup, developers can onboard users into the Web3 ecosystem while ensuring a smooth and intuitive experience.
+Okto provides a comprehensive set of APIs for integrating Web3 functionality into any application. This guide will help you understand the core architecture, authentication flow, and how to effectively integrate with our APIs.
 
 <div className="my-6 grid grid-cols-1 md:grid-cols-2 gap-4">
   <TechnologyCard
@@ -39,24 +41,93 @@ import { VscDebugConsole } from "react-icons/vsc";
   />
 </div>
 
-## Quickstart
+## API Architecture
 
-### Authentication Overview
+Okto's API landscape consists of two distinct types of APIs:
 
-This API uses a **OAuth-based authentication** mechanism to ensure secure access. Developers can generate an Okto Auth Token using the provided Okto Dev Tools and must include this token in the Authorization header for all protected endpoints.
+### JSON-RPC Methods
+- **Description**: Direct calls to the Okto Gateway
+- **Endpoint**: `https://sandbox-okto-gateway.oktostage.com/rpc`
+- **Used for**: Authentication and User Operations (Intents)
 
-### Authentication Flow:
-- Generate Okto Auth Token:
-Use the [Okto Dev Tools]('/tools') to generate an authentication token. This tool simplifies the token generation process.
+### REST APIs
+- **Description**: Calls to the Okto Gateway through a BFF service
+- **Endpoint**: `https://sandbox-apigw.oktostage.com`
+- **Used for**: Explorer functions (portfolio, wallets, tokens, etc.)
 
-- Use Access Token:
-Include the token in the Authorization header for all API requests:
+<Callout type="info">
+  The OpenAPI specification documentation supports interactive elements for REST APIs, but not for JSON-RPC methods. For JSON-RPC methods (Authentication and Intents), check out the [Template Repository](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src) for detailed code examples and helper scripts.
+</Callout>
+
+## Authentication Flow
+
+To use Okto APIs, you need to first authenticate and establish a session. The authentication flow is as follows:
+
+<FullscreenImage 
+  src="/images/api-auth-flow.png" 
+  alt="API Authentication Flow" 
+  className="w-full md:w-auto max-w-full rounded-lg shadow-md" 
+/>
+
+The Okto Auth Token generated at the end of the authentication flow is necessary for all subsequent API calls. 
+
+Since this process is a bit complex and uses JSON-RPC methods which cannot be replicated in the OpenAPI specification documentation, we have provided an [Okto Auth Token Generator](/tools) that does the heavy lifting for you and gives you the Okto Auth Token in return. We recommend using this tool for testing purposes only.
+
+### Using the Okto Auth Token Generator Tool
+
+The [Okto Auth Token Generator](/tools) simplifies the authentication process for testing purposes. This tool handles the following steps for you:
+
+1. **Create a Session Key** - Generates a cryptographic key pair used to secure your session
+2. **Generate Authentication Payload** - Constructs the necessary data structure with your OAuth token and provider
+3. **Call the Authentication Endpoint** - Sends the payload to Okto's JSON-RPC gateway
+4. **Process the Response** - Extracts the user's Smart Wallet Address (SWA)
+5. **Create a Session Configuration** - Creates a session configuration combining the session keys with the user's SWA
+6. **Generate the Authorization Token** - Creates the Okto Auth Token needed for all subsequent API calls
+
+<Callout type="warn">
+  The tool generates a session private and public key pair that is required for signing operations. If implementing your own authentication flow, store the private key securely!
+</Callout>
+
+## Using the Auth Token
+
+After successful authentication, you'll receive an Okto Auth Token that must be included in all subsequent API calls:
+
 ```bash
-Authorization: Bearer <okto_auth_token>
+# For REST APIs
+curl -X GET https://sandbox-apigw.oktostage.com/api/oc/v1/wallets \
+  -H "Authorization: Bearer <your-okto-auth-token>"
+
+# For JSON-RPC methods
+curl -X POST https://sandbox-okto-gateway.oktostage.com/rpc \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <your-okto-auth-token>" \
+  -d '{"jsonrpc":"2.0","method":"execute","params":[...],"id":"request-id"}'
 ```
 
-- Session Expiry & Refresh:
-A session is created for the user and client, with a default validity of 7 days. However, this duration can be customized as needed
+## Getting Started
+
+To start integrating with Okto APIs:
+
+<Steps>
+  <Step>
+  **Set up your environment**:
+   - Create an [Okto Developer Dashboard](/docs/developer-admin-dashboard) account
+   - Generate API credentials
+   - Enable chains and tokens for your application
+  </Step>
+  <Step>
+  **Authenticate**:
+   - Use the [Okto Auth Token Generator](/tools) to obtain an authentication token
+   - Or follow our [Sample Implementation](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api_template.ts) to implement authentication in your code
+   - A session is created for the user and client, with a default validity of 10 days. However, this duration can be customized as needed
+   - Store your session keys securely
+  </Step>
+  <Step>
+  **Make API calls**:
+   - Use the Auth Token in all subsequent requests
+   - Follow our [API documentation](#explore-api) for specific endpoints
+  </Step>
+</Steps>
 
 ## Explore API
 
@@ -101,14 +172,12 @@ A session is created for the user and client, with a default validity of 7 days.
     icon={<IoSwapHorizontalOutline size={"1.5rem"} />}
     title="Migration Guide"
     subtitle="Upgrade from previous versions of the API"
-    link="/docs/openapi/v2migration"
+    link="/docs/openapi/api-migration"
   />
 </div>
 
-## Get Started
+## Need further assistance?
 
-Ready to dive in? We recommend you begin with our Getting Started guide to set up your environment, get your Okto API key, and spin up a simple React app. Once you're comfortable with the basics, feel free to explore more advanced features or check out our APIs.
-
-If you have any questions or need assistance, don't hesitate to reach out via our **[Troubleshooting](./openapi/troubleshooting)** page or email us at `devrel@coindcx.com`.
-
-**Happy Building!**
+<Callout>
+If you have additional questions or require further support, please join our [Discord community](https://discord.com/channels/916349620383252511) and open a **support ticket** in the [support-ticket channel](https://discord.com/channels/916349620383252511/1249217657820151881).
+</Callout>
