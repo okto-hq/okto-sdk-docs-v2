@@ -1,5 +1,114 @@
 ---
-title: Introduction
-description: A demo documentation for the Okto SDK V2 API Reference
+title: API Overview
+description: A complete guide to understand Okto APIs and integrate them in your application.
 index: true
 ---
+
+import TechnologyCard from 'app/components/mdx/TechnologyCard';
+import { 
+  IoCodeSlashOutline, 
+  IoKeyOutline, 
+  IoWalletOutline, 
+  IoBookOutline,
+  IoConstructOutline,
+  IoGitBranchOutline,
+  IoHelpCircleOutline,
+  IoSwapHorizontalOutline 
+} from "react-icons/io5";
+import { FaReact, FaBook, FaTools, FaExchangeAlt } from "react-icons/fa6";
+import { VscDebugConsole } from "react-icons/vsc";
+
+## Introduction to Okto API
+
+**Okto API** is a comprehensive toolkit designed to seamlessly integrate Web3 functionality into any application. With minimal setup, developers can onboard users into the Web3 ecosystem while ensuring a smooth and intuitive experience.
+
+<div className="my-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+  <TechnologyCard
+    className="h-25"
+    icon={<IoGitBranchOutline size={"1.5rem"} />}
+    title="GitHub Repository"
+    subtitle="View SDK Source Code"
+    link="https://github.com/okto-hq/okto-js-sdk-monorepo"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoCodeSlashOutline size={"1.5rem"} />}
+    title="Template Repository" 
+    subtitle="API Example Implementation"
+    link="https://github.com/okto-hq/okto-sdkv2-ts-template"
+  />
+</div>
+
+## Quickstart
+
+### Authentication Overview
+
+This API uses a **OAuth-based authentication** mechanism to ensure secure access. Developers can generate an Okto Auth Token using the provided Okto Dev Tools and must include this token in the Authorization header for all protected endpoints.
+
+### Authentication Flow:
+- Generate Okto Auth Token:
+Use the [Okto Dev Tools]('/tools') to generate an authentication token. This tool simplifies the token generation process.
+
+- Use Access Token:
+Include the token in the Authorization header for all API requests:
+```bash
+Authorization: Bearer <okto_auth_token>
+```
+
+- Session Expiry & Refresh:
+A session is created for the user and client, with a default validity of 7 days. However, this duration can be customized as needed
+
+## Explore API
+
+<div className="my-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+  <TechnologyCard
+    className="h-25"
+    icon={<IoKeyOutline size={"1.5rem"} />}
+    title="Authentication"
+    subtitle="Implement secure user login and session management"
+    link="/docs/openapi/authenticate/okto-auth-session"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoWalletOutline size={"1.5rem"} />}
+    title="Wallet Management"
+    subtitle="Configure and manage embedded and external wallets"
+    link="/docs/openapi/wallets/overview"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoConstructOutline size={"1.5rem"} />}
+    title="Usage & Features"
+    subtitle="Explore intents, and explorer API"
+    link="/docs/openapi/intents"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoBookOutline size={"1.5rem"} />}
+    title="Technical Reference"
+    subtitle="In-depth documentation of classes, methods, and data models"
+    link="/docs/openapi/technical-reference"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoHelpCircleOutline size={"1.5rem"} />}
+    title="Troubleshooting"
+    subtitle="Common issues and their solutions"
+    link="/docs/openapi/troubleshooting"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoSwapHorizontalOutline size={"1.5rem"} />}
+    title="Migration Guide"
+    subtitle="Upgrade from previous versions of the API"
+    link="/docs/openapi/v2migration"
+  />
+</div>
+
+## Get Started
+
+Ready to dive in? We recommend you begin with our Getting Started guide to set up your environment, get your Okto API key, and spin up a simple React app. Once you're comfortable with the basics, feel free to explore more advanced features or check out our APIs.
+
+If you have any questions or need assistance, don't hesitate to reach out via our **[Troubleshooting](./openapi/troubleshooting)** page or email us at `devrel@coindcx.com`.
+
+**Happy Building!**
