@@ -27,14 +27,14 @@ The `getNftCollections` function retrieves NFT collection details for the authen
 <Tab value="TypeScript">
 ```typescript
 import { useOkto } from '@okto_web3/react-sdk';
-import { getNftCollections } from '@okto_web3/react-sdk';
+import { getNftCollections } from '@okto_web3/react-sdk'; // [!code highlight]
 
 function NFTCollectionsList() {
     const oktoClient = useOkto();
 
     async function fetchCollections() {
         try {
-            const collections = await getNftCollections(oktoClient);
+            const collections = await getNftCollections(oktoClient); // [!code highlight]
             console.log('NFT Collections:', collections);
         } catch (error) {
             console.error('Error fetching collections:', error);

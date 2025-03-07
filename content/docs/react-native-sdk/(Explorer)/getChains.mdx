@@ -48,7 +48,7 @@ The `getChains` function retrieves a list of all blockchain networks supported b
 <Tab value="TypeScript">
 ```typescript
 import { useOkto } from '@okto_web3/react-native-sdk';
-import { getChains } from '@okto_web3/react-native-sdk';
+import { getChains } from '@okto_web3/react-native-sdk'; // [!code highlight]
 import { View, Text, Pressable } from 'react-native';
 
 function ChainsList() {
@@ -56,7 +56,7 @@ function ChainsList() {
 
     async function fetchChains() {
         try {
-            const chains = await getChains(oktoClient);
+            const chains = await getChains(oktoClient); // [!code highlight]
             console.log('Supported chains:', chains);
         } catch (error) {
             console.error('Error fetching chains:', error);

@@ -23,14 +23,14 @@ The `getPortfolioActivity` function retrieves the user's portfolio activity hist
 <Tab value="TypeScript">
 ```typescript
 import { useOkto } from '@okto_web3/react-sdk';
-import { getPortfolioActivity } from '@okto_web3/react-sdk';
+import { getPortfolioActivity } from '@okto_web3/react-sdk'; // [!code highlight]
 
 function PortfolioActivity() {
     const oktoClient = useOkto();
 
     async function fetchActivity() {
         try {
-            const activity = await getPortfolioActivity(oktoClient);
+            const activity = await getPortfolioActivity(oktoClient); // [!code highlight]
             console.log('Portfolio activity:', activity);
         } catch (error) {
             console.error('Error fetching portfolio activity:', error);

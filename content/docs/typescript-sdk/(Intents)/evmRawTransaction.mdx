@@ -31,22 +31,22 @@ There are two ways to implement raw transactions:
 <Tabs items={['Abstracted Flow', 'UserOp Flow']}>
 <Tab value="Abstracted Flow">
 ```typescript
-import { evmRawTransaction } from "@okto_web3/core-js-sdk";
+import { evmRawTransaction } from "@okto_web3/core-js-sdk"; // [!code highlight]
 
 async function handleRawTransaction() {
     try {
-        const rawTxParams = {
-            caip2Id: "eip155:1", // Ethereum Mainnet
-            transaction: {
-                from: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-                to: "0x23581767a106ae21c074b2276D25e5C3e136a68b",
-                data: "0x", // Optional transaction data
-                value: BigInt("1000000000000000000") // 1 ETH
-            }
-        };
-        
+        const rawTxParams = { // [!code highlight]
+            caip2Id: "eip155:1", // Ethereum Mainnet // [!code highlight]
+            transaction: { // [!code highlight]
+                from: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e", // [!code highlight]
+                to: "0x23581767a106ae21c074b2276D25e5C3e136a68b", // [!code highlight]
+                data: "0x", // Optional transaction data // [!code highlight]
+                value: BigInt("1000000000000000000") // 1 ETH // [!code highlight]
+            } // [!code highlight]
+        }; // [!code highlight]
+         
         // Execute the transaction
-        const jobId = await evmRawTransaction(oktoClient, rawTxParams);
+        const jobId = await evmRawTransaction(oktoClient, rawTxParams); // [!code highlight]
         console.log('Transaction jobId:', jobId);
     } catch (error) {
         console.error('Error in raw transaction:', error);
@@ -56,28 +56,28 @@ async function handleRawTransaction() {
 </Tab>
 <Tab value="UserOp Flow">
 ```typescript
-import { evmRawTransaction } from "@okto_web3/core-js-sdk/userop";
+import { evmRawTransaction } from "@okto_web3/core-js-sdk/userop"; // [!code highlight]
 
 async function handleRawTransaction() {
     try {
-        const rawTxParams = {
-            caip2Id: "eip155:1", // Ethereum Mainnet
-            transaction: {
-                from: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-                to: "0x23581767a106ae21c074b2276D25e5C3e136a68b",
-                data: "0x", // Optional transaction data
-                value: BigInt("1000000000000000000") // 1 ETH
-            }
-        };
+        const rawTxParams = { // [!code highlight]
+            caip2Id: "eip155:1", // Ethereum Mainnet // [!code highlight]
+            transaction: { // [!code highlight]
+                from: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e", // [!code highlight]
+                to: "0x23581767a106ae21c074b2276D25e5C3e136a68b", // [!code highlight]
+                data: "0x", // Optional transaction data // [!code highlight]
+                value: BigInt("1000000000000000000") // 1 ETH // [!code highlight]
+            } // [!code highlight]
+        }; // [!code highlight]
 
         // Create the user operation
-        const userOp = await evmRawTransaction(oktoClient, rawTxParams);
+        const userOp = await evmRawTransaction(oktoClient, rawTxParams); // [!code highlight]
         
         // Sign the operation
-        const signedOp = await oktoClient.signUserOp(userOp);
+        const signedOp = await oktoClient.signUserOp(userOp); // [!code highlight]
         
         // Execute the transaction
-        const jobId = await oktoClient.executeUserOp(signedOp);
+        const jobId = await oktoClient.executeUserOp(signedOp); // [!code highlight]
         console.log('Transaction jobId:', jobId);
     } catch (error) {
         console.error('Error in raw transaction:', error);

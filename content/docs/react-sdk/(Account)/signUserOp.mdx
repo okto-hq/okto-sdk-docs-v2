@@ -19,30 +19,30 @@ The `signUserOp()` method is available on the OktoClient instance and is used to
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
 ```typescript
-import { useOkto } from '@okto_web3/react-sdk';
+import { useOkto } from '@okto_web3/react-sdk'; // [!code highlight]
 
 function SignOperation() {
     const oktoClient = useOkto();
 
     // Sample UserOp before signing
-    const userOp = {
-        sender: "0xa9F6b3A5a718754979dbA78113f3614Dd4524c53",
-        nonce: "0x000000000000000000000000000000006c3581e0bd4f42d4a16294410c439e7a",
-        paymaster: "0x5408fAa7F005c46B85d82060c532b820F534437c",
-        callGasLimit: "0x493e0",
-        verificationGasLimit: "0x30d40",
-        preVerificationGas: "0xc350",
-        maxFeePerGas: "0x77359400",
-        maxPriorityFeePerGas: "0x77359400",
-        paymasterPostOpGasLimit: "0x186a0",
-        paymasterVerificationGasLimit: "0x186a0",
-        callData: "0x8dd7712f000...", // truncated for brevity
-        paymasterData: "0x000000000..." // truncated for brevity
-    };
+    const userOp = { // [!code highlight]
+        sender: "0xa9F6b3A5a718754979dbA78113f3614Dd4524c53", // [!code highlight]
+        nonce: "0x000000000000000000000000000000006c3581e0bd4f42d4a16294410c439e7a", // [!code highlight]
+        paymaster: "0x5408fAa7F005c46B85d82060c532b820F534437c", // [!code highlight]
+        callGasLimit: "0x493e0", // [!code highlight]
+        verificationGasLimit: "0x30d40", // [!code highlight]
+        preVerificationGas: "0xc350", // [!code highlight]
+        maxFeePerGas: "0x77359400", // [!code highlight]
+        maxPriorityFeePerGas: "0x77359400", // [!code highlight]
+        paymasterPostOpGasLimit: "0x186a0", // [!code highlight]
+        paymasterVerificationGasLimit: "0x186a0", // [!code highlight]
+        callData: "0x8dd7712f000...", // truncated for brevity // [!code highlight]
+        paymasterData: "0x000000000..." // truncated for brevity // [!code highlight]
+    }; // [!code highlight]
 
     async function handleSignOperation(userOp) {
         try {
-            const signedOp = await oktoClient.signUserOp(userOp);
+            const signedOp = await oktoClient.signUserOp(userOp); // [!code highlight]
             console.log('Signed operation:', signedOp);
             return signedOp;
         } catch (error) {

@@ -35,24 +35,24 @@ There are two ways to implement NFT transfers:
 <Tab value="Abstracted Flow">
 ```typescript
 import { useOkto } from '@okto_web3/react-sdk';
-import { nftTransfer } from '@okto_web3/react-sdk';
+import { nftTransfer } from '@okto_web3/react-sdk'; // [!code highlight]
 
 function NFTTransfer() {
     const oktoClient = useOkto();
 
     async function handleNFTTransfer() {
         try {
-            const transferParams = {
-                caip2Id: "eip155:1", // Ethereum Mainnet
-                collectionAddress: "0x23581767a106ae21c074b2276D25e5C3e136a68b",
-                nftId: "123", // NFT token ID
-                recipientWalletAddress: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-                amount: 1,
-                nftType: 'ERC721'
-            };
+            const transferParams = { // [!code highlight]
+                caip2Id: "eip155:1", // Ethereum Mainnet // [!code highlight]
+                collectionAddress: "0x23581767a106ae21c074b2276D25e5C3e136a68b", // [!code highlight]
+                nftId: "123", // NFT token ID // [!code highlight]
+                recipientWalletAddress: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e", // [!code highlight]
+                amount: 1, // [!code highlight]
+                nftType: 'ERC721' // [!code highlight]
+            }; // [!code highlight]
             
             // Execute the transfer
-            const jobId = await nftTransfer(oktoClient, transferParams);
+            const jobId = await nftTransfer(oktoClient, transferParams); // [!code highlight]
             console.log('Transfer jobId:', jobId);
         } catch (error) {
             console.error('Error in NFT transfer:', error);
@@ -70,30 +70,30 @@ function NFTTransfer() {
 <Tab value="UserOp Flow">
 ```typescript
 import { useOkto } from '@okto_web3/react-sdk';
-import { nftTransfer } from '@okto_web3/react-sdk/userop';
+import { nftTransfer } from '@okto_web3/react-sdk/userop'; // [!code highlight]
 
 function NFTTransfer() {
     const oktoClient = useOkto();
 
     async function handleNFTTransfer() {
         try {
-            const transferParams = {
-                caip2Id: "eip155:1", // Ethereum Mainnet
-                collectionAddress: "0x23581767a106ae21c074b2276D25e5C3e136a68b",
-                nftId: "123", // NFT token ID
-                recipientWalletAddress: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-                amount: 1,
-                nftType: 'ERC721'
-            };
+            const transferParams = { // [!code highlight]
+                caip2Id: "eip155:1", // Ethereum Mainnet // [!code highlight]
+                collectionAddress: "0x23581767a106ae21c074b2276D25e5C3e136a68b", // [!code highlight]
+                nftId: "123", // NFT token ID // [!code highlight]
+                recipientWalletAddress: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e", // [!code highlight]
+                amount: 1, // [!code highlight]
+                nftType: 'ERC721' // [!code highlight]
+            }; // [!code highlight]
 
             // Create the user operation
-            const userOp = await nftTransfer(oktoClient, transferParams);
+            const userOp = await nftTransfer(oktoClient, transferParams); // [!code highlight]
             
             // Sign the operation
-            const signedOp = await oktoClient.signUserOp(userOp);
+            const signedOp = await oktoClient.signUserOp(userOp); // [!code highlight]
             
             // Execute the transfer
-            const jobId = await oktoClient.executeUserOp(signedOp);
+            const jobId = await oktoClient.executeUserOp(signedOp); // [!code highlight]
             console.log('Transfer jobId:', jobId);
         } catch (error) {
             console.error('Error in NFT transfer:', error);
