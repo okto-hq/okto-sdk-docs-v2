@@ -19,29 +19,36 @@ The `getPortfolio` function retrieves the user's portfolio information, includin
 
 <Accordions defaultValue="Usage">
 <Accordion title="Usage">
-<Tabs items={['TypeScript']}>
-<Tab value="TypeScript">
-```typescript
-import { useOkto } from '@okto_web3/react-sdk';
-import { getPortfolio } from '@okto_web3/react-sdk';
+<Tabs items={['C#']}>
+<Tab value="C#">
+```csharp
+using System;
+using System.Threading.Tasks;
+using UnityEngine;
 
-function Portfolio() {
-    const oktoClient = useOkto();
-
-    async function fetchPortfolio() {
-        try {
-            const portfolio = await getPortfolio(oktoClient);
-            console.log('Portfolio data:', portfolio);
-        } catch (error) {
-            console.error('Error fetching portfolio:', error);
+//This is an independent script which calls GetPortfolio() Api
+namespace OktoSDK
+{
+    public class Portfolio : MonoBehaviour
+    {
+        public async Task<object> GetPortfolio(OktoClient oc)
+        {
+            if (!oc.IsLoggedIn())
+            {
+                ResponsePanel.SetResponse("You are not logged In!");
+                return "You are not logged In!";
+            }
+            try
+            {
+                return await BffClientRepository.GetBffClientRepository().GetPortfolio();
+            }
+            catch (Exception error)
+            {
+                Debug.LogError($"Failed to retrieve portfolio: {error}");
+                throw;
+            }
         }
     }
-
-    return (
-        <button onClick={fetchPortfolio}>
-            Fetch Portfolio
-        </button>
-    );
 }
 ```
 </Tab>
@@ -124,7 +131,7 @@ For error handling:
 
 | Parameter | Type | Description | Required |
 |-----------|------|-------------|-----------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from OktoClient.cs | Yes |
 
 ### Response
 
@@ -132,52 +139,95 @@ For error handling:
 
 | Field Name | Type | Description |
 |------------|------|-------------|
-| `portfolio` | [`Promise<UserPortfolioData>`](/docs/react-sdk/technical-reference#models) | User's portfolio information |
+| `portfolio` | [`Task<Lis<UserPortfolioData>>`](/docs/react-sdk/technical-reference#models) | User's portfolio information |
 
 <Accordions>
     <Accordion title="Response Type">
-        ```typescript
-        interface UserPortfolioData {
-            aggregated_data: {
-                holdings_count: string;
-                holdings_price_inr: string;
-                holdings_price_usdt: string;
-                total_holding_price_inr: string;
-                total_holding_price_usdt: string;
-            };
-            group_tokens: {
-                id: string;
-                name: string;
-                symbol: string;
-                short_name: string;
-                token_image: string;
-                token_address: string;
-                group_id: string;
-                network_id: string;
-                precision: string;
-                network_name: string;
-                is_primary: boolean;
-                balance: string;
-                holdings_price_usdt: string;
-                holdings_price_inr: string;
-                aggregation_type: string;
-                tokens: {
-                    id: string;
-                    name: string;
-                    symbol: string; 
-                    short_name: string;
-                    token_image: string;
-                    token_address: string;
-                    network_id: string;
-                    precision: string;
-                    network_name: string;
-                    is_primary: boolean;
-                    balance: string;
-                    holdings_price_usdt: string;
-                    holdings_price_inr: string;
-                }[];
-            }[];
-        }
+        ```csharp
+            [Serializable]
+            public class UserPortfolioData
+            {
+                [Serializable]
+                public class AggregatedData
+                {
+                    [JsonProperty("holdings_count")]
+                    public string hldingsCount { get; set; }
+
+                    [JsonProperty("holdings_price_inr")]
+                    public string holdingsPriceInr { get; set; }
+
+                    [JsonProperty("holdings_price_usdt")]
+                    public string holdingsPriceUsdt { get; set; }
+
+                    [JsonProperty("total_holding_price_inr")]
+                    public string totalHoldingPriceInr { get; set; }
+
+                    [JsonProperty("total_holding_price_usdt")]
+                    public string totalHoldingPriceUsdt { get; set; }
+                }
+
+                [Serializable]
+                public class TokenData
+                {
+                    [JsonProperty("id")]
+                    public string id { get; set; }
+
+                    [JsonProperty("name")]
+                    public string name { get; set; }
+
+                    [JsonProperty("symbol")]
+                    public string symbol { get; set; }
+
+                    [JsonProperty("short_name")]
+                    public string shortName { get; set; }
+
+                    [JsonProperty("token_image")]
+                    public string tokenImage { get; set; }
+
+                    [JsonProperty("token_address")]
+                    public string tokenAddress { get; set; }
+
+                    [JsonProperty("caip2_id")]
+                    public string caip2Id { get; set; }
+
+                    [JsonProperty("precision")]
+                    public string precision { get; set; }
+
+                    [JsonProperty("network_name")]
+                    public string networkName { get; set; }
+
+                    [JsonProperty("is_primary")]
+                    public bool isPrimary { get; set; }
+
+                    [JsonProperty("balance")]
+                    public string balance { get; set; }
+
+                    [JsonProperty("holdings_price_usdt")]
+                    public string holdingsPriceUsdt { get; set; }
+
+                    [JsonProperty("holdings_price_inr")]
+                    public string holdingsPriceInr { get; set; }
+                }
+
+                [Serializable]
+                public class GroupToken : TokenData
+                {
+                    [JsonProperty("group_id")]
+                    public string groupId { get; set; }
+
+                    [JsonProperty("aggregation_type")]
+                    public string aggregationType { get; set; }
+
+                    [JsonProperty("tokens")]
+                    public List<TokenData> tokens { get; set; }
+                }
+
+                [JsonProperty("aggregated_data")]
+                public AggregatedData aggregatedData { get; set; }
+
+                [JsonProperty("group_tokens")]
+                public List<GroupToken> groupTokens { get; set; }
+            }
         ```
     </Accordion>
 </Accordions>

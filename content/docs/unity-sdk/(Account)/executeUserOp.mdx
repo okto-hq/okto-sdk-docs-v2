@@ -16,30 +16,15 @@ The `executeUserOp()` method is available on the OktoClient instance and is used
 
 <Accordions defaultValue="Usage">
 <Accordion title="Usage">
-<Tabs items={['TypeScript']}>
-<Tab value="TypeScript">
-```typescript
-import { useOkto } from '@okto_web3/react-sdk';
-
-function ExecuteOperation() {
-    const oktoClient = useOkto();
-
-    async function handleExecuteOperation(signedUserOp) {
-        try {
-            const result = await oktoClient.executeUserOp(signedUserOp);
-            console.log('Job ID:', result);
-            return result;
-        } catch (error) {
-            console.error('Error executing operation:', error);
+<Tabs items={['C#']}>
+<Tab value="C#">
+```csharp
+        async Task<JsonRpcResponse<ExecuteResult>> ExecuteUserOp(UserOp signedUserOp)
+        {
+            // Execute UserOp
+            JsonRpcResponse<ExecuteResult> txHash = await UserOpExecute.ExecuteUserOp(signedUserOp, signedUserOp.signature);
+            return txHash;
         }
-    }
-
-    return (
-        <button onClick={() => handleExecuteOperation(signedUserOp)}>
-            Execute Operation
-        </button>
-    );
-}
 ```
 </Tab>
 </Tabs>
@@ -75,21 +60,38 @@ For error handling:
 
 | Parameter | Type | Description | Required |
 |-----------|------|-------------|-----------|
-| `userop` | [`SignedUserOp`](/docs/react-sdk/technical-reference#models) | The signed user operation to be executed | Yes |
+| `userop` | [`UserOp`](/docs/react-sdk/technical-reference#models) | The signed user operation to be executed | Yes |
 
 ### Response
 
 <Callout title="Success Response">
 | Field Name | Type | Description |
 |------------|------|-------------|
-| `result` | `Promise<string>` | Returns the job ID of the executed user operation |
+| `result` | `Task<JsonRpcResponse<ExecuteResult>>` | Returns the job ID of the executed user operation |
 
 <Accordions>
 <Accordion title="Response Type">
-```typescript
-interface {
-    jobId: string;
-}
+```csharp
+
+    public class JsonRpcResponse<T>
+    {
+        public string jsonrpc { get; set; }
+        public string id { get; set; }
+        public T result { get; set; }
+        public JsonRpcError error { get; set; }
+    }
+
+    public class JsonRpcError
+    {
+        public int code { get; set; }
+        public string message { get; set; }
+        public string data { get; set; }
+    }
+    
+    public class ExecuteResult
+    {
+        public string jobId { get; set; }
+    }
 ```
 </Accordion>
 </Accordions>

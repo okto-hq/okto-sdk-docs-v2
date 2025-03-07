@@ -19,29 +19,36 @@ The `getOrdersHistory` function retrieves the transaction history of orders plac
 
 <Accordions defaultValue="Usage">
 <Accordion title="Usage">
-<Tabs items={['TypeScript']}>
-<Tab value="TypeScript">
-```typescript
-import { useOkto } from '@okto_web3/react-sdk';
-import { getOrdersHistory } from '@okto_web3/react-sdk';
-
-function OrderHistory() {
-    const oktoClient = useOkto();
-
-    async function fetchOrderHistory() {
-        try {
-            const history = await getOrdersHistory(oktoClient);
-            console.log('Order history:', history);
-        } catch (error) {
-            console.error('Error fetching order history:', error);
+<Tabs items={['C#']}>
+<Tab value="C#">
+```csharp
+using System;
+using System.Threading.Tasks;
+using UnityEngine;
+//This is an independent script which called GetOrder() Api
+namespace OktoSDK
+{
+    public class GetOrder : MonoBehaviour
+    {
+        public async Task<object> GetOrdersHistory(OktoClient oc, OrderFilterRequest filters = null)
+        {
+            if (!oc.IsLoggedIn())
+            {
+                ResponsePanel.SetOrderResponse("You are not logged In!");
+                //ResponsePanel.DisplayResponse();
+                return "You are not logged In!";
+            }
+            try
+            {
+                return await BffClientRepository.GetBffClientRepository().GetOrders(filters);
+            }
+            catch (Exception error)
+            {
+                Debug.LogError($"Failed to retrieve orders: {error}");
+                throw new Exception("Failed to retrieve orders. Please try again later.");
+            }
         }
     }
-
-    return (
-        <button onClick={fetchOrderHistory}>
-            Fetch Order History
-        </button>
-    );
 }
 ```
 </Tab>
@@ -115,7 +122,7 @@ For error handling:
 
 | Parameter | Type | Description | Required |
 |-----------|------|-------------|-----------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from OktoClient.cs | Yes |
 | `filters` | `OrderFilterRequest` | Optional filters for the orders query | No |
 
 Where `OrderFilterRequest` contains:
@@ -132,22 +139,68 @@ Where `OrderFilterRequest` contains:
 
 | Field Name | Type | Description |
 |------------|------|-------------|
-| `orders` | [`Promise<Order[]>`](/docs/react-sdk/technical-reference#models) | Array of order history items |
+| `orders` | [`Task<List<Order>>`](/docs/react-sdk/technical-reference#models) | Array of order history items |
 
 <Accordions>
     <Accordion title="Response Type">
-        ```typescript
-        interface Order {
-            downstream_transaction_hash: string[];
-            transaction_hash: string[];
-            status: "SUCCESSFUL" | "FAILED" | "PENDING" | "REJECTED";
-            intent_id: string;
-            intent_type: "TOKEN_TRANSFER" | "NFT_TRANSFER" | "RAW_TRANSACTION";
-            network_name: string;
-            caip_id: string;
-            details: OrderDetails;
-            reason: string;
-            block_timestamp: number;
+        ```csharp
+        [Serializable]
+        public class Order
+        {
+            [JsonProperty("downstream_transaction_hash")]
+            public List<string> downstreamTransactionHash;
+
+            [JsonProperty("transaction_hash")]
+            public List<string> transactionHash;
+
+            [JsonProperty("status")]
+            public string status;
+
+            [JsonProperty("intent_id")]
+            public string intentId;
+
+            [JsonProperty("intent_type")]
+            public string intentType;
+
+            [JsonProperty("network_name")]
+            public string networkName;
+
+            [JsonProperty("caip_id")]
+            public string caipId;
+
+            private BaseDetails _details;
+                
+            [JsonIgnore]
+            public BaseDetails Details => _details;
+
+            [JsonProperty("details")]
+            public object RawDetails
+            {
+                get { return _details; }
+                set
+                {
+                    if (value == null) return;
+
+                    if (intentType == "RAW_TRANSACTION")
+                    {
+                        _details = JsonConvert.DeserializeObject<RawTransactionDetails>(value.ToString());
+                    }
+                    else if (intentType == "TOKEN_TRANSFER")
+                    {
+                        _details = JsonConvert.DeserializeObject<TokenTransferDetails>(value.ToString());
+                    }
+                    else if (intentType == "NFT_TRANSFER")
+                    {
+                        _details = JsonConvert.DeserializeObject<NftTransferDetails>(value.ToString());
+                    }
+                }
+            }
+
+            [JsonProperty("reason")]
+            public string reason;
+
+            [JsonProperty("block_timestamp")]
+            public long blockTimestamp;
         }
         ```
     </Accordion>

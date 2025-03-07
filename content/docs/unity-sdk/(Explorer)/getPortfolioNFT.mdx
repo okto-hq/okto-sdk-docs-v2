@@ -23,29 +23,42 @@ The `getPortfolioNFT` function retrieves the list of NFTs in the authenticated u
 
 <Accordions defaultValue="Usage">
 <Accordion title="Usage">
-<Tabs items={['TypeScript']}>
-<Tab value="TypeScript">
-```typescript
-import { useOkto } from '@okto_web3/react-sdk';
-import { getPortfolioNFT } from '@okto_web3/react-sdk';
-
-function NFTPortfolio() {
-    const oktoClient = useOkto();
-
-    async function fetchNFTPortfolio() {
-        try {
-            const nftPortfolio = await getPortfolioNFT(oktoClient);
-            console.log('NFT Portfolio:', nftPortfolio);
-        } catch (error) {
-            console.error('Error fetching NFT portfolio:', error);
+<Tabs items={['C#']}>
+<Tab value="C#">
+```csharp
+using System;
+using System.Threading.Tasks;
+using UnityEngine;
+//This is an independent script which calls GetNftPotfolio() Api
+namespace OktoSDK
+{
+    public class NFT : MonoBehaviour
+    {
+        public async Task<object> GetNftCollections(OktoClient oc)
+        {
+            if (oc == null)
+            {
+                ResponsePanel.SetResponse("You are not logged In!");
+                return "You are not logged In!";
+            }
+            if (!oc.IsLoggedIn())
+            {
+                ResponsePanel.SetResponse("You are not logged In!");
+                //ResponsePanel.DisplayResponse();
+                return "You are not logged In!";
+            }
+            try
+            {
+                var response = await BffClientRepository.GetBffClientRepository().GetPortfolioNft();
+                return response;
+            }
+            catch (Exception error)
+            {
+                Debug.LogError($"Error fetching NFT collections: {error}");
+                throw new Exception("Failed to fetch NFT collections from the backend.");
+            }
         }
     }
-
-    return (
-        <button onClick={fetchNFTPortfolio}>
-            Fetch NFT Portfolio
-        </button>
-    );
 }
 ```
 </Tab>
@@ -103,7 +116,7 @@ For error handling:
 
 | Parameter | Type | Description | Required |
 |-----------|------|-------------|-----------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from OktoClient.cs | Yes |
 
 ### Response
 
@@ -111,25 +124,51 @@ For error handling:
 
 | Field Name | Type | Description |
 |------------|------|-------------|
-| `nfts` | [`Promise<UserNFTBalance[]>`](/docs/react-sdk/technical-reference#models) | Array of user's NFT balances |
+| `nfts` | [`Task<List<UserNFTBalance>>`](/docs/react-sdk/technical-reference#models) | Array of user's NFT balances |
 
 <Accordions>
     <Accordion title="Response Type">
-        ```typescript
-        interface UserNFTBalance {
-            caipId: string;
-            networkName: string;
-            entityType: string;
-            collectionAddress: string;
-            collectionName: string;
-            nftId: string;
-            image: string;
-            quantity: string;
-            tokenUri: string;
-            description: string;
-            nftName: string;
-            explorerSmartContractUrl: string;
-            collectionImage: string;
+        ```csharp
+       public class UserNFTBalance
+        {
+            [JsonProperty("caip_id")]
+            public string caipId;
+
+            [JsonProperty("network_name")]
+            public string networkName;
+
+            [JsonProperty("entity_type")]
+            public string entityType;
+
+            [JsonProperty("collection_address")]
+            public string collectionAddress;
+
+            [JsonProperty("collection_name")]
+            public string collectionName;
+
+            [JsonProperty("nft_id")]
+            public string nftId;
+
+            [JsonProperty("image")]
+            public string image;
+
+            [JsonProperty("quantity")]
+            public string quantity;
+
+            [JsonProperty("token_uri")]
+            public string tokenUri;
+
+            [JsonProperty("description")]
+            public string description;
+
+            [JsonProperty("nft_name")]
+            public string nftName;
+
+            [JsonProperty("explorer_smart_contract_url")]
+            public string explorerSmartContractUrl;
+
+            [JsonProperty("collection_image")]
+            public string collectionImage;
         }
         ```
     </Accordion>

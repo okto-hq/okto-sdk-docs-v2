@@ -23,29 +23,36 @@ The `getNftCollections` function retrieves NFT collection details for the authen
 
 <Accordions defaultValue="Usage">
 <Accordion title="Usage">
-<Tabs items={['TypeScript']}>
-<Tab value="TypeScript">
-```typescript
-import { useOkto } from '@okto_web3/react-sdk';
-import { getNftCollections } from '@okto_web3/react-sdk';
-
-function NFTCollectionsList() {
-    const oktoClient = useOkto();
-
-    async function fetchCollections() {
-        try {
-            const collections = await getNftCollections(oktoClient);
-            console.log('NFT Collections:', collections);
-        } catch (error) {
-            console.error('Error fetching collections:', error);
+<Tabs items={['c#']}>
+<Tab value="c#">
+```csharp
+using System;
+using System.Threading.Tasks;
+using UnityEngine;
+//This is an independent script which calls GetNftPotfolio() Api
+namespace OktoSDK
+{
+    public class Portfolio : MonoBehaviour
+    {
+        public async Task<object> GetPortfolioNFT(OktoClient oc)
+        {
+            Loader.ShowLoader();
+            if (!oc.IsLoggedIn())
+            {
+                ResponsePanel.SetResponse("You are not logged In!");
+                return "You are not logged In!";
+            }
+            try
+            {
+                return await BffClientRepository.GetBffClientRepository().GetPortfolioNft();
+            }
+            catch (Exception error)
+            {
+                Debug.LogError($"Failed to retrieve orders: {error}");
+                throw;
+            }
         }
     }
-
-    return (
-        <button onClick={fetchCollections}>
-            Fetch NFT Collections
-        </button>
-    );
 }
 ```
 </Tab>
@@ -77,8 +84,8 @@ function NFTCollectionsList() {
 
 <Callout title="Note" type="info">
 For error handling:
-- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
-- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/unity-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/unity-sdk/troubleshooting) to contact support
 </Callout>
 
 ### Method Overview
@@ -97,7 +104,7 @@ For error handling:
 
 | Parameter | Type | Description | Required |
 |-----------|------|-------------|-----------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from OktoClient.cs | Yes |
 
 ### Response
 
@@ -105,20 +112,52 @@ For error handling:
 
 | Field Name | Type | Description |
 |------------|------|-------------|
-| `collections` | [`Promise<NFTCollection[]>`](/docs/react-sdk/technical-reference#models) | Array of NFT collections |
+| `collections` | [`Task<List<NFTBalance>>`](/docs/unity-sdk/technical-reference#models) | List of NFT collections |
 
 <Accordions>
     <Accordion title="Response Type">
-        ```typescript
-        interface NFTCollection {
-            caip_id: string;            
-            network_name: string;       
-            entity_type: "ERC721" | "ERC1155"; 
-            collection_address: string; 
-            collection_name: string;    
-            description: string;        
-            collection_image: string;   
-            whitelisted: boolean;      
+        ```csharp
+        [Serializable]
+        public class UserNFTBalance
+        {
+            [JsonProperty("caip_id")]
+            public string caipId;
+
+            [JsonProperty("network_name")]
+            public string networkName;
+
+            [JsonProperty("entity_type")]
+            public string entityType;
+
+            [JsonProperty("collection_address")]
+            public string collectionAddress;
+
+            [JsonProperty("collection_name")]
+            public string collectionName;
+
+            [JsonProperty("nft_id")]
+            public string nftId;
+
+            [JsonProperty("image")]
+            public string image;
+
+            [JsonProperty("quantity")]
+            public string quantity;
+
+            [JsonProperty("token_uri")]
+            public string tokenUri;
+
+            [JsonProperty("description")]
+            public string description;
+
+            [JsonProperty("nft_name")]
+            public string nftName;
+
+            [JsonProperty("explorer_smart_contract_url")]
+            public string explorerSmartContractUrl;
+
+            [JsonProperty("collection_image")]
+            public string collectionImage;
         }
         ```
     </Accordion>
