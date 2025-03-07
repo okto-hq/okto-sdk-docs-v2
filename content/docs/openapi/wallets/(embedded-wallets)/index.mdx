@@ -18,6 +18,9 @@ Okto automatically handles wallet creation for your users. When a user authentic
 
 ### Accessing User Wallets
 
+To retrieve a user's wallets across different chains, use the [`Get Wallet` API](/docs/openapi/explorer/get-wallets)
+
+{/*
 To retrieve a user's wallets across different chains, use the `getAccount` function:
 
 ```typescript
@@ -56,6 +59,7 @@ function WalletExample() {
     );
 }
 ```
+*/}
 
 <Callout title="Note">
 Ensure that the user is authenticated before calling `getAccount()`. You should prompt users to log in if they are not already authenticated.
