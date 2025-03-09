@@ -29,30 +29,41 @@ The `getNftCollections` function retrieves NFT collection details for the authen
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
+
 //This is an independent script which calls GetNftPotfolio() Api
 namespace OktoSDK
 {
-    public class Portfolio : MonoBehaviour
+    public class NFT : MonoBehaviour
     {
-        public async Task<object> GetPortfolioNFT(OktoClient oc)
+
+        public async Task<object> GetNftCollections(OktoClient oc)
         {
-            Loader.ShowLoader();
-            if (!oc.IsLoggedIn())
+            if (oc == null)
             {
                 ResponsePanel.SetResponse("You are not logged In!");
                 return "You are not logged In!";
             }
+
+            if (!oc.IsLoggedIn())
+            {
+                ResponsePanel.SetResponse("You are not logged In!");
+                //ResponsePanel.DisplayResponse();
+                return "You are not logged In!";
+            }
+
             try
             {
-                return await BffClientRepository.GetBffClientRepository().GetPortfolioNft();
+                var response = await BffClientRepository.GetBffClientRepository().GetPortfolioNft();
+                return response;
             }
             catch (Exception error)
             {
-                Debug.LogError($"Failed to retrieve orders: {error}");
-                throw;
+                Debug.LogError($"Error fetching NFT collections: {error}");
+                throw new Exception("Failed to fetch NFT collections from the backend.");
             }
         }
     }
+
 }
 ```
 </Tab>
@@ -92,13 +103,13 @@ For error handling:
 
 | Method | Description |
 |---------|-------------|
-| <sub><i>async</i></sub> [`getNftCollections`](#get-nft-collections) | Get NFT collections for the user |
+| <sub><i>async</i></sub> [`GetNftCollections`](#get-nft-collections) | Get NFT collections for the user |
 
 <div className="method-box">
 
 ## Get NFT Collections
 
-<sub><i>async</i></sub> `getNftCollections(oktoClient: OktoClient)` retrieves the list of NFT collections associated with the user.
+<sub><i>async</i></sub> `GetNftCollections(oktoClient: OktoClient)` retrieves the list of NFT collections associated with the user.
 
 ### Parameters
 

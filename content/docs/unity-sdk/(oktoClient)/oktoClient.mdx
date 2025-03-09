@@ -1,0 +1,85 @@
+---
+title: OktoClient
+description: Learn how to use the OktoClient class to access Okto functionality in Unity components
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react';
+
+The `OktoClient` class is the primary way to access Okto functionality within Unity components. It provides access to the Okto client instance, allowing you to manage authentication, user operations, and session management.
+
+### Hook Overview
+
+| Hook | Description |
+|------|-------------|
+| [`OktoClient`](#oktoClient) | Access the Okto client instance and its methods |
+
+<div className="method-box">
+
+## OktoClient Class
+
+`OktoClient` class returns an instance of OktoClient.
+
+### OktoClient Properties and Methods
+
+<Callout title="OktoClient Class">
+
+| Method | Signature | Description |
+|--------|-----------|-------------|
+| `loginUsingOAuth` | [`AuthenticateResult`](/docs/unity-sdk/technical-reference#models) | Authenticate using OAuth providers |
+| `verifyLogin` | `bool` | Verify if user is logged in |
+
+</Callout>
+
+<Accordions>
+<Accordion title="Example">
+<Tabs items={['C#']}>
+<Tab value="C#">
+```csharp
+public static void OnLogin()
+{
+    LoginWithGoogle(_instance.idToken, "google");
+}
+
+public async Task<string> ExecuteTokenTransfer(string receiptAddress, BigInteger amount, string network, string tokenAddress)
+{
+    var transaction = new TokenTransferIntentParams
+    {
+        recipientWalletAddress = receiptAddress,
+        tokenAddress = tokenAddress,
+        amount = amount,
+        caip2Id = network
+    };
+
+    Debug.Log($"Generated transaction: {JsonConvert.SerializeObject(transaction, Formatting.Indented)}");
+
+    userOp = await CreateUserOp(transaction);
+    string userOpStr = JsonConvert.SerializeObject(userOp, Formatting.Indented);
+    Debug.Log($"UserOp created: {JsonConvert.SerializeObject(userOp, Formatting.Indented)}");
+
+
+    userOp = SignUserOp(userOp, network);
+    userOpStr = JsonConvert.SerializeObject(userOp, Formatting.Indented);
+    Debug.Log($"UserOp Signed: {JsonConvert.SerializeObject(userOp, Formatting.Indented)}");
+
+    JsonRpcResponse<ExecuteResult> txHash = await ExecuteUserOp(userOp);
+    string txHashStr = JsonConvert.SerializeObject(txHash, Formatting.Indented);
+
+    Debug.Log($"Transaction executed. Hash: {txHashStr}");
+
+    //clear all inputfield
+    OnClose();
+
+    return txHashStr;
+}
+```
+</Tab>
+</Tabs>
+</Accordion>
+</Accordions>
+
+</div>

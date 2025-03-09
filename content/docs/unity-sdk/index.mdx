@@ -135,14 +135,12 @@ Import the required packages:
         void InitializePlayGamesLogin()
         {
 #if GOOGLE_LOGIN
-
             configuration = new GoogleSignInConfiguration
             {
                 WebClientId = webClientId,
                 RequestEmail = true,
                 RequestIdToken = true,
             };
-
 #else
             Debug.Log("Google Sign-In is not enabled. Please add GOOGLE_LOGIN to scripting define symbols.");
         }
@@ -158,22 +156,20 @@ Import the required packages:
     Currently, you can onboard users and support on-chain interaction via the Okto Embedded wallet. To do this you must first authenticate your user via social login. We currently support Google OAuth.
 
     ```csharp title="GoogleLogin.cs"
-            (authenticationData, error) = await LoginGoogle();
-
-            if (error != null)
-            {
-                Debug.LogError($"Login failed with error: {error.Message}");
-            }
-            else
-            {
-                Debug.Log("Login successful!");
-                Debug.Log("loginDone " + authenticationData);
-
-            }
+(authenticationData, error) = await LoginGoogle();
+if (error != null)
+{
+    Debug.LogError($"Login failed with error: {error.Message}");
+}
+else
+{
+    Debug.Log("Login successful!");
+    Debug.Log("loginDone " + authenticationData);
+}
     ```
     <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-unity-template-app/tree/main/okto-unity/Assets/OktoSDK/Scripts/GoogleLogin/GoogleLogin.cs" />
 
-    The user's embedded wallet is automatically created or retrieved once the session is created and can be accessed via TypeScript and unity.
+    The user's embedded wallet is automatically created or retrieved once the session is created and can be accessed via unity.
 
 </Step>
 
@@ -183,42 +179,31 @@ Import the required packages:
     Use a BffClientRepository monobehavior to fetch user information:
 
     ```csharp title="BffClientRepository.cs"
-         public async Task<List<Wallet>> GetWallets()
-        {
-
-            var response = await bffClient.Get<ApiResponse<List<Wallet>>>(Routes.GetWallets);
-
-
-            if (response.status == "error")
-            {
-                throw new Exception("Failed to retrieve supported wallets");
-            }
-
-            if (response.data == null) 
-            {
-                throw new Exception("Response data is missing");
-            }
-
-            return response.data;
-        }
-
-
-        public async Task<UserPortfolioData> GetPortfolio()
-        {
-            var response = await bffClient.Get<ApiResponse<UserPortfolioData>>(Routes.GetPortfolio);
-
-            if (response.status == "error")
-            {
-                throw new Exception("Failed to retrieve portfolio");
-            }
-
-            if (response.data == null)
-            {
-                throw new Exception("Response data is missing");
-            }
-
-            return response.data;
-        }
+public async Task<List<Wallet>> GetWallets()
+{
+    var response = await bffClient.Get<ApiResponse<List<Wallet>>>(Routes.GetWallets);
+    if (response.status == "error")
+    {
+        throw new Exception("Failed to retrieve supported wallets");
+    }
+    if (response.data == null) 
+    {
+        throw new Exception("Response data is missing");
+    }
+    return response.data;
+}
+public async Task<UserPortfolioData> GetPortfolio()
+{
+    var response = await bffClient.Get<ApiResponse<UserPortfolioData>>(Routes.GetPortfolio);
+    if (response.status == "error")
+    {
+        throw new Exception("Failed to retrieve portfolio");
+    }
+    if (response.data == null)
+    {
+        throw new Exception("Response data is missing");
+    }
+}
     ```
      <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-unity-template-app/tree/main/okto-unity/Assets/OktoSDK/Scripts/OktoSDK/Api/BffClientRepository.cs" />
 
@@ -255,24 +240,19 @@ Now that we have our basic setup complete, let's implement a token transfer on S
     First, get your Polygon wallet address:
 
     ```csharp
-        public async Task<List<Wallet>> GetWallets()
-        {
-
-            var response = await bffClient.Get<ApiResponse<List<Wallet>>>(Routes.GetWallets);
-
-
-            if (response.status == "error")
-            {
-                throw new Exception("Failed to retrieve supported wallets");
-            }
-
-            if (response.data == null) 
-            {
-                throw new Exception("Response data is missing");
-            }
-
-            return response.data;
-        }
+public async Task<List<Wallet>> GetWallets()
+{
+    var response = await bffClient.Get<ApiResponse<List<Wallet>>>(Routes.GetWallets);
+    if (response.status == "error")
+    {
+        throw new Exception("Failed to retrieve supported wallets");
+    }
+    if (response.data == null) 
+    {
+        throw new Exception("Response data is missing");
+    }
+    return response.data;
+}
     ```
     <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-unity-template-app/tree/main/okto-unity/Assets/OktoSDK/Scripts/OktoSDK/Api/BffClientRepository.cs" />
 
@@ -298,34 +278,31 @@ Now that we have our basic setup complete, let's implement a token transfer on S
     Create a new component for handling the transfer:
 
     ```csharp title="TokenTransferView.cs"
-        public async Task<string> ExecuteTokenTransfer(string receiptAddress, BigInteger amount, string network, string tokenAddress)
-        {
-            var transaction = new TokenTransferIntentParams
-            {
-                recipientWalletAddress = receiptAddress,
-                tokenAddress = tokenAddress,
-                amount = amount,
-                caip2Id = network
-            };
+public async Task<string> ExecuteTokenTransfer(string receiptAddress, BigInteger amount, string network, string tokenAddress)
+{
+    var transaction = new TokenTransferIntentParams
+    {
+        recipientWalletAddress = receiptAddress,
+        tokenAddress = tokenAddress,
+        amount = amount,
+        caip2Id = network
+    };
 
-            Debug.Log($"Generated transaction: {JsonConvert.SerializeObject(transaction, Formatting.Indented)}");
+    Debug.Log($"Generated transaction: {JsonConvert.SerializeObject(transaction, Formatting.Indented)}");
 
-            userOp = await CreateUserOp(transaction);
-            string userOpStr = JsonConvert.SerializeObject(userOp, Formatting.Indented);
-            Debug.Log($"UserOp created: {JsonConvert.SerializeObject(userOp, Formatting.Indented)}");
+    userOp = await CreateUserOp(transaction);
+    string userOpStr = JsonConvert.SerializeObject(userOp, Formatting.Indented);
+    Debug.Log($"UserOp created: {JsonConvert.SerializeObject(userOp, Formatting.Indented)}");
 
+    userOp = SignUserOp(userOp, network);
+    userOpStr = JsonConvert.SerializeObject(userOp, Formatting.Indented);
+    Debug.Log($"UserOp Signed: {JsonConvert.SerializeObject(userOp, Formatting.Indented)}");
 
-            userOp = SignUserOp(userOp, network);
-            userOpStr = JsonConvert.SerializeObject(userOp, Formatting.Indented);
-            Debug.Log($"UserOp Signed: {JsonConvert.SerializeObject(userOp, Formatting.Indented)}");
-
-            JsonRpcResponse<ExecuteResult> txHash = await ExecuteUserOp(userOp);
-            string txHashStr = JsonConvert.SerializeObject(txHash, Formatting.Indented);
-
-            Debug.Log($"Transaction executed. Hash: {txHashStr}");
-
-            return txHashStr;
-        }
+    JsonRpcResponse<ExecuteResult> txHash = await ExecuteUserOp(userOp);
+    string txHashStr = JsonConvert.SerializeObject(txHash, Formatting.Indented);
+    Debug.Log($"Transaction executed. Hash: {txHashStr}");
+    return txHashStr;
+}
     ```
      <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-unity-template-app/blob/main/okto-unity/Assets/OktoSDK/Scripts/UserOp/TokenTransfer/TokenTransferView.cs" />
 
@@ -354,14 +331,14 @@ For more examples and advanced usage, check out the [Template Repo](https://gith
 
 | Command | Description | Documentation |
 |---------|-------------|---------------|
-| `const account = await GetAccount(oktoClient);` | Get user's wallet details | <ExternalLink href="/docs/unity-sdk/getAccount">Method Overview</ExternalLink> |
-| `const chains = await GetChains(oktoClient);` | List supported blockchain networks | <ExternalLink href="/docs/unity-sdk/getChains">Method Overview</ExternalLink> |
-| `const tokens = await getTokens(oktoClient);` | List supported tokens | <ExternalLink href="/docs/unity-sdk/getTokens">Method Overview</ExternalLink> |
-| `const portfolio = await GetPortfolio(oktoClient);` | Get user's token holdings | <ExternalLink href="/docs/unity-sdk/getPortfolio">Method Overview</ExternalLink> |
-| `const nfts = await GetPortfolioNFT(oktoClient);` | Get user's NFT holdings | <ExternalLink href="/docs/unity-sdk/getPortfolioNFT">Method Overview</ExternalLink> |
-| `const activity = await GetPortfolioActivity(oktoClient);` | Get transaction history | <ExternalLink href="/docs/unity-sdk/getPortfolioActivity">Method Overview</ExternalLink> |
-| `const orders = await GetOrdersHistory(oktoClient);` | Get transaction order history | <ExternalLink href="/docs/unity-sdk/getOrdersHistory">Method Overview</ExternalLink> |
-| `const collections = await GetNftCollections(oktoClient);` | Get NFT collections | <ExternalLink href="/docs/unity-sdk/getNFTCollections">Method Overview</ExternalLink> |
+| `var account = await GetAccount(oktoClient);` | Get user's wallet details | <ExternalLink href="/docs/unity-sdk/getAccount">Method Overview</ExternalLink> |
+| `var chains = await GetChains(oktoClient);` | List supported blockchain networks | <ExternalLink href="/docs/unity-sdk/getChains">Method Overview</ExternalLink> |
+| `var tokens = await getTokens(oktoClient);` | List supported tokens | <ExternalLink href="/docs/unity-sdk/getTokens">Method Overview</ExternalLink> |
+| `var portfolio = await GetPortfolio(oktoClient);` | Get user's token holdings | <ExternalLink href="/docs/unity-sdk/getPortfolio">Method Overview</ExternalLink> |
+| `var nfts = await GetPortfolioNFT(oktoClient);` | Get user's NFT holdings | <ExternalLink href="/docs/unity-sdk/getPortfolioNFT">Method Overview</ExternalLink> |
+| `var activity = await GetPortfolioActivity(oktoClient);` | Get transaction history | <ExternalLink href="/docs/unity-sdk/getPortfolioActivity">Method Overview</ExternalLink> |
+| `var orders = await GetOrdersHistory(oktoClient);` | Get transaction order history | <ExternalLink href="/docs/unity-sdk/getOrdersHistory">Method Overview</ExternalLink> |
+| `var collections = await GetNftCollections(oktoClient);` | Get NFT collections | <ExternalLink href="/docs/unity-sdk/getNftCollections">Method Overview</ExternalLink> |
 
 ### User Operations (Intents)
 

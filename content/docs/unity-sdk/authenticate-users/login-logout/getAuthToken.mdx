@@ -40,25 +40,74 @@ This method doesn't take any parameters.
 
 <Accordions>
 <Accordion title="Example">
-<Tabs items={['Typescript']}>
-  <Tab value="Typescript">
-    ```typescript
-    import { useOkto } from '@okto_web3/react-sdk';
+<Tabs items={['C#']}>
+  <Tab value="C#">
+    ```csharp
+        public async Task<string> GetAuthorizationToken()
+        {
+            //return idToken;
+            if (_sessionConfig?.SessionPrivKey == null)
+            {
+                Debug.LogError("SessionPrivKey is null");
+                return null;
 
-    function TokenRetrieval() {
-        const oktoClient = useOkto();
+            }
+            if (_sessionConfig?.SessionPubKey == null)
+            {
+                Debug.LogError("SessionPubKey is null");
+                return null;
+            }
 
-        async function getToken() {
-            try {
-                const token = await oktoClient.getAuthorizationToken();
-                console.log("Auth token retrieved");
-            } catch (error) {
-                console.error("Failed to get token:", error);
+            var expire_at = DateTimeOffset.UtcNow.AddMinutes(90).ToUnixTimeSeconds(); 
+
+            try
+            {
+                // Create the data object with the correct format
+                var data = new
+                {
+                    expire_at = expire_at,
+                    session_pub_key = _sessionConfig.SessionPubKey
+                };
+
+                Debug.Log($"expire_at: {expire_at}");
+
+
+                string messageToSign = JsonConvert.SerializeObject(data, new JsonSerializerSettings
+                {
+                    Formatting = Formatting.None,  // Ensure minified JSON (no spaces/indentation)
+                    StringEscapeHandling = StringEscapeHandling.EscapeNonAscii  // Ensure escape characters match JS behavior
+                });
+
+                string signature = SignMessage(messageToSign, _sessionConfig.SessionPrivKey);
+                Debug.Log($"Generated signature: {signature}");
+
+                // Create the token payload with the correct format
+                var tokenPayload = new
+                {
+                    type = "ecdsa_uncompressed",
+                    data = data,
+                    data_signature = signature
+                };
+
+                // Convert to JSON with camelCase formatting
+                string jsonPayload = JsonConvert.SerializeObject(tokenPayload, new JsonSerializerSettings
+                {
+                    ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
+                    Formatting = Formatting.None
+                });
+
+                // Convert to Base64
+                string token = Convert.ToBase64String(Encoding.UTF8.GetBytes(jsonPayload));
+                Debug.Log($"Final token: {token}");
+
+                return token;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Error generating authorization token: {ex.Message}\nStack trace: {ex.StackTrace}");
+                throw;
             }
         }
-
-        return <button onClick={getToken}>Get Auth Token</button>;
-    }
     ```
   </Tab>
 </Tabs>
@@ -72,5 +121,5 @@ The authorization token is a JWT that can be used to authenticate requests to Ok
 </Callout>
 
 <Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation for more details.
+In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/unity-sdk/sdk-error-warnings) documentation for more details.
 </Callout>

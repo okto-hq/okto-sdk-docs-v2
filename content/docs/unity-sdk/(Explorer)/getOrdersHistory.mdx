@@ -102,8 +102,8 @@ To track a transaction to completion:
 
 <Callout title="Note" type="info">
 For error handling:
-- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
-- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/unity-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/unity-sdk/troubleshooting) to contact support
 </Callout>
 
 ### Method Overview
@@ -130,7 +130,6 @@ Where `OrderFilterRequest` contains:
 | Field | Type | Description |
 |-------|------|-------------|
 | `intentId` | `string` | Optional ID to filter specific order/transaction |
-| `status` | `STATUS_TYPE` | Optional status to filter orders by (e.g., "SUCCESSFUL", "FAILED", "PENDING", "REJECTED") |
 | `intentType` | `INTENT_TYPE` | Optional type to filter orders by (e.g., "TOKEN_TRANSFER", "NFT_TRANSFER", "RAW_TRANSACTION") |
 
 ### Response
@@ -139,7 +138,7 @@ Where `OrderFilterRequest` contains:
 
 | Field Name | Type | Description |
 |------------|------|-------------|
-| `orders` | [`Task<List<Order>>`](/docs/react-sdk/technical-reference#models) | Array of order history items |
+| `orders` | [`Task<List<Order>>`](/docs/unity-sdk/technical-reference#models) | Array of order history items |
 
 <Accordions>
     <Accordion title="Response Type">

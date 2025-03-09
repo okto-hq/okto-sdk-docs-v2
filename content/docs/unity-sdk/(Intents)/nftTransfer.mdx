@@ -10,7 +10,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
 
-The `nftTransfer()` function creates a user operation for transferring NFTs. This function initiates the process of transferring an NFT by encoding the necessary parameters into a User Operation, which can then be signed and executed using the OktoClient.
+The `ExecuteNFTTransaction()` function creates a user operation for transferring NFTs. This function initiates the process of transferring an NFT by encoding the necessary parameters into a User Operation, which can then be signed and executed using the OktoClient.
 
 <ChainSupportStatus 
   unsupportedChains={[
@@ -33,37 +33,26 @@ There are two ways to implement NFT transfers:
 
 <Tabs items={['Abstracted Flow', 'UserOp Flow']}>
 <Tab value="Abstracted Flow">
-```typescript
-import { useOkto } from '@okto_web3/react-sdk';
-import { nftTransfer } from '@okto_web3/react-sdk';
+```csharp
+TransferNft nftData = new TransferNft 
+{
+    opteration_type = "NFT_TRANSFER",
+    network_name = "POLYGON",
+    collection_address = "0x1234...",
+    collection_name = "My NFT Collection",
+    quantity = "1",
+    recipient_address = "0x5678...",
+    nft_address = "0x91011..."
+};
 
-function NFTTransfer() {
-    const oktoClient = useOkto();
-
-    async function handleNFTTransfer() {
-        try {
-            const transferParams = {
-                caip2Id: "eip155:1", // Ethereum Mainnet
-                collectionAddress: "0x23581767a106ae21c074b2276D25e5C3e136a68b",
-                nftId: "123", // NFT token ID
-                recipientWalletAddress: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-                amount: 1,
-                nftType: 'ERC721'
-            };
-            
-            // Execute the transfer
-            const jobId = await nftTransfer(oktoClient, transferParams);
-            console.log('Transfer jobId:', jobId);
-        } catch (error) {
-            console.error('Error in NFT transfer:', error);
-        }
-    }
-
-    return (
-        <button onClick={handleNFTTransfer}>
-            Transfer NFT
-        </button>
-    );
+try 
+{
+    var result = await OktoProviderSDK.Instance.transferNft(nftData);
+    Debug.Log($"NFT Transfer initiated: {result.order_id}");
+} 
+catch (Exception e) 
+{
+    Debug.LogError($"NFT Transfer failed: {e.Message}");
 }
 ```
 </Tab>
@@ -103,13 +92,13 @@ function NFTTransfer() {
 <Accordion title="Sample Response">
 <Tabs items={['Abstracted Flow', 'UserOp Flow']}>
 <Tab value="Abstracted Flow">
-```typescript
+```json
 // JobId returned
 "3ee33731-9e96-4ab9-892c-ea476b36295d"
 ```
 </Tab>
 <Tab value="UserOp Flow">
-```typescript
+```json
 // UserOp returned from nftTransfer
 {
     "sender": "0xa9F6b3A5a718754979dbA78113f3614Dd4524c53",
@@ -134,29 +123,45 @@ function NFTTransfer() {
 
 <Accordion title="Suggested Post Implementation">
 
-```typescript
-import { useOkto } from '@okto_web3/react-sdk';
-import { getOrdersHistory } from '@okto_web3/react-sdk';
+```csharp
+using System;
+using System.Threading.Tasks;
+using UnityEngine;
 
-async function getNFTOrder(jobId: string) {
-    const oktoClient = useOkto();
-    try {
-        // Get order history with filter for specific jobId
-        const orders = await getOrdersHistory(oktoClient, {
-            intentId: jobId,                    // Filter by specific order/transaction
-            intentType: "NFT_TRANSFER",         // Filter for NFT transfer orders
-            status: "SUCCESSFUL"                // Filter by status: "SUCCESSFUL" | "FAILED" | "PENDING" | "REJECTED"
-        });
-        return orders?.[0] || null;
-    } catch (error) {
-        console.error('Error fetching NFT order:', error);
-        throw error;
+//This is an independent script which called GetOrder() Api
+namespace OktoSDK
+{
+    public class GetOrder : MonoBehaviour
+    {
+
+        public async Task<object> GetOrdersHistory(OktoClient oc, OrderFilterRequest filters = null)
+        {
+
+            if (oc == null)
+            {
+                ResponsePanel.SetOrderResponse("You are not logged In!");
+                return "You are not logged In!";
+            }
+
+            if (!oc.IsLoggedIn())
+            {
+                ResponsePanel.SetOrderResponse("You are not logged In!");
+                //ResponsePanel.DisplayResponse();
+                return "You are not logged In!";
+            }
+
+            try
+            {
+                return await BffClientRepository.GetBffClientRepository().GetOrders(filters);
+            }
+            catch (Exception error)
+            {
+                Debug.LogError($"Failed to retrieve orders: {error}");
+                throw new Exception("Failed to retrieve orders. Please try again later.");
+            }
+        }
     }
 }
-
-// Usage example:
-const order = await getNFTOrder(jobId);
-console.log('Order Status:', order?.status);
 ```
 <Callout title="Important: Transaction Lifecycle">
 The `getOrderHistory` function fetches the current status of a transaction on the Okto chain. However, the transaction status will continue to update on the Okto chain as it progresses through various stages in the [Distributed Transaction Network (DTN)](/docs/okto-layer/dtn).
@@ -169,7 +174,7 @@ To track a transaction to completion:
 </Accordion>
 
 <Accordion title="Corresponding jobId Response">
-```typescript
+```json
 // Order returned from getOrdersHistory
 {
     "downstream_transaction_hash": ["0x742d35Cc6634C0532925a3b844Bc454e4438f44e"],
@@ -197,39 +202,38 @@ To track a transaction to completion:
 
 <Callout title="Note" type="info">
 For error handling:
-- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
-- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/unity-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/unity-sdk/troubleshooting) to contact support
 </Callout>
 
 ### Method Overview
 
 | Method | Description |
 |---------|-------------|
-| <sub><i>async</i></sub> [`nftTransfer`](#nft-transfer) | Create a user operation for NFT transfer |
+| <sub><i>async</i></sub> [`ExecuteNFTTransaction`](#nft-transfer) | Create a user operation for NFT transfer |
 
 <div className="method-box">
 
 ## NFT Transfer
 
-<sub><i>async</i></sub> `nftTransfer(oktoClient: OktoClient, data: NFTTransferIntentParams)` creates a user operation for transferring NFTs.
+<sub><i>async</i></sub> `ExecuteNFTTransaction(data: NFTTransferIntentParams)` creates a user operation for transferring NFTs.
 
 ### Parameters
 
 | Parameter | Type | Description | Required |
 |-----------|------|-------------|----------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
-| `data` | [`NFTTransferIntentParams`](/docs/react-sdk/technical-reference#models) | Parameters for the NFT transfer | Yes |
+| `data` | [`NFTTransferIntentParams`](/docs/unity-sdk/technical-reference#models) | Parameters for the NFT transfer | Yes |
 
 Where `NFTTransferIntentParams` contains:
 
 | Field | Type | Description | Required |
 |-------|------|-------------|----------|
 | `caip2Id` | `string` | The network identifier, formatted as a CAIP network ID | Yes |
-| `collectionAddress` | `Address` | The address of the NFT collection | Yes |
+| `collectionAddress` | `string` | The address of the NFT collection | Yes |
 | `nftId` | `string` | The unique identifier of the NFT | Yes |
-| `recipientWalletAddress` | `Address` | The wallet address of the recipient | Yes |
-| `amount` | `number \| bigint` | The amount of NFTs to transfer, typically "1" | Yes |
-| `nftType` | `'ERC721' \| 'ERC1155'` | The type of NFT standard | Yes |
+| `recipientWalletAddress` | `string` | The wallet address of the recipient | Yes |
+| `amount` | `int` | The amount of NFTs to transfer, typically "1" | Yes |
+| `nftType` | `string` | The type of NFT standard | Yes |
 
 ### Response
 
@@ -239,15 +243,32 @@ Where `NFTTransferIntentParams` contains:
 
 | Field Name | Type | Description |
 |------------|------|-------------|
-| `result` | `Promise<string>` | Returns the jobId for the NFT transfer |
+| `result` | `string` | Returns the jobId for the NFT transfer |
 
 <Accordions>
     <Accordion title="Response Type">
-        ```typescript
-        interface {
-            jobId: string;  
-        }
-        ```
+    ```csharp
+TransferNft nftData = new TransferNft 
+{
+    opteration_type = "NFT_TRANSFER",
+    network_name = "POLYGON",
+    collection_address = "0x1234...",
+    collection_name = "My NFT Collection",
+    quantity = "1",
+    recipient_address = "0x5678...",
+    nft_address = "0x91011..."
+};
+
+try 
+{
+    var result = await OktoProviderSDK.Instance.transferNft(nftData);
+    Debug.Log($"NFT Transfer initiated: {result.order_id}");
+} 
+catch (Exception e) 
+{
+    Debug.LogError($"NFT Transfer failed: {e.Message}");
+}
+    ```
     </Accordion>
 </Accordions>
 </Callout>
@@ -257,26 +278,28 @@ Where `NFTTransferIntentParams` contains:
 
 | Field Name | Type | Description |
 |------------|------|-------------|
-| `result` | [`Promise<UserOp>`](/docs/react-sdk/technical-reference#models) | Returns the user operation for the NFT transfer |
+| `result` | `Task<UserOp>` | Returns the jobId for the NFT transfer |
 
 <Accordions>
     <Accordion title="Response Type">
-        ```typescript
-        interface UserOp {
-            sender: string;
-            nonce: string;
-            paymaster: string;
-            callGasLimit: string;
-            verificationGasLimit: string;
-            preVerificationGas: string;
-            maxFeePerGas: string;
-            maxPriorityFeePerGas: string;
-            paymasterPostOpGasLimit: string;
-            paymasterVerificationGasLimit: string;
-            callData: string;
-            paymasterData: string;
-            signature: string;
-        }
+        ```csharp
+    public class UserOp
+    {
+        public string sender { get; set; }
+        public string nonce { get; set; }
+        public string paymaster { get; set; }
+        public string callGasLimit { get; set; } = "0x493e0";
+        public string verificationGasLimit { get; set; } = "0x30d40";
+        public string preVerificationGas { get; set; } = "0xc350";
+        public string maxFeePerGas { get; set; } = "0x77359400";
+        public string maxPriorityFeePerGas { get; set; } = "0x77359400";
+        public string paymasterPostOpGasLimit { get; set; } = "0x186a0";
+        public string paymasterVerificationGasLimit { get; set; } = "0x186a0";
+        public string callData { get; set; }
+        public string paymasterData { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string signature { get; set; }
+    }
         ```
     </Accordion>
 </Accordions>
