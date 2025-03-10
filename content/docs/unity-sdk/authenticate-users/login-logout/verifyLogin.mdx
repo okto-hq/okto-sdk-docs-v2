@@ -15,31 +15,19 @@ The `verifyLogin()` method checks if a user is currently logged in. If the user 
 
 <Accordions defaultValue="Usage">
 <Accordion title="Usage"> 
-<Tabs items={['Typescript']}>
-  <Tab value="Typescript">
-    ```typescript
-    import { useOkto } from '@okto_web3/react-sdk';
-
-    function AuthCheck() {
-        const oktoClient = useOkto();
-
-        async function checkLoginStatus() {
-            try {
-                const isLoggedIn = await oktoClient.verifyLogin();
-                console.log("Login status:", isLoggedIn);
-            } catch (error) {
-                console.error("Verification failed:", error);
-            }
+<Tabs items={['C#']}>
+  <Tab value="C#">
+    ```csharp
+        public bool IsLoggedIn()
+        {
+            return _sessionConfig != null;
         }
-
-        return <button onClick={checkLoginStatus}>Check Login Status</button>;
-    }
     ```
   </Tab>
 </Tabs>
 </Accordion>
 <Accordion title="Success Response">
-```typescript
+```csharp
 true
 ```
 </Accordion>
@@ -47,21 +35,21 @@ true
 
 <Callout title="Note" type="info">
 For error handling:
-- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
-- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/unity-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/unity-sdk/troubleshooting) to contact support
 </Callout>
 
 ### Method Overview
 
 | Methods | Description |
 |---------|-------------|
-| <sub><i>async</i></sub> `OktoClient.verifyLogin` | Verify if user is logged in |
+| <sub><i>bool</i></sub> `oktoclient.IsLoggedIn()` | Verify if user is logged in |
 
 <div className="method-box">
 
 ## Verify Login
 
-<sub><i>async</i></sub> `OktoClient.verifyLogin()` checks the current login status of the user.
+<sub><i>bool</i></sub> `oktoclient.IsLoggedIn()` checks the current login status of the user.
 
 ### Parameters
 
@@ -73,7 +61,7 @@ This method doesn't take any parameters.
 
 | Field Name | Type | Description |
 |------------|------|-------------|
-| `result` | `Promise<boolean>` | Returns true if user is logged in, false otherwise |
+| `result` | `boolean` | Returns true if user is logged in, false otherwise |
 
 </Callout>
 
