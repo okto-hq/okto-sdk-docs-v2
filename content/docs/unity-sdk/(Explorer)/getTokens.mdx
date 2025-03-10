@@ -25,31 +25,36 @@ The `getTokens` function fetches the list of supported tokens from the backend.
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
-//This is an independent script which called GetWallets() Api
+
+//This is an independent script which called GetToken() Api
 namespace OktoSDK
 {
-    public class Account : MonoBehaviour
+    public class GetToken : MonoBehaviour
     {
-        public async Task<object> GetAccount(OktoClient oc)
+        public async Task<object> GetTokens(OktoClient oc)
         {
             if (oc == null)
             {
                 ResponsePanel.SetResponse("You are not logged In!");
                 return "You are not logged In!";
             }
+
             if (!oc.IsLoggedIn())
             {
                 ResponsePanel.SetResponse("You are not logged In!");
+                //ResponsePanel.DisplayResponse();
                 return "You are not logged In!";
             }
+
             try
             {
-                return await BffClientRepository.GetBffClientRepository().GetWallets();
+                var response = await BffClientRepository.GetBffClientRepository().GetSupportedTokens();
+                return response;
             }
             catch (Exception error)
             {
-                Debug.LogError($"Failed to retrieve wallets: {error}");
-                throw;
+                Debug.LogError($"Error fetching supported tokens: {error}");
+                throw new Exception("Failed to fetch supported tokens from the backend.");
             }
         }
     }
@@ -105,21 +110,21 @@ namespace OktoSDK
 
 <Callout title="Note" type="info">
 For error handling:
-- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
-- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/unity-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/unity-sdk/troubleshooting) to contact support
 </Callout>
 
 ### Method Overview
 
 | Method | Description |
 |---------|-------------|
-| <sub><i>async</i></sub> [`getWallets`](#get-tokens) | Get supported token information |
+| <sub><i>async</i></sub> [`GetTokens`](#get-tokens) | Get supported token information |
 
 <div className="method-box">
 
 ## Get Tokens
 
-<sub><i>async</i></sub> `getWallets(oktoClient: OktoClient)` retrieves information about all supported tokens.
+<sub><i>async</i></sub> `GetTokens(oktoClient: OktoClient)` retrieves information about all supported tokens.
 
 ### Parameters
 
@@ -133,28 +138,53 @@ For error handling:
 
 | Field Name | Type | Description |
 |------------|------|-------------|
-| `tokens` | [`Task<List<Token>>`](/docs/react-sdk/technical-reference#models) | Array of supported tokens |
+| `tokens` | [`Task<List<Token>>`](/docs/unity-sdk/technical-reference#models) | Array of supported tokens |
 
 <Accordions>
     <Accordion title="Response Type">
         ```csharp
-        public class Wallet
-        {
-            [JsonProperty("caip_id")]
-            public string capId { get; set; }
+    [Serializable]
+    public class Token
+    {
+        [JsonProperty("address")]
+        public string address { get; set; }
 
-            [JsonProperty("network_name")]
-            public string networkName { get; set; }
+        [JsonProperty("caip_id")]
+        public string caipId { get; set; }
 
-            [JsonProperty("address")]
-            public string address { get; set; }
+        [JsonProperty("symbol")]
+        public string symbol { get; set; }
 
-            [JsonProperty("network_id")]
-            public string cap2Id { get; set; }
+        [JsonProperty("image")]
+        public string image { get; set; }
 
-            [JsonProperty("network_symbol")]
-            public string networkSymbol { get; set; }
-        }
+        [JsonProperty("name")]
+        public string name { get; set; }
+
+        [JsonProperty("short_name")]
+        public string shortName { get; set; }
+
+        [JsonProperty("id")]
+        public string id { get; set; }
+
+        [JsonProperty("group_id")]
+        public string groupId { get; set; }
+
+        [JsonProperty("is_primary")]
+        public bool isPrimary { get; set; }
+
+        [JsonProperty("network_id")]
+        public string networkId { get; set; }
+
+        [JsonProperty("network_name")]
+        public string networkName { get; set; }
+
+        [JsonProperty("onramp_enabled")]
+        public bool isOnrampEnabled { get; set; }
+
+        [JsonProperty("whitelisted")]
+        public bool whitelisted { get; set; }
+    }
         ```
     </Accordion>
 </Accordions>

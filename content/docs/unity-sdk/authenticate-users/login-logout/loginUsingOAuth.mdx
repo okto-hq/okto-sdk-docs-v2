@@ -17,33 +17,40 @@ The `loginUsingOAuth()` method authenticates users using OAuth providers. It gen
 
 <Accordions defaultValue="Usage">
 <Accordion title="Usage">
-<Tabs items={['TypeScript']}>
-<Tab value="TypeScript">
-```typescript
-import { useOkto } from '@okto_web3/react-sdk';
-import { GoogleLogin } from '@react-oauth/google';
+<Tabs items={['C#']}>
+<Tab value="C#">
+```csharp
+public static async void LoginWithGoogle(string idToken, string provider)
+{
+  try
+  {
+    var authData = new AuthData
+    {
+      IdToken = idToken,
+      Provider = provider
+    };
 
-function LoginComponent() {
-    const oktoClient = useOkto();
-
-    // Using Google OAuth
-    async function handleGoogleLogin(credentialResponse: any) {
-        try {
-            const user = await oktoClient.loginUsingOAuth({
-                idToken: credentialResponse.credential,
-                provider: "google",
-            });
-            console.log("Login successful:", user);
-        } catch (error) {
-            console.error("Login failed:", error);
-        }
+    AuthenticateResult authSessionData = await _instance._oktoClient.LoginUsingOAuth(
+    authData,
+    (session) =>
+    {
+       Debug.Log($"Login successful! Session created for user: {session.UserSWA}");
     }
-
-    return (
-        <div>
-            <GoogleLogin onSuccess={handleGoogleLogin} />
-        </div>
     );
+
+    if (authSessionData.UserSWA != null)
+    {
+      string jsonString = JsonConvert.SerializeObject(authSessionData, Formatting.Indented);
+      ResponsePanel.SetResponse(jsonString);
+      BffClientRepository.InitializeApiClient();
+      Debug.Log($"Successfully logged in with user SWA: {authSessionData.UserSWA}");
+    }
+    }
+    catch (System.Exception e)
+    {
+      Loader.DisableLoader();
+      Debug.Log($"Login failed: {e.Message}");
+    }
 }
 ```
 </Tab>
@@ -51,16 +58,25 @@ function LoginComponent() {
 </Accordion>
 
 <Accordion title="Success Response">
-```typescript
-0x9A94366DC5a9447C763aa2c3A09EB56dc82CB4D3
+```json
+Data: {
+  "jsonrpc": "2.0",
+  "id": "0b55f9f2-334c-493c-8e9d-b742c244771e",
+  "result": {
+    "userSWA": "0x523c0C04B1c...",
+    "nonce": "0x00000000000000......",
+    "clientSWA": "0xb532926d0......",
+    "sessionExpiry": 1742241508
+  }
+}
 ```
 </Accordion>
 </Accordions>
 
 <Callout title="Note" type="info">
 For error handling:
-- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
-- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/unity-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/unity-sdk/troubleshooting) to contact support
 </Callout>
 
 ### Method Overview
@@ -86,7 +102,6 @@ Where `AuthData` is one of:
 | Type | Fields | Description |
 |------|--------|-------------|
 | Google OAuth | `{ idToken: string; provider: 'google' }` | For authentication using Google OAuth |
-| Okto Auth | `{ authToken: string; provider: 'okto' }` | For authentication using Okto token |
 
 ### Response
 
@@ -94,7 +109,7 @@ Where `AuthData` is one of:
 
 | Field Name | Type | Description |
 |------------|------|-------------|
-| `result` | `Promise<Address>` | Returns the user's Smart Wallet Address on successful login |
+| `result` | `Task<AuthenticateResult>` | Returns the user's Smart Wallet Address on successful login |
 
 </Callout>
 
