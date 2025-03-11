@@ -16,15 +16,15 @@ import Link from "next/link";
 
 <TemplateRepoBanner sdk="unity" />
 
-<CollapsibleCallout type="warning" title="Essential Setup Required">
-Before you begin, set up your [developer dashboard](https://dashboard.okto.tech) by making sure you have :
-- Created your [Okto Developer Dashboard](/docs/developer-admin-dashboard/dashboard-account) account
-- Get your [Okto credits](/docs/developer-admin-dashboard/okto-faucet) from the dashboard
-- Obtained your [API keys](/docs/developer-admin-dashboard/api-key) from the dashboard
-- Enabled the specific [Chains and Tokens](/docs/developer-admin-dashboard/wallet-control) you plan to use in your application
-- Optional: Enabled [Sponsorship](/docs/developer-admin-dashboard/sponsorship) for the desired chains
+<CollapsibleCallout type="warning" title="Essential Dashboard Setup Required">
+Before you begin, ensure you've completed these steps in the [Okto Developer Dashboard](https://dashboard.okto.tech):
+- Created your [dashboard account](/docs/developer-admin-dashboard/dashboard-account)
+- Obtained [Okto credits](/docs/developer-admin-dashboard/okto-faucet) from Okto Faucet for testing
+- Generated your [API keys](/docs/developer-admin-dashboard/api-key)
+- Enabled the specific [chains and tokens](/docs/developer-admin-dashboard/wallet-control) you plan to use in your application
+- Optional: Configured [sponsorship](/docs/developer-admin-dashboard/sponsorship) for seamless gas abstracted transactions.
 
-If you need help, reach out to us on our <ExternalLink href="/docs/unity-sdk/troubleshooting">troubleshooting form</ExternalLink> and we will contact you.
+Need assistance? Use our <ExternalLink href="/docs/unity-sdk/troubleshooting">troubleshooting form</ExternalLink> and we'll help you get started.
 </CollapsibleCallout>
 
 <Steps>
@@ -39,8 +39,10 @@ If you need help, reach out to us on our <ExternalLink href="/docs/unity-sdk/tro
     
     <CollapsibleCallout type="tip" title="Setting up Google OAuth">
     1. Go to <ExternalLink href="https://console.cloud.google.com/">Google Cloud Console</ExternalLink>.
-    2. Create OAuth 2.0 credentials for your project.
-    43. Save your Client ID.
+    2. Create a new project or select an existing one
+    3. Create OAuth 2.0 credentials for your project.
+    4. Save your Client ID.
+    5. Add authorized redirect URIs if necessary
     
     Need detailed instructions? Check our <ExternalLink href="/docs/unity-sdk/authenticate-users/google-oauth/google-console-setup">Google Console Setup Guide</ExternalLink>.
     </CollapsibleCallout>
@@ -48,14 +50,15 @@ If you need help, reach out to us on our <ExternalLink href="/docs/unity-sdk/tro
 </Step>
 
 <Step>
-    ## 1. Create a new unity project.
+    ## 1. Create a new Unity project.
 
-    If you already have a unity app, you can skip this step and proceed directly to Step 2 to start integrating Okto.
+    If you already have a Unity project, you can skip this step and proceed directly to Step 2 to start integrating Okto.
 
-    To create a new unity app, just go to unity Hub and choose version `2022.3.11f1`or higher
+    To create a new Unity project, just go to Unity Hub and choose version `2022.3.11f1` or higher.
 
-    <Callout type="tip" title="Tip"> Unity projects are generally not backward compatible, so it's best to use the latest stable version to avoid compatibility issues. </Callout>
-</Step>
+    <Callout type="tip">
+    Unity projects are generally not backward compatible. For the best experience, use the latest LTS (Long Term Support) version when starting your project.
+    </Callout></Step>
 
 <Step>
 ## 2. Install Dependencies
@@ -65,15 +68,15 @@ Import the required packages:
 <Tabs items={['Google Sign-In', 'Play Services Resolver', 'Newtonsoft.Json']}>
     <Tab value="Google Sign-In">
         Google Sign-In is a plugin that allows users to authenticate with their Google accounts in Unity applications.  
-        Repository: https://github.com/googlesamples/google-signin-unity/releases
+        **Repository:** <ExternalLink href="https://github.com/googlesamples/google-signin-unity/releases">https://github.com/googlesamples/google-signin-unity/releases</ExternalLink>
     </Tab>
     <Tab value="Play Services Resolver">
         Play Services Resolver helps manage dependencies and automatically resolve Google Play services libraries for Unity.  
-        Repository: https://github.com/googlesamples/unity-jar-resolver
+        **Repository:** <ExternalLink href="https://github.com/googlesamples/unity-jar-resolver">https://github.com/googlesamples/unity-jar-resolver</ExternalLink>
     </Tab>
     <Tab value="Newtonsoft.Json">
         Newtonsoft.Json is a popular high-performance JSON framework for .NET, used for parsing and serializing JSON data.  
-        Package: "com.unity.nuget.newtonsoft-json": "3.0.2"
+        Package: `com.unity.nuget.newtonsoft-json`: `3.0.2`
     </Tab>
 </Tabs>
 </Step>
@@ -82,35 +85,31 @@ Import the required packages:
 <Step>
     ## 3. Configure Environment Variables
 
-    SetUp `Google web client Id` to get started with google authenticate and GOOGLE_LOGIN key should be added in scripting in project setting to be enable to learn google login.
+    Set up your authentication credentials for Google and Okto services:
 
     ```csharp title="OktoClient.cs"
+    // Your Okto client credentials from the developer dashboard
     clientPrivateKey="YOUR_CLIENT_PRIVATE_KEY"
     clientSwa="YOUR_CLIENT_SWA"
     ```
 
-    ```csharp title="Login.cs"
-    # Google OAuth credentials (Required only if you want to enable Google Sign-In)
+    ```csharp title="GoogleLogin.cs"
+    // Google OAuth credentials (Required only if you want to enable Google Sign-In)
     webClientId="YOUR_GOOGLE_CLIENT_ID"
     ```
+
     <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-unity-template-app/tree/main/okto-unity/Assets/OktoSDK/Scripts/GoogleLogin/GoogleLogin.cs" />
 
     Replace the placeholders with your actual credentials.
+
     <CollapsibleCallout type="warning" title="Important">
         - Never commit your `webClientId` parameter to version control. Add it to your `.gitignore`.
-    </CollapsibleCallout>
-    <CollapsibleCallout type="tip" title="Setting up Google OAuth">
-        1. Go to <ExternalLink href="https://console.cloud.google.com/">Google Cloud Console</ExternalLink>.
-        2. Create OAuth 2.0 credentials for your project.
-        3. Save your Client ID and Client Secret.
-
-        Need detailed instructions? Check our <ExternalLink href="/docs/unity-sdk/authenticate-users/google-oauth/google-console-setup">Google Console Setup Guide</ExternalLink>.
     </CollapsibleCallout>
 
 </Step>
 
 <Step>
-    ## 4. Set Up Okto Provider
+    ## 4. Initialize the Okto Client
 
     Update your `OktoClient.cs` to initialize the Okto SDK:
 
@@ -121,51 +120,56 @@ Import the required packages:
         ClientPubKey = GetPublicKey(config.ClientPrivateKey),
         ClientSWA = config.ClientSWA
     };
+    _envConfig = config.Environment; 
     ```
     <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-unity-template-app/tree/main/okto-unity/Assets/OktoSDK/Scripts/OktoSDK/OktoClient/OktoClient.cs" />
+
+    This initializes the core Okto functionality in your Unity application, establishing a connection to the Okto backend services.
 
 </Step>
 
 <Step>
-    ## 5. Set Up Google OAuth Provider
+    ## 5. Set Up Google Authentication
 
-    Wrap your app with the Google OAuth provider:
+    Implement Google Sign-In functionality:
 
     ```csharp title="main.cs"
         void InitializePlayGamesLogin()
         {
-#if GOOGLE_LOGIN
+        #if GOOGLE_LOGIN
             configuration = new GoogleSignInConfiguration
             {
                 WebClientId = webClientId,
                 RequestEmail = true,
                 RequestIdToken = true,
             };
-#else
+        #else
             Debug.Log("Google Sign-In is not enabled. Please add GOOGLE_LOGIN to scripting define symbols.");
         }
-#endif
+        #endif
     ```
     <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-unity-template-app/tree/main/okto-unity/Assets/OktoSDK/Scripts/GoogleLogin/GoogleLogin.cs" />
+
+    This configures the Google Sign-In provider with your credentials.
 
 </Step>
 
 <Step>
-    ## 6. Implement Authentication
+    ## 6. Implement User Authentication
 
     Currently, you can onboard users and support on-chain interaction via the Okto Embedded wallet. To do this you must first authenticate your user via social login. We currently support Google OAuth.
 
     ```csharp title="GoogleLogin.cs"
-(authenticationData, error) = await LoginGoogle();
-if (error != null)
-{
-    Debug.LogError($"Login failed with error: {error.Message}");
-}
-else
-{
-    Debug.Log("Login successful!");
-    Debug.Log("loginDone " + authenticationData);
-}
+    (authenticationData, error) = await LoginGoogle();
+    if (error != null)
+    {
+        Debug.LogError($"Login failed with error: {error.Message}");
+    }
+    else
+    {
+        Debug.Log("Login successful!");
+        Debug.Log("loginDone " + authenticationData);
+    }
     ```
     <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-unity-template-app/tree/main/okto-unity/Assets/OktoSDK/Scripts/GoogleLogin/GoogleLogin.cs" />
 
@@ -179,31 +183,35 @@ else
     Use a BffClientRepository monobehavior to fetch user information:
 
     ```csharp title="BffClientRepository.cs"
-public async Task<List<Wallet>> GetWallets()
-{
-    var response = await bffClient.Get<ApiResponse<List<Wallet>>>(Routes.GetWallets);
-    if (response.status == "error")
+
+    // Get user's wallet addresses across chains
+    public async Task<List<Wallet>> GetWallets()
     {
-        throw new Exception("Failed to retrieve supported wallets");
+        var response = await bffClient.Get<ApiResponse<List<Wallet>>>(Routes.GetWallets);
+        if (response.status == "error")
+        {
+            throw new Exception("Failed to retrieve supported wallets");
+        }
+        if (response.data == null) 
+        {
+            throw new Exception("Response data is missing");
+        }
+        return response.data;
     }
-    if (response.data == null) 
+
+    // Get user's portfolio
+    public async Task<UserPortfolioData> GetPortfolio()
     {
-        throw new Exception("Response data is missing");
+        var response = await bffClient.Get<ApiResponse<UserPortfolioData>>(Routes.GetPortfolio);
+        if (response.status == "error")
+        {
+            throw new Exception("Failed to retrieve portfolio");
+        }
+        if (response.data == null)
+        {
+            throw new Exception("Response data is missing");
+        }
     }
-    return response.data;
-}
-public async Task<UserPortfolioData> GetPortfolio()
-{
-    var response = await bffClient.Get<ApiResponse<UserPortfolioData>>(Routes.GetPortfolio);
-    if (response.status == "error")
-    {
-        throw new Exception("Failed to retrieve portfolio");
-    }
-    if (response.data == null)
-    {
-        throw new Exception("Response data is missing");
-    }
-}
     ```
      <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-unity-template-app/tree/main/okto-unity/Assets/OktoSDK/Scripts/OktoSDK/Api/BffClientRepository.cs" />
 
@@ -214,7 +222,10 @@ public async Task<UserPortfolioData> GetPortfolio()
 
     Run your app:-
 
-    Click on `OktoDemo` Scene and click `play` to test out features.
+    1. Open the OktoDemo scene in the project
+    2. Click the Play button in the Unity Editor
+    3. Test the authentication flow with your Google credentials
+    4. Explore available functions like wallet info and token balances
 
 </Step>
 
@@ -228,9 +239,10 @@ public async Task<UserPortfolioData> GetPortfolio()
 </Steps>
 
 <br/>
+
 ## Trying Out a User Operation
 
-Now that we have our basic setup complete, let's implement a token transfer on Solana devnet to understand how user operations work in Okto.
+Now that we have our basic setup complete, let's implement a token transfer on  Polygon Amoy Testnet to understand how user operations work in Okto.
 
 <Steps>
 
@@ -240,19 +252,19 @@ Now that we have our basic setup complete, let's implement a token transfer on S
     First, get your Polygon wallet address:
 
     ```csharp
-public async Task<List<Wallet>> GetWallets()
-{
-    var response = await bffClient.Get<ApiResponse<List<Wallet>>>(Routes.GetWallets);
-    if (response.status == "error")
+    public async Task<List<Wallet>> GetWallets()
     {
-        throw new Exception("Failed to retrieve supported wallets");
+        var response = await bffClient.Get<ApiResponse<List<Wallet>>>(Routes.GetWallets);
+        if (response.status == "error")
+        {
+            throw new Exception("Failed to retrieve supported wallets");
+        }
+        if (response.data == null) 
+        {
+            throw new Exception("Response data is missing");
+        }
+        return response.data;
     }
-    if (response.data == null) 
-    {
-        throw new Exception("Response data is missing");
-    }
-    return response.data;
-}
     ```
     <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-unity-template-app/tree/main/okto-unity/Assets/OktoSDK/Scripts/OktoSDK/Api/BffClientRepository.cs" />
 
@@ -261,7 +273,7 @@ public async Task<List<Wallet>> GetWallets()
 <Step>
     ### 2. Fund Your Wallet
 
-    To perform a token transfer, you'll need some funds in your wallet. Add funds to this address using the [Polygon Amoy Faucet](https://faucet.polygon.technology/).
+    To perform a token transfer, you'll need some funds in your wallet. Add funds to this address using the [Polygon Amoy Faucet](https://faucet.polygon.technology/). You can verify your balance using the `GetPortfolio()` method.
 
 </Step>
 
@@ -278,31 +290,32 @@ public async Task<List<Wallet>> GetWallets()
     Create a new component for handling the transfer:
 
     ```csharp title="TokenTransferView.cs"
-public async Task<string> ExecuteTokenTransfer(string receiptAddress, BigInteger amount, string network, string tokenAddress)
-{
-    var transaction = new TokenTransferIntentParams
+    public async Task<string> ExecuteTokenTransfer(string receiptAddress, BigInteger amount, string network, string tokenAddress)
     {
-        recipientWalletAddress = receiptAddress,
-        tokenAddress = tokenAddress,
-        amount = amount,
-        caip2Id = network
-    };
+        // Create transfer parameters
+        var transaction = new TokenTransferIntentParams
+        {
+            recipientWalletAddress = receiptAddress,
+            tokenAddress = tokenAddress,
+            amount = amount,
+            caip2Id = network
+        };
 
-    Debug.Log($"Generated transaction: {JsonConvert.SerializeObject(transaction, Formatting.Indented)}");
+        Debug.Log($"Generated transaction: {JsonConvert.SerializeObject(transaction, Formatting.Indented)}");
 
-    userOp = await CreateUserOp(transaction);
-    string userOpStr = JsonConvert.SerializeObject(userOp, Formatting.Indented);
-    Debug.Log($"UserOp created: {JsonConvert.SerializeObject(userOp, Formatting.Indented)}");
+        userOp = await CreateUserOp(transaction);
+        string userOpStr = JsonConvert.SerializeObject(userOp, Formatting.Indented);
+        Debug.Log($"UserOp created: {JsonConvert.SerializeObject(userOp, Formatting.Indented)}");
 
-    userOp = SignUserOp(userOp, network);
-    userOpStr = JsonConvert.SerializeObject(userOp, Formatting.Indented);
-    Debug.Log($"UserOp Signed: {JsonConvert.SerializeObject(userOp, Formatting.Indented)}");
+        userOp = SignUserOp(userOp, network);
+        userOpStr = JsonConvert.SerializeObject(userOp, Formatting.Indented);
+        Debug.Log($"UserOp Signed: {JsonConvert.SerializeObject(userOp, Formatting.Indented)}");
 
-    JsonRpcResponse<ExecuteResult> txHash = await ExecuteUserOp(userOp);
-    string txHashStr = JsonConvert.SerializeObject(txHash, Formatting.Indented);
-    Debug.Log($"Transaction executed. Hash: {txHashStr}");
-    return txHashStr;
-}
+        JsonRpcResponse<ExecuteResult> txHash = await ExecuteUserOp(userOp);
+        string txHashStr = JsonConvert.SerializeObject(txHash, Formatting.Indented);
+        Debug.Log($"Transaction executed. Hash: {txHashStr}");
+        return txHashStr;
+    }
     ```
      <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-unity-template-app/blob/main/okto-unity/Assets/OktoSDK/Scripts/UserOp/TokenTransfer/TokenTransferView.cs" />
 
