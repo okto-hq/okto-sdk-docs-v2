@@ -187,12 +187,12 @@ export default function NavbarComponent() {
             <MdOutlineArrowOutward size={".9rem"} />
           </SCButton>
         </NavbarItem>
-        {/* <NavbarItem className="hidden lg:flex">
+        <NavbarItem className="hidden lg:flex">
           <SCButton variant="outline" className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]">
-            <Link href="https://demo.okto.tech">Demo</Link>
+            <Link href="/showcase">Showcase</Link>
             <MdOutlineArrowOutward size={".9rem"} />
           </SCButton>
-        </NavbarItem> */}
+        </NavbarItem> 
         {/* <NavbarItem className="hidden lg:flex">
           <SCButton variant="outline" className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]">
             <Link href="https://dashboard.okto.tech/" target="_blank">Dashboard</Link>
