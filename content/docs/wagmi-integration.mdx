@@ -48,6 +48,7 @@ export function getConfig() {
         environment: 'sandbox',
         clientPrivateKey: '0xprivatekey',
         clientSWA: '0xswa',
+        googleClientId: 'xxx',
       }),
     ],
     storage: createStorage({
@@ -74,7 +75,7 @@ declare module 'wagmi' {
 | `environment` | Environment to use for the SDK | `'sandbox'` \| `'production'` | Yes |
 | `clientPrivateKey` | Your client private key | `string` | Yes |
 | `clientSWA` | Your client SWA | `string` | Yes |
-
+| `googleClientId` | Your Google client ID | `string` | Yes |
 </Step>
 
 <Step>
