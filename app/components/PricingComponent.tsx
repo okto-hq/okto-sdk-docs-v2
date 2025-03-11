@@ -100,7 +100,7 @@ export default function PricingComponent() {
             ) : (
               <a
                 className="no-underline hover:no-underline"
-                href="https://coindcx.typeform.com/to/jskNWEIE"
+                href="https://form.typeform.com/to/jskNWEIE"
                 target="_blank"
                 rel="noopener noreferrer"
               >
