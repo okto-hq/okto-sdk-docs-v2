@@ -1,5 +1,4 @@
 import { createMDX } from 'fumadocs-mdx/next';
-import { withContentCollections } from '@content-collections/next';
 
 const withMDX = createMDX();
 
@@ -8,5 +7,4 @@ const config = {
   reactStrictMode: true,
 };
 
-// Chain the middleware functions
-export default withContentCollections(withMDX(config));
+export default withMDX(config);
