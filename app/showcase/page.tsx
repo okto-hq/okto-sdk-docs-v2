@@ -124,7 +124,7 @@ export default function Showcase() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background mb-10">
       {/* Header Section */}
       <div className="flex flex-col lg:flex-row justify-between mx-4 lg:mx-16 mt-20 gap-8">
         {/* Left Side: Heading and Description */}
