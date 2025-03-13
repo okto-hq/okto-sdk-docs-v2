@@ -6,6 +6,7 @@ full: false
 import { Callout } from 'fumadocs-ui/components/callout';
 import FeatureCard from "app/components/mdx/FeatureCard";
 import { LuArrowRightLeft, LuCalendarClock, LuSprout } from "react-icons/lu";
+import FullscreenImage from 'app/components/mdx/FullscreenImage';
 
 Okto lets you securely request "on-behalf-of" permissions from users for their embedded wallets. This is known as delegated actions. It allows your application or backend to perform certain wallet operations without requiring a user signature prompt each time, so long as it adheres to user-approved policies.
 
@@ -13,7 +14,19 @@ Okto lets you securely request "on-behalf-of" permissions from users for their e
 
 Delegated actions empower your application to take pre-defined actions using a user's embedded wallet, with the user's explicit consent. This means your application can, for example, initiate transactions or sign messages on behalf of the user, within clearly defined boundaries and under secure conditions.
 
-## How to get started with delegated actions
+## Understanding Delegated Intent Flow
+
+The diagram below shows how delegated actions work within the Okto ecosystem:
+
+<FullscreenImage 
+  src="/images/okto-auth-delegated-flow.png" 
+  alt="Okto Delegated Flow" 
+  className="w-3/4 md:w-2/3 max-w-full rounded-lg shadow-md mx-auto" 
+/>
+
+Notice that in this flow, the user isn't directly involved in the transaction approval. Once the session is established and valid, the client app can make requests directly to the Okto Gateway without additional user input.
+
+## How to implement delegated actions
 
 To implement delegated actions in your application:
 
@@ -36,6 +49,8 @@ To implement delegated actions in your application:
                provider: "google",
            }, (sessionPrivateKey: string) => {
                console.log("Session Private Key:", sessionPrivateKey);
+               // Store this key securely for delegated actions
+               localStorage.setItem("sessionPrivKey", sessionPrivateKey);
            });
 
            console.log("Login successful:", user);
@@ -44,10 +59,110 @@ To implement delegated actions in your application:
        }
    }
    ```
+  
+  3. **Creating the Okto Auth Token for delegated actions**: Once you have the session key, you can generate an authorization token to make delegated actions:
+
+  ```typescript
+  import { secp256k1 } from "@noble/curves/secp256k1";
+  import { keccak_256 } from "@noble/hashes/sha3";
+  import { signMessage } from "viem/accounts";
+
+  // Define SessionKey class for handling key operations
+  class SessionKey {
+    priv;
+    constructor(privKey) {
+      if (privKey) {
+        this.priv = Uint8Array.from(
+          Buffer.from(privKey.replace("0x", ""), "hex")
+        );
+      } else {
+        this.priv = secp256k1.utils.randomPrivateKey();
+      }
+    }
+    
+    get privateKeyHexWith0x() {
+      return `0x${Buffer.from(this.priv).toString("hex")}`;
+    }
+    
+    get uncompressedPublicKeyHexWith0x() {
+      return `0x${Buffer.from(secp256k1.getPublicKey(this.priv, false)).toString("hex")}`;
+    }
+    
+    static fromPrivateKey(privateKey) {
+      return new SessionKey(privateKey);
+    }
+  }
+
+  // Generate an Okto Auth Token using session keys
+  async function getAuthorizationToken(sessionConfig) {
+    const sessionPriv = sessionConfig?.sessionPrivKey;
+    const sessionPub = sessionConfig?.sessionPubKey;
+    
+    if (!sessionPriv || !sessionPub) {
+      throw new Error("Session keys are not set");
+    }
+    
+    const data = {
+      expire_at: Math.round(Date.now() / 1000) + 60 * 90, // 90 minutes expiry
+      session_pub_key: sessionPub,
+    };
+
+    // Okto auth token is the session public key encrypted with the session private key
+    const payload = {
+      type: "ecdsa_uncompressed",
+      data,
+      data_signature: await signMessage({
+        message: JSON.stringify(data),
+        privateKey: sessionPriv,
+      }),
+    };
+    
+    return btoa(JSON.stringify(payload));
+  }
+
+  // Example usage with stored session key
+  async function performDelegatedAction() {
+    // Retrieve the stored session private key
+    const sessionPrivKey = localStorage.getItem("sessionPrivKey");
+    const userSWA = oktoClient.userSWA; // Get from Okto client
+    
+    if (!sessionPrivKey || !userSWA) {
+      console.error("Missing session keys or user SWA");
+      return;
+    }
+    
+    // Create session object
+    const session = SessionKey.fromPrivateKey(sessionPrivKey);
+    
+    // Construct session config
+    const sessionConfig = {
+      sessionPrivKey: session.privateKeyHexWith0x,
+      sessionPubKey: session.uncompressedPublicKeyHexWith0x,
+      userSWA,
+    };
+    
+    // Generate auth token
+    const authToken = await getAuthorizationToken(sessionConfig);
+    console.log("Okto session authToken:", authToken);
+    
+    // Now use this token for API calls
+    // Example: fetch user portfolio
+    const response = await fetch("https://sandbox-api.okto.tech/api/oc/v1/aggregated-portfolio", {
+      headers: {
+        "Authorization": `Bearer ${authToken}`
+      }
+    });
+    
+    const portfolioData = await response.json();
+    return portfolioData;
+  }
+  ```
+
 
 ## How It Works
-1. **User Consent:** The user must explicitly delegate their embedded wallet to your application.
+1. **User Consent:** The user delegates their embedded wallet to your application when they login and this consent can be revoked at any time by logging out.
 2. **Limited Scope:** Delegation is governed by a policy engine that enforces limits (e.g., transaction count, spend limits) to protect the user.
+3. **Session-Based Security:** The delegated actions are bound to the session keys, which have a limited lifetime (10 days by default).
 
 ## Policy Enforcement
 Okto's policy engine may enforce transaction thresholds—such as daily or total spend—beyond which users need to re-confirm.
@@ -55,6 +170,14 @@ Okto's policy engine may enforce transaction thresholds—such as daily or total
 <Callout type="info">
 For more details please read our section on [Policy engine](/docs/system-capabilities/policy-engine)
 </Callout>
+
+## Security Considerations
+
+When implementing delegated actions, keep these security best practices in mind:
+
+- **Secure Storage:** Store session keys securely. Never expose them in client-side code that could be accessed by malicious actors.
+- **Transparent Communication:** Clearly inform users when your application will use delegated actions and what those actions entail.
+- **Regular Verification:** Periodically check session validity before attempting delegated operations.
 
 ## Example Usecases
 
