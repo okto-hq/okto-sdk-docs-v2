@@ -13,8 +13,13 @@ import { usePathname } from "next/navigation";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { ChevronDown } from 'lucide-react';
 import { FaReact } from "react-icons/fa6";
-import { TbBrandReactNative, TbApi } from "react-icons/tb";
-import { SiFlutter } from "react-icons/si";
+import {
+  TbBrandReactNative,
+  TbApi,
+  TbRobot,
+  TbPlugConnected,
+} from "react-icons/tb";
+import { SiAxios, SiFlutter, SiNextdotjs, SiWagmi } from "react-icons/si";
 import { FaUnity } from "react-icons/fa6";
 import { SiTypescript } from "react-icons/si";
 import { useTheme } from "next-themes";
@@ -22,12 +27,15 @@ import GitHubButton from "./GithubButton";
 import DiscordButton from "./DiscordButton";
 import { Button as SCButton } from "@/components/ui/button";
 import Link from "next/link";
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon } from "lucide-react";
 
-const poppins = Poppins({ subsets: ['latin'], weight: '500', display: 'swap' });
-const poppinsLight = Poppins({ subsets: ['latin'], weight: '400', display: 'swap' });
+const poppins = Poppins({ subsets: ["latin"], weight: "500", display: "swap" });
+const poppinsLight = Poppins({
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+});
 // const poppins = Poppins({ subsets: ['latin'], weight: '500', display: 'swap' });
-
 
 export default function NavbarComponent() {
   const pathname = usePathname();
@@ -35,53 +43,104 @@ export default function NavbarComponent() {
   const [mounted, setMounted] = useState(false);
   const { setTheme, resolvedTheme } = useTheme();
 
-  const handleThemeChange = (isSelected: boolean) => {
-    setTheme(isSelected ? 'dark' : 'light');
+  const toggleTheme = () => {
+    setTheme(resolvedTheme === "light" ? "dark" : "light");
   };
 
-  const toggleTheme = () => {
-    setTheme(resolvedTheme === "light" ? "dark" : "light")
-  }
+  const navItems = [
+    {
+      href: "https://www.okto.tech/blog",
+      label: "Blog",
+      subpath: "",
+      external: true,
+    },
+    { href: "/showcase", label: "Showcase", subpath: "", external: true },
+    { href: "/docs", label: "SDK Docs", subpath: "", external: false },
+  ];
 
-  // const navItems = [
-  //   // { href: "/docs/developer-admin-dashboard", label: "Using Dashboard", subpath: '/overview' },
-  //   { href: "https://www.okto.tech/blog", label: "Blog", subpath: '' },
-  //   { href: "/showcase", label: "Showcase", subpath: '' },
-  //   // { href: "/api-docs", label: "API Reference", subpath: '' },
-  // ];
-
-  // const sdkOptions = [
-  //   { href: "/docs/react-sdk", label: "React", subpath: '/', icons: <FaReact /> },
-  //   { href: "/docs/react-native-sdk", label: "React Native", subpath: '/', icons: <TbBrandReactNative /> },
-  //   // { href: "/docs/flutter-sdk", label: "Flutter (Coming Soon)", subpath: '/', icons: <SiFlutter /> },
-  //   // { href: "/docs", label: "Unity (Coming Soon)", subpath: '/unity-sdk', icons: <FaUnity /> },
-  //   { href: "/docs/typescript-sdk", label: "Typescript", subpath: '/', icons: <SiTypescript /> },
-  // ];
+  const sdkOptions = [
+    {
+      href: "/docs/react-sdk",
+      label: "React",
+      subpath: "/",
+      icons: <FaReact />,
+    },
+    {
+      href: "/docs/nextjs-sdk",
+      label: "NextJS",
+      subpath: "/",
+      icons: <SiNextdotjs />,
+    },
+    {
+      href: "/docs/react-native-sdk",
+      label: "React Native",
+      subpath: "/",
+      icons: <TbBrandReactNative />,
+    },
+    {
+      href: "/docs/unity-sdk",
+      label: "Unity",
+      subpath: "/",
+      icons: <FaUnity />,
+    },
+    {
+      href: "/docs/typescript-sdk",
+      label: "Typescript",
+      subpath: "/",
+      icons: <SiTypescript />,
+    },
+    {
+      href: "/docs/wagmi-integration",
+      label: "Wagmi",
+      subpath: "/",
+      icons: <SiWagmi />,
+    },
+    {
+      href: "/docs/okto-eliza-plugin",
+      label: "Eliza Plugin",
+      subpath: "/",
+      icons: <TbPlugConnected />,
+    },
+    {
+      href: "/docs/openapi",
+      label: "API References",
+      subpath: "/",
+      icons: <SiAxios />,
+    },
+  ];
 
   const getFrameworkLabel = () => {
-    if (pathname.startsWith('/docs/typescript-sdk')) return 'Typescript';
-    if (pathname.startsWith('/docs/react-sdk')) return 'React';
-    if (pathname.startsWith('/docs/react-native-sdk')) return 'React Native';
-    // if (pathname.startsWith('/docs/flutter-sdk')) return 'Flutter';
-    // if (pathname.startsWith('/docs/unity-sdk')) return 'Unity';
-    return 'SDKs';
+    if (pathname.startsWith("/docs/react-sdk")) return "React";
+    if (pathname.startsWith("/docs/nextjs-sdk")) return "NextJS";
+    if (pathname.startsWith("/docs/typescript-sdk")) return "Typescript";
+    if (pathname.startsWith("/docs/react-native-sdk")) return "React Native";
+    if (pathname.startsWith("/docs/unity-sdk")) return "Unity";
+    if (pathname.startsWith("/docs/wagmi-integration")) return "Wagmi";
+    if (pathname.startsWith("/docs/okto-eliza-plugin")) return "Eliza Plugin";
+    if (pathname.startsWith("/docs/openapi")) return "API References";
+    return "SDKs";
   };
 
-  // useEffect(() => {
-  //   const updateActiveItem = () => {
-  //     const activeNavItem = [...navItems, ...sdkOptions].find(item => pathname.startsWith(item.href));
-  //     setActiveItem(activeNavItem ? activeNavItem.href : "");
-  //   };
+  useEffect(() => {
+    const updateActiveItem = () => {
+      const activeNavItem = [...navItems, ...sdkOptions].find(
+        (item) =>
+          pathname.startsWith(item.href) ||
+          (item.href === "/docs" && pathname.startsWith("/docs/"))
+      );
+      setActiveItem(activeNavItem ? activeNavItem.href : "");
+    };
 
-  //   updateActiveItem();
-  // }, [pathname]);
+    updateActiveItem();
+  }, [pathname]);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // const isFrameworkSelected = sdkOptions.some(option => pathname.startsWith(option.href));
-
+  const isFrameworkSelected = sdkOptions.some((option) =>
+    pathname.startsWith(option.href)
+  );
   return (
     <Navbar
       isBordered
@@ -103,43 +162,59 @@ export default function NavbarComponent() {
             </Chip>
           </NavbarItem>
         </ULink>
-        {/* <NavbarContent className="hidden sm:flex gap-8" justify="start">
-          {navItems.map((item) => (
-            <NavbarItem key={item.href}>
-              <ULink
-                href={`${item.href}${item.subpath}`}
-                color="foreground"
-                className={`text-md ${pathname.startsWith(item.href)
-                  ? "text-blue-600"
-                  : `${poppinsLight.className}`
-                  } pb-1`}
-                  target={item.href.startsWith('/docs/developer-admin-dashboard') ? '_self' : '_blank'}
-              >
-                {item.label}
-              </ULink>
-            </NavbarItem>
-          ))}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <SCButton variant="ghost" className={`text-md flex hover:bg-transparent hover:text-inherit items-center gap-1 p-0 ${pathname.startsWith('/docs/typescript-sdk') || pathname.startsWith('/docs/react-sdk') || pathname.startsWith('/docs/react-native-sdk') || pathname.startsWith('/docs/flutter-sdk') || pathname.startsWith('/docs/unity-sdk') ? "text-blue-600 hover:text-blue-600" : `${poppinsLight.className} hover:text-inherit` }`}>
-                {getFrameworkLabel()} <ChevronDown className="h-5 w-5 font-normal" />
-              </SCButton>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56 rounded-lg p-2">
-              {sdkOptions.map((option) => (
-                <DropdownMenuItem key={option.label} asChild>
-                  <Link
-                    href={`${option.href}${option.subpath}`}
-                    className="flex items-center gap-1 cursor-pointer"
+        <NavbarContent className="hidden sm:flex gap-8" justify="start">
+          {navItems.map((item, index) => {
+            if (item.label === "SDK Docs") {
+              return (
+                <DropdownMenu key={item.href}>
+                  <DropdownMenuTrigger asChild className="border-0">
+                    <SCButton
+                      variant="ghost"
+                      className={`text-md border-0 flex hover:bg-transparent hover:text-inherit items-center gap-1 p-0 focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0 outline-none ${
+                        isFrameworkSelected || pathname.startsWith("/docs/")
+                          ? "text-blue-600 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]"
+                          : `${poppinsLight.className} hover:text-inherit`
+                      }`}
+                    >
+                      {getFrameworkLabel()}{" "}
+                      <ChevronDown className="h-5 w-5 font-normal" />
+                    </SCButton>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56 rounded-lg p-2">
+                    {sdkOptions.map((option) => (
+                      <DropdownMenuItem key={option.label} asChild>
+                        <Link
+                          href={`${option.href}${option.subpath}`}
+                          className="flex items-center gap-1 cursor-pointer"
+                        >
+                          {option.icons}
+                          <span className="pl-2">{option.label}</span>
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              );
+            } else {
+              return (
+                <NavbarItem key={item.href}>
+                  <ULink
+                    href={`${item.href}${item.subpath}`}
+                    color="foreground"
+                    className={`text-md ${
+                      pathname.startsWith(item.href)
+                        ? "text-blue-600"
+                        : `${poppinsLight.className}`
+                    } pb-1`}
+                    target={item.external ? "_blank" : "_self"}
                   >
-                    {option.icons}
-                    <span>{option.label}</span>
-                  </Link>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </NavbarContent> */}
+                    {item.label}
+                  </ULink>
+                </NavbarItem>
+              );
+            }
+          })}
+        </NavbarContent>
       </NavbarBrand>
       <NavbarContent justify="end">
         <NavbarItem>
@@ -148,7 +223,7 @@ export default function NavbarComponent() {
         <NavbarItem>
           <GitHubButton />
         </NavbarItem>
-        <NavbarItem className="hidden lg:flex">
+        {/* <NavbarItem className="hidden lg:flex">
           <SCButton
             variant="outline"
             className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF] group relative"
@@ -161,19 +236,8 @@ export default function NavbarComponent() {
               Add your project to Okto's showcase
             </span>
           </SCButton>
-        </NavbarItem>
-        <NavbarItem className="hidden lg:flex">
-          <SCButton
-            variant="outline"
-            className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]"
-          >
-            <Link href="https://www.okto.tech/blog" target="_blank">
-              Blog
-            </Link>
-            <MdOutlineArrowOutward size={".9rem"} />
-          </SCButton>
-        </NavbarItem>
-        <NavbarItem className="hidden lg:flex">
+        </NavbarItem> */}
+        {/* <NavbarItem className="hidden lg:flex">
           <SCButton
             variant="outline"
             className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]"
@@ -184,12 +248,6 @@ export default function NavbarComponent() {
             >
               Grants
             </Link>
-            <MdOutlineArrowOutward size={".9rem"} />
-          </SCButton>
-        </NavbarItem>
-        {/* <NavbarItem className="hidden lg:flex">
-          <SCButton variant="outline" className="rounded-full flex gap-1 hover:bg-[#F5F6FE] dark:hover:bg-gray-700 hover:text-[#5166EE] dark:hover:text-[#7C8FFF]">
-            <Link href="https://demo.okto.tech">Demo</Link>
             <MdOutlineArrowOutward size={".9rem"} />
           </SCButton>
         </NavbarItem> */}
