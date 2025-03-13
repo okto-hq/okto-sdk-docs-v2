@@ -36,7 +36,7 @@ const SDK_CONFIG = {
   },
   'eliza-okto-plugin': {
     icon: <FaCode size={24} className="text-[#3178c6] flex-shrink-0" />,
-    defaultRepo: "https://github.com/okto-hq/okto-eliza-ai-agent-example",
+    defaultRepo: "https://github.com/okto-hq/okto-sdk-eliza-agent-template",
     defaultTemplateUrl: "/docs/okto-eliza-plugin/integrating-into-dapp/eliza-okto-sample-agent"
   },
   unity: {
