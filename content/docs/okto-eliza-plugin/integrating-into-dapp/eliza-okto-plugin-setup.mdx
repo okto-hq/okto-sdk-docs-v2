@@ -20,6 +20,11 @@ This guide assumes you have an existing Eliza project where you want to add Web3
 - Explore the <ExternalLink href="https://github.com/elizaOS/eliza">Eliza Framework</ExternalLink> by referring to the <ExternalLink href="https://elizaos.github.io/eliza/docs/intro/">docs</ExternalLink> to create a new project from scratch
 - Use our [Sample Agent Implementation](/docs/okto-eliza-plugin/integrating-into-dapp/eliza-okto-sample-agent) which comes with both Eliza and the Okto plugin pre-configured
 
+<Steps>
+
+<Step>
+### Prerequisites
+
 <CollapsibleCallout type="warning" title="Essential Setup Required">
 Before you begin, set up your [developer dashboard](https://dashboard.okto.tech) by making sure you have :
 - Created your [Okto Developer Dashboard](/docs/developer-admin-dashboard/dashboard-account) account
@@ -31,16 +36,12 @@ Before you begin, set up your [developer dashboard](https://dashboard.okto.tech)
 If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/troubleshooting">troubleshooting form</ExternalLink> and we will contact you.
 </CollapsibleCallout>
 
-<Steps>
-
-<Step>
-### Prerequisites
-
 Before getting started, ensure you have the following:
 - **Node.js (v23+) and pnpm:** <ExternalLink href="https://nodejs.org/">Download Node.js</ExternalLink>
 - **Existing Eliza Project:** A working Eliza project where you want to add Web3 capabilities
 - **Okto API Keys:** You need your `OKTO_CLIENT_PRIVATE_KEY` and `OKTO_CLIENT_SWA`. Obtain these from the [Okto Developer Dashboard](https://dashboard.okto.tech/login).
-- **Google OAuth Credentials:** Create OAuth 2.0 credentials in the <ExternalLink href="https://console.cloud.google.com/">Google Cloud Console</ExternalLink>.
+- **Okto Account Setup:** Ensure you have sufficient <ExternalLink href="https://dashboard.okto.tech/okto-credits">Okto Credits</ExternalLink>, enable the required <ExternalLink href="https://dashboard.okto.tech/wallet-controls">Chains and Tokens </ExternalLink>, and optionally <ExternalLink href="https://dashboard.okto.tech/paymaster">Activate Sponsorship</ExternalLink>.
+- **Google OAuth Credentials (if using Google authentication):** Create OAuth 2.0 credentials in the <ExternalLink href="https://console.cloud.google.com/">Google Cloud Console</ExternalLink>.
 - **LLM Provider Account (Optional):** Access to OpenAI, Anthropic, or another supported LLM provider.
 </Step>
 
