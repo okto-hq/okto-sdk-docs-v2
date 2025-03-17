@@ -12,37 +12,9 @@ import { Icon as IIcon } from '@iconify/react';
 
 The `getTokens` function fetches the list of supported tokens from the backend.
 
-### Method Overview
-
-| Method | Description |
-|---------|-------------|
-| <sub><i>async</i></sub> [`getTokens`](#get-tokens) | Get list of supported tokens |
-
-<div className="method-box">
-
-## Get Tokens
-
-<sub><i>async</i></sub> `getTokens(oktoClient: OktoClient)` retrieves the list of supported tokens.
-
-### Parameters
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `tokens` | [`Promise<Token[]>`](./technical-reference#models) | Array of supported tokens |
-
-</Callout>
-
 ### Example
 
-<Accordions>
+<Accordions defaultValue="Usage">
 <Accordion title="Usage">
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
@@ -102,8 +74,60 @@ function TokensList() {
 </Accordion>
 </Accordions>
 
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`getTokens`](#get-tokens) | Get list of supported tokens |
+
+<div className="method-box">
+
+## Get Tokens
+
+<sub><i>async</i></sub> `getTokens(oktoClient: OktoClient)` retrieves the list of supported tokens.
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `tokens` | [`Promise<Token[]>`](./technical-reference#models) | Array of supported tokens |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface Token {
+            address: string;
+            caip_id: string;
+            symbol: string;
+            image: string;
+            name: string;
+            short_name: string;
+            id: string;
+            group_id: string;
+            is_primary: boolean;
+            network_id: string;
+            network_name: string;
+            onramp_enabled: boolean;
+            whitelisted: boolean;
+        }
+        ```
+    </Accordion>
+</Accordions>
+
+</Callout>
+
 </div>
 
-<Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](./sdk-error-warnings) documentation for more details.
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
 </Callout>

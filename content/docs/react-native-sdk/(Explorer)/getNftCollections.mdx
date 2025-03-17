@@ -12,46 +12,9 @@ import { Icon as IIcon } from '@iconify/react';
 
 The `getNFTCollections` function retrieves information about supported NFT collections.
 
-<Callout 
-  title="Note" 
-  style={{ backgroundColor: '#f8d7da', color: '#842029', margin: 0, border: '1px solid #f5c2c7' }}
->
-  This function is currently **not supported** for the following chains:
-  - Base Sepolia
-  - HyperEVM
-</Callout>
-
-### Method Overview
-
-| Method | Description |
-|---------|-------------|
-| <sub><i>async</i></sub> [`getNFTCollections`](#get-nft-collections) | Get supported NFT collections |
-
-<div className="method-box">
-
-## Get NFT Collections
-
-<sub><i>async</i></sub> `getNFTCollections(oktoClient: OktoClient)` retrieves the list of supported NFT collections.
-
-### Parameters
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `collections` | `Promise<NFTCollection[]>` | Array of NFT collections |
-
-</Callout>
-
 ### Example
 
-<Accordions>
+<Accordions defaultValue="Usage">
 <Accordion title="Usage">
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
@@ -92,14 +55,14 @@ function NFTCollections() {
     "data": {
         "collections": [
             {
-                "address": "0x123...",
-                "name": "Bored Ape Yacht Club",
-                "symbol": "BAYC",
-                "chain": "eip155:1",
-                "standard": "ERC721",
-                "verified": true,
-                "floorPrice": "50.5",
-                "totalSupply": "10000"
+                "caip_id": "eip155:8453",
+                "network_name": "BASE",
+                "entity_type": "ERC721",
+                "collection_address": "0x19fc518b9eed93f70aa4b49133d303101699467a",
+                "collection_name": "EXAMPLE_COLLECTION",
+                "description": "Collection description",
+                "collection_image": "https://example.com/image.png",
+                "whitelisted": true
             }
         ]
     }
@@ -108,8 +71,66 @@ function NFTCollections() {
 </Accordion>
 </Accordions>
 
+<br />
+
+<Callout 
+  title="Note" 
+  style={{ backgroundColor: '#f8d7da', color: '#842029', margin: 0, border: '1px solid #f5c2c7' }}
+>
+  This function is currently **not supported** for the following chains:
+  - Base Sepolia
+  - HyperEVM
+</Callout>
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`getNFTCollections`](#get-nft-collections) | Get supported NFT collections |
+
+<div className="method-box">
+
+## Get NFT Collections
+
+<sub><i>async</i></sub> `getNFTCollections(oktoClient: OktoClient)` retrieves the list of supported NFT collections.
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `collections` | `Promise<NFTCollection[]>` | Array of NFT collections |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface NFTCollection {
+            caip_id: string;            
+            network_name: string;       
+            entity_type: "ERC721" | "ERC1155"; 
+            collection_address: string; 
+            collection_name: string;    
+            description: string;        
+            collection_image: string;   
+            whitelisted: boolean;      
+        }
+        ```
+    </Accordion>
+</Accordions>
+
+</Callout>
+
 </div>
 
-<Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](./sdk-error-warnings) documentation for more details.
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
 </Callout>

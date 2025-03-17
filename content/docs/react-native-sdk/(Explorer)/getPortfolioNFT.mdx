@@ -12,46 +12,9 @@ import { Icon as IIcon } from '@iconify/react';
 
 The `getPortfolioNFT` function retrieves all NFTs owned by the user across supported chains.
 
-<Callout 
-  title="Note" 
-  style={{ backgroundColor: '#f8d7da', color: '#842029', margin: 0, border: '1px solid #f5c2c7' }}
->
-  This function is currently **not supported** for the following chains:
-  - Base Sepolia
-  - HyperEVM
-</Callout>
-
-### Method Overview
-
-| Method | Description |
-|---------|-------------|
-| <sub><i>async</i></sub> [`getPortfolioNFT`](#get-portfolio-nft) | Get user's NFT holdings |
-
-<div className="method-box">
-
-## Get Portfolio NFT
-
-<sub><i>async</i></sub> `getPortfolioNFT(oktoClient: OktoClient)` retrieves the user's NFT portfolio data.
-
-### Parameters
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `nfts` | `Promise<NFTData[]>` | Array of user's NFT holdings |
-
-</Callout>
-
 ### Example
 
-<Accordions>
+<Accordions defaultValue="Usage">
 <Accordion title="Usage">
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
@@ -90,22 +53,22 @@ function NFTPortfolio() {
 {
     "status": "success",
     "data": {
-        "nfts": [
+        "count": 2,
+        "details": [
             {
-                "tokenId": "1234",
-                "name": "Cool NFT #1234",
-                "description": "A very cool NFT",
-                "image": "https://example.com/nft/1234.png",
-                "collectionName": "Cool NFTs",
-                "collectionAddress": "0x1234...",
-                "chain": "eip155:1",
-                "standard": "ERC721",
-                "attributes": [
-                    {
-                        "trait_type": "Background",
-                        "value": "Blue"
-                    }
-                ]
+                "caip_id": "eip155:8453",
+                "network_name": "BASE",
+                "entity_type": "ERC721",
+                "collection_address": "0x19fc518b9eed93f70aa4b49133d303101699467a",
+                "collection_name": "MAYANKONBOARDINGTEST",
+                "nft_id": "5",
+                "image": "ipfs://QmWypyEUGo9mpt5R2EXbAwVRvtaAfg8TTyzwZEdDRowdov",
+                "quantity": "1.000000000000000000",
+                "token_uri": "https://ipfs.io/ipfs/QmT434r64HQXdkpKo5fRCCn2PzxmQQPtXgGSnrUVzpPwaw",
+                "description": "Marks a splashy start to your journey of conquering the ocean of web3 and achieving the ultimate feat of becoming a whale, metaphorically atleast ;)",
+                "nft_name": "Dolphin NFT - CoinDCX Maxis",
+                "explorer_smart_contract_url": "https://basescan.org/search?f=0&q=0x19fc518b9eed93f70aa4b49133d303101699467a",
+                "collection_image": "https://coindcx.s3.amazonaws.com/static/images/474c04b3-3abd-4d45-8cf4-f59871e15aec/Unfold_23.png"
             }
         ]
     }
@@ -114,8 +77,71 @@ function NFTPortfolio() {
 </Accordion>
 </Accordions>
 
+<br />
+
+<Callout 
+  title="Note" 
+  style={{ backgroundColor: '#f8d7da', color: '#842029', margin: 0, border: '1px solid #f5c2c7' }}
+>
+  This function is currently **not supported** for the following chains:
+  - Base Sepolia
+  - HyperEVM
+</Callout>
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`getPortfolioNFT`](#get-portfolio-nft) | Get user's NFT holdings |
+
+<div className="method-box">
+
+## Get Portfolio NFT
+
+<sub><i>async</i></sub> `getPortfolioNFT(oktoClient: OktoClient)` retrieves the user's NFT portfolio data.
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `nfts` | `Promise<NFTData[]>` | Array of user's NFT holdings |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface UserNFTBalance {
+            caipId: string;
+            networkName: string;
+            entityType: string;
+            collectionAddress: string;
+            collectionName: string;
+            nftId: string;
+            image: string;
+            quantity: string;
+            tokenUri: string;
+            description: string;
+            nftName: string;
+            explorerSmartContractUrl: string;
+            collectionImage: string;
+        }
+        ```
+    </Accordion>
+</Accordions>
+
+</Callout>
+
 </div>
 
-<Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](./sdk-error-warnings) documentation for more details.
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
 </Callout>

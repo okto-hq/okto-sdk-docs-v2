@@ -12,43 +12,10 @@ import { Icon as IIcon } from '@iconify/react';
 
 The `loginUsingOAuth()` method authenticates users using OAuth providers. It generates a session key pair, creates an authenticate payload, and sends it to the Gateway service. Upon successful authentication, it updates the user session.
 
-### Method Overview
+### Example
 
-| Method | Description |
-|---------|-------------|
-| <sub><i>async</i></sub> `OktoClient.loginUsingOAuth` | Authenticate user using OAuth |
-
-<div className="method-box">
-
-## Login Using OAuth
-
-<sub><i>async</i></sub> `OktoClient.loginUsingOAuth(data: AuthData)` authenticates users using OAuth providers and establishes their session.
-
-### Parameters
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `data` | `AuthData` | Authentication data containing the OAuth provider details |
-
-Where `AuthData` is one of:
-
-| Type | Fields | Description |
-|------|--------|-------------|
-| Google OAuth | `{ idToken: string; provider: 'google' }` | For authentication using Google OAuth |
-| Okto Auth | `{ authToken: string; provider: 'okto' }` | For authentication using Okto token |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `result` | `Promise<User>` | Returns the user data on successful login |
-
-</Callout>
-
-<Accordions>
-<Accordion title="Example">
+<Accordions defaultValue="Usage">
+<Accordion title="Usage">
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
 ```typescript
@@ -101,10 +68,52 @@ function LoginComponent() {
 </Tab>
 </Tabs>
 </Accordion>
+{/* <Accordion title="Success Response">
+```typescript
+0x9A94366DC5a9447C763aa2c3A09EB56dc82CB4D3
+```
+</Accordion> */}
 </Accordions>
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> `OktoClient.loginUsingOAuth` | Authenticate user using OAuth |
+
+<div className="method-box">
+
+## Login Using OAuth
+
+<sub><i>async</i></sub> `OktoClient.loginUsingOAuth(data: AuthData)` authenticates users using OAuth providers and establishes their session.
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `data` | `AuthData` | Authentication data containing the OAuth provider details |
+
+Where `AuthData` is one of:
+
+| Type | Fields | Description |
+|------|--------|-------------|
+| Google OAuth | `{ idToken: string; provider: 'google' }` | For authentication using Google OAuth |
+| Okto Auth | `{ authToken: string; provider: 'okto' }` | For authentication using Okto token |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | `Promise<User>` | Returns the user data on successful login |
+
+</Callout>
 
 </div>
 
-<Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/react-native-sdk/sdk-error-warnings) documentation for more details.
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
 </Callout>

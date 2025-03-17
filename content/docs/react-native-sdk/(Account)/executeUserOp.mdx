@@ -12,38 +12,9 @@ import { Icon as IIcon } from '@iconify/react';
 
 The `executeUserOp` function submits a signed user operation to the blockchain for execution.
 
-### Method Overview
-
-| Method | Description |
-|---------|-------------|
-| <sub><i>async</i></sub> [`executeUserOp`](#execute-user-op) | Execute a signed user operation |
-
-<div className="method-box">
-
-## Execute User Operation
-
-<sub><i>async</i></sub> `executeUserOp(oktoClient: OktoClient, userOp: UserOperation)` executes a signed user operation.
-
-### Parameters
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
-| `userOp` | [`UserOperation`](/docs/react-native-sdk/technical-reference#models) | Signed user operation to execute |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `result` | `Promise<string>` | Job Id of the executed operation |
-
-</Callout>
-
 ### Example
 
-<Accordions>
+<Accordions defaultValue="Usage">
 <Accordion title="Usage">
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
@@ -76,7 +47,52 @@ function ExecuteOperation() {
 </Tab>
 </Tabs>
 </Accordion>
+<Accordion title="Sample Response">
+```json
+// JobId returned
+"3ee33731-9e96-4ab9-892c-ea476b36295d"
+```
+</Accordion>
 </Accordions>
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`executeUserOp`](#execute-user-op) | Execute a signed user operation |
+
+<div className="method-box">
+
+## Execute User Operation
+
+<sub><i>async</i></sub> `executeUserOp(oktoClient: OktoClient, userOp: UserOperation)` executes a signed user operation.
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
+| `userOp` | [`UserOperation`](/docs/react-native-sdk/technical-reference#models) | Signed user operation to execute |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | `Promise<string>` | Job Id of the executed operation |
+
+<Accordions>
+<Accordion title="Response Type">
+```typescript
+interface {
+    jobId: string;
+}
+```
+</Accordion>
+</Accordions>
+
+</Callout>
 
 </div>
 
@@ -84,6 +100,8 @@ function ExecuteOperation() {
 Ensure the user operation is properly signed before execution. Failed transactions may still consume gas.
 </Callout>
 
-<Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/react-native-sdk/sdk-error-warnings) documentation for more details.
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
 </Callout>

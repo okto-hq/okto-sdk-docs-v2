@@ -12,33 +12,9 @@ import { Icon as IIcon } from '@iconify/react';
 
 The `getAuthorizationToken()` method retrieves the current user's authorization token for authenticated operations.
 
-### Method Overview
+### Example 
 
-| Methods | Description |
-|---------|-------------|
-| <sub><i>async</i></sub> `OktoClient.getAuthorizationToken` | Get the current authorization token |
-
-<div className="method-box">
-
-## Get Authorization Token
-
-<sub><i>async</i></sub> `OktoClient.getAuthorizationToken()` retrieves the current authorization token for the authenticated user.
-
-### Parameters
-
-This method doesn't take any parameters.
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `result` | `Promise<string>` | Returns the authorization token |
-
-</Callout>
-
-<Accordions>
+<Accordions defaultValue="Example">
 <Accordion title="Example">
 <Tabs items={['Typescript']}>
   <Tab value="Typescript">
@@ -72,12 +48,40 @@ This method doesn't take any parameters.
 </Accordion>
 </Accordions>
 
+### Method Overview
+
+| Methods | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> `OktoClient.getAuthorizationToken` | Get the current authorization token |
+
+<div className="method-box">
+
+## Get Authorization Token
+
+<sub><i>async</i></sub> `OktoClient.getAuthorizationToken()` retrieves the current authorization token for the authenticated user.
+
+### Parameters
+
+This method doesn't take any parameters.
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | `Promise<string>` | Returns the authorization token |
+
+</Callout>
+
 </div>
 
 <Callout>
 The authorization token is a JWT that can be used to authenticate requests to Okto services. This token is automatically managed by the SDK for internal operations.
 </Callout>
 
-<Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/react-native-sdk/sdk-error-warnings) documentation for more details.
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
 </Callout>
