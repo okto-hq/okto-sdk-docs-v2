@@ -12,6 +12,48 @@ import { Icon as IIcon } from '@iconify/react';
 
 The `verifyLogin()` method checks if a user is currently logged in. If the user is not logged in, it automatically clears the auth options to maintain consistency.
 
+### Example
+
+<Accordions defaultValue="Usage">
+<Accordion title="Usage">
+<Tabs items={['TypeScript']}>
+<Tab value="TypeScript">
+```typescript
+import { useOkto } from '@okto_web3/react-native-sdk';
+    import { View, Text, Pressable } from 'react-native';
+
+    function AuthCheck() {
+        const oktoClient = useOkto();
+
+        async function checkLoginStatus() {
+            try {
+                const isLoggedIn = await oktoClient.verifyLogin();
+                console.log("Login status:", isLoggedIn);
+            } catch (error) {
+                console.error("Verification failed:", error);
+            }
+        }
+
+        return (
+            <View>
+                <Pressable onPress={checkLoginStatus}>
+                    <Text>Check Login Status</Text>
+                </Pressable>
+            </View>
+        );
+    }
+```
+</Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```typescript
+true
+```
+</Accordion>
+</Accordions>
+
 ### Method Overview
 
 | Methods | Description |
@@ -38,7 +80,7 @@ This method doesn't take any parameters.
 
 </Callout>
 
-<Accordions>
+{/*<Accordions>
 <Accordion title="Example">
 <Tabs items={['Typescript']}>
   <Tab value="Typescript">
@@ -70,10 +112,12 @@ This method doesn't take any parameters.
   </Tab>
 </Tabs>
 </Accordion>
-</Accordions>
+</Accordions> */}
 
 </div>
 
-<Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/react-native-sdk/sdk-error-warnings) documentation for more details.
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-native-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-native-sdk/troubleshooting) to contact support
 </Callout>

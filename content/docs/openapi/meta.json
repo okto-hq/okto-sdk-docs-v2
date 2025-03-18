@@ -5,8 +5,9 @@
     "icon": "Rocket",
     "pages": [
         "[← Back to Home](/)",
-        "------",
+        "---Quickstart---",
         "index",
+        "getting-started",
         "---Authentication---",
         "./authenticate/okto-auth-session",
         "./authenticate/google-oauth",

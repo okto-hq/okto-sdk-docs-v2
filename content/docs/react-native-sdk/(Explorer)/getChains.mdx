@@ -12,37 +12,9 @@ import { Icon as IIcon } from '@iconify/react';
 
 The `getChains` function retrieves a list of all blockchain networks supported by Okto. This includes information about each chain's configuration, network details, and supported features.
 
-### Method Overview
-
-| Method | Description |
-|---------|-------------|
-| <sub><i>async</i></sub> [`getChains`](#get-chains) | Get all supported blockchain networks |
-
-<div className="method-box">
-
-## Get Chains
-
-<sub><i>async</i></sub> `getChains(oktoClient: OktoClient)` retrieves the list of all blockchain networks supported by Okto.
-
-### Parameters
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `chains` | [`Promise<GetSupportedNetworksResponseData[]>`](./technical-reference#models) | Array of supported blockchain networks |
-
-</Callout>
-
 ### Example
 
-<Accordions>
+<Accordions defaultValue="Usage">
 <Accordion title="Usage">
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
@@ -101,8 +73,57 @@ function ChainsList() {
 </Accordion>
 </Accordions>
 
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`getChains`](#get-chains) | Get all supported blockchain networks |
+
+<div className="method-box">
+
+## Get Chains
+
+<sub><i>async</i></sub> `getChains(oktoClient: OktoClient)` retrieves the list of all blockchain networks supported by Okto.
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `chains` | [`Promise<GetSupportedNetworksResponseData[]>`](./technical-reference#models) | Array of supported blockchain networks |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface GetSupportedNetworksResponseData {
+            caip_id: string;
+            network_name: string;
+            chain_id: string;
+            logo: string;
+            sponsorship_enabled: boolean;
+            gsn_enabled: boolean;
+            type: string;
+            network_id: string;
+            onramp_enabled: boolean;
+            whitelisted: boolean;
+        }
+        ```
+    </Accordion>
+</Accordions>
+
+</Callout>
+
 </div>
 
-<Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](./sdk-error-warnings) documentation for more details.
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-native-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-native-sdk/troubleshooting) to contact support
 </Callout>

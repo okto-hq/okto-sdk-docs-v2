@@ -1,0 +1,103 @@
+---
+title: API Setup
+description: Learn how to integrate with Okto APIs directly in your applications.
+full: false
+---
+
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Callout } from 'fumadocs-ui/components/callout';
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
+import ExternalLink from 'app/components/mdx/ExternalLink';
+import TemplateRepoBanner from 'app/components/mdx/TemplateRepoBanner';
+import { FaGithub } from 'react-icons/fa';
+import ViewOnGithub from 'app/components/mdx/ViewOnGithub';
+
+This guide walks you through integrating Okto APIs into your application. You'll set up your developer account, obtain API keys, authenticate requests, and make API calls using the Okto Auth Token. Follow the steps below to get started.
+
+<Steps>
+  <Step>
+  ### **Prerequisites**
+  <CollapsibleCallout type="warning" title="Essential Setup Required">
+    Before you begin, set up your [developer dashboard](https://dashboard.okto.tech) by making sure you have :
+    - Created your [Okto Developer Dashboard](/docs/developer-admin-dashboard/dashboard-account) account
+    - Get your [Okto credits](/docs/developer-admin-dashboard/okto-faucet) from the dashboard
+    - Obtained your [API keys](/docs/developer-admin-dashboard/api-key) from the dashboard
+    - Enabled the specific [Chains and Tokens](/docs/developer-admin-dashboard/wallet-control) you plan to use in your application
+    - Optional: Enabled [Sponsorship](/docs/developer-admin-dashboard/sponsorship) for the desired chains
+
+    If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/troubleshooting">troubleshooting form</ExternalLink> and we will contact you.
+    </CollapsibleCallout>
+
+   - **Okto API Keys:** You need your `CLIENT_PRIVATE_KEY` and `CLIENT_SWA`. Obtain these from the [Okto Developer Dashboard](https://dashboard.okto.tech/login).
+   - **Okto Account Setup:** Ensure you have sufficient <ExternalLink href="https://dashboard.okto.tech/okto-credits">Okto Credits</ExternalLink>, enable the required <ExternalLink href="https://dashboard.okto.tech/wallet-controls">Chains and Tokens </ExternalLink>, and optionally <ExternalLink href="https://dashboard.okto.tech/paymaster">Activate Sponsorship</ExternalLink>.
+    - **Google OAuth Credentials (if using Google authentication):** Create OAuth 2.0 credentials in the <ExternalLink href="/docs/react-sdk/authenticate-users/google-oauth/google-console-setup">Google Cloud Console</ExternalLink> to get your `GOOGLE_CLIENT_ID`.
+  </Step>
+
+  <Step>
+  ### **Authenticate**
+
+  Authentication with the Okto API requires generating an Okto Auth Token, which is used for all subsequent API calls.
+  - For testing purpose, Use the [Okto Auth Token Generator](/tools) to obtain an authentication token.
+  - Alternatively, implement authentication in your code using our [Sample Implementation](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api_template.ts) to implement authentication in your code
+  - Ensure the session keys/Okto auth token are stored securely.
+
+  <Callout title="Note" type="info">
+  Each session is created for both the user and client, with a default validity of 10 days. You can customize this duration as needed.
+  </Callout>
+  </Step>
+
+  <Step>
+  ### **Make API calls**
+
+  To effectively interact with the Okto API, please check the [API Overview Guide](/docs/openapi). This will help you understand the API architecture, and the authentication flow.
+
+  After obtaining the Okto Auth Token, you can use it to send API requests:
+  - Include the token in the request headers as:
+  ```bash
+  Authorization: Bearer <OKTO_AUTH_TOKEN>
+  ```
+  - Check out our [API Documentation](/docs/openapi#explore-api) for a complete list of available endpoints, and start testing the API instantly using your generated Okto Auth Token.
+  - For a hands-on example, check out our [Template App](https://github.com/okto-hq/okto-sdkv2-ts-template) to understand request structures and best practices.
+
+  </Step>
+</Steps>
+
+## API References
+
+Okto's API landscape is composed of two distinct types of APIs:
+
+### JSON-RPC Methods
+
+JSON-RPC methods directly interact with the Okto Gateway and are primarily used for authentication and executing user operations (intents).
+
+| **API Endpoint** | **Headers** | **Description** |
+|-----------------|------------|---------------|
+| <ExternalLink href="/docs/openapi/authenticate/login-logout/loginUsingOktoAuth">`POST https://sandbox-okto-gateway.oktostage.com/rpc`</ExternalLink> | `Content-Type: application/json` | Handles user authentication and session management. |
+| <ExternalLink href="/docs/openapi/tokenTransfer">`POST https://sandbox-okto-gateway.oktostage.com/rpc`</ExternalLink> | `Content-Type: application/json` `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Handles token transfers between addresses. |
+| <ExternalLink href="/docs/openapi/nftTransfer">`POST https://sandbox-okto-gateway.oktostage.com/rpc`</ExternalLink> | `Content-Type: application/json` `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Handles NFT transfers between addresses. |
+| <ExternalLink href="/docs/openapi/evmRawTransaction">`POST https://sandbox-okto-gateway.oktostage.com/rpc`</ExternalLink> | `Content-Type: application/json` `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Handles custom EVM transactions with specified parameters. |
+
+### REST APIs
+
+REST APIs communicate with the Okto Gateway via a BFF service and are designed for explorer methods.
+
+| **API Endpoint** | **Headers** | **Description** |
+|-----------------|------------|---------------|
+| <ExternalLink href="/docs/openapi/explorer/get-gas-fee-values">`GET /api/oc/v1/gas-values`</ExternalLink> | `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Get the gas fee values. |
+| <ExternalLink href="/docs/openapi/explorer/get-nft-portfolio">`GET /api/oc/v1/portfolio/nft`</ExternalLink> | `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Get the details of all the NFTs. |
+| <ExternalLink href="/docs/openapi/explorer/get-order-history">`GET /api/oc/v1/orders`</ExternalLink> | `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Fetch all the orders of the user |
+| <ExternalLink href="/docs/openapi/explorer/get-portfolio">`GET /api/oc/v1/aggregated-portfolio`</ExternalLink> | `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Get the portfolio data of the user. |
+| <ExternalLink href="/docs/openapi/explorer/get-portfolio-activity">`GET /api/oc/v1/portfolio/activity`</ExternalLink> | `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Get user's portfolio activity. |
+| <ExternalLink href="/docs/openapi/explorer/get-supported-networks">`GET /api/oc/v1/supported/networks`</ExternalLink> | `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Get an array of all the whitelisted networks on your API key. |
+| <ExternalLink href="/docs/openapi/explorer/get-supported-tokens">`GET /api/oc/v1/supported/tokens`</ExternalLink> | `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Get an array of all the whitelisted tokens on your API key. |
+| <ExternalLink href="/docs/openapi/explorer/get-wallets">`GET /api/oc/v1/wallets`</ExternalLink> | `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Fetch all the wallets created by the user. |
+| <ExternalLink href="/docs/openapi/explorer/order-estimate">`POST /api/oc/v1/estimate`</ExternalLink> | `Authorization: Bearer <OKTO_AUTH_TOKEN>` `Content-Type: application/json` | Handles order estimation. |
+| <ExternalLink href="/docs/openapi/explorer/user-session-verify">`GET /api/oc/v1/verify-session`</ExternalLink> | `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Verify the session of the user. |
+
+## Additional Resources
+
+- <ExternalLink href="/docs/openapi/troubleshooting">Troubleshooting Guide</ExternalLink>
+- <ExternalLink href="/docs/openapi/technical-reference">Technical Reference</ExternalLink>
+
+Need help? Join our <ExternalLink href="https://discord.com/invite/okto-916349620383252511">Discord community</ExternalLink> or email us at `devrel@coindcx.com`.

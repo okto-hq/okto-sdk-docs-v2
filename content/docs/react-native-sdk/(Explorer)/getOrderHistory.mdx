@@ -12,37 +12,9 @@ import { Icon as IIcon } from '@iconify/react';
 
 The `getOrderHistory` function retrieves the user's transaction order history.
 
-### Method Overview
-
-| Method | Description |
-|---------|-------------|
-| <sub><i>async</i></sub> [`getOrderHistory`](#get-order-history) | Get user's order history |
-
-<div className="method-box">
-
-## Get Order History
-
-<sub><i>async</i></sub> `getOrderHistory(oktoClient: OktoClient)` retrieves the user's transaction order history.
-
-### Parameters
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `orders` | [`Promise<Order[]>`](./technical-reference#models) | Array of order history |
-
-</Callout>
-
 ### Example
 
-<Accordions>
+<Accordions defaultValue="Usage">
 <Accordion title="Usage">
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
@@ -103,6 +75,53 @@ function OrderHistory() {
 </Accordion>
 </Accordions>
 
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`getOrderHistory`](#get-order-history) | Get user's order history |
+
+<div className="method-box">
+
+## Get Order History
+
+<sub><i>async</i></sub> `getOrderHistory(oktoClient: OktoClient)` retrieves the user's transaction order history.
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `orders` | [`Promise<Order[]>`](./technical-reference#models) | Array of order history |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface Order {
+            downstream_transaction_hash: string[];
+            transaction_hash: string[];
+            status: "SUCCESSFUL" | "FAILED" | "PENDING" | "REJECTED";
+            intent_id: string;
+            intent_type: "TOKEN_TRANSFER" | "NFT_TRANSFER" | "RAW_TRANSACTION";
+            network_name: string;
+            caip_id: string;
+            details: OrderDetails;
+            reason: string;
+            block_timestamp: number;
+        }
+        ```
+    </Accordion>
+</Accordions>
+
+</Callout>
+
 </div>
 
 <Callout title="Important: Transaction Lifecycle">
@@ -114,6 +133,8 @@ To track a transaction to completion:
 - Use this transaction hash to verify the transaction on the destination chain's explorer
 </Callout>
 
-<Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](./sdk-error-warnings) documentation for more details.
-</Callout> 
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-native-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-native-sdk/troubleshooting) to contact support
+</Callout>
