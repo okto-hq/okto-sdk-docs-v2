@@ -12,38 +12,9 @@ import { Icon as IIcon } from '@iconify/react';
 
 The `signUserOp` function signs a user operation for execution on the blockchain.
 
-### Method Overview
-
-| Method | Description |
-|---------|-------------|
-| <sub><i>async</i></sub> [`signUserOp`](#sign-user-op) | Sign a user operation |
-
-<div className="method-box">
-
-## Sign User Operation
-
-<sub><i>async</i></sub> `signUserOp(oktoClient: OktoClient, userOp: UserOperation)` signs a user operation for execution.
-
-### Parameters
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
-| `userOp` | [`UserOperation`](/docs/react-native-sdk/technical-reference#models) | User operation to sign |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `signature` | `Promise<string>` | Signed user operation |
-
-</Callout>
-
 ### Example
 
-<Accordions>
+<Accordions defaultValue="Usage">
 <Accordion title="Usage">
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
@@ -76,7 +47,77 @@ function SignOperation() {
 </Tab>
 </Tabs>
 </Accordion>
+<Accordion title="Sample Response">
+```json
+{
+    "sender": "0xa9F6b3A5a718754979dbA78113f3614Dd4524c53",
+    "nonce": "0x000000000000000000000000000000003ee337319e964ab9892cea476b36295d",
+    "paymaster": "0x5408fAa7F005c46B85d82060c532b820F534437c",
+    "callGasLimit": "0x493e0",
+    "verificationGasLimit": "0x30d40",
+    "preVerificationGas": "0xc350",
+    "maxFeePerGas": "0x77359400",
+    "maxPriorityFeePerGas": "0x77359400",
+    "paymasterPostOpGasLimit": "0x186a0",
+    "paymasterVerificationGasLimit": "0x186a0",
+    "callData": "0x8dd7712f000...",
+    "paymasterData": "0x0000000000...",
+    "signature": "0x6bf06e6d6c2bf6bc4d317efabdbc714e99ef7796194df7da3fcf3d9cf16e0e872b5bb9e5658b061360a104c13c44f31407252f330e622ee946a3bcb3aebd15901c"
+}
+```
+</Accordion>
 </Accordions>
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`signUserOp`](#sign-user-op) | Sign a user operation |
+
+<div className="method-box">
+
+## Sign User Operation
+
+<sub><i>async</i></sub> `signUserOp(oktoClient: OktoClient, userOp: UserOperation)` signs a user operation for execution.
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook |
+| `userOp` | [`UserOperation`](/docs/react-native-sdk/technical-reference#models) | User operation to sign |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `signature` | `Promise<string>` | Signed user operation |
+
+<Accordions>
+<Accordion title="Response Type">
+```typescript
+interface SignedUserOp {
+    sender: string;
+    nonce: string;
+    paymaster: string;
+    callGasLimit: string;
+    verificationGasLimit: string;
+    preVerificationGas: string;
+    maxFeePerGas: string;
+    maxPriorityFeePerGas: string;
+    paymasterPostOpGasLimit: string;
+    paymasterVerificationGasLimit: string;
+    callData: string;
+    paymasterData: string;
+    signature: string;
+}
+```
+</Accordion>
+</Accordions>
+
+</Callout>
 
 </div>
 
@@ -84,6 +125,8 @@ function SignOperation() {
 Ensure the user operation is properly formatted and includes all required fields before signing.
 </Callout>
 
-<Callout title="Note">
-In case of errors, debug the error using the error code and refer to the [SDK errors and warnings](/docs/react-native-sdk/sdk-error-warnings) documentation for more details.
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-native-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-native-sdk/troubleshooting) to contact support
 </Callout>

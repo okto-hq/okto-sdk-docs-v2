@@ -1,0 +1,69 @@
+---
+title: API Setup
+description: Learn how to integrate with Okto APIs directly in your applications.
+full: false
+---
+
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Callout } from 'fumadocs-ui/components/callout';
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
+import ExternalLink from 'app/components/mdx/ExternalLink';
+import TemplateRepoBanner from 'app/components/mdx/TemplateRepoBanner';
+import { FaGithub } from 'react-icons/fa';
+import ViewOnGithub from 'app/components/mdx/ViewOnGithub';
+
+This guide walks you through integrating Okto APIs into your application. You'll set up your developer account, obtain API keys, authenticate requests, and make API calls using the Okto Auth Token. Follow the steps below to get started.
+
+<Steps>
+  <Step>
+  ### **Prerequisites**:
+  <CollapsibleCallout type="warning" title="Essential Setup Required">
+    Before you begin, set up your [developer dashboard](https://dashboard.okto.tech) by making sure you have :
+    - Created your [Okto Developer Dashboard](/docs/developer-admin-dashboard/dashboard-account) account
+    - Get your [Okto credits](/docs/developer-admin-dashboard/okto-faucet) from the dashboard
+    - Obtained your [API keys](/docs/developer-admin-dashboard/api-key) from the dashboard
+    - Enabled the specific [Chains and Tokens](/docs/developer-admin-dashboard/wallet-control) you plan to use in your application
+    - Optional: Enabled [Sponsorship](/docs/developer-admin-dashboard/sponsorship) for the desired chains
+
+    If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/troubleshooting">troubleshooting form</ExternalLink> and we will contact you.
+    </CollapsibleCallout>
+
+   - **Okto API Keys:** You need your `CLIENT_PRIVATE_KEY` and `CLIENT_SWA`. Obtain these from the [Okto Developer Dashboard](https://dashboard.okto.tech/login).
+   - **Okto Account Setup:** Ensure you have sufficient <ExternalLink href="https://dashboard.okto.tech/okto-credits">Okto Credits</ExternalLink>, enable the required <ExternalLink href="https://dashboard.okto.tech/wallet-controls">Chains and Tokens </ExternalLink>, and optionally <ExternalLink href="https://dashboard.okto.tech/paymaster">Activate Sponsorship</ExternalLink>.
+    - **Google OAuth Credentials (if using Google authentication):** Create OAuth 2.0 credentials in the <ExternalLink href="/docs/react-sdk/authenticate-users/google-oauth/google-console-setup">Google Cloud Console</ExternalLink> to get your `GOOGLE_CLIENT_ID`.
+  </Step>
+
+  <Step>
+  ### **Authenticate**:
+
+  Authentication with the Okto API requires generating an Okto token, which is used for all subsequent API calls.
+  - Use the [Okto Auth Token Generator](/tools) to obtain an authentication token.
+  - Alternatively, implement authentication in your code using our [Sample Implementation](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api_template.ts) to implement authentication in your code
+  - Securely store your session keys.
+
+  <Callout title="Note" type="info">
+  Each session is created for both the user and client, with a default validity of 10 days. You can customize this duration as needed.
+  </Callout>
+  </Step>
+
+  <Step>
+  ### **Make API calls**:
+
+  After obtaining the Okto Auth Token, you can use it to authenticate API requests:
+  - Include the token in the request headers as:
+  ```bash
+  Authorization: Bearer <generated_okto_token>
+  ```
+  - Refer to our [API documentation](/docs/openapi#explore-api) for details on available endpoints.
+  - Test the API right away using the generated token.
+  - For a hands-on example, check out our [Template App](https://github.com/okto-hq/okto-sdkv2-ts-template) to understand request structures and best practices.
+
+  </Step>
+</Steps>
+<br />
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/openapi/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/openapi/troubleshooting) to contact support
+</Callout>

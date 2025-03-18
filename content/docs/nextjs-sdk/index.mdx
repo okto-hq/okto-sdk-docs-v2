@@ -14,26 +14,27 @@ import ViewOnGithub from 'app/components/mdx/ViewOnGithub';
 
 <TemplateRepoBanner sdk="nextjs" />
 
-<CollapsibleCallout type="warning" title="Essential Setup Required">
-Before you begin, set up your [developer dashboard](https://dashboard.okto.tech) by making sure you have :
-- Created your [Okto Developer Dashboard](/docs/developer-admin-dashboard/dashboard-account) account
-- Get your [Okto credits](/docs/developer-admin-dashboard/okto-faucet) from the dashboard
-- Obtained your [API keys](/docs/developer-admin-dashboard/api-key) from the dashboard
-- Enabled the specific [Chains and Tokens](/docs/developer-admin-dashboard/wallet-control) you plan to use in your application
-- Optional: Enabled [Sponsorship](/docs/developer-admin-dashboard/sponsorship) for the desired chains
-
-If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/troubleshooting">troubleshooting form</ExternalLink> and we will contact you.
-</CollapsibleCallout>
-
 <Steps>
 
 <Step>
     ## Prerequisites
 
+    <CollapsibleCallout type="warning" title="Essential Setup Required">
+    Before you begin, set up your [developer dashboard](https://dashboard.okto.tech) by making sure you have :
+    - Created your [Okto Developer Dashboard](/docs/developer-admin-dashboard/dashboard-account) account
+    - Get your [Okto credits](/docs/developer-admin-dashboard/okto-faucet) from the dashboard
+    - Obtained your [API keys](/docs/developer-admin-dashboard/api-key) from the dashboard
+    - Enabled the specific [Chains and Tokens](/docs/developer-admin-dashboard/wallet-control) you plan to use in your application
+    - Optional: Enabled [Sponsorship](/docs/developer-admin-dashboard/sponsorship) for the desired chains
+
+    If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/troubleshooting">troubleshooting form</ExternalLink> and we will contact you.
+    </CollapsibleCallout>
+
     Before getting started, ensure you have the following:
     - **Node.js (v18+) and npm/pnpm/yarn:** <ExternalLink href="https://nodejs.org/">Download Node.js</ExternalLink>
     - **Okto API Keys:** You need your `NEXT_PUBLIC_CLIENT_PRIVATE_KEY` and `NEXT_PUBLIC_CLIENT_SWA`. Obtain these from the [Okto Developer Dashboard](https://dashboard.okto.tech/login).
-    - **Google OAuth Credentials:** Create OAuth 2.0 credentials in the <ExternalLink href="/docs/nextjs-sdk/authenticate-users/google-oauth/google-console-setup">Google Cloud Console</ExternalLink> to get your `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`.
+    - **Okto Account Setup:** Ensure you have sufficient <ExternalLink href="https://dashboard.okto.tech/okto-credits">Okto Credits</ExternalLink>, enable the required <ExternalLink href="https://dashboard.okto.tech/wallet-controls">Chains and Tokens </ExternalLink>, and optionally <ExternalLink href="https://dashboard.okto.tech/paymaster">Activate Sponsorship</ExternalLink>.
+    - **Google OAuth Credentials (if using Google authentication):** Create OAuth 2.0 credentials in the <ExternalLink href="/docs/nextjs-sdk/authenticate-users/google-oauth/google-console-setup">Google Cloud Console</ExternalLink> to get your `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`.
     - **Auth Secret:** NextAuth requires a secret for signing tokens. Generate one by running:
     
     ```bash:title="bash"

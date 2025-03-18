@@ -16,26 +16,29 @@ import Link from "next/link";
 
 <TemplateRepoBanner sdk="unity" />
 
-<CollapsibleCallout type="warning" title="Essential Dashboard Setup Required">
-Before you begin, ensure you've completed these steps in the [Okto Developer Dashboard](https://dashboard.okto.tech):
-- Created your [dashboard account](/docs/developer-admin-dashboard/dashboard-account)
-- Obtained [Okto credits](/docs/developer-admin-dashboard/okto-faucet) from Okto Faucet for testing
-- Generated your [API keys](/docs/developer-admin-dashboard/api-key)
-- Enabled the specific [chains and tokens](/docs/developer-admin-dashboard/wallet-control) you plan to use in your application
-- Optional: Configured [sponsorship](/docs/developer-admin-dashboard/sponsorship) for seamless gas abstracted transactions.
 
-Need assistance? Use our <ExternalLink href="/docs/unity-sdk/troubleshooting">troubleshooting form</ExternalLink> and we'll help you get started.
-</CollapsibleCallout>
 
 <Steps>
 
 <Step>
     ## Prerequisites
 
+    <CollapsibleCallout type="warning" title="Essential Dashboard Setup Required">
+    Before you begin, ensure you've completed these steps in the [Okto Developer Dashboard](https://dashboard.okto.tech):
+    - Created your [Okto Developer Dashboard](/docs/developer-admin-dashboard/dashboard-account) account
+    - Get your [Okto credits](/docs/developer-admin-dashboard/okto-faucet) from the dashboard
+    - Obtained your [API keys](/docs/developer-admin-dashboard/api-key) from the dashboard
+    - Enabled the specific [Chains and Tokens](/docs/developer-admin-dashboard/wallet-control) you plan to use in your application
+    - Optional: Enabled [Sponsorship](/docs/developer-admin-dashboard/sponsorship) for the desired chains
+
+    Need assistance? Use our <ExternalLink href="/docs/unity-sdk/troubleshooting">troubleshooting form</ExternalLink> and we'll help you get started.
+    </CollapsibleCallout>
+
     Before getting started, ensure you have the following:
     - **Google SignIn Package:** <ExternalLink href="https://github.com/googlesamples/google-signin-unity/releases/">Download Package</ExternalLink>
     - **Okto API Keys:** You need your `clientPrivateKey` and `clientSwa`. Obtain these from the [Okto Developer Dashboard](https://dashboard.okto.tech/login).
-    - **Google OAuth Credentials:** Create OAuth 2.0 credentials in the <ExternalLink href="/docs/unity-sdk/authenticate-users/google-oauth/google-console-setup">Google Cloud Console</ExternalLink> to get your `webClientId`.
+    - **Okto Account Setup:** Ensure you have sufficient <ExternalLink href="https://dashboard.okto.tech/okto-credits">Okto Credits</ExternalLink>, enable the required <ExternalLink href="https://dashboard.okto.tech/wallet-controls">Chains and Tokens </ExternalLink>, and optionally <ExternalLink href="https://dashboard.okto.tech/paymaster">Activate Sponsorship</ExternalLink>.
+    - **Google OAuth Credentials (if using Google authentication):** Create OAuth 2.0 credentials in the <ExternalLink href="/docs/unity-sdk/authenticate-users/google-oauth/google-console-setup">Google Cloud Console</ExternalLink> to get your `webClientId`.
     
     <CollapsibleCallout type="tip" title="Setting up Google OAuth">
     1. Go to <ExternalLink href="https://console.cloud.google.com/">Google Cloud Console</ExternalLink>.
