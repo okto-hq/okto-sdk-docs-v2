@@ -55,6 +55,7 @@ export default function NavbarComponent() {
       external: true,
     },
     { href: "/showcase", label: "Showcase", subpath: "", external: true },
+    { href: "/summer-of-abstraction", label: "Summer of Abstraction", subpath: "", external: true },
     { href: "/docs", label: "SDK Docs", subpath: "", external: false },
   ];
 
