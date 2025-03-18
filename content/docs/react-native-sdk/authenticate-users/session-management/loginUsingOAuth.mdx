@@ -68,11 +68,11 @@ function LoginComponent() {
 </Tab>
 </Tabs>
 </Accordion>
-{/* <Accordion title="Success Response">
+<Accordion title="Success Response">
 ```typescript
-0x9A94366DC5a9447C763aa2c3A09EB56dc82CB4D3
+Client_SWA: 0x9A94366DC5a9447C763aa2c3A09EB56dc82CB4D3
 ```
-</Accordion> */}
+</Accordion>
 </Accordions>
 
 ### Method Overview
@@ -106,7 +106,7 @@ Where `AuthData` is one of:
 
 | Field Name | Type | Description |
 |------------|------|-------------|
-| `result` | `Promise<User>` | Returns the user data on successful login |
+| `result` | `Promise<Address>` | Returns the user's Smart Wallet Address on successful login |
 
 </Callout>
 
