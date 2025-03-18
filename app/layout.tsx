@@ -21,7 +21,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <RootProvider>
           <Providers>
             <NavbarComponent />
-            {/* <SOABanner /> */}
+            <SOABanner />
             {children}
           </Providers>
         </RootProvider>
