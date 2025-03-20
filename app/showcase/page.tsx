@@ -5,7 +5,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
-import { Link as ULink, Tooltip } from "@nextui-org/react";
+import { Link as ULink, Tooltip } from "@heroui/react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

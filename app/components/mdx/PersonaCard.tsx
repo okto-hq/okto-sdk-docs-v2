@@ -22,7 +22,7 @@ export default function PersonaCard({
         </div>
       </CardHeader>
       <CardContent className="space-y-2">
-        <h3 className="text-xl font-semibold my-0 dark:text-white">{title}</h3>
+        <h3 className="text-xl font-semibold my-0 dark:text-white not-prose">{title}</h3>
         <p className="text-slate-600 dark:text-slate-300">{description}</p>
       </CardContent>
       <CardFooter>

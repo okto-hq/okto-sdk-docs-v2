@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import type { ReactNode } from "react";
 import { Providers } from "./providers";
 import NavbarComponent from "./components/Navbar";
-import AskCookbook from "./components/AskCookbook";
+// import AskCookbook from "./components/AskCookbook";
 import SOABanner from "./components/SOABanner";
 
 const inter = Inter({
@@ -19,13 +19,13 @@ export default function Layout({ children }: { children: ReactNode }) {
       </head>
       <body>
         <RootProvider>
-          <Providers>
+          <Providers> 
             <NavbarComponent />
             <SOABanner />
             {children}
           </Providers>
         </RootProvider>
-        <AskCookbook />
+        {/* <AskCookbook /> */}
       </body>
     </html>
   );

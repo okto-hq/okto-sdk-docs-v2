@@ -57,7 +57,7 @@ export default function TemplateRepoBanner({
   const finalRepoUrl = repoUrl || config.defaultRepo;
 
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-between px-6 py-4 mb-8 bg-gradient-to-r from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-800 rounded-lg border-2 border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 transition-all shadow-sm">
+    <div className="not-prose flex flex-col lg:flex-row items-center justify-between px-6 py-4 mb-8 bg-gradient-to-r from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-800 rounded-lg border-2 border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 transition-all shadow-sm">
       <div className="flex-1 pr-4 mb-6 lg:mb-0">
         <div className="flex items-center gap-2 mb-2">
           {config.icon}
