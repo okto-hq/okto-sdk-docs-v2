@@ -1,18 +1,78 @@
 "use client"
 
-
-import React, { useState } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { IdeaboardTable } from "./IdeaboardTable";
 import { ideasData } from "../data/ideas-data";
-import { Idea, IdeaType, SkillLevel, TimeCommitment } from "../types";
+import { Idea } from "../types";
+
+// Define contribution fields and their associated skills
+const CONTRIBUTION_FIELDS = {
+  all: "All Fields",
+  development: "Development",
+  content: "Content",
+  community: "Community"
+};
+
+// Map skills to specific contribution fields
+const FIELD_SKILLS_MAP = {
+  development: [
+    "React", "TypeScript", "JavaScript", "Node.js", "Go", "UI/UX", 
+    "Component Design", "Data Visualization", "API Integration", 
+    "CLI Development", "DevOps"
+  ],
+  content: [
+    "Technical Writing", "Video Production", "Technical Communication", 
+    "Content Creation", "Documentation", "Educational Design"
+  ],
+  community: [
+    "Community Building", "Workshop Facilitation", "Event Planning", 
+    "Social Media", "Community Management", "User Research"
+  ]
+};
 
 export function IdeaboardSection() {
   // State for filters
   const [filters, setFilters] = useState({
     type: "all",
-    skillLevel: "all",
-    timeCommitment: "all",
+    field: "all",
+    skill: "all"
   });
+
+  // Skills based on selected field
+  const [availableSkills, setAvailableSkills] = useState<string[]>([]);
+
+  // Update available skills when field changes
+  useEffect(() => {
+    if (filters.field === "all") {
+      setAvailableSkills([]);
+    } else {
+      setAvailableSkills(FIELD_SKILLS_MAP[filters.field as keyof typeof FIELD_SKILLS_MAP] || []);
+    }
+    // Reset skill selection when field changes
+    setFilters(prev => ({ ...prev, skill: "all" }));
+  }, [filters.field]);
+
+  // Determine if an idea belongs to a specific field
+  const getIdeaField = (idea: Idea): string => {
+    const skillsSet = new Set(idea.skillsRequired);
+    
+    // Check if any development skills are present
+    if (FIELD_SKILLS_MAP.development.some(skill => skillsSet.has(skill))) {
+      return "development";
+    }
+    
+    // Check if any content skills are present
+    if (FIELD_SKILLS_MAP.content.some(skill => skillsSet.has(skill))) {
+      return "content";
+    }
+    
+    // Check if any community skills are present
+    if (FIELD_SKILLS_MAP.community.some(skill => skillsSet.has(skill))) {
+      return "community";
+    }
+    
+    return "other";
+  };
 
   // Apply filters to ideas
   const filteredIdeas = ideasData.filter((idea: Idea) => {
@@ -20,25 +80,20 @@ export function IdeaboardSection() {
       filters.type === "all" || 
       idea.type === filters.type;
     
+    const fieldMatch = 
+      filters.field === "all" || 
+      getIdeaField(idea) === filters.field;
+    
     const skillMatch = 
-      filters.skillLevel === "all" || 
-      idea.skillLevel === filters.skillLevel;
+      filters.skill === "all" || 
+      idea.skillsRequired.includes(filters.skill);
     
-    const timeMatch = 
-      filters.timeCommitment === "all" || 
-      idea.timeCommitment === filters.timeCommitment;
-    
-    return typeMatch && skillMatch && timeMatch;
+    return typeMatch && fieldMatch && skillMatch;
   });
-
-  // Get featured ideas
-  const featuredIdeas = filteredIdeas.filter(
-    (idea: Idea) => idea.featured
-  );
 
   // Handle filter changes
   const handleFilterChange = (
-    filterType: "type" | "skillLevel" | "timeCommitment",
+    filterType: "type" | "field" | "skill",
     value: string
   ) => {
     setFilters((prev) => ({
@@ -51,8 +106,8 @@ export function IdeaboardSection() {
   const resetFilters = () => {
     setFilters({
       type: "all",
-      skillLevel: "all",
-      timeCommitment: "all",
+      field: "all",
+      skill: "all",
     });
   };
 
@@ -92,100 +147,61 @@ export function IdeaboardSection() {
             </select>
           </div>
 
-          {/* Skill Level Filter */}
+          {/* Field of Contribution Filter */}
           <div>
-            <label htmlFor="skill-filter" className="block text-sm font-medium mb-1 dark:text-gray-300">
-              Skill Level:
+            <label htmlFor="field-filter" className="block text-sm font-medium mb-1 dark:text-gray-300">
+              Field of Contribution:
             </label>
             <select
-              id="skill-filter"
-              value={filters.skillLevel}
-              onChange={(e) => handleFilterChange("skillLevel", e.target.value)}
+              id="field-filter"
+              value={filters.field}
+              onChange={(e) => handleFilterChange("field", e.target.value)}
               className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             >
-              <option value="all">All Levels</option>
-              <option value="Beginner">Beginner</option>
-              <option value="Intermediate">Intermediate</option>
-              <option value="Advanced">Advanced</option>
+              <option value="all">All Fields</option>
+              <option value="development">Development</option>
+              <option value="content">Content</option>
+              <option value="community">Community</option>
             </select>
           </div>
 
-          {/* Time Commitment Filter */}
+          {/* Specific Skills Filter */}
           <div>
-            <label htmlFor="time-filter" className="block text-sm font-medium mb-1 dark:text-gray-300">
-              Time Commitment:
+            <label htmlFor="skill-filter" className="block text-sm font-medium mb-1 dark:text-gray-300">
+              Skill:
             </label>
             <select
-              id="time-filter"
-              value={filters.timeCommitment}
-              onChange={(e) => handleFilterChange("timeCommitment", e.target.value)}
+              id="skill-filter"
+              value={filters.skill}
+              onChange={(e) => handleFilterChange("skill", e.target.value)}
               className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              disabled={filters.field === "all"}
             >
-              <option value="all">Any Commitment</option>
-              <option value="Low">Low (0-5 hrs/week)</option>
-              <option value="Medium">Medium (5-10 hrs/week)</option>
-              <option value="High">High (10+ hrs/week)</option>
+              <option value="all">
+                {filters.field === "all" ? "Select a field first" : "All Skills"}
+              </option>
+              {availableSkills.map((skill) => (
+                <option key={skill} value={skill}>{skill}</option>
+              ))}
             </select>
           </div>
         </div>
       </div>
 
-      {/* Featured Ideas */}
-      {featuredIdeas.length > 0 && (
-        <div>
-          <h3 className="text-xl font-bold mb-4 dark:text-white">Featured Ideas</h3>
-          <IdeaboardTable ideas={featuredIdeas} featured={true} />
+      {/* Unified Ideas Table */}
+      <div>
+        <h3 className="text-xl font-bold mb-4 dark:text-white">Available Opportunities</h3>
+        <div className="mb-2">
+          <p className="text-gray-600 dark:text-gray-300">
+            Showing {filteredIdeas.length} available ideas matching your filters. Click on any idea to view details.
+          </p>
         </div>
-      )}
-
-      {/* Type-specific sections */}
-      {filters.type === "all" && (
-        <>
-          {/* Projects Section */}
-          <div>
-            <div className="flex items-center mb-4">
-              <div className="w-8 h-8 bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 rounded-full flex items-center justify-center font-bold mr-2">P</div>
-              <h3 className="text-xl font-bold dark:text-white">Projects</h3>
-            </div>
-            <div className="mb-2 pl-10">
-              <p className="text-gray-600 dark:text-gray-300">
-                Projects require a proposal and go through an approval process. They typically have a longer timeframe and periodic payments.
-              </p>
-            </div>
-            <IdeaboardTable 
-              ideas={filteredIdeas.filter((idea: Idea) => idea.type === "Project")}
-              emptyMessage="No projects match your current filters. Try adjusting them to see more options."
-            />
-          </div>
-
-          {/* Bounties Section */}
-          <div>
-            <div className="flex items-center mb-4 mt-8">
-              <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400 rounded-full flex items-center justify-center font-bold mr-2">B</div>
-              <h3 className="text-xl font-bold dark:text-white">Bounties</h3>
-            </div>
-            <div className="mb-2 pl-10">
-              <p className="text-gray-600 dark:text-gray-300">
-                Bounties can be worked on immediately with no proposal required. Winners are selected and paid in monthly review cycles.
-              </p>
-            </div>
-            <IdeaboardTable 
-              ideas={filteredIdeas.filter((idea: Idea) => idea.type === "Bounty")}
-              emptyMessage="No bounties match your current filters. Try adjusting them to see more options."
-            />
-          </div>
-        </>
-      )}
-
-      {/* All Ideas when filtered */}
-      {filters.type !== "all" && (
-        <div>
-          <h3 className="text-xl font-bold mb-4 dark:text-white">
-            {filters.type === "Project" ? "Projects" : "Bounties"}
-          </h3>
-          <IdeaboardTable ideas={filteredIdeas} />
-        </div>
-      )}
+        <IdeaboardTable 
+          ideas={filteredIdeas}
+          emptyMessage="No ideas match your current filters. Try adjusting them to see more options."
+          hideDeadlineAndTime={true}
+        />
+      </div>
     </div>
   );
 }

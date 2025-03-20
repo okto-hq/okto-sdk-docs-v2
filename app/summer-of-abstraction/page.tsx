@@ -1,9 +1,11 @@
-
 "use client"
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { ProposalGuidelinesDialog } from "./components/ProposalGuidelinesDialog";
+import { ProposalTemplateDialog } from "./components/ProposalTemplateDialog";
+import { SubmissionGuideDialog } from "./components/SubmissionGuideDialog";
 
 export default function Page() {
   // State to track active section for navigation
@@ -130,67 +132,107 @@ export default function Page() {
             </div>
           </section>
 
-          {/* Timeline Section */}
-          <section id="timeline" className="mb-12">
-            <h2 className="text-2xl font-bold mb-6 dark:text-white">Program Timeline</h2>
+          {/* How to Participate Section (moved from ideaboard page) */}
+          <section id="how-to-participate" className="mb-12">
+            <h2 className="text-2xl font-bold mb-6 dark:text-white">How to Participate</h2>
             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm dark:shadow-gray-900 border border-gray-300 dark:border-gray-700">
               <div className="relative">
-                {/* Vertical line connecting all events */}
-                <div className="absolute top-2 bottom-2 left-6 w-1 bg-indigo-400 dark:bg-indigo-700"></div>
+                {/* Vertical line connecting all events - Fixed position */}
+                <div className="absolute left-6 w-1 bg-indigo-400 dark:bg-indigo-700" style={{ top: "24px", bottom: "24px" }}></div>
                 
-                {/* Kickoff */}
-                <div className="flex items-start mb-8">
-                  <div className="relative">
+                {/* Browse */}
+                <div className="flex items-start mb-10 relative">
+                  <div className="min-w-[48px] z-10">
                     <div className="w-12 h-12 flex items-center justify-center">
-                      <div className="w-6 h-6 bg-indigo-600 dark:bg-indigo-500 rounded-full border-2 border-indigo-300 dark:border-indigo-700 shadow-md z-10"></div>
+                      <div className="w-8 h-8 bg-indigo-600 dark:bg-indigo-500 rounded-full border-4 border-indigo-100 dark:border-indigo-900 shadow-md flex items-center justify-center">
+                        <span className="text-white text-sm font-bold">1</span>
+                      </div>
                     </div>
                   </div>
-                  <div className="ml-2">
-                    <h3 className="text-lg font-semibold dark:text-white">Kickoff</h3>
-                    <p className="text-indigo-700 dark:text-indigo-400 font-medium mb-1">June 1, 2025</p>
-                    <p className="text-gray-600 dark:text-gray-300">Program launch, project announcements</p>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold dark:text-white">Browse Ideas</h3>
+                    <p className="text-gray-600 dark:text-gray-300 mt-1">
+                      Browse through our ideaboard to find projects and bounties that match your interests and skills. Filter by type, skill level, and time commitment to find the perfect fit.
+                    </p>
                   </div>
                 </div>
                 
-                {/* Contribution Period */}
-                <div className="flex items-start mb-8">
-                  <div className="relative">
+                {/* Choose */}
+                <div className="flex items-start mb-10 relative">
+                  <div className="min-w-[48px] z-10">
                     <div className="w-12 h-12 flex items-center justify-center">
-                      <div className="w-6 h-6 bg-indigo-600 dark:bg-indigo-500 rounded-full border-2 border-indigo-300 dark:border-indigo-700 shadow-md z-10"></div>
+                      <div className="w-8 h-8 bg-indigo-600 dark:bg-indigo-500 rounded-full border-4 border-indigo-100 dark:border-indigo-900 shadow-md flex items-center justify-center">
+                        <span className="text-white text-sm font-bold">2</span>
+                      </div>
                     </div>
                   </div>
-                  <div className="ml-2">
-                    <h3 className="text-lg font-semibold dark:text-white">Contribution Period</h3>
-                    <p className="text-indigo-700 dark:text-indigo-400 font-medium mb-1">June 15 - August 15, 2025</p>
-                    <p className="text-gray-600 dark:text-gray-300">Active project development and bounty submissions</p>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold dark:text-white">Choose Your Path</h3>
+                    <p className="text-gray-600 dark:text-gray-300 mt-1">
+                      Decide whether you want to work on a project (requires proposal) or a bounty (start immediately). Each has different requirements and timelines.
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+                      <div className="bg-indigo-50 dark:bg-indigo-900/30 p-4 rounded-md border border-indigo-100 dark:border-indigo-800 cursor-pointer">
+                        <h4 className="font-semibold text-indigo-700 dark:text-indigo-400 mb-1">Projects</h4>
+                        <p className="text-sm text-gray-700 dark:text-gray-300">
+                          Require a proposal and review process. Longer-term commitments with structured milestones and payments.
+                        </p>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          <ProposalGuidelinesDialog linkClassName="inline-block bg-indigo-600 hover:bg-indigo-700 text-white text-sm py-1.5 px-3 rounded-md transition-colors">
+                            View proposal guidelines
+                          </ProposalGuidelinesDialog>
+                          <ProposalTemplateDialog linkClassName="inline-block bg-indigo-300 hover:bg-indigo-500 text-indigo-700 dark:bg-indigo-900/60 dark:hover:bg-indigo-900/80 dark:text-indigo-300 text-sm py-1.5 px-3 rounded-md transition-colors border border-indigo-200 dark:border-indigo-800">
+                            Get proposal template
+                          </ProposalTemplateDialog>
+                        </div>
+                      </div>
+                      
+                      <div className="bg-purple-50 dark:bg-purple-900/30 p-4 rounded-md border border-purple-100 dark:border-purple-800 cursor-pointer">
+                        <h4 className="font-semibold text-purple-700 dark:text-purple-400 mb-1">Bounties</h4>
+                        <p className="text-sm text-gray-700 dark:text-gray-300">
+                          Start immediately without approval. Submit when ready, winners selected in monthly review cycles.
+                        </p>
+                        <div className="mt-3">
+                          <SubmissionGuideDialog linkClassName="inline-block bg-purple-600 hover:bg-purple-700 text-white text-sm py-1.5 px-3 rounded-md transition-colors">
+                            View submission guide
+                          </SubmissionGuideDialog>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 
-                {/* Evaluation */}
-                <div className="flex items-start mb-8">
-                  <div className="relative">
+                {/* Apply/Start */}
+                <div className="flex items-start mb-10 relative">
+                  <div className="min-w-[48px] z-10">
                     <div className="w-12 h-12 flex items-center justify-center">
-                      <div className="w-6 h-6 bg-indigo-600 dark:bg-indigo-500 rounded-full border-2 border-indigo-300 dark:border-indigo-700 shadow-md z-10"></div>
+                      <div className="w-8 h-8 bg-indigo-600 dark:bg-indigo-500 rounded-full border-4 border-indigo-100 dark:border-indigo-900 shadow-md flex items-center justify-center">
+                        <span className="text-white text-sm font-bold">3</span>
+                      </div>
                     </div>
                   </div>
-                  <div className="ml-2">
-                    <h3 className="text-lg font-semibold dark:text-white">Evaluation</h3>
-                    <p className="text-indigo-700 dark:text-indigo-400 font-medium mb-1">August 16-30, 2025</p>
-                    <p className="text-gray-600 dark:text-gray-300">Review of contributions</p>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold dark:text-white">Apply or Start Building</h3>
+                    <p className="text-gray-600 dark:text-gray-300 mt-1">
+                      For projects, submit a proposal using our template. For bounties, start working right away on your implementation.
+                    </p>
                   </div>
                 </div>
                 
-                {/* Awards & Celebration */}
-                <div className="flex items-start">
-                  <div className="relative">
+                {/* Submit */}
+                <div className="flex items-start relative">
+                  <div className="min-w-[48px] z-10">
                     <div className="w-12 h-12 flex items-center justify-center">
-                      <div className="w-6 h-6 bg-indigo-600 dark:bg-indigo-500 rounded-full border-2 border-indigo-300 dark:border-indigo-700 shadow-md z-10"></div>
+                      <div className="w-8 h-8 bg-indigo-600 dark:bg-indigo-500 rounded-full border-4 border-indigo-100 dark:border-indigo-900 shadow-md flex items-center justify-center">
+                        <span className="text-white text-sm font-bold">4</span>
+                      </div>
                     </div>
                   </div>
-                  <div className="ml-2">
-                    <h3 className="text-lg font-semibold dark:text-white">Awards & Celebration</h3>
-                    <p className="text-indigo-700 dark:text-indigo-400 font-medium mb-1">September 5, 2025</p>
-                    <p className="text-gray-600 dark:text-gray-300">Recognition of top contributors</p>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold dark:text-white">Submit Your Work</h3>
+                    <p className="text-gray-600 dark:text-gray-300 mt-1">
+                      Complete your project or bounty according to the requirements and submit for review by the stated deadline.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -274,12 +316,12 @@ export default function Page() {
                 </li>
                 <li>
                   <button 
-                    onClick={() => handleNavClick("timeline")} 
-                    className={`w-full text-left px-3 py-2 rounded-md transition-colors ${activeSection === "timeline" 
+                    onClick={() => handleNavClick("how-to-participate")} 
+                    className={`w-full text-left px-3 py-2 rounded-md transition-colors ${activeSection === "how-to-participate" 
                       ? "bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-400 font-medium" 
                       : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50"}`}
                   >
-                    Program Timeline
+                    How to Participate
                   </button>
                 </li>
                 <li>

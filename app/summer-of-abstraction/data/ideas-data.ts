@@ -222,7 +222,7 @@ export const ideasData: Idea[] = [
     type: "Project",
     description: "Extend Okto's CLI tool with new features that improve developer productivity, such as scaffolding, code generation, environment management, and integration with CI/CD pipelines.",
     skillLevel: "Advanced",
-    skillsRequired: ["Node.js", "CLI Development", "DevOps", "Go (optional)"],
+    skillsRequired: ["Node.js", "CLI Development", "DevOps", "Go"],
     reward: 3000,
     deadline: "2025-08-30",
     timeCommitment: "High",
@@ -277,6 +277,60 @@ export const ideasData: Idea[] = [
     description: "Produce a series of high-quality video tutorials that walk new users through getting started with Okto, from installation to building their first application.",
     skillLevel: "Beginner",
     skillsRequired: ["Video Production", "Technical Communication", "Basic Okto Knowledge"],
+    reward: 1200,
+    deadline: "2025-07-20",
+    timeCommitment: "Medium",
+    status: "Open",
+    featured: false,
+    outcomes: [
+      "5-7 tutorial videos (3-10 minutes each)",
+      "Clear, step-by-step instructions",
+      "High-quality audio and visuals",
+      "Accompanying text summaries"
+    ],
+    successCriteria: [
+      "Videos are clear, concise, and engaging",
+      "Content is technically accurate",
+      "Production quality meets professional standards",
+      "Concepts are explained in an accessible way"
+    ],
+    prerequisites: [
+      "Experience with video production and editing",
+      "Good communication skills and clear speaking voice",
+      "Basic understanding of Okto or similar tools"
+    ],
+    timeline: [
+      {
+        milestone: "Script Approval",
+        date: "2025-06-25",
+        description: "Submit scripts for review and approval"
+      },
+      {
+        milestone: "Submission Deadline",
+        date: "2025-07-20",
+        description: "Complete video series must be submitted by this date"
+      },
+      {
+        milestone: "Review Period",
+        date: "2025-07-30",
+        description: "All submissions will be reviewed by this date"
+      }
+    ],
+    mentor: {
+      name: "Ovia Seshadri",
+      title: "Head od DevRel",
+      contactHours: "Tuesdays and Thursdays, 2-4pm ",
+      email: "ovia.seshadri@coindcx.com"
+    },
+    applicationUrl: "/summer-of-abstraction/start-bounty"
+  },
+  {
+    id: "bounty-4",
+    title: "Organise an Okto meetup",
+    type: "Bounty",
+    description: "Organise an Okto meetup, highlighting the chain abstraction being powered by Okto and builders can levereage the Okto SDK",
+    skillLevel: "Beginner",
+    skillsRequired: ["Event Management", "Operations", "Basic Okto Knowledge"],
     reward: 1200,
     deadline: "2025-07-20",
     timeCommitment: "Medium",

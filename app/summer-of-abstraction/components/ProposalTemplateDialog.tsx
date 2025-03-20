@@ -25,9 +25,7 @@ export function ProposalTemplateDialog({ children, linkClassName }: ProposalTemp
         </DialogHeader>
 
         <div className="prose prose-indigo dark:prose-invert max-w-none">
-          <p className="italic text-gray-600 dark:text-gray-400">
-            <strong>Note:</strong> The template can be customized based on your project type. Different projects may require different formats—for example, a content creation request, a community workshop proposal, or a developer product plan might each have unique requirements. Adjust the template as needed to best fit your proposal.
-          </p>
+          
 
           <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mt-6">1. Applicant Information</h2>
           <ul className="list-disc pl-6 space-y-1">

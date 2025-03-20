@@ -1,6 +1,5 @@
 "use client"
 
-
 import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Idea } from "../types";
@@ -10,12 +9,14 @@ interface IdeaboardTableProps {
   ideas: Idea[];
   featured?: boolean;
   emptyMessage?: string;
+  hideDeadlineAndTime?: boolean;
 }
 
 export function IdeaboardTable({ 
   ideas, 
   featured = false, 
-  emptyMessage = "No ideas found that match your filters. Try adjusting your filters to see more results."
+  emptyMessage = "No ideas found that match your filters. Try adjusting your filters to see more results.",
+  hideDeadlineAndTime = false
 }: IdeaboardTableProps) {
   // Format date for display
   const formatDate = (dateString: string) => {
@@ -74,8 +75,12 @@ export function IdeaboardTable({
             <th className="px-4 py-3 text-left">Skill Level</th>
             <th className="px-4 py-3 text-left">Skills Required</th>
             <th className="px-4 py-3 text-left">Reward</th>
-            <th className="px-4 py-3 text-left">Deadline</th>
-            <th className="px-4 py-3 text-left">Time</th>
+            {!hideDeadlineAndTime && (
+              <>
+                <th className="px-4 py-3 text-left">Deadline</th>
+                <th className="px-4 py-3 text-left">Time</th>
+              </>
+            )}
             <th className="px-4 py-3 text-left"></th>
           </tr>
         </thead>
@@ -108,8 +113,12 @@ export function IdeaboardTable({
               </td>
               <td className="px-4 py-3 dark:text-gray-300">{idea.skillsRequired.join(", ")}</td>
               <td className="px-4 py-3 font-medium text-indigo-600 dark:text-indigo-400">${idea.reward}</td>
-              <td className="px-4 py-3 dark:text-gray-300">{formatDate(idea.deadline)}</td>
-              <td className="px-4 py-3 dark:text-gray-300">{idea.timeCommitment}</td>
+              {!hideDeadlineAndTime && (
+                <>
+                  <td className="px-4 py-3 dark:text-gray-300">{formatDate(idea.deadline)}</td>
+                  <td className="px-4 py-3 dark:text-gray-300">{idea.timeCommitment}</td>
+                </>
+              )}
               <td className="px-4 py-3">
                 <IdeaDetailDialog idea={idea} />
               </td>
