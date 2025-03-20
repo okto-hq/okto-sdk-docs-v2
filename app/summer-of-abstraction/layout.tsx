@@ -1,4 +1,4 @@
-// app/showcase/layout.js or wherever your layout file is located
+
 import type { ReactNode } from 'react';
 
 export const metadata = {
