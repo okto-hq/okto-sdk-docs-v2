@@ -1,10 +1,15 @@
+// data/ideas-data.ts
 import { Idea } from "../types";
+import { parseIdeasFromCSV } from "../utils/csv-parser";
 
-export const ideasData: Idea[] = [
+
+// Default ideas array with added field property
+export let ideasData: Idea[] = [
   {
     id: "project-1",
     title: "Build a New Component Library",
     type: "Project",
+    field: "Development",
     description: "Create a comprehensive component library for Okto's frontend applications using React and TypeScript. This will involve designing, implementing, and documenting a set of reusable UI components that follow Okto's design guidelines.",
     skillLevel: "Intermediate",
     skillsRequired: ["React", "TypeScript", "UI/UX", "Component Design"],
@@ -49,7 +54,7 @@ export const ideasData: Idea[] = [
     ],
     mentor: {
       name: "Ovia Seshadri",
-      title: "Head od DevRel",
+      title: "Head of DevRel",
       contactHours: "Tuesdays and Thursdays, 2-4pm ",
       email: "ovia.seshadri@coindcx.com"
     },
@@ -59,6 +64,7 @@ export const ideasData: Idea[] = [
     id: "bounty-1",
     title: "Implement Dark Mode for Documentation",
     type: "Bounty",
+    field: "Development",
     description: "Implement a dark mode toggle and styling for the Okto documentation website. This should include all necessary CSS changes and respect user preferences via system settings.",
     skillLevel: "Beginner",
     skillsRequired: ["CSS", "JavaScript", "Web Development"],
@@ -102,7 +108,7 @@ export const ideasData: Idea[] = [
     ],
     mentor: {
       name: "Ovia Seshadri",
-      title: "Head od DevRel",
+      title: "Head of DevRel",
       contactHours: "Tuesdays and Thursdays, 2-4pm ",
       email: "ovia.seshadri@coindcx.com"
     },
@@ -112,6 +118,7 @@ export const ideasData: Idea[] = [
     id: "project-2",
     title: "Create Interactive Tutorial System",
     type: "Project",
+    field: "Content",
     description: "Design and implement an interactive tutorial system that helps new users learn Okto through guided, hands-on experiences. The system should be embeddable in our documentation and support multiple learning paths.",
     skillLevel: "Advanced",
     skillsRequired: ["JavaScript", "React", "UX Design", "Technical Writing"],
@@ -156,7 +163,7 @@ export const ideasData: Idea[] = [
     ],
     mentor: {
       name: "Ovia Seshadri",
-      title: "Head od DevRel",
+      title: "Head of DevRel",
       contactHours: "Tuesdays and Thursdays, 2-4pm ",
       email: "ovia.seshadri@coindcx.com"
     },
@@ -166,6 +173,7 @@ export const ideasData: Idea[] = [
     id: "bounty-2",
     title: "Create Performance Dashboard Widget",
     type: "Bounty",
+    field: "Development",
     description: "Build a dashboard widget that displays real-time performance metrics for Okto deployments, including response times, error rates, and resource usage.",
     skillLevel: "Intermediate",
     skillsRequired: ["JavaScript", "Data Visualization", "API Integration"],
@@ -210,7 +218,7 @@ export const ideasData: Idea[] = [
     ],
     mentor: {
       name: "Ovia Seshadri",
-      title: "Head od DevRel",
+      title: "Head of DevRel",
       contactHours: "Tuesdays and Thursdays, 2-4pm ",
       email: "ovia.seshadri@coindcx.com"
     },
@@ -220,9 +228,10 @@ export const ideasData: Idea[] = [
     id: "project-3",
     title: "Develop CLI Tool Extensions",
     type: "Project",
+    field: "Development",
     description: "Extend Okto's CLI tool with new features that improve developer productivity, such as scaffolding, code generation, environment management, and integration with CI/CD pipelines.",
     skillLevel: "Advanced",
-    skillsRequired: ["Node.js", "CLI Development", "DevOps", "Go"],
+    skillsRequired: ["Node.js", "CLI Development", "DevOps", "Go (optional)"],
     reward: 3000,
     deadline: "2025-08-30",
     timeCommitment: "High",
@@ -264,7 +273,7 @@ export const ideasData: Idea[] = [
     ],
     mentor: {
       name: "Ovia Seshadri",
-      title: "Head od DevRel",
+      title: "Head of DevRel",
       contactHours: "Tuesdays and Thursdays, 2-4pm ",
       email: "ovia.seshadri@coindcx.com"
     },
@@ -274,6 +283,7 @@ export const ideasData: Idea[] = [
     id: "bounty-3",
     title: "Create Tutorial Videos for Beginners",
     type: "Bounty",
+    field: "Content",
     description: "Produce a series of high-quality video tutorials that walk new users through getting started with Okto, from installation to building their first application.",
     skillLevel: "Beginner",
     skillsRequired: ["Video Production", "Technical Communication", "Basic Okto Knowledge"],
@@ -318,64 +328,43 @@ export const ideasData: Idea[] = [
     ],
     mentor: {
       name: "Ovia Seshadri",
-      title: "Head od DevRel",
-      contactHours: "Tuesdays and Thursdays, 2-4pm ",
-      email: "ovia.seshadri@coindcx.com"
-    },
-    applicationUrl: "/summer-of-abstraction/start-bounty"
-  },
-  {
-    id: "bounty-4",
-    title: "Organise an Okto meetup",
-    type: "Bounty",
-    description: "Organise an Okto meetup, highlighting the chain abstraction being powered by Okto and builders can levereage the Okto SDK",
-    skillLevel: "Beginner",
-    skillsRequired: ["Event Management", "Operations", "Basic Okto Knowledge"],
-    reward: 1200,
-    deadline: "2025-07-20",
-    timeCommitment: "Medium",
-    status: "Open",
-    featured: false,
-    outcomes: [
-      "5-7 tutorial videos (3-10 minutes each)",
-      "Clear, step-by-step instructions",
-      "High-quality audio and visuals",
-      "Accompanying text summaries"
-    ],
-    successCriteria: [
-      "Videos are clear, concise, and engaging",
-      "Content is technically accurate",
-      "Production quality meets professional standards",
-      "Concepts are explained in an accessible way"
-    ],
-    prerequisites: [
-      "Experience with video production and editing",
-      "Good communication skills and clear speaking voice",
-      "Basic understanding of Okto or similar tools"
-    ],
-    timeline: [
-      {
-        milestone: "Script Approval",
-        date: "2025-06-25",
-        description: "Submit scripts for review and approval"
-      },
-      {
-        milestone: "Submission Deadline",
-        date: "2025-07-20",
-        description: "Complete video series must be submitted by this date"
-      },
-      {
-        milestone: "Review Period",
-        date: "2025-07-30",
-        description: "All submissions will be reviewed by this date"
-      }
-    ],
-    mentor: {
-      name: "Ovia Seshadri",
-      title: "Head od DevRel",
+      title: "Head of DevRel",
       contactHours: "Tuesdays and Thursdays, 2-4pm ",
       email: "ovia.seshadri@coindcx.com"
     },
     applicationUrl: "/summer-of-abstraction/start-bounty"
   }
 ];
+
+// For now, let's remove the CSV loading functionality to simplify the setup
+// We can add it back later once the basic integration is working
+
+// Placeholder for future CSV loading functionality
+
+
+export const loadIdeasFromCSV = async (csvUrl: string): Promise<Idea[]> => {
+  try {
+    const response = await fetch(csvUrl);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch CSV: ${response.status} ${response.statusText}`);
+    }
+    
+    const csvText = await response.text();
+    const parsedIdeas = parseIdeasFromCSV(csvText);
+    
+    if (parsedIdeas.length > 0) {
+      // Replace the existing ideas data with the parsed data
+      ideasData = parsedIdeas;
+      console.log(`Loaded ${parsedIdeas.length} ideas from CSV`);
+    } else {
+      console.warn("CSV parsing resulted in 0 ideas, keeping default data");
+    }
+    
+    return ideasData;
+  } catch (error) {
+    console.error("Error loading ideas from CSV:", error);
+    console.log("Using default idea data instead");
+    // Return the default data if CSV loading fails
+    return ideasData;
+  }
+};

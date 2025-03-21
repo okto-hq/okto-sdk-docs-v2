@@ -1,99 +1,82 @@
 "use client"
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { IdeaboardTable } from "./IdeaboardTable";
 import { ideasData } from "../data/ideas-data";
 import { Idea } from "../types";
-
-// Define contribution fields and their associated skills
-const CONTRIBUTION_FIELDS = {
-  all: "All Fields",
-  development: "Development",
-  content: "Content",
-  community: "Community"
-};
-
-// Map skills to specific contribution fields
-const FIELD_SKILLS_MAP = {
-  development: [
-    "React", "TypeScript", "JavaScript", "Node.js", "Go", "UI/UX", 
-    "Component Design", "Data Visualization", "API Integration", 
-    "CLI Development", "DevOps"
-  ],
-  content: [
-    "Technical Writing", "Video Production", "Technical Communication", 
-    "Content Creation", "Documentation", "Educational Design"
-  ],
-  community: [
-    "Community Building", "Workshop Facilitation", "Event Planning", 
-    "Social Media", "Community Management", "User Research"
-  ]
-};
 
 export function IdeaboardSection() {
   // State for filters
   const [filters, setFilters] = useState({
     type: "all",
     field: "all",
-    skill: "all"
   });
 
-  // Skills based on selected field
-  const [availableSkills, setAvailableSkills] = useState<string[]>([]);
+  // State for multi-select skills - now using a custom UI
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  
+  // Calculate all available skills for each field dynamically from the idea data
+  const fieldSkillsMap = useMemo(() => {
+    const map: Record<string, Set<string>> = {
+      Development: new Set(),
+      Content: new Set(),
+      Community: new Set()
+    };
+    
+    // Populate the map based on actual ideas and their fields
+    ideasData.forEach((idea: Idea) => {
+      const field = idea.field;
+      if (field in map) {
+        idea.skillsRequired.forEach(skill => {
+          map[field].add(skill);
+        });
+      }
+    });
+    
+    // Convert sets to sorted arrays
+    return {
+      Development: Array.from(map.Development).sort(),
+      Content: Array.from(map.Content).sort(),
+      Community: Array.from(map.Community).sort()
+    };
+  }, []);
 
-  // Update available skills when field changes
-  useEffect(() => {
+  // Available skills based on selected field
+  const availableSkills = useMemo(() => {
     if (filters.field === "all") {
-      setAvailableSkills([]);
-    } else {
-      setAvailableSkills(FIELD_SKILLS_MAP[filters.field as keyof typeof FIELD_SKILLS_MAP] || []);
+      return [];
     }
-    // Reset skill selection when field changes
-    setFilters(prev => ({ ...prev, skill: "all" }));
+    return fieldSkillsMap[filters.field as keyof typeof fieldSkillsMap] || [];
+  }, [filters.field, fieldSkillsMap]);
+
+  // Reset selected skills when field changes
+  useEffect(() => {
+    setSelectedSkills([]);
   }, [filters.field]);
 
-  // Determine if an idea belongs to a specific field
-  const getIdeaField = (idea: Idea): string => {
-    const skillsSet = new Set(idea.skillsRequired);
-    
-    // Check if any development skills are present
-    if (FIELD_SKILLS_MAP.development.some(skill => skillsSet.has(skill))) {
-      return "development";
-    }
-    
-    // Check if any content skills are present
-    if (FIELD_SKILLS_MAP.content.some(skill => skillsSet.has(skill))) {
-      return "content";
-    }
-    
-    // Check if any community skills are present
-    if (FIELD_SKILLS_MAP.community.some(skill => skillsSet.has(skill))) {
-      return "community";
-    }
-    
-    return "other";
-  };
-
   // Apply filters to ideas
-  const filteredIdeas = ideasData.filter((idea: Idea) => {
-    const typeMatch = 
-      filters.type === "all" || 
-      idea.type === filters.type;
-    
-    const fieldMatch = 
-      filters.field === "all" || 
-      getIdeaField(idea) === filters.field;
-    
-    const skillMatch = 
-      filters.skill === "all" || 
-      idea.skillsRequired.includes(filters.skill);
-    
-    return typeMatch && fieldMatch && skillMatch;
-  });
+  const filteredIdeas = useMemo(() => {
+    return ideasData.filter((idea: Idea) => {
+      const typeMatch = 
+        filters.type === "all" || 
+        idea.type === filters.type;
+      
+      const fieldMatch = 
+        filters.field === "all" || 
+        idea.field === filters.field;
+      
+      // Check if any of the selected skills match the idea's required skills
+      const skillMatch = 
+        selectedSkills.length === 0 || 
+        idea.skillsRequired.some(skill => selectedSkills.includes(skill));
+      
+      return typeMatch && fieldMatch && skillMatch;
+    });
+  }, [filters.type, filters.field, selectedSkills]);
 
   // Handle filter changes
   const handleFilterChange = (
-    filterType: "type" | "field" | "skill",
+    filterType: "type" | "field",
     value: string
   ) => {
     setFilters((prev) => ({
@@ -102,13 +85,25 @@ export function IdeaboardSection() {
     }));
   };
 
+  // Handle skill selection toggle
+  const toggleSkill = (skill: string) => {
+    setSelectedSkills(prev => {
+      // If already selected, remove it
+      if (prev.includes(skill)) {
+        return prev.filter(s => s !== skill);
+      }
+      // Otherwise, add it
+      return [...prev, skill];
+    });
+  };
+
   // Reset all filters
   const resetFilters = () => {
     setFilters({
       type: "all",
       field: "all",
-      skill: "all",
     });
+    setSelectedSkills([]);
   };
 
   // Calculate counts for each type
@@ -139,7 +134,7 @@ export function IdeaboardSection() {
               id="type-filter"
               value={filters.type}
               onChange={(e) => handleFilterChange("type", e.target.value)}
-              className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white h-10"
             >
               <option value="all">All Types ({ideasData.length})</option>
               <option value="Project">Projects ({projectCount})</option>
@@ -156,41 +151,73 @@ export function IdeaboardSection() {
               id="field-filter"
               value={filters.field}
               onChange={(e) => handleFilterChange("field", e.target.value)}
-              className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white h-10"
             >
               <option value="all">All Fields</option>
-              <option value="development">Development</option>
-              <option value="content">Content</option>
-              <option value="community">Community</option>
+              <option value="Development">Development</option>
+              <option value="Content">Content</option>
+              <option value="Community">Community</option>
             </select>
           </div>
 
-          {/* Specific Skills Filter */}
+          {/* Custom Skills Filter */}
           <div>
-            <label htmlFor="skill-filter" className="block text-sm font-medium mb-1 dark:text-gray-300">
-              Skill:
+            <label htmlFor="skills-filter" className="block text-sm font-medium mb-1 dark:text-gray-300">
+              Skill: {selectedSkills.length > 0 ? `(${selectedSkills.length} selected)` : ""}
             </label>
-            <select
-              id="skill-filter"
-              value={filters.skill}
-              onChange={(e) => handleFilterChange("skill", e.target.value)}
-              className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-              disabled={filters.field === "all"}
+            <div 
+              className="w-full border rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 h-10 flex items-center text-gray-500 dark:text-gray-300 cursor-pointer relative"
+              onClick={() => {
+                // Only show the dropdown if a field is selected
+                if (filters.field !== "all") {
+                  const dropdown = document.getElementById("skills-dropdown");
+                  if (dropdown) {
+                    dropdown.classList.toggle("hidden");
+                  }
+                }
+              }}
             >
-              <option value="all">
-                {filters.field === "all" ? "Select a field first" : "All Skills"}
-              </option>
-              {availableSkills.map((skill) => (
-                <option key={skill} value={skill}>{skill}</option>
-              ))}
-            </select>
+              {filters.field === "all" ? (
+                "Select a field first"
+              ) : selectedSkills.length === 0 ? (
+                "Select skills"
+              ) : (
+                selectedSkills.join(", ")
+              )}
+
+              {/* Dropdown panel for skills selection */}
+              <div 
+                id="skills-dropdown" 
+                className="absolute left-0 top-full mt-1 w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg z-10 max-h-40 overflow-y-auto hidden"
+                onClick={(e) => e.stopPropagation()} // Prevent click from closing dropdown
+              >
+                {availableSkills.length === 0 ? (
+                  <div className="p-2 text-gray-500 dark:text-gray-400">No skills available</div>
+                ) : (
+                  availableSkills.map((skill) => (
+                    <div 
+                      key={skill} 
+                      className="p-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center"
+                      onClick={() => toggleSkill(skill)}
+                    >
+                      <input 
+                        type="checkbox" 
+                        checked={selectedSkills.includes(skill)} 
+                        onChange={() => {}} // Handled by parent click
+                        className="mr-2"
+                      />
+                      {skill}
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Unified Ideas Table */}
       <div>
-        <h3 className="text-xl font-bold mb-4 dark:text-white">Available Opportunities</h3>
         <div className="mb-2">
           <p className="text-gray-600 dark:text-gray-300">
             Showing {filteredIdeas.length} available ideas matching your filters. Click on any idea to view details.
@@ -202,6 +229,31 @@ export function IdeaboardSection() {
           hideDeadlineAndTime={true}
         />
       </div>
+
+      {/* Close dropdown when clicking outside */}
+      <div 
+        className="fixed inset-0 z-0 hidden" 
+        id="click-outside-layer"
+        onClick={() => {
+          const dropdown = document.getElementById("skills-dropdown");
+          if (dropdown) {
+            dropdown.classList.add("hidden");
+          }
+          document.getElementById("click-outside-layer")?.classList.add("hidden");
+        }}
+      ></div>
     </div>
   );
+}
+
+// Add this code to handle closing the dropdown when clicking outside
+if (typeof document !== 'undefined') {
+  document.addEventListener('click', (e) => {
+    const dropdown = document.getElementById("skills-dropdown");
+    const clickOutsideLayer = document.getElementById("click-outside-layer");
+    
+    if (dropdown && !dropdown.classList.contains("hidden")) {
+      clickOutsideLayer?.classList.remove("hidden");
+    }
+  });
 }

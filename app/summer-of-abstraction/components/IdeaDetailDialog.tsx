@@ -9,6 +9,7 @@ import { Idea } from "../types";
 import { ProposalGuidelinesDialog } from "./ProposalGuidelinesDialog";
 import { ProposalTemplateDialog } from "./ProposalTemplateDialog";
 import { SubmissionGuideDialog } from "./SubmissionGuideDialog";
+import { SUBMISSION_URLS } from "../utils/constants";
 
 interface IdeaDetailDialogProps {
   idea: Idea;
@@ -133,7 +134,7 @@ export function IdeaDetailDialog({ idea }: IdeaDetailDialogProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="dark:text-white">
-              <strong>Reward:</strong> ${idea.reward}
+              <strong>Reward:</strong> {idea.reward} $OKTO
             </div>
             <div className="dark:text-white">
               <strong>Deadline:</strong> {formatDate(idea.deadline)}
@@ -312,7 +313,7 @@ export function IdeaDetailDialog({ idea }: IdeaDetailDialogProps) {
         {/* Apply Button */}
         <div className="flex flex-col justify-center mt-6">
         <a 
-          href="https://questbook.app/proposal_form/?grantId=67ab0aaf75ceaec6d645dd48&chainId=10"
+          href={SUBMISSION_URLS[idea.type]}
           target="_blank"
           rel="noopener noreferrer"
           className={`${typeStyles.actionBgClass} text-white px-6 py-3 rounded-md font-bold text-center`}
