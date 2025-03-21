@@ -152,7 +152,7 @@ export default function Page() {
                   <div className="ml-4">
                     <h3 className="text-lg font-semibold dark:text-white">Browse Ideas</h3>
                     <p className="text-gray-600 dark:text-gray-300 mt-1">
-                      Browse through our ideaboard to find projects and bounties that match your interests and skills. Filter by type, skill level, and time commitment to find the perfect fit.
+                      Browse through our idea board to find projects and bounties that match your interests and skills. Filter by type, skill level, and time commitment to find the perfect fit.
                     </p>
                   </div>
                 </div>
@@ -246,7 +246,7 @@ export default function Page() {
               <ol className="list-decimal pl-5 space-y-4 dark:text-gray-300">
                 <li>
                   <strong>Explore Ideas</strong> - Browse through our 
-                  <Link href="/summer-of-abstraction/ideaboard" className="text-indigo-600 dark:text-indigo-400 hover:underline"> ideaboard </Link> 
+                  <Link href="/summer-of-abstraction/ideaboard" className="text-indigo-600 dark:text-indigo-400 hover:underline"> Idea Board </Link> 
                   to find projects and bounties that match your interests and skills.
                 </li>
                 <li>
@@ -275,7 +275,7 @@ export default function Page() {
                   href="/summer-of-abstraction/ideaboard" 
                   className="bg-white text-indigo-700 hover:bg-gray-100 px-6 py-3 rounded-md font-bold"
                 >
-                  View Ideaboard
+                  View Idea Board
                 </Link>
                 <a 
                   href="#" 
@@ -349,7 +349,7 @@ export default function Page() {
                     href="/summer-of-abstraction/ideaboard" 
                     className="block px-3 py-2 text-indigo-600 dark:text-indigo-400 hover:underline"
                   >
-                    View Ideaboard →
+                    View Idea Board →
                   </Link>
                 </li>
               </ul>

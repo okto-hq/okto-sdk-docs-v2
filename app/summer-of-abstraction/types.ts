@@ -1,14 +1,15 @@
-
-
+// types.ts
 export type IdeaType = "Project" | "Bounty";
 export type SkillLevel = "Beginner" | "Intermediate" | "Advanced";
 export type TimeCommitment = "Low" | "Medium" | "High";
 export type Status = "Open" | "In Progress" | "Completed";
+export type ContributionField = "Development" | "Content" | "Community";
 
 export interface Idea {
   id: string;
   title: string;
   type: IdeaType;
+  field: ContributionField; 
   description: string;
   skillLevel: SkillLevel;
   skillsRequired: string[];

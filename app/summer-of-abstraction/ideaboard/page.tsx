@@ -1,40 +1,40 @@
-// File: /app/summer-of-abstraction/ideaboard/page.tsx
-import React from 'react';
-import { IdeaboardSection } from "../components/IdeaboardSection";
-import { ProposalGuidelinesDialog } from "../components/ProposalGuidelinesDialog";
-import { ProposalTemplateDialog } from "../components/ProposalTemplateDialog";
-import { SubmissionGuideDialog } from "../components/SubmissionGuideDialog";
+"use client"
+
+import React from "react";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { IdeaboardSection } from "../components/IdeaboardSection";
+import { IdeasLoader } from "../components/IdeasLoader";
 
 export default function IdeaboardPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-5xl mx-auto">
-        {/* Breadcrumb Navigation */}
-        <div className="mb-6">
-          <Link
-            href="/summer-of-abstraction"
-            className="flex items-center text-indigo-600 dark:text-indigo-400 hover:underline"
+        {/* Back Link */}
+        <div className="mb-4">
+          <Link 
+            href="/summer-of-abstraction" 
+            className="text-indigo-600 dark:text-indigo-400 hover:underline flex items-center"
           >
-            <ArrowLeft className="w-4 h-4 mr-1" />
-            <span>Back to Summer of Abstraction</span>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Summer of Abstraction
           </Link>
         </div>
-
-        {/* Header Section */}
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold mb-4 dark:text-white">Idea Board</h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 mb-6">
-            Browse available projects and bounties in the Summer of Abstraction program.
+        
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold mb-4 dark:text-white">Ideaboard</h1>
+          <p className="text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            Browse available projects and bounties for the Summer of Abstraction program.
+            Filter by type, field, and skill to find the perfect opportunity.
           </p>
         </div>
 
-        {/* Ideaboard List Section */}
-        <section>
-          <h2 className="text-2xl font-bold mb-6 dark:text-white">Browse Ideas</h2>
+        {/* Ideaboard Section */}
+        <IdeasLoader>
           <IdeaboardSection />
-        </section>
+        </IdeasLoader>
       </div>
     </div>
   );

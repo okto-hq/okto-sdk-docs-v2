@@ -3,6 +3,7 @@
 
 import React from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { SUBMISSION_URLS } from "../utils/constants";
 
 interface ProposalTemplateDialogProps {
   children: React.ReactNode;
@@ -139,7 +140,7 @@ export function ProposalTemplateDialog({ children, linkClassName }: ProposalTemp
 
           <h3 className="text-lg font-medium text-indigo-600 dark:text-indigo-400 mt-6">Submission Instructions:</h3>
           <ul className="list-disc pl-6 space-y-1">
-            <li><a href="https://questbook.app/proposal_form/?grantId=67ab0aaf75ceaec6d645dd48&chainId=10" className="text-indigo-600 dark:text-indigo-400 hover:underline" target="_blank" rel="noopener noreferrer">Submit your proposal here.</a></li>
+            <li><a href={SUBMISSION_URLS.Project} className="text-indigo-600 dark:text-indigo-400 hover:underline" target="_blank" rel="noopener noreferrer">Submit your proposal here.</a></li>
             <li>Ensure your proposal is complete and follows the guidelines.</li>
             <li>Proposals will be reviewed based on feasibility, innovation, impact, and execution potential.</li>
           </ul>
@@ -155,7 +156,6 @@ export function ProposalTemplateDialog({ children, linkClassName }: ProposalTemp
                 // Generate the proposal template as text
                 const template = `# Proposal Template
 
-**Note:** The template can be customized based on your project type. Different projects may require different formats—for example, a content creation request, a community workshop proposal, or a developer product plan might each have unique requirements. Adjust the template as needed to best fit your proposal.
 
 # **1. Applicant Information**
 
