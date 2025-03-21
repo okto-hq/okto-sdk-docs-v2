@@ -20,7 +20,7 @@ export default function FeatureCard({
     <div className="flex flex-col">
       <div className="flex items-start gap-3">
         <div className={`${iconColor} flex-shrink-0`}>{icon}</div>
-        <h3 className="text-sm font-bold m-0">{title}</h3>
+        <h3 className="text-sm font-bold m-0  ">{title}</h3>
       </div>
       <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400 m-0">{description}</p>
     </div>
@@ -29,7 +29,7 @@ export default function FeatureCard({
   const cardClasses = "px-4 py-4 rounded-lg border border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 transition-all shadow-sm hover:shadow-md";
 
   return link ? (
-    <Link href={link} className="no-underline">
+    <Link href={link} className="no-underline not-prose">
       <div className={`${cardClasses} cursor-pointer hover:transform hover:translate-y-[-2px]`}>
         <CardContent />
       </div>
