@@ -9,7 +9,7 @@ export interface Idea {
   id: string;
   title: string;
   type: IdeaType;
-  field: ContributionField; // New field for contribution type
+  field: ContributionField; 
   description: string;
   skillLevel: SkillLevel;
   skillsRequired: string[];

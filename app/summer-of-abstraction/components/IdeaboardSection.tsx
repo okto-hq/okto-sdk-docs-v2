@@ -246,7 +246,7 @@ export function IdeaboardSection() {
   );
 }
 
-// Add this code to handle closing the dropdown when clicking outside
+// to handle closing the dropdown when clicking outside
 if (typeof document !== 'undefined') {
   document.addEventListener('click', (e) => {
     const dropdown = document.getElementById("skills-dropdown");

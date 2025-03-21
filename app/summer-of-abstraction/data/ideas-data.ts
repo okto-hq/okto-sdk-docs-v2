@@ -3,6 +3,8 @@ import { Idea } from "../types";
 import { parseIdeasFromCSV } from "../utils/csv-parser";
 
 
+// WARNING: Do Not delete the ideasData array, it acts as a fallback in case csv parser fails. Thank you!
+
 // Default ideas array with added field property
 export let ideasData: Idea[] = [
   {
@@ -336,10 +338,9 @@ export let ideasData: Idea[] = [
   }
 ];
 
-// For now, let's remove the CSV loading functionality to simplify the setup
-// We can add it back later once the basic integration is working
 
-// Placeholder for future CSV loading functionality
+
+// function for CSV loading functionality
 
 
 export const loadIdeasFromCSV = async (csvUrl: string): Promise<Idea[]> => {
