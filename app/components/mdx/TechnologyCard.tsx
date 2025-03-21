@@ -30,7 +30,7 @@ export default function TechnologyCard({
             href={link}
             className={`block no-underline w-full max-w-sm group ${className}`}
         >
-            <Card className="hover:bg-[#e7eafd] bg-[#F5F6FE] dark:bg-gray-800 transition-colors duration-300 rounded-xl shadow-sm hover:shadow-md border-none h-full">
+            <Card className="not-dark:hover:bg-[#e7eafd] bg-[#F5F6FE] dark:bg-gray-800 transition-colors duration-300 rounded-xl shadow-sm hover:shadow-md border-none h-full">
                 <CardContent className="flex items-center justify-between p-4">
                     <div className="flex items-center space-x-4">
                         <div className="p-2 rounded-lg text-[#161616] dark:text-white">

@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, Image } from "@nextui-org/react";
+import { Card, Image } from "@heroui/react";
 import Link from "next/link";
 import { ReactNode } from "react";
 
