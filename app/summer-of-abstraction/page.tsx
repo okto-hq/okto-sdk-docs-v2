@@ -95,7 +95,7 @@ export default function Page() {
           </div>
 
           {/* Banner Image */}
-          <div className="w-full mb-10 rounded-lg overflow-hidden shadow-lg">
+          {/* <div className="w-full mb-10 rounded-lg overflow-hidden shadow-lg">
             <Image 
               src="/images/summer-of-abstraction-banner.jpg" 
               alt="Summer of Abstraction - Retrowave themed banner with palm trees and grid"
@@ -104,7 +104,7 @@ export default function Page() {
               className="w-full object-cover"
               priority
             />
-          </div>
+          </div> */}
 
           {/* About Section */}
           <section id="about" className="mb-12">
@@ -191,9 +191,10 @@ export default function Page() {
                     </div>
                   </div>
                   <div className="ml-4">
-                    <h3 className="text-lg font-semibold dark:text-white">Browse Ideas</h3>
+                    <h3 className="text-lg font-semibold dark:text-white">Browse Ideas or Propose Your Own</h3>
                     <p className="text-gray-600 dark:text-gray-300 mt-1">
-                      Browse through our idea board to find projects and bounties that match your interests and skills. Filter by type, skill level, and time commitment to find the perfect fit.
+                      Browse through our <Link href="/summer-of-abstraction/ideaboard" className="text-indigo-600 dark:text-indigo-400 hover:underline"> Idea Board </Link> to find projects and bounties that match your interests and skills. Filter by type to find the perfect fit. 
+                      Or if you have an idea of your own where okto is used, propose it to us for a project collab.
                     </p>
                   </div>
                 </div>
