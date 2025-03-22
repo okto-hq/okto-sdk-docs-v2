@@ -1,7 +1,9 @@
-// utils/csv-parser.ts
-import { Idea, IdeaType, SkillLevel, TimeCommitment, ContributionField } from "../types";
+import { Idea, IdeaType, SkillLevel, Status, ContributionField } from "../types";
 import Papa from 'papaparse';
 import { SUBMISSION_URLS } from './constants';
+
+// Special value for indicating a rolling deadline
+const ROLLING_DEADLINE_VALUE = "rolling";
 
 export const parseIdeasFromCSV = (csvText: string): Idea[] => {
   const results = Papa.parse(csvText, {
@@ -29,6 +31,11 @@ export const parseIdeasFromCSV = (csvText: string): Idea[] => {
       // Generate a sequential ID if not provided
       const id = row.id || `idea-${index + 1}`;
       
+      // Parse fields - handle as an array
+      const fields = row.fields ? 
+        row.fields.split(',').map((f: string) => f.trim() as ContributionField) : 
+        [row.field as ContributionField || "Development"]; // Fallback to single field if provided
+      
       // Parse arrays (split by commas)
       const skillsRequired = row.skillsRequired ? row.skillsRequired.split(',').map((s: string) => s.trim()) : [];
       const outcomes = row.outcomes ? row.outcomes.split(',').map((s: string) => s.trim()) : [];
@@ -41,26 +48,30 @@ export const parseIdeasFromCSV = (csvText: string): Idea[] => {
         return { milestone, date, description };
       }) : [];
       
-      // Parse mentor
-      const mentorParts = row.mentor ? row.mentor.split(':') : ['', '', '', ''];
+      // Parse mentor (now without email)
+      const mentorParts = row.mentor ? row.mentor.split(':') : ['', '', ''];
       
       // Get the appropriate URL based on type
       const type = (row.type as IdeaType) || "Project";
       const applicationUrl = SUBMISSION_URLS[type];
+
+      // Process deadline - check for rolling deadline
+      const deadlineValue = row.deadline?.toLowerCase().trim();
+      const deadline = deadlineValue === ROLLING_DEADLINE_VALUE ? 
+        "Rolling Deadline" : 
+        row.deadline || new Date().toISOString().split('T')[0];
       
       return {
         id,
         title: row.title || "Untitled Idea",
         type,
-        field: (row.field as ContributionField) || "Development",
+        fields,
         description: row.description || "",
-        skillLevel: (row.skillLevel as SkillLevel) || "Intermediate",
         skillsRequired,
         reward: parseInt(row.reward) || 0,
-        deadline: row.deadline || new Date().toISOString().split('T')[0],
-        timeCommitment: (row.timeCommitment as TimeCommitment) || "Medium",
-        status: "Open", // Default status
-        featured: false, // Not featuring any ideas
+        deadline,
+        status: (row.status as Status) || "Open",
+        featured: row.featured === 'true' || false,
         outcomes,
         successCriteria,
         prerequisites,
@@ -69,7 +80,6 @@ export const parseIdeasFromCSV = (csvText: string): Idea[] => {
           name: mentorParts[0] || "TBD",
           title: mentorParts[1] || "Mentor",
           contactHours: mentorParts[2] || "TBD",
-          email: mentorParts[3] || "contact@example.com"
         },
         applicationUrl
       };
