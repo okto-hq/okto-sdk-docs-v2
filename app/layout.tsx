@@ -16,7 +16,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     <html lang="en" className={inter.className} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/logo/okto-icon.png" sizes="any" />
-        <meta name="algolia-site-verification"  content="315BD3BB6CEAFB7A" />
+        <meta name="algolia-site-verification"  content="DE6E97334C938277" />
       </head>
       <body>
         <RootProvider>
