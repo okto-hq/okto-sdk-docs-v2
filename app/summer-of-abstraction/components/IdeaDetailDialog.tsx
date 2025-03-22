@@ -18,6 +18,10 @@ interface IdeaDetailDialogProps {
 export function IdeaDetailDialog({ idea }: IdeaDetailDialogProps) {
   // Format date for display
   const formatDate = (dateString: string) => {
+    // If it's already "Rolling Deadline", return as-is
+  if (dateString === "Rolling Deadline") {
+    return dateString;
+  }
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
       year: "numeric",
@@ -56,20 +60,8 @@ export function IdeaDetailDialog({ idea }: IdeaDetailDialogProps) {
     }
   };
 
-  // Get skill level variant for badge styling
-  const getSkillLevelVariant = (level: string) => {
-    switch (level) {
-      case "Beginner":
-        return "outline";
-      case "Intermediate":
-        return "secondary";
-      case "Advanced":
-        return "destructive";
-      default:
-        return "outline";
-    }
-  };
-
+  
+  
   // Get mentor initials for avatar
   const getMentorInitials = (name: string) => {
     return name
@@ -112,12 +104,7 @@ export function IdeaDetailDialog({ idea }: IdeaDetailDialogProps) {
             >
               {idea.type}
             </Badge>
-            <Badge
-              variant={getSkillLevelVariant(idea.skillLevel)}
-              className="px-3 py-1"
-            >
-              {idea.skillLevel}
-            </Badge>
+            
             <Badge
               variant="outline"
               className={
@@ -138,9 +125,6 @@ export function IdeaDetailDialog({ idea }: IdeaDetailDialogProps) {
             </div>
             <div className="dark:text-white">
               <strong>Deadline:</strong> {formatDate(idea.deadline)}
-            </div>
-            <div className="dark:text-white">
-              <strong>Time Commitment:</strong> {idea.timeCommitment}
             </div>
           </div>
         </div>
@@ -260,9 +244,6 @@ export function IdeaDetailDialog({ idea }: IdeaDetailDialogProps) {
                 <p className="text-gray-600 dark:text-gray-400 text-sm">{idea.mentor.title}</p>
                 <p className="text-sm dark:text-gray-300">
                   <strong>Office Hours:</strong> {idea.mentor.contactHours}
-                </p>
-                <p className="text-sm dark:text-gray-300">
-                  <strong>Contact:</strong> {idea.mentor.email}
                 </p>
               </div>
             </div>

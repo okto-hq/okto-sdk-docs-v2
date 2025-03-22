@@ -9,13 +9,11 @@ export interface Idea {
   id: string;
   title: string;
   type: IdeaType;
-  field: ContributionField; 
+  fields: ContributionField[]; 
   description: string;
-  skillLevel: SkillLevel;
   skillsRequired: string[];
   reward: number;
   deadline: string;
-  timeCommitment: TimeCommitment;
   status: Status;
   featured: boolean;
   outcomes: string[];
@@ -30,7 +28,6 @@ export interface Idea {
     name: string;
     title: string;
     contactHours: string;
-    email: string;
   };
   applicationUrl: string;
 }

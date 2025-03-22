@@ -11,13 +11,11 @@ export let ideasData: Idea[] = [
     id: "project-1",
     title: "Build a New Component Library",
     type: "Project",
-    field: "Development",
+    fields: ["Development"],
     description: "Create a comprehensive component library for Okto's frontend applications using React and TypeScript. This will involve designing, implementing, and documenting a set of reusable UI components that follow Okto's design guidelines.",
-    skillLevel: "Intermediate",
     skillsRequired: ["React", "TypeScript", "UI/UX", "Component Design"],
     reward: 2000,
     deadline: "2025-08-01",
-    timeCommitment: "Medium",
     status: "Open",
     featured: true,
     outcomes: [
@@ -57,8 +55,7 @@ export let ideasData: Idea[] = [
     mentor: {
       name: "Ovia Seshadri",
       title: "Head of DevRel",
-      contactHours: "Tuesdays and Thursdays, 2-4pm ",
-      email: "ovia.seshadri@coindcx.com"
+      contactHours: "Tuesdays and Thursdays, 2-4pm "
     },
     applicationUrl: "/summer-of-abstraction/submit-proposal"
   },
@@ -66,13 +63,11 @@ export let ideasData: Idea[] = [
     id: "bounty-1",
     title: "Implement Dark Mode for Documentation",
     type: "Bounty",
-    field: "Development",
+    fields: ["Development"],
     description: "Implement a dark mode toggle and styling for the Okto documentation website. This should include all necessary CSS changes and respect user preferences via system settings.",
-    skillLevel: "Beginner",
     skillsRequired: ["CSS", "JavaScript", "Web Development"],
     reward: 500,
     deadline: "2025-07-15",
-    timeCommitment: "Low",
     status: "Open",
     featured: true,
     outcomes: [
@@ -111,8 +106,7 @@ export let ideasData: Idea[] = [
     mentor: {
       name: "Ovia Seshadri",
       title: "Head of DevRel",
-      contactHours: "Tuesdays and Thursdays, 2-4pm ",
-      email: "ovia.seshadri@coindcx.com"
+      contactHours: "Tuesdays and Thursdays, 2-4pm "
     },
     applicationUrl: "/summer-of-abstraction/start-bounty"
   },
@@ -120,13 +114,11 @@ export let ideasData: Idea[] = [
     id: "project-2",
     title: "Create Interactive Tutorial System",
     type: "Project",
-    field: "Content",
+    fields: ["Content"],
     description: "Design and implement an interactive tutorial system that helps new users learn Okto through guided, hands-on experiences. The system should be embeddable in our documentation and support multiple learning paths.",
-    skillLevel: "Advanced",
     skillsRequired: ["JavaScript", "React", "UX Design", "Technical Writing"],
     reward: 2500,
     deadline: "2025-08-15",
-    timeCommitment: "High",
     status: "Open",
     featured: false,
     outcomes: [
@@ -166,8 +158,7 @@ export let ideasData: Idea[] = [
     mentor: {
       name: "Ovia Seshadri",
       title: "Head of DevRel",
-      contactHours: "Tuesdays and Thursdays, 2-4pm ",
-      email: "ovia.seshadri@coindcx.com"
+      contactHours: "Tuesdays and Thursdays, 2-4pm "
     },
     applicationUrl: "/summer-of-abstraction/submit-proposal"
   },
@@ -175,13 +166,11 @@ export let ideasData: Idea[] = [
     id: "bounty-2",
     title: "Create Performance Dashboard Widget",
     type: "Bounty",
-    field: "Development",
+    fields: ["Development"],
     description: "Build a dashboard widget that displays real-time performance metrics for Okto deployments, including response times, error rates, and resource usage.",
-    skillLevel: "Intermediate",
     skillsRequired: ["JavaScript", "Data Visualization", "API Integration"],
     reward: 800,
     deadline: "2025-07-30",
-    timeCommitment: "Medium",
     status: "Open",
     featured: false,
     outcomes: [
@@ -221,8 +210,7 @@ export let ideasData: Idea[] = [
     mentor: {
       name: "Ovia Seshadri",
       title: "Head of DevRel",
-      contactHours: "Tuesdays and Thursdays, 2-4pm ",
-      email: "ovia.seshadri@coindcx.com"
+      contactHours: "Tuesdays and Thursdays, 2-4pm "
     },
     applicationUrl: "/summer-of-abstraction/start-bounty"
   },
@@ -230,13 +218,11 @@ export let ideasData: Idea[] = [
     id: "project-3",
     title: "Develop CLI Tool Extensions",
     type: "Project",
-    field: "Development",
+    fields: ["Development"],
     description: "Extend Okto's CLI tool with new features that improve developer productivity, such as scaffolding, code generation, environment management, and integration with CI/CD pipelines.",
-    skillLevel: "Advanced",
     skillsRequired: ["Node.js", "CLI Development", "DevOps", "Go (optional)"],
     reward: 3000,
     deadline: "2025-08-30",
-    timeCommitment: "High",
     status: "Open",
     featured: false,
     outcomes: [
@@ -276,8 +262,7 @@ export let ideasData: Idea[] = [
     mentor: {
       name: "Ovia Seshadri",
       title: "Head of DevRel",
-      contactHours: "Tuesdays and Thursdays, 2-4pm ",
-      email: "ovia.seshadri@coindcx.com"
+      contactHours: "Tuesdays and Thursdays, 2-4pm "
     },
     applicationUrl: "/summer-of-abstraction/submit-proposal"
   },
@@ -285,13 +270,11 @@ export let ideasData: Idea[] = [
     id: "bounty-3",
     title: "Create Tutorial Videos for Beginners",
     type: "Bounty",
-    field: "Content",
+    fields: ["Content"],
     description: "Produce a series of high-quality video tutorials that walk new users through getting started with Okto, from installation to building their first application.",
-    skillLevel: "Beginner",
     skillsRequired: ["Video Production", "Technical Communication", "Basic Okto Knowledge"],
     reward: 1200,
     deadline: "2025-07-20",
-    timeCommitment: "Medium",
     status: "Open",
     featured: false,
     outcomes: [
@@ -331,8 +314,7 @@ export let ideasData: Idea[] = [
     mentor: {
       name: "Ovia Seshadri",
       title: "Head of DevRel",
-      contactHours: "Tuesdays and Thursdays, 2-4pm ",
-      email: "ovia.seshadri@coindcx.com"
+      contactHours: "Tuesdays and Thursdays, 2-4pm "
     },
     applicationUrl: "/summer-of-abstraction/start-bounty"
   }

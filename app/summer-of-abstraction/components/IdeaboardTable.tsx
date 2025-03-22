@@ -20,6 +20,11 @@ export function IdeaboardTable({
 }: IdeaboardTableProps) {
   // Format date for display
   const formatDate = (dateString: string) => {
+    // If it's already "Rolling Deadline", return as-is
+    if (dateString === "Rolling Deadline") {
+      return dateString;
+    }
+    
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
       year: "numeric",
@@ -33,24 +38,26 @@ export function IdeaboardTable({
     return type === "Project" ? "default" : "secondary";
   };
 
-  // Helper function to get type color class for the left border
-  const getTypeBorderClass = (type: string) => {
+  // Helper function to get type color class
+  const getTypeColorClass = (type: string) => {
     return type === "Project" 
-      ? "border-l-4 border-l-indigo-500 dark:border-l-indigo-600" 
-      : "border-l-4 border-l-purple-500 dark:border-l-purple-600";
+      ? "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-400 hover:bg-indigo-200" 
+      : "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-400 hover:bg-purple-200";
   };
 
-  // Helper function to get skill level variant for badge
-  const getSkillLevelVariant = (level: string) => {
-    switch (level) {
-      case "Beginner":
-        return "outline";
-      case "Intermediate":
-        return "secondary";
-      case "Advanced":
-        return "destructive";
+  
+
+  // Helper function to get field color classes
+  const getFieldColorClass = (field: string) => {
+    switch (field) {
+      case "Development":
+        return "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400";
+      case "Content":
+        return "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400";
+      case "Community":
+        return "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400";
       default:
-        return "outline";
+        return "bg-gray-100 text-gray-700 dark:bg-gray-900/40 dark:text-gray-400";
     }
   };
 
@@ -71,15 +78,11 @@ export function IdeaboardTable({
             ? "bg-indigo-600 text-white border-b-2 border-indigo-400" 
             : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white border-b-2 border-gray-300 dark:border-gray-700"}>
             <th className="px-4 py-3 text-left">Title</th>
-            <th className="px-4 py-3 text-left">Type</th>
-            <th className="px-4 py-3 text-left">Skill Level</th>
+            <th className="px-4 py-3 text-left">Field</th>
             <th className="px-4 py-3 text-left">Skills Required</th>
             <th className="px-4 py-3 text-left">Reward</th>
             {!hideDeadlineAndTime && (
-              <>
-                <th className="px-4 py-3 text-left">Deadline</th>
-                <th className="px-4 py-3 text-left">Time</th>
-              </>
+              <th className="px-4 py-3 text-left">Deadline</th>
             )}
             <th className="px-4 py-3 text-left"></th>
           </tr>
@@ -90,34 +93,36 @@ export function IdeaboardTable({
             : "bg-white dark:bg-gray-900"
         }>
           {ideas.map((idea: Idea) => (
-            <tr key={idea.id} className={`border-t border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 ${getTypeBorderClass(idea.type)}`}>
+            <tr key={idea.id} className="border-t border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
               <td className="px-4 py-3 font-medium dark:text-white">
-                <div className="flex items-start">
-                  {idea.type === "Project" ? (
-                    <div className="w-6 h-6 bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 rounded-full flex items-center justify-center font-bold text-xs mr-2 mt-0.5">P</div>
-                  ) : (
-                    <div className="w-6 h-6 bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400 rounded-full flex items-center justify-center font-bold text-xs mr-2 mt-0.5">B</div>
-                  )}
+                <div className="flex items-center gap-2">
                   <span>{idea.title}</span>
+                  <Badge 
+                    variant={getTypeVariant(idea.type)} 
+                    className={`font-normal ${getTypeColorClass(idea.type)}`}
+                  >
+                    {idea.type}
+                  </Badge>
                 </div>
               </td>
               <td className="px-4 py-3">
-                <Badge variant={getTypeVariant(idea.type)} className={`font-normal ${idea.type === "Project" ? "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-400 hover:bg-indigo-200" : "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-400 hover:bg-purple-200"}`}>
-                  {idea.type}
-                </Badge>
+                <div className="flex flex-wrap gap-1">
+                  {idea.fields.map(field => (
+                    <Badge 
+                      key={field}
+                      variant="outline" 
+                      className={`font-normal ${getFieldColorClass(field)}`}
+                    >
+                      {field}
+                    </Badge>
+                  ))}
+                </div>
               </td>
-              <td className="px-4 py-3">
-                <Badge variant={getSkillLevelVariant(idea.skillLevel)} className="font-normal">
-                  {idea.skillLevel}
-                </Badge>
-              </td>
+              
               <td className="px-4 py-3 dark:text-gray-300">{idea.skillsRequired.join(", ")}</td>
               <td className="px-4 py-3 font-medium text-indigo-600 dark:text-indigo-400">{idea.reward} $OKTO</td>
               {!hideDeadlineAndTime && (
-                <>
-                  <td className="px-4 py-3 dark:text-gray-300">{formatDate(idea.deadline)}</td>
-                  <td className="px-4 py-3 dark:text-gray-300">{idea.timeCommitment}</td>
-                </>
+                <td className="px-4 py-3 dark:text-gray-300">{formatDate(idea.deadline)}</td>
               )}
               <td className="px-4 py-3">
                 <IdeaDetailDialog idea={idea} />
