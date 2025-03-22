@@ -10,6 +10,7 @@
       "build:docs": "node ./scripts/generate-docs.mjs"
    },
    "dependencies": {
+      "@cookbookdev/docsbot": "^4.24.18",
       "@heroui/accordion": "^2.2.13",
       "@heroui/dropdown": "^2.3.16",
       "@heroui/react": "2.7.5",
