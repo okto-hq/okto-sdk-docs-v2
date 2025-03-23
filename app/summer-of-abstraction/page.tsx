@@ -155,7 +155,7 @@ export default function Page() {
                 </div>
                 <h3 className="text-lg font-semibold mb-2 dark:text-white">Earn Rewards</h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Complete bounties and earn recognition for your work. Rewards range from cash prizes to exclusive Okto merchandise and community recognition.
+                  Complete bounties and earn recognition for your work. Rewards range from $OKTO tokens, Stablecoin prizes to exclusive Okto merchandise and community recognition.
                 </p>
               </div>
               
@@ -211,13 +211,13 @@ export default function Page() {
                   <div className="ml-4">
                     <h3 className="text-lg font-semibold dark:text-white">Choose Your Path</h3>
                     <p className="text-gray-600 dark:text-gray-300 mt-1">
-                      Decide whether you want to work on a project (requires proposal) or a bounty (start immediately). Each has different requirements and timelines.
+                      Decide whether you want to work on a project (requires proposal acceptence) or a bounty (start immediately). Each has different requirements and timelines.
                     </p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
                       <div className="bg-indigo-50 dark:bg-indigo-900/30 p-4 rounded-md border border-indigo-100 dark:border-indigo-800 cursor-pointer">
                         <h4 className="font-semibold text-indigo-700 dark:text-indigo-400 mb-1">Projects</h4>
                         <p className="text-sm text-gray-700 dark:text-gray-300">
-                          Require a proposal and review process. Longer-term commitments with structured milestones and payments.
+                          Requires a proposal, review and acceptence process. Longer-term commitments with structured milestones and payments.
                         </p>
                         <div className="mt-3 flex flex-wrap gap-2">
                           <ProposalGuidelinesDialog linkClassName="inline-block bg-indigo-600 hover:bg-indigo-700 text-white text-sm py-1.5 px-3 rounded-md transition-colors">
@@ -232,7 +232,7 @@ export default function Page() {
                       <div className="bg-purple-50 dark:bg-purple-900/30 p-4 rounded-md border border-purple-100 dark:border-purple-800 cursor-pointer">
                         <h4 className="font-semibold text-purple-700 dark:text-purple-400 mb-1">Bounties</h4>
                         <p className="text-sm text-gray-700 dark:text-gray-300">
-                          Start immediately without approval. Submit when ready, winners selected in monthly review cycles.
+                          Start immediately without approval. Submit when ready, winners are selected in fixed or periodic review cycles.
                         </p>
                         <div className="mt-3">
                           <SubmissionGuideDialog linkClassName="inline-block bg-purple-600 hover:bg-purple-700 text-white text-sm py-1.5 px-3 rounded-md transition-colors">
