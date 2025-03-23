@@ -210,58 +210,119 @@ export function IdeaboardSection() {
           </div>
 
           {/* Skills Filter - Multi-select */}
-          <div>
-            <label htmlFor="skills-filter" className="block text-sm font-medium mb-1 dark:text-gray-300">
-              Skill: {selectedSkills.length > 0 ? `(${selectedSkills.length} selected)` : ""}
-            </label>
-            <div 
-              className="w-full border rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 h-10 flex items-center text-gray-500 dark:text-gray-300 cursor-pointer relative"
-              onClick={() => {
-                // Only show the dropdown if fields are selected
-                if (selectedFields.length > 0) {
-                  const dropdown = document.getElementById("skills-dropdown");
-                  if (dropdown) {
-                    dropdown.classList.toggle("hidden");
-                  }
-                }
-              }}
-            >
-              {selectedFields.length === 0 ? (
-                "Select a field first"
-              ) : selectedSkills.length === 0 ? (
-                "Select skills"
-              ) : (
-                selectedSkills.join(", ")
-              )}
-
-              {/* Dropdown panel for skills selection */}
+            <div>
+              <label htmlFor="skills-filter" className="block text-sm font-medium mb-1 dark:text-gray-300">
+                Skill: {selectedSkills.length > 0 ? `(${selectedSkills.length} selected)` : ""}
+              </label>
               <div 
-                id="skills-dropdown" 
-                className="absolute left-0 top-full mt-1 w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg z-10 max-h-40 overflow-y-auto hidden"
-                onClick={(e) => e.stopPropagation()} // Prevent click from closing dropdown
+                className="w-full border rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 h-10 flex items-center text-gray-500 dark:text-gray-300 cursor-pointer relative"
+                onClick={() => {
+                  // Only show the dropdown if fields are selected
+                  if (selectedFields.length > 0) {
+                    const dropdown = document.getElementById("skills-dropdown");
+                    if (dropdown) {
+                      dropdown.classList.toggle("hidden");
+                    }
+                  }
+                }}
               >
-                {availableSkills.length === 0 ? (
-                  <div className="p-2 text-gray-500 dark:text-gray-400">No skills available</div>
+                {selectedFields.length === 0 ? (
+                  "Select a field first"
+                ) : selectedSkills.length === 0 ? (
+                  "Select skills"
                 ) : (
-                  availableSkills.map((skill) => (
-                    <div 
-                      key={skill} 
-                      className="p-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center"
-                      onClick={() => toggleSkill(skill)}
-                    >
-                      <input 
-                        type="checkbox" 
-                        checked={selectedSkills.includes(skill)} 
-                        onChange={() => {}} // Handled by parent click
-                        className="mr-2"
-                      />
-                      {skill}
-                    </div>
-                  ))
+                  <div className="flex items-center w-full">
+                    <span className="truncate mr-2">
+                      {`${selectedSkills.length} skill${selectedSkills.length > 1 ? 's' : ''} selected`}
+                    </span>
+                    {selectedSkills.length > 0 && (
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedSkills([]);
+                        }} 
+                        className="ml-auto text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
                 )}
+
+                {/* Dropdown panel for skills selection */}
+                <div 
+                  id="skills-dropdown" 
+                  className="absolute left-0 top-full mt-1 w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg z-10 max-h-40 overflow-y-auto hidden"
+                  onClick={(e) => e.stopPropagation()} // Prevent click from closing dropdown
+                >
+                  {availableSkills.length === 0 ? (
+                    <div className="p-2 text-gray-500 dark:text-gray-400">No skills available</div>
+                  ) : (
+                    <>
+                      {/* Add a "Select All" and "Clear All" buttons */}
+                      {availableSkills.length > 0 && (
+                        <div className="flex justify-between px-2 py-1 border-b border-gray-200 dark:border-gray-600">
+                          <button 
+                            className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline"
+                            onClick={() => setSelectedSkills([...availableSkills])}
+                          >
+                            Select All
+                          </button>
+                          <button 
+                            className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline"
+                            onClick={() => setSelectedSkills([])}
+                          >
+                            Clear All
+                          </button>
+                        </div>
+                      )}
+                      
+                      {/* Filter search box */}
+                      <div className="p-2 border-b border-gray-200 dark:border-gray-600">
+                        <input 
+                          type="text" 
+                          placeholder="Filter skills..."
+                          className="w-full p-1 text-sm border rounded dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+                          onChange={(e) => {
+                            const dropdown = document.getElementById("skills-dropdown");
+                            const items = dropdown?.querySelectorAll('.skill-item');
+                            if (items) {
+                              const filter = e.target.value.toLowerCase();
+                              items.forEach((item) => {
+                                const text = item.textContent?.toLowerCase() || '';
+                                if (text.includes(filter)) {
+                                  (item as HTMLElement).style.display = '';
+                                } else {
+                                  (item as HTMLElement).style.display = 'none';
+                                }
+                              });
+                            }
+                          }}
+                        />
+                      </div>
+                      
+                      {availableSkills.map((skill) => (
+                        <div 
+                          key={skill} 
+                          className="p-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center skill-item"
+                          onClick={() => toggleSkill(skill)}
+                        >
+                          <input 
+                            type="checkbox" 
+                            checked={selectedSkills.includes(skill)} 
+                            onChange={() => {}} // Handled by parent click
+                            className="mr-2"
+                          />
+                          {skill}
+                        </div>
+                      ))}
+                    </>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
         </div>
       </div>
 
