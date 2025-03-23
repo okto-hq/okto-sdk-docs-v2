@@ -42,7 +42,7 @@ export const parseIdeasFromCSV = (csvText: string): Idea[] => {
             const trimmed = s.trim();
             // Capitalize the first letter of each word
             return trimmed.split(' ')
-                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1).slice())
                 .join(' ');
             }) 
         : [];

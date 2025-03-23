@@ -22,6 +22,8 @@ export function IdeaboardSection() {
       Content: new Set(),
       Community: new Set()
     };
+
+    // 
     
     // Populate the map based on actual ideas and their fields
     ideasData.forEach((idea: Idea) => {
@@ -355,7 +357,7 @@ export function IdeaboardSection() {
   );
 }
 
-// Add this code to handle closing the dropdowns when clicking outside
+// code to handle closing the dropdowns when clicking outside
 if (typeof document !== 'undefined') {
   document.addEventListener('click', (e) => {
     const fieldsDropdown = document.getElementById("fields-dropdown");
