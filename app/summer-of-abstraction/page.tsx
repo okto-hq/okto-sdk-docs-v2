@@ -85,10 +85,10 @@ export default function Page() {
         <div className="lg:w-3/4 lg:pr-8">
           {/* Header Section */}
           <div className="text-center mb-6">
-            <h1 className="text-4xl font-bold mb-4 dark:text-white">Summer of Abstraction</h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mb-6">
+            {/* <h1 className="text-4xl font-bold mb-4 dark:text-white">Summer of Abstraction</h1> */}
+            {/* <p className="text-xl text-gray-600 dark:text-gray-300 mb-6">
               Join Okto's community engagement program and be part of something extraordinary.
-            </p>
+            </p> */}
             <p className="mb-4 dark:text-gray-300">
             Explore exciting project ideas for the Okto Summer of Abstraction program. Build innovative Web3 applications, create educational content, or lead community initiatives with support from Okto.
             </p>
