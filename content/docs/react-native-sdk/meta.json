@@ -23,6 +23,7 @@
     "(Hooks)",
     "(Intents)",
     "(Account)",
+    "(MessageSig)",
     "(Explorer)",
     "---Wallets---",
     "./wallets/overview",
