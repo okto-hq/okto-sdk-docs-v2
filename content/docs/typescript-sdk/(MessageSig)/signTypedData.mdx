@@ -1,0 +1,104 @@
+---
+title: Sign Typed Data
+description: Learn how to sign a typed data object using the Okto SDK.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react';
+import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
+
+The `signTypedData()` method generates a signature for a structured data object following the EIP712 standard. This function allows secure message signing using the `OktoClient` instance.
+
+### Example
+
+<Accordions defaultValue="Usage">
+<Accordion title="Usage">
+```typescript
+import { OktoClient } from '@okto_web3/core-js-sdk';
+
+async function SignTypedData() {
+    const oktoClient = new OktoClient({ 
+        environment: process.env.OKTO_ENVIRONMENT, 
+        clientPrivateKey: process.env.OKTO_CLIENT_PRIVATE_KEY, 
+        clientSWA: process.env.OKTO_CLIENT_SWA, 
+    }); 
+    
+    const data = { // [!code highlight]
+        types: {  // [!code highlight]
+            EIP712Domain: [ // [!code highlight]
+                { name: "name", type: "string" }, // [!code highlight]
+                { name: "chainId", type: "uint256" } // [!code highlight]
+            ], // [!code highlight]
+            Test: [ // [!code highlight]
+                { name: "message", type: "string" } // [!code highlight]
+            ] // [!code highlight]
+        }, // [!code highlight]
+        primaryType: "Test", // [!code highlight]
+        domain: { // [!code highlight]
+            name: "OktoTest", // [!code highlight]
+            chainId: 1 // [!code highlight]
+        }, // [!code highlight]
+        message: { // [!code highlight]
+            message: "Test message" // [!code highlight]
+        } // [!code highlight]
+    }; // [!code highlight]
+
+    const signedTypedData_response = await oktoClient.signTypedData(data);  // [!code highlight]
+    console.log('Signed Typed Data: ', signedTypedData_response);
+};
+```
+</Accordion>
+
+<Accordion title="Sample Response">
+```typescript
+Signed Typed Data: 0x4d0a8249fc83052c17078d3c600cd4364963f0b9a866c49cbf2cda683d9552b745c53746b97f6ebe79c18f5839450ac86511ed73849fbc2d58d1319346c50e451b
+```
+</Accordion>
+</Accordions>
+
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Refer to the [SDK errors and warnings](/docs/typescript-sdk/sdk-error-warnings) documentation.
+- For additional support, check the [troubleshooting guide](/docs/typescript-sdk/troubleshooting).
+</Callout>
+
+### Method Overview
+
+| Method | Description |
+|--------|-------------|
+| <sub><i>async</i></sub> [`signTypedData`](#sign-typed-data) | Signs structured data using the EIP712 standard |
+
+<div className="method-box">
+
+## Sign Typed Data
+
+<sub><i>async</i></sub> `oktoClient.signTypedData(data: EIP712 Object)` generates a cryptographic signature for the structured data.
+
+### Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|----------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from the `useOkto` hook | Yes |
+| `data` | `EIP712 Object` | Structured data object to be signed | Yes |
+
+### Response
+
+<Callout title="Success Response">
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | `Promise<string>` | Returns the EIP712-compliant signature of the data |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        signature: string;
+        ```
+    </Accordion>
+</Accordions>
+</Callout>
+
+</div>
