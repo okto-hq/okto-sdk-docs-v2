@@ -112,7 +112,7 @@ export default function Page() {
             <h2 className="text-2xl font-bold mb-6 dark:text-white">About the Program</h2>
             <div className="w-full mb-10 rounded-lg overflow-hidden shadow-lg">
             <Image 
-              src="/images/who-is-it-for.jpg" 
+              src="/images/whoisitfor.png" 
               alt="who-is-it-for banner"
               width={1200}
               height={500}
@@ -755,7 +755,7 @@ export default function Page() {
             {/* Banner placeholder - you can replace this with your actual banner */}
             <div className="w-full mb-10 rounded-lg overflow-hidden shadow-lg">
             <Image 
-              src="/images/Prizes.jpg" 
+              src="/images/prizes.png" 
               alt="Prizes and Rewards Banner"
               width={1200}
               height={500}

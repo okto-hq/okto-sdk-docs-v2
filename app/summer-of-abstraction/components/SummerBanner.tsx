@@ -31,7 +31,7 @@ export function SummerBanner() {
     >
       <div className="relative w-full h-[80px] md:h-[100px] lg:h-[120px] overflow-hidden">
         <Image
-          src="/images/SOA.png" // Adjust path to your actual image
+          src="/images/soabanner.png" // Adjust path to your actual image
           alt="Summer of Abstraction Banner"
           fill
           className="object-cover"
