@@ -37,7 +37,16 @@ export const parseIdeasFromCSV = (csvText: string): Idea[] => {
         [row.field as ContributionField || "Development"]; // Fallback to single field if provided
       
       // Parse arrays (split by commas)
-      const skillsRequired = row.skillsRequired ? row.skillsRequired.split(',').map((s: string) => s.trim()) : [];
+      const skillsRequired = row.skillsRequired 
+        ? row.skillsRequired.split(',').map((s: string) => {
+            const trimmed = s.trim();
+            // Capitalize the first letter of each word
+            return trimmed.split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1).slice())
+                .join(' ');
+            }) 
+        : [];
+
       const outcomes = row.outcomes ? row.outcomes.split(',').map((s: string) => s.trim()) : [];
       const successCriteria = row.successCriteria ? row.successCriteria.split(',').map((s: string) => s.trim()) : [];
       const prerequisites = row.prerequisites ? row.prerequisites.split(',').map((s: string) => s.trim()) : [];

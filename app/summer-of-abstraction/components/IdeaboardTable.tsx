@@ -93,9 +93,17 @@ export function IdeaboardTable({
             : "bg-white dark:bg-gray-900"
         }>
           {ideas.map((idea: Idea) => (
-            <tr key={idea.id} className="border-t border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
+            <tr 
+              key={idea.id} 
+              className={`px-4 py-3 font-medium dark:text-white ${
+                idea.type === "Project" 
+                  ? "border-l-4 border-indigo-500 dark:border-indigo-600" 
+                  : "border-l-4 border-purple-500 dark:border-purple-600"
+              } pl-5 rounded-l-md`}>
+                
               <td className="px-4 py-3 font-medium dark:text-white">
-                <div className="flex items-center gap-2">
+                
+                <div className="grid grid-cols-[1fr_auto] items-center gap-2">
                   <span>{idea.title}</span>
                   <Badge 
                     variant={getTypeVariant(idea.type)} 
