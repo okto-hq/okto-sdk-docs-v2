@@ -1,0 +1,6 @@
+{
+    "title": "Message Signing",
+    "pages": [
+        "signMessage", "signTypedData"
+    ]
+}
