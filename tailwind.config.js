@@ -1,5 +1,4 @@
-import { createPreset } from 'fumadocs-ui/tailwind-plugin';
-import { nextui } from "@nextui-org/react";
+
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -10,15 +9,10 @@ export default {
 		'./content/**/*.{md,mdx}',
 		'./mdx-components.{ts,tsx}',
 		'./node_modules/fumadocs-ui/dist/**/*.js',
-		'./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
+		"./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
         "./node_modules/fumadocs-openapi/dist/**/*.js"
     ],
 	darkMode: "class",
-	plugins: [nextui()],
-	presets: [createPreset({
-		preset: 'vitepress',
-	})],
-	plugins: [require("tailwindcss-animate")],
 	theme: {
 		extend: {
 			borderRadius: {

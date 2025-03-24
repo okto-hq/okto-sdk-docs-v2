@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from "react";
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link as ULink, Image, Chip } from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link as ULink, Image, Chip } from "@heroui/react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -55,6 +55,7 @@ export default function NavbarComponent() {
       external: true,
     },
     { href: "/showcase", label: "Showcase", subpath: "", external: true },
+    { href: "/summer-of-abstraction", label: "Summer of Abstraction", subpath: "", external: true },
     { href: "/docs", label: "SDK Docs", subpath: "", external: false },
   ];
 

@@ -36,7 +36,7 @@ const FullscreenImage: React.FC<FullscreenImageProps> = ({ src, alt, className }
         >
           <div className="relative h-full w-full flex items-center justify-center">
             <button
-              className="absolute top-4 right-4 bg-white bg-opacity-20 rounded-full p-2 text-white hover:bg-opacity-40 transition-colors z-10"
+              className="absolute top-4 right-4 bg-white/20 rounded-full p-2 text-white hover:bg-white/40 transition-colors z-10"
               onClick={(e) => {
                 e.stopPropagation();
                 closeFullscreen();
