@@ -19,16 +19,30 @@ export function IdeaDetailDialog({ idea }: IdeaDetailDialogProps) {
   // Format date for display
   const formatDate = (dateString: string) => {
     // If it's already "Rolling Deadline", return as-is
-  if (dateString === "Rolling Deadline") {
-    return dateString;
-  }
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
+    if (dateString === "Rolling Deadline" || dateString === "Rolling" || dateString === "TBD") {
+      return dateString;
+    }
+    
+    try {
+      // Try to parse as date if it's a valid date format
+      const date = new Date(dateString);
+      
+      if (!isNaN(date.getTime())) {
+        return date.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+      }
+      
+      // If date parsing failed, just return the original string
+      return dateString;
+    } catch (error) {
+      // If any error occurs, return the original string
+      console.warn(`Error formatting date: ${dateString}`, error);
+      return dateString;
+    }
+    };
 
   // Get type variant for badge styling
   const getTypeVariant = (type: string) => {

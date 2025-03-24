@@ -20,17 +20,17 @@ export function ProposalGuidelinesDialog({ children, linkClassName }: ProposalGu
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-indigo-700 dark:text-indigo-400">
-            Vision and Criteria for Grant Proposals
+            Vision and Criteria for Project Proposals
           </DialogTitle>
         </DialogHeader>
 
         <div className="prose prose-indigo dark:prose-invert max-w-none">
           <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mt-4">Vision</h2>
           <p>
-            The <strong>Okto Summer of Abstraction</strong> grant program aims to <strong>empower builders, developers, content creators, and community leaders</strong> in Web3 by providing funding, mentorship, and ecosystem support. Our vision is to <strong>advance chain abstraction</strong> and make Web3 <strong>more accessible, seamless, and developer-friendly</strong>. We seek to fund projects that drive innovation, foster adoption, and create long-term impact within the Web3 ecosystem.
+            The <strong>Okto Summer of Abstraction</strong> program aims to <strong>empower builders, developers, content creators, and community leaders</strong> in Web3 by providing funding, mentorship, and ecosystem support. Our vision is to <strong>advance chain abstraction</strong> and make Web3 <strong>more accessible, seamless, and developer-friendly</strong>. We seek to fund projects that drive innovation, foster adoption, and create long-term impact within the Web3 ecosystem.
           </p>
 
-          <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mt-6">Grant Focus Areas</h2>
+          <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mt-6">Project Focus Areas</h2>
           <p>We encourage proposals in the following areas:</p>
           <ol className="list-decimal pl-6 space-y-2">
             <li><strong>Building dApps with Okto SDK</strong> (e.g., cross-chain wallets, decentralized finance solutions, multi-chain gaming, social applications)</li>
@@ -46,8 +46,8 @@ export function ProposalGuidelinesDialog({ children, linkClassName }: ProposalGu
 
           <hr className="my-6 border-gray-300 dark:border-gray-700" />
 
-          <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400">Criteria for Grant Proposals</h2>
-          <p>Grant applications will be <strong>evaluated based on the following criteria:</strong></p>
+          <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400">Criteria for Project Proposals</h2>
+          <p>Project applications will be <strong>evaluated based on the following criteria:</strong></p>
 
           <h3 className="text-lg font-medium text-indigo-600 dark:text-indigo-400 mt-4">1. Feasibility & Execution</h3>
           <ul className="list-disc pl-6 space-y-1">
@@ -67,7 +67,7 @@ export function ProposalGuidelinesDialog({ children, linkClassName }: ProposalGu
           <ul className="list-disc pl-6 space-y-1">
             <li>Does the project <strong>align with Okto's mission</strong> to improve Web3 accessibility and usability?</li>
             <li>How many <strong>users, developers, or stakeholders</strong> will benefit from this?</li>
-            <li>Will the project continue to provide value <strong>beyond the grant period</strong>?</li>
+            <li>Will the project continue to provide value <strong>beyond the program period</strong>?</li>
           </ul>
 
           <h3 className="text-lg font-medium text-indigo-600 dark:text-indigo-400 mt-4">4. Community Engagement & Adoption</h3>
@@ -86,7 +86,7 @@ export function ProposalGuidelinesDialog({ children, linkClassName }: ProposalGu
 
           <hr className="my-6 border-gray-300 dark:border-gray-700" />
 
-          <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400">Grant Proposal Evaluation Rubric</h2>
+          <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400">Project Proposal Evaluation Rubric</h2>
           <p>Proposals will be scored on a <strong>scale of 0-5</strong> for each criterion:</p>
 
           <div className="overflow-x-auto mt-4 border border-gray-300 dark:border-gray-700 rounded-md">
@@ -148,12 +148,13 @@ export function ProposalGuidelinesDialog({ children, linkClassName }: ProposalGu
 
           <hr className="my-6 border-gray-300 dark:border-gray-700" />
 
-          <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400">Final Evaluation & Approval Process</h2>
+          <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400">Approval & Reward Process</h2>
           <ul className="list-disc pl-6 space-y-1">
-            <li>All proposals will be <strong>reviewed by Okto mentors and domain experts</strong>.</li>
-            <li>Selected applicants will be invited for a <strong>follow-up discussion</strong> or interview.</li>
-            <li>Stipend allocations will be <strong>disbursed monthly</strong> based on project progress and milestone completion.</li>
-            <li>Final project showcase at the end of the <strong>16-week program</strong>.</li>
+            <li>All proposals will be <strong>reviewed by Okto mentors</strong>.</li>
+            <li>Selected applicants may be invited for a <strong>follow-up discussion</strong>.</li>
+            <li>Okto Points will be <strong>awarded upon verified completion of each milestone</strong>.</li>
+            <li>Initial project costs must be self-funded until the first milestone verification.</li>
+            <li>All earned Okto Points will be <strong>converted to $OKTO tokens </strong>upon mainnet launch and TGE.</li>
           </ul>
         </div>
       </DialogContent>
