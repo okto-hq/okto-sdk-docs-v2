@@ -281,6 +281,15 @@ Now that you've completed your first user operation, you're ready to explore mor
 | `const orders = await getOrdersHistory(oktoClient);` | Get transaction order history | <ExternalLink href="/docs/typescript-sdk/(Explorer)/getOrdersHistory">Method Overview</ExternalLink> |
 | `const collections = await getNftCollections(oktoClient);` | Get NFT collections | <ExternalLink href="/docs/typescript-sdk/(Explorer)/getNftCollections">Method Overview</ExternalLink> |
 
+### Message Signing
+
+Enables the creation of signatures for messages or object data. The signing process is initiated through the OktoClient instance.
+
+| Command | Description | Documentation |
+|---------|-------------|---------------|
+| `const signature = await oktoClient.signMessage(message);` | Signs messages following the EIP191 standard | <ExternalLink href="/docs/typescript-sdk/signMessage">Method Overview</ExternalLink> |
+| `const signature = await oktoClient.signTypedData(data);` | Signs typed data following the EIP712 standard | <ExternalLink href="/docs/typescript-sdk/signTypedData">Method Overview</ExternalLink> |
+
 ### User Operations (Intents)
 
 Intents are pre-built action templates within the Okto SDK that simplify common Web3 tasks. They provide one-liner functions for complex blockchain interactions.

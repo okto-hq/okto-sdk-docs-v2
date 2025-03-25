@@ -12,7 +12,8 @@ import {
   IoCodeSlashOutline,
   IoServerOutline,
   IoAppsOutline,
-  IoListOutline
+  IoListOutline,
+  IoLockClosedOutline
 } from "react-icons/io5";
 
 This section provides a comprehensive overview of the functions available in the Typescript SDK. These functions empower you to interact seamlessly with the Okto platform—from initiating transaction operations to retrieving data related to accounts, portfolios, and more.
@@ -117,6 +118,24 @@ This section provides a comprehensive overview of the functions available in the
     title="getTokens"
     subtitle="List available tokens and their details"
     link="/docs/typescript-sdk/getTokens"
+  />
+</div>
+
+## Message Signing
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+  <TechnologyCard
+    icon={<IoLockClosedOutline size={"1.5rem"} />}
+    title="signMessage"
+    subtitle="Sign message following the EIP191 standard"
+    link="/docs/typescript-sdk/signMessage"
+  />
+
+  <TechnologyCard
+    icon={<IoLockClosedOutline size={"1.5rem"} />}
+    title="signTypedData"
+    subtitle="Sign typed data following the EIP712 standard"
+    link="/docs/typescript-sdk/signTypedData"
   />
 </div>
 

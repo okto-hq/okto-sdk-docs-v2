@@ -323,6 +323,15 @@ In V1, the AuthToken was a combination of the user login method and the client A
 | - | <ExternalLink href="/docs/nextjs-sdk/getNftCollections#get-nft-collections">`getNftCollections(oktoClient)`</ExternalLink> | - Retrieves NFT collection metadata |
 | [`orderHistory(query)`](https://docsv1.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-tokens#fetch-order-history) <br/> [`getNftOrderDetails(query)`](https://docsv1.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/transfer-nfts#get-nft-order-details) <br/> [`getRawTransactionStatus(query)`](https://docsv1.okto.tech/docs/react-sdk/okto-embedded-wallet/use-user-embedded-wallet/raw-transactions#get-raw-transactions) | <ExternalLink href="/docs/nextjs-sdk/getOrdersHistory#get-orders-history">`getOrdersHistory(oktoClient, filters?)`</ExternalLink> | - All order history functions are now combined into one<br/>- Retrieves order history for token transfers, NFT transfers, and raw transactions using filter parameters |
 
+### Message Signing
+
+The Message Signing methods enables the creation of signatures for messages or structured data. The signing process is initiated through the OktoClient instance.
+
+| V1 Function | V2 Function | Changes |
+|---------|-------------|---------------|
+| - | <ExternalLink href="/docs/nextjs-sdk/signMessage">`oktoClient.signMessage(message)`</ExternalLink> | - Signs message following the EIP191 standard |
+| - | <ExternalLink href="/docs/nextjs-sdk/signTypedData">`oktoClient.signTypedData(data)`</ExternalLink> | - Signs typed data following the EIP712 standard | 
+
 ### Intent Functions
 
 All intents are available in both abstracted and detailed flows. In the detailed flow, intents can be converted into a user operation (UserOp), signed, and executed on the Okto chain as separate calls. In the abstracted flow, these three steps are combined into a single call for a more seamless experience.
