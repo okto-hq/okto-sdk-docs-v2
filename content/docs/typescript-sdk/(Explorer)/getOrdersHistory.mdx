@@ -15,40 +15,11 @@ import '../../styles.css';
 
 The `getOrdersHistory` function retrieves the list of orders for the authenticated user.
 
-<ChainSupportStatus 
-/>
-
-### Method Overview
-
-| Methods                                                                         | Description                          |                 
-|---------------------------------------------------------------------------------|--------------------------------------|
-| <sub><i>async</i></sub> [`getOrdersHistory`](#get-orders-history) | Get the orders history of a user |
-
-<div className="method-box">
-
-## Get Orders History
-
-<sub><i>async</i></sub> `getOrdersHistory(OktoClient)` retrieves the user's order history.
-
-### Parameters
-
-| Parameter   | Type                        | Description                            | 
-|-------------|-----------------------------|----------------------------------------|
-| `oktoClient` | [`OktoClient`](/docs/typescript-sdk/technical-reference#models) | Okto client |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type                  | Description                                   | 
-|------------|-----------------------|-----------------------------------------------|
-| `result`   | [`Promise<Order[]>`](/docs/typescript-sdk/technical-reference#models) | Returns the list of orders for a user | 
-
-</Callout>
+<ChainSupportStatus />
 
 ### Example
 
-<Accordions>
+<Accordions defaultValue="Usage">
 <Accordion title="Usage">
 <Tabs items={['Typescript']}>
   <Tab value="Typescript">
@@ -97,6 +68,33 @@ The `getOrdersHistory` function retrieves the list of orders for the authenticat
 </Accordion>
 </Accordions>
 
+### Method Overview
+
+| Methods                                                                         | Description                          |                 
+|---------------------------------------------------------------------------------|--------------------------------------|
+| <sub><i>async</i></sub> [`getOrdersHistory`](#get-orders-history) | Get the orders history of a user |
+
+<div className="method-box">
+
+## Get Orders History
+
+<sub><i>async</i></sub> `getOrdersHistory(OktoClient)` retrieves the user's order history.
+
+### Parameters
+
+| Parameter   | Type                        | Description                            | 
+|-------------|-----------------------------|----------------------------------------|
+| `oktoClient` | [`OktoClient`](/docs/typescript-sdk/technical-reference#models) | Okto client |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type                  | Description                                   | 
+|------------|-----------------------|-----------------------------------------------|
+| `result`   | [`Promise<Order[]>`](/docs/typescript-sdk/technical-reference#models) | Returns the list of orders for a user | 
+
+</Callout>
 </div>
 
 <Callout title="Important: Transaction Lifecycle">

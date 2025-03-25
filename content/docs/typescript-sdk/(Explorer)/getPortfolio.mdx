@@ -15,40 +15,11 @@ import '../../styles.css';
 
 The `getPortfolio` function retrieves the aggregated portfolio for the authenticated user.
 
-<ChainSupportStatus 
-/>
-
-### Method Overview
-
-| Methods                                                                         | Description                          |                 
-|---------------------------------------------------------------------------------|--------------------------------------|
-| <sub><i>async</i></sub> [`getPortfolio`](#get-portfolio) | Get the portfolio of a user |
-
-<div className="method-box">
-
-## Get Portfolio
-
-<sub><i>async</i></sub> `getPortfolio(OktoClient)` retrieves the user's aggregated portfolio data.
-
-### Parameters
-
-| Parameter   | Type                        | Description                            | 
-|-------------|-----------------------------|----------------------------------------|
-| `oktoClient` | [`OktoClient`](/docs/typescript-sdk/technical-reference#models) | Okto client |                                        |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type                  | Description                                   | 
-|------------|-----------------------|-----------------------------------------------|
-| `result`   | [`Promise<UserPortfolioData>`](/docs/typescript-sdk/technical-reference#models) | Returns the portfolio of the user | 
-
-</Callout>
+<ChainSupportStatus />
 
 ### Example
 
-<Accordions>
+<Accordions defaultValue="Usage">
 <Accordion title="Usage">
 <Tabs items={['Typescript']}>
   <Tab value="Typescript">
@@ -115,6 +86,33 @@ The `getPortfolio` function retrieves the aggregated portfolio for the authentic
 </Accordion>
 </Accordions>
 
+### Method Overview
+
+| Methods                                                                         | Description                          |                 
+|---------------------------------------------------------------------------------|--------------------------------------|
+| <sub><i>async</i></sub> [`getPortfolio`](#get-portfolio) | Get the portfolio of a user |
+
+<div className="method-box">
+
+## Get Portfolio
+
+<sub><i>async</i></sub> `getPortfolio(OktoClient)` retrieves the user's aggregated portfolio data.
+
+### Parameters
+
+| Parameter   | Type                        | Description                            | 
+|-------------|-----------------------------|----------------------------------------|
+| `oktoClient` | [`OktoClient`](/docs/typescript-sdk/technical-reference#models) | Okto client |                                        |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type                  | Description                                   | 
+|------------|-----------------------|-----------------------------------------------|
+| `result`   | [`Promise<UserPortfolioData>`](/docs/typescript-sdk/technical-reference#models) | Returns the portfolio of the user | 
+
+</Callout>
 </div>
 
 <Callout title="Note">

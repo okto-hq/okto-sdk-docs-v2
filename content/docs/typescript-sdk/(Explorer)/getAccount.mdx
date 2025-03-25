@@ -15,42 +15,11 @@ import '../../styles.css';
 
 Okto SDK provides the `getAccount()` method to retrieve details of wallets connected to the current user's Okto account. This includes both embedded wallets created via Okto and external wallets connected by the user (e.g., MetaMask, Phantom).
 
-<ChainSupportStatus 
-/>
-
-### Method Overview
-
-| Methods                                                                         | Description                          |                 
-|---------------------------------------------------------------------------------|--------------------------------------|
-| <sub><i>async</i></sub> [`getAccount`](#get-account) | Get the account of a user |
-
-<div className="method-box">
-
-## Get Account
-
-<sub><i>async</i></sub> `getAccount()` retrieves the list of all wallets associated with the currently authenticated user. 
-
-In Okto, an **account** represents the user's identity in the Okto ecosystem, encompassing both embedded wallets seamlessly created by Okto and external wallets users choose to connect.
-
-### Parameters
-
-| Parameter   | Type                        | Description                            | 
-|-------------|-----------------------------|----------------------------------------|
-| `oktoClient` | [`OktoClient`](/docs/typescript-sdk/technical-reference#models) | Okto client |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type                  | Description                                   | 
-|------------|-----------------------|-----------------------------------------------|
-| `result`   | [`Promise<Wallet[]>`](/docs/typescript-sdk/technical-reference#models) | Returns the list of wallets | 
-
-</Callout>
+<ChainSupportStatus />
 
 ### Example
 
-<Accordions>
+<Accordions defaultValue="Usage">
 <Accordion title="Usage">
 <Tabs items={['Typescript']}>
   <Tab value="Typescript">
@@ -81,6 +50,35 @@ In Okto, an **account** represents the user's identity in the Okto ecosystem, en
 </Accordion>
 </Accordions>
 
+### Method Overview
+
+| Methods                                                                         | Description                          |                 
+|---------------------------------------------------------------------------------|--------------------------------------|
+| <sub><i>async</i></sub> [`getAccount`](#get-account) | Get the account of a user |
+
+<div className="method-box">
+
+## Get Account
+
+<sub><i>async</i></sub> `getAccount()` retrieves the list of all wallets associated with the currently authenticated user. 
+
+In Okto, an **account** represents the user's identity in the Okto ecosystem, encompassing both embedded wallets seamlessly created by Okto and external wallets users choose to connect.
+
+### Parameters
+
+| Parameter   | Type                        | Description                            | 
+|-------------|-----------------------------|----------------------------------------|
+| `oktoClient` | [`OktoClient`](/docs/typescript-sdk/technical-reference#models) | Okto client |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type                  | Description                                   | 
+|------------|-----------------------|-----------------------------------------------|
+| `result`   | [`Promise<Wallet[]>`](/docs/typescript-sdk/technical-reference#models) | Returns the list of wallets | 
+
+</Callout>
 </div>
 
 <Callout title="Note">
