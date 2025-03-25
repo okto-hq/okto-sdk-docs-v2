@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState, createElement, Fragment } from "react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link as ULink, Image, Chip } from "@heroui/react";
 import {
   DropdownMenu,
@@ -20,6 +20,7 @@ import {
   TbPlugConnected,
 } from "react-icons/tb";
 import { SiAxios, SiFlutter, SiNextdotjs, SiWagmi } from "react-icons/si";
+import { IoDocumentTextOutline } from "react-icons/io5";
 import { FaUnity } from "react-icons/fa6";
 import { SiTypescript } from "react-icons/si";
 import { useTheme } from "next-themes";
@@ -28,6 +29,25 @@ import DiscordButton from "./DiscordButton";
 import { Button as SCButton } from "@/components/ui/button";
 import Link from "next/link";
 import { Sun, Moon } from "lucide-react";
+import '@algolia/autocomplete-theme-classic';
+import { createRoot } from "react-dom/client";
+import {
+  autocomplete,
+  getAlgoliaResults,
+  AutocompleteComponents
+} from "@algolia/autocomplete-js";
+import algoliasearch from "algoliasearch";
+
+const config = {
+  appId: "ME6QM8CWYI",
+  apiKey: "f45ba172bf00603a4d12479afb0b7665",
+  indexName: "docsv2_staging_okto_tech_me6qm8cwyi_pages",
+}
+
+const searchClient = algoliasearch(
+  config.appId,
+  config.apiKey
+)
 
 const poppins = Poppins({ subsets: ["latin"], weight: "500", display: "swap" });
 const poppinsLight = Poppins({
@@ -42,6 +62,9 @@ export default function NavbarComponent() {
   const [activeItem, setActiveItem] = useState("");
   const [mounted, setMounted] = useState(false);
   const { setTheme, resolvedTheme } = useTheme();
+  const containerRef = useRef<any>(null);
+  const panelRootRef = useRef<any>(null);
+  const rootRef = useRef<any>(null);
 
   const toggleTheme = () => {
     setTheme(resolvedTheme === "light" ? "dark" : "light");
@@ -139,6 +162,156 @@ export default function NavbarComponent() {
     setMounted(true);
   }, []);
 
+  useEffect(() => {
+
+    if (!containerRef.current) {
+      return undefined;
+    }
+    
+    autocomplete({
+      container: containerRef.current,
+      renderer: { createElement, Fragment, render: () => {} },
+      render({ children, state, Fragment, components }, root) {
+        const { preview }: any = state.context;
+        if (!panelRootRef.current || rootRef.current !== root) {
+          rootRef.current = root;
+
+          panelRootRef.current?.unmount();
+          panelRootRef.current = createRoot(root);
+        }
+      
+
+        panelRootRef.current.render(
+          <div className="w-full">
+            <div className="grid grid-cols-2 p-4 bg-white rounded-lg shadow-lg">
+              <div className="overflow-y-auto max-h-[500px] ">
+                {children}
+              </div>
+              <div className="overflow-y-auto max-h-[500px] " id="preview-section">
+                <div className="p-6 relative">
+                  <div className="mb-4">
+                    <IoDocumentTextOutline size={24} className="text-gray-600" />
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-4">
+                    {preview?.path.split('/').filter(Boolean)
+                      .filter((crumb: string, index: number) => !(index === 0 && crumb === 'docs'))
+                      .map((crumb: string, index: number, array: string[]) => (
+                        <React.Fragment key={index}>
+                          <span className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 cursor-pointer transition-colors">
+                            {crumb.replace(/-/g, ' ').replace(/^\w/, c => c.toUpperCase())}
+                          </span>
+                          {index < array.length - 1 && (
+                            <span className="text-gray-400 dark:text-gray-600 mx-3">›</span>
+                          )}
+                        </React.Fragment>
+                    ))}
+                  </div>
+                  
+                  <h1 className="text-3xl leading-tight font-semibold text-gray-900 dark:text-white mb-6">
+                    <components.Highlight hit={preview} attribute={["title"]} />
+                  </h1>
+                  
+                  <div className="text-gray-600 leading-relaxed mb-8">
+                    <components.Highlight hit={preview} attribute={["description"]} />
+                  </div>
+
+                  <div className="border-t border-gray-200 pt-6">
+                    <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wider mb-4">
+                      ON THIS PAGE
+                    </h3>
+                    <ul className="space-y-3">
+                      {preview?.headers.map((header: any, index: any) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <span className="text-sm text-gray-400 dark:text-gray-500 font-medium">
+                            {(index + 1).toString()}.
+                          </span>
+                          <Link 
+                            href={`${preview.path}#${header.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '')}`}
+                            className="text-sm text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                          >
+                            {header.replace(/^\d+\.\s*/, '')}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      },
+      placeholder: "Search the Docs",
+      detachedMediaQuery: '',
+      defaultActiveItemId: 0,
+      getSources({ query }) {
+        if (!query) {
+          return [];
+        }
+
+        return [
+          {
+            sourceId: 'hits',
+            getItems({ query }) {
+              return getAlgoliaResults({
+                searchClient,
+                queries: [
+                  {
+                    indexName: config.indexName,
+                    query,
+                    params: {
+                      hitsPerPage: 16,
+                    },
+                  },
+                ],
+              });
+            },
+            getItemUrl({ item }) {
+              return item.url as string | undefined;
+            },
+            onActive({ item, setContext }) {
+              setContext({ preview: item});
+            },
+            templates: {  
+              item({ item, components }) {
+                console.log("item", item);
+                return (
+                  <Link 
+                    className="flex items-start gap-3 py-3 px-1 rounded-md group transition-colors" 
+                    href={`${item.path}`}  
+                  >
+                    <div className="flex-shrink-0 mt-1">
+                      <IoDocumentTextOutline size={18} className="text-gray-400 dark:text-gray-500 " />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                        <components.Highlight hit={item} attribute="title" />
+                      </div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                        {(item.path as string).split('/').filter(Boolean)
+                          .filter((crumb: string, index: number) => !(index === 0 && crumb === 'docs'))
+                          .map((crumb: string, index: number, array: string[]) => (
+                            <React.Fragment key={index}>
+                              <span>
+                                {crumb.replace(/-/g, ' ').replace(/^\w/, c => c.toUpperCase())}
+                              </span>
+                              {index < array.length - 1 && (
+                                <span className="mx-2 text-gray-400 dark:text-gray-600">›</span>
+                              )}
+                            </React.Fragment>
+                        ))}
+                      </div>
+                    </div>
+                  </Link>
+                );
+              },
+            },
+          },
+        ];
+      }
+    });
+  }, []);
+
   const isFrameworkSelected = sdkOptions.some((option) =>
     pathname.startsWith(option.href)
   );
@@ -147,6 +320,7 @@ export default function NavbarComponent() {
       isBordered
       className="nav-spacing border-b border-gray-200 dark:border-gray-700"
     >
+          
       <NavbarBrand className={`${poppins.className} gap-20 flex items-center`}>
         <ULink href="/docs" color="foreground" className="no-underline">
           <NavbarItem className="flex gap-2 items-center">
@@ -218,6 +392,7 @@ export default function NavbarComponent() {
         </NavbarContent>
       </NavbarBrand>
       <NavbarContent justify="end">
+      <div ref={containerRef} id="autocomplete" className="w-50 bg-black" />
         <NavbarItem>
           <DiscordButton />
         </NavbarItem>

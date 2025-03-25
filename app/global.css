@@ -4,6 +4,7 @@
 @import 'fumadocs-ui/css/vitepress.css';
 @import 'tw-animate-css';
 
+
 @config "../tailwind.config.js";
 
 html {
@@ -13,6 +14,7 @@ html {
 @layer base {
   :root {
     --card-foreground: 240 10% 3.9%;
+    --aa-detached-modal-max-width: 100px;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
     --primary-foreground: 0 0% 98%;
