@@ -28,6 +28,7 @@
     "(hooks)",
     "(Intents)",
     "(Account)",
+    "(MessageSig)",
     "(Explorer)",
     "---Resources---",
     "[Dev Tools](/tools)",

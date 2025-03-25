@@ -14,6 +14,7 @@
         "./authenticate/login-logout",
         "---Usage---",
         "(Intents)",
+        "(MessageSig)",
         "explorer",
         "---Wallets---",
         "./wallets/overview",
