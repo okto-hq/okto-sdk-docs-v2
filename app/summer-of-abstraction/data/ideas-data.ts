@@ -1,6 +1,7 @@
 // data/ideas-data.ts
 import { Idea } from "../types";
 import { parseIdeasFromCSV } from "../utils/csv-parser";
+import { SUBMISSION_URLS } from "../utils/constants";
 
 
 // WARNING: Do Not delete the ideasData array, it acts as a fallback in case csv parser fails. Thank you!
@@ -57,7 +58,7 @@ export let ideasData: Idea[] = [
       title: "Head of DevRel",
       contactHours: "Tuesdays and Thursdays, 2-4pm "
     },
-    applicationUrl: "/summer-of-abstraction/submit-proposal"
+    applicationUrl: SUBMISSION_URLS.Project
   },
   {
     id: "bounty-1",
@@ -108,7 +109,7 @@ export let ideasData: Idea[] = [
       title: "Head of DevRel",
       contactHours: "Tuesdays and Thursdays, 2-4pm "
     },
-    applicationUrl: "/summer-of-abstraction/start-bounty"
+    applicationUrl: SUBMISSION_URLS.Bounty
   },
   {
     id: "project-2",
@@ -160,7 +161,7 @@ export let ideasData: Idea[] = [
       title: "Head of DevRel",
       contactHours: "Tuesdays and Thursdays, 2-4pm "
     },
-    applicationUrl: "/summer-of-abstraction/submit-proposal"
+    applicationUrl: SUBMISSION_URLS.Project
   },
   {
     id: "bounty-2",
@@ -212,7 +213,7 @@ export let ideasData: Idea[] = [
       title: "Head of DevRel",
       contactHours: "Tuesdays and Thursdays, 2-4pm "
     },
-    applicationUrl: "/summer-of-abstraction/start-bounty"
+    applicationUrl: SUBMISSION_URLS.Bounty
   },
   {
     id: "project-3",
@@ -264,7 +265,7 @@ export let ideasData: Idea[] = [
       title: "Head of DevRel",
       contactHours: "Tuesdays and Thursdays, 2-4pm "
     },
-    applicationUrl: "/summer-of-abstraction/submit-proposal"
+    applicationUrl: SUBMISSION_URLS.Project
   },
   {
     id: "bounty-3",
@@ -316,7 +317,7 @@ export let ideasData: Idea[] = [
       title: "Head of DevRel",
       contactHours: "Tuesdays and Thursdays, 2-4pm "
     },
-    applicationUrl: "/summer-of-abstraction/start-bounty"
+    applicationUrl: SUBMISSION_URLS.Bounty
   }
 ];
 

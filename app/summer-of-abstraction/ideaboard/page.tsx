@@ -5,6 +5,9 @@ import Link from "next/link";
 import { IdeaboardSection } from "../components/IdeaboardSection";
 import { IdeasLoader } from "../components/IdeasLoader";
 import { SummerBanner } from "../components/SummerBanner";
+import { ProposalGuidelinesDialog } from "../components/ProposalGuidelinesDialog";
+import { ProposalTemplateDialog } from "../components/ProposalTemplateDialog";
+import { SUBMISSION_URLS } from "../utils/constants";
 
 export default function IdeaboardPage() {
   return (
@@ -39,7 +42,43 @@ export default function IdeaboardPage() {
               <span className="font-semibold text-indigo-700 dark:text-indigo-400">Note: </span>
               The ideas presented in this idea board are just suggestions to help you get started. We welcome proposals for any kind of idea that can help the Okto ecosystem grow. Whether you're a builder, content creator, community manager, or have a different skill set entirely, we encourage you to apply with your innovative and interesting concepts. The Summer of Abstraction program is open to everyone with a passion for Web3 and a vision for improving the Okto ecosystem. Don't feel limited by what you see here – we're excited to see your unique proposals!
             </p>
+            <div className="mt-6 flex flex-wrap gap-3 justify-center">
+                <ProposalGuidelinesDialog linkClassName="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-md font-medium transition-colors shadow-sm hover:shadow cursor-pointer">
+                    <span className="flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+                      </svg>
+                        Proposal Guidelines
+                    </span>
+                </ProposalGuidelinesDialog>
+                          
+                <ProposalTemplateDialog linkClassName="inline-block bg-purple-600 hover:bg-purple-700 text-white px-5 py-2.5 rounded-md font-medium transition-colors shadow-sm hover:shadow cursor-pointer">
+                    <span className="flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                        <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
+                      </svg>
+                        Proposal Template
+                      </span>
+
+                </ProposalTemplateDialog>
+                          
+                    <a 
+                      href={SUBMISSION_URLS.Project}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-5 py-2.5 rounded-md font-medium transition-colors shadow-sm hover:shadow cursor-pointer"
+                    >
+                    <span className="flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+                      </svg>
+                              Create a Proposal
+                    </span>
+                    </a>
+            </div>
           </div>
+          
 
           {/* Ideaboard Section */}
           <IdeasLoader>

@@ -1,9 +1,6 @@
-import { Idea, IdeaType, SkillLevel, Status, ContributionField } from "../types";
+import { Idea, IdeaType, Status, ContributionField } from "../types";
 import Papa from 'papaparse';
 import { SUBMISSION_URLS } from './constants';
-
-// Special value for indicating a rolling deadline
-const ROLLING_DEADLINE_VALUE = "rolling";
 
 export const parseIdeasFromCSV = (csvText: string): Idea[] => {
   const results = Papa.parse(csvText, {
@@ -13,6 +10,11 @@ export const parseIdeasFromCSV = (csvText: string): Idea[] => {
 
   if (results.errors && results.errors.length > 0) {
     console.error("CSV parsing errors:", results.errors);
+  }
+
+  // Log first row for debugging
+  if (results.data.length > 0) {
+    console.log("First row sample:", results.data[0]);
   }
 
   // Filter out any instruction rows
@@ -42,7 +44,7 @@ export const parseIdeasFromCSV = (csvText: string): Idea[] => {
             const trimmed = s.trim();
             // Capitalize the first letter of each word
             return trimmed.split(' ')
-                .map(word => word.charAt(0).toUpperCase() + word.slice(1).slice())
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
                 .join(' ');
             }) 
         : [];
@@ -52,23 +54,39 @@ export const parseIdeasFromCSV = (csvText: string): Idea[] => {
       const prerequisites = row.prerequisites ? row.prerequisites.split(',').map((s: string) => s.trim()) : [];
       
       // Parse timeline
-      const timeline = row.timeline ? row.timeline.split(';').map((item: string) => {
-        const [milestone, date, description] = item.split(':');
-        return { milestone, date, description };
-      }) : [];
+      const timeline = row.timeline 
+        ? row.timeline.split(';').map((item: string) => {
+            const parts = item.split(':');
+            const milestone = parts[0]?.trim() || '';
+            const rawDate = parts[1]?.trim() || '';
+            const description = parts[2]?.trim() || '';
+            
+            return {
+                milestone,
+                date: rawDate, // Pass through the raw date string without parsing
+                description
+            };
+            }) 
+        : [];
       
       // Parse mentor (now without email)
       const mentorParts = row.mentor ? row.mentor.split(':') : ['', '', ''];
       
       // Get the appropriate URL based on type
       const type = (row.type as IdeaType) || "Project";
-      const applicationUrl = SUBMISSION_URLS[type];
+      const defaultApplicationUrl = SUBMISSION_URLS[type];
 
-      // Process deadline - check for rolling deadline
-      const deadlineValue = row.deadline?.toLowerCase().trim();
-      const deadline = deadlineValue === ROLLING_DEADLINE_VALUE ? 
-        "Rolling Deadline" : 
-        row.deadline || new Date().toISOString().split('T')[0];
+      // SIMPLIFIED DEADLINE HANDLING: 
+      // Just use the raw deadline string or "Rolling Deadline" as fallback
+      // No date parsing/formatting to avoid "Invalid Date" issues
+      let deadline = "Rolling Deadline";
+      
+      if (row.deadline) {
+        const rawDeadline = String(row.deadline).trim();
+        if (rawDeadline && !rawDeadline.toLowerCase().includes('roll')) {
+          deadline = rawDeadline; // Use the raw string as-is
+        }
+      }
       
       return {
         id,
@@ -90,7 +108,7 @@ export const parseIdeasFromCSV = (csvText: string): Idea[] => {
           title: mentorParts[1] || "Mentor",
           contactHours: mentorParts[2] || "TBD",
         },
-        applicationUrl
+        applicationUrl: row.applicationUrl || defaultApplicationUrl
       };
     } catch (error) {
       console.error("Error parsing CSV row:", row, error);
