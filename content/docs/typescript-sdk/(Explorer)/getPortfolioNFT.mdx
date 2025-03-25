@@ -22,37 +22,9 @@ The `getPortfolioNFT` function retrieves the list of NFTs in the authenticated u
   ]}
 />
 
-### Method Overview
-
-| Methods                                                                         | Description                          |                 
-|---------------------------------------------------------------------------------|--------------------------------------|
-| <sub><i>async</i></sub> [`getPortfolioNFT`](#get-portfolio-nft) | Get the NFT portfolio of a user |
-
-<div className="method-box">
-
-## Get Portfolio NFT
-
-<sub><i>async</i></sub> `getPortfolioNFT(OktoClient)` returns the NFT portfolio of the user.
-
-### Parameters
-
-| Parameter   | Type                        | Description                            | 
-|-------------|-----------------------------|----------------------------------------|
-| `oktoClient` | [`OktoClient`](/docs/typescript-sdk/technical-reference#models) | Okto client |                                        |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type                  | Description                                   | 
-|------------|-----------------------|-----------------------------------------------|
-| `result`   | [`Promise<UserNFTBalance[]>`](/docs/typescript-sdk/technical-reference#models) | Returns the NFT portfolio of the user | 
-
-</Callout>
-
 ### Example
 
-<Accordions>
+<Accordions defaultValue="Usage">
 <Accordion title="Usage">
 <Tabs items={['Typescript']}>
   <Tab value="Typescript">
@@ -94,6 +66,33 @@ The `getPortfolioNFT` function retrieves the list of NFTs in the authenticated u
 </Accordion>
 </Accordions>
 
+### Method Overview
+
+| Methods                                                                         | Description                          |                 
+|---------------------------------------------------------------------------------|--------------------------------------|
+| <sub><i>async</i></sub> [`getPortfolioNFT`](#get-portfolio-nft) | Get the NFT portfolio of a user |
+
+<div className="method-box">
+
+## Get Portfolio NFT
+
+<sub><i>async</i></sub> `getPortfolioNFT(OktoClient)` returns the NFT portfolio of the user.
+
+### Parameters
+
+| Parameter   | Type                        | Description                            | 
+|-------------|-----------------------------|----------------------------------------|
+| `oktoClient` | [`OktoClient`](/docs/typescript-sdk/technical-reference#models) | Okto client |                                        |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type                  | Description                                   | 
+|------------|-----------------------|-----------------------------------------------|
+| `result`   | [`Promise<UserNFTBalance[]>`](/docs/typescript-sdk/technical-reference#models) | Returns the NFT portfolio of the user | 
+
+</Callout>
 </div>
 
 <Callout title="Note">

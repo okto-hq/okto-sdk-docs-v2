@@ -15,40 +15,11 @@ import '../../styles.css';
 
 The `getPortfolioActivity` function retrieves the portfolio activity for the authenticated user.
 
-<ChainSupportStatus 
-/>
-
-### Method Overview
-
-| Methods                                                                         | Description                          |                 
-|---------------------------------------------------------------------------------|--------------------------------------|
-| <sub><i>async</i></sub> [`getPortfolioActivity`](#get-portfolio-activity) | Get the portfolio activity of a user |
-
-<div className="method-box">
-
-## Get Portfolio Activity
-
-<sub><i>async</i></sub> `getPortfolioActivity(OktoClient)` retrieves the user's portfolio activity history.
-
-### Parameters
-
-| Parameter   | Type                        | Description                            | 
-|-------------|-----------------------------|----------------------------------------|
-| `oktoClient` | [`OktoClient`](/docs/typescript-sdk/technical-reference#models) | Okto client |                                        |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type                  | Description                                   | 
-|------------|-----------------------|-----------------------------------------------|
-| `result`   | [`Promise<UserPortfolioActivity[]>`](/docs/typescript-sdk/technical-reference#models) | Returns the portfolio activity of the user | 
-
-</Callout>
+<ChainSupportStatus />
 
 ### Example
 
-<Accordions>
+<Accordions defaultValue="Usage">
 <Accordion title="Usage">
 <Tabs items={['Typescript']}>
   <Tab value="Typescript">
@@ -121,6 +92,33 @@ The `getPortfolioActivity` function retrieves the portfolio activity for the aut
 </Accordion>
 </Accordions>
 
+### Method Overview
+
+| Methods                                                                         | Description                          |                 
+|---------------------------------------------------------------------------------|--------------------------------------|
+| <sub><i>async</i></sub> [`getPortfolioActivity`](#get-portfolio-activity) | Get the portfolio activity of a user |
+
+<div className="method-box">
+
+## Get Portfolio Activity
+
+<sub><i>async</i></sub> `getPortfolioActivity(OktoClient)` retrieves the user's portfolio activity history.
+
+### Parameters
+
+| Parameter   | Type                        | Description                            | 
+|-------------|-----------------------------|----------------------------------------|
+| `oktoClient` | [`OktoClient`](/docs/typescript-sdk/technical-reference#models) | Okto client |                                        |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type                  | Description                                   | 
+|------------|-----------------------|-----------------------------------------------|
+| `result`   | [`Promise<UserPortfolioActivity[]>`](/docs/typescript-sdk/technical-reference#models) | Returns the portfolio activity of the user | 
+
+</Callout>
 </div>
 
 <Callout title="Note">
