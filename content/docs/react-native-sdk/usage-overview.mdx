@@ -14,7 +14,8 @@ import {
   IoServerOutline,
   IoAppsOutline,
   IoListOutline,
-  IoRocketOutline
+  IoRocketOutline,
+  IoLockClosedOutline
 } from "react-icons/io5";
 
 The Okto React Native SDK provides a comprehensive set of tools and hooks for integrating blockchain functionality into your React Native applications. This guide will help you understand the main components and features available in the SDK.
@@ -119,6 +120,24 @@ The Okto React Native SDK provides a comprehensive set of tools and hooks for in
     title="getTokens"
     subtitle="List available tokens and their details"
     link="/docs/react-native-sdk/getTokens"
+  />
+</div>
+
+## Message Signing
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+  <TechnologyCard
+    icon={<IoLockClosedOutline size={"1.5rem"} />}
+    title="signMessage"
+    subtitle="Sign message following the EIP191 standard"
+    link="/docs/react-native-sdk/signMessage"
+  />
+
+  <TechnologyCard
+    icon={<IoLockClosedOutline size={"1.5rem"} />}
+    title="signTypedData"
+    subtitle="Sign typed data following the EIP712 standard"
+    link="/docs/react-native-sdk/signTypedData"
   />
 </div>
 
