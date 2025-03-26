@@ -1441,7 +1441,7 @@
       },
       "Token": {
         "type": "object",
-        "required": ["address", "caip_id", "symbol", "image", "name", "short_name", "id", "group_id", "is_primary", "network_id", "network_name", "onramp_enabled", "whitelisted"],
+        "required": ["address", "caip_id", "symbol", "image", "name", "short_name", "id", "group_id", "is_primary", "network_id", "network_name", "onramp_enabled", "whitelisted","decimals", "precision"],
         "properties": {
           "address": {
             "type": "string",
@@ -1494,6 +1494,14 @@
           "whitelisted": {
             "type": "boolean",
             "example": true
+          },
+          "decimals": {
+            "type": "string",
+            "example": "6"
+          },
+           "precision": {
+            "type": "string",
+            "example": "6"
           }
         }
       },
