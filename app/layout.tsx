@@ -19,7 +19,9 @@ export default function Layout({ children }: { children: ReactNode }) {
         <meta name="algolia-site-verification" content="DE6E97334C938277" />
       </head>
       <body>
-        <RootProvider>
+        <RootProvider search={{
+           enabled: false,
+        }}>
           <Providers>
             <NavbarComponent />
             <SOABanner />
