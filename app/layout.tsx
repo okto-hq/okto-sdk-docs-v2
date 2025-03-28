@@ -7,6 +7,7 @@ import NavbarComponent from "./components/Navbar";
 import AskCookbook from "./components/AskCookbook";
 import SOABanner from "./components/SOABanner";
 import Script from "next/script";
+import Footer from "./components/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -34,9 +35,14 @@ export default function Layout({ children }: { children: ReactNode }) {
            enabled: false,
         }}>
           <Providers>
-            <NavbarComponent />
-            <SOABanner />
-            {children}
+            <div className="min-h-screen flex flex-col">
+              <NavbarComponent />
+              <SOABanner />
+              <main className="flex-1">
+                {children}
+              </main>
+              <Footer />
+            </div>
           </Providers>
         </RootProvider>
         <AskCookbook />
