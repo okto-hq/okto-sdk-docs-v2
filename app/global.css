@@ -251,11 +251,18 @@ html {
 /* Search results container */
 .aa-DetachedContainer, .aa-Panel {
   background: rgb(var(--aa-background-color-rgb));
-  border-radius: 0;
   border: 1px solid rgba(var(--aa-panel-border-color-rgb), 1);
   box-shadow: var(--aa-panel-shadow);
   overflow: hidden;
+  width: 80vw !important; 
+  max-width: 1000px !important; 
+  max-height: 95vh !important; 
+  left: 50% !important;
+  transform: translateX(-50%) !important; 
+  border-radius: 0; 
 }
+
+
 
 /* Highlighting styles */
 .aa-Highlight mark, 
