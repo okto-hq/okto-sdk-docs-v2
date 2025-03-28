@@ -15,40 +15,11 @@ import '../../styles.css';
 
 The `getChains` function retrieves a list of all blockchain networks supported by Okto.
 
-<ChainSupportStatus 
-/>
-
-### Method Overview
-
-| Methods                                                                         | Description                          |                 
-|---------------------------------------------------------------------------------|--------------------------------------|
-| <sub><i>async</i></sub> [`getChains`](#get-chains) | Get all the supported chains |
-
-<div className="method-box">
-
-## Get Chains
-
-<sub><i>async</i></sub> `getChains(OktoClient)` returns the list of supported chains.
-
-### Parameters
-
-| Parameter   | Type                        | Description                            | 
-|-------------|-----------------------------|----------------------------------------|
-| `oktoClient` | [`OktoClient`](/docs/typescript-sdk/technical-reference#models) | Okto client |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type                  | Description                                   | 
-|------------|-----------------------|-----------------------------------------------|
-| `result`   | [`Promise<GetSupportedNetworksResponseData[]>`](/docs/typescript-sdk/technical-reference#models) | Returns the list of supported chains | 
-
-</Callout>
+<ChainSupportStatus />
 
 ### Example
 
-<Accordions>
+<Accordions defaultValue="Usage">
 <Accordion title="Usage">
 <Tabs items={['Typescript']}>
   <Tab value="Typescript">
@@ -122,6 +93,33 @@ The `getChains` function retrieves a list of all blockchain networks supported b
 </Accordion>
 </Accordions>
 
+### Method Overview
+
+| Methods                                                                         | Description                          |                 
+|---------------------------------------------------------------------------------|--------------------------------------|
+| <sub><i>async</i></sub> [`getChains`](#get-chains) | Get all the supported chains |
+
+<div className="method-box">
+
+## Get Chains
+
+<sub><i>async</i></sub> `getChains(OktoClient)` returns the list of supported chains.
+
+### Parameters
+
+| Parameter   | Type                        | Description                            | 
+|-------------|-----------------------------|----------------------------------------|
+| `oktoClient` | [`OktoClient`](/docs/typescript-sdk/technical-reference#models) | Okto client |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type                  | Description                                   | 
+|------------|-----------------------|-----------------------------------------------|
+| `result`   | [`Promise<GetSupportedNetworksResponseData[]>`](/docs/typescript-sdk/technical-reference#models) | Returns the list of supported chains | 
+
+</Callout>
 </div>
 
 <Callout title="Note">

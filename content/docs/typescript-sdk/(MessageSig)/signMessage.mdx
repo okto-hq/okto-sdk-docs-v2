@@ -1,0 +1,88 @@
+---
+title: Sign Message
+description: Learn how to sign a message using the Okto SDK.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react';
+
+The `signMessage()` method creates a signature for any message following the EIP191 standard. This function initiates the signing process, which can be executed using the `OktoClient` instance.
+
+### Example
+
+<Accordions defaultValue="Usage">
+<Accordion title="Usage">
+```typescript
+import { OktoClient } from '@okto_web3/core-js-sdk'; 
+
+async function SignMessage() {
+
+    const oktoClient = new OktoClient({ 
+        environment: process.env.OKTO_ENVIRONMENT, 
+        clientPrivateKey: process.env.OKTO_CLIENT_PRIVATE_KEY, 
+        clientSWA: process.env.OKTO_CLIENT_SWA, 
+    }); 
+
+    const message = "Hello Okto!"; // [!code highlight]
+
+    const signedMessage_response = await oktoClient.signMessage(message); // [!code highlight]
+    console.log('Signed Message: ', signedMessage_response);
+}
+```
+</Accordion>
+
+<Accordion title="Sample Response">
+```typescript
+Signed Message: 0x83c701514dd434454495f514bf560904b76dec9f476cf847a2aa782546aead3b024e1f3fe69d47529384bae2d3f206d74777943f08b84dd3612dbcdd731c99f41c
+```
+</Accordion>
+</Accordions>
+
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/typescript-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/typescript-sdk/troubleshooting) to contact support
+</Callout>
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> [`signMessage`](#sign-message) | Sign a message using EIP191 standard |
+
+<div className="method-box">
+
+## Sign Message
+
+<sub><i>async</i></sub> `oktoClient.signMessage(message: string)` creates cryptographic signature for the provided message.
+
+### Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|----------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+| `message` | `String` | Parameters for the Sign Message | Yes |
+
+
+### Response
+
+
+<Callout title="Success Response">
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | `Promise<string>` | Returns the EIP191 compliant signature of the message |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+            signature: string;  
+        ```
+    </Accordion>
+</Accordions>
+</Callout>
+
+</div>

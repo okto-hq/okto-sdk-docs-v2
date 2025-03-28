@@ -15,8 +15,70 @@ import '../../styles.css';
 
 The `getTokens` function fetches the list of supported tokens from the backend.
 
-<ChainSupportStatus 
-/>
+<ChainSupportStatus />
+
+### Example
+
+<Accordions defaultValue="Usage">
+<Accordion title="Usage">
+<Tabs items={['Typescript']}>
+  <Tab value="Typescript">
+    ```typescript
+    import { getTokens } from "@okto_web3/core-js-sdk/explorer"; // [!code highlight]
+
+    const tokens = await getTokens(oktoClient); // [!code highlight]
+    ```
+  </Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": {
+        "count": 24,
+        "tokens": [
+            {
+                "address": "0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2",
+                "caip_id": "eip155:84532",
+                "symbol": "USDT",
+                "image": "https://images.okto.tech/token_logos/USDT.png",
+                "name": "",
+                "short_name": "Tether USD",
+                "id": "4388841c-8934-3bca-b518-b883aee7d826",
+                "group_id": "83e77d34-88e9-3e59-a678-231fbf336b08",
+                "is_primary": false,
+                "network_id": "8970cafe-4fc2-3a71-a7d3-77a672b749e9",
+                "network_name": "BASE_TESTNET",
+                "onramp_enabled": false,
+                "whitelisted": true,
+                "decimals": "6",
+                "precision": "6"
+            },
+            {
+                "address": "",
+                "caip_id": "eip155:56",
+                "symbol": "BNB",
+                "image": "https://images.okto.tech/token_logos/BNB.png",
+                "name": "BNB",
+                "short_name": "BNB",
+                "id": "d34383bb-b6b1-3d10-ad7f-60aef8d548fa",
+                "group_id": "9fc268f9-2a56-315a-bd6e-b6a91aceb79c",
+                "is_primary": true,
+                "network_id": "9a26afcf-ed62-43d8-91ea-42dc7cd55890",
+                "network_name": "BSC",
+                "onramp_enabled": false,
+                "whitelisted": true,
+                "decimals": "18",
+                "precision": "6"
+            }
+        ]
+    }
+}
+```
+</Accordion>
+</Accordions>
 
 ### Method Overview
 
@@ -45,66 +107,6 @@ The `getTokens` function fetches the list of supported tokens from the backend.
 | `result`   | [`Promise<GetSupportedNetworksResponseData[]>`](/docs/typescript-sdk/technical-reference#models) | Returns the list of supported tokens | 
 
 </Callout>
-
-### Example
-
-<Accordions>
-<Accordion title="Usage">
-<Tabs items={['Typescript']}>
-  <Tab value="Typescript">
-    ```typescript
-    import { getTokens } from "@okto_web3/core-js-sdk/explorer"; // [!code highlight]
-
-    const tokens = await getTokens(oktoClient); // [!code highlight]
-    ```
-  </Tab>
-</Tabs>
-</Accordion>
-
-<Accordion title="Success Response">
-```json
-{
-    "status": "success",
-    "data": {
-        "count": 24,
-        "tokens": [
-            {
-                "address": "0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2",
-                "caip_id": "eip155:8453",
-                "symbol": "USDT",
-                "image": "https://images.okto.tech/token_logos/USDT.png",
-                "name": "",
-                "short_name": "Tether USD",
-                "id": "a060dd71-4ab2-3865-9530-5c4288f40506",
-                "group_id": "83e77d34-88e9-3e59-a678-231fbf336b08",
-                "is_primary": false,
-                "network_id": "9400de12-efc6-3e69-ab02-0eaf5aaf21e5",
-                "network_name": "BASE",
-                "onramp_enabled": false,
-                "whitelisted": true
-            },
-            {
-                "address": "",
-                "caip_id": "eip155:56",
-                "symbol": "BNB",
-                "image": "https://images.okto.tech/token_logos/BNB.png",
-                "name": "BNB",
-                "short_name": "BNB",
-                "id": "d34383bb-b6b1-3d10-ad7f-60aef8d548fa",
-                "group_id": "9fc268f9-2a56-315a-bd6e-b6a91aceb79c",
-                "is_primary": true,
-                "network_id": "9a26afcf-ed62-43d8-91ea-42dc7cd55890",
-                "network_name": "BSC",
-                "onramp_enabled": false,
-                "whitelisted": true
-            }
-        ]
-    }
-}
-```
-</Accordion>
-</Accordions>
-
 </div>
 
 <Callout title="Note">

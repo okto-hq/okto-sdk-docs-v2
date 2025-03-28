@@ -20,6 +20,43 @@ import '../../styles.css';
   ]}
 />
 
+### Example
+
+<Accordions defaultValue="Usage">
+<Accordion title="Usage">
+<Tabs items={['Typescript']}>
+  <Tab value="Typescript">
+    ```typescript
+    import { getNftCollections } from "@okto_web3/core-js-sdk/explorer"; // [!code highlight]
+    
+    const nftCollections = await getNftCollections(); // [!code highlight]
+    ```
+  </Tab>
+</Tabs>
+</Accordion>
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": {
+        "collections": [
+            {
+                "caip_id": "eip155:8453",
+                "network_name": "BASE",
+                "entity_type": "ERC721",
+                "collection_address": "0x19fc518b9eed93f70aa4b49133d303101699467a",
+                "collection_name": "EXAMPLE_COLLECTION",
+                "description": "Collection description",
+                "collection_image": "https://example.com/image.png",
+                "whitelisted": true
+            }
+        ]
+    }
+}
+```
+</Accordion>
+</Accordions>
+
 ### Method Overview
 
 | Methods                                                                         | Description                          |                 
@@ -47,22 +84,6 @@ import '../../styles.css';
 | `result`   | [`Promise<NFTOrderDetails[]>`](/docs/typescript-sdk/technical-reference#models) | Returns the list of NFT collections | 
 
 </Callout>
-
-
-<Accordions>
-<Accordion title="Example">
-<Tabs items={['Typescript']}>
-  <Tab value="Typescript">
-    ```typescript
-    import { getNftCollections } from "@okto_web3/core-js-sdk/explorer"; // [!code highlight]
-    
-    const nftCollections = await getNftCollections(); // [!code highlight]
-    ```
-  </Tab>
-</Tabs>
-</Accordion>
-</Accordions>
-
 </div>
 
 <Callout title="Note">
