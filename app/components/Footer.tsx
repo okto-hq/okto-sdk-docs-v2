@@ -50,7 +50,6 @@ export default function Footer() {
             <ul className="space-y-2 p-0 m-0">
               <li className="p-0 m-0"><a href="https://docs.okto.tech/docs/okto-sdk/supported-sdk-platforms" className="text-gray-400 hover:text-white text-sm" target="_blank" rel="noopener">SDK</a></li>
               <li className="p-0 m-0"><a href="https://okto.tech/wallet" className="text-gray-400 hover:text-white text-sm" target="_blank" rel="noopener">Wallet</a></li>
-              <li className="p-0 m-0"><a href="https://form.typeform.com/to/CvPAQNAU" className="text-gray-400 hover:text-white text-sm" target="_blank" rel="noopener">Okto Grants</a></li>
             </ul>
           </div>
 
@@ -61,16 +60,18 @@ export default function Footer() {
               <li className="p-0 m-0"><a href="https://whitepaper.okto.tech/" className="text-gray-400 hover:text-white text-sm" target="_blank" rel="noopener">Whitepaper</a></li>
               <li className="p-0 m-0"><a href="https://okto.tech/blog" className="text-gray-400 hover:text-white text-sm" target="_blank" rel="noopener">Blog</a></li>
               <li className="p-0 m-0"><a href="https://docs.okto.tech/showcase" className="text-gray-400 hover:text-white text-sm" target="_blank" rel="noopener">Showcase</a></li>
+              <li className="p-0 m-0"><a href="https://docs.okto.tech/docs/react-sdk/sdk-error-warnings" className="text-gray-400 hover:text-white text-sm" target="_blank" rel="noopener">Errors and Warnings</a></li>
+              <li className="p-0 m-0"><a href="https://discord.com/invite/okto-916349620383252511" className="text-gray-400 hover:text-white text-sm" target="_blank" rel="noopener">Contact Us</a></li>
             </ul>
           </div>
 
-          {/* Support Column */}
+          {/* Community Column */}
           <div className="col-span-3">
-            <h3 className="text-sm font-medium mb-3 mt-0">Support</h3>
+            <h3 className="text-sm font-medium mb-3 mt-0">Community</h3>
             <ul className="space-y-2 p-0 m-0">
               <li className="p-0 m-0"><a href="https://docs.okto.tech/docs/troubleshooting" className="text-gray-400 hover:text-white text-sm" target="_blank" rel="noopener">Troubleshooting</a></li>
-              <li className="p-0 m-0"><a href="https://docs.okto.tech/docs/react-sdk/sdk-error-warnings" className="text-gray-400 hover:text-white text-sm" target="_blank" rel="noopener">SDK Error and Warnings</a></li>
-              <li className="p-0 m-0"><a href="https://discord.com/invite/okto-916349620383252511" className="text-gray-400 hover:text-white text-sm" target="_blank" rel="noopener">Contact Us</a></li>
+              <li className="p-0 m-0"><a href="https://docs.okto.tech/summer-of-abstraction" className="text-gray-400 hover:text-white text-sm" target="_blank" rel="noopener">Summer of Abstraction</a></li>
+              <li className="p-0 m-0"><a href="https://form.typeform.com/to/CvPAQNAU" className="text-gray-400 hover:text-white text-sm" target="_blank" rel="noopener">Okto Grants</a></li>
             </ul>
           </div>
         </div>
