@@ -12,10 +12,7 @@ export const parseIdeasFromCSV = (csvText: string): Idea[] => {
     console.error("CSV parsing errors:", results.errors);
   }
 
-  // Log first row for debugging
-  if (results.data.length > 0) {
-    console.log("First row sample:", results.data[0]);
-  }
+
 
   // Filter out any instruction rows
   const validRows = (results.data as any[]).filter((row: any) => {
