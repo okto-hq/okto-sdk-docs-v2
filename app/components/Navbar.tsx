@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState, createElement, Fragment } from "react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link as ULink, Image, Chip } from "@heroui/react";
 import {
   DropdownMenu,
@@ -20,6 +20,7 @@ import {
   TbPlugConnected,
 } from "react-icons/tb";
 import { SiAxios, SiFlutter, SiNextdotjs, SiWagmi } from "react-icons/si";
+import { IoDocumentTextOutline } from "react-icons/io5";
 import { FaUnity } from "react-icons/fa6";
 import { SiTypescript } from "react-icons/si";
 import { useTheme } from "next-themes";
@@ -28,6 +29,7 @@ import DiscordButton from "./DiscordButton";
 import { Button as SCButton } from "@/components/ui/button";
 import Link from "next/link";
 import { Sun, Moon } from "lucide-react";
+import AlgoliaSearch from "./AlgoliaSearch";
 
 const poppins = Poppins({ subsets: ["latin"], weight: "500", display: "swap" });
 const poppinsLight = Poppins({
@@ -147,6 +149,7 @@ export default function NavbarComponent() {
       isBordered
       className="nav-spacing border-b border-gray-200 dark:border-gray-700"
     >
+          
       <NavbarBrand className={`${poppins.className} gap-20 flex items-center`}>
         <ULink href="/docs" color="foreground" className="no-underline">
           <NavbarItem className="flex gap-2 items-center">
@@ -218,6 +221,7 @@ export default function NavbarComponent() {
         </NavbarContent>
       </NavbarBrand>
       <NavbarContent justify="end">
+          <AlgoliaSearch />
         <NavbarItem>
           <DiscordButton />
         </NavbarItem>

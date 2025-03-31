@@ -57,18 +57,20 @@ function TokensList() {
         "tokens": [
             {
                 "address": "0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2",
-                "caip_id": "eip155:8453",
+                "caip_id": "eip155:84532",
                 "symbol": "USDT",
                 "image": "https://images.okto.tech/token_logos/USDT.png",
                 "name": "",
                 "short_name": "Tether USD",
-                "id": "a060dd71-4ab2-3865-9530-5c4288f40506",
+                "id": "4388841c-8934-3bca-b518-b883aee7d826",
                 "group_id": "83e77d34-88e9-3e59-a678-231fbf336b08",
                 "is_primary": false,
-                "network_id": "9400de12-efc6-3e69-ab02-0eaf5aaf21e5",
-                "network_name": "BASE",
+                "network_id": "8970cafe-4fc2-3a71-a7d3-77a672b749e9",
+                "network_name": "BASE_TESTNET",
                 "onramp_enabled": false,
-                "whitelisted": true
+                "whitelisted": true,
+                "decimals": "6",
+                "precision": "6"
             },
             {
                 "address": "",
@@ -83,7 +85,9 @@ function TokensList() {
                 "network_id": "9a26afcf-ed62-43d8-91ea-42dc7cd55890",
                 "network_name": "BSC",
                 "onramp_enabled": false,
-                "whitelisted": true
+                "whitelisted": true,
+                "decimals": "18",
+                "precision": "6"
             }
         ]
     }
@@ -141,6 +145,8 @@ For error handling:
             network_name: string;
             onramp_enabled: boolean;
             whitelisted: boolean;
+            decimals: string;
+            precision: string;
         }
         ```
     </Accordion>

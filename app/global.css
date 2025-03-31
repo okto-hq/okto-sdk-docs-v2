@@ -4,6 +4,7 @@
 @import 'fumadocs-ui/css/vitepress.css';
 @import 'tw-animate-css';
 
+
 @config "../tailwind.config.js";
 
 html {
@@ -13,6 +14,7 @@ html {
 @layer base {
   :root {
     --card-foreground: 240 10% 3.9%;
+    --aa-detached-modal-max-width: 100px;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
     --primary-foreground: 0 0% 98%;
@@ -194,6 +196,101 @@ html {
 
 .animate-spin-slow {
   animation: spin-slow 3s linear infinite;
+}
+
+/* Light mode variables */
+:root {
+  --aa-primary-color-rgb: 59, 90, 245;
+  --aa-background-color-rgb: 255, 255, 255;
+  --aa-text-color-rgb: 51, 51, 51;
+  --aa-muted-color-rgb: 115, 115, 140;
+  --aa-panel-border-color-rgb: 229, 231, 235;
+  --aa-input-border-color-rgb: 209, 213, 219;
+  --aa-selected-color-rgb: 240, 244, 255;
+  --aa-panel-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.08);
+}
+
+/* Dark mode variables */
+.dark, [data-theme="dark"] {
+  --aa-primary-color-rgb: 80, 110, 255;
+  --aa-background-color-rgb: 23, 29, 40;
+  --aa-input-background-color-rgb: 31, 41, 55;
+  --aa-text-color-rgb: 229, 231, 235;
+  --aa-muted-color-rgb: 156, 163, 175;
+  --aa-panel-border-color-rgb: 55, 65, 81;
+  --aa-input-border-color-rgb: 75, 85, 99;
+  --aa-selected-color-rgb: 30, 41, 59;
+  --aa-scrollbar-track-background-color-rgb: 55, 65, 81; /* Gray-700 */
+  --aa-scrollbar-thumb-background-color-rgb: 107, 114, 128; /* Gray-500 */
+  --aa-panel-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.3);
+}
+
+.aa-Form {
+  border-radius: 1rem;
+  height: 44px;
+  border: 1px solid rgba(var(--aa-input-border-color-rgb), 1);
+  background-color: rgb(var(--aa-input-background-color-rgb, var(--aa-background-color-rgb)));
+}
+
+.aa-InputWrapper {
+  padding-left: 2.5rem;
+}
+
+.aa-Input, 
+.aa-Input:focus,
+#autocomplete input,
+#autocomplete input:focus {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent;
+  height: 100%; 
+  vertical-align: middle;
+}
+
+/* Search results container */
+.aa-DetachedContainer, .aa-Panel {
+  background: rgb(var(--aa-background-color-rgb));
+  border: 1px solid rgba(var(--aa-panel-border-color-rgb), 1);
+  box-shadow: var(--aa-panel-shadow);
+  overflow: hidden;
+  width: 80vw !important; 
+  max-width: 1000px !important; 
+  max-height: 95vh !important; 
+  left: 50% !important;
+  transform: translateX(-50%) !important; 
+  border-radius: 0; 
+}
+
+
+
+/* Highlighting styles */
+.aa-Highlight mark, 
+.aa-ItemContentTitle mark, 
+.aa-ItemContentDescription mark {
+  background-color: rgba(var(--aa-primary-color-rgb), 0.15);
+  color: rgb(var(--aa-primary-color-rgb));
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* Dark mode highlights */
+.dark .aa-Highlight mark,
+.dark .aa-ItemContentTitle mark,
+.dark .aa-ItemContentDescription mark,
+[data-theme="dark"] .aa-Highlight mark,
+[data-theme="dark"] .aa-ItemContentTitle mark,
+[data-theme="dark"] .aa-ItemContentDescription mark {
+  background-color: rgba(var(--aa-primary-color-rgb), 0.25);
+}
+
+/* Active item styling */
+.aa-Item[aria-selected="true"] {
+  background-color: rgba(var(--aa-primary-color-rgb), 0.1);
+}
+
+.aa-Item[aria-selected="true"] .aa-ItemContentTitle {
+  color: rgb(var(--aa-primary-color-rgb));
 }
 
 /* #nd-sidebar > div.overflow-hidden.flex-1 > div > div > div > div:nth-child(9) > div > div > a:nth-child(1),

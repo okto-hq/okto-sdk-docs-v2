@@ -30,7 +30,7 @@
     "/api/oc/v1/wallets": {
       "get": {
         "tags": ["Explorer"],
-        "summary": "Get wallet",
+        "summary": "Get Wallet",
         "description": "Fetch all the wallets created by the user.",
         "operationId": "getWallets",
         "security": [
@@ -65,7 +65,7 @@
     "/api/oc/v1/supported/networks": {
       "get": {
         "tags": ["Explorer"],
-        "summary": "Get supported networks",
+        "summary": "Get Chains",
         "description": "Get an array of all the whitelisted networks on your API key.",
         "operationId": "getSupportedNetworks",
         "security": [
@@ -100,7 +100,7 @@
     "/api/oc/v1/supported/tokens": {
       "get": {
         "tags": ["Explorer"],
-        "summary": "Get supported tokens",
+        "summary": "Get Tokens",
         "description": "Get an array of all the whitelisted tokens on your API key.",
         "operationId": "getSupportedTokens",
         "security": [
@@ -135,7 +135,7 @@
     "/api/oc/v1/aggregated-portfolio": {
       "get": {
         "tags": ["Explorer"],
-        "summary": "Get portfolio",
+        "summary": "Get Portfolio",
         "description": "Get the portfolio data of the user, which includes all the tokens owned by the user across all the networks.",
         "operationId": "getPortfolio",
         "security": [
@@ -170,7 +170,7 @@
     "/api/oc/v1/portfolio/activity": {
       "get": {
         "tags": ["Explorer"],
-        "summary": "Get portfolio activity",
+        "summary": "Get Portfolio Activity",
         "description": "Get user's portfolio activity.",
         "operationId": "getPortfolioActivity",
         "security": [
@@ -213,7 +213,7 @@
     "/api/oc/v1/portfolio/nft": {
       "get": {
         "tags": ["Explorer"],
-        "summary": "Get NFT Portfolio",
+        "summary": "Get Portfolio NFTs",
         "description": "Get the details of all the NFTs owned by the authenticated user across all networks.",
         "operationId": "getNftPortfolio",
         "security": [
@@ -248,7 +248,7 @@
     "/api/oc/v1/orders": {
       "get": {
         "tags": ["Explorer"],
-        "summary": "Get order history",
+        "summary": "Get Orders History",
         "description": "Fetch all the orders of the user, which includes the history of tokens sent and received.",
         "operationId": "getOrderHistory",
         "security": [
@@ -284,41 +284,6 @@
               }
             }
           },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/responses/BadRequest"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/oc/v1/gas-values": {
-      "get": {
-        "tags": ["Explorer"],
-        "summary": "Get gas values",
-        "description": "Get the gas fee values.",
-        "operationId": "getGasFeeValues",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Fetched",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetGasFeeValuesResponse"
-                }
-              }
-            }
-          }, 
           "400": {
             "description": "Bad Request",
             "content": {
@@ -1441,7 +1406,7 @@
       },
       "Token": {
         "type": "object",
-        "required": ["address", "caip_id", "symbol", "image", "name", "short_name", "id", "group_id", "is_primary", "network_id", "network_name", "onramp_enabled", "whitelisted"],
+        "required": ["address", "caip_id", "symbol", "image", "name", "short_name", "id", "group_id", "is_primary", "network_id", "network_name", "onramp_enabled", "whitelisted","decimals", "precision"],
         "properties": {
           "address": {
             "type": "string",
@@ -1494,6 +1459,14 @@
           "whitelisted": {
             "type": "boolean",
             "example": true
+          },
+          "decimals": {
+            "type": "string",
+            "example": "6"
+          },
+           "precision": {
+            "type": "string",
+            "example": "6"
           }
         }
       },

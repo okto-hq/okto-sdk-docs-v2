@@ -1,0 +1,14 @@
+{
+  "title": "Explorer",
+  "pages": [
+    "get-wallets",
+    "get-supported-networks",
+    "get-supported-tokens",
+    "get-portfolio",
+    "get-portfolio-activity",
+    "get-nft-portfolio",
+    "get-order-history",
+    "order-estimate",
+    "user-session-verify"
+  ]
+}
