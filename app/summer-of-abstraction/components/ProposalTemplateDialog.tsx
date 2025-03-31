@@ -1,6 +1,5 @@
 "use client"
 
-
 import React from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { SUBMISSION_URLS } from "../utils/constants";
@@ -26,24 +25,38 @@ export function ProposalTemplateDialog({ children, linkClassName }: ProposalTemp
         </DialogHeader>
 
         <div className="prose prose-indigo dark:prose-invert max-w-none">
-          
+          <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mt-6">Program Details</h2>
+          <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-md mb-6">
+            <p className="italic">
+              This template adapts to different types of proposals, allowing you to effectively present your vision. Complete the relevant sections based on your proposal type—whether it's content creation, community workshops, development work, or other initiatives. Focus on the fields that best communicate your specific project goals and deliverables. Try to make your proposal as detailed as possible to help us evaluate it properly. The team will be in touch with you during the review process if clarifications or edits are needed.
+            </p>
+          </div>
 
           <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mt-6">1. Applicant Information</h2>
           <ul className="list-disc pl-6 space-y-1">
             <li><strong>Full Name:</strong></li>
             <li><strong>Email Address:</strong></li>
-            <li><strong>GitHub/Twitter/LinkedIn (if applicable):</strong></li>
-            <li><strong>Project/Team Name (if applicable):</strong></li>
-            <li><strong>Number of Team Members:</strong></li>
-            <li><strong>Location:</strong></li>
-            <li><strong>Previous Web3 Experience (if any):</strong></li>
+            <li><strong>Funding Address (Polygon):</strong></li>
+            <li><strong>Telegram:</strong></li>
+            <li><strong>Twitter/X:</strong></li>
+            <li><strong>GitHub:</strong></li>
           </ul>
 
-          <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mt-6">2. Project Title & Summary</h2>
+          <h3 className="text-lg font-medium text-indigo-600 dark:text-indigo-400 mt-4">Team Members (if applicable)</h3>
           <ul className="list-disc pl-6 space-y-1">
-            <li><strong>Project Title:</strong></li>
-            <li><strong>Project Summary (150-250 words):</strong></li>
-            <li><strong>Key Features & Functionality:</strong></li>
+            <li><strong>Name:</strong></li>
+            <li><strong>Email:</strong></li>
+            <li><strong>Bio:</strong></li>
+            <li><strong>Telegram Handle:</strong></li>
+            <li><strong>Okto App Wallet Address:</strong></li>
+          </ul>
+
+          <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mt-6">2. Project Overview</h2>
+          <ul className="list-disc pl-6 space-y-1">
+            <li><strong>Project Name:</strong></li>
+            <li><strong>Project Category:</strong> (Development, Content, Community, etc.)</li>
+            <li><strong>Project Summary:</strong> (150-250 words)</li>
+            <li><strong>Details:</strong></li>
           </ul>
 
           <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mt-6">3. Problem Statement</h2>
@@ -64,79 +77,71 @@ export function ProposalTemplateDialog({ children, linkClassName }: ProposalTemp
           <ul className="list-disc pl-6 space-y-1">
             <li><strong>Tech Stack & Dependencies:</strong></li>
             <li><strong>Architecture Overview:</strong></li>
-            <li><strong>Any Existing Work or Prototypes? (Include links if available)</strong></li>
-            <li><strong>Integration Plan with Okto SDK (if applicable):</strong></li>
+            <li><strong>Any Existing Work or Prototypes:</strong></li>
+            <li><strong>Integration Plan with Okto SDK:</strong></li>
           </ul>
 
           <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mt-6">6. Milestones & Timeline</h2>
+          <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-md mb-4">
+            <p className="italic">
+              Note: Token disbursement is milestone-based. Regular communication and updates are required throughout the project duration. Tokens will be released upon successful completion and verification of each milestone.
+            </p>
+          </div>
           <div className="overflow-x-auto mt-3">
             <table className="min-w-full border border-gray-300 dark:border-gray-700">
               <thead className="bg-gray-50 dark:bg-gray-800">
                 <tr>
                   <th className="px-4 py-2 border border-gray-300 dark:border-gray-700 text-left">Milestone</th>
+                  <th className="px-4 py-2 border border-gray-300 dark:border-gray-700 text-left">Tentative Start Date</th>
                   <th className="px-4 py-2 border border-gray-300 dark:border-gray-700 text-left">Expected Completion Date</th>
-                  <th className="px-4 py-2 border border-gray-300 dark:border-gray-700 text-left">Deliverables</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td className="px-4 py-2 border border-gray-300 dark:border-gray-700">Milestone 1</td>
-                  <td className="px-4 py-2 border border-gray-300 dark:border-gray-700">[Date]</td>
-                  <td className="px-4 py-2 border border-gray-300 dark:border-gray-700">[Deliverable]</td>
+                  <td className="px-4 py-2 border border-gray-300 dark:border-gray-700"></td>
+                  <td className="px-4 py-2 border border-gray-300 dark:border-gray-700"></td>
+                  <td className="px-4 py-2 border border-gray-300 dark:border-gray-700"></td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-2 border border-gray-300 dark:border-gray-700">Milestone 2</td>
-                  <td className="px-4 py-2 border border-gray-300 dark:border-gray-700">[Date]</td>
-                  <td className="px-4 py-2 border border-gray-300 dark:border-gray-700">[Deliverable]</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-2 border border-gray-300 dark:border-gray-700">Milestone 3</td>
-                  <td className="px-4 py-2 border border-gray-300 dark:border-gray-700">[Date]</td>
-                  <td className="px-4 py-2 border border-gray-300 dark:border-gray-700">[Deliverable]</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-2 border border-gray-300 dark:border-gray-700">Final Submission</td>
-                  <td className="px-4 py-2 border border-gray-300 dark:border-gray-700">[Date]</td>
-                  <td className="px-4 py-2 border border-gray-300 dark:border-gray-700">[Deliverable]</td>
+                  <td className="px-4 py-2 border border-gray-300 dark:border-gray-700"></td>
+                  <td className="px-4 py-2 border border-gray-300 dark:border-gray-700"></td>
+                  <td className="px-4 py-2 border border-gray-300 dark:border-gray-700"></td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mt-6">7. Requested Funding</h2>
-          <ul className="list-disc pl-6 space-y-1">
-            <li><strong>Total Points Request (5k - 300k):</strong></li>
-            <li><strong>Budget Breakdown:</strong>
-              <ul className="list-disc pl-6 mt-1">
-                <li>Development Costs:</li>
-                <li>Infrastructure & Tools:</li>
-                <li>Design & UX:</li>
-                <li>Marketing & Outreach:</li>
-                <li>Miscellaneous:</li>
-              </ul>
-            </li>
-          </ul>
+          <h3 className="text-lg font-medium text-indigo-600 dark:text-indigo-400 mt-4">Total Points Requested</h3>
+          <p className="mb-2">_________________</p>
 
-          <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mt-6">8. Impact & Community Benefit</h2>
+          <h3 className="text-lg font-medium text-indigo-600 dark:text-indigo-400 mt-4">Budget Breakdown</h3>
+          <p className="mb-2">_________________</p>
+
+          <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mt-6">7. Impact & Community Benefit</h2>
           <ul className="list-disc pl-6 space-y-1">
             <li><strong>How does your project contribute to Web3 adoption?</strong></li>
             <li><strong>How will you measure success?</strong></li>
             <li><strong>Potential user base & community engagement plans:</strong></li>
           </ul>
 
-          <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mt-6">9. Additional Information</h2>
+          <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mt-6">8. Additional Information</h2>
           <ul className="list-disc pl-6 space-y-1">
-            <li><strong>Have you received funding from other grants? (Yes/No, please specify)</strong></li>
+            <li><strong>Have you received funding from other grants?</strong></li>
             <li><strong>Any relevant links (GitHub, Website, Demo, etc.)</strong></li>
             <li><strong>Other comments or special considerations:</strong></li>
           </ul>
 
-          <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mt-6">10. Terms & Commitments</h2>
+          <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mt-6">9. Terms & Conditions</h2>
           <ul className="list-disc pl-6 space-y-1">
-            <li><strong>Are you available for monthly reviews and updates? (Yes/No)</strong></li>
-            <li><strong>Are you open to collaboration and mentorship? (Yes/No)</strong></li>
-            <li><strong>Do you agree to abide by Okto's program guidelines? (Yes/No)</strong></li>
+            <li><strong>Are you available for periodic reviews and updates?</strong> (Yes/No)</li>
+            <li><strong>Are you open to collaboration and mentorship?</strong> (Yes/No)</li>
+            <li><strong>Do you agree to abide by Okto's program guidelines?</strong> (Yes/No)</li>
+            <li><strong>How did you hear about SOA?</strong></li>
           </ul>
+
+          <p className="mt-4 text-gray-600 dark:text-gray-400 italic">
+            Please fill out all required fields before submitting. If a field is not applicable, enter 'N/A' or '-' as placeholder.
+          </p>
 
           <h3 className="text-lg font-medium text-indigo-600 dark:text-indigo-400 mt-6">Submission Instructions:</h3>
           <ul className="list-disc pl-6 space-y-1">
@@ -151,87 +156,95 @@ export function ProposalTemplateDialog({ children, linkClassName }: ProposalTemp
 
           <div className="mt-6 flex justify-center">
             <button 
-              className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors duration-300"
+              className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors duration-300 cursor-pointer"
               onClick={() => {
                 // Generate the proposal template as text
-                const template = `# Proposal Template
+                const template = `# Proposal Template for Summer of Abstraction
 
+## Program Details
 
-# **1. Applicant Information**
+This template adapts to different types of proposals, allowing you to effectively present your vision. Complete the relevant sections based on your proposal type—whether it's content creation, community workshops, development work, or other initiatives. Focus on the fields that best communicate your specific project goals and deliverables. Try to make your proposal as detailed as possible to help us evaluate it properly. The team will be in touch via Telegram during the review process if clarifications or edits are needed.
+
+## 1. Applicant Information
 
 - **Full Name:**
 - **Email Address:**
-- **GitHub/Twitter/LinkedIn (if applicable):**
-- **Project/Team Name (if applicable):**
-- **Number of Team Members:**
-- **Location:**
-- **Previous Web3 Experience (if any):**
+- **Funding Address (Polygon):**
+- **Telegram:**
+- **Twitter/X:**
+- **GitHub:**
 
-## **2. Project Title & Summary**
+### Team Members (if applicable)
 
-- **Project Title:**
-- **Project Summary (150-250 words):**
-- **Key Features & Functionality:**
+- **Name:**
+- **Email:**
+- **Bio:**
+- **Telegram Handle:**
+- **Okto App Wallet Address:**
 
-## **3. Problem Statement**
+## 2. Project Overview
+
+- **Project Name:**
+- **Project Category:** (Development, Content, Community, etc.)
+- **Project Summary:** (150-250 words)
+- **Details:**
+
+## 3. Problem Statement
 
 - **What problem are you solving?**
 - **Why is this problem significant in Web3?**
 - **Who are the target users?**
 
-## **4. Proposed Solution**
+## 4. Proposed Solution
 
 - **How does your project address the problem?**
 - **How does it leverage Okto SDK or chain abstraction?**
 - **What makes your solution unique?**
 
-## **5. Technical Details**
+## 5. Technical Details
 
 - **Tech Stack & Dependencies:**
 - **Architecture Overview:**
-- **Any Existing Work or Prototypes? (Include links if available)**
-- **Integration Plan with Okto SDK (if applicable):**
+- **Any Existing Work or Prototypes:**
+- **Integration Plan with Okto SDK:**
 
-## **6. Milestones & Timeline**
+## 6. Milestones & Timeline
 
-| **Milestone** | **Expected Completion Date** | **Deliverables** |
+Note: Token disbursement is milestone-based. Regular communication and updates are required throughout the project duration. Tokens will be released upon successful completion and verification of each milestone.
+
+| Milestone | Tentative Start Date | Expected Completion Date |
 | --- | --- | --- |
-| Milestone 1 | [Date] | [Deliverable] |
-| Milestone 2 | [Date] | [Deliverable] |
-| Milestone 3 | [Date] | [Deliverable] |
-| Final Submission | [Date] | [Deliverable] |
+|  |  |  |
+|  |  |  |
 
-## **7. Requested Funding**
+**Total Points Requested:**
 
-- **Total Points Request (5k - 300k):**
-- **Budget Breakdown:**
-    - Development Costs:
-    - Infrastructure & Tools:
-    - Design & UX:
-    - Marketing & Outreach:
-    - Miscellaneous:
+**Budget Breakdown:**
 
-## **8. Impact & Community Benefit**
+## 7. Impact & Community Benefit
 
 - **How does your project contribute to Web3 adoption?**
 - **How will you measure success?**
 - **Potential user base & community engagement plans:**
 
-## **9. Additional Information**
+## 8. Additional Information
 
-- **Have you received funding from other grants? (Yes/No, please specify)**
+- **Have you received funding from other grants?**
 - **Any relevant links (GitHub, Website, Demo, etc.)**
 - **Other comments or special considerations:**
 
-## **10. Terms & Commitments**
+## 9. Terms & Conditions
 
-- **Are you available for monthly reviews and updates? (Yes/No)**
-- **Are you open to collaboration and mentorship? (Yes/No)**
-- **Do you agree to abide by Okto's program guidelines? (Yes/No)**
+- **Are you available for periodic reviews and updates?** (Yes/No)
+- **Are you open to collaboration and mentorship?** (Yes/No)
+- **Do you agree to abide by Okto's program guidelines?** (Yes/No)
+- **How did you hear about SOA?**
 
-### **Submission Instructions:**
+Please fill out all required fields before submitting. If a field is not applicable, enter 'N/A' or '-' as placeholder.
 
-- [Submit your proposal here.](https://questbook.app/proposal_form/?grantId=67ab0aaf75ceaec6d645dd48&chainId=10)
+### Submission Instructions:
+
+- Submit your proposal here: ${SUBMISSION_URLS.Project}
 - Ensure your proposal is complete and follows the guidelines.
 - Proposals will be reviewed based on feasibility, innovation, impact, and execution potential.
 
