@@ -376,6 +376,26 @@ html {
   }
 }
 
+html.dark .aa-DetachedContainer,
+html.dark .aa-Panel,
+html[data-theme="dark"] .aa-DetachedContainer,
+html[data-theme="dark"] .aa-Panel {
+  background-color: rgb(23, 29, 40);
+}
+
+html.dark .aa-Form,
+html[data-theme="dark"] .aa-Form {
+  background-color: rgb(31, 41, 55);
+  border-color: rgb(75, 85, 99);
+}
+
+html.dark .aa-DetachedContainer .flex.items-center.justify-between.p-3,
+html.dark .aa-Panel .flex.items-center.justify-between.p-3,
+html[data-theme="dark"] .aa-DetachedContainer .flex.items-center.justify-between.p-3,
+html[data-theme="dark"] .aa-Panel .flex.items-center.justify-between.p-3 {
+  background-color: rgb(23, 29, 40);
+}
+
 /* #nd-sidebar > div.overflow-hidden.flex-1 > div > div > div > div:nth-child(9) > div > div > a:nth-child(1),
 #nd-sidebar > div.overflow-hidden.flex-1 > div > div > div > div:nth-child(9) > div > div > p:nth-child(2),
 #nd-sidebar > div.overflow-hidden.flex-1 > div > div > div > div:nth-child(10) > div > div > a:nth-child(1),
