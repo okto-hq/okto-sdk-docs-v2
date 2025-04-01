@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, Fragment, createElement, useState } from 'react';
+import React, { useEffect, useRef, Fragment, createElement, useState, useCallback } from 'react';
 import { IoDocumentTextOutline } from 'react-icons/io5';
 import Link from 'next/link';
 import '@algolia/autocomplete-theme-classic';
@@ -269,53 +269,97 @@ export default function AlgoliaSearch() {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const panelRootRef = useRef<Root | null>(null);
     const rootRef = useRef<HTMLElement | null>(null);
+    const autocompleteInstanceRef = useRef<any>(null);
     const [isMobile, setIsMobile] = useState(false);
+
+    // Memoize the resize handler to prevent unnecessary re-renders
+    const handleResize = useCallback(() => {
+        const isMobileView = window.innerWidth <= 768;
+        if (isMobile !== isMobileView) {
+            setIsMobile(isMobileView);
+        }
+    }, [isMobile]);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            const checkMobile = () => {
-                setIsMobile(window.innerWidth <= 768);
-            };
-            
-            checkMobile();
-            window.addEventListener('resize', checkMobile);
-            return () => window.removeEventListener('resize', checkMobile);
+            handleResize();
+            const debouncedResize = debounce(handleResize, 200);
+            window.addEventListener('resize', debouncedResize);
+            return () => window.removeEventListener('resize', debouncedResize);
         }
-    }, []);
+    }, [handleResize]);
+
+    // Debounce function to limit resize event handling
+    function debounce(fn: Function, ms = 300) {
+        let timeoutId: ReturnType<typeof setTimeout>;
+        return function(...args: any[]) {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => fn(...args), ms);
+        };
+    }
 
     useEffect(() => {
         if (!containerRef.current) {
-            console.warn("AlgoliaSearch: Container ref is not available.");
             return;
         }
 
+        let isUnmounting = false;
+
         // Initialize Algolia Autocomplete
-        const autocompleteInstance = autocomplete<AlgoliaHit>({
+        const instance = autocomplete<AlgoliaHit>({
             container: containerRef.current,
             renderer: { createElement, Fragment, render: () => { } },
             render: ({ children, state, Fragment, components }, root) => {
-                if (!panelRootRef.current || rootRef.current !== root) {
-                    rootRef.current = root;
-                    panelRootRef.current?.unmount();
-                    panelRootRef.current = createRoot(root);
-                }
+                if (isUnmounting) return;
 
-                // Set mobile context
-                if (state.context) {
-                    (state.context as AutocompleteContext).isMobile = isMobile;
-                }
+                // Safely handle the root updates
+                try {
+                    if (!panelRootRef.current || rootRef.current !== root) {
+                        rootRef.current = root;
+                        // Safely unmount previous root if it exists
+                        setTimeout(() => {
+                            if (panelRootRef.current && !isUnmounting) {
+                                try {
+                                    panelRootRef.current.unmount();
+                                } catch (e) {
+                                    console.warn("Error unmounting panel root", e);
+                                }
+                                panelRootRef.current = createRoot(root);
+                                renderContent();
+                            } else if (!isUnmounting) {
+                                panelRootRef.current = createRoot(root);
+                                renderContent();
+                            }
+                        }, 0);
+                    } else {
+                        renderContent();
+                    }
 
-                panelRootRef.current.render(
-                    <SearchResultsPanel state={state} components={components}>
-                        {children}
-                    </SearchResultsPanel>
-                );
+                    function renderContent() {
+                        if (isUnmounting || !panelRootRef.current) return;
+                        
+                        // Set mobile context
+                        if (state.context) {
+                            (state.context as AutocompleteContext).isMobile = isMobile;
+                        }
+
+                        try {
+                            panelRootRef.current.render(
+                                <SearchResultsPanel state={state} components={components}>
+                                    {children}
+                                </SearchResultsPanel>
+                            );
+                        } catch (e) {
+                            console.warn("Error rendering search panel", e);
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Error in Algolia render function", e);
+                }
             },
-
             placeholder: STRINGS.searchPlaceholder,
             detachedMediaQuery: '',
             defaultActiveItemId: 0,
-
             getSources({ query }) {
                 if (!query) {
                     return [];
@@ -363,11 +407,33 @@ export default function AlgoliaSearch() {
             }
         });
 
+        autocompleteInstanceRef.current = instance;
+
         return () => {
-            autocompleteInstance.destroy();
-            panelRootRef.current?.unmount();
+            isUnmounting = true;
+            
+            // Safe cleanup: use setTimeout to avoid race conditions
+            setTimeout(() => {
+                try {
+                    if (autocompleteInstanceRef.current) {
+                        autocompleteInstanceRef.current.destroy();
+                        autocompleteInstanceRef.current = null;
+                    }
+                } catch (e) {
+                    console.warn("Error destroying autocomplete instance", e);
+                }
+                
+                try {
+                    if (panelRootRef.current) {
+                        panelRootRef.current.unmount();
+                        panelRootRef.current = null;
+                    }
+                } catch (e) {
+                    console.warn("Error unmounting panel root", e);
+                }
+            }, 0);
         };
-    }, [isMobile]);
+    }, []);
 
     return (
         <div 

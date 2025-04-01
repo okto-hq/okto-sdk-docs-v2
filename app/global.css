@@ -204,36 +204,171 @@ html {
   --aa-background-color-rgb: 255, 255, 255;
   --aa-text-color-rgb: 51, 51, 51;
   --aa-muted-color-rgb: 115, 115, 140;
+  --aa-background-color-rgb: 255, 255, 255;
+  --aa-input-background-color-rgb: 255, 255, 255;
+  --aa-selected-color-rgb: 245, 246, 254;
+  --aa-description-highlight-background-color-rgb: 245, 246, 254;
   --aa-panel-border-color-rgb: 229, 231, 235;
   --aa-input-border-color-rgb: 209, 213, 219;
-  --aa-selected-color-rgb: 240, 244, 255;
-  --aa-panel-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.08);
+  --aa-panel-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --aa-scrollbar-track-background-color-rgb: 241, 242, 243;
+  --aa-scrollbar-thumb-background-color-rgb: 209, 213, 219;
 }
 
 /* Dark mode variables */
 .dark, [data-theme="dark"] {
-  --aa-primary-color-rgb: 80, 110, 255;
-  --aa-background-color-rgb: 23, 29, 40;
-  --aa-input-background-color-rgb: 31, 41, 55;
+  --aa-primary-color-rgb: 124, 143, 255;
   --aa-text-color-rgb: 229, 231, 235;
   --aa-muted-color-rgb: 156, 163, 175;
+  --aa-background-color-rgb: 37, 38, 48;
+  --aa-input-background-color-rgb: 31, 41, 55;
+  --aa-selected-color-rgb: 55, 65, 81;
+  --aa-description-highlight-background-color-rgb: 55, 65, 81;
   --aa-panel-border-color-rgb: 55, 65, 81;
   --aa-input-border-color-rgb: 75, 85, 99;
-  --aa-selected-color-rgb: 30, 41, 59;
-  --aa-scrollbar-track-background-color-rgb: 55, 65, 81; /* Gray-700 */
-  --aa-scrollbar-thumb-background-color-rgb: 107, 114, 128; /* Gray-500 */
-  --aa-panel-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.3);
+  --aa-scrollbar-track-background-color-rgb: 55, 65, 81;
+  --aa-scrollbar-thumb-background-color-rgb: 107, 114, 128;
+  --aa-panel-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Direct dark mode fixes for Algolia search */
+html.dark,
+.dark {
+  --aa-background-color-rgb: 37, 38, 48;
+  --aa-input-background-color-rgb: 31, 41, 55;
+}
+
+/* Fix for specific search button query text in dark mode */
+html.dark .aa-DetachedSearchButtonQuery,
+.dark .aa-DetachedSearchButtonQuery,
+html.dark .aa-DetachedSearchButtonPlaceholder,
+.dark .aa-DetachedSearchButtonPlaceholder {
+  color: #e5e7eb !important;
+}
+
+html.dark .aa-DetachedSearchButton,
+.dark .aa-DetachedSearchButton {
+  color: #e5e7eb !important;
+  background-color: #1f2937 !important;
+  border-color: #4b5563 !important;
+}
+
+/* Cancel button fix for dark mode */
+html.dark .aa-ClearButton,
+.dark .aa-ClearButton,
+html.dark .aa-DetachedCancelButton,
+.dark .aa-DetachedCancelButton {
+  color: #e5e7eb !important;
+}
+
+html.dark .aa-ClearButton svg,
+.dark .aa-ClearButton svg,
+html.dark .aa-DetachedCancelButton svg,
+.dark .aa-DetachedCancelButton svg {
+  fill: #e5e7eb !important;
+}
+
+/* Reset button hover states */
+html.dark .aa-ClearButton:hover,
+.dark .aa-ClearButton:hover,
+html.dark .aa-DetachedCancelButton:hover,
+.dark .aa-DetachedCancelButton:hover {
+  color: #ffffff !important;
+}
+
+/* Input field dark mode fix */
+html.dark .aa-Form,
+.dark .aa-Form,
+html.dark #autocomplete-container .aa-Form,
+.dark #autocomplete-container .aa-Form {
+  background-color: #1f2937 !important;
+  border-color: #4b5563 !important;
+  color: #e5e7eb !important;
+}
+
+/* Input field text color */
+html.dark .aa-Input,
+.dark .aa-Input,
+html.dark #autocomplete input,
+.dark #autocomplete input {
+  color: #e5e7eb !important;
+  caret-color: #e5e7eb !important;
+}
+
+/* Search icon color */
+html.dark .aa-SubmitIcon,
+.dark .aa-SubmitIcon {
+  color: #9ca3af !important;
+}
+
+/* Results panel dark mode fixes */
+html.dark .aa-Panel,
+.dark .aa-Panel,
+html.dark .aa-DetachedContainer,
+.dark .aa-DetachedContainer,
+html.dark .aa-DetachedFormContainer,
+.dark .aa-DetachedFormContainer,
+html.dark .grid.grid-cols-1.md\\:grid-cols-2.bg-white.dark\\:bg-gray-800,
+.dark .grid.grid-cols-1.md\\:grid-cols-2.bg-white.dark\\:bg-gray-800 {
+  background-color: #252630 !important;
+  border-color: #374151 !important;
+}
+
+/* Footer dark mode fixes */
+html.dark .flex.items-center.justify-between.p-3,
+.dark .flex.items-center.justify-between.p-3,
+html.dark .aa-PanelFooter,
+.dark .aa-PanelFooter {
+  background-color: #252630 !important;
+  border-color: #374151 !important;
+  color: #e5e7eb !important;
+}
+
+/* Results items hover state */
+html.dark .aa-Item[aria-selected="true"],
+.dark .aa-Item[aria-selected="true"],
+html.dark .aa-Item:hover,
+.dark .aa-Item:hover {
+  background-color: #374151 !important;
+}
+
+/* Result text colors */
+html.dark .aa-ItemContentTitle,
+.dark .aa-ItemContentTitle {
+  color: #e5e7eb !important;
+}
+
+html.dark .aa-ItemContentDescription,
+.dark .aa-ItemContentDescription {
+  color: #9ca3af !important;
+}
+
+/* Highlighted text in search results */
+html.dark .aa-Highlight mark,
+.dark .aa-Highlight mark,
+html.dark .aa-ItemContentTitle mark,
+.dark .aa-ItemContentTitle mark,
+html.dark .aa-ItemContentDescription mark,
+.dark .aa-ItemContentDescription mark {
+  background-color: rgba(124, 143, 255, 0.2) !important;
+  color: #7c8fff !important;
 }
 
 .aa-Form {
-  border-radius: 1rem;
-  height: 44px;
-  border: 1px solid rgba(var(--aa-input-border-color-rgb), 1);
-  background-color: rgb(var(--aa-input-background-color-rgb, var(--aa-background-color-rgb)));
+  border-radius: 1rem !important;
+  height: 42px !important;
+  border: 1px solid rgba(var(--aa-input-border-color-rgb), var(--aa-input-border-color-alpha)) !important;
+  background-color: rgba(var(--aa-input-background-color-rgb), var(--aa-input-background-color-alpha)) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.aa-Form:focus-within {
+  border-color: rgba(var(--aa-primary-color-rgb), 0.6) !important;
+  box-shadow: 0 0 0 2px rgba(var(--aa-primary-color-rgb), 0.2) !important;
 }
 
 .aa-InputWrapper {
-  padding-left: 2.5rem;
+  padding-left: 2.5rem !important;
 }
 
 .aa-Input, 
@@ -243,7 +378,9 @@ html {
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
-  background: transparent;
+  background: transparent !important;
+  color: rgba(var(--aa-text-color-rgb), var(--aa-text-color-alpha)) !important;
+  font-size: 0.95rem !important;
   height: 100%; 
   vertical-align: middle;
 }
@@ -262,16 +399,16 @@ html {
   border-radius: 0; 
 }
 
-
-
 /* Highlighting styles */
 .aa-Highlight mark, 
 .aa-ItemContentTitle mark, 
 .aa-ItemContentDescription mark {
-  background-color: rgba(var(--aa-primary-color-rgb), 0.15);
-  color: rgb(var(--aa-primary-color-rgb));
-  padding: 0 2px;
-  border-radius: 2px;
+  background-color: rgba(var(--aa-primary-color-rgb), 0.15) !important;
+  color: rgba(var(--aa-primary-color-rgb), 1) !important;
+  padding: 0 2px !important;
+  border-radius: 2px !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
 }
 
 /* Dark mode highlights */
@@ -291,6 +428,32 @@ html {
 
 .aa-Item[aria-selected="true"] .aa-ItemContentTitle {
   color: rgb(var(--aa-primary-color-rgb));
+}
+
+.aa-ClearButton {
+  color: rgba(var(--aa-muted-color-rgb), var(--aa-muted-color-alpha)) !important;
+  transition: color 0.2s ease !important;
+}
+
+.aa-ClearButton:hover {
+  color: rgba(var(--aa-text-color-rgb), var(--aa-text-color-alpha)) !important;
+}
+
+/* Preview Section */
+#preview-section {
+  border-left: 1px solid rgba(var(--aa-panel-border-color-rgb), var(--aa-panel-border-color-alpha)) !important;
+}
+
+#preview-section h3 {
+  font-size: 0.75rem !important;
+  letter-spacing: 0.05em !important;
+  color: rgba(var(--aa-muted-color-rgb), var(--aa-muted-color-alpha)) !important;
+}
+
+#preview-section li a,
+#preview-section li span {
+  font-size: 0.875rem !important;
+  line-height: 1.4 !important;
 }
 
 /* Mobile-specific Algolia search styles */
@@ -374,26 +537,6 @@ html {
     max-height: none !important;
     flex: 1;
   }
-}
-
-html.dark .aa-DetachedContainer,
-html.dark .aa-Panel,
-html[data-theme="dark"] .aa-DetachedContainer,
-html[data-theme="dark"] .aa-Panel {
-  background-color: rgb(23, 29, 40);
-}
-
-html.dark .aa-Form,
-html[data-theme="dark"] .aa-Form {
-  background-color: rgb(31, 41, 55);
-  border-color: rgb(75, 85, 99);
-}
-
-html.dark .aa-DetachedContainer .flex.items-center.justify-between.p-3,
-html.dark .aa-Panel .flex.items-center.justify-between.p-3,
-html[data-theme="dark"] .aa-DetachedContainer .flex.items-center.justify-between.p-3,
-html[data-theme="dark"] .aa-Panel .flex.items-center.justify-between.p-3 {
-  background-color: rgb(23, 29, 40);
 }
 
 /* #nd-sidebar > div.overflow-hidden.flex-1 > div > div > div > div:nth-child(9) > div > div > a:nth-child(1),
