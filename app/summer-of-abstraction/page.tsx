@@ -753,7 +753,7 @@ export default function Page() {
             <h2 className="text-2xl font-bold mb-6 dark:text-white">Prizes and Rewards</h2>
             
             {/* Banner placeholder - you can replace this with your actual banner */}
-            {/* <div className="w-full mb-10 rounded-lg overflow-hidden shadow-lg">
+            <div className="w-full mb-10 rounded-lg overflow-hidden shadow-lg">
             <Image 
               src="/images/prizes.png" 
               alt="Prizes and Rewards Banner"
@@ -762,7 +762,7 @@ export default function Page() {
               className="w-full object-cover"
               priority
             />
-          </div> */}
+          </div>
             
             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm dark:shadow-gray-900 border border-gray-300 dark:border-gray-700">
               <ul className="space-y-3 dark:text-gray-300">
@@ -805,19 +805,65 @@ export default function Page() {
 
           {/* Call to Action */}
           <section id="cta" className="mb-12 text-center">
-            <div className="bg-indigo-600 dark:bg-indigo-700 p-8 rounded-lg shadow-lg text-white">
+            <div className="bg-gradient-to-br from-indigo-600 to-indigo-800 dark:from-indigo-700 dark:to-indigo-900 p-8 rounded-lg shadow-lg text-white">
               <h2 className="text-2xl font-bold mb-4">Ready to Join?</h2>
               <p className="mb-6">Don't miss this opportunity to be part of something extraordinary!</p>
+              
+              {/* Add the note about proposing own ideas - more concise */}
+              <div className="mb-6 bg-white/15 backdrop-blur-sm p-5 rounded-md border border-white/20 text-left mx-auto max-w-3xl">
+                <p className="text-white mb-3">
+                  <span className="font-semibold"> Have your own ideas? </span>
+                  We welcome all innovative proposals! The idea board is simply a brainstorming tool to spark creativity. Whether you're a developer, content creator, or community builder, we respect and encourage your unique concepts to help grow the Okto ecosystem. We're excited to see what you'll create!
+
+                </p>
+                
+                {/* Add the three buttons */}
+                <div className="mt-4 flex flex-wrap gap-3 justify-center ">
+                  <ProposalGuidelinesDialog linkClassName="inline-block bg-white/90 hover:bg-white text-indigo-700 px-5 py-2.5 rounded-md font-medium transition-colors shadow-sm hover:shadow-md">
+                    <span className="flex items-center  cursor-pointer">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+                      </svg>
+                      Proposal Guidelines
+                    </span>
+                  </ProposalGuidelinesDialog>
+                  
+                  <ProposalTemplateDialog linkClassName="inline-block bg-white/90 hover:bg-white text-indigo-700 px-5 py-2.5 rounded-md font-medium transition-colors shadow-sm hover:shadow-md">
+                    <span className="flex items-center cursor-pointer">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                        <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
+                      </svg>
+                      Proposal Template
+                    </span>
+                  </ProposalTemplateDialog>
+                  
+                  <a 
+                    href={SUBMISSION_URLS.Project}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block bg-white/90 hover:bg-white text-indigo-700 px-5 py-2.5 rounded-md font-medium transition-colors shadow-sm hover:shadow-md"
+                  >
+                    <span className="flex items-center cursor-pointer">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+                      </svg>
+                      Create a Proposal
+                    </span>
+                  </a>
+                </div>
+              </div>
+              
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <Link 
                   href="/summer-of-abstraction/ideaboard" 
-                  className="bg-white text-indigo-700 hover:bg-gray-100 px-6 py-3 rounded-md font-bold"
+                  className="bg-white/90 hover:bg-white text-indigo-700 px-6 py-3 rounded-md font-bold transition-all hover:shadow-md"
                 >
                   View Idea Board
                 </Link>
                 <a 
                   href="#" 
-                  className="bg-indigo-500 hover:bg-indigo-400 text-white px-6 py-3 rounded-md font-bold"
+                  className="bg-indigo-400 hover:bg-indigo-300 text-white border border-white/20 px-6 py-3 rounded-md font-bold transition-all hover:shadow-md"
                 >
                   Join Discord Community
                 </a>
