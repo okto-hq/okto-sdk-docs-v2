@@ -1,6 +1,4 @@
-'use client';
-
-import React, { useEffect, useRef, Fragment, createElement, ReactNode } from 'react';
+import React, { useEffect, useRef, Fragment, createElement, useState } from 'react';
 import { IoDocumentTextOutline } from 'react-icons/io5';
 import Link from 'next/link';
 import '@algolia/autocomplete-theme-classic';
@@ -9,11 +7,10 @@ import {
     autocomplete,
     getAlgoliaResults,
     AutocompleteComponents,
-    AutocompleteRender,
     AutocompleteState,
     AutocompleteSource,
 } from '@algolia/autocomplete-js';
-import algoliasearch, { SearchClient } from 'algoliasearch/lite'; // Use lite client if only searching
+import algoliasearch, { SearchClient } from 'algoliasearch/lite';
 
 // --- Configuration ---
 const ALGOLIA_CONFIG = {
@@ -46,12 +43,13 @@ interface AlgoliaHit {
     title: string;
     description?: string;
     headers?: string[];
-    [key: string]: any; // Allow other properties
+    [key: string]: any;
 }
 
 interface AutocompleteContext {
     preview?: AlgoliaHit;
-    [key: string]: any; // Add index signature to match the expected type
+    isMobile?: boolean;
+    [key: string]: any;
 }
 
 // --- Algolia Client ---
@@ -61,12 +59,7 @@ const searchClient: SearchClient = algoliasearch(
 );
 
 // --- Helper Functions ---
-
-/**
- * Renders breadcrumbs based on a given path string.
- */
-const renderBreadcrumbs = (path: string): ReactNode => {
-    // Split, remove empty segments, filter out 'docs' if it's the first part
+const renderBreadcrumbs = (path: string) => {
     const crumbs = (path || '').split('/')
         .filter(Boolean)
         .filter((crumb, index) => !(index === 0 && crumb.toLowerCase() === 'docs'));
@@ -84,45 +77,49 @@ const renderBreadcrumbs = (path: string): ReactNode => {
 };
 
 // --- Sub-Components ---
-
-interface HitItemProps {
-    item: AlgoliaHit;
-    components: AutocompleteComponents;
-}
-
-/**
- * Renders a single search result item.
- */
-const HitItem: React.FC<HitItemProps> = ({ item, components }) => (
-    <Link
-        className="flex items-start gap-3 py-3 px-1 rounded-md group transition-colors"
-        href={item.path || '#'} // Use '#' as fallback
-    >
-        <div className="flex-shrink-0 mt-1">
-            <IoDocumentTextOutline size={18} className="text-gray-400 dark:text-gray-500" />
-        </div>
-        <div className="flex-1 min-w-0">
-            <div className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 truncate">
-                <components.Highlight hit={item} attribute="title" />
+const HitItem = ({ item, components }: { item: AlgoliaHit; components: AutocompleteComponents }) => {
+    // Check if we're on mobile
+    const [isMobile, setIsMobile] = useState(false);
+    
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+        
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+    
+    return (
+        <Link
+            className="flex items-start gap-3 py-3 px-1 rounded-md group transition-colors"
+            href={item.path || '#'}
+        >
+            <div className="flex-shrink-0 mt-1">
+                <IoDocumentTextOutline size={18} className="text-gray-400 dark:text-gray-500" />
             </div>
-            <div className="text-sm text-gray-500 dark:text-gray-400 truncate">
-                {renderBreadcrumbs(item.path)}
+            <div className="flex-1 min-w-0">
+                <div className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 truncate">
+                    <components.Highlight hit={item} attribute="title" />
+                </div>
+                <div className="text-sm text-gray-500 dark:text-gray-400 truncate">
+                    {renderBreadcrumbs(item.path)}
+                </div>
+                
+                {/* Description - shown on mobile */}
+                {isMobile && item.description && (
+                    <div className="mt-2 text-sm text-gray-600 dark:text-gray-300 line-clamp-2 leading-normal">
+                        <components.Highlight hit={item} attribute="description" />
+                    </div>
+                )}
             </div>
-        </div>
-    </Link>
-);
+        </Link>
+    );
+};
 
-interface PreviewPaneProps {
-    preview: AlgoliaHit | undefined;
-    components: AutocompleteComponents;
-}
-
-/**
- * Renders the preview section on the right side.
- */
-const PreviewPane: React.FC<PreviewPaneProps> = ({ preview, components }) => {
+const PreviewPane = ({ preview, components }: { preview?: AlgoliaHit; components: AutocompleteComponents }) => {
     if (!preview) {
-        // Optional: Render a placeholder when no item is active/previewed
         return (
             <div className="p-6 text-center text-gray-500 dark:text-gray-400">
                 Select an item to see the preview.
@@ -132,7 +129,6 @@ const PreviewPane: React.FC<PreviewPaneProps> = ({ preview, components }) => {
 
     return (
       <div className="p-6 relative h-full flex flex-col">
-          {/* Icon and Breadcrumbs in one row */}
           <div className="flex items-center mb-4">
               <div className="flex-shrink-0 mr-2">
                   <IoDocumentTextOutline size={18} className="text-gray-500 dark:text-gray-400" />
@@ -142,19 +138,16 @@ const PreviewPane: React.FC<PreviewPaneProps> = ({ preview, components }) => {
               </div>
           </div>
 
-          {/* Title - smaller size */}
           <h1 className="text-2xl leading-tight font-semibold text-gray-900 dark:text-white mb-4">
               <components.Highlight hit={preview} attribute="title" />
           </h1>
 
-          {/* Description */}
           {preview.description && (
               <div className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
                   <components.Highlight hit={preview} attribute="description" />
               </div>
           )}
 
-          {/* On This Page (Headers) always visible, pushed to bottom of container */}
           <div className="mt-auto border-t border-gray-200 dark:border-gray-700 pt-6">
               <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-4">
                   {STRINGS.onThisPage}
@@ -162,8 +155,8 @@ const PreviewPane: React.FC<PreviewPaneProps> = ({ preview, components }) => {
               <ul className="space-y-3">
                   {(preview.headers && preview.headers.length > 0) ? (
                       preview.headers.map((header, index) => {
-                          const cleanHeader = header.replace(/^\d+\.\s*/, ''); // Remove leading numbers like "1. "
-                          const slug = cleanHeader.toLowerCase().replace(/\s+/g, '-').replace(/[.?]/g, ''); // Basic slugify
+                          const cleanHeader = header.replace(/^\d+\.\s*/, '');
+                          const slug = cleanHeader.toLowerCase().replace(/\s+/g, '-').replace(/[.?]/g, '');
                           return (
                               <li key={index} className="flex items-start">
                                   <span className="text-sm text-gray-400 dark:text-gray-500 font-medium w-6 text-right mr-3">
@@ -179,7 +172,6 @@ const PreviewPane: React.FC<PreviewPaneProps> = ({ preview, components }) => {
                           );
                       })
                   ) : (
-                      // Placeholder content when no headers are available
                       [
                           "General tips for writing solid prompts",
                           "Concrete tips to improve your prompts",
@@ -201,73 +193,95 @@ const PreviewPane: React.FC<PreviewPaneProps> = ({ preview, components }) => {
   );
 };
 
-/**
- * Renders the footer with keyboard hints and Algolia branding.
- */
-const AlgoliaFooter: React.FC = () => (
+const AlgoliaFooter = ({ isMobile }: { isMobile: boolean }) => (
     <div className="flex items-center justify-between p-3 text-sm text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
-        {/* Keyboard Hints */}
-        <div className="flex items-center gap-4">
-            {KEYBOARD_HINTS.map((hint, index) => (
-                <div key={index} className="flex items-center gap-1">
-                    <div className="flex">
-                        {hint.keys.map((key, kIndex) => (
-                            <kbd key={kIndex} className={`px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-md text-gray-600 dark:text-gray-300 ${kIndex > 0 ? 'ml-1' : ''}`}>
-                                {key}
-                            </kbd>
-                        ))}
+        {/* Keyboard Hints - Hidden on mobile */}
+        {!isMobile && (
+            <div className="flex items-center gap-4">
+                {KEYBOARD_HINTS.map((hint, index) => (
+                    <div key={index} className="flex items-center gap-1">
+                        <div className="flex">
+                            {hint.keys.map((key, kIndex) => (
+                                <kbd key={kIndex} className={`px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-md text-gray-600 dark:text-gray-300 ${kIndex > 0 ? 'ml-1' : ''}`}>
+                                    {key}
+                                </kbd>
+                            ))}
+                        </div>
+                        <span className="text-gray-600 dark:text-gray-400">{hint.label}</span>
                     </div>
-                    <span className="text-gray-600 dark:text-gray-400">{hint.label}</span>
-                </div>
-            ))}
-        </div>
+                ))}
+            </div>
+        )}
 
-        {/* Algolia Branding */}
-        <div className="flex items-center">
+        {/* Algolia Branding - Always displayed */}
+        <div className={`flex items-center ${isMobile ? 'ml-auto' : ''}`}>
             <span>{STRINGS.searchBy}</span>
-            {/* Ensure the image path is correct relative to your public directory */}
             <img src="/images/algolia_logo.svg" alt="Algolia" className="h-4 ml-2" />
         </div>
     </div>
 );
 
-interface SearchResultsPanelProps {
-    children: ReactNode;
-    state: AutocompleteState<AlgoliaHit>;
-    components: AutocompleteComponents;
-}
+const SearchResultsPanel = ({ children, state, components }: { children: React.ReactNode; state: AutocompleteState<AlgoliaHit>; components: AutocompleteComponents }) => {
+    const { preview, isMobile } = (state.context as AutocompleteContext) || {};
+    const [windowWidth, setWindowWidth] = useState(
+        typeof window !== 'undefined' ? window.innerWidth : 0
+    );
 
-/**
- * Renders the main panel containing search results and the preview pane.
- */
-const SearchResultsPanel: React.FC<SearchResultsPanelProps> = ({ children, state, components }) => {
-    const { preview } = (state.context as AutocompleteContext) || {};
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        if (typeof window !== 'undefined') {
+            window.addEventListener('resize', handleResize);
+            return () => {
+                window.removeEventListener('resize', handleResize);
+            };
+        }
+    }, []);
+
+    // Determine if we're on mobile based on window width
+    const isSmallScreen = windowWidth <= 768;
 
     return (
-        <div className="w-full">
-            <div className="grid grid-cols-1 md:grid-cols-2 bg-white dark:bg-gray-800 shadow-lg overflow-hidden">
+        <div className="w-full h-full flex flex-col">
+            <div className="grid grid-cols-1 md:grid-cols-2 bg-white dark:bg-gray-800 shadow-lg overflow-hidden flex-1">
                 {/* Search Results Column */}
                 <div className="overflow-y-auto max-h-[50vh] md:max-h-[60vh] p-4 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-700">
                     {children}
                 </div>
-                {/* Preview Column */}
-                <div className="overflow-y-auto max-h-[50vh] md:max-h-[60vh]" id="preview-section">
-                    <PreviewPane preview={preview} components={components} />
-                </div>
+                {/* Preview Column - Hidden on mobile */}
+                {!isSmallScreen && (
+                    <div className="overflow-y-auto max-h-[50vh] md:max-h-[60vh]" id="preview-section">
+                        <PreviewPane preview={preview} components={components} />
+                    </div>
+                )}
             </div>
-            <AlgoliaFooter />
+            <div className="mt-auto">
+                <AlgoliaFooter isMobile={isSmallScreen} />
+            </div>
         </div>
     );
 };
 
-
 // --- Main Component ---
-
 export default function AlgoliaSearch() {
-    // Refs for DOM elements and React root management
     const containerRef = useRef<HTMLDivElement | null>(null);
-    const panelRootRef = useRef<Root | null>(null); // For React 18 createRoot
-    const rootRef = useRef<HTMLElement | null>(null); // To track the Algolia root element
+    const panelRootRef = useRef<Root | null>(null);
+    const rootRef = useRef<HTMLElement | null>(null);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const checkMobile = () => {
+                setIsMobile(window.innerWidth <= 768);
+            };
+            
+            checkMobile();
+            window.addEventListener('resize', checkMobile);
+            return () => window.removeEventListener('resize', checkMobile);
+        }
+    }, []);
 
     useEffect(() => {
         if (!containerRef.current) {
@@ -278,32 +292,31 @@ export default function AlgoliaSearch() {
         // Initialize Algolia Autocomplete
         const autocompleteInstance = autocomplete<AlgoliaHit>({
             container: containerRef.current,
-            // Pass React's createElement and Fragment for rendering internally
             renderer: { createElement, Fragment, render: () => { } },
-            // Custom render function to integrate with React's createRoot
             render: ({ children, state, Fragment, components }, root) => {
-                // Manage React root for the panel
                 if (!panelRootRef.current || rootRef.current !== root) {
                     rootRef.current = root;
-                    panelRootRef.current?.unmount(); // Clean up previous root if exists
+                    panelRootRef.current?.unmount();
                     panelRootRef.current = createRoot(root);
                 }
 
-                // Render the panel structure using React components
+                // Set mobile context
+                if (state.context) {
+                    (state.context as AutocompleteContext).isMobile = isMobile;
+                }
+
                 panelRootRef.current.render(
                     <SearchResultsPanel state={state} components={components}>
-                        {children} {/* Algolia injects the list of items here */}
+                        {children}
                     </SearchResultsPanel>
                 );
             },
 
             placeholder: STRINGS.searchPlaceholder,
-            detachedMediaQuery: '', // Keep detached mode always active or adjust as needed
-            defaultActiveItemId: 0, // Automatically highlight the first result
+            detachedMediaQuery: '',
+            defaultActiveItemId: 0,
 
-            // Define how to get search results
-            getSources({ query }): Array<AutocompleteSource<AlgoliaHit>> {
-                // Don't perform search for empty query
+            getSources({ query }) {
                 if (!query) {
                     return [];
                 }
@@ -311,7 +324,6 @@ export default function AlgoliaSearch() {
                 return [
                     {
                         sourceId: 'hits',
-                        // Fetch items from Algolia
                         getItems() {
                             return getAlgoliaResults<AlgoliaHit>({
                                 searchClient,
@@ -320,28 +332,28 @@ export default function AlgoliaSearch() {
                                         indexName: ALGOLIA_CONFIG.indexName,
                                         query,
                                         params: {
-                                            hitsPerPage: 10, // Adjusted for potentially better UX
-                                            attributesToSnippet: ['description:15'], // Optional: Snippet description
+                                            hitsPerPage: 10,
+                                            attributesToSnippet: ['description:15'],
                                             snippetEllipsisText: '...',
+                                            attributesToHighlight: ['title', 'description'],
                                         },
                                     },
                                 ],
                             });
                         },
-                        // Define URL for keyboard navigation (Enter key)
                         getItemUrl({ item }) {
-                            return item.path; // Assuming 'path' is the correct URL field
+                            return item.path;
                         },
-                        // Update context when an item is highlighted (hover or arrow keys)
                         onActive({ item, setContext }) {
-                            setContext({ preview: item } as AutocompleteContext);
+                            setContext({ 
+                                preview: item,
+                                isMobile: window.innerWidth <= 768
+                            } as AutocompleteContext);
                         },
-                        // Define how each item in the results list is rendered
                         templates: {
                             item({ item, components }) {
                                 return <HitItem item={item} components={components} />;
                             },
-                            // Optional: Define a "no results" template
                             noResults() {
                                 return <div className="p-4 text-sm text-gray-500">No results found.</div>;
                             }
@@ -351,16 +363,18 @@ export default function AlgoliaSearch() {
             }
         });
 
-        // Cleanup function to destroy the autocomplete instance
         return () => {
             autocompleteInstance.destroy();
-            panelRootRef.current?.unmount(); // Unmount React root on cleanup
+            panelRootRef.current?.unmount();
         };
-    }, []); // Empty dependency array ensures this runs only once on mount
+    }, [isMobile]);
 
-    // Render the container div that Algolia Autocomplete will attach to
     return (
-        <div ref={containerRef} id="autocomplete-container" className="w-full" />
-        // Added id for clarity, though Algolia uses the ref primarily
+        <div 
+            ref={containerRef} 
+            id="autocomplete-container" 
+            className="w-full"
+            data-mobile={isMobile ? 'true' : 'false'}
+        />
     );
 }
