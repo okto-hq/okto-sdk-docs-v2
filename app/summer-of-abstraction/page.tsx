@@ -753,7 +753,7 @@ export default function Page() {
             <h2 className="text-2xl font-bold mb-6 dark:text-white">Prizes and Rewards</h2>
             
             {/* Banner placeholder - you can replace this with your actual banner */}
-            {/* <div className="w-full mb-10 rounded-lg overflow-hidden shadow-lg">
+            <div className="w-full mb-10 rounded-lg overflow-hidden shadow-lg">
             <Image 
               src="/images/prizes.png" 
               alt="Prizes and Rewards Banner"
@@ -762,7 +762,7 @@ export default function Page() {
               className="w-full object-cover"
               priority
             />
-          </div> */}
+          </div>
             
             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm dark:shadow-gray-900 border border-gray-300 dark:border-gray-700">
               <ul className="space-y-3 dark:text-gray-300">
