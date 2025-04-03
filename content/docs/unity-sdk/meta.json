@@ -33,9 +33,7 @@
     "!./wallets/wagmi-integration",
     "---Resources---",
     "v2migration",
-    "---Technical Reference---",
-    "technical-guide",
-    "./technical-guide/ios-support",
+    "./technical-guide/technical-reference",
     "sdk-error-warnings",
     "troubleshooting",
     "!changelog"

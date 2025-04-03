@@ -1,6 +1,6 @@
 ---
-title: Read Contract Data On-chain Via Code
-description: Learn how to read data from any smart contract using the OktoSDK in Unity.
+title: Read Contract Data
+description: Learn how to read data from any smart contract using the Okto SDK in Unity.
 ---
 
 import { TypeTable } from 'fumadocs-ui/components/type-table';
@@ -13,81 +13,10 @@ import '../../styles.css';
 
 ## Overview
 
-The OktoSDK provides a powerful interface for reading data from smart contracts across supported EVM chains. This Unity-based solution allows developers to interact with any deployed smart contract using a simple, intuitive interface.
+The Okto SDK provides a powerful interface for reading data from smart contracts across supported EVM chains. This Unity-based solution allows developers to interact with any deployed smart contract using a simple, intuitive interface.
 
 <Callout type="info">
 For the most up-to-date list of supported chains, block confirmation times, and token support, click [here](/docs/supported-chains).
-</Callout>
-
-### Class Overview
-
-| Class | Description |
-|---------|-------------|
-| `ReadContract` | Unity MonoBehaviour class to read data from any smart contract on supported EVM chains |
-
-<div className="method-box">
-
-## Read Smart Contract Data
-
-`ReadSmartContractAsync(string abi, string functionName, string contractAddress, string parameters = "")` reads data from a smart contract based on the provided parameters.
-
-### Parameters
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `abi` | `string` | The JSON ABI of the contract |
-| `functionName` | `string` | The name of the function to call |
-| `contractAddress` | `string` | The address of the smart contract |
-| `parameters` | `string` | Optional comma-separated function parameters |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `result` | `Task<string>` | Returns the decoded data read from the contract |
-
-</Callout>
-
-### Supported Types
-
-The following table details all the supported parameter types for contract interactions:
-
-| Type | Description | Example Value | Notes |
-|------|-------------|---------------|-------|
-| `address` | Ethereum address (20 bytes) | `"0x742d35Cc6634C0532925a3b844Bc454e4438f44e"` | Must be a valid hex string starting with "0x" and 42 characters long |
-| `uint256` | 256-bit unsigned integer | `"115792089237316195423570985008687907853269984665640564039457584007913129639935"` | Maximum value for uint256 |
-| `uint8` | 8-bit unsigned integer | `"255"` | Values from 0 to 255 |
-| `uint16` | 16-bit unsigned integer | `"65535"` | Values from 0 to 65535 |
-| `uint32` | 32-bit unsigned integer | `"4294967295"` | Values from 0 to 4294967295 |
-| `uint64` | 64-bit unsigned integer | `"18446744073709551615"` | Values from 0 to 18446744073709551615 |
-| `uint128` | 128-bit unsigned integer | `"340282366920938463463374607431768211455"` | Large numbers should be passed as strings |
-| `uint` | Alias for uint256 | `"1000000"` | Treated the same as uint256 |
-| `int256` | 256-bit signed integer | `"-57896044618658097711785492504343953926634992332820282019728792003956564819968"` | Minimum value for int256 |
-| `int8` | 8-bit signed integer | `"-128"` to `"127"` | |
-| `int16` | 16-bit signed integer | `"-32768"` to `"32767"` | |
-| `int32` | 32-bit signed integer | `"-2147483648"` to `"2147483647"` | |
-| `int64` | 64-bit signed integer | `"-9223372036854775808"` to `"9223372036854775807"` | |
-| `int128` | 128-bit signed integer | `"-170141183460469231731687303715884105728"` to `"170141183460469231731687303715884105727"` | |
-| `int` | Alias for int256 | `"-1000000"` | Treated the same as int256 |
-| `bool` | Boolean value | `"true"` or `"false"` | Case insensitive |
-| `string` | UTF-8 string | `"Hello World"` | Automatically encoded/decoded |
-| `bytes32` | Fixed-size byte array | `"0x0000000000000000000000000000000000000000000000000000000000000000"` | Must be exactly 32 bytes when hex-encoded |
-
-<Callout type="warning">
-When passing numeric values, it's recommended to:
-- Use string representation for large numbers to avoid precision loss
-- Ensure values are within the valid range for the specified type
-- Include quotes around all values when passing as parameters
-</Callout>
-
-<Callout type="info">
-Parameter Formatting Rules:
-1. Multiple parameters should be comma-separated
-2. String values should be properly escaped if they contain special characters
-3. Hex values should include the "0x" prefix
-4. Boolean values can be "true"/"false" (case insensitive)
 </Callout>
 
 ### Examples
@@ -267,39 +196,79 @@ public class CommonContractCalls : MonoBehaviour
 </Accordion>
 </Accordions>
 
-### Error Handling
+### Class Overview
 
-The class includes comprehensive error handling for:
-- Invalid ABI format
-- Missing or incorrect parameters
-- Network connection issues
-- Contract execution errors
-- Response decoding failures
+| Class | Description |
+|---------|-------------|
+| `ReadContract` | Unity MonoBehaviour class to read data from any smart contract on supported EVM chains |
 
-<Callout type="warning">
-Common Error Cases:
-1. Invalid contract address format
-2. Incorrect ABI format
-3. Mismatched parameter types
-4. Network connectivity issues
-5. Contract execution reverts
+<div className="method-box">
+
+## Read Smart Contract Data
+
+`ReadSmartContractAsync(string abi, string functionName, string contractAddress, string parameters = "")` reads data from a smart contract based on the provided parameters.
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `abi` | `string` | The JSON ABI of the contract |
+| `functionName` | `string` | The name of the function to call |
+| `contractAddress` | `string` | The address of the smart contract |
+| `parameters` | `string` | Optional comma-separated function parameters |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | `Task<string>` | Returns the decoded data read from the contract |
+
 </Callout>
 
-### Best Practices
+<Accordions>
+<Accordion title="Supported Types">
 
-1. **ABI Management**
-   - Store ABIs in separate JSON files
-   - Validate ABI format before calls
-   - Use minimal ABI (only include needed functions)
+The following table details all the supported parameter types for contract interactions:
 
-2. **Parameter Handling**
-   - Validate parameter types and ranges
-   - Use string representation for large numbers
-   - Properly escape string parameters
+| Type | Description | Example Value | Notes |
+|------|-------------|---------------|-------|
+| `address` | Ethereum address (20 bytes) | `"0x742d35Cc6634C0532925a3b844Bc454e4438f44e"` | Must be a valid hex string starting with "0x" and 42 characters long |
+| `uint256` | 256-bit unsigned integer | `"115792089237316195423570985008687907853269984665640564039457584007913129639935"` | Maximum value for uint256 |
+| `uint8` | 8-bit unsigned integer | `"255"` | Values from 0 to 255 |
+| `uint16` | 16-bit unsigned integer | `"65535"` | Values from 0 to 65535 |
+| `uint32` | 32-bit unsigned integer | `"4294967295"` | Values from 0 to 4294967295 |
+| `uint64` | 64-bit unsigned integer | `"18446744073709551615"` | Values from 0 to 18446744073709551615 |
+| `uint128` | 128-bit unsigned integer | `"340282366920938463463374607431768211455"` | Large numbers should be passed as strings |
+| `uint` | Alias for uint256 | `"1000000"` | Treated the same as uint256 |
+| `int256` | 256-bit signed integer | `"-57896044618658097711785492504343953926634992332820282019728792003956564819968"` | Minimum value for int256 |
+| `int8` | 8-bit signed integer | `"-128"` to `"127"` | |
+| `int16` | 16-bit signed integer | `"-32768"` to `"32767"` | |
+| `int32` | 32-bit signed integer | `"-2147483648"` to `"2147483647"` | |
+| `int64` | 64-bit signed integer | `"-9223372036854775808"` to `"9223372036854775807"` | |
+| `int128` | 128-bit signed integer | `"-170141183460469231731687303715884105728"` to `"170141183460469231731687303715884105727"` | |
+| `int` | Alias for int256 | `"-1000000"` | Treated the same as int256 |
+| `bool` | Boolean value | `"true"` or `"false"` | Case insensitive |
+| `string` | UTF-8 string | `"Hello World"` | Automatically encoded/decoded |
+| `bytes32` | Fixed-size byte array | `"0x0000000000000000000000000000000000000000000000000000000000000000"` | Must be exactly 32 bytes when hex-encoded |
 
-3. **Error Management**
-   - Implement proper try-catch blocks
-   - Log detailed error information
-   - Provide user-friendly error messages
-   
+</Accordion>
+</Accordions>
+
+<Callout type="warn">
+When passing numeric values, it's recommended to:
+- Use string representation for large numbers to avoid precision loss
+- Ensure values are within the valid range for the specified type
+- Include quotes around all values when passing as parameters
+</Callout>
+
+<Callout type="info">
+Parameter Formatting Rules:
+1. Multiple parameters should be comma-separated
+2. String values should be properly escaped if they contain special characters
+3. Hex values should include the "0x" prefix
+4. Boolean values can be "true"/"false" (case insensitive)
+</Callout>
+
 </div>
