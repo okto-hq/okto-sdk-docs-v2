@@ -357,7 +357,7 @@ export default function AlgoliaSearch() {
                     console.warn("Error in Algolia render function", e);
                 }
             },
-            placeholder: STRINGS.searchPlaceholder,
+            placeholder: window.innerWidth <= 768 ? '' : STRINGS.searchPlaceholder,
             detachedMediaQuery: '',
             defaultActiveItemId: 0,
             getSources({ query }) {
