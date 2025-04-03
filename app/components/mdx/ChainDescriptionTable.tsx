@@ -6,6 +6,8 @@ const chains = [
     { logo: "/images/HL-icon.png", name: "HyperEVM", type: "EVM", mainnet: false, testnet: true, section: "hyperevm"},
     { logo: "/images/polygon-logo.svg", name: "Polygon", type: "EVM", mainnet: true, testnet: true, section: "polygon" },
     { logo: "/images/base-icon.svg", name: "Base", type: "EVM", mainnet: true, testnet: true, section: "base" },
+    { logo: "/images/sol-icon.svg", name: "Solana", type: "Solana", mainnet: true, testnet: true, section: "solana" },
+    { logo: "/images/aptos-icon.svg", name: "Aptos", type: "Aptos", mainnet: true, testnet: true, section: "aptos" },
     { logo: "/images/avalanche-icon.svg", name: "Avalanche", type: "EVM", mainnet: true, testnet: false, section: "avalanche" },
     { logo: "/images/arbitrum-icon.png", name: "Arbitrum", type: "EVM", mainnet: true, testnet: false, section: "arbitrum" },
     { logo: "/images/bsc-icon.png", name: "BSC", type: "EVM", mainnet: true, testnet: false, section: "bsc" },
@@ -24,6 +26,18 @@ export default function ChainDescriptionTable() {
       document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
       window.location.hash = section;
     }
+  };
+
+  // Helper function to render the appropriate icon based on chain type
+  const renderChainTypeIcon = (type: string) => {
+    if (type === "EVM") {
+      return <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" />;
+    } else if (type === "Solana") {
+      return <img src="/images/sol-icon.svg" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Solana" />;
+    } else if (type === "Aptos") {
+      return <img src="/images/aptos-icon.svg" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Aptos" />;
+    }
+    return type; // Fallback to text if no icon available
   };
 
   return (
@@ -55,7 +69,9 @@ export default function ChainDescriptionTable() {
                 </div>
               </td>
               <td className="text-gray-700 dark:text-white">{chain.name}</td>
-              <td className="text-gray-700 dark:text-white text-center"><img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /></td>
+              <td className="text-gray-700 dark:text-white text-center">
+                {renderChainTypeIcon(chain.type)}
+              </td>
               <td className="text-center">
                 {chain.mainnet ? 
                   <span className="text-green-500">✅</span> : 
