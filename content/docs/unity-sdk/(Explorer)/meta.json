@@ -8,6 +8,8 @@
     "getPortfolioActivity",
     "getPortfolioNFT",
     "getNftCollections",
-    "getOrdersHistory"
+    "getOrdersHistory",
+    "read-contract-data",
+    "ab-encoding"
   ]
 }

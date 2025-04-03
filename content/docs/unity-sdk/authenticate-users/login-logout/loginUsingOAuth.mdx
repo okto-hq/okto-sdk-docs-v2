@@ -11,7 +11,39 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 import '../../../styles.css';
 
-The `loginUsingOAuth()` method authenticates users using OAuth providers. It generates a session key pair, creates an authenticate payload, and sends it to the Gateway service. Upon successful authentication, it updates the user session.
+The `loginUsingOAuth()` method authenticates users using OAuth providers. It generates a session key pair, creates an authenticate payload, and sends it to the Gateway service. Upon successful authentication, it updates the user session. When auto-login is enabled, the SDK will attempt to reuse the last valid session, eliminating the need for users to log in again.
+
+### Auto-Login Feature
+
+When auto-login is enabled, the SDK will:
+1. Check for an existing valid session in local storage
+2. Automatically restore the user's session if it hasn't expired
+3. Allow users to continue their previous session without re-authentication
+
+<Callout type="info">
+Auto-login uses the last successful session data and does not store sensitive client details. Client configuration must be properly set up before attempting auto-login.
+</Callout>
+
+### Session Management
+
+The SDK includes built-in session expiration handling:
+
+```csharp
+public static void HandleSessionExpired()
+{
+    //Handle Session Expire Here
+    CustomLogger.LogError("=========Session Expired,please login Again===========");
+}
+```
+
+<Callout type="warning">
+Session Expiration (Error 401):
+- The SDK automatically detects when a session expires
+- Triggers `HandleSessionExpired()` when a 401 error is received
+- Requires user to re-authenticate to establish a new session
+- Previous session data is cleared for security
+</Callout>
+
 
 ### Example
 
