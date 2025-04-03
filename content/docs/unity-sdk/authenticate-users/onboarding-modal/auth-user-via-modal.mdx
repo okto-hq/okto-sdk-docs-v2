@@ -12,6 +12,85 @@ import { Icon as IIcon } from '@iconify/react';
 
 import '../../../styles.css';
 
+### Visual Overview
+
+<Tabs items={["Initial Screen", "WhatsApp Number", "OTP Verification", "Complete"]}>
+  <Tab>
+    <div className="tab-content">
+      <img 
+        src="/images/unity-images/unity-template.png" 
+        alt="Initial Onboarding Screen" 
+        style={{ maxWidth: '100%', borderRadius: '8px', margin: '1rem 0' }}
+      />
+      <p className="tab-description">
+        The initial onboarding screen that users see before starting the authentication process.
+      </p>
+    </div>
+  </Tab>
+  
+  <Tab>
+    <div className="tab-content">
+      <img 
+        src="/images/unity-images/enter-whatsApp-number.png" 
+        alt="WhatsApp Number Input" 
+        style={{ maxWidth: '100%', borderRadius: '8px', margin: '1rem 0' }}
+      />
+      <p className="tab-description">
+        Users enter their WhatsApp number for authentication.
+      </p>
+    </div>
+  </Tab>
+  
+  <Tab>
+    <div className="tab-content">
+      <img 
+        src="/images/unity-images/enter-whatsApp-otp.png" 
+        alt="OTP Verification" 
+        style={{ maxWidth: '100%', borderRadius: '8px', margin: '1rem 0' }}
+      />
+      <p className="tab-description">
+        OTP verification screen where users enter the code received on WhatsApp.
+      </p>
+    </div>
+  </Tab>
+  
+  <Tab>
+    <div className="tab-content">
+      <img 
+        src="/images/unity-images/complete-authentication.png" 
+        alt="Success Screen" 
+        style={{ maxWidth: '100%', borderRadius: '8px', margin: '1rem 0' }}
+      />
+      <p className="tab-description">
+        Successful authentication completion screen.
+      </p>
+    </div>
+  </Tab>
+</Tabs>
+
+### Authentication Flow Steps
+
+1. **Launch Modal**
+   - User triggers the onboarding flow through your game interface
+   
+2. **Enter WhatsApp Number**
+   - User inputs their WhatsApp number for authentication
+   
+3. **Verify OTP**
+   - User receives and enters the OTP sent to their WhatsApp
+   
+4. **Complete Authentication**
+   - System processes verification and establishes user session
+
+### Prerequisites
+
+Before implementing the authentication flow, ensure you have:
+
+**Unity WebView Package**
+   - Download and import the [Unity WebView SDK](https://github.com/gree/unity-webview/blob/master/dist/unity-webview.unitypackage)
+   - This package is required for JavaScript communication between Unity and the web interface
+   - Import the package through Assets > Import Package > Custom Package
+
 ### Methods Overview
 
 | Method | Description |
@@ -107,11 +186,9 @@ private string GetBuildUrl()
     switch (OktoAuthExample.getOktoClientConfig().Environment.ToUpper())
     {
         case "SANDBOX":
-            return "https://onboarding.okto.tech";
+            return "https://sandbox-onboarding.okto.tech";
         case "STAGING":
             return "https://onboarding.oktostage.com";
-        case "PRODUCTION":
-            return "https://onboarding.okto.tech";
         default:
             return "";
     }
