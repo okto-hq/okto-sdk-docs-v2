@@ -9,7 +9,7 @@ import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 # Understanding the Onboarding Modal in Unity
 
-The Okto **Onboarding Modal** provides a streamlined authentication flow through a WebView implementation in Unity. It handles WhatsApp authentication without requiring complex authentication flow management on your side.
+The Okto **Onboarding Modal** provides a streamlined authentication flow through a WebView implementation in Unity. It handles authentication without requiring complex authentication flow management on the client app.
 
 ## Communication System Overview
 
@@ -137,36 +137,6 @@ The JavaScript bridge handles:
     wkAllowsBackForwardNavigationGestures: true
 #endif
 ```
-
-## Best Practices
-
-1. **Error Handling**
-   - Implement comprehensive error catching
-   - Provide clear error messages
-   - Handle network failures gracefully
-
-2. **Screen Orientation**
-   - Handle orientation changes properly
-   - Set portrait mode for WebView
-   - Restore previous orientation on close
-
-3. **Memory Management**
-   - Clean up WebView resources
-   - Handle component lifecycle properly
-   - Manage event listeners
-
-4. **Security**
-   - Validate message origins
-   - Sanitize input data
-   - Handle sensitive data properly
-
-<Callout type="warning">
-Important Considerations:
-- Test on both Android and iOS platforms
-- Handle different screen sizes appropriately
-- Implement proper cleanup on WebView close
-- Monitor memory usage
-</Callout>
 
 ## Common Issues and Solutions
 

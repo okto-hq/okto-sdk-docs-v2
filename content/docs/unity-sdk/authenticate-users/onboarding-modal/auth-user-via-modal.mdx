@@ -8,79 +8,11 @@ import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import FullscreenImage from 'app/components/mdx/FullscreenImage';
 import { Icon as IIcon } from '@iconify/react';
 
 import '../../../styles.css';
-
-### Visual Overview
-
-<Tabs items={["Initial Screen", "WhatsApp Number", "OTP Verification", "Complete"]}>
-  <Tab>
-    <div className="tab-content">
-      <img 
-        src="/images/unity-images/unity-template.png" 
-        alt="Initial Onboarding Screen" 
-        style={{ maxWidth: '100%', borderRadius: '8px', margin: '1rem 0' }}
-      />
-      <p className="tab-description">
-        The initial onboarding screen that users see before starting the authentication process.
-      </p>
-    </div>
-  </Tab>
-  
-  <Tab>
-    <div className="tab-content">
-      <img 
-        src="/images/unity-images/enter-whatsApp-number.png" 
-        alt="WhatsApp Number Input" 
-        style={{ maxWidth: '100%', borderRadius: '8px', margin: '1rem 0' }}
-      />
-      <p className="tab-description">
-        Users enter their WhatsApp number for authentication.
-      </p>
-    </div>
-  </Tab>
-  
-  <Tab>
-    <div className="tab-content">
-      <img 
-        src="/images/unity-images/enter-whatsApp-otp.png" 
-        alt="OTP Verification" 
-        style={{ maxWidth: '100%', borderRadius: '8px', margin: '1rem 0' }}
-      />
-      <p className="tab-description">
-        OTP verification screen where users enter the code received on WhatsApp.
-      </p>
-    </div>
-  </Tab>
-  
-  <Tab>
-    <div className="tab-content">
-      <img 
-        src="/images/unity-images/complete-authentication.png" 
-        alt="Success Screen" 
-        style={{ maxWidth: '100%', borderRadius: '8px', margin: '1rem 0' }}
-      />
-      <p className="tab-description">
-        Successful authentication completion screen.
-      </p>
-    </div>
-  </Tab>
-</Tabs>
-
-### Authentication Flow Steps
-
-1. **Launch Modal**
-   - User triggers the onboarding flow through your game interface
-   
-2. **Enter WhatsApp Number**
-   - User inputs their WhatsApp number for authentication
-   
-3. **Verify OTP**
-   - User receives and enters the OTP sent to their WhatsApp
-   
-4. **Complete Authentication**
-   - System processes verification and establishes user session
 
 ### Prerequisites
 
@@ -97,7 +29,7 @@ Before implementing the authentication flow, ensure you have:
 |--------|-------------|
 | [`OpenOnBoardingScreen()`](#open-onboarding-screen) | Opens the Okto Onboarding modal in a WebView with WhatsApp authentication |
 
-<div class="method-box">
+<div className="method-box">
 
 ## Open Onboarding Screen
 
@@ -204,24 +136,56 @@ The OnboardingWebview handles:
 - Session management
 </Callout>
 
-### Authentication Flow
+## Authentication Flow
 
-1. **Opening the Modal**
+<Steps>
+
+<Step>
+### Launch Modal
+User triggers the onboarding flow through your game interface.
    - Calls `OpenOnBoardingScreen()`
    - Initializes WebView
    - Sets screen orientation to Portrait
    - Loads the appropriate URL based on environment
 
-2. **WhatsApp Authentication**
-   - User enters WhatsApp number
-   - System sends OTP
-   - User verifies OTP
-   - Authentication token is received
+<img
+  src="/images/unity-images/unity-template.png"
+  alt="Initial Onboarding Screen"
+  style={{ display: 'block', margin: '1rem auto', maxWidth: '100%', height: '300px', borderRadius: '8px', margin: '1rem 0' }}
+/>
+</Step>
 
-3. **Completion**
-   - On successful authentication, WebView closes automatically
-   - Screen returns to landscape orientation
-   - User session is established
+<Step>
+### Enter Login Credentials
+User inputs their email/WhatsApp number for authentication.
+<img
+  src="/images/unity-images/enter-whatsApp-number.png"
+  alt="WhatsApp Number Input"
+  style={{ display: 'block', margin: '1rem auto', maxWidth: '100%', height: '500px', borderRadius: '8px' }}
+/>
+</Step>
+
+<Step>
+### Verify OTP
+User receives and enters the OTP sent to their email/WhatsApp.
+<img
+  src="/images/unity-images/enter-whatsApp-otp.png"
+  alt="OTP Verification"
+  style={{ display: 'block', margin: '1rem auto', maxWidth: '100%', height: '500px', borderRadius: '8px' }}
+/>
+</Step>
+
+<Step>
+### Complete Authentication
+System processes verification and establishes user session.
+<img
+  src="/images/unity-images/complete-authentication.png"
+  alt="Success Screen"
+  style={{ display: 'block', margin: '1rem auto', maxWidth: '100%', height: '300px', borderRadius: '8px', margin: '1rem 0' }}
+/>
+</Step>
+
+</Steps>
 
 <Callout type="warning">
 Important Considerations:
@@ -230,44 +194,5 @@ Important Considerations:
 - Implement proper error handling
 - Test across different devices and platforms
 </Callout>
-
-### Error Handling
-
-The system includes comprehensive error handling for:
-- WebView initialization failures
-- Network connectivity issues
-- OTP verification failures
-- Invalid responses
-- Session management errors
-
-```csharp
-try
-{
-    webViewObject = gameObject.AddComponent<WebViewObject>();
-    // ... initialization code
-}
-catch (Exception e)
-{
-    ResponsePanel.SetResponse(e.Message);
-}
-```
-
-### Best Practices
-
-1. **Component Setup**
-   - Properly serialize required components
-   - Initialize WebView at appropriate lifecycle point
-   - Handle orientation changes gracefully
-
-2. **Error Management**
-   - Implement comprehensive error handling
-   - Provide clear user feedback
-   - Log errors for debugging
-
-3. **Testing**
-   - Test on multiple devices
-   - Verify different network conditions
-   - Check orientation handling
-   - Validate authentication flow
 
 </div>
