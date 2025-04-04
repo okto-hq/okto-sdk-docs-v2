@@ -1,5 +1,198 @@
 ---
 title: Authenticate User via Onboarding Modal
-description: Learn how to trigger and handle authentication using the Okto Onboarding Modal.
+description: Learn how to trigger and handle authentication using the Okto Onboarding Modal in Unity.
 full: false
 ---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import FullscreenImage from 'app/components/mdx/FullscreenImage';
+import { Icon as IIcon } from '@iconify/react';
+
+import '../../../styles.css';
+
+### Prerequisites
+
+Before implementing the authentication flow, ensure you have:
+
+**Unity WebView Package**
+   - Download and import the [Unity WebView SDK](https://github.com/gree/unity-webview/blob/master/dist/unity-webview.unitypackage)
+   - This package is required for JavaScript communication between Unity and the web interface
+   - Import the package through Assets > Import Package > Custom Package
+
+### Methods Overview
+
+| Method | Description |
+|--------|-------------|
+| [`OpenOnBoardingScreen()`](#open-onboarding-screen) | Opens the Okto Onboarding modal in a WebView with WhatsApp authentication |
+
+<div className="method-box">
+
+## Open Onboarding Screen
+
+`OpenOnBoardingScreen()` presents a guided onboarding flow to the user in a WebView. This includes WhatsApp authentication and handles the complete authentication flow.
+
+### Parameters
+
+None. The OnboardingWebview component handles all necessary configurations internally.
+
+### Response
+
+<Callout title="Success Response">
+Authentication success is handled through the WebView message system, which will:
+1. Receive the auth token
+2. Authenticate the user
+3. Close the WebView automatically
+</Callout>
+
+<Accordions>
+<Accordion title="Basic Implementation">
+
+```csharp
+using OktoSDK;
+using UnityEngine;
+
+public class YourAuthenticationManager : MonoBehaviour
+{
+    [SerializeField]
+    private OnboardingWebview onboardingWebview;
+
+    public void ShowOnboarding()
+    {
+        onboardingWebview.OpenOnBoardingScreen();
+    }
+}
+```
+
+</Accordion>
+
+<Accordion title="Complete Implementation">
+
+```csharp
+using OktoSDK;
+using UnityEngine;
+
+public class AuthenticationManager : MonoBehaviour
+{
+    [SerializeField]
+    private OnboardingWebview onboardingWebview;
+    [SerializeField]
+    private WhatsAppAuthentication whatsAppAuthentication;
+
+    void Start()
+    {
+        // Initialize your components
+        if (onboardingWebview == null)
+        {
+            onboardingWebview = gameObject.AddComponent<OnboardingWebview>();
+        }
+    }
+
+    public void StartAuthentication()
+    {
+        try
+        {
+            onboardingWebview.OpenOnBoardingScreen();
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error opening onboarding screen: {e.Message}");
+        }
+    }
+}
+```
+
+</Accordion>
+</Accordions>
+
+### Environment Configuration
+
+The WebView URL is automatically configured based on your environment setting:
+
+```csharp
+private string GetBuildUrl()
+{
+    switch (OktoAuthExample.getOktoClientConfig().Environment.ToUpper())
+    {
+        case "SANDBOX":
+            return "https://sandbox-onboarding.okto.tech";
+        case "STAGING":
+            return "https://onboarding.oktostage.com";
+        default:
+            return "";
+    }
+}
+```
+
+<Callout type="info">
+The OnboardingWebview handles:
+- WebView initialization and configuration
+- Message communication between Unity and WebView
+- WhatsApp authentication flow
+- OTP verification
+- Session management
+</Callout>
+
+## Authentication Flow
+
+<Steps>
+
+<Step>
+### Launch Modal
+User triggers the onboarding flow through your game interface.
+   - Calls `OpenOnBoardingScreen()`
+   - Initializes WebView
+   - Sets screen orientation to Portrait
+   - Loads the appropriate URL based on environment
+
+<img
+  src="/images/unity-images/unity-template.png"
+  alt="Initial Onboarding Screen"
+  style={{ display: 'block', margin: '1rem auto', maxWidth: '100%', height: '300px', borderRadius: '8px', margin: '1rem 0' }}
+/>
+</Step>
+
+<Step>
+### Enter Login Credentials
+User inputs their email/WhatsApp number for authentication.
+<img
+  src="/images/unity-images/enter-whatsApp-number.png"
+  alt="WhatsApp Number Input"
+  style={{ display: 'block', margin: '1rem auto', maxWidth: '100%', height: '500px', borderRadius: '8px' }}
+/>
+</Step>
+
+<Step>
+### Verify OTP
+User receives and enters the OTP sent to their email/WhatsApp.
+<img
+  src="/images/unity-images/enter-whatsApp-otp.png"
+  alt="OTP Verification"
+  style={{ display: 'block', margin: '1rem auto', maxWidth: '100%', height: '500px', borderRadius: '8px' }}
+/>
+</Step>
+
+<Step>
+### Complete Authentication
+System processes verification and establishes user session.
+<img
+  src="/images/unity-images/complete-authentication.png"
+  alt="Success Screen"
+  style={{ display: 'block', margin: '1rem auto', maxWidth: '100%', height: '300px', borderRadius: '8px', margin: '1rem 0' }}
+/>
+</Step>
+
+</Steps>
+
+<Callout type="warning">
+Important Considerations:
+- Ensure proper screen orientation handling
+- Handle WebView lifecycle appropriately
+- Implement proper error handling
+- Test across different devices and platforms
+</Callout>
+
+</div>

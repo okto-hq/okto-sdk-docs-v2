@@ -18,6 +18,7 @@
     "!./authenticate-users/jwt-closed-loop",
     "!./authenticate-users/onboarding-modal",
     "./authenticate-users/login-logout",
+    "./authenticate-users/onboarding-modal",
     "---Usage---",
     "usage-overview",
     "(hooks)",
@@ -32,7 +33,7 @@
     "!./wallets/wagmi-integration",
     "---Resources---",
     "v2migration",
-    "technical-reference",
+    "./technical-guide/technical-reference",
     "sdk-error-warnings",
     "troubleshooting",
     "!changelog"

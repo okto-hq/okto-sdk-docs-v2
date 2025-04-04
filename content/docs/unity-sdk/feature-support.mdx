@@ -3,7 +3,7 @@ title: Feature Support
 full: false
 ---
 
-<style jsx>
+<style jsx="true">
 {`
 .feature-supported-version {
     display: inline-block;
@@ -39,9 +39,10 @@ Check out the matrix below to determine which features are supported in each Okt
 | Feature               | Supported in Version |
 | --------------------- | -------------------- |
 | Google OAuth          | <span className="feature-supported-version">v0.1.0</span>        |
+| WhatsApp OTP via Onboarding Screen | <span className="feature-supported-version">v0.1.0</span> |
+| Onboarding Modal      | <span className="feature-supported-version">v0.1.0</span> |
 | Email OTP             | 🔜                    |
 | Phone OTP             | 🔜                    |
-| Whatsapp OTP          | 🔜                    |
 | Custom Authentication |  🔜                   |
 
 ### Okto Smart Wallets
@@ -54,14 +55,14 @@ Check out the matrix below to determine which features are supported in each Okt
 | Transaction MFA           | 🔜                      |
 | Wallet Key Export         | 🔜                      |
 
-### Custom Blockchain Support
+### Blockchain Support
 
 | Feature                     | Supported in Version |
 | --------------------------- | -------------------- |
 | EVM Chains Support    | <span className="feature-supported-version">v0.1.0</span>         |
 | Custom EVM Chains Support    | <span className="feature-supported-version">v0.1.0</span>         |
-| Solana Chain Support |    🔜      |
-| Aptos Chain Support |  🔜         |
+| Solana Chain Support |    <span className="feature-supported-version">v0.1.0</span>      |
+| Aptos Chain Support |  <span className="feature-supported-version">v0.1.0</span>         |
 
 ### Connectors
 
@@ -95,4 +96,5 @@ Check out the matrix below to determine which features are supported in each Okt
 | Feature                     | Supported in Version |
 | --------------------------- | -------------------- |
 | RawWrite (Write to Smart Contract)    | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" />  |
-| RawRead (Read from Smart Contract)   | 🔜 |
+| RawRead (Read from Smart Contract)   | <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="Ethereum" /> |
+| ABI Encoding (Encode Function Data) | <span className="feature-supported-version">v0.1.0</span> |

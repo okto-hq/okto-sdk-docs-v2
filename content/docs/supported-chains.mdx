@@ -140,6 +140,77 @@ To request funds, please complete the form below:
 </div>
 <br/>
 
+<div id="solana">
+  <SupportedChainCard
+    chainIcon="/images/sol-icon.svg"
+    chainName="Solana"
+    renderBelongsTo={false}
+    tokens={[
+      { name: "SOL (Native)", icon: "/images/sol-icon.svg" },
+      { name: "USDT (Default)", icon: "/images/usdt-icon.svg" },
+      { name: "USDC (Default)", icon: "/images/usdc-icon.svg" },
+    ]}
+    whitelistNote="For Solana, any SPL token can be whitelisted by contacting the team."
+    resources={{
+      "Solana Docs": "https://solana.com/docs",
+      "Rust": "https://www.rust-lang.org/",
+      "Anchor": "https://www.anchor-lang.com/",
+      "Solana Playground": "https://beta.solpg.io/",
+    }}
+    supportedTestnet={{
+      "Solana Devnet": "https://explorer.solana.com/?cluster=devnet",
+    }}
+    networkInfo={[
+      {
+        name: "Solana Mainnet",
+        confirmations: "1",
+        blockInterval: "0.4s",
+      },
+      {
+        name: "Solana Devnet",
+        confirmations: "1",
+        blockInterval: "0.4s",
+      },
+    ]}
+  />
+</div>
+<br/>
+
+<div id="aptos">
+  <SupportedChainCard
+    chainIcon="/images/aptos-icon.svg"
+    chainName="Aptos"
+    renderBelongsTo={false}
+    tokens={[
+      { name: "APTOS (Native)", icon: "/images/aptos-icon.svg" },
+      { name: "USDC (Default)", icon: "/images/usdc-icon.svg" },
+    ]}
+    whitelistNote="For Aptos, any fungible asset can be whitelisted by contacting the team."
+    resources={{
+      "Aptos Docs": "https://aptos.dev/en",
+      "Move": "https://aptos.dev/en/build/smart-contracts",
+      "Aptos CLI": "https://aptos.dev/en/build/cli",
+      "Aptos SDK": "https://aptos.dev/en/build/sdks",
+    }}
+    supportedTestnet={{
+      "Aptos Testnet": "https://explorer.aptoslabs.com/?network=testnet",
+    }}
+    networkInfo={[
+      {
+        name: "Aptos Mainnet",
+        confirmations: "1",
+        blockInterval: "4s",
+      },
+      {
+        name: "Aptos Testnet",
+        confirmations: "1",
+        blockInterval: "4s",
+      },
+    ]}
+  />
+</div>
+<br/>
+
 <div id="avalanche">
   <SupportedChainCard
     chainIcon="/images/avalanche-icon.svg"

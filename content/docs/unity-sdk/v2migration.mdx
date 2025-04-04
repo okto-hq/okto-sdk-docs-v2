@@ -30,6 +30,23 @@ This guide provides a detailed walkthrough for migrating your unity application 
 This guide assumes that you have already set up a fully functional unity dapp using Okto SDK V1.
 </Callout>
 
+### 1. Remove Existing OktoSDK
+
+Before installing the new version, you need to remove the existing OktoSDK:
+
+1. In your Unity Project:
+   - Delete the `Assets/OktoSDK` directory
+   - Remove any remaining `.meta` files related to OktoSDK
+   - Clear the Unity cache (Unity → Preferences → Cache Server)
+
+2. In your scripts:
+   - Remove any imports referencing the old SDK namespace
+   - Clear any serialized references to OktoSDK components
+
+<Callout type="warning">
+Make sure to back up any custom configurations or modifications you've made to the SDK before deletion.
+</Callout>
+
 ### 1. Installing Dependencies
 
 Okto SDK V2 adopts a scoped package structure under the `OKTOSDK` namespace, providing enhanced access control and enabling private package distribution when required. This approach aligns with modern best practices in package management, ensuring a more organized, and scalable  package structure.

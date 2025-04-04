@@ -14,6 +14,8 @@ export default function ChainSupportStatus({ unsupportedChains = [] }: ChainSupp
   const allChains: Chain[] = [
     { name: "Ethereum", icon: "/images/eth-icon.svg", mainnet: true },
     { name: "Polygon", icon: "/images/polygon-logo.svg", mainnet: true },
+    { name: "Solana", icon: "/images/sol-icon.svg", mainnet: true },
+    { name: "Aptos", icon: "/images/aptos-icon.svg", mainnet: true },
     { name: "Avalanche", icon: "/images/avalanche-icon.svg", mainnet: true },
     { name: "Arbitrum", icon: "/images/arbitrum-icon.png", mainnet: true },
     { name: "BSC", icon: "/images/bsc-icon.png", mainnet: true },

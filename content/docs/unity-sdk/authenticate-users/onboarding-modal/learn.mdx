@@ -1,5 +1,164 @@
 ---
 title: Learn
-description: Learn how the Okto Onboarding Modal helps streamline user authentication and onboarding workflows.
+description: Learn how the Okto Onboarding Modal works in Unity for user authentication.
 full: false
 ---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+# Understanding the Onboarding Modal in Unity
+
+The Okto **Onboarding Modal** provides a streamlined authentication flow through a WebView implementation in Unity. It handles authentication without requiring complex authentication flow management on the client app.
+
+## Communication System Overview
+
+The Unity implementation uses a WebView-based communication system with three main components:
+
+1. **Request Channel**: Handles messages from WebView to Unity
+2. **Response Channel**: Handles messages from Unity back to WebView
+3. **JavaScript Bridge**: Facilitates communication between Unity and WebView
+
+### Message Format
+
+#### Requests from WebView
+```json
+{
+  "id": "uuid-for-webview",
+  "method": "okto_sdk_login",
+  "data": {
+    "provider": "whatsapp",
+    "whatsapp_number": "+91909191919",
+    "type": "request_otp | verify_otp | resend_otp"
+  }
+}
+```
+
+#### Responses from Unity
+```json
+{
+  "id": "uuid-for-webview",
+  "method": "okto_sdk_login",
+  "data": {
+    "provider": "whatsapp",
+    "whatsapp_number": "+91909191919",
+    "token": "token_from_api_call",
+    "status": "success"
+  },
+  "error": "error_message_if_any"
+}
+```
+
+## Authentication Flow
+
+1. **Initialize WebView**
+   ```csharp
+   webViewObject = gameObject.AddComponent<WebViewObject>();
+   webViewObject.Init(
+       cb: (msg) => OnMessageReceived(msg),
+       ld: (msg) => {
+           CustomLogger.Log($"Page Loaded: {msg}");
+           InjectJavaScript();
+       }
+   );
+   ```
+
+2. **Handle WhatsApp Authentication**
+   - User enters WhatsApp number
+   - System sends OTP
+   - User verifies OTP
+   - Authentication token is received
+
+3. **Message Processing**
+   ```csharp
+   private void HandleOktoLogin(WebViewRequestDataModel webViewRequestModel)
+   {
+       switch (webViewRequestModel.Data.Type)
+       {
+           case "request_otp":
+               HandleSendOtp(webViewRequestModel);
+               break;
+           case "verify_otp":
+               HandleOtpVerification(webViewRequestModel);
+               break;
+           case "resend_otp":
+               HandleResendOtp(webViewRequestModel);
+               break;
+           case "close_webview":
+               CloseWebView();
+               break;
+       }
+   }
+   ```
+
+## JavaScript Bridge Implementation
+
+The JavaScript bridge enables bidirectional communication:
+
+```javascript
+window.unityBridge = {
+    postMessage: function(msg) {
+        try {
+            msg = (typeof msg === 'string') ? msg : JSON.stringify(msg);
+            if (window.Unity && typeof Unity.call === 'function') {
+                Unity.call(msg);  // Android specific
+            } else if (window.webkit?.messageHandlers?.unityControl) {
+                window.webkit.messageHandlers.unityControl.postMessage(msg);  // iOS specific
+            }
+        } catch (e) {
+            console.error('Failed to send message to Unity:', e);
+        }
+    }
+};
+```
+
+<Callout type="info">
+The JavaScript bridge handles:
+- Message serialization/deserialization
+- Platform-specific communication (Android/iOS)
+- Error handling and logging
+</Callout>
+
+## Platform-Specific Considerations
+
+### Android
+```csharp
+#if !UNITY_EDITOR && UNITY_ANDROID
+    androidForceDarkMode: 1
+#endif
+```
+
+### iOS
+```csharp
+#if !UNITY_EDITOR && UNITY_IOS
+    enableWKWebView: true,
+    wkContentMode: 1,
+    wkAllowsLinkPreview: true,
+    wkAllowsBackForwardNavigationGestures: true
+#endif
+```
+
+## Common Issues and Solutions
+
+1. **WebView Not Showing**
+   ```csharp
+   webViewObject.SetMargins(0, 0, 0, 0);
+   webViewObject.SetVisibility(true);
+   ```
+
+2. **Communication Failures**
+   ```csharp
+   private void SendMessageToWebView(string message)
+   {
+       string js = $"globalThis.responseChannel?.('{message}');";
+       webViewObject.EvaluateJS(js);
+       CustomLogger.Log($"Message sent to WebView: {message}");
+   }
+   ```
+
+3. **Orientation Issues**
+   ```csharp
+   Screen.orientation = ScreenOrientation.Portrait;
+   // ... WebView code ...
+   Screen.orientation = ScreenOrientation.LandscapeLeft;
+   ```
