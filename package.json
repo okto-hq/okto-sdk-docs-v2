@@ -7,7 +7,8 @@
       "dev": "next dev",
       "start": "next start",
       "postinstall": "fumadocs-mdx",
-      "build:docs": "node ./scripts/generate-docs.mjs"
+      "build:api-reference-docs": "node ./scripts/generate-api-reference-docs.mjs",
+      "build:trade-service-docs": "node ./scripts/generate-trade-service-docs.mjs"
    },
    "dependencies": {
       "@algolia/autocomplete-js": "^1.18.1",
