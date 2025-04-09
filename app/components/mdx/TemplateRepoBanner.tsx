@@ -3,7 +3,13 @@ import { TbBrandNextjs, TbBrandReactNative } from "react-icons/tb";
 import { SiTypescript, SiUnity } from "react-icons/si";
 import Link from "next/link";
 
-type SDKType = 'react' | 'nextjs' | 'react-native' | 'typescript' | 'eliza-okto-plugin' | 'unity';
+type SDKType =
+  | "react"
+  | "nextjs"
+  | "react-native"
+  | "typescript"
+  | "eliza-okto-plugin"
+  | "unity";
 
 interface TemplateRepoBannerProps {
   sdk: SDKType;
@@ -15,35 +21,54 @@ interface TemplateRepoBannerProps {
 
 const SDK_CONFIG = {
   react: {
-    icon: <FaReact size={24} className="text-[#61dafb] animate-spin-slow flex-shrink-0" />,
-    defaultRepo: "https://github.com/okto-hq/okto-sdkv2-react-template-app", 
-    defaultTemplateUrl: "/docs/react-sdk/templateRepo"
+    icon: (
+      <FaReact
+        size={24}
+        className="text-[#61dafb] animate-spin-slow flex-shrink-0"
+      />
+    ),
+    defaultRepo: "https://github.com/okto-hq/okto-sdkv2-react-template-app",
+    defaultTemplateUrl: "/docs/react-sdk/templateRepo",
   },
   nextjs: {
-    icon: <TbBrandNextjs size={24} className="text-black dark:text-white flex-shrink-0" />,
+    icon: (
+      <TbBrandNextjs
+        size={24}
+        className="text-black dark:text-white flex-shrink-0"
+      />
+    ),
     defaultRepo: "https://github.com/okto-hq/okto-sdkv2-nextjs-template-app",
-    defaultTemplateUrl: "/docs/nextjs-sdk/templateRepo"
+    defaultTemplateUrl: "/docs/nextjs-sdk/templateRepo",
   },
-  'react-native': {
-    icon: <TbBrandReactNative size={24} className="text-[#61dafb] animate-spin-slow flex-shrink-0" />,
-    defaultRepo: "https://github.com/okto-hq/okto-sdkv2-react-native-template-app",
-    defaultTemplateUrl: "/docs/react-native-sdk/templateRepo"
+  "react-native": {
+    icon: (
+      <TbBrandReactNative
+        size={24}
+        className="text-[#61dafb] animate-spin-slow flex-shrink-0"
+      />
+    ),
+    defaultRepo:
+      "https://github.com/okto-hq/okto-sdkv2-react-native-template-app",
+    defaultTemplateUrl: "/docs/react-native-sdk/templateRepo",
   },
   typescript: {
     icon: <SiTypescript size={24} className="text-[#3178c6] flex-shrink-0" />,
     defaultRepo: "https://github.com/okto-hq/okto-sdkv2-ts-template",
-    defaultTemplateUrl: "https://github.com/okto-hq/okto-sdkv2-ts-template"
+    defaultTemplateUrl: "https://github.com/okto-hq/okto-sdkv2-ts-template",
   },
-  'eliza-okto-plugin': {
+  "eliza-okto-plugin": {
     icon: <FaCode size={24} className="text-[#3178c6] flex-shrink-0" />,
     defaultRepo: "https://github.com/okto-hq/okto-sdk-eliza-agent-template",
-    defaultTemplateUrl: "/docs/okto-eliza-plugin/integrating-into-dapp/eliza-okto-sample-agent"
+    defaultTemplateUrl:
+      "/docs/okto-eliza-plugin/integrating-into-dapp/eliza-okto-sample-agent",
   },
   unity: {
-    icon: <SiUnity size={24} className="text-black dark:text-white flex-shrink-0" />,
+    icon: (
+      <SiUnity size={24} className="text-black dark:text-white flex-shrink-0" />
+    ),
     defaultRepo: "https://github.com/okto-hq/okto-sdkv2-unity-template-app",
-    defaultTemplateUrl: "/docs/unity-sdk/templateRepo"
-  }
+    defaultTemplateUrl: "/docs/unity-sdk/templateRepo",
+  },
 };
 
 export default function TemplateRepoBanner({
@@ -51,7 +76,7 @@ export default function TemplateRepoBanner({
   title = "Quick Start Template Available!",
   description = "Skip the manual setup and get started in minutes with our template repository. It includes pre-configured Okto SDK integration, authentication setup, and example components and operations.",
   repoUrl,
-  templateUrl
+  templateUrl,
 }: TemplateRepoBannerProps) {
   const config = SDK_CONFIG[sdk];
   const finalRepoUrl = repoUrl || config.defaultRepo;
@@ -65,9 +90,7 @@ export default function TemplateRepoBanner({
             {title}
           </h2>
         </div>
-        <p className="text-zinc-600 dark:text-zinc-400 m-0">
-          {description}
-        </p>
+        <p className="text-zinc-600 dark:text-zinc-400 m-0">{description}</p>
       </div>
       <div className="flex flex-col gap-3">
         <Link
@@ -75,17 +98,23 @@ export default function TemplateRepoBanner({
           target="_blank"
           className="relative group no-underline px-6 py-3 rounded-md border-2 border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-800/80 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-2px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.5),0_2px_4px_-2px_rgba(0,0,0,0.4)] transition-all hover:scale-105 hover:shadow-[0_8px_12px_-3px_rgba(0,0,0,0.15),0_4px_6px_-4px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_8px_12px_-3px_rgba(0,0,0,0.6),0_4px_6px_-4px_rgba(0,0,0,0.5)] dark:hover:bg-zinc-700/90 dark:hover:border-zinc-500"
         >
-          <span className="flex items-center gap-2 text-zinc-800 dark:text-zinc-200 font-medium">
+          <span
+            id="view-template"
+            className="flex items-center gap-2 text-zinc-800 dark:text-zinc-200 font-medium"
+          >
             <FaGithub size={20} />
             View Template
           </span>
         </Link>
-        {sdk !== 'typescript' && (
+        {sdk !== "typescript" && (
           <Link
             href={templateUrl || config.defaultTemplateUrl}
             className="relative group no-underline px-6 py-3 rounded-md border-2 border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-800/80 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-2px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.5),0_2px_4px_-2px_rgba(0,0,0,0.4)] transition-all hover:scale-105 hover:shadow-[0_8px_12px_-3px_rgba(0,0,0,0.15),0_4px_6px_-4px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_8px_12px_-3px_rgba(0,0,0,0.6),0_4px_6px_-4px_rgba(0,0,0,0.5)] dark:hover:bg-zinc-700/90 dark:hover:border-zinc-500"
           >
-            <span className="flex items-center gap-2 text-zinc-800 dark:text-zinc-200 font-medium">
+            <span
+              id="run-template"
+              className="flex items-center gap-2 text-zinc-800 dark:text-zinc-200 font-medium"
+            >
               <FaCode size={20} />
               Run Template
             </span>

@@ -20,54 +20,57 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (pathname === "/docs") {
-        const hideLink = () => {
-          document.querySelectorAll("#nd-sidebar a").forEach((a: any) => {
-            if (a.textContent.trim().toLowerCase() === "← back to home") {
-                a.style.display = "none";
-            }
+      const hideLink = () => {
+        document.querySelectorAll("#nd-sidebar a").forEach((a: any) => {
+          if (a.textContent.trim().toLowerCase() === "← back to home") {
+            a.style.display = "none";
+          }
         });
-      }
+      };
 
       hideLink();
 
       const sidebar = document.querySelector("#nd-sidebar");
       if (sidebar) {
-          const observer = new MutationObserver(hideLink);
-          observer.observe(sidebar, { childList: true, subtree: true });
+        const observer = new MutationObserver(hideLink);
+        observer.observe(sidebar, { childList: true, subtree: true });
 
-          return () => observer.disconnect(); // Cleanup
+        return () => observer.disconnect(); // Cleanup
       }
-
     }
-}, [pathname]); 
+  }, [pathname]);
 
   return (
     <html lang="en" className={inter.className} suppressHydrationWarning>
       <head>
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-MHRLR04DWL"></Script>
-        <Script id="google-analytics">
-          {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-MHRLR04DWL');
-          `}
-        </Script>
+        <Script>{`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-WLDDSGTX');
+        `}</Script>
         <link rel="icon" href="/logo/okto-icon.png" sizes="any" />
         <meta name="algolia-site-verification" content="DE6E97334C938277" />
       </head>
       <body>
-        <RootProvider search={{
-           enabled: false,
-        }}>
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-WLDDSGTX"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          ></iframe>
+        </noscript>
+        <RootProvider
+          search={{
+            enabled: false,
+          }}
+        >
           <Providers>
             <div className="min-h-screen flex flex-col">
               <NavbarComponent />
               <SOABanner />
-              <main className="flex-1">
-                {children}
-              </main>
+              <main className="flex-1">{children}</main>
               <Footer />
             </div>
           </Providers>
