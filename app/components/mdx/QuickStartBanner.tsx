@@ -22,7 +22,7 @@ export default function QuickStartBanner() {
         <div className="relative z-20 flex gap-6 items-center justify-center">
           <Link
             href="/docs/react-sdk"
-            className={baseButtonStyles}
+            className={`${baseButtonStyles} quickstart-banner-link-analytics-tracker`}
           >
             <FaReact
               size={36}
@@ -35,7 +35,7 @@ export default function QuickStartBanner() {
 
           <Link
             href="/docs/nextjs-sdk"
-            className={baseButtonStyles}
+            className={`${baseButtonStyles} quickstart-banner-link-analytics-tracker`}
           >
             <TbBrandNextjs
               size={36}
@@ -48,7 +48,7 @@ export default function QuickStartBanner() {
 
           <Link
             href="/docs/react-native-sdk"
-            className={baseButtonStyles}
+            className={`${baseButtonStyles} quickstart-banner-link-analytics-tracker`}
           >
             <TbBrandReactNative
               size={36}
@@ -63,7 +63,7 @@ export default function QuickStartBanner() {
         <div className="relative z-10 flex gap-6 items-center justify-center">
           <Link
             href="/docs/typescript-sdk"
-            className={baseButtonStyles}
+            className={`${baseButtonStyles} quickstart-banner-link-analytics-tracker`}
           >
             <SiTypescript
               size={36}
@@ -76,7 +76,7 @@ export default function QuickStartBanner() {
 
           <Link
             href="/docs/unity-sdk"
-            className={baseButtonStyles}
+            className={`${baseButtonStyles} quickstart-banner-link-analytics-tracker`}
           >
             <FaUnity
               size={36}
@@ -89,7 +89,7 @@ export default function QuickStartBanner() {
 
           <Link
             href="/docs/wagmi-integration"
-            className={baseButtonStyles}
+            className={`${baseButtonStyles} quickstart-banner-link-analytics-tracker`}
           >
             <SiWagmi
               size={36}
@@ -102,7 +102,7 @@ export default function QuickStartBanner() {
 
           <Link
             href="/docs/openapi"
-            className={baseButtonStyles}
+            className={`${baseButtonStyles} quickstart-banner-link-analytics-tracker`}
           >
             <TbApi
               size={36}

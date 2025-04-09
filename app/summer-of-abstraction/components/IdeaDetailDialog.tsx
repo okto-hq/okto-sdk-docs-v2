@@ -92,7 +92,8 @@ export function IdeaDetailDialog({ idea }: IdeaDetailDialogProps) {
         <Button 
           variant="default" 
           size="sm"
-          className={idea.type === "Project" ? "bg-indigo-600 hover:bg-indigo-700" : "bg-purple-600 hover:bg-purple-700"}
+          id={`(${idea.type}) ${idea.title}`}
+          className={idea.type === "Project" ? "bg-indigo-600 hover:bg-indigo-700 soa-idea-analytics-tracker" : "bg-purple-600 hover:bg-purple-700 soa-idea-analytics-tracker"}
         >
           View
         </Button>
