@@ -1,0 +1,13 @@
+{
+    "title": "Trade Service",
+    "description": "Trade Service",
+    "root": true,
+    "icon": "Rocket",
+    "pages": [
+        "[← Back to Home](/)",
+        "index",
+        "setup",
+        "usage",
+        "resources"
+    ]
+}
