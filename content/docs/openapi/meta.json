@@ -12,6 +12,7 @@
         "./authenticate/okto-auth-session",
         "./authenticate/google-oauth",
         "./authenticate/login-logout",
+        "./authenticate/auth-whatsapp",
         "---Usage---",
         "(Intents)",
         "(MessageSig)",
