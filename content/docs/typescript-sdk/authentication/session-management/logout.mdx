@@ -24,12 +24,17 @@ When using Google as the third-party provider, make sure to call `googleLogout()
 <Tabs items={['TypeScript']}>
 <Tab value="TypeScript">
 ```typescript
-import { useOkto } from '@okto_web3/react-native-sdk';
+import { OktoClient } from "@okto_web3/core-js-sdk";
 import { googleLogout } from "@react-oauth/google";
-import { View, Text, Pressable } from 'react-native';
+
 
 function LogoutComponent() {
-    const oktoClient = useOkto();
+        // Initialize OktoClient
+    const oktoClient = new OktoClient({
+        environment: process.env.ENVIRONMENT,
+        clientPrivateKey: process.env.CLIENT_PRIVATE_KEY,
+        clientSWA: process.env.CLIENT_SWA,
+    });
 
     async function handleLogout() {
         try {
@@ -45,11 +50,11 @@ function LogoutComponent() {
     }
 
     return (
-        <View>
-            <Pressable onPress={handleLogout}>
-                <Text>Login with Google</Text>
-            </Pressable>
-        </View>
+         <div>
+            <button onClick={handleLogout}> 
+                Logout 
+            </button>
+        </div>
     );
 }
 ```

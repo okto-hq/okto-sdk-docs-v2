@@ -428,6 +428,354 @@
           }
         }
       }
+    },
+    "/api/oc/v1/authenticate/whatsapp": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Authenticate via WhatsApp",
+        "description": "Sends an OTP to the provided WhatsApp number for authentication using a signed payload.",
+        "operationId": "whatsappSendOtp",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["data", "client_signature", "type"],
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "required": ["whatsapp_number", "country_short_name", "client_swa", "timestamp"],
+                    "properties": {
+                      "whatsapp_number": {
+                        "type": "string",
+                        "example": "9871170638"
+                      },
+                      "country_short_name": {
+                        "type": "string",
+                        "example": "IN"
+                      },
+                      "client_swa": {
+                        "type": "string",
+                        "description": "User's wallet address",
+                        "example": "0xC06Cb1847f8cd185EB61980ec78311A1935c3Fd5"
+                      },
+                      "timestamp": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "Timestamp in milliseconds",
+                        "example": 1744199446352
+                      }
+                    }
+                  },
+                  "client_signature": {
+                    "type": "string",
+                    "description": "Signature of the stringified `data` object using `eth_sign`",
+                    "example": "0xa4363f9c3a5e05ca204080b72b869e0daa4be43d91dead3305377a20b7b416802dac6b10a392672b1a69b7fdbe4667a8d916fb158dafffc7d2de9b797a1d2c191c"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["ethsign"],
+                    "description": "Signature type",
+                    "example": "ethsign"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP Sent Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "success"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "phone otp sent"
+                        },
+                        "code": {
+                          "type": "integer",
+                          "example": 200
+                        },
+                        "token": {
+                          "type": "string",
+                          "example": "c67931f6-a8b1-511c-91d5-9fc88231d541"
+                        },
+                        "trace_id": {
+                          "type": "string",
+                          "example": "0000000000000000208338242c787032"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Payload or Signature",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/BadRequest"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/oc/v1/authenticate/whatsapp": {
+      "post": {
+        "tags": ["Explorer"],
+        "summary": "Resend WhatsApp OTP",
+        "description": "Resends an OTP to the user's WhatsApp number using the same endpoint as initial send. A valid `token` from the first OTP request must be included.",
+        "operationId": "whatsappResendOtp",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["data", "client_signature", "type"],
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "required": ["whatsapp_number", "country_short_name", "client_swa", "timestamp"],
+                    "properties": {
+                      "whatsapp_number": {
+                        "type": "string",
+                        "example": "9871170638"
+                      },
+                      "country_short_name": {
+                        "type": "string",
+                        "example": "IN"
+                      },
+                      "token": {
+                        "type": "string",
+                        "description": "Token from the initial OTP request",
+                        "example": "ef698598-de81-56b3-8859-3fd008ac0ce3"
+                      },
+                      "client_swa": {
+                        "type": "string",
+                        "example": "0xC06Cb1847f8cd185EB61980ec78311A1935c3Fd5"
+                      },
+                      "timestamp": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1744199446352
+                      }
+                    }
+                  },
+                  "client_signature": {
+                    "type": "string",
+                    "description": "Signature of `data` using `eth_sign`",
+                    "example": "0xa4363f9c3a5e05ca204080b72b869e0daa4be43d91dead3305377a20b7b416802dac6b10a392672b1a69b7fdbe4667a8d916fb158dafffc7d2de9b797a1d2c191c"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["ethsign"],
+                    "example": "ethsign"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP resent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "success"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "phone otp sent"
+                        },
+                        "code": {
+                          "type": "integer",
+                          "example": 200
+                        },
+                        "token": {
+                          "type": "string",
+                          "example": "c67931f6-a8b1-511c-91d5-9fc88231d541"
+                        },
+                        "trace_id": {
+                          "type": "string",
+                          "example": "0000000000000000208338242c787032"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/BadRequest"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/oc/v1/authenticate/whatsapp/verify": {
+      "post": {
+        "tags": ["Explorer"],
+        "summary": "Verify WhatsApp OTP",
+        "description": "Verifies the OTP sent to the user's WhatsApp number. Requires the OTP along with the same session token used in the send/resend step.",
+        "operationId": "verifyWhatsappOtp",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["data", "client_signature", "type"],
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "required": [
+                      "whatsapp_number",
+                      "country_short_name",
+                      "token",
+                      "otp",
+                      "client_swa",
+                      "timestamp"
+                    ],
+                    "properties": {
+                      "whatsapp_number": {
+                        "type": "string",
+                        "example": "9871170638"
+                      },
+                      "country_short_name": {
+                        "type": "string",
+                        "example": "IN"
+                      },
+                      "token": {
+                        "type": "string",
+                        "description": "Token from send/resend OTP call",
+                        "example": "ef698598-de81-56b3-8859-3fd008ac0ce3"
+                      },
+                      "otp": {
+                        "type": "string",
+                        "description": "6-digit code received on WhatsApp",
+                        "example": "072336"
+                      },
+                      "client_swa": {
+                        "type": "string",
+                        "description": "User's wallet address",
+                        "example": "0xC06Cb1847f8cd185EB61980ec78311A1935c3Fd5"
+                      },
+                      "timestamp": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "Current UNIX timestamp in milliseconds",
+                        "example": 1744199520590
+                      }
+                    }
+                  },
+                  "client_signature": {
+                    "type": "string",
+                    "description": "Signature of the `data` object using `eth_sign`",
+                    "example": "0xaf7f40c338124c7e457cc8a67a89095223edd72623727e5a07150bdaa1848e9f36a05d931d4efecc08b97beff4eea939ca81ea12c8da6543075fb5cd3ecb074a1b"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["ethsign"],
+                    "example": "ethsign"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP verified successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "success"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "OTP verified successfully"
+                        },
+                        "code": {
+                          "type": "integer",
+                          "example": 200
+                        },
+                        "trace_id": {
+                          "type": "string",
+                          "example": "0000000000000000208338242c787032"
+                        },
+                        "user_id": {
+                          "type": "string",
+                          "example": "8afacbe2-dacc-4d35-a49e-259145b4ef90"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid OTP or expired session",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/BadRequest"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {

@@ -19,6 +19,7 @@
       "wagmi-integration",
       "okto-eliza-plugin",
       "openapi",
+      "trade-service",
       "!api-migration",
       "---About Okto SDK---",
       "okto-sdk/overview",
