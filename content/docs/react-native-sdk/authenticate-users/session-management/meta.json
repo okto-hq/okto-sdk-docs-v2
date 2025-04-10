@@ -3,6 +3,7 @@
     "pages": [
       "loginUsingOAuth",
       "verifyLogin",
-      "getAuthToken"
+      "getAuthToken",
+      "logout"
     ]
   }

@@ -1,0 +1,8 @@
+{
+    "title": "WhatsApp Authentication",
+    "pages": [
+      "../../explorer/whatsapp-send-otp",
+      "../../explorer/whatsapp-resend-otp",
+      "../../explorer/verify-whatsapp-otp"
+    ]
+}
