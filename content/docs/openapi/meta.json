@@ -13,6 +13,7 @@
         "./authenticate/google-oauth",
         "./authenticate/login-logout",
         "./authenticate/auth-whatsapp",
+        "./authenticate/auth-email",
         "---Usage---",
         "(Intents)",
         "(MessageSig)",

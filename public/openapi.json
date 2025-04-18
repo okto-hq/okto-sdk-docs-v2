@@ -776,6 +776,292 @@
           }
         }
       }
+    },
+    "/api/oc/v1/authenticate/email": {
+      "post": {
+        "tags": ["Explorer"],
+        "summary": "Send Email OTP",
+        "description": "Send an OTP to the user's email address.",
+        "operationId": "emailSendOtp",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["data", "client_signature", "type"],
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "required": ["email", "client_swa", "timestamp"],
+                    "properties": {
+                      "email": {
+                        "type": "string",
+                        "example": "testuser@gmail.com"
+                      },
+                      "client_swa": {
+                        "type": "string",
+                        "example": "0x15256FEB5fAea1662Ce9A3fB8A46237B81b6Dfb1"
+                      },
+                      "timestamp": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1744100955808
+                      }
+                    }
+                  },
+                  "client_signature": {
+                    "type": "string",
+                    "description": "Signature of `data` using `eth_sign`",
+                    "example": "0x7bbaaa8298be149cad8fd4d08802d7f5d8042aefd50a52bfa38b41129c9f986b50a8b599666f0583ec190d80845590a22670708b7c893f356112992cbd6fcf941c"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["ethsign"],
+                    "example": "ethsign"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP resent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "data"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "success"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "email otp sent"
+                        },
+                        "code": {
+                          "type": "integer",
+                          "example": 200
+                        },
+                        "token": {
+                          "type": "string",
+                          "example": "a25cd3c7-fefe-58cd-96ab-a4897e13c829"
+                        },
+                        "trace_id": {
+                          "type": "string",
+                          "example": "a71fd63da0cb92a19e613a67c888b1f3"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status","error"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 422
+                        },
+                        "errorCode": {
+                          "type": "string",
+                          "example": "422"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Something went wrong. Please try again."
+                        },
+                        "trace_id": {
+                          "type": "string",
+                          "example": "a71fd63da0cb92a19e613a67c888b1f3"
+                        },
+                        "details": {
+                          "type": "string",
+                          "example": "Signature Expired"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/oc/v1/authenticate/email/verify": {
+      "post": {
+        "tags": ["Explorer"],
+        "summary": "Verify Email OTP",
+        "description": "Verifies the OTP sent to the user's Email Address. Requires the OTP along with the same session token used in the send/resend step.",
+        "operationId": "emailVerifyOtp",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["data", "client_signature", "type"],
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "required": [
+                      "email",
+                      "token",
+                      "otp",
+                      "client_swa",
+                      "timestamp"
+                    ],
+                    "properties": {
+                      "email": {
+                        "type": "string",
+                        "example": "testuser@gmail.com"
+                      },
+                      "token": {
+                        "type": "string",
+                        "description": "Token from send/resend OTP call",
+                        "example": "ef698598-de81-56b3-8859-3fd008ac0ce3"
+                      },
+                      "otp": {
+                        "type": "string",
+                        "description": "6-digit code received on Email",
+                        "example": "072336"
+                      },
+                      "client_swa": {
+                        "type": "string",
+                        "description": "User's wallet address",
+                        "example": "0x15256FEB5fAea1662Ce9A3fB8A46237B81b6Dfb1"
+                      },
+                      "timestamp": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "Current UNIX timestamp in milliseconds",
+                        "example": 1744101204648
+                      }
+                    }
+                  },
+                  "client_signature": {
+                    "type": "string",
+                    "description": "Signature of the `data` object using `eth_sign`",
+                    "example": "0x394708d6f32c49692d67c13cf17e6fbc1bae9896a77569fbfd15f60884398cda5cfb182cbc009fc6bb766a9bb24acd24122d9695d0f2b95ef29f1780b763db441c"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["ethsign"],
+                    "example": "ethsign"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP verified successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "data"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "auth_token": {
+                          "type": "string",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2luZGN4X2lkIjoiMGU3Y2QxZGUtY2Y2Yi00NjcwLThlZmUtNDdhZGUxODMzZGNkIiwidXNlcl9pZCI6IjBlN2NkMWRlLWNmNmItNDY3MC04ZWZlLTQ3YWRlMTgzM2RjZCIsInNoYXJlZF9pZCI6bnVsbCwiZGN4X2NyZWF0ZWRfYXQiOm51bGwsInBvcnRmb2xpb0ZhY3RvciI6IjEiLCJhY2NUeXBlIjoid2ViMyIsImFjY291bnRfb3duZXJfaWQiOiJjNTcwMzA0Yi1hOTkwLTVkMGMtYTViZi1hYTI5ODk0ZjQ4MTciLCJzZXNzaW9uSWQiOiJkODNhNmVjMS03ZTAwLTQ4ZmUtODQ2YS1lZWE5MGYxNTRhM2QiLCJ1c2VyX2xvZ2luX3ZlbmRvcl9pZCI6ImJkNjMwYWMyLWRiZjgtNGZmMS04YTNhLThjOGMxYjY3MzIzNSIsInMiOiJ3ZWIiLCJ1c2VyQWdlbnQiOiJheGlvcy8xLjguMSIsInNpcCI6IjI0MDk6NDBmMDo1MDRkOjY3NjI6NjFkNDo1OTVkOmQxNmU6MTQzOSIsInNjb3VudHJ5IjoiSU4iLCJsb2dpbl9tZWRpdW0iOiJFTUFJTF9PVFAiLCJpYXQiOjE3NDQ5ODMwNDQsImV4cCI6MTc0NTg0NzA0NH0.zZm2PFrMQu-orabj_56Xjibn4ROg4-jr0ZUVs7tUiGY"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "success"
+                        },
+                        "refresh_auth_token": {
+                          "type": "string",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2luZGN4X2lkIjoiMGU3Y2QxZGUtY2Y2Yi00NjcwLThlZmUtNDdhZGUxODMzZGNkIiwidXNlcl9pZCI6IjBlN2NkMWRlLWNmNmItNDY3MC04ZWZlLTQ3YWRlMTgzM2RjZCIsInNoYXJlZF9pZCI6bnVsbCwiZGN4X2NyZWF0ZWRfYXQiOm51bGwsInBvcnRmb2xpb0ZhY3RvciI6IjEiLCJhY2NUeXBlIjoid2ViMyIsImFjY291bnRfb3duZXJfaWQiOiJjNTcwMzA0Yi1hOTkwLTVkMGMtYTViZi1hYTI5ODk0ZjQ4MTciLCJzZXNzaW9uSWQiOiJkODNhNmVjMS03ZTAwLTQ4ZmUtODQ2YS1lZWE5MGYxNTRhM2QiLCJ1c2VyX2xvZ2luX3ZlbmRvcl9pZCI6ImJkNjMwYWMyLWRiZjgtNGZmMS04YTNhLThjOGMxYjY3MzIzNSIsInMiOiJ3ZWIiLCJ1c2VyQWdlbnQiOiJheGlvcy8xLjguMSIsInNpcCI6IjI0MDk6NDBmMDo1MDRkOjY3NjI6NjFkNDo1OTVkOmQxNmU6MTQzOSIsInNjb3VudHJ5IjoiSU4iLCJsb2dpbl9tZWRpdW0iOiJFTUFJTF9PVFAiLCJyIjoiMSIsImlhdCI6MTc0NDk4MzA0NCwiZXhwIjoxNzQ3NTc1MDQ0fQ.HtAgNORNLYPhbNFpnYgPo-lmGzvsHlnb1RC-GQRh02s"
+                        },
+                        "device_token": {
+                          "type": "string",
+                          "example": "a7702605cdb6f17adc83d3e2ebca20a98a2698fa130d18c6d2e2e1ae4a89594b"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+         "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status","error"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 422
+                        },
+                        "errorCode": {
+                          "type": "string",
+                          "example": "422"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Something went wrong. Please try again"
+                        },
+                        "trace_id": {
+                          "type": "string",
+                          "example": "16d13cc33b8fdb4bb991be15b454144e"
+                        },
+                        "details": {
+                          "type": "string",
+                          "example": "Signature Expired"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
