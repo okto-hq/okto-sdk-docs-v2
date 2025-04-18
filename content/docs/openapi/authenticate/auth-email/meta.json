@@ -1,0 +1,7 @@
+{
+    "title": "Email Authentication",
+    "pages": [
+      "../../explorer/email-send-otp",
+      "../../explorer/email-verify-otp"
+    ]
+}

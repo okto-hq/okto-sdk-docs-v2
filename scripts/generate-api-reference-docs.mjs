@@ -24,6 +24,7 @@ rimrafSync(out, {
       !v.endsWith("technical-reference.mdx") &&
       !v.endsWith("sdk-error-warnings.mdx") &&
       !v.endsWith("troubleshooting.mdx") &&
+      !v.endsWith("whatsapp-send-otp.mdx") &&
       !isInAuthenticateFolder &&
       !isInIntentsFolder &&
       !isInMessageSigFolder &&
