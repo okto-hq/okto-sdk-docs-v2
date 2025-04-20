@@ -33,7 +33,7 @@ import ViewOnGithub from 'app/components/mdx/ViewOnGithub';
 
     Before getting started, ensure you have the following:
     - **Node.js (v18+) and npm/pnpm/yarn:** <ExternalLink href="https://nodejs.org/">Download Node.js</ExternalLink>
-    - **Okto API Keys:** You need your `VITE_CLIENT_PRIVATE_KEY` and `VITE_PUBLIC_CLIENT_SWA`. Obtain these from the [Okto Developer Dashboard](https://dashboard.okto.tech/login).
+    - **Okto API Keys:** You need your `VITE_OKTO_CLIENT_PRIVATE_KEY` and `VITE_OKTO_CLIENT_SWA`. Obtain these from the [Okto Developer Dashboard](https://dashboard.okto.tech/login).
     - **Okto Account Setup:** Ensure you have sufficient <ExternalLink href="https://dashboard.okto.tech/okto-credits">Okto Credits</ExternalLink>, enable the required <ExternalLink href="https://dashboard.okto.tech/wallet-controls">Chains and Tokens </ExternalLink>, and optionally <ExternalLink href="https://dashboard.okto.tech/paymaster">Activate Sponsorship</ExternalLink>.
     - **Google OAuth Credentials (if using Google authentication):** Create OAuth 2.0 credentials in the <ExternalLink href="/docs/react-sdk/authenticate-users/google-oauth/google-console-setup">Google Cloud Console</ExternalLink> to get your `VITE_GOOGLE_CLIENT_ID`.
     
@@ -118,8 +118,12 @@ import ViewOnGithub from 'app/components/mdx/ViewOnGithub';
     Create a `.env` file in your project root:
 
     ```bash title=".env"
-    VITE_CLIENT_PRIV_KEY="YOUR_CLIENT_PRIVATE_KEY"
-    VITE_CLIENT_SWA="YOUR_CLIENT_SWA"
+    # The Okto environment "sandbox" or "production"
+    VITE_OKTO_ENVIRONMENT="sandbox"
+
+    # Get the below values from Okto Developer Dashboard. Learn how here- https://docsv2.okto.tech/docs/developer-admin-dashboard
+    VITE_OKTO_CLIENT_PRIVATE_KEY="YOUR_CLIENT_PRIVATE_KEY"
+    VITE_OKTO_CLIENT_SWA="YOUR_CLIENT_SWA"
 
     # Google OAuth credentials (Required only if you want to enable Google Sign-In)
     VITE_GOOGLE_CLIENT_ID="YOUR_GOOGLE_CLIENT_ID"
@@ -154,9 +158,9 @@ import ViewOnGithub from 'app/components/mdx/ViewOnGithub';
     import { OktoProvider } from "@okto_web3/react-sdk"; // [!code highlight]
 
     const config = { // [!code highlight]
-        environment: "sandbox", // [!code highlight]
-        clientPrivateKey: import.meta.env.VITE_CLIENT_PRIV_KEY, // [!code highlight]
-        clientSWA: import.meta.env.VITE_CLIENT_SWA, // [!code highlight]
+        environment: import.meta.env.VITE_OKTO_ENVIRONMENT, // [!code highlight]
+        clientPrivateKey: import.meta.env.VITE_OKTO_CLIENT_PRIVATE_KEY, // [!code highlight]
+        clientSWA: import.meta.env.VITE_OKTO_CLIENT_SWA, // [!code highlight]
     }; // [!code highlight]
 
     ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -181,12 +185,12 @@ import ViewOnGithub from 'app/components/mdx/ViewOnGithub';
     import ReactDOM from "react-dom/client";
     import App from "./App";
     import { GoogleOAuthProvider } from "@react-oauth/google"; // [!code highlight]
-    import { Hash, Hex, OktoProvider } from "@okto_web3/react-sdk";
+    import { OktoProvider } from "@okto_web3/react-sdk";
 
     const config = {
-        environment: "sandbox",
-        clientPrivateKey: import.meta.env.VITE_CLIENT_PRIV_KEY as Hash,
-        clientSWA: import.meta.env.VITE_CLIENT_SWA as Hex,
+        environment: import.meta.env.VITE_OKTO_ENVIRONMENT,
+        clientPrivateKey: import.meta.env.VITE_OKTO_CLIENT_PRIVATE_KEY,
+        clientSWA: import.meta.env.VITE_OKTO_CLIENT_SWA,
     };
 
     ReactDOM.createRoot(document.getElementById("root")!).render(
