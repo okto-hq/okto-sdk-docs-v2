@@ -1,117 +1,89 @@
 ---
 title: Okto's Abstraction Approach
+description: "Explore how Okto simplifies blockchain through five dimensions of abstraction: chain, transaction, wallet, liquidity, and gas." 
 full: false
----
-
-import FullscreenImage from 'app/components/mdx/FullscreenImage';
-
-Okto is a comprehensive orchestration layer designed to simplify the complex world of blockchain technology. Our goal is to make Web3 more accessible by addressing common challenges such as:
-- **Chain Abstraction** (accessing multiple blockchains seamlessly),
-- **Account Management** (secure self-custody without complex private key handling),
-- **Transaction Handling** (orchestration and automation of multi-step, cross-chain tasks),
-- **Fee Management** (abstracting away different gas tokens and payment flows).
-
-Our goal is to help both developers and end-users navigate Web3 effortlessly, enabling a new era of decentralized applications with **Web2-like** simplicity.
-
-<FullscreenImage 
-  src="/images/index-image.png" 
-  alt="Okto" 
-  className="w-full md:w-auto max-w-full rounded-lg shadow-md" 
-/>
-
 ---
 
 ## What is Okto's Abstraction Approach?
 
-Blockchain adoption faces significant challenges due to fragmented ecosystems, complex user experiences, and liquidity issues. **Okto’s Abstraction Approach** addresses these hurdles by hiding the underlying complexities of blockchain technology, enabling seamless, user-friendly experiences across chains, transactions, and wallets.
+Blockchain adoption faces significant challenges due to fragmented ecosystems, complex user experiences, and liquidity issues. **Okto** addresses these hurdles by hiding the underlying complexities of blockchain technology, enabling seamless, user-friendly experiences across chains, transactions, and wallets.
 
 Okto achieves this by combining cutting-edge solutions like **chain abstraction**, **transaction abstraction**, **wallet abstraction**, and **liquidity abstraction** into a unified architecture. This ensures that developers and end-users can interact with blockchain ecosystems as intuitively as they would with Web2 applications.
 
-<FullscreenImage 
-  src="/images/chain-abstraction.png" 
-  alt="Okto" 
-  className="w-full md:w-auto max-w-full rounded-lg shadow-md" 
-/>
-
 ---
 
+## The Five Dimensions of Okto's Abstraction
 
-## Background & Motivation
-
-While Web3 promises decentralization, transparency, and user empowerment, mainstream adoption has been hindered by challenges like:
-
-- **Complex Wallet Management:** Users often need to juggle multiple wallets, manage private keys, and remember numerous seed phrases.
-- **Diverse Gas Fee Requirements:** Navigating varying native tokens for gas across different networks complicates transactions.
-- **Fragmented Liquidity and Bridging:** Moving assets between chains involves multiple protocols and bridging steps.
-- **Inconsistent Developer Experiences:** Building on diverse blockchain networks often requires dealing with low-level details and bespoke integrations.
-
-Okto was created to bridge these gaps by combining robust crypto primitives with a developer-friendly abstraction layer. Our goal is to make blockchain interactions as simple as “click and done,” allowing dApps to onboard users without friction and empowering developers to build innovative applications without deep blockchain expertise.
-
----
-
-## The Six Dimensions of Okto's Abstraction
-
-Through its innovative architecture, Okto simplifies blockchain interactions across six critical dimensions:
+Through its innovative architecture, Okto simplifies blockchain interactions across five critical dimensions:
 
 ### 1. **Chain Abstraction**
 
 Okto’s infrastructure is **chain-agnostic**, supporting both EVM and non-EVM chains like Solana, Aptos, and Cosmos. Developers and users no longer need to manage chain-specific details, enabling:
 - Simplified integration for developers building cross-chain applications.
 - Seamless multichain interactions for users with a single wallet interface.  
-[Learn more about supported chains →](#)
+
+With chain abstraction, applications can reach users across multiple ecosystems without requiring users to understand the technical differences between chains.
+
+[Learn more about supported chains →](/docs/supported-chains)
 
 ---
 
 ### 2. **Transaction Abstraction**
 
-Okto eliminates the complexities of blockchain transactions by handling:
+Complex blockchain transactions often require multiple steps across different protocols. Okto eliminates the complexities of blockchain transactions by handling:
 - **Payload management:** Automating retries and error handling.
 - **Nonce management:** Avoiding transaction failures due to manual nonce mismanagement.
 - **Bundled transactions:** Sequencing and parallel execution of multi-step transactions.
 
-This allows developers to focus on building applications while Okto handles the technical heavy lifting behind the scenes.
+This allows developers to focus on building applications while Okto handles the technical heavy lifting behind the scenes. [Learn more](/docs/okto-layer/dtn)
 
 ---
 
 ### 3. **Wallet Abstraction**
 
 Okto’s **Decentralized Wallet Network (DWN)** enables:
-- **Delegated and gasless transactions:** Users can transact without holding native gas tokens.
-- **OAuth and WaaS integration:** Simplifies onboarding through familiar social login options.
+
+- **Social login:** Use Google, Apple, or other familiar authentication methods instead of seed phrases.
+- **Unified portfolio view:** One wallet interface to manage assets across all supported chains
+- **Session-based permissions:** Temporary access grants without compromising security. [Learn more](/docs/system-capabilities/session-management)
 - **Secure key management:** Multi-Party Computation (MPC) ensures private keys are never fully exposed, protecting users against single points of failure.  
-[Learn more about DWN →](#)
+[Learn more about DWN →](/docs/okto-layer/dwn)
 
 ---
 
-### 4. **Data Abstraction**
+### 4. **Liquidity Abstraction**
 
-Okto monitors all blockchains in real-time to provide live data feeds, including price updates and other critical information, ensuring developers have access to up-to-date data without extra effort.
+Fragmented liquidity across chains forces users to manually bridge assets and navigate complex DEX interfaces. Okto's Universal Liquidity Layer (ULL) solves this through:
+
+- **ERC-7683 implementation** - Supporting the cross-chain intent standard for seamless liquidity access
+- **Solver-settler network** - Optimizing routes for the best possible prices and execution
+- **Any-to-any token swaps** - Moving assets between any supported blockchains with one click
+
+The ULL enables users to move assets between chains without manually bridging, and developers to access liquidity across the entire ecosystem without complex integrations.
 
 ---
 
-### 5. **Liquidity Abstraction**
+### 5. **Gas Abstraction**
 
-Okto’s Universal Liquidity Layer (ULL) facilitates seamless liquidity access across multiple chains, allowing developers to tap into cross-chain liquidity without manual integration, thereby enhancing their app’s capabilities.
-
----
-
-### 6. **Gas Abstraction**
-
-Through Okto’s cross-ecosystem Gas Station Network (GSN), users can pay transaction fees in their preferred tokens, eliminating the need to hold native tokens for gas fees across different chains.
+The need to hold native tokens for gas on each chain is a major friction point. Through Okto’s cross-ecosystem Gas Station Network (GSN), users can pay transaction fees in their preferred tokens, eliminating the need to hold native tokens for gas fees across different chains. Okto handles converting assets to cover gas requirements.
 
 ---
 
 ## The Future of Blockchain: Web2-Like Simplicity
 
-Okto's abstraction approach enables Web3 applications to deliver experiences comparable to Web2 platforms like PayPal or Venmo. By handling blockchain complexities behind the scenes, Okto empowers developers to build **retail-friendly** applications that:
-- Simplify onboarding with OAuth and embedded wallets.
-- Provide seamless, gas-efficient cross-chain interactions.
-- Enable secure, multichain portfolio management.
+Okto enables Web3 applications to deliver experiences comparable to Web2 platforms like PayPal or Venmo. By handling blockchain complexities behind the scenes, Okto empowers developers to build **retail-friendly** applications.
+
+The future of blockchain is one where:
+- Users interact with applications through familiar interfaces without worrying about seeds, bridges, or gas
+- Developers build across multiple chains without learning chain-specific code
+- Applications can access users and liquidity from any ecosystem, not just their native chain
+- Complex multi-chain operations are executed with simple one-click actions
 
 ---
 
 ## Get Started with Okto
 
-Okto’s abstraction approach bridges the gap between blockchain technology and mainstream usability, unlocking a new era of blockchain adoption.  
+Okto bridges the gap between blockchain technology and mainstream usability, unlocking a new era of blockchain adoption and innovation. 
+
 [Explore Okto SDKs →](./okto-sdk/supported-sdk-platforms)  
-[Learn more about Okto’s architecture →](#)
+[Learn more about Okto’s architecture →](/docs/okto-layer/architecture)

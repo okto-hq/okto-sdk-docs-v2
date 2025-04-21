@@ -2,7 +2,7 @@
     "title": "Okto",
     "pages": [
       "---About Okto---",
-      "index",
+      "okto-ecosystem",
       "okto-abstraction-approach",
       "supported-chains",
       "okto-layer",
