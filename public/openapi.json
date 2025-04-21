@@ -431,116 +431,6 @@
     },
     "/api/oc/v1/authenticate/whatsapp": {
       "post": {
-        "tags": ["Auth"],
-        "summary": "Authenticate via WhatsApp",
-        "description": "Sends an OTP to the provided WhatsApp number for authentication using a signed payload.",
-        "operationId": "whatsappSendOtp",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": ["data", "client_signature", "type"],
-                "properties": {
-                  "data": {
-                    "type": "object",
-                    "required": ["whatsapp_number", "country_short_name", "client_swa", "timestamp"],
-                    "properties": {
-                      "whatsapp_number": {
-                        "type": "string",
-                        "example": "9871170638"
-                      },
-                      "country_short_name": {
-                        "type": "string",
-                        "example": "IN"
-                      },
-                      "client_swa": {
-                        "type": "string",
-                        "description": "User's wallet address",
-                        "example": "0xC06Cb1847f8cd185EB61980ec78311A1935c3Fd5"
-                      },
-                      "timestamp": {
-                        "type": "integer",
-                        "format": "int64",
-                        "description": "Timestamp in milliseconds",
-                        "example": 1744199446352
-                      }
-                    }
-                  },
-                  "client_signature": {
-                    "type": "string",
-                    "description": "Signature of the stringified `data` object using `eth_sign`",
-                    "example": "0xa4363f9c3a5e05ca204080b72b869e0daa4be43d91dead3305377a20b7b416802dac6b10a392672b1a69b7fdbe4667a8d916fb158dafffc7d2de9b797a1d2c191c"
-                  },
-                  "type": {
-                    "type": "string",
-                    "enum": ["ethsign"],
-                    "description": "Signature type",
-                    "example": "ethsign"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OTP Sent Successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "success"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "status": {
-                          "type": "string",
-                          "example": "success"
-                        },
-                        "message": {
-                          "type": "string",
-                          "example": "phone otp sent"
-                        },
-                        "code": {
-                          "type": "integer",
-                          "example": 200
-                        },
-                        "token": {
-                          "type": "string",
-                          "example": "c67931f6-a8b1-511c-91d5-9fc88231d541"
-                        },
-                        "trace_id": {
-                          "type": "string",
-                          "example": "0000000000000000208338242c787032"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid Payload or Signature",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/responses/BadRequest"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/oc/v1/authenticate/whatsapp": {
-      "post": {
         "tags": ["Explorer"],
         "summary": "Resend WhatsApp OTP",
         "description": "Resends an OTP to the user's WhatsApp number using the same endpoint as initial send. A valid `token` from the first OTP request must be included.",
@@ -638,12 +528,43 @@
               }
             }
           },
-          "400": {
-            "description": "Bad Request",
+          "422": {
+            "description": "Signature Expired",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/responses/BadRequest"
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 422
+                        },
+                        "errorCode": {
+                          "type": "string",
+                          "example": "422"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Something went wrong. Please try again"
+                        },
+                        "trace_id": {
+                          "type": "string",
+                          "example": "2a870ab615dab5fa1c58b26b46e864b3"
+                        },
+                        "details": {
+                          "type": "string",
+                          "example": "client signature invalid"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -737,25 +658,21 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "status": {
+                        "auth_token": {
                           "type": "string",
-                          "example": "success"
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2luZGN4X2lkIjoiNjA5OTMyMGYtMTMxNC00NmJkLWFkMWUtNmY5MWU3Mjg5MGY4IiwidXNlcl9pZCI6IjYwOTkzMjBmLTEzMTQtNDZiZC1hZDFlLTZmOTFlNzI4OTBmOCIsInNoYXJlZF9pZCI6bnVsbCwiZGN4X2NyZWF0ZWRfYXQiOm51bGwsInBvcnRmb2xpb0ZhY3RvciI6IjEiLCJhY2NUeXBlIjoid2ViMyIsImFjY291bnRfb3duZXJfaWQiOiJjNTcwMzA0Yi1hOTkwLTVkMGMtYTViZi1hYTI5ODk0ZjQ4MTciLCJzZXNzaW9uSWQiOiJlYWVlNDYyZC05N2U0LTQzNTAtODg4My00MzAwNjFjMjExMGQiLCJ1c2VyX2xvZ2luX3ZlbmRvcl9pZCI6ImJkNjMwYWMyLWRiZjgtNGZmMS04YTNhLThjOGMxYjY3MzIzNSIsInMiOiJ3ZWIiLCJ1c2VyQWdlbnQiOiJheGlvcy8xLjguMSIsInNpcCI6IjEwNi4yMTMuODEuMTI2Iiwic2NpdHkiOiJQdW5lIiwic2NvdW50cnkiOiJJTiIsInNyZWdpb24iOiJNSCIsImxvZ2luX21lZGl1bSI6IldIQVRTQVBQX09UUCIsImlhdCI6MTc0NTIwODg1NSwiZXhwIjoxNzQ2MDcyODU1fQ.Lm-QJhJA2xkvNfy6Apgp10P0dVxu7PMWTxVC52sidpI"
                         },
                         "message": {
                           "type": "string",
-                          "example": "OTP verified successfully"
+                          "example": "success"
                         },
-                        "code": {
-                          "type": "integer",
-                          "example": 200
-                        },
-                        "trace_id": {
+                        "refresh_auth_token": {
                           "type": "string",
-                          "example": "0000000000000000208338242c787032"
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2luZGN4X2lkIjoiNjA5OTMyMGYtMTMxNC00NmJkLWFkMWUtNmY5MWU3Mjg5MGY4IiwidXNlcl9pZCI6IjYwOTkzMjBmLTEzMTQtNDZiZC1hZDFlLTZmOTFlNzI4OTBmOCIsInNoYXJlZF9pZCI6bnVsbCwiZGN4X2NyZWF0ZWRfYXQiOm51bGwsInBvcnRmb2xpb0ZhY3RvciI6IjEiLCJhY2NUeXBlIjoid2ViMyIsImFjY291bnRfb3duZXJfaWQiOiJjNTcwMzA0Yi1hOTkwLTVkMGMtYTViZi1hYTI5ODk0ZjQ4MTciLCJzZXNzaW9uSWQiOiJlYWVlNDYyZC05N2U0LTQzNTAtODg4My00MzAwNjFjMjExMGQiLCJ1c2VyX2xvZ2luX3ZlbmRvcl9pZCI6ImJkNjMwYWMyLWRiZjgtNGZmMS04YTNhLThjOGMxYjY3MzIzNSIsInMiOiJ3ZWIiLCJ1c2VyQWdlbnQiOiJheGlvcy8xLjguMSIsInNpcCI6IjEwNi4yMTMuODEuMTI2Iiwic2NpdHkiOiJQdW5lIiwic2NvdW50cnkiOiJJTiIsInNyZWdpb24iOiJNSCIsImxvZ2luX21lZGl1bSI6IldIQVRTQVBQX09UUCIsInIiOiIxIiwiaWF0IjoxNzQ1MjA4ODU1LCJleHAiOjE3NDc4MDA4NTV9.JSMV_HHRcYFprqsnxEAr-169eMwGpBYFk4G2W1Lo6WE"
                         },
-                        "user_id": {
+                        "device_token": {
                           "type": "string",
-                          "example": "8afacbe2-dacc-4d35-a49e-259145b4ef90"
+                          "example": "e86ef82340f5f8e666291e98010bd450e6b183d2a88be7b588cd5ef9d5327ea5"
                         }
                       }
                     }
@@ -764,12 +681,43 @@
               }
             }
           },
-          "400": {
-            "description": "Invalid OTP or expired session",
+          "422": {
+            "description": "Signature Expired",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/responses/BadRequest"
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 422
+                        },
+                        "errorCode": {
+                          "type": "string",
+                          "example": "422"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Something went wrong. Please try again"
+                        },
+                        "trace_id": {
+                          "type": "string",
+                          "example": "2a870ab615dab5fa1c58b26b46e864b3"
+                        },
+                        "details": {
+                          "type": "string",
+                          "example": "signature expired"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
