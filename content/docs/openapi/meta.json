@@ -10,6 +10,7 @@
         "getting-started",
         "---Authentication---",
         "./authenticate/okto-auth-session",
+        "./authenticate/auth-methods",
         "./authenticate/google-oauth",
         "./authenticate/login-logout",
         "./authenticate/auth-whatsapp",

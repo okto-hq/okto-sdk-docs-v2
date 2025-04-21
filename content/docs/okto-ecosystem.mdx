@@ -1,20 +1,22 @@
 ---
-title: Okto Ecosystem
-description: Welcome to the Okto Ecosystem!
+title: Overview
+description: "Bridge the gap between Web2 and Web3 with seamless multi-chain experiences with Okto. Okto's suit of products includes the Okto Wallet for seamless DeFi trading, Okto SDK for building chain abstracted dApps, and Trade Service for unified liquidity access."
 full: false
 ---
 
+![Okto](/images/index-image.png)
+
 ## What is Okto?
 
-Okto is a comprehensive orchestration platform designed to simplify the complex world of blockchain technology. Our goal is to make Web3 more accessible by addressing common challenges such as:
+Okto is a comprehensive end-to-end chain abstraction platform designed to simplify the complex world of blockchain technology. Our mission is "Bringing the world on chain" by making Web3 more accessible to everyone – not just developers and crypto enthusiasts, but anyone who wants to participate in the digital future.
+
+Okto addresses common challenges such as:
 - **Chain Abstraction** (accessing multiple blockchains seamlessly),
 - **Account Management** (secure self-custody without complex private key handling),
 - **Transaction Handling** (orchestration and automation of multi-step, cross-chain tasks),
 - **Fee Management** (abstracting away different gas tokens and payment flows).
 
-Our goal is to help both developers and end-users navigate Web3 effortlessly, enabling a new era of decentralized applications with **Web2-like** simplicity.
-
-![Okto](/images/index-image.png)
+Just as web browsers made the internet accessible without understanding complex HTTP protocols, Okto aims to enable users to interact with blockchain through intuitive interfaces where the underlying complexity happens invisibly.
 
 ## Background & Motivation
 
@@ -29,18 +31,20 @@ Okto was created to bridge these gaps by combining robust crypto primitives with
 
 ## Okto's Suite of Products
 
-The Okto Ecosystem is built on a modular architecture that includes both user-facing applications and underlying infrastructural components. Each product plays a specific role in ensuring secure, efficient, and scalable blockchain operations.
-
 ### 1. Okto Wallet
 
-**Okto Wallet** is a fully featured DeFi application available on the Play Store and App Store. It provides:
-- **Effortless Trading**: Make trades easily for maximum returns.
+**Okto Wallet** is the flagship fully featured DeFi application built on Okto. Available on the Play Store and App Store, it highlights the power of end-to-end chain abstraction with features that would be nearly impossible to implement without Okto's infrastructure:
+
+- **1-Click Cross-Chain Swaps**: Seamlessly trade assets across EVM chains, Solana, Aptos, and more.
+- **Gasless Transactions**: No need to hold native tokens for gas fees on any chain. Pay gas fees with any stable token you own.
+- **DEX Futures with 50X leverage**: Trade derivatives across 100+ token pairs powered by Hyperliquid.
+- **Unified Trading Interface**: Trade across spot markets and derivatives from a single dashboard.
 - **Airdrop Opportunities**: Stay updated on potential airdrops.
 - **Multi-Chain Support**: Manage assets across 30+ chains, including EVM, Solana, Aptos, and Cosmos.
-- Gain **Passive Income** and access **DeFi opportunities** with ease.
-- Enjoy **regulated on/off ramps** and pay **gas fees** with any stable token you own.
+- **Passive Income**: Access DeFi opportunities with ease.
+- **Regulated On/Off Ramps**.
 
-With over 1.5 million users and growing transaction volumes, Okto Wallet is quickly becoming a favorite in the crypto community. Learn more about Okto Wallet [here](https://www.okto.tech/).
+The Okto Wallet doesn't just simplify basic blockchain interactions - it delivers professional-grade trading features with the ease of use that both beginners and experts can appreciate. [Learn more](https://www.okto.tech/).
 
 ### 2. Okto SDK
 
@@ -51,44 +55,27 @@ Okto Wallet and Okto SDK are independent offerings:
 - **Okto SDK**: A developer tool to help build for Web3 while abstracting out the complexities.
 </Callout>
 
-Okto SDK is our solution for developers looking to integrate Web3 features into their applications quickly and easily. Here's what Okto SDK offers:
-- **Interoperable Embedded Wallets** for developers to onboard users to Web3 with a familiar Web2-like experience.
+The Okto SDK allows developers to leverage Okto's chain abstraction technology in their own applications. Available for React, React Native, Flutter, Unity, and TypeScript, it offers:
+
+- **Interoperable Embedded Wallets**: Onboard users to Web3 with a familiar Web2-like experience.
 - **Easy Integration**: Embed Okto SDK in any Web2 applications and convert it to Web3 in just a few steps.
 - **Simplified Development**: Abstract away the complexities of Web3, allowing even Web2 developers to build blockchain-enabled apps.
 - **Multi-Platform Support**: Available for various frontend frameworks and blockchain ecosystems.
+- **Multi-chain Development Simplified**: Implement features across multiple blockchains with a single interface—eliminating the need to learn chain-specific code for each ecosystem.
+- **Intent-based Transactions**: Implement complex multi-step operations with simple function calls
 
-Okto SDK is the bridge that connects traditional web applications with the exciting world of Web3, without requiring extensive blockchain knowledge. Learn more about Okto SDK and how to use it [here](https://www.okto.tech/SDK-sdk).
+Dozens of innovative projects across gaming, DeFi, and social applications are already leveraging the Okto SDK, creating applications that combine Web2-like simplicity with Web3 power. [Learn more](/docs/okto-sdk/overview)
 
-### 3. Okto Chain
-**Okto Chain** is a specialized, **ZK-based Layer 2** built on Polygon CDK that serves as the immutable coordination platform for the entire ecosystem. It provides:
-- **Immutable Recordkeeping:** Securely storing user intents, payload commitments, and execution logs in a tamper-proof manner.
-- **Policy Enforcement:** Validating and enforcing rules for interactions between components.
-- **Event-Driven Orchestration:** Emitting on-chain events (e.g., job creation, assignment, and termination) for automatic coordination with other Okto services.
+### 3. Trade Service (Coming Soon)
 
-Think of Okto Chain as the **“command center”** for verifying, storing, and finalizing all cross-chain operations in a trust-minimized environment.
+Built on Okto's Unified Liquidity Layer (ULL), the Trade Service enables seamless cross-chain token swaps through a powerful API suite:
 
-### 4. Decentralized Wallet Network (DWN)
-The **Decentralized Wallet Network (DWN)** is the backbone for wallet management in the Okto ecosystem. Key features include:
-- **Unified Wallet Experience:** Provision and manage cross-chain smart wallets that eliminate the need for multiple, separate wallets.
-- **MPC-Based Security:** Uses Multi-Party Computation (MPC) and Trusted Execution Environments (TEEs) to securely sign transactions without exposing private keys.
-- **Seamless Integration:** Works behind the scenes to enable user authentication and transaction signing.
+**Key Features:**
 
-With DWN, users don’t have to memorize seed phrases or manage multiple wallets; everything is handled through secure, decentralized signers.
+* **Any-to-Any Swaps**: Swap any token for any other token across multiple chains
+* **Optimal Routing**: Finds the best swap route for price and execution efficiency
+* **Bridgeless Design**: No direct bridge interaction required from users
+* **Fast Settlements**: Rapid cross-chain liquidity provisioning
+* **Simple Integration**: Easy-to-implement APIs for developers
 
-### 5. Decentralized Transaction Network (DTN)
-The **Decentralized Transaction Network (DTN)** is the orchestration engine that processes and executes complex cross-chain transactions. Its capabilities include:
-- **Intent Decomposition:** Breaking down high-level user intents into atomic sub-transactions that can be executed independently across different chains.
-- **Secure Coordination:** Interacting with DWN for MPC-based transaction signing and with ULL for optimal liquidity routing.
-- **Asynchronous Management:** Managing parallel execution with defined ordering through on-chain events, ensuring reliable “soft finality” for each sub-transaction.
-- **Error Handling & Recovery:** Automatic monitoring and retry mechanisms to handle network volatility and transaction failures.
-
-By handling asynchronous multi-chain complexity, the DTN reduces the risk of user errors and failed transactions.
-
-### 6. Unified Liquidity Layer (ULL)
-The **Unified Liquidity Layer (ULL)** aggregates cross-chain liquidity, acting as an “aggregator of aggregators” to optimize asset transfers. Its primary functions are:
-- **Liquidity Aggregation:** Consolidating liquidity from various sources such as native bridges, DEX protocols, and third-party providers.
-- **Optimal Routing:** Select the best available route based on real-time data regarding fees, speed, and available liquidity.
-- **Standardized Execution:** Implementing cross-chain trade execution via smart contracts compliant with standards like ERC-7683.
-- **Settlement Coordination:** Working with solvers and settlers to ensure that cross-chain operations are executed securely and efficiently.
-
-This ensures users get optimal swap and bridging routes without manually navigating multiple portals.
+The Trade Service makes possible seamless cross-chain swaps, optimized routing, and batch settlements for improved efficiency and lower overall costs. For users, this means saying goodbye to manual bridging, liquidity hunting across DEXs, and maintaining separate balances for gas on different chains.
