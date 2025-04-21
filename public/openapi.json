@@ -488,7 +488,7 @@
         },
         "responses": {
           "200": {
-            "description": "OTP resent successfully",
+            "description": "OTP sent successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -617,7 +617,7 @@
                       },
                       "client_swa": {
                         "type": "string",
-                        "description": "User's wallet address",
+                        "description": "Client SWA",
                         "example": "0xC06Cb1847f8cd185EB61980ec78311A1935c3Fd5"
                       },
                       "timestamp": {

@@ -9,6 +9,7 @@ import { ArrowRight } from 'lucide-react'
 import GoogleIdTokenGenerator from '@/app/tools/components/GoogleIdTokenGenerator'
 import OktoAuthTokenGenerator from '@/app/tools/components/OktoAuthTokenGenerator'
 import AbiEncoder from '@/app/tools/components/AbiEncoder'
+import GenerateClientSign from "./components/GenerateClientSign";
 
 interface Tool {
   title: string
@@ -48,7 +49,12 @@ const tools: Tool[] = [
   //   description: 'Detailed documentation for advanced usage.',
   //   link: '/tools/technical-reference',
   // },
-]
+  {
+    title: "Client Signature",
+    description: "Generate a client signature for Okto SDK.",
+    component: <GenerateClientSign />,
+  },
+];
 
 export default function ToolsPage() {
   const [openDialog, setOpenDialog] = useState<string | null>(null)
@@ -65,7 +71,7 @@ export default function ToolsPage() {
           Explore our collection of powerful tools designed to enhance your experience with our SDK.
           These tools will help you develop, test, and optimize your integration efficiently.
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {tools.map((tool, index) =>
             tool.component ? (
               <Dialog
