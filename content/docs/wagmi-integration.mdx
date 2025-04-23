@@ -229,17 +229,15 @@ Update your app's root component to include the necessary providers:
     );
   }
   ```
+
+    <Callout title="Note">
+    For Vite project, add this script tag to your `index.html` file in the project root directory.
+    ```html
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    ```
+    </Callout>
   </Tab>
 </Tabs>
-
-<Callout title="Note">
-Make sure to add the Google Sign-In script to your HTML head for authentication:
-```html
-<script src="https://accounts.google.com/gsi/client" async defer />
-```
-
-For Vite project, add this script tag to your `index.html` file in the project root directory.
-</Callout>
 
 </Step>
 
