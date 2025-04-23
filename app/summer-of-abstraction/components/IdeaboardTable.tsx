@@ -80,7 +80,6 @@ export function IdeaboardTable({
             <th className="px-4 py-3 text-left">Title</th>
             <th className="px-4 py-3 text-left">Field</th>
             <th className="px-4 py-3 text-left">Skills Required</th>
-            <th className="px-4 py-3 text-left">Reward</th>
             {!hideDeadlineAndTime && (
               <th className="px-4 py-3 text-left">Deadline</th>
             )}
@@ -128,7 +127,6 @@ export function IdeaboardTable({
               </td>
               
               <td className="px-4 py-3 dark:text-gray-300">{idea.skillsRequired.join(", ")}</td>
-              <td className="px-4 py-3 font-medium text-indigo-600 dark:text-indigo-400">{idea.reward} $OKTO</td>
               {!hideDeadlineAndTime && (
                 <td className="px-4 py-3 dark:text-gray-300">{formatDate(idea.deadline)}</td>
               )}

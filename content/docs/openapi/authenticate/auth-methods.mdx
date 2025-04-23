@@ -1,0 +1,81 @@
+---
+title: Authentication Methods
+description: Learn about the various ways of authenticating a user on Okto via API
+full: false
+---
+
+import FullscreenImage from 'app/components/mdx/FullscreenImage';
+
+## Authentication Methods in Okto via API
+
+Authentication in Okto serves as the foundation for secure user interactions within your application. Okto provides multiple authentication methods to suit different use cases and user preferences, each with its own strengths and implementation approach.
+
+| Method | Description | Best For | Implementation Guide |
+|--------|-------------|----------|----------------------|
+| **Google OAuth** | Uses Google's secure identity platform | Web and mobile applications | [API Reference](./google-oauth/loginUsingOktoAuth) |
+| **WhatsApp OTP** | Verifies users through WhatsApp messages | Mobile-centric applications | [API Reference](../explorer/whatsapp-send-otp) |
+| **Email OTP** | Authenticates users via email verification | Universal applications (Alternative authentication option) | [API Reference](../explorer/email-send-otp) |
+
+---
+
+## Authentication Flow Architecture
+
+All authentication methods in Okto follow a similar high-level architecture:
+
+1. **User Identity Verification** - Validate user identity through Google, WhatsApp, or Email
+2. **Session Establishment** - Generate secure session keys for ongoing interactions
+3. **User Wallet Creation** - Automatically create blockchain wallets for new users
+4. **Authorization Token Generation** - Create an Okto Auth Token for API requests
+
+This architecture ensures secure, seamless authentication while maintaining the self-custodial nature of user wallets.
+
+---
+
+## Google OAuth Authentication
+
+Google OAuth 2.0 provides a streamlined authentication experience by leveraging Google's trusted identity platform.
+
+### How Google Authentication Works
+
+1. **Client Invokes Google Login** - Client application initiates the Google OAuth flow
+2. **Google Returns ID Token** - After successful login, Google generates and returns an ID token
+3. **Client Application Submits ID Token to Okto** - The ID token is sent to Okto's authentication endpoint
+4. **Okto Verifies Token** - Okto validates the token with Google and identifies the user
+5. **Session Creation** - A secure session is established between the user and the client application
+6. **Auth Token Generated** - Okto returns an authentication token for future API requests
+
+---
+
+## WhatsApp OTP Authentication
+
+WhatsApp OTP authentication provides a secure verification process through WhatsApp messages, which is particularly useful for mobile-centric applications.
+
+### How WhatsApp Authentication Works
+
+1. **Initiate WhatsApp Authentication** - Client application requests WhatsApp authentication for a user's phone number
+2. **OTP Generation and Delivery** - Okto generates a one-time password and sends it via WhatsApp
+3. **User Verification** - The user receives and enters the OTP in the client application
+4. **OTP Validation** - Client application submits the OTP to Okto for verification
+5. **Session Establishment** - Upon successful verification, a secure session is created
+6. **Auth Token Generated** - Okto returns an authentication token for future API requests
+
+---
+
+## Email OTP Authentication
+
+Email OTP authentication provides a secure verification process through email, offering broad compatibility across platforms.
+
+### How Email Authentication Works
+
+1. **Initiate Email Authentication** - Client application request email authentication for a user's email address
+2. **OTP Generation and Delivery** - Okto generates a one-time password and send it via email to the user
+3. **User Verification** - The user receives and enters the OTP in the client application
+4. **OTP Validation** - Client application submits the OTP to Okto for verification
+5. **Session Establishment** - Upon successful verification, a secure session is created
+6. **Auth Token Generated** - Okto returns an authentication token for future API requests
+
+---
+
+By implementing one or more of these authentication methods, you can provide your users with a secure, seamless experience while leveraging Okto's powerful blockchain capabilities.
+
+

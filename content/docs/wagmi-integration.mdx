@@ -1,11 +1,13 @@
 ---
 title: 'Integrating with wagmi'
+description: 'A step-by-step guide to integrating the Okto-Wagmi adapter into Wagmi-based dApps, enabling smooth wallet connectivity and streamlined user onboarding.'
 full: false
 ---
 
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
 import ExternalLink from 'app/components/mdx/ExternalLink';
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 [Wagmi](https://wagmi.sh/) is a collection of React hooks for Ethereum, making it easy to interact with wallets and smart contracts. Okto provides seamless integration with Wagmi through its adapter package, allowing you to add social login options via Okto to your existing Wagmi application.
 
@@ -28,6 +30,30 @@ Install the Okto wagmi adapter [package](https://www.npmjs.com/package/@okto_web
 ```bash
 npm i @okto_web3/wagmi-adapter wagmi @tanstack/react-query
 ```
+
+<Callout type="tip" title="Essential Vite Configuration for Wagmi + Okto">
+  When integrating Okto with Wagmi in a Vite project, you'll need to add Node.js polyfills to resolve browser buffer issues. Update your `vite.config.ts` file with this configuration:
+
+  ```typescript title="vite.config.ts"
+  import { defineConfig } from 'vite'
+  import react from '@vitejs/plugin-react'
+  import { nodePolyfills } from 'vite-plugin-node-polyfills'
+
+  // https://vite.dev/config/
+  export default defineConfig({
+    plugins: [react(), nodePolyfills()],
+    server: {
+      port: 3000, // will always start the service on port 3000
+    }
+  })
+  ```
+
+  Don't forget to install the required package:
+  ```bash
+  npm i -D vite-plugin-node-polyfills
+  ```
+
+  </Callout>
 
 </Step>
 
@@ -60,38 +86,77 @@ npm i @okto_web3/wagmi-adapter wagmi @tanstack/react-query
 
 Create a configuration file to set up wagmi with the Okto connector:
 
-```typescript title="wagmi.config.ts"
-import { okto } from '@okto_web3/wagmi-adapter';
-import { cookieStorage, createConfig, createStorage, http } from 'wagmi';
-import { mainnet, optimism, polygon } from 'wagmi/chains';
+<Tabs items={['NextJS', 'React']}>
+  <Tab value="NextJS">
+    ```typescript title="wagmi.config.ts"
+    import { okto } from '@okto_web3/wagmi-adapter';
+    import { cookieStorage, createConfig, createStorage, http } from 'wagmi';
+    import { mainnet, optimism, polygon } from 'wagmi/chains';
 
-export function getConfig() {
-  return createConfig({
-    chains: [polygon],
-    connectors: [
-      okto({
-        environment: 'sandbox',
-        clientPrivateKey: '0xprivatekey',
-        clientSWA: '0xswa',
-        googleClientId: 'xxx',
-      }),
-    ],
-    storage: createStorage({
-      storage: cookieStorage,
-    }),
-    ssr: true,
-    transports: {
-      [polygon.id]: http(),
-    },
-  });
-}
+    export function getConfig() {
+      return createConfig({
+        chains: [polygon],
+        connectors: [
+          okto({
+            environment: 'sandbox',
+            clientPrivateKey: '0xprivatekey',
+            clientSWA: '0xswa',
+            googleClientId: 'xxx',
+          }),
+        ],
+        storage: createStorage({
+          storage: cookieStorage,
+        }),
+        ssr: true,
+        transports: {
+          [polygon.id]: http(),
+        },
+      });
+    }
 
-declare module 'wagmi' {
-  interface Register {
-    config: ReturnType<typeof getConfig>;
-  }
-}
-```
+    declare module 'wagmi' {
+      interface Register {
+        config: ReturnType<typeof getConfig>;
+      }
+    }
+    ```
+  </Tab>
+  <Tab value="React">
+    ```typescript title="wagmi.config.ts"
+    import { okto } from '@okto_web3/wagmi-adapter';
+    import { cookieStorage, createConfig, createStorage, http } from 'wagmi';
+    import { mainnet, optimism, polygon } from 'wagmi/chains';
+
+    export function getConfig() {
+      return createConfig({
+        chains: [polygon],
+        connectors: [
+          okto({
+            environment: 'sandbox',
+            clientPrivateKey: '0xprivatekey',
+            clientSWA: '0xswa',
+            googleClientId: 'xxx',
+          }),
+        ],
+        storage: createStorage({
+          storage: cookieStorage,
+        }),
+        ssr: true,
+        transports: {
+          [polygon.id]: http(),
+        },
+      });
+    }
+
+    declare module 'wagmi' {
+      interface Register {
+        config: ReturnType<typeof getConfig>;
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
 
 #### Okto Configuration Parameters
 
@@ -109,45 +174,71 @@ declare module 'wagmi' {
 
 Update your app's root component to include the necessary providers:
 
-```tsx title="providers.tsx"
-import { headers } from 'next/headers';
-import { useState } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import type { ReactNode } from 'react';
-import { WagmiProvider, cookieToInitialState } from 'wagmi';
-import { getConfig } from '../wagmi';
+<Tabs items={['NextJS', 'React']}>
+  <Tab value="NextJS">
+    ```tsx title="providers.tsx"
+    import { headers } from 'next/headers';
+    import { useState } from 'react';
+    import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+    import type { ReactNode } from 'react';
+    import { WagmiProvider, cookieToInitialState } from 'wagmi';
+    import { getConfig } from '../wagmi';
 
-export default async function RootLayout(props: { children: ReactNode }) {
-  const initialState = cookieToInitialState(
-    getConfig(),
-    (await headers()).get('cookie'),
-  );
+    export default async function RootLayout(props: { children: ReactNode }) {
+      const initialState = cookieToInitialState(
+        getConfig(),
+        (await headers()).get('cookie'),
+      );
 
-  const [config] = useState(() => getConfig());
-  const [queryClient] = useState(() => new QueryClient());
+      const [config] = useState(() => getConfig());
+      const [queryClient] = useState(() => new QueryClient());
 
-  return (
-    <html lang="en">
-      <head>
-        <script src="https://accounts.google.com/gsi/client" async defer />
-      </head>
-      <body>
-        <WagmiProvider config={config} initialState={initialState}>
-          <QueryClientProvider client={queryClient}>
-            {props.children}
-          </QueryClientProvider>
-        </WagmiProvider>
-      </body>
-    </html>
-  );
-}
-```
+      return (
+        <html lang="en">
+          <head>
+            <script src="https://accounts.google.com/gsi/client" async defer />
+          </head>
+          <body>
+            <WagmiProvider config={config} initialState={initialState}>
+              <QueryClientProvider client={queryClient}>
+                {props.children}
+              </QueryClientProvider>
+            </WagmiProvider>
+          </body>
+        </html>
+      );
+    }
+    ```
+  </Tab>
+  <Tab value="React">
+  ```tsx title="providers.tsx"
+  import { ReactNode } from 'react';
+  import { WagmiProvider } from 'wagmi';
+  import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+  import { getConfig } from './wagmi.config';
+
+  const queryClient = new QueryClient();
+
+  export function Web3Provider({ children }: { children: ReactNode }) {
+    return (
+      <WagmiProvider config={getConfig()}>
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      </WagmiProvider>
+    );
+  }
+  ```
+  </Tab>
+</Tabs>
 
 <Callout title="Note">
 Make sure to add the Google Sign-In script to your HTML head for authentication:
 ```html
 <script src="https://accounts.google.com/gsi/client" async defer />
 ```
+
+For Vite project, add this script tag to your `index.html` file in the project root directory.
 </Callout>
 
 </Step>

@@ -27,18 +27,18 @@ export function ProposalGuidelinesDialog({ children, linkClassName }: ProposalGu
         <div className="prose prose-indigo dark:prose-invert max-w-none">
           <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mt-4">Vision</h2>
           <p>
-            The <strong>Okto Summer of Abstraction</strong> program aims to <strong>empower builders, developers, content creators, and community leaders</strong> in Web3 by providing funding, mentorship, and ecosystem support. Our vision is to <strong>advance chain abstraction</strong> and make Web3 <strong>more accessible, seamless, and developer-friendly</strong>. We seek to fund projects that drive innovation, foster adoption, and create long-term impact within the Web3 ecosystem.
+            The <strong>Okto Summer of Abstraction</strong> program   <strong>empowers builders, developers, content creators, and community leaders</strong> in Web3 to explore, innovate and contribute to the growth of the Okto ecosystem through funding, mentorship, and collaborative support. Our vision is to <strong>advance chain abstraction</strong> and make Web3 <strong>more accessible, seamless, and developer-friendly</strong>. We seek to fund projects that drive innovation, foster adoption, and create long-term impact within the Web3 ecosystem.
           </p>
 
           <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mt-6">Project Focus Areas</h2>
           <p>We encourage proposals in the following areas:</p>
           <ol className="list-decimal pl-6 space-y-2">
-            <li><strong>Building dApps with Okto SDK</strong> (e.g., cross-chain wallets, decentralized finance solutions, multi-chain gaming, social applications)</li>
+            <li><strong>Building dApps with Okto SDK</strong> (e.g., cross-chain wallets, decentralized finance solutions, multi-chain gaming, social applications, novel use-cases like decentralized identity, AI-powered blockchain solutions, etc.)</li>
             <li><strong>Developer Tooling & Infrastructure</strong> (e.g., cross-chain indexers, multi-chain bridges, account abstraction tools)</li>
-            <li><strong>DeFi & On-chain Finance</strong> (e.g., cross-chain lending, multi-chain yield aggregators, decentralized exchanges)</li>
-            <li><strong>Content & Education</strong> (e.g., tutorials, YouTube series, technical blogs, university blockchain courses)</li>
-            <li><strong>Community Growth & IRL Events</strong> (e.g., hackathons, developer bootcamps, workshops, AMAs)</li>
-            <li><strong>Novel Use Cases in Chain Abstraction</strong> (e.g., decentralized identity, AI-powered blockchain solutions, social reputation systems)</li>
+            <li><strong>Building tools for the Okto ecosystem</strong> (e.g., gamified contribution experiences, reputation systems, on-chain governance tools)</li>
+            <li><strong>Technical Content & Education</strong> (e.g., tutorials, YouTube series, technical blogs, university blockchain courses)</li>
+            <li><strong>Non-technical Content & Education</strong> (e.g., memes, graphic designing, instagram reels, etc.)</li>
+            <li><strong>Community Growth</strong> (e.g., IRL events like hackathons, conferences etc. or virtual events like hackathons, podcasts, X spaces, etc.)</li>
           </ol>
           <p className="italic mt-2">
             … and much more, feel free to submit any idea you think would be a great fit for the entire ecosystem.
@@ -51,7 +51,7 @@ export function ProposalGuidelinesDialog({ children, linkClassName }: ProposalGu
 
           <h3 className="text-lg font-medium text-indigo-600 dark:text-indigo-400 mt-4">1. Feasibility & Execution</h3>
           <ul className="list-disc pl-6 space-y-1">
-            <li>Is the project <strong>practical and achievable</strong> within the 16-week timeline?</li>
+            <li>Is the project <strong>practical and achievable</strong>?</li>
             <li>Does the team have the <strong>necessary skills and resources</strong> to execute the project?</li>
             <li>Does the proposal have a <strong>clear roadmap with defined milestones</strong>?</li>
           </ul>
@@ -59,7 +59,13 @@ export function ProposalGuidelinesDialog({ children, linkClassName }: ProposalGu
           <h3 className="text-lg font-medium text-indigo-600 dark:text-indigo-400 mt-4">2. Innovation & Uniqueness</h3>
           <ul className="list-disc pl-6 space-y-1">
             <li>Is the project <strong>introducing a novel solution</strong> or significantly improving an existing one?</li>
-            <li>Does it leverage <strong>Okto SDK and chain abstraction</strong> effectively?</li>
+            <li>Does it showcase <strong>Okto SDK and chain abstraction</strong> effectively?</li>
+            <li>For non-technical projects:</li>
+              <ol type="i" className="pl-6 space-y-1">
+                <li>Does it <strong>promote Okto SDK & chain abstraction</strong> effectively?</li>
+                <li>Does it <strong>invite more contributions</strong> to the Okto ecosystem?</li>
+              </ol>
+            <li>How does it promote <strong>ecosystem growth for Okto</strong>?</li>
             <li>How does it differentiate from similar projects in Web3?</li>
           </ul>
 
@@ -84,7 +90,7 @@ export function ProposalGuidelinesDialog({ children, linkClassName }: ProposalGu
             <li>Does the proposal clearly state how the funds will be <strong>used efficiently</strong>?</li>
           </ul>
 
-          <hr className="my-6 border-gray-300 dark:border-gray-700" />
+          {/* <hr className="my-6 border-gray-300 dark:border-gray-700" />
 
           <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400">Project Proposal Evaluation Rubric</h2>
           <p>Proposals will be scored on a <strong>scale of 0-5</strong> for each criterion:</p>
@@ -144,7 +150,7 @@ export function ProposalGuidelinesDialog({ children, linkClassName }: ProposalGu
             <li>Proposals with a <strong>high total score</strong> (above 18/25) are <strong>strong candidates for funding</strong>.</li>
             <li><strong>Borderline proposals</strong> (12-18/25) may receive conditional approval, pending improvements.</li>
             <li>Proposals scoring <strong>below 12/25</strong> are unlikely to be accepted.</li>
-          </ul>
+          </ul> */}
 
           <hr className="my-6 border-gray-300 dark:border-gray-700" />
 
@@ -152,8 +158,8 @@ export function ProposalGuidelinesDialog({ children, linkClassName }: ProposalGu
           <ul className="list-disc pl-6 space-y-1">
             <li>All proposals will be <strong>reviewed by Okto mentors</strong>.</li>
             <li>Selected applicants may be invited for a <strong>follow-up discussion</strong>.</li>
-            <li>Okto Points will be <strong>awarded upon verified completion of each milestone</strong>.</li>
-            <li>Initial project costs must be self-funded until the first milestone verification.</li>
+            <li>Each milestone should have a justified dollar amount which will be <strong>awarded upon verified completion of each milestone</strong> in the form of <strong>$OKTO</strong> post TGE</li>
+            {/* <li>Initial project costs must be self-funded until the first milestone verification.</li> */}
             <li>All earned Okto Points will be <strong>converted to $OKTO tokens </strong>upon mainnet launch and TGE.</li>
           </ul>
         </div>
