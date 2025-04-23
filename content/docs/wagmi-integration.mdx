@@ -31,6 +31,30 @@ Install the Okto wagmi adapter [package](https://www.npmjs.com/package/@okto_web
 npm i @okto_web3/wagmi-adapter wagmi @tanstack/react-query
 ```
 
+<Callout type="tip" title="Essential Vite Configuration for Wagmi + Okto">
+  When integrating Okto with Wagmi in a Vite project, you'll need to add Node.js polyfills to resolve browser buffer issues. Update your `vite.config.ts` file with this configuration::
+
+  ```typescript title="vite.config.ts"
+  import { defineConfig } from 'vite'
+  import react from '@vitejs/plugin-react'
+  import { nodePolyfills } from 'vite-plugin-node-polyfills'
+
+  // https://vite.dev/config/
+  export default defineConfig({
+    plugins: [react(), nodePolyfills()],
+    server: {
+      port: 3000, // will always start the service on port 3000
+    }
+  })
+  ```
+
+  Don't forget to install the required package:
+  ```bash
+  npm i -D vite-plugin-node-polyfills
+  ```
+
+  </Callout>
+
 </Step>
 
 <Step>
@@ -187,7 +211,7 @@ Update your app's root component to include the necessary providers:
     ```
   </Tab>
   <Tab value="React">
-  ```tsx
+  ```tsx title="providers.tsx"
   import { ReactNode } from 'react';
   import { WagmiProvider } from 'wagmi';
   import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -213,6 +237,8 @@ Make sure to add the Google Sign-In script to your HTML head for authentication:
 ```html
 <script src="https://accounts.google.com/gsi/client" async defer />
 ```
+
+For Vite project, add this script tag to your `index.html` file in the project root directory.
 </Callout>
 
 </Step>
