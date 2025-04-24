@@ -12,7 +12,7 @@ import { Poppins } from "next/font/google";
 import { usePathname } from "next/navigation";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { ChevronDown } from 'lucide-react';
-import { FaReact } from "react-icons/fa6";
+import { FaRainbow, FaReact } from "react-icons/fa6";
 import {
   TbBrandReactNative,
   TbApi,
@@ -93,10 +93,16 @@ export default function NavbarComponent() {
       icons: <SiTypescript />,
     },
     {
-      href: "/docs/wagmi-integration",
+      href: "/docs/wagmi/setup",
       label: "Wagmi",
       subpath: "/",
       icons: <SiWagmi />,
+    },
+    {
+      href: "/docs/rainbowkit/setup",
+      label: "RainbowKit",
+      subpath: "/",
+      icons: <FaRainbow />,
     },
     {
       href: "/docs/okto-eliza-plugin",
@@ -118,7 +124,8 @@ export default function NavbarComponent() {
     if (pathname.startsWith("/docs/typescript-sdk")) return "Typescript";
     if (pathname.startsWith("/docs/react-native-sdk")) return "React Native";
     if (pathname.startsWith("/docs/unity-sdk")) return "Unity";
-    if (pathname.startsWith("/docs/wagmi-integration")) return "Wagmi";
+    if (pathname.startsWith("/docs/wagmi/setup")) return "Wagmi";
+    if (pathname.startsWith("/docs/rainbowkit/setup")) return "RainbowKit";
     if (pathname.startsWith("/docs/okto-eliza-plugin")) return "Eliza Plugin";
     if (pathname.startsWith("/docs/openapi")) return "API References";
     return "SDKs";

@@ -1,6 +1,6 @@
-import { FaReact, FaGithub, FaCode } from "react-icons/fa6";
+import { FaReact, FaGithub, FaCode, FaRainbow } from "react-icons/fa6";
 import { TbBrandNextjs, TbBrandReactNative } from "react-icons/tb";
-import { SiTypescript, SiUnity } from "react-icons/si";
+import { Si1And1, SiTypescript, SiUnity, SiWagmi } from "react-icons/si";
 import Link from "next/link";
 
 type SDKType =
@@ -9,7 +9,9 @@ type SDKType =
   | "react-native"
   | "typescript"
   | "eliza-okto-plugin"
-  | "unity";
+  | "unity"
+  | "wagmi-okto"
+  | "rainbow-okto";
 
 interface TemplateRepoBannerProps {
   sdk: SDKType;
@@ -68,6 +70,20 @@ const SDK_CONFIG = {
     ),
     defaultRepo: "https://github.com/okto-hq/okto-sdkv2-unity-template-app",
     defaultTemplateUrl: "/docs/unity-sdk/templateRepo",
+  },
+  "wagmi-okto": {
+    icon: (
+      <SiWagmi size={24} className="text-black dark:text-white flex-shrink-0" />
+    ),
+    defaultRepo: "https://github.com/okto-hq/okto-sdkv2-external-adapter-template/tree/bmac-react-wagmi-okto",
+    defaultTemplateUrl: "/docs/wagmi/templateRepo",
+  },
+  "rainbow-okto": {
+    icon: (
+      <FaRainbow size={24} className="text-black dark:text-white flex-shrink-0" />
+    ),
+    defaultRepo: "https://github.com/okto-hq/okto-sdkv2-external-adapter-template/tree/bmac-react-rainbowkit-okto",
+    defaultTemplateUrl: "/docs/rainbowkit/templateRepo",
   },
 };
 
