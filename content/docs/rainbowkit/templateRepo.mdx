@@ -1,5 +1,90 @@
 ---
 title: Template Repository
-description: "Explore the template repository for building with Okto."
+description: Explore the template repository for integrating Rainbowkit with Okto.
 full: false
 ---
+
+A comprehensive walkthrough of the Okto Template App designed for seamless RainbowKit integration. This template demonstrates core Okto functionality—including authentication, wallet management, and blockchain interactions—so you can quickly get started building with Okto and Rainbowkit.
+
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+
+<div className="bg-white dark:bg-[#1a1a1e] rounded-lg shadow-sm border border-gray-200 dark:border-[#2b2b2c] p-4 w-full my-4">
+  <div className="flex items-center justify-between">
+    <span className="text-base font-semibold text-gray-900 dark:text-gray-100">RainbowKit Okto Template Repository</span>
+    <div className="flex gap-3">
+    {/* 
+      <a
+        href="https://react-template-oktov2.vercel.app/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="no-underline px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-colors min-w-[120px] text-center"
+      >
+        Live Demo
+      </a>
+    */}
+      <a
+        href="https://github.com/okto-hq/okto-sdkv2-external-adapter-template/tree/bmac-react-rainbowkit-okto"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="no-underline px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors min-w-[120px] text-center"
+      >
+        View on GitHub
+      </a>
+    </div>
+  </div>
+</div>
+
+## Getting Started
+
+For detailed installation instructions, follow the steps given below:
+
+<Tabs items={["React"]}>
+  <Tab value="React" label="React">
+  
+  1. Clone the repository:
+  ```bash
+    git clone https://github.com/okto-hq/okto-sdkv2-external-adapter-template.git
+  ```
+
+  2. Navigate into the project directory:
+  ```bash
+    cd okto-sdkv2-external-adapter-template
+  ```
+
+  3. Switch to the `bmac-react-rainbowkit-okto` branch and install dependencies:
+  ```bash
+    git checkout bmac-react-rainbowkit-okto
+    npm install
+  ```
+
+  4. Set up environment variables:
+  ```bash
+    cp .env.sample .env
+  ```
+
+  5. Add your API keys to the `.env` file:
+  ```
+    VITE_OKTO_ENVIRONMENT="sandbox" or "production"
+    VITE_OKTO_CLIENT_PRIVATE_KEY="YOUR_CLIENT_PRIVATE_KEY"
+    VITE_OKTO_CLIENT_SWA="YOUR_CLIENT_SWA"
+    VITE_GOOGLE_CLIENT_ID="YOUR_GOOGLE_CLIENT_ID"
+  ```
+
+  <Callout title="Note">
+    To obtain these credentials:
+
+    - **Client Private Key & SWA**: Get these from the Okto Dashboard. These keys are essential for authenticating your requests with Okto's services.
+
+    - **Google OAuth Credentials**: Required for Google Sign-In functionality
+      1. Set up a project in [Google Cloud Console](https://console.cloud.google.com/)
+      2. Create OAuth 2.0 credentials
+      3. Follow our [Google Console Setup Guide](/docs/react-sdk/authenticate-users/google-oauth/google-console-setup) for detailed instructions
+  </Callout>
+
+  5. Start the development server:
+  ```bash
+    npm run dev
+  ```
+  </Tab>
+</Tabs>
