@@ -1,0 +1,324 @@
+---
+title: "Integrating with Rainbowkit"
+description: "A step-by-step guide to integrating the Okto-Rainbowkit adapter into Rainbowkit-based dApps, enabling smooth wallet connectivity and streamlined user onboarding."
+full: false
+---
+
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import CollapsibleCallout from "app/components/mdx/CollapsibleCallout";
+import ExternalLink from "app/components/mdx/ExternalLink";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import TemplateRepoBanner from 'app/components/mdx/TemplateRepoBanner';
+
+<TemplateRepoBanner sdk="rainbow-okto" />
+
+<Callout>
+Note that this repository includes multiple branches, each corresponding to a different adapter integration. For integrating Okto with RainbowKit, refer to the **bmac-react-rainbowkit-okto** branch.
+</Callout>
+
+[Rainbowkit](https://rainbowkit.com/) is a React library that makes it easy to add wallet connection to your dapp. It's intuitive, responsive and customizable.
+
+<Callout>
+This guide shows how to add Okto wallet support to an existing Rainbowkit application, enabling social login options for your users.
+
+If you're starting from scratch, you have two options:
+
+- Build with an <a href="/docs/okto-sdk/supported-sdk-platforms" target="_blank" rel="noopener noreferrer">Okto SDK</a> directly
+- Follow the <a href="https://rainbowkit.com/docs/installation" target="_blank" rel="noopener noreferrer">Rainbowkit quickstart guide</a> first, then return here to add Okto support
+</Callout>
+
+<Steps>
+
+<Step>
+
+## Installation
+
+Install the Okto wagmi adapter [package](https://www.npmjs.com/package/@okto_web3/wagmi-adapter), Rainbowkit and other dependencies:
+
+```bash
+npm i @okto_web3/wagmi-adapter @rainbow-me/rainbowkit wagmi viem@2.x @tanstack/react-query
+```
+
+<Callout type="tip" title="Essential Vite Configuration for Rainbowkit + Okto">
+  When integrating Okto with Rainbowkit in a Vite project, you'll need to add Node.js polyfills to resolve browser buffer issues. Update your `vite.config.ts` file with this configuration:
+
+```typescript title="vite.config.ts"
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import { nodePolyfills } from "vite-plugin-node-polyfills";
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(), nodePolyfills()],
+  server: {
+    port: 3000, // will always start the service on port 3000
+  },
+});
+```
+
+Don't forget to install the required package:
+
+```bash
+npm i -D vite-plugin-node-polyfills
+```
+
+</Callout>
+
+</Step>
+
+<Step>
+
+### Configure Okto
+
+<CollapsibleCallout type="warning" title="Essential Setup Required">
+  Set up your [Okto Developer Dashboard](https://dashboard.okto.tech) by making sure you have :
+  - Created your [Okto Developer Dashboard](/docs/developer-admin-dashboard/dashboard-account) account
+  - Get your [Okto credits](/docs/developer-admin-dashboard/okto-faucet) from the dashboard
+  - Obtained your [API keys](/docs/developer-admin-dashboard/api-key) from the dashboard
+  - Enabled the specific [Chains and Tokens](/docs/developer-admin-dashboard/wallet-control) you plan to use in your application
+  - Optional: Enabled [Sponsorship](/docs/developer-admin-dashboard/sponsorship) for the desired chains
+
+If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/troubleshooting">troubleshooting form</ExternalLink> and we will contact you.
+
+</CollapsibleCallout>
+
+Before getting started, ensure you have the following:
+
+- **Okto API Keys:** You need your `clientPrivateKey` and `clientSWA`. Obtain these from the [Okto Developer Dashboard](https://dashboard.okto.tech/login).
+- **Okto Account Setup:** Ensure you have sufficient <ExternalLink href="https://dashboard.okto.tech/okto-credits">Okto Credits</ExternalLink>, enable the required <ExternalLink href="https://dashboard.okto.tech/wallet-controls">Chains and Tokens </ExternalLink>, and optionally <ExternalLink href="https://dashboard.okto.tech/paymaster">Activate Sponsorship</ExternalLink>.
+- **Google OAuth Credentials (if using Google authentication):** Create OAuth 2.0 credentials in the <ExternalLink href="/docs/react-sdk/authenticate-users/google-oauth/google-console-setup">Google Cloud Console</ExternalLink> to get your `googleClientId`.
+
+</Step>
+
+<Step>
+
+### Configure Rainbowkit
+
+Create a configuration file to set up rainbowkit with the Okto connector:
+
+<Tabs items={['NextJS', 'React']}>
+  <Tab value="NextJS">
+    ```typescript title="rainbowkit.config.ts"
+    import { getOktoSdkConnector, OktoParameters } from '@okto_web3/wagmi-adapter';
+    import { connectorsForWallets } from '@rainbow-me/rainbowkit';
+    import { createConfig, http } from 'wagmi';
+    import { mainnet, optimism, polygon } from 'wagmi/chains';
+
+    const oktoParams: OktoParameters = {
+        environment: 'sandbox',
+        clientPrivateKey: '0xprivatekey',
+        clientSWA: '0xswa',
+        googleClientId: 'xxx',
+    } as OktoParameters;
+
+    // create a 'Social Login' group in rainbowkit config connectors list
+    const connectors = connectorsForWallets(
+    [
+     {
+       groupName: 'Social Login',
+       wallets: [
+       getOktoSdkConnector({
+          type: 'google',
+          params: oktoParams,
+        }),
+       ],
+     }
+    ],
+    {
+      appName: 'My Okto Rainbowkit App',
+      projectId: 'xxx',
+    },
+    );
+
+    export const config = createConfig({
+    chains: [mainnet, optimism, polygon],
+    connectors: connectors,
+    transports: {
+      [mainnet.id]: http(),
+      [optimism.id]: http(),
+      [polygon.id]: http(),
+     },
+    });
+
+    ```
+
+  </Tab>
+  <Tab value="React">
+    ```typescript title="rainbowkit.config.ts"
+    import { getOktoSdkConnector, OktoParameters } from '@okto_web3/wagmi-adapter';
+    import { connectorsForWallets } from '@rainbow-me/rainbowkit';
+    import { createConfig, http } from 'wagmi';
+    import { mainnet, optimism, polygon } from 'wagmi/chains';
+
+    const oktoParams: OktoParameters = {
+        environment: 'sandbox',
+        clientPrivateKey: '0xprivatekey',
+        clientSWA: '0xswa',
+        googleClientId: 'xxx',
+    } as OktoParameters;
+
+    // create a 'Social Login' group in rainbowkit config connectors list
+    const connectors = connectorsForWallets(
+    [
+     {
+       groupName: 'Social Login',
+       wallets: [
+       getOktoSdkConnector({
+          type: 'google',
+          params: oktoParams,
+        }),
+       ],
+     }
+    ],
+    {
+      appName: 'My Okto Rainbowkit App',
+      projectId: 'xxx',
+    },
+    );
+
+    export const config = createConfig({
+    chains: [mainnet, optimism, polygon],
+    connectors: connectors,
+    transports: {
+      [mainnet.id]: http(),
+      [optimism.id]: http(),
+      [polygon.id]: http(),
+     },
+    });
+    ```
+
+  </Tab>
+</Tabs>
+
+#### Okto Configuration Parameters
+
+| Parameter          | Description                    | Type                          | Required |
+| ------------------ | ------------------------------ | ----------------------------- | -------- |
+| `environment`      | Environment to use for the SDK | `'sandbox'` \| `'production'` | Yes      |
+| `clientPrivateKey` | Your client private key        | `string`                      | Yes      |
+| `clientSWA`        | Your client SWA                | `string`                      | Yes      |
+| `googleClientId`   | Your Google client ID          | `string`                      | Yes      |
+
+</Step>
+
+<Step>
+
+### Set Up Providers
+
+Update your app's root component to include the necessary providers:
+
+<Tabs items={['NextJS', 'React']}>
+  <Tab value="NextJS">
+    ```tsx title="layout.tsx"
+    "use client"
+
+    import { config } from 'wagmi.config.ts';
+    import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
+    import '@rainbow-me/rainbowkit/styles.css';
+    import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+    import Script from 'next/script';
+    import { WagmiProvider } from 'wagmi';
+
+     const queryClient = new QueryClient();
+
+    export default function Layout({ children }: { children: React.ReactNode }) {
+
+      return (
+        <html lang="en">
+          <head>
+            <Script src="https://accounts.google.com/gsi/client" async defer />
+          </head>
+          <body>
+            <WagmiProvider config={config}>
+              <QueryClientProvider client={queryClient}>
+                 <RainbowKitProvider>{children}</RainbowKitProvider>
+              </QueryClientProvider>
+            </WagmiProvider>
+           </body>
+        </html>
+      );
+    }
+    ```
+
+  </Tab>
+  <Tab value="React">
+    ```tsx title="main.tsx"
+    import { config } from 'wagmi.config.ts';
+    import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
+    import '@rainbow-me/rainbowkit/styles.css';
+    import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+    import { WagmiProvider } from 'wagmi';
+
+    const queryClient = new QueryClient();
+
+    createRoot(document.getElementById('root')!).render(
+      <StrictMode>
+        <WagmiProvider config={config}>
+          <QueryClientProvider client={queryClient}>
+            <RainbowKitProvider>
+               <App />
+            </RainbowKitProvider>
+          </QueryClientProvider>
+        </WagmiProvider>
+      </StrictMode>
+    )
+
+
+    ````
+
+    <Callout title="Note">
+    For Vite project, add this script tag to your `index.html` file in the project root directory.
+    ```html
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    ```
+    </Callout>
+
+  </Tab>
+</Tabs>
+
+</Step>
+
+<Step>
+
+## Add the ConnectButton to your App
+
+Once configured, you can use to offer Okto social login to your users:
+
+<Tabs items={['NextJS', 'React']}>
+  <Tab value="NextJS">
+    ```tsx title="page.tsx"
+    'use client';
+
+    import { ConnectButton } from '@rainbow-me/rainbowkit';
+
+    export default function Home() {
+    return (
+        <div>
+          <p>Connect your wallet</p>
+          <ConnectButton />
+        </div>
+    );
+    }
+    ```
+
+  </Tab>
+  <Tab value="React">
+    ```tsx title="App.tsx"
+    import { ConnectButton } from "@rainbow-me/rainbowkit";
+
+    export default function App() {
+    return (
+        <div>
+          <p>Connect your wallet</p>
+          <ConnectButton />
+        </div>
+    );
+    }
+    ````
+
+  </Tab>
+</Tabs>
+
+</Step>
+
+</Steps>

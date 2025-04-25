@@ -1,0 +1,292 @@
+---
+title: 'Integrating with wagmi'
+description: 'A step-by-step guide to integrating the Okto-Wagmi adapter into Wagmi-based dApps, enabling smooth wallet connectivity and streamlined user onboarding.'
+full: false
+---
+
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
+import ExternalLink from 'app/components/mdx/ExternalLink';
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import TemplateRepoBanner from 'app/components/mdx/TemplateRepoBanner';
+
+<TemplateRepoBanner sdk="wagmi-okto" />
+
+<Callout>
+Note that this repository includes multiple branches, each corresponding to a different adapter integration. For integrating Okto with Wagmi, refer to the **bmac-react-wagmi-okto** branch.
+</Callout>
+
+[Wagmi](https://wagmi.sh/) is a collection of React hooks for Ethereum, making it easy to interact with wallets and smart contracts. Okto provides seamless integration with Wagmi through its adapter package, allowing you to add social login options via Okto to your existing Wagmi application.
+
+<Callout>
+This guide shows how to add Okto wallet support to an existing wagmi application, enabling social login options for your users.
+
+If you're starting from scratch, you have two options:
+- Build with an <a href="/docs/okto-sdk/supported-sdk-platforms" target="_blank" rel="noopener noreferrer">Okto SDK</a> directly
+- Follow the <a href="https://wagmi.sh/react/getting-started" target="_blank" rel="noopener noreferrer">wagmi getting started guide</a> first, then return here to add Okto support
+</Callout>
+
+<Steps>
+
+<Step>
+
+## Installation
+
+Install the Okto wagmi adapter [package](https://www.npmjs.com/package/@okto_web3/wagmi-adapter) and other dependencies:
+
+```bash
+npm i @okto_web3/wagmi-adapter wagmi @tanstack/react-query
+```
+
+<Callout type="tip" title="Essential Vite Configuration for Wagmi + Okto">
+  When integrating Okto with Wagmi in a Vite project, you'll need to add Node.js polyfills to resolve browser buffer issues. Update your `vite.config.ts` file with this configuration:
+
+  ```typescript title="vite.config.ts"
+  import { defineConfig } from 'vite'
+  import react from '@vitejs/plugin-react'
+  import { nodePolyfills } from 'vite-plugin-node-polyfills'
+
+  // https://vite.dev/config/
+  export default defineConfig({
+    plugins: [react(), nodePolyfills()],
+    server: {
+      port: 3000, // will always start the service on port 3000
+    }
+  })
+  ```
+
+  Don't forget to install the required package:
+  ```bash
+  npm i -D vite-plugin-node-polyfills
+  ```
+
+  </Callout>
+
+</Step>
+
+<Step>
+
+### Configure Okto
+
+  <CollapsibleCallout type="warning" title="Essential Setup Required">
+  Set up your [Okto Developer Dashboard](https://dashboard.okto.tech) by making sure you have :
+  - Created your [Okto Developer Dashboard](/docs/developer-admin-dashboard/dashboard-account) account
+  - Get your [Okto credits](/docs/developer-admin-dashboard/okto-faucet) from the dashboard
+  - Obtained your [API keys](/docs/developer-admin-dashboard/api-key) from the dashboard
+  - Enabled the specific [Chains and Tokens](/docs/developer-admin-dashboard/wallet-control) you plan to use in your application
+  - Optional: Enabled [Sponsorship](/docs/developer-admin-dashboard/sponsorship) for the desired chains
+
+  If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/troubleshooting">troubleshooting form</ExternalLink> and we will contact you.
+  </CollapsibleCallout>
+
+  Before getting started, ensure you have the following:
+  - **Okto API Keys:** You need your `clientPrivateKey` and `clientSWA`. Obtain these from the [Okto Developer Dashboard](https://dashboard.okto.tech/login).
+  - **Okto Account Setup:** Ensure you have sufficient <ExternalLink href="https://dashboard.okto.tech/okto-credits">Okto Credits</ExternalLink>, enable the required <ExternalLink href="https://dashboard.okto.tech/wallet-controls">Chains and Tokens </ExternalLink>, and optionally <ExternalLink href="https://dashboard.okto.tech/paymaster">Activate Sponsorship</ExternalLink>.
+  - **Google OAuth Credentials (if using Google authentication):** Create OAuth 2.0 credentials in the <ExternalLink href="/docs/react-sdk/authenticate-users/google-oauth/google-console-setup">Google Cloud Console</ExternalLink> to get your `googleClientId`.
+
+
+</Step>
+
+<Step>
+
+### Configure Wagmi
+
+Create a configuration file to set up wagmi with the Okto connector:
+
+<Tabs items={['NextJS', 'React']}>
+  <Tab value="NextJS">
+    ```typescript title="wagmi.config.ts"
+    import { okto } from '@okto_web3/wagmi-adapter';
+    import { cookieStorage, createConfig, createStorage, http } from 'wagmi';
+    import { mainnet, optimism, polygon } from 'wagmi/chains';
+
+    export function getConfig() {
+      return createConfig({
+        chains: [polygon],
+        connectors: [
+          okto({
+            environment: 'sandbox',
+            clientPrivateKey: '0xprivatekey',
+            clientSWA: '0xswa',
+            googleClientId: 'xxx',
+          }),
+        ],
+        storage: createStorage({
+          storage: cookieStorage,
+        }),
+        ssr: true,
+        transports: {
+          [polygon.id]: http(),
+        },
+      });
+    }
+
+    declare module 'wagmi' {
+      interface Register {
+        config: ReturnType<typeof getConfig>;
+      }
+    }
+    ```
+  </Tab>
+  <Tab value="React">
+    ```typescript title="wagmi.config.ts"
+    import { okto } from '@okto_web3/wagmi-adapter';
+    import { cookieStorage, createConfig, createStorage, http } from 'wagmi';
+    import { mainnet, optimism, polygon } from 'wagmi/chains';
+
+    export function getConfig() {
+      return createConfig({
+        chains: [polygon],
+        connectors: [
+          okto({
+            environment: 'sandbox',
+            clientPrivateKey: '0xprivatekey',
+            clientSWA: '0xswa',
+            googleClientId: 'xxx',
+          }),
+        ],
+        storage: createStorage({
+          storage: cookieStorage,
+        }),
+        ssr: true,
+        transports: {
+          [polygon.id]: http(),
+        },
+      });
+    }
+
+    declare module 'wagmi' {
+      interface Register {
+        config: ReturnType<typeof getConfig>;
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+
+#### Okto Configuration Parameters
+
+| Parameter | Description | Type | Required |
+|-----------|-------------|------|----------|
+| `environment` | Environment to use for the SDK | `'sandbox'` \| `'production'` | Yes |
+| `clientPrivateKey` | Your client private key | `string` | Yes |
+| `clientSWA` | Your client SWA | `string` | Yes |
+| `googleClientId` | Your Google client ID | `string` | Yes |
+</Step>
+
+<Step>
+
+### Set Up Providers
+
+Update your app's root component to include the necessary providers:
+
+<Tabs items={['NextJS', 'React']}>
+  <Tab value="NextJS">
+    ```tsx title="providers.tsx"
+    import { headers } from 'next/headers';
+    import { useState } from 'react';
+    import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+    import type { ReactNode } from 'react';
+    import Script from 'next/script';
+    import { WagmiProvider, cookieToInitialState } from 'wagmi';
+    import { getConfig } from '../wagmi';
+
+    export default async function RootLayout(props: { children: ReactNode }) {
+      const initialState = cookieToInitialState(
+        getConfig(),
+        (await headers()).get('cookie'),
+      );
+
+      const [config] = useState(() => getConfig());
+      const [queryClient] = useState(() => new QueryClient());
+
+      return (
+        <html lang="en">
+          <head>
+            <Script src="https://accounts.google.com/gsi/client" async defer />
+          </head>
+          <body>
+            <WagmiProvider config={config} initialState={initialState}>
+              <QueryClientProvider client={queryClient}>
+                {props.children}
+              </QueryClientProvider>
+            </WagmiProvider>
+          </body>
+        </html>
+      );
+    }
+    ```
+  </Tab>
+  <Tab value="React">
+  ```tsx title="providers.tsx"
+  import { ReactNode } from 'react';
+  import { WagmiProvider } from 'wagmi';
+  import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+  import { getConfig } from './wagmi.config';
+
+  const queryClient = new QueryClient();
+
+  export function Web3Provider({ children }: { children: ReactNode }) {
+    return (
+      <WagmiProvider config={getConfig()}>
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      </WagmiProvider>
+    );
+  }
+  ```
+
+    <Callout title="Note">
+    For Vite project, add this script tag to your `index.html` file in the project root directory.
+    ```html
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    ```
+    </Callout>
+  </Tab>
+</Tabs>
+
+</Step>
+
+<Step>
+
+## Usage with wagmi Hooks
+
+Once configured, you can use wagmi hooks to offer Okto social login to your users:
+
+```typescript
+import { useAccount, useConnect, useDisconnect } from 'wagmi';
+
+function WalletConnection() {
+  const { address, isConnected } = useAccount();
+  const { connect, connectors } = useConnect();
+  const { disconnect } = useDisconnect();
+
+  if (isConnected) {
+    return (
+      <div>
+        Connected to {address}
+        <button onClick={() => disconnect()}>Disconnect</button>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      {connectors.map((connector) => (
+        <button
+          key={connector.id}
+          onClick={() => connect({ connector })}
+        >
+          Connect with {connector.name}
+        </button>
+      ))}
+    </div>
+  );
+}
+```
+
+</Step>
+
+</Steps>
