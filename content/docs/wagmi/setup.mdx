@@ -8,6 +8,13 @@ import { Step, Steps } from "fumadocs-ui/components/steps";
 import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
 import ExternalLink from 'app/components/mdx/ExternalLink';
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import TemplateRepoBanner from 'app/components/mdx/TemplateRepoBanner';
+
+<TemplateRepoBanner sdk="wagmi-okto" />
+
+<Callout>
+Note that this repository includes multiple branches, each corresponding to a different adapter integration. For integrating Okto with Wagmi, refer to the **bmac-react-wagmi-okto** branch.
+</Callout>
 
 [Wagmi](https://wagmi.sh/) is a collection of React hooks for Ethereum, making it easy to interact with wallets and smart contracts. Okto provides seamless integration with Wagmi through its adapter package, allowing you to add social login options via Okto to your existing Wagmi application.
 
@@ -181,6 +188,7 @@ Update your app's root component to include the necessary providers:
     import { useState } from 'react';
     import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
     import type { ReactNode } from 'react';
+    import Script from 'next/script';
     import { WagmiProvider, cookieToInitialState } from 'wagmi';
     import { getConfig } from '../wagmi';
 
@@ -196,7 +204,7 @@ Update your app's root component to include the necessary providers:
       return (
         <html lang="en">
           <head>
-            <script src="https://accounts.google.com/gsi/client" async defer />
+            <Script src="https://accounts.google.com/gsi/client" async defer />
           </head>
           <body>
             <WagmiProvider config={config} initialState={initialState}>
@@ -229,17 +237,15 @@ Update your app's root component to include the necessary providers:
     );
   }
   ```
+
+    <Callout title="Note">
+    For Vite project, add this script tag to your `index.html` file in the project root directory.
+    ```html
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    ```
+    </Callout>
   </Tab>
 </Tabs>
-
-<Callout title="Note">
-Make sure to add the Google Sign-In script to your HTML head for authentication:
-```html
-<script src="https://accounts.google.com/gsi/client" async defer />
-```
-
-For Vite project, add this script tag to your `index.html` file in the project root directory.
-</Callout>
 
 </Step>
 
