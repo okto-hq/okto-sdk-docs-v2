@@ -5,7 +5,7 @@ full: false
 
 import FeatureSupportTable from 'app/components/mdx/FeatureSupportTable';
 
-Okto provides a seamless and secure way to integrate blockchain functionality into your applications. The Okto NextJS SDK enables developers to onboard users, manage wallets, interact with multiple chains, and facilitate smooth crypto transactions within NextJS applications.
+Okto provides a seamless and secure way to integrate blockchain functionality into your applications. The Okto TypeScript SDK enables developers to onboard users, manage wallets, interact with multiple chains, and facilitate smooth crypto transactions within TypeScript applications.
 
 ---
 
@@ -14,6 +14,7 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
 **Legend:**
 -   ✅ - Feature Currently Supported
 -   🔜 - Feature Coming Soon
+-   🔗 - Feature Supported via APIs
 -   🔌 - Feature Supported via Adapter
 -   ❌ - Feature Not Supported
 -   <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="EVM" /> - EVM Chains (To see the list of supported EVM chains, click [here](/docs/supported-chains))
@@ -33,26 +34,26 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
       description: "Users can create an Okto session on the client app using their Google account",
       support: {
         Status: "✅",
-        "Version": "v0.1.0",
-        Chains: ["EVM"]
+        "Version": ">v0.1.0",
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
       name: "Email OTP",
       description: "Authentication using one-time passwords sent via email",
       support: {
-        Status: "🔜",
+        Status: "🔗",
         "Version": "-",
-        Chains: ["EVM"]
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
       name: "Whatsapp OTP",
       description: "Authentication using one-time passwords sent via WhatsApp",
       support: {
-        Status: "🔜",
+        Status: "🔗",
         "Version": "-",
-        Chains: ["EVM"]
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
@@ -61,7 +62,7 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
       support: {
         Status: "🔜",
         "Version": "-",
-        Chains: ["EVM"]
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
@@ -70,7 +71,7 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
       support: {
         Status: "🔜",
         "Version": "-",
-        Chains: ["EVM"]
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
@@ -79,7 +80,7 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
       support: {
         Status: "🔜",
         "Version": "-",
-        Chains: ["EVM"]
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
@@ -88,7 +89,7 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
       support: {
         Status: "🔜",
         "Version": "-",
-        Chains: ["EVM"]
+        Chains: ["EVM", "Aptos"]
       }
     }
   ]}
@@ -99,12 +100,21 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
 <FeatureSupportTable
   features={[
     {
-      name: "Automatic Wallet Generation",
-      description: "Automatically create and manage blockchain wallets for users upon authentication",
+      name: "Automatic AA Wallet Generation",
+      description: "Automatically create and manage AA wallets for users upon authentication",
       support: {
         Status: "✅",
-        "Version": "v0.1.0",
-        Chains: ["EVM"]
+        "Version": ">v0.1.0",
+        Chains: ["EVM", "Aptos", "Aptos"]
+      }
+    },
+    {
+      name: "Automatic EOA Wallet Generation",
+      description: "Automatically create and manage EOA wallets for users upon authentication",
+      support: {
+        Status: "🔜",
+        "Version": "-",
+        Chains: ["EVM", "Aptos", "Aptos"]
       }
     },
     {
@@ -112,8 +122,8 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
       description: "Sign EIP-4337 compliant user operations for account abstraction",
       support: {
         Status: "✅",
-        "Version": "v0.1.0",
-        Chains: ["EVM"]
+        "Version": ">v0.1.0",
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
@@ -121,8 +131,8 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
       description: "Send signed user operations to the blockchain network",
       support: {
         Status: "✅",
-        "Version": "v0.1.0",
-        Chains: ["EVM"]
+        "Version": ">v0.1.0",
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
@@ -131,7 +141,7 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
       support: {
         Status: "🔜",
         "Version": "-",
-        Chains: ["EVM"]
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
@@ -139,8 +149,8 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
       description: "Allow third-party services to perform actions on behalf of the user with specific permissions",
       support: {
         Status: "✅",
-        "Version": "v0.1.0",
-        Chains: ["EVM"]
+        "Version": ">v0.1.0",
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
@@ -149,7 +159,7 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
       support: {
         Status: "🔜",
         "Version": "-",
-        Chains: ["EVM"]
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
@@ -158,7 +168,7 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
       support: {
         Status: "🔜",
         "Version": "-",
-        Chains: ["EVM"]
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
@@ -167,7 +177,16 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
       support: {
         Status: "🔜",
         "Version": "-",
-        Chains: ["EVM"]
+        Chains: ["EVM", "Aptos"]
+      }
+    },
+    {
+      name: "Treasury Wallets",
+      description: "Perform client-side intents via Treasury Wallets",
+      support: {
+        Status: "✅",
+        "Version": ">v0.1.0",
+        Chains: ["EVM", "Aptos"]
       }
     }
   ]}
@@ -181,8 +200,8 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
       name: "Cross Chain Liquidity",
       description: "Access and manage liquidity across multiple blockchain networks",
       support: {
-        Status: "🔜",
-        "Version": "-",
+        Status: "✅",
+        "Version": ">v0.1.0",
         Chains: ["EVM"]
       }
     },
@@ -190,8 +209,8 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
       name: "Cross Chain Swaps",
       description: "Perform token swaps between different blockchain networks",
       support: {
-        Status: "🔜",
-        "Version": "-",
+        Status: "✅",
+        "Version": ">v0.1.0",
         Chains: ["EVM"]
       }
     },
@@ -209,7 +228,7 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
       description: "Execute transactions without requiring users to hold native tokens for gas fees",
       support: {
         Status: "✅",
-        "Version": "v0.1.0",
+        "Version": ">v0.1.0",
         Chains: ["EVM"]
       }
     },
@@ -225,13 +244,13 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
   ]}
 />
 
-### Connectors
+### External Wallet Connectors
 
 <FeatureSupportTable
   features={[
     {
-      name: "Import External Wallet in Okto",
-      description: "Import and manage external wallets within the Okto ecosystem",
+      name: "Connect External Wallet in Okto (Okto Kit)",
+      description: "Connect and perform intents via external wallets within the Okto ecosystem",
       support: {
         Status: "🔜",
         "Version": "-",
@@ -239,26 +258,18 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
       }
     },
     {
-      name: "Wagmi (connect external wallet)",
+      name: "Wagmi Adapter",
       description: "Connect and interact with external wallets using the Wagmi hooks ecosystem",
       support: {
-        Status: "❌",
+        Status: "🔌",
         Chains: ["EVM"]
       }
     },
     {
-      name: "Viem",
-      description: "Interact with EVM chains using the Viem TypeScript library",
+      name: "RainbowKit Adapter",
+      description: "Connect and interact with external wallets using the RainbowKit",
       support: {
-        Status: "❌",
-        Chains: ["EVM"]
-      }
-    },
-    {
-      name: "Ethers",
-      description: "Interact with EVM chains using the Ethers.js library",
-      support: {
-        Status: "❌",
+        Status: "🔌",
         Chains: ["EVM"]
       }
     },
@@ -310,7 +321,7 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
       description: "View and manage all token holdings across supported chains",
       support: {
         Status: "✅",
-        "Version": "v0.1.0",
+        "Version": ">v0.1.0",
         Chains: ["EVM"]
       }
     },
@@ -319,7 +330,7 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
       description: "Send tokens to other addresses across supported chains",
       support: {
         Status: "✅",
-        "Version": "v0.1.0",
+        "Version": ">v0.1.0",
         Chains: ["EVM"]
       }
     }
@@ -343,8 +354,8 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
       name: "NFT Transfer",
       description: "Transfer NFTs between addresses",
       support: {
-        Status: "🔜",
-        "Version": "-",
+        Status: "✅",
+        "Version": ">v0.1.0",
         Chains: ["EVM"]
       }
     },
@@ -353,7 +364,7 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
       description: "View and manage NFT holdings across supported chains",
       support: {
         Status: "✅",
-        "Version": "v0.1.0",
+        "Version": ">v0.1.0",
         Chains: ["EVM"]
       }
     },
@@ -378,7 +389,7 @@ Okto provides a seamless and secure way to integrate blockchain functionality in
       description: "Execute write operations on smart contracts",
       support: {
         Status: "✅",
-        "Version": "v0.1.0",
+        "Version": ">v0.1.0",
         Chains: ["EVM"]
       }
     },

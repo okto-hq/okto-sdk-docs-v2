@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 interface MainSupportStatus {
   SDKs: string;
-  'Wagmi Adapter': string;
+  'Wagmi/ RainbowKit Adapter': string;
   Chains: string[];
 }
 
@@ -41,6 +41,8 @@ const StatusIcon = ({ status, version }: { status: string; version?: string }) =
       return <span>🔜</span>;
     case '🔄':
       return <span>🔄</span>;
+    case '🔗':
+      return <span>🔗</span>;
     case '🔌':
       return <span>🔌</span>;
     case '❌':
@@ -69,7 +71,7 @@ export default function FeatureSupportTable({ features }: FeatureSupportTablePro
   return (
     <div>
       <style>
-{`
+        {`
 .feature-supported-version {
     display: inline-block;
     padding: 2px 8px;
@@ -93,7 +95,7 @@ export default function FeatureSupportTable({ features }: FeatureSupportTablePro
               ) : (
                 <>
                   <th>SDKs and APIs</th>
-                  <th>Wagmi Adapter</th>
+                  <th>Wagmi/ RainbowKit Adapter</th>
                 </>
               )}
               <th>Chain Types</th>
@@ -103,18 +105,32 @@ export default function FeatureSupportTable({ features }: FeatureSupportTablePro
             {features.map((feature, index) => (
               <tr key={index}>
                 <td className="font-medium">{feature.name}</td>
-                <td className="text-sm text-gray-600 dark:text-gray-300">{feature.description}</td>
+                <td className="text-sm text-gray-600 dark:text-gray-300">
+                  {feature.description}
+                </td>
                 {isReactFormat ? (
                   <td>
-                    <StatusIcon 
-                      status={(feature.support as ReactSupportStatus).Status} 
+                    <StatusIcon
+                      status={(feature.support as ReactSupportStatus).Status}
                       version={(feature.support as ReactSupportStatus).Version}
                     />
                   </td>
                 ) : (
                   <>
-                    <td><StatusIcon status={(feature.support as MainSupportStatus).SDKs} /></td>
-                    <td><StatusIcon status={(feature.support as MainSupportStatus)['Wagmi Adapter']} /></td>
+                    <td>
+                      <StatusIcon
+                        status={(feature.support as MainSupportStatus).SDKs}
+                      />
+                    </td>
+                    <td>
+                      <StatusIcon
+                        status={
+                          (feature.support as MainSupportStatus)[
+                            "Wagmi/ RainbowKit Adapter"
+                          ]
+                        }
+                      />
+                    </td>
                   </>
                 )}
                 <td>
