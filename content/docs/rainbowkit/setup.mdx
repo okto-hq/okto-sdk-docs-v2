@@ -212,7 +212,7 @@ Update your app's root component to include the necessary providers:
     ```tsx title="layout.tsx"
     "use client"
 
-    import { config } from 'wagmi.config.ts';
+    import { config } from './rainbowkit.config.ts';
     import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
     import '@rainbow-me/rainbowkit/styles.css';
     import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -243,7 +243,10 @@ Update your app's root component to include the necessary providers:
   </Tab>
   <Tab value="React">
     ```tsx title="main.tsx"
-    import { config } from 'wagmi.config.ts';
+    import { StrictMode } from 'react';
+    import { createRoot } from 'react-dom/client';
+    import App from './App.tsx';
+    import { config } from './rainbowkit.config.ts';
     import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
     import '@rainbow-me/rainbowkit/styles.css';
     import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -255,15 +258,13 @@ Update your app's root component to include the necessary providers:
       <StrictMode>
         <WagmiProvider config={config}>
           <QueryClientProvider client={queryClient}>
-            <RainbowKitProvider>
-               <App />
+            <RainbowKitProvider >
+              <App />
             </RainbowKitProvider>
           </QueryClientProvider>
         </WagmiProvider>
       </StrictMode>
-    )
-
-
+    );
     ````
 
     <Callout title="Note">
