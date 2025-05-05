@@ -6,6 +6,7 @@ import Image from "next/image";
 import { ProposalGuidelinesDialog } from "./components/ProposalGuidelinesDialog";
 import { ProposalTemplateDialog } from "./components/ProposalTemplateDialog";
 import { SubmissionGuideDialog } from "./components/SubmissionGuideDialog";
+import { ProposalPreparationDialog } from "./components/ProposalPreparationDialog";
 import { SummerBanner } from "./components/SummerBanner";
 import { SUBMISSION_URLS } from "./utils/constants";
 
@@ -220,14 +221,19 @@ export default function Page() {
                         <p className="text-sm text-gray-700 dark:text-gray-300">
                           Requires a proposal, review and acceptence process. Longer-term commitments with structured milestones and payments.
                         </p>
-                        <div className="mt-3 flex flex-wrap gap-2">
-                          <ProposalGuidelinesDialog linkClassName="inline-block bg-indigo-600 hover:bg-indigo-700 text-white text-sm py-1.5 px-3 rounded-md transition-colors">
+                        <div className="mt-3">
+                        <div className="flex gap-2 mb-2">
+                          <ProposalGuidelinesDialog linkClassName="inline-block bg-indigo-600 hover:bg-indigo-700 text-white text-sm py-1.5 px-3 rounded-md transition-colors flex-1 text-center">
                             View proposal guidelines
                           </ProposalGuidelinesDialog>
-                          <ProposalTemplateDialog linkClassName="inline-block bg-indigo-300 hover:bg-indigo-500 text-indigo-700 dark:bg-indigo-900/60 dark:hover:bg-indigo-900/80 dark:text-indigo-300 text-sm py-1.5 px-3 rounded-md transition-colors border border-indigo-200 dark:border-indigo-800">
+                          <ProposalTemplateDialog linkClassName="inline-block bg-indigo-300 hover:bg-indigo-500 text-indigo-700 dark:bg-indigo-900/60 dark:hover:bg-indigo-900/80 dark:text-indigo-300 text-sm py-1.5 px-3 rounded-md transition-colors border border-indigo-200 dark:border-indigo-800 flex-1 text-center">
                             Get proposal template
                           </ProposalTemplateDialog>
                         </div>
+                        <ProposalPreparationDialog linkClassName="inline-block bg-indigo-500 hover:bg-indigo-600 text-white text-sm py-1.5 px-3 rounded-md transition-colors w-full text-center">
+                          How to prepare proposal
+                        </ProposalPreparationDialog>
+                      </div>
                       </div>
                       
                       <div className="bg-purple-50 dark:bg-purple-900/30 p-4 rounded-md border border-purple-100 dark:border-purple-800 cursor-pointer">
@@ -282,6 +288,7 @@ export default function Page() {
             </div>
           </section>
 
+         
           {/* Getting Started Section */}
           <section id="getting-started" className="mb-12">
             <h2 className="text-2xl font-bold mb-6 dark:text-white">Getting Started</h2>
@@ -330,6 +337,15 @@ export default function Page() {
                     Proposal Template
                   </span>
                 </ProposalTemplateDialog>
+
+                <ProposalPreparationDialog linkClassName="inline-block bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-md font-medium transition-colors shadow-sm hover:shadow cursor-pointer">
+                  <span className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+                    </svg>
+                    How to Prepare Proposal
+                  </span>
+                </ProposalPreparationDialog>
                 
                 <a 
                   href={SUBMISSION_URLS.Project}
