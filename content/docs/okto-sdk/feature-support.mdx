@@ -17,8 +17,9 @@ Okto offers a range of integration options tailored to diverse development platf
 - [**React Native**](/docs/react-native-sdk) – A React Native SDK for mobile applications.
 - [**TypeScript**](/docs/typescript-sdk) – A TypeScript SDK for building Web3 applications. 
 - [**Unity**](/docs/unity-sdk) – A Unity SDK for blockchain-based gaming apps.
-- [**Wagmi Adapter**](/docs/wagmi-integration) – A connector to use Okto with the Wagmi hooks ecosystem.
-- APIs – For custom backend integrations.
+- [**Wagmi Adapter**](/docs/wagmi/setup) – A connector to use Okto with the Wagmi hooks ecosystem.
+- [**RainbowKit Adapter**](/docs/rainbowkit/setup) – A connector to use Okto with the RainbowKit ecosystem.
+- [**APIs**](/docs/openapi) – For custom backend integrations.
 
 The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solana, and Aptos, enabling seamless cross-chain interactions.
 
@@ -31,6 +32,7 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
 -   ✅ - Feature Currently Supported Across SDKs
 -   🔜 - Feature Coming Soon to All SDKs
 -   🔄 - Feature Support Possible via [V1 SDK](/docs/react-sdk/v2migration)
+-   🔗 - Feature Available via APIs
 -   🔌 - Feature Available via Adapter
 -   ❌ - Feature Not Supported
 -   <img src="https://cdn3.emoji.gg/emojis/3031-ethereum.png" className='not-prose chain-symbol' style={{display: 'inline'}} width="20px" height="20px" alt="EVM" /> - EVM Chains (To see the list of supported EVM chains, click [here](/docs/supported-chains))
@@ -51,26 +53,26 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Users can create an Okto session on the client app using their Google account",
       support: {
         SDKs: "✅",
-        "Wagmi Adapter": "✅",
-        Chains: ["EVM"]
+        "Wagmi/ RainbowKit Adapter": "✅",
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
       name: "Email OTP",
       description: "Authentication using one-time passwords sent via email",
       support: {
-        SDKs: "🔄",
-        "Wagmi Adapter": "🔜",
-        Chains: ["EVM"]
+        SDKs: "🔗",
+        "Wagmi/ RainbowKit Adapter": "🔜",
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
       name: "Whatsapp OTP",
       description: "Authentication using one-time passwords sent via WhatsApp",
       support: {
-        SDKs: "🔄",
-        "Wagmi Adapter": "🔜",
-        Chains: ["EVM"]
+        SDKs: "🔗",
+        "Wagmi/ RainbowKit Adapter": "🔜",
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
@@ -78,8 +80,8 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Custom authentication flow using JSON Web Tokens",
       support: {
         SDKs: "🔄",
-        "Wagmi Adapter": "🔜",
-        Chains: ["EVM"]
+        "Wagmi/ RainbowKit Adapter": "🔜",
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
@@ -87,8 +89,8 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Authentication using various OAuth providers including Apple, Twitter, Steam, and Epic Games",
       support: {
         SDKs: "🔜",
-        "Wagmi Adapter": "🔜",
-        Chains: ["EVM"]
+        "Wagmi/ RainbowKit Adapter": "🔜",
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
@@ -96,8 +98,8 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Authentication using Ethereum wallet signatures following the SIWE standard",
       support: {
         SDKs: "🔜",
-        "Wagmi Adapter": "🔜",
-        Chains: ["EVM"]
+        "Wagmi/ RainbowKit Adapter": "🔜",
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
@@ -105,8 +107,8 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Authentication using Solana wallet signatures",
       support: {
         SDKs: "🔜",
-        "Wagmi Adapter": "🔜",
-        Chains: ["EVM"]
+        "Wagmi/ RainbowKit Adapter": "🔜",
+        Chains: ["EVM", "Aptos"]
       }
     }
   ]}
@@ -117,12 +119,21 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
 <FeatureSupportTable
   features={[
     {
-      name: "Automatic Wallet Generation",
-      description: "Automatically create and manage blockchain wallets for users upon authentication",
+      name: "Automatic AA Wallet Generation",
+      description: "Automatically create and manage AA wallets for users upon authentication",
       support: {
         SDKs: "✅",
-        "Wagmi Adapter": "✅",
-        Chains: ["EVM"]
+        "Wagmi/ RainbowKit Adapter": "✅",
+        Chains: ["EVM", "Aptos"]
+      }
+    },
+    {
+      name: "Automatic EOA Wallet Generation",
+      description: "Automatically create and manage EOA wallets for users upon authentication",
+      support: {
+        SDKs: "🔜",
+        "Wagmi/ RainbowKit Adapter": "🔜",
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
@@ -130,8 +141,8 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Sign EIP-4337 compliant user operations for account abstraction",
       support: {
         SDKs: "✅",
-        "Wagmi Adapter": "❌",
-        Chains: ["EVM"]
+        "Wagmi/ RainbowKit Adapter": "❌",
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
@@ -139,8 +150,8 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Send signed user operations to the blockchain network",
       support: {
         SDKs: "✅",
-        "Wagmi Adapter": "❌",
-        Chains: ["EVM"]
+        "Wagmi/ RainbowKit Adapter": "❌",
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
@@ -148,8 +159,8 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Sign arbitrary messages using the wallet's private key",
       support: {
         SDKs: "✅",
-        "Wagmi Adapter": "✅",
-        Chains: ["EVM"]
+        "Wagmi/ RainbowKit Adapter": "✅",
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
@@ -157,8 +168,8 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Allow third-party services to perform actions on behalf of the user with specific permissions",
       support: {
         SDKs: "✅",
-        "Wagmi Adapter": "❌",
-        Chains: ["EVM"]
+        "Wagmi/ RainbowKit Adapter": "❌",
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
@@ -166,8 +177,8 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Recover wallet access or link multiple authentication methods to the same wallet",
       support: {
         SDKs: "🔜",
-        "Wagmi Adapter": "❌",
-        Chains: ["EVM"]
+        "Wagmi/ RainbowKit Adapter": "❌",
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
@@ -175,8 +186,8 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Additional security layer requiring multi-factor authentication for transactions",
       support: {
         SDKs: "🔜",
-        "Wagmi Adapter": "❌",
-        Chains: ["EVM"]
+        "Wagmi/ RainbowKit Adapter": "❌",
+        Chains: ["EVM", "Aptos"]
       }
     },
     {
@@ -184,8 +195,17 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Export wallet private keys for backup or external use",
       support: {
         SDKs: "🔜",
-        "Wagmi Adapter": "❌",
-        Chains: ["EVM"]
+        "Wagmi/ RainbowKit Adapter": "❌",
+        Chains: ["EVM", "Aptos"]
+      }
+    },
+    {
+      name: "Treasury Wallets",
+      description: "Perform client-side intents via Treasury Wallets",
+      support: {
+        Status: "✅",
+        "Version": "-",
+        Chains: ["EVM", "Aptos"]
       }
     }
   ]}
@@ -199,8 +219,8 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       name: "Cross Chain Liquidity",
       description: "Access and manage liquidity across multiple blockchain networks",
       support: {
-        SDKs: "🔜",
-        "Wagmi Adapter": "❌",
+        SDKs: "✅",
+        "Wagmi/ RainbowKit Adapter": "❌",
         Chains: ["EVM"]
       }
     },
@@ -208,8 +228,8 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       name: "Cross Chain Swaps",
       description: "Perform token swaps between different blockchain networks",
       support: {
-        SDKs: "🔜",
-        "Wagmi Adapter": "❌",
+        SDKs: "✅",
+        "Wagmi/ RainbowKit Adapter": "❌",
         Chains: ["EVM"]
       }
     },
@@ -218,7 +238,7 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "View aggregated token balances across all supported chains in a single view",
       support: {
         SDKs: "🔜",
-        "Wagmi Adapter": "❌",
+        "Wagmi/ RainbowKit Adapter": "❌",
         Chains: ["EVM"]
       }
     },
@@ -227,7 +247,7 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Execute transactions without requiring users to hold native tokens for gas fees",
       support: {
         SDKs: "✅",
-        "Wagmi Adapter": "❌",
+        "Wagmi/ RainbowKit Adapter": "❌",
         Chains: ["EVM"]
       }
     },
@@ -236,50 +256,41 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Pay transaction gas fees using any supported token instead of native chain tokens",
       support: {
         SDKs: "🔜",
-        "Wagmi Adapter": "❌",
+        "Wagmi/ RainbowKit Adapter": "❌",
         Chains: ["EVM"]
       }
     }
   ]}
 />
 
-### Connectors
+### External Wallet Connectors
 
 <FeatureSupportTable
   features={[
     {
-      name: "Import External Wallet in Okto",
-      description: "Import and manage external wallets within the Okto ecosystem",
+      name: "Connect External Wallet in Okto (Okto Kit)",
+      description: "Connect and perform intents via external wallets within the Okto ecosystem",
       support: {
         SDKs: "🔜",
-        "Wagmi Adapter": "❌",
+        "Wagmi/ RainbowKit Adapter": "❌",
         Chains: ["EVM"]
       }
     },
     {
-      name: "Wagmi (connect external wallet)",
+      name: "Wagmi Adapter",
       description: "Connect and interact with external wallets using the Wagmi hooks ecosystem",
       support: {
         SDKs: "🔌",
-        "Wagmi Adapter": "✅",
+        "Wagmi/ RainbowKit Adapter": "✅",
         Chains: ["EVM"]
       }
     },
     {
-      name: "Viem",
-      description: "Interact with EVM chains using the Viem TypeScript library",
+      name: "RainbowKit Adapter",
+      description: "Connect and interact with external wallets using the RainbowKit ecosystem",
       support: {
         SDKs: "🔌",
-        "Wagmi Adapter": "✅",
-        Chains: ["EVM"]
-      }
-    },
-    {
-      name: "Ethers",
-      description: "Interact with EVM chains using the Ethers.js library",
-      support: {
-        SDKs: "🔌",
-        "Wagmi Adapter": "✅",
+        "Wagmi/ RainbowKit Adapter": "✅",
         Chains: ["EVM"]
       }
     },
@@ -288,7 +299,7 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Interact with Solana blockchain using the official Solana web3.js library",
       support: {
         SDKs: "🔜",
-        "Wagmi Adapter": "❌",
+        "Wagmi/ RainbowKit Adapter": "❌",
         Chains: ["Solana"]
       }
     }
@@ -304,7 +315,7 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Purchase crypto using fiat currency through Onmeta or Saber integration",
       support: {
         SDKs: "🔜",
-        "Wagmi Adapter": "❌",
+        "Wagmi/ RainbowKit Adapter": "❌",
         Chains: ["EVM"]
       }
     },
@@ -313,7 +324,7 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Convert crypto to fiat currency with KYC verification",
       support: {
         SDKs: "🔜",
-        "Wagmi Adapter": "❌",
+        "Wagmi/ RainbowKit Adapter": "❌",
         Chains: ["EVM"]
       }
     }
@@ -331,7 +342,7 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "View and manage all token holdings across supported chains",
       support: {
         SDKs: "✅",
-        "Wagmi Adapter": "❌",
+        "Wagmi/ RainbowKit Adapter": "❌",
         Chains: ["EVM"]
       }
     },
@@ -340,7 +351,7 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Send tokens to other addresses across supported chains",
       support: {
         SDKs: "✅",
-        "Wagmi Adapter": "❌",
+        "Wagmi/ RainbowKit Adapter": "❌",
         Chains: ["EVM"]
       }
     }
@@ -356,7 +367,7 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Create and deploy new NFT collections",
       support: {
         SDKs: "🔜",
-        "Wagmi Adapter": "❌",
+        "Wagmi/ RainbowKit Adapter": "❌",
         Chains: ["EVM"]
       }
     },
@@ -365,7 +376,7 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Transfer NFTs between addresses",
       support: {
         SDKs: "✅",
-        "Wagmi Adapter": "❌",
+        "Wagmi/ RainbowKit Adapter": "❌",
         Chains: ["EVM"]
       }
     },
@@ -374,7 +385,7 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "View and manage NFT holdings across supported chains",
       support: {
         SDKs: "✅",
-        "Wagmi Adapter": "❌",
+        "Wagmi/ RainbowKit Adapter": "❌",
         Chains: ["EVM"]
       }
     },
@@ -383,7 +394,7 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Mint new NFTs from supported collections",
       support: {
         SDKs: "🔜",
-        "Wagmi Adapter": "❌",
+        "Wagmi/ RainbowKit Adapter": "❌",
         Chains: ["EVM"]
       }
     }
@@ -399,7 +410,7 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Execute write operations on smart contracts",
       support: {
         SDKs: "✅",
-        "Wagmi Adapter": "✅",
+        "Wagmi/ RainbowKit Adapter": "✅",
         Chains: ["EVM"]
       }
     },
@@ -408,7 +419,7 @@ The Okto SDK supports multiple blockchain ecosystems including EVM chains, Solan
       description: "Read data from smart contracts",
       support: {
         SDKs: "🔜",
-        "Wagmi Adapter": "✅",
+        "Wagmi/ RainbowKit Adapter": "✅",
         Chains: ["EVM"]
       }
     }

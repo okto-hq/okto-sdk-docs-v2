@@ -6,7 +6,7 @@ const chains = [
     { logo: "/images/HL-icon.png", name: "HyperEVM", type: "EVM", mainnet: false, testnet: true, section: "hyperevm"},
     { logo: "/images/polygon-logo.svg", name: "Polygon", type: "EVM", mainnet: true, testnet: true, section: "polygon" },
     { logo: "/images/base-icon.svg", name: "Base", type: "EVM", mainnet: true, testnet: true, section: "base" },
-    { logo: "/images/sol-icon.svg", name: "Solana", type: "Solana", mainnet: true, testnet: true, section: "solana" },
+    { logo: "/images/sol-icon.svg", name: "Solana", type: "Solana", mainnet: false, testnet: false, section: "solana" },
     { logo: "/images/aptos-icon.svg", name: "Aptos", type: "Aptos", mainnet: true, testnet: true, section: "aptos" },
     { logo: "/images/avalanche-icon.svg", name: "Avalanche", type: "EVM", mainnet: true, testnet: false, section: "avalanche" },
     { logo: "/images/arbitrum-icon.png", name: "Arbitrum", type: "EVM", mainnet: true, testnet: false, section: "arbitrum" },
