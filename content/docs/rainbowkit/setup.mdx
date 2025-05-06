@@ -172,7 +172,7 @@ Create a configuration file to set up rainbowkit with the Okto connector:
     ],
     {
       appName: 'My Okto Rainbowkit App',
-      projectId: 'xxx',
+      projectId: 'xxx',     
     },
     );
 
@@ -246,11 +246,13 @@ Update your app's root component to include the necessary providers:
     import { StrictMode } from 'react';
     import { createRoot } from 'react-dom/client';
     import App from './App.tsx';
-    import { config } from './rainbowkit.config.ts';
-    import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
     import '@rainbow-me/rainbowkit/styles.css';
-    import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+    import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
     import { WagmiProvider } from 'wagmi';
+    import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+    import { config } from './rainbowkit.config.ts';
+
+    (window as any).Buffer = Buffer;
 
     const queryClient = new QueryClient();
 
