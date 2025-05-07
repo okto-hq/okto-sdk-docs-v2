@@ -1,21 +1,83 @@
 ---
 title: Policy Engine
-description: "The Okto Policy Engine provides a flexible and robust mechanism for defining and enforcing transaction policies across the Okto ecosystem. Policies are crucial for managing risk, ensuring compliance, and enabling granular control over transaction parameters at the user, vendor, and system levels."
+description: "The Okto Policy Engine provides a flexible and robust mechanism for defining and enforcing transaction policies across the Okto ecosystem. Policies are crucial for managing risk, ensuring compliance, and enabling granular control over transaction parameters at the user, client, and Wallet Provider levels."
 full: false
 ---
 
-## Policy Controls
+## Overview
 
-- **Daily transaction value limits:** Restricts total token outflow (in USD or token terms) over a 24-hour period. Useful for vendor accounts that sponsor gas or want to mitigate risk.
+The Okto Policy Engine is a core component designed to offer robust security and risk management capabilities for all participants in the Okto ecosystem. By setting predefined rules, the engine controls how transactions are processed, protecting users while providing flexibility for clients and wallet providers.
 
-- **Per-transaction value limits:** Sets a cap on the value of each individual transaction. This prevents any single operation from exceeding a defined threshold, thereby reducing the risk of large, unauthorized outflows.
+This system revolves around [three key entities](/docs/okto-layer/okto-client-user):
+
+* **Wallet Provider (WP):** The entity managing the underlying wallet infrastructure (e.g., Okto AA, Okto EOA, or potentially future third-party providers). ([learn more about Wallet Providers](/docs/react-sdk/wallets))
+* **Client (Application):** The application or dApp that integrates with Okto, onboarding users (e.g., Stan, ChainCode).
+* **User:** The end-user interacting with the Client's application.
+
+Policies are applied hierarchically, ensuring that the user always has the final say over the limits applied to their transactions within a specific client application. This gives the perfect balance between self-custody and delegated access.
+
+## Current Policies
+
+Currently, the primary policy implemented and enforced by the Okto Policy Engine is:
+
+* **Per-Transaction Value Limit:** Sets a maximum USD value allowed for a single transaction.
+
+*(Future Scope: Okto plans to introduce more granular policies, such as daily/weekly/monthly transaction value limits, limits based on transaction types, etc.)*
+
+## Policy Hierarchy and Control
+
+Okto employs a clear priority order for applying policy limits. The most specific setting (User) always overrides broader settings (Client, Wallet Provider).
+
+### 1. User Level Settings:
+
+* **Priority:** Highest.
+* **Control:** Users can define specific policy limits for each client application they use. For example, a user might set a $5 limit for Client A and a $60 limit for Client B.
+* **Precedence:** If a user sets a limit for a specific client, this limit **always** takes precedence, regardless of the limits set by the Client or the Wallet Provider.
+
+### 2. Client (Application) Level Settings:
+
+* **Priority:** Medium.
+* **Control:** Clients can request specific default policy limits for their application, overriding the Wallet Provider's defaults. For example, Client A might request a $40 limit.
+* **Approval:** These client-specific limits must be reviewed and approved by the Wallet Provider.
+* **Precedence:** The Client's limit applies to all its users *unless* a specific user sets their own overriding limit for that client.
+
+### 3. Wallet Provider (WP) Level Settings:
+
+* **Priority:** Lowest (Default).
+* **Control:** The Wallet Provider sets the base default policies applicable to all clients operating under it. For example, the WP might set a default $10 limit.
+* **Precedence:** This default limit applies only if neither the Client nor the User has set a more specific overriding limit.
+
+In summary, the enforcement hierarchy is:
+
+**User Limit > Client Limit > Wallet Provider Limit**
+
+**Example:**
+
+* Wallet Provider Default Limit = $10
+* Client A sets an approved limit = $40
+* User 1 sets a limit for Client A = $5
+* User 2 sets no specific limit for Client A.
+
+**Result:**
+
+* For User 1 interacting with Client A, the enforced limit is **$5**.
+* For User 2 interacting with Client A, the enforced limit is **$40** (the Client's limit).
+* If Client A had not set a specific limit, User 2's limit would be **$10** (the WP default).
 
 ## Policy Enforcement Mechanism
 
-*   **Policy Manager Contract (Okto Chain):** The central Policy Manager smart contract on the Okto Chain stores and enforces all defined policies. This contract maintains records of user, vendor, and policies and provides functions for policy verification.
+When a user initiates a transaction via a Client application:
 
-*   **Policy Data in User Operations (UserOps):** When a user initiates a transaction (UserOp) on the Okto Chain, policy-related data is included within the UserOp's signature. This "Policy Data" is signed by a designated Policy Service Signer (a backend service).
+1.  **Limit Check:** The Okto system determines the applicable per-transaction limit by checking the hierarchy (User > Client > WP).
+2.  **Transaction Validation:**
+    * If the transaction value is *within* the applicable limit, it proceeds to the next steps.
+    * If the transaction value *exceeds* the applicable limit, the transaction is initially blocked.
+3.  **User Prompt on Exceeding Limit:**
+    * The user is presented with a notification screen within the client app (rendered securely by Okto) informing them that the transaction exceeds their set limit.
+    * The screen displays the requested amount and the current limit.
+    * The user is given options, such as:
+        * **Approve This Transaction:** Allows the single, specific transaction to proceed, overriding the limit just for this instance.
+        * **Enter Lower Amount/Cancel:** Allows the user to modify or cancel the transaction.
+        * **Update Limit:** In some flows, the user might be offered the option to permanently increase their limit for that specific client.
 
-*   **On-Chain Policy Verification:**  During UserOp validation, the Entry Point contract and User Account contracts on the Okto Chain interact with the Policy Manager contract. They verify the "Policy Data" signature and evaluate the transaction against the applicable policies.
-
-*   **Transaction Reversal upon Policy Violation:** If a transaction violates any enforced policy, the validation process fails, and the transaction is reverted.
+If the user approves the transaction (e.g., via a one-time override) or modifies it to be within limits, Okto's backend may then proceed to enforce it. Else, the transaction is reverted.

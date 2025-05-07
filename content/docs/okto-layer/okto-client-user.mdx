@@ -1,6 +1,6 @@
 ---
-title: Okto / Client / User
-description: "In the Okto documentation, you'll frequently encounter three main personas: Okto, Client, and User. These personas are key to navigating how Okto interacts with developers and users across its platform. Let's break down each of these roles to understand their place in the ecosystem."
+title: Wallet Provider / Client / User
+description: "In the Okto documentation, you'll frequently encounter three main personas: Wallet Provider(WP), Client, and User. These personas are key to navigating how Okto interacts with developers and users across its platform. Let's break down each of these roles to understand their place in the ecosystem."
 full: false
 ---
 
@@ -12,8 +12,8 @@ import PersonaDescriptionCard from "app/components/mdx/PersonaDescriptionCard";
 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
       <PersonaCard
         icon="/images/okto-persona.svg"
-        title="Okto"
-        description="Okto refers to our company, our platform, and the suite of services we provide, including Wallet and SDK."
+        title="Wallet Provider"
+        description="A Wallet Provider is the core entity that defines and manages a distinct wallet ecosystem, offering wallet infrastructure and services that Clients integrate."
       />
       <PersonaCard
         icon="/images/vendor-persona.svg"
@@ -30,9 +30,22 @@ import PersonaDescriptionCard from "app/components/mdx/PersonaDescriptionCard";
 ## Dive deep into what & how each personas work
 
 <PersonaDescriptionCard 
-  title="Okto"
-  description="Okto refers to our company, our platform, and the suite of services we provide"
-  
+  title="Wallet Provider"
+  description="A Wallet Provider is the entity responsible for the underlying wallet infrastructure and the specific ecosystem of wallets made available to users through Client applications. Okto itself acts as a Wallet Provider (e.g., with Okto AA and Okto EOA wallets), and in the future, other entities might also assume this role within the Okto framework."
+  whatItDoes={[
+    "Manages the underlying wallet infrastructure.",
+    "Defines a distinct wallet ecosystem and its interoperability rules.",
+    "Provides wallet services that Client applications integrate for their Users.",
+    "Can set default policies for its ecosystem."
+  ]}
+  whatItIs={[
+    "Can be Okto itself (providing Okto AA/EOA wallets) or a third-party entity.",
+    "Forms the foundation upon which Clients build their user-facing applications.",
+    "Each Wallet Provider creates a boundary for direct wallet/asset interoperability between different Wallet Provider ecosystems."
+  ]}
+  howToIdentify={[
+    "Users' wallets are tied to a specific Wallet Provider through the Client application and login method they use."
+  ]}
 / >
 <br/>
 <PersonaDescriptionCard
