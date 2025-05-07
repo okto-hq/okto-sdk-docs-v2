@@ -1,0 +1,75 @@
+---
+title: Refunds
+description: Understand how Okto's Trade Service and Unified Liquidity Layer (ULL) handle automated refunds for cross-chain swaps in case of transaction failures.
+full: false
+---
+
+## Introduction
+
+Okto's Trade Service, powered by the Unified Liquidity Layer (ULL), is designed for robust and reliable cross-chain swaps. However, in the dynamic world of blockchain, occasional failures can occur. 
+
+Okto has implemented automated refund mechanisms within the Trade Service to ensure user assets are handled securely if a transaction cannot be completed as intended after assets have been committed to the cross-chain process.
+
+This page explains the principles behind refunds, the scenarios where they apply, and what users can expect.
+
+## Core Refund Principles
+
+1.  **Managed by ULL Smart Contracts:** Refunds are fundamentally handled by the smart contracts of Okto’s Unified Liquidity Layer (ULL), particularly the time-bound Escrow Contract that holds assets during the cross-chain process.
+2.  **Automation:** The refund process is designed to be fully automated. Once triggered by a failure condition (like an expired intent where no Filler fulfills the order), the ULL system automatically returns the appropriate assets to the user's wallet on the source chain. Typically, no manual intervention is required from the user or Okto.
+3.  **Atomicity & Refund Guarantees:**
+    The Trade Service, through ULL, aims to provide clear guarantees about what asset is returned to the user in case of failures. The nature of the refund depends on whether an initial swap on the source chain was required.
+
+    * **Full Atomicity:** This applies when the user's source token is directly a Filler-Supported Token (FST) – meaning no preliminary swap is needed on the source chain before the ULL bridging process. If a failure occurs at *any step* after the FST is committed to the ULL (e.g., intent expires, bridge fails, destination swap fails if it was part of an atomic ULL step), the process is fully atomic from the user's perspective of their initial asset. The user will receive their original **Source FST** back on the source chain.
+
+    * **Partial Atomicity (Source Swap Involved):** This applies when the user's source token is *not* an FST. In this case, an initial swap is required on the source chain to convert the user's token into an FST that ULL can then bridge. This initial swap is typically handled by an integrated DEX aggregator.
+        * **If the initial source swap itself fails:** The transaction does not proceed to ULL. The user's original source token remains in their wallet (minus any gas fees for the failed swap attempt). The refund is effectively "fully atomic" to the user's original token in this specific failure case.
+        * **If the initial source swap succeeds, but a subsequent ULL step fails:** (e.g., the ULL bridge fails, or an atomic ULL bridge + destination swap step fails). In this scenario, the refund processed by ULL will be the **intermediary FST** (the token obtained after the successful source swap) on the source chain. The user will not receive their *original* non-FST source token back, as it was already successfully swapped.
+
+4.  **Refund Trigger:** A refund from ULL is generally triggered if the cross-chain fulfillment step of an intent fails. This could be due to no solver/filler picking up the intent within the designated time limit, or other system-level failures preventing completion.
+
+5.  **No Refund Necessary if Initial Step Fails (Before ULL Lock):** As covered under "Partial Atomicity," if a transaction fails during the very first step *before* assets are locked into the ULL system (e.g., an initial same-chain swap facilitated by an integrated aggregator fails due to lack of liquidity, user cancellation, or high slippage), then no refund *from ULL* is necessary. The funds (the original source token) remain in the user's wallet, less any gas fees consumed by the attempted swap.
+
+6.  **Refund Token:** The token returned to the user is always the asset on the source chain that was held within the ULL system immediately before the point of failure occurred.
+
+7.  **Refund Chain:** All ULL-processed refunds are sent back to the user's originating wallet address on the source chain.
+
+## Common Refund Scenarios
+
+The specific token refunded depends on the state of the transaction when the failure occurred. Understanding the terms:
+
+* **Source Token:** The initial token the user wants to swap from.
+* **Destination Token:** The final token the user wants to receive.
+* **FST (Filler-Supported Token):** A token (often a stablecoin like USDC or USDT) that ULL Fillers primarily use to facilitate liquidity transfer between chains.
+* **Non-FST:** Any token that is not an FST.
+* **Source Swap:** A swap on the source chain to convert a Non-FST Source Token into an FST.
+* **Destination Swap:** A swap on the destination chain to convert an FST (received via ULL bridge) into the Non-FST Destination Token.
+* **ULL Bridge:** The core ULL process of moving an FST from the source chain to the destination chain.
+* **Atomic Step (within ULL):** Refers to operations that ULL treats as a single, indivisible unit for success/failure, e.g., ULL Bridge + Destination Swap.
+
+Here’s a summary table:
+
+| Scenario Description                                       | Key Steps Involved                                                                 | Point of Failure Affecting ULL                                                                          | Refund Token                 | Refund Chain |
+| :--------------------------------------------------------- | :--------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------ | :--------------------------- | :----------- |
+| **1. Initial Source Swap Fails** | User's Source Token (Non-FST) → Attempted Source Swap to FST (fails) → ULL Bridge → ... | Before ULL locks any assets. The initial aggregator swap fails.                                         | N/A (No ULL Refund needed)   | N/A          |
+| **2. Pure ULL Bridge Failure** (Source Token is already FST) | User's Source Token (FST) → ULL Bridge (fails) → Destination Token (FST)             | ULL Intent registered, but during bridge: filler not found, intent expires, or filler fails to fill order. | Original Source FST          | Source Chain |
+| **3. ULL Bridge + Destination Swap Failure** (Source is FST) | User's Source Token (FST) → ULL Bridge + Dest. Swap (FST → Non-FST) (atomic step fails) | ULL Intent registered, but the combined ULL Bridge + Destination Swap atomic step fails.                | Original Source FST          | Source Chain |
+| **4. Source Swap Succeeds, ULL Bridge Fails** | User's Source Token (Non-FST) → Source Swap to FST (succeeds) → ULL Bridge (fails) → ... | ULL Intent registered (with Intermediary FST), but the ULL bridge step fails.                           | Intermediary FST             | Source Chain |
+| **5. Source Swap Succeeds, ULL Bridge + Dest. Swap Fails** | User's Source Token (Non-FST) → Source Swap to FST (succeeds) → ULL (Bridge + Dest. Swap Atomic Step) (fails) | ULL Intent registered (with Intermediary FST), but the combined ULL Bridge + Dest. Swap atomic step fails. | Intermediary FST             | Source Chain |
+
+* **Intermediary FST:** The Filler-Supported Token on the source chain that was obtained *after* a successful initial source swap, and was the asset locked in ULL before the subsequent failure.
+
+## How Refunds Are Processed
+
+1.  When a user initiates a cross-chain transaction via the Trade Service, assets intended for the ULL process are locked in the ULL's Escrow Contract on the source chain. This locking is conditional upon the terms of the user's signed intent.
+2.  Intents have a defined time limit for fulfillment by Fillers.
+3.  If the intent expires without fulfillment, or if other ULL-specific failure conditions are met after assets are locked, the ULL system automatically triggers a refund.
+4.  The Escrow Contract releases the appropriate assets (as defined by the atomicity rules above) back to the user's wallet address on the source chain.
+5.  The Okto Facilitator Node and ULL smart contracts manage this refund process automatically.
+
+## Monitoring and Support
+
+- Users can typically monitor the status of their transactions using blockchain explorers for the source and destination chains or track the status of their `jobId` or `intentId` if using the Okto SDKs..
+- The application interface used to initiate the swap may also provide status updates.
+- Okto's system includes monitoring and alerting for refund processes. If you believe a refund is due but haven't received it after a reasonable time, please contact support through the application you used or Okto's official channels by sharing relevant information like job id.
+
+

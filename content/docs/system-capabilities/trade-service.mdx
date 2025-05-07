@@ -1,18 +1,37 @@
 ---
-title: Trade Service (Coming Soon)
+title: Trade Service
+description: An overview of Okto's Trade Service, the API suite for integrating seamless, optimized cross-chain swaps into your application, powered by the Unified Liquidity Layer (ULL).
 full: false
 ---
 
-The Trade Service is a core component within Okto's Unified Liquidity Layer (ULL), designed to be **the central access point for all cross-chain swap functionalities.** Whether you are building a dApp directly interacting with ULL or leveraging the power of the Okto Platform through the Okto SDK, the Trade Service is the central component for accessing cross-chain swap functionalities.
+## Introduction
 
-## Core Functionality
+The Okto Trade Service is a powerful API suite designed for developers looking to incorporate seamless cross-chain token swap functionality into their applications. It acts as the primary gateway to the capabilities of Okto's underlying Unified Liquidity Layer (ULL), abstracting away the complexities of multi-step bridging and swapping operations.
 
-The Trade Service offers a range of functionalities designed to simplify the process of initiating and executing cross-chain swaps. Its key capabilities include:
+With the Trade Service, you can offer your users the ability to swap virtually any token on one supported chain for any other token on another supported chain through a single, simplified interface.
 
-- **Cross-Chain Swaps:** The Trade Service accepts user or application requests for cross-chain token swaps. These requests can simply specify the source chain, destination chain, input token, output token, and desired amount, and let the Trade Service handle the rest.
-- **Optimal Route Discovery:** Upon receiving a swap request, the Trade Service consults the Okto Aggregation Framework (OAF). OAF will consult a vast network of liquidity sources, including:
-    *   **Decentralized Exchanges** across multiple chains
-    *   **Cross-Chain Bridges** and bridging protocols
-    *   **ERC-7683 Solvers** and intent markets
+<Callout type="info" title="Wallet Compatibility">
+The Okto Trade Service is designed for broad compatibility. It provides transaction data that can be signed and executed by virtually any wallet, whether it's an Okto embedded wallet or an external third-party wallet. This flexibility ensures developers can integrate Okto's powerful swap capabilities regardless of their users' preferred wallet solutions or the underlying wallet provider.
+</Callout>
 
-    to identify the **most efficient and cost-effective route** for your requested swap. You won't need to manually compare bridges or DEXs – the Trade Service will handle the pathfinding for you.
+## Core Functionality at a Glance
+
+The Trade Service uses an intent-based approach, focusing on what the user wants to achieve rather than how it needs to be done:
+
+1.  **Unified Swap Requests:** Your application submits a request specifying the source token/chain, destination token/chain, and amount. (See [ULL Supported Chains and FSTs](#) for more details).
+2.  **Intelligent Routing:** The Trade Service employs a sophisticated Pathfinder to determine the most optimal execution route. This considers factors like best price, lowest gas fees, execution speed, and slippage across various liquidity sources.
+3.  **Seamless Execution:** It automatically coordinates all necessary steps behind the scenes. This may involve:
+    * Utilizing integrated DEX Aggregators (like 1inch, Socket, etc.) for efficient on-chain swaps if the source/destination tokens aren't directly Filler/Solver-Supported Tokens (FSTs). ([Learn more about Fillers/Solvers](/docs/trade-service/trade-service-actors)).
+    * Leveraging the Unified Liquidity Layer (ULL) for the core secure cross-chain asset transfer via its network of solvers/fillers. ([Read the detailed explanation of ULL](/docs/okto-layer/ull)).
+4.  **Abstraction:** Developers and users don't need to manually interact with different bridges, DEXs, or manage multi-step transaction processes. The Trade Service handles the orchestration.
+
+## Key Benefits
+
+* **Simplified Integration:** Provides a single API endpoint for complex cross-chain swaps.
+* **Optimal Execution:** Automatically finds and executes the most efficient swap routes.
+* **Broad Token Coverage:** Access swaps for a vast range of tokens via integrated aggregators.
+* **Enhanced User Experience:** Offers users a simple "one-click" experience for cross-chain swaps.
+
+## Learn More
+
+This page provides a high-level overview. For detailed information on architecture, features, API references, usage guides, and integration steps, please refer to the main [Trade Service Documentation Section](/docs/trade-service).

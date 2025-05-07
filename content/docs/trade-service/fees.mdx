@@ -1,0 +1,104 @@
+---
+title: Fees
+description: Understand the fee structure for Okto's Trade Service, including network gas fees and Okto's service fees for cross-chain swaps.
+full: false
+---
+
+import FullscreenImage from 'app/components/mdx/FullscreenImage';
+
+## Introduction
+
+Okto aims for transparency in all transactions facilitated through its infrastructure. When transacting for cross-chain swaps built upon the Unified Liquidity Layer (ULL) using the standalone Trade Service or the Swap intents via SDK, users and developers should be aware of the associated costs. This page outlines the fee structure involved.
+
+## Overview of Cost Components
+
+Executing a swap via the Trade Service involves two primary types of costs:
+
+1.  **Network Gas Fees:**
+    * These are standard fees paid directly to the blockchain network (e.g., Ethereum, Polygon) by the entity initiating the transaction.
+    * Gas fees are variable, depend on network congestion, and are neither collected by Okto nor by the client who has integrated Okto.
+    * **Gas Sponsorship (AA Wallets):** For clients using Okto's Account Abstraction (AA) embedded wallets, clients can enable gas sponsorship. This allows the client to pay the network gas fees on behalf of their users. This can be enabled by the client on their Okto developer dashboard.
+    * **Gas Abstraction (EOA Wallets):** For clients opting for Okto’s standard Externally Owned Account (EOA) embedded wallets, we offer a Gas Station Network (GSN) feature. This means users pay for their own gas fee but are exempted from the need to hold the native token on the chains used to pay for gas. Okto can automatically convert other stablecoins held by the user on other supported chains into the required native tokens to cover gas costs.
+
+2.  **Okto Trade Service Fees:**
+    * These are fees associated with using the Okto infrastructure for facilitating swaps, especially cross-chain operations.
+    * They cover platform maintenance, operational costs, liquidity orchestration (via ULL solvers/fillers), and potentially include a fee configured by the application developer using the service.
+    * These fees are typically deducted from the source token amount before the swap/bridge process occurs.
+
+## Trade Service Fee Breakdown
+
+<FullscreenImage 
+  src="/images/trade-service-fees.png" 
+  alt="Trade Service Fees" 
+  className="w-full md:w-auto max-w-full rounded-lg shadow-md" 
+/>
+
+Okto Trade Service fees are primarily applied when a transaction involves a cross-chain component (bridging). For purely same-chain swaps executed via the service (using integrated aggregators without ULL bridging), Okto currently does not deduct its own service fees. Furthermore, clients cannot add their own service fee for these same-chain swaps through the Trade Service at this time. Only standard network gas fees apply to the end-user (unless sponsored).
+
+When a cross-chain operation is involved, the following fee components may apply:
+
+### 1. Aggregator Fee: (Currently 0%)
+
+Fee potentially charged by integrated DEX aggregators for any on-chain swap portions that might occur before or after the ULL bridge. Okto currently does not pass on or add aggregator fees.
+
+### 2. Okto Base Fee (A)
+- **Purpose:** A standard fee applied by Okto for utilizing the cross-chain infrastructure and covering operational costs.
+- **Calculation:** A fixed percentage of the source token amount being swapped/bridged.
+- **Default Rate:** 0.01% of the source token amount.
+- **Applicability:** Charged on all Trade Service transactions that include a cross-chain bridge step.
+
+### 3. Client Deduction (`crossChainFee`)
+- **Purpose:** Allows developers integrating the Okto Trade Service into their applications (Clients) to optionally charge their end-users a fee for the cross-chain functionality. This entire amount is the "Client Deduction".
+- **Mechanism:** Clients can configure this fee in one of two ways:
+    -  **Option 1: Percentage-Based Client Fee:** 
+    
+        - The Client specifies their desired fee share (`X`) as a percentage of the source token amount. The total amount deducted from the user for this component will be `X + (Y% * X)`, where `Y%` represents Okto's revenue share percentage (default 50%).
+        - In this case, the Client receives `X`, and Okto receives `Y% * X`.
+
+    -  **Option 2: Fixed-Value Total Deduction:** 
+        
+        - The Client specifies a fixed total amount (`X`) that should be deducted from the user for the client-specific fee portion. Okto then calculates the underlying Client Share (`Z`) such that `Z + (Y% * Z) = X`, where `Y%` is Okto's revenue share percentage (default 50%).
+        - In this scenario, the Client receives `Z`, Okto receives `(Y% * Z)`, and the total deducted from the user for this component is the pre-defined `X`.
+
+- **Shares:** Regardless of the configuration method, the total Client Deduction is split internally:
+    - **Okto Share (B):** Okto's portion of the total Client Deduction (`Y% * X` in Option 1, or `Y% * Z` in Option 2). Default is 50% of the Client's base share.
+    - **Client Share (C):** The Client's portion (`X` in Option 1, or `Z` in Option 2). Clients receive this share in their designated wallet address for the respective chain.
+- **Applicability:** This fee component (Client Deduction) is applied in addition to the Okto Base Fee (A) for all Trade Service transactions involving a ULL cross-chain bridge step. However, this fee is only deducted if the Client chooses to configure one greater than zero. If the Client sets it to zero, only the Okto Base Fee (A) applies as the service fee.
+
+### Total Service Fee Deduction (Cross-Chain)
+
+The total amount deducted from the user's source tokens by the Okto Trade Service for a cross-chain transaction is:
+
+**Total Service Fee = Aggregator Fee (0) + Okto Base Fee (A) + Okto’s share of Client Deduction (B)**
+
+(Where Client Deduction, and thus Okto's share of it (B), is only non-zero if configured by the integrating Client using Option 1 or Option 2 above).
+
+## When Fees Are Applied
+
+The "Trade Type" below describes the sequence of operations involved in fulfilling a user's swap request.
+
+| Trade Type                                                                 | Okto Base Fee (A) | Client Deduction (B+C) | Notes                                                                                                                         |
+| :------------------------------------------------------------------------- | :---------------- | :--------------------- | :---------------------------------------------------------------------------------------------------------------------------- |
+| **Same-Chain Swap ONLY** <br/>*(Swap Token A for Token B on the same chain)* | No (0)            | No (0)                 | Okto currently charges no service fee for same-chain swaps.                                                                   |
+| **Swap + Bridge** <br/>*(Source token swapped on source chain, then result bridged)* | Yes               | Yes* | Fees A, B, C apply.                                                                                                           |
+| **Bridge + Swap** <br/>*(Asset bridged, then swapped on destination chain)* | Yes               | Yes* | Fees A, B, C apply.                                                                                                           |
+| **Swap + Bridge + Swap** <br/>*(Source swap, bridge, then destination swap)* | Yes               | Yes* | Fees A, B, C apply.                                                                                                           |
+| **Pure Bridge ONLY** <br/>*(Source token is directly ULL-compatible and bridged)* | Yes               | Yes* | Fees A, B, C apply.                                                                                                           |
+
+*Applied only if the integrating Client sets a `crossChainFee` (Client Deduction) greater than 0 using either configuration method.
+
+## Default Fee Configuration
+
+Unless a specific agreement is made with a Client (developer), the default configuration is:
+
+* **Okto Base Fee (A):** 0.01%
+* **Okto Revenue Share (for B):** 50% (meaning the Client Fee Share (C) is also 50% of the `crossChainFee`'s base value)
+
+## Fee Transparency in Quotes
+
+The Okto Trade Service aims to provide clarity. The estimated output amount returned by the `getQuote` and `getBestRoute` API calls should reflect the expected final amount after accounting for:
+
+* Okto Trade Service Fees (A, B, C)
+* Market rates and potential price impact
+* Liquidity provider (Solver) spreads within the ULL
+

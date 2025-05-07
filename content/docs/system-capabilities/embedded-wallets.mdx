@@ -1,6 +1,6 @@
 ---
 title: Embedded Wallets
-description: Learn about embedded wallets, their features, and how they simplify blockchain interactions by integrating Okto's Decentralized Wallet Network.
+description: "Discover Okto's Embedded Wallets: self-custodial wallets seamlessly integrated into your application via the Okto SDK. Learn how Wallet Providers define distinct ecosystems and control interoperability for enhanced user experience and security."
 full: false
 ---
 
@@ -12,32 +12,120 @@ import FullscreenImage from 'app/components/mdx/FullscreenImage';
     className="w-full md:w-auto max-w-full rounded-lg shadow-md" 
 />
 
-## What is an Embedded Wallet?
+## What are Okto Embedded Wallets?
 
-An **embedded wallet** is a cryptocurrency wallet seamlessly integrated into an application, such as a dApp, website, or traditional web app. Unlike standalone wallets or browser extensions, embedded wallets are directly built into the application, offering a streamlined and intuitive user experience. 
+Okto Embedded Wallets offer a streamlined way to bring Web3 capabilities to your users directly within your application. Unlike standalone wallets or browser extensions, Okto embedded wallets are directly built into the application, offering an intuitive user experience. They are:
 
-Powered by Okto’s [**Decentralized Wallet Network (DWN)**](#), embedded wallets simplify blockchain interactions by providing a consolidated view of user assets across multiple chains and enabling chain-abstracted transactions.
+* **Self-Custodial:** Users maintain full control over their keys and assets. Okto's infrastructure utilizes technologies like Multi-Party Computation (MPC) to manage keys securely, ensuring private keys are never fully exposed in one place.
+* **Seamlessly Integrated:** Created and managed via the Okto SDKs, eliminating the need for users to install external wallet extensions or manage complex setups.
+* **User-Friendly:** Designed to simplify onboarding, offering familiar Web2-like login and interaction experiences (e.g., email, social login), often removing the need for users to manage seed phrases directly.
+* **Automatically Provisioned:** Wallets are typically created automatically for users across supported chains upon successful authentication with your application via Okto.
 
-Developers can leverage [Okto’s SDKs](../okto-sdk/supported-sdk-platforms) to easily build embedded wallets into their apps, whether on web or mobile platforms. These wallets bring the power of Okto's infrastructure to end users, hiding blockchain complexities and enabling seamless asset management.
+Developers can leverage [Okto’s SDKs](/docs/react-sdk/overview) to easily build embedded wallets into their apps, whether on web or mobile platforms. These wallets bring the power of Okto's infrastructure to end users, hiding blockchain complexities and enabling seamless asset management.
 
 ---
 
-## Key Features of Embedded Wallets
+## Key Features of Okto Embedded Wallets
 
-### 1. **Unified Asset Management**
-Users can view and manage assets across multiple chains (e.g., Ethereum, Solana, Aptos) in a single wallet interface.
+* **Unified Asset Management:** Users can view and manage assets across multiple supported chains (e.g., Ethereum, Solana, Aptos) in a single wallet interface within your application.
+* **Chain-Abstracted Transactions:** By leveraging Okto's backend infrastructure (including the Unified Liquidity Layer for swaps), embedded wallets allow users to transact without needing to deeply understand the underlying chains, token standards, or manually manage gas fees in many scenarios.
+* **Simplified Onboarding:** Integrated with familiar authentication methods, embedded wallets make onboarding simple for users with no prior blockchain experience.
+* **Cross-Platform Compatibility:** Okto's embedded wallets are designed to work seamlessly across web and mobile environments where SDKs are integrated, providing consistent functionality.
+* **Advanced Security:** Leveraging MPC technology, Okto embedded wallets enhance security by distributing key management processes, reducing single points of failure.
 
-### 2. **Chain-Abstracted Transactions**
-By tapping into Okto's DWN, embedded wallets allow users to transact without worrying about the underlying chains, token standards, or gas fees.
+---
 
-### 3. **User-Friendly Onboarding**
-Integrated with familiar authentication methods (e.g., email, social login), embedded wallets remove the need for seed phrases and make onboarding simple for users with no prior blockchain experience.
+## The Wallet Provider Ecosystem
 
-### 4. **Cross-Platform Compatibility**
-Okto's embedded wallets work seamlessly across web and mobile environments, providing consistent functionality and user experience.
+A core concept for understanding Okto Embedded Wallets is the **Wallet Provider (WP)**. A Wallet Provider defines a distinct ecosystem for wallets and manages the underlying infrastructure.
 
-### 5. **Advanced Security**
-Embedded wallets leverage the **multi-party computation (MPC)** and trusted execution environments (TEEs) of Okto's DWN to ensure private keys are never fully exposed, delivering high security for users’ digital assets.
+- **Okto's Role:** Okto itself provides foundational Wallet Providers, currently including:
+    - **Okto EOA Wallets:** Utilising standard Externally Owned Accounts for EVM type chains.
+    - **Okto AA Wallets:** Leveraging Account Abstraction (ERC-4337) for smart contract wallets with enhanced features for EVM type chains.
+
+    <Callout type="info" title="Note">
+        After Pectra Okto will merge both EoA and AA into a single WP.
+    </Callout>
+
+- **Client Association:** Each Client application integrating Okto is associated with **one** specific Wallet Provider.
+- **User Association:** A single user (identified by their login method) can interact with multiple Client applications. These applications might belong to the *same* Wallet Provider or *different* Wallet Providers.
+
+*(Future Scope: In the future, third-party entities or specific clients might operate as distinct Wallet Providers within the Okto framework, creating their own unique wallet ecosystems.)*
+
+---
+
+## Interoperability: The Key Rule
+
+The most critical aspect defined by the Wallet Provider is **interoperability**.
+
+To understand Okto's specific approach, it's helpful to first consider the general notion of interoperability. In blockchain, interoperability often refers to a single wallet's ability to move assets or interact seamlessly across different blockchain systems. 
+
+Okto's embedded wallet interoperability extends this idea: different client applications operating **under the same Wallet Provider (WP)** can offer the *exact same wallet and assets* to a common user. This creates a unified experience for the user within that specific Wallet Provider's ecosystem.
+
+<Callout type="info" title="Note">
+    Embedded wallets are **only** interoperable within the **same** Wallet Provider ecosystem.
+</Callout>
+
+This means:
+
+### 1. Within the SAME Wallet Provider Ecosystem
+
+<FullscreenImage 
+  src="/images/wallet-provider-1.png" 
+  alt="Wallet Provider Scenario" 
+  className="w-100 h-140 mx-auto rounded-lg shadow-md" 
+/>
+
+- If a user interacts with multiple client applications (e.g., Client App 1 and Client App 2 using Google Authentication) that *both* belong to the **same Wallet Provider** (e.g., both use Okto AA wallets), they will use the **exact same wallet address** (e.g., Address `A`) across both applications for any given blockchain.
+- Assets acquired in Client App 1 within this WP ecosystem are directly accessible and usable in Client App 2, providing a seamless and unified multi-app experience for the user.
+
+<Callout type="info" title="Note">
+    - A user's wallet address is typically derived from or linked to their authentication method (e.g., GAuth, email OTP). 
+    - **If a user switches to a *different login mechanism* (e.g., from Google login to email OTP), this will generally result in a *different set of wallet addresses*, even if the client applications are under the same Wallet Provider.** The consistent wallet address sharing described above applies when the user employs the *same login mechanism* across clients within that single WP. 
+    - In summary, a user's address via the same login mechanism will remain the same under a single WP, regardless of which client app they log in to, as long as the client is under that WP as well.
+</Callout>
+
+### 2. Across DIFFERENT Wallet Provider Ecosystems
+
+<FullscreenImage 
+  src="/images/wallet-provider-2.png" 
+  alt="Wallet Provider Scenario" 
+  className="w-120 h-100 mx-auto rounded-lg shadow-md"
+/>
+
+- If the same user (potentially identified by the same login credentials but for clients under different WPs) interacts with Client App 1 (under WP 1, e.g., Okto AA) and Client App 2 (under WP 2, e.g., Okto EOA or a future third-party WP), they will have **completely separate wallet addresses** for each ecosystem (e.g., Address A for WP 1, Address B for WP 2).
+- These wallets are **non-interoperable from a direct client access perspective**. This means assets held in the wallet associated with WP 1 (Address `A`) cannot be directly viewed or utilized by Client App 2, which operates exclusively within the WP 2 ecosystem (Address B), and vice-versa. They are distinct wallets tied to the same user identity but siloed by the Wallet Provider.
+
+<Callout type="info" title="Note">
+    - When we state that wallets across different Wallet Providers are "non-interoperable" in this context, we mean that the *direct access and visibility of assets are siloed within each WP's ecosystem for client applications*.
+    - However, each embedded wallet (e.g., Address A under WP1, or Address B under WP2), once provisioned, still functions as a standard self-custodial wallet with the traditional notion of interoperability. The wallets are still capable of standard blockchain transactions and can take advatage of Okto's full suite of features..
+    - The "non-interoperability" refers to the barrier between client applications belonging to *different* Wallet Provider ecosystems in terms of shared asset views and direct utilization.
+</Callout>
+
+---
+
+## Okto's Current Wallet Providers
+
+Okto currently offers two primary Wallet Provider types for embedded wallets:
+
+### 1. Okto EOA Wallets
+
+* **Type:** Standard Externally Owned Accounts for EVM-type chains. (Note: Non-EVM ecosystems like Solana and Aptos typically have standard programmable wallets which may have different characteristics).
+* **Generation:** Automatically generated for users upon authentication by default.
+* **Interoperability:** Wallets are interoperable across different client applications that utilize the Okto EOA Wallet Provider (when using the same login mechanism).
+
+### 2. Okto AA Wallets
+
+* **Type:** Smart Contract Wallets based on Account Abstraction (ERC-4337) for EVM-type chains. (Note: Non-EVM ecosystems like Solana and Aptos typically have standard programmable wallets which may have different characteristics).
+* **Benefits:** Enable features like gas sponsorship, batched transactions, social recovery, and enhanced policy controls.
+* **Generation:** Automatically generated for users upon authentication.
+* **Interoperability:** Wallets are interoperable across different client applications that utilize the Okto AA Wallet Provider (when using the same login mechanism).
+
+---
+
+## Special Case: JWT/OAuth Users
+
+Users authenticating via methods like JWT or certain specific OAuth providers might function within a more isolated or client-specific context. In such cases, their wallets can be considered as operating under a special Wallet Provider instance unique to that authentication context and client, potentially limiting interoperability even with other clients that might generally share a common WP (like Okto AA or Okto EOA).
 
 ---
 
