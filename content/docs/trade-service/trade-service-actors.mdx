@@ -1,0 +1,53 @@
+---
+title: Actors of Trade Service
+description: Understand the key participants and components involved in executing cross-chain swaps through the Okto Trade Service, from the user initiating the intent to the liquidity providers fulfilling it.
+full: false
+---
+
+## Introduction
+
+Executing a seamless any-to-any cross-chain swap via the Okto Trade Service involves a sophisticated orchestration between various actors and system components. Each plays a distinct role in translating a user's simple request into a successfully settled transaction across different blockchain networks. Understanding these actors helps clarify how Okto achieves this complexity abstraction.
+
+## Key Actors and Roles
+
+Here are the primary actors and components involved in a typical Trade Service flow:
+
+### User:
+
+* **Role:** The initiator of the transaction.
+* **Interaction:** Expresses their desired outcome (their "intent") through the Developer Application interface. e.g., "Swap X amount of Token A on Chain 1 for Token B on Chain 2". The user approves and signs the final transaction proposed by the application after reviewing the quote and details.
+
+### Developer Application (Client):
+
+* **Role:** The dApp, wallet, or platform that integrates the Okto Trade Service SDK or API.
+* **Interaction:** Provides the interface for the User. It communicates with the Okto Trade Service to fetch quotes, receives optimized routing information and transaction calldata, presents this information to the User for approval, and ultimately submits the User-signed transaction for execution.
+
+### Okto Trade Service (The Orchestrator):
+
+* **Role:** The central system, accessible via API/SDK, that coordinates the entire swap process. It acts as the main interface between the Developer Application and the underlying liquidity and execution layers.
+* **Interaction:**
+    * Receives quote and execution requests from the Developer Application.
+    * Utilizes its internal Intelligent Pathfinder component to calculate the optimal route (considering price, gas, speed, slippage).
+    * Interacts with external DEX Aggregators if necessary for on-chain swaps (pre-processing source token or post-processing destination token).
+    * Structures the core cross-chain transfer request into a formal "intent".
+    * Submits this intent to the Unified Liquidity Layer (ULL) Facilitator Node.
+    * Manages risk parameters and provides status updates back to the Developer Application.
+
+### DEX Aggregators:
+
+* **Role:** External, third-party services (e.g., 1inch, Socket, etc.) that find the best prices for on-chain swaps.
+* **Interaction:** The Okto Trade Service may route parts of the transaction through these aggregators if the user's source token needs to be swapped into a ULL-compatible asset/FST (like a stablecoin) before the cross-chain transfer, or if the ULL-transferred asset needs to be swapped into the final desired token on the destination chain. This ensures support for a wide variety of tokens beyond those directly handled by ULL's core transfer mechanism.
+
+### Unified Liquidity Layer (ULL) Actors:
+
+The ULL is the core Okto infrastructure responsible for the secure and efficient cross-chain settlement part of the swap. It involves its own set of specialized actors:
+
+* **Facilitator Node:**
+    * **Role:** The primary off-chain coordinator within the ULL network.
+    * **Interaction:** Receives structured intents from the Trade Service. It broadcasts these intents to the network of Fillers and matches the intent with an available Filler based on efficiency and cost, managing the intent's lifecycle within the ULL system. Currently, Okto runs the facilitator nodes.
+* **Fillers (or Solvers):**
+    * **Role:** Independent liquidity providers (LPs) who actively monitor the network for intents broadcast by the Facilitator Node. They are the actors who bridge the liquidity gap between chains. The fillers register and stake with Okto for additional security. Currently Okto has a network of fillers, later this will be opened to any external participants.
+    * **Interaction:** When a Filler accepts an intent, they lock collateral on the source chain (via ULL smart contracts) and provide the required funds (the desired token) to the User's address on the destination chain. They undertake the cross-chain execution risk, typically earning a fee or capturing a price spread for their service.
+* **Settlers:**
+    * **Role:** Entities interacting with the ULL smart contracts on the source chain to finalize the transaction after a Filler confirms successful execution on the destination chain.
+    * **Interaction:** Verify the Filler's success proof and release the User's original deposited funds (locked in the ULL contract) to the Filler, thus completing the economic cycle of the swap and compensating the Filler.
