@@ -69,7 +69,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Providers>
             <div className="min-h-screen flex flex-col">
               <NavbarComponent />
-              <SOABanner />
+              {/* <SOABanner /> */}
               <main className="flex-1">{children}</main>
               <Footer />
             </div>
