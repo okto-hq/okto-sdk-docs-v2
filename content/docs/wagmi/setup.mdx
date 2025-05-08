@@ -42,17 +42,18 @@ npm i @okto_web3/wagmi-adapter wagmi @tanstack/react-query
   When integrating Okto with Wagmi in a Vite project, you'll need to add Node.js polyfills to resolve browser buffer issues. Update your `vite.config.ts` file with this configuration:
 
   ```typescript title="vite.config.ts"
-  import { defineConfig } from 'vite'
-  import react from '@vitejs/plugin-react'
-  import { nodePolyfills } from 'vite-plugin-node-polyfills'
-
+  import { defineConfig } from "vite";
+  import react from "@vitejs/plugin-react";
+  import tailwindcss from '@tailwindcss/vite'
+  import { nodePolyfills } from "vite-plugin-node-polyfills";
+  
   // https://vite.dev/config/
   export default defineConfig({
-    plugins: [react(), nodePolyfills()],
+    plugins: [react(), tailwindcss(), nodePolyfills()],
     server: {
       port: 3000, // will always start the service on port 3000
-    }
-  })
+    },
+  });
   ```
 
   Don't forget to install the required package:
