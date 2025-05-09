@@ -1,0 +1,64 @@
+---
+title: Slippage
+full: false
+description: "Automated slippage calculation with base thresholds, real-time volatility metrics, and scenario-based formulas ensures accurate pricing across swap and bridging flows."
+---
+
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
+
+Slippage refers to the difference between the expected price of a trade at the time of submission and the actual execution price at which the trade is completed. This variance typically occurs due to market volatility, liquidity fluctuations, or the time delay between transaction initiation and confirmation.
+
+## How Trade Service Handles Slippage?
+Trade Service incorporates a dynamic, system-driven approach to slippage management, eliminating the need for manual configuration and improving execution reliability:
+
+### Dynamic Slippage Calculation
+ Slippage tolerances are automatically adjusted based on real-time market conditions, ensuring that swaps remain executable even during periods of high volatility.
+
+### One-Time Initialization reset
+ Upon system initialization, all previously stored token-specific slippage settings are reset to avoid conflicts or outdated tolerances affecting current trades.
+
+### High Swap Success Rate 
+ By actively responding to market changes, the system improves the likelihood of successful swap execution without requiring user intervention.
+
+### Immutable by End Users
+ Slippage parameters are centrally managed and not user-editable, ensuring consistency, preventing manipulation, and maintaining platform-wide reliability.
+
+## Slippage Calculation:
+The system employs an automated slippage calculation mechanism that prohibits manual modification. The comprehensive slippage value is derived through the base slippage along with the dynamic slippage adjustments.
+Where the Dynamic Slippage Buffer is calculated based on token volatility metrics.
+
+## Calculation Methodology
+### 1. Base Slippage 
+The Base Slippage represents a static value configured on a per-token basis by the Operations team.
+<CollapsibleCallout type="info" title="Base Slippage Fallback">
+    - In the absence of both 5-minute and 24-hour data: System defaults to 3%.
+    - In the absence of 5-minute data only: System utilizes 24-hour data exclusively.
+    - In the absence of 24-hour data only: System utilizes 5-minute data exclusively.
+</CollapsibleCallout>
+
+### 2. Dynamic Slippage Buffer Parameter
+The Dynamic Slippage Buffer is calculated using two primary volatility parameter:
+
+- **5-Minute Price Volatility (Parameter P1):** Measures price fluctuation magnitude over the preceding 5-minute interval.
+    - 5-min price change for token `T1 → A`
+    - 5-min price change for token `T2 → B`
+    - Combined slippage value = `S = A + B`
+
+- **24-Hour Price Volatility (Parameter P2):** Measures price fluctuation magnitude over the preceding 24-hour interval.
+    - 24-hour price change for token `T1 → C`
+    - 24-hour price change for token `T2 → D`
+    - Combined slippage value = `R = C + D`
+
+The final dynamic slippage value is determined by `Dynamic_Slippage = MAX(P1, P2)`
+
+Here P1 and P2 values are mapped to predefined slippage threshold buckets according to volatility levels.
+
+## Slippage Implementation based on Scenarios
+
+| Transaction Type | Slippage Calculation Formula | Parameter Details | Comparison with App |
+|---------------------------|-----------------------------|-------------------------------|---------------------|
+| Same Chain Swap (S1) | MAX(P1, P2) + Base Slippage | P1: 5-min price volatility buckets<br/>P2: 24-hour price volatility buckets | Same as App |
+| Bridge + Destination Swap (S2) | MAX(K1, K2) + Base Slippage | K1: 5-min price volatility with distinct buckets<br/>K2: 24-hour price volatility with distinct buckets | Lower than App |
+| Bridge Only Transaction (S3) | Fixed 0.1% slippage | Stable tokens only | 0.1% |
+| Swap + Bridge (S+B) | S1 + S3 | Combined slippage from both transaction types | Same as App |
+| Swap + Bridge + Swap (S+B+S) | S1 + S2 + S3 | Combined slippage from all three transaction types | Same as App |
