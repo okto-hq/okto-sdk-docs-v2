@@ -9,6 +9,7 @@
       "okto-faucet",
       "api-key",
       "wallet-control",
+      "treasury-wallet",
       "sponsorship"
     ],
     "icon": "Shield",
