@@ -24,6 +24,7 @@
       "./external-wallet-adapters/wagmi",
       "./external-wallet-adapters/rainbowkit",
       "---Trade Service (Coming Soon)---",
+      "trade-service",
       "---About Okto SDK---",
       "okto-sdk/overview",
       "okto-sdk/sdk-introduction",

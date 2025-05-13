@@ -6,8 +6,13 @@
     "pages": [
         "[← Back to Home](/)",
         "index",
-        "setup",
-        "usage",
-        "resources"
+        "trade-service-actors",
+        "refunds",
+        "slippage",
+        "fees",
+        "suported-networks-tokens",
+        "!setup",
+        "!usage",
+        "!resources"
     ]
 }
