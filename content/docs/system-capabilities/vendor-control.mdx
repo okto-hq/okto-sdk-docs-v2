@@ -1,27 +1,36 @@
 ---
-title: Vendor Control
+title: Client Wallets
 full: false
 ---
 
-Vendors in the Okto ecosystem can manage user onboarding, sponsor gas, and handle batch operations. Okto provides two specialized wallet constructs to support vendor activities: **Sponsor Wallet** and **Central Wallet**.
+Clients in the Okto ecosystem can manage user onboarding, sponsor gas fees for user transactions, and perform their own on-chain operations. Okto provides two specialized wallet constructs to support these client activities: **Treasury Wallet** and **Sponsor Wallet**.
 
-## 1. Sponsor Wallet
+<Callout type="info" title="Info">
+- Treasury and Sponsor wallets can be created and managed via the Okto Developer Dashboard.
+- For a step-by-step guide, check out the [Treasury Wallet Dashboard Guide](/docs/developer-admin-dashboard/treasury-wallet).
+</Callout>
 
-- **Purpose:** Primarily designed for **gas sponsorship**. Vendor Sponsor Wallets are used to fund gas fees for user transactions on chosen blockchain networks, enabling a frictionless user experience.
-- **Key Features:**
-    - **Gas Fee Sponsorship:** Automatically covers transaction fees for user operations initiated under the vendor’s purview.
-    - **Funding Mechanism:** Vendors deposit funds into the Sponsor Wallet, which are then used exclusively for gas sponsorship.
-    - **Chain-Specific Sponsorship (Configurable):** Vendors can configure their Sponsor Wallets to sponsor gas fees on specific chains relevant to their applications or user activities.
-    - **Policy Integration:** The vendor can specify policy constraints (daily volume limit, per transaction limit) to avoid misuse.
+## 1. Treasury Wallet
 
-## 2. Central Wallet
-
-- **Purpose:** Designed for performing **aggregated or batch actions** across multiple users and potentially multiple chains. Central Wallets are used for vendor-initiated operations that require centralized control and execution, such as:
-    - Batch token transfers to multiple users.
-    - Aggregated smart contract interactions on behalf of a group of users.
-    - Centralized management of vendor-specific assets or operations.
+The Treasury Wallet serves as the client's own on-chain identity. It allows clients to:
+    * Perform on-chain actions independently of user wallets (e.g., invoking their own smart contracts, executing airdrops, or other DApp-specific operations).
+    * Authorize and validate gas sponsorship for user transactions when the sponsorship feature is enabled.
 
 - **Key Features:**
-    - **Aggregated Transaction Execution:** Vendor Central Wallets can initiate transactions that affect multiple user accounts or perform actions across different chains in a coordinated manner.
-    - **Batch Operations:** Enables efficient batching of transactions, reducing gas costs and improving operational efficiency for vendor-driven actions.
-    - **Centralized Asset Management:** Provides vendors with centralized oversight of all transactions under their management.
+    - **Client-Initiated Transactions:** Execute transactions directly from a wallet controlled by the client.
+    - **Aggregated Transaction Execution:** Can be used for operations like batch token transfers or aggregated smart contract interactions.
+    - **Sponsorship Authorization:** Acts as the authorizing entity (`feePayerAddress`) for transactions where gas fees are paid by the Sponsor Wallet.
+
+<Callout type="warn" title="Note">
+A Treasury Wallet is **required** if the client intends to use gas sponsorship or needs to perform any on-chain actions directly from their own account. It is not required if the client's application only facilitates transactions initiated and funded by end-users.
+</Callout>
+
+## 2. Sponsor Wallet
+
+The sponsor wallet is primarily designed for **gas sponsorship**. The Sponsor Wallet holds the funds that will be used to pay gas fees for user transactions on supported blockchain networks, enabling a gasless experience for your users.
+
+- **Key Features:**
+    - **Gas Fee Sponsorship:** Automatically covers transaction fees for user operations when sponsorship is enabled for the specific chain and a valid Treasury Wallet is set as the fee payer.
+    - **Funding Mechanism:** Clients deposit funds directly into the Sponsor Wallet via the Okto Developer Dashboard. These funds are then used exclusively for gas sponsorship.
+    - **Chain-Specific Sponsorship:** Clients can enable sponsorship and fund Sponsor Wallets on a per-chain basis.
+    - **Policy Integration:** (Future scope) Clients will be able to specify policy constraints (e.g., daily volume limit, per-transaction limit) to manage sponsored funds.
