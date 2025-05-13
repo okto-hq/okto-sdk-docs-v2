@@ -1,0 +1,50 @@
+---
+title: Supported Network
+description: Supported Network, Tokens and Limits (Still working)
+full: false
+---
+
+## Overview
+
+Trade Service supports a wide range of swap and bridge flows across EVM and SVM networks. These transaction types enable asset interoperability through native swaps, cross-chain bridging, and token conversions on either or both ends of the transaction path.
+
+All supported flows ensure optimal pathing through liquidity aggregators such as 1inch, Socket, Lifi, Jupiter, Unizen and Okto ULL.
+
+---
+
+## Supported Chains
+
+| Networks | Filler Supported Test | Supported |
+|---|---|---|
+| Ethereum | USDC, USDT | ✅ |
+| Arbitrum | USDC | ✅ |
+| Base | USDC | ✅ |
+| Polygon | USDT, USDC | ✅ |
+| BSC | USDT, USDC | ✅ |
+| HyperEVM | USDC | 🔜 |
+| Optimism | USDT | 🔜 |
+| zkEVM | USDC | 🔜 |
+| Avalanche | USDC | 🔜 | 
+| zkSync | USDT | 🔜 | 
+
+
+---
+
+## Aggregators Used
+
+| Aggregator       | Approx. Usage Share |
+|------------------|---------------------|
+| 1inch            | ~90.32%             |
+| Unizen           | ~4.51%              |
+| Okto (Bridge-only)| ~4.43%             |
+| LiFi             | ~0.82%              |
+| Socket           | ~0.43%              |
+
+---
+
+## Notes
+
+- **FST (Filler Supported Token)** is the primary stable token on a given chain supported for bridging.
+- At this time, **only one FST is supported per chain**. Support for additional tokens will expanded in future updates.
+
+---
