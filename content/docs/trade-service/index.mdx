@@ -1,7 +1,124 @@
 ---
 title: Overview
 full: false
-description: Okto Trade Service APIs to test out things. 
+description: "Comprehensive API suite for same-chain and cross-chain token swaps with routing, slippage control, and filler-aggregator logic—featuring ULL, permit2, and intent registration."
 ---
 
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
+import ExternalLink from 'app/components/mdx/ExternalLink';
+import TechnologyCard from "app/components/mdx/TechnologyCard";
+import { 
+  IoCodeSlashOutline,
+  IoKeyOutline,
+  IoFileTrayFullSharp,
+  IoGitBranch,
+  IoDocumentAttachSharp,
+  IoLayersSharp,
+  IoPushSharp,
+  IoDuplicate
+} from "react-icons/io5";
 
+Okto Trade Service offers a comprehensive suite of functionalities to make token swaps a seamless and abstracted experience for both the users and developers. It handles estimations, routing algorithms, filler-facilitator-settler matching, slippage calculation, and more. The service is built for use within the Okto platform and is also suitable for integration into other Web3 dApps.
+
+The Okto Trade Service functions as:
+- Independent Liquidity Filler- Okto operates as its own aggregator, with the ability to independently fulfill swap intents using internal liquidity sources and routing logic.
+
+- Aggregator of Aggregators- In addition to its internal liquidity, Okto integrates with multiple third-party aggregators and liquidity providers. This enables the platform to source the most optimal routes and pricing from a wide range of external providers.
+
+## Features
+
+Trade Service offers following fetures: 
+- Same Chain Swaps 
+- Cross Chain Swaps
+- API Endpoints for Core Swap Functions
+- Flexible and Transparent Fee Structure
+- Detailed Slippage Breakdown
+- Depegging management and Alerts
+- Automatic Refunds for Failed Transactions
+
+## Swap
+
+Each swap operation, especially cross-chain swaps, involves a series of intermediate on-chain transactions that are abstracted away from the user. These steps are essential for routing, bridging, and completing the swap securely and efficiently. The exact sequence varies based on the type of swap.
+
+### Same Chain Swap 
+
+A same chain swap involves converting one token to another on the same blockchain, within the same user's wallet address. It does not require any cross-chain communication or bridging. 
+
+**Example-** Swap ETH to USDT on the Base network.
+
+- **User Initiates Transaction-** The user starts a swap for two tokens on the same blockchain.
+- **Swap Execution-** The source token is swapped to the destination token within the same user’s wallet address.
+
+### Cross Chain Swap
+
+A cross chain swap enables token conversion across different blockchains, delivering the final tokens to the same user’s wallet on the destination chain. This process typically involves bridging assets between chains.
+
+**Example-** Swap SHIBA on BSC to USDT on Ethereum.
+
+### Cross Chain Swap – Filler Supported Tokens
+
+- **User Initiates Transaction-** The user begins a swap involving a filler-supported source token.
+- **Bridging Transaction Initiation-** The source token is locked on the source chain via ULL.
+- **Token Release on Destination Chain-** The equivalent filler-supported token is released on the destination chain.
+- **(Optional) Destination-Side Swap-** If the final output token differs from the bridged token, a swap is executed on the destination chain.
+
+### Cross Chain Swap – Filler Unsupported Tokens
+
+- **User Initiates Transaction-** A cross-chain swap is initiated using a token that is not filler-supported.
+- **Source-Side Swap to Filler Supported Token-** The non-supported token is first swapped on the source chain into a filler-supported token that ULL can bridge.
+- **Bridging via ULL-** The filler-supported token is then bridged from the source chain to the destination chain using ULL’s cross-chain messaging and bridging mechanisms.
+- **Destination-Side Swap to Final Token-** If the intended destination token is also not filler-supported, the bridged asset is further swapped on the destination chain to obtain the final desired token.
+
+## Explore Trade Service APIs
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+  <TechnologyCard
+    className="h-25"
+    icon={<IoFileTrayFullSharp size={"1.5rem"} />}
+    title="Get Quote"
+    subtitle="Returns a quote for the specified token pair and amount"
+    link="-"
+  />
+
+  <TechnologyCard
+    className="h-25"
+    icon={<IoGitBranch size={"1.5rem"} />}
+    title="Get Best Route"
+    subtitle="Finds the most optimal route for the swap"
+    link="-"
+  />
+
+  <TechnologyCard
+    className="h-25"
+    icon={<IoDocumentAttachSharp size={"1.5rem"} />}
+    title="Get Call Data"
+    subtitle="Provides the calldata required to execute the transaction"
+    link="-"
+  />
+
+  <TechnologyCard
+    className="h-25"
+    icon={<IoLayersSharp size={"1.5rem"} />}
+    title="Register Intent"
+    subtitle="Registers a swap intent with the system"
+    link="-"
+  />
+
+  <TechnologyCard
+    className="h-25"
+    icon={<IoPushSharp size={"1.5rem"} />}
+    title="Get Intent by orderId"
+    subtitle="Fetches the details of an intent using the order ID"
+    link="-"
+  />
+
+  <TechnologyCard
+    className="h-25"
+    icon={<IoDuplicate size={"1.5rem"} />}
+    title="Generate permit2"
+    subtitle="Reduce gas fees compared to traditional approval methods"
+    link="-"
+  />
+</div>

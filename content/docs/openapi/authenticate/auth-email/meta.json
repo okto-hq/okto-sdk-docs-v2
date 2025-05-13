@@ -2,6 +2,7 @@
     "title": "Email Authentication",
     "pages": [
       "../../explorer/email-send-otp",
-      "../../explorer/email-verify-otp"
+      "../../explorer/email-verify-otp",
+      "authenticate"
     ]
 }

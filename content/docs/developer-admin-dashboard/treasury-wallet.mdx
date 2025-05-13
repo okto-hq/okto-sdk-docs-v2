@@ -1,0 +1,63 @@
+---
+title: Treasury Wallet
+description: Manage and utilize client-controlled wallets for on-chain operations and sponsorship.
+full: false
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+## Overview
+
+A Treasury Wallet in Okto is a client-controlled Smart Wallet Account (SWA). Unlike end-user SWAs, Treasury Wallets serve as your (the client's) on-chain identity, allowing you to perform blockchain operations directly and to authorize gas sponsorship for your users' transactions.
+
+![Treasury Wallet Page - Okto Dashboard](/images/dashboard-img-v2/dashboard-treasury-wallet.png)
+
+Treasury Wallets, Sponsor Wallets, and User Wallets are all [DWN](/docs/okto-layer/dwn) based smart contract wallets, sharing similar underlying technology but differing in their intended use and management.
+
+**Key Use Cases for Treasury Wallets:**
+
+- **Client-Side Chain Interactions:** Execute transactions or interact with smart contracts directly from a wallet you control. This is useful for operations like airdrops, DApp-specific administrative functions, or any scenario where your application logic needs to initiate an on-chain action.
+- **Enabling Gas Sponsorship:** A Treasury Wallet is **mandatory** if you wish to sponsor gas fees for your users. It acts as the authorizing entity (`feePayerAddress`) for such transactions.
+
+---
+
+## Creating a Treasury Wallet
+
+1.  Navigate to the **Treasury Wallet** section in your Okto Developer Dashboard.
+
+    ![Treasury Wallet Page - Okto Dashboard](/images/dashboard-img-v2/dashboard-treasury-wallet-create.png)
+
+2.  Click the **Create Wallet** button.
+
+3.  A new Treasury Wallet will be created. Its **Treasury SWA** (the unique address of this Treasury Wallet) will be displayed. You can create multiple Treasury Wallets if needed (e.g., for scaling or organizational purposes).
+    ![Treasury Wallet Page - Okto Dashboard](/images/dashboard-img-v2/dashboard-treasury-wallet-new.png)
+
+---
+
+## Funding Treasury Wallets
+
+If you plan to use a Treasury Wallet to authorize gas sponsorship, it must hold a small amount of native tokens on the destination chain where the sponsored transactions will occur. This serves as a verification step to ensure the Treasury Wallet is active on that chain.
+
+The process to fund your Treasury Wallet is now streamlined directly through the Okto Dashboard:
+
+1. Navigate to the **Treasury Wallet** section in your dashboard and select the wallet you wish to fund.
+
+![Treasury Wallet Page - Okto Dashboard](/images/dashboard-img-v2/dashboard-treasury-wallet.png)
+
+2. Click the **Deposit** button in the top-right corner of the wallet details panel.
+
+![Treasury Wallet Page - Okto Dashboard](/images/dashboard-img-v2/dashboard-treasury-wallet-deposit.png)
+
+3. Select the blockchain network (destination chain) you want to fund from the available options (Arbitrum, Avalanche, Base, etc.).
+
+![Treasury Wallet Page - Okto Dashboard](/images/dashboard-img-v2/dashboard-treasury-wallet-deposit-chain.png)
+
+4. Once you've selected a chain, you'll be presented with a QR code and wallet address specific to that chain.
+
+![Treasury Wallet Page - Okto Dashboard](/images/dashboard-img-v2/dashboard-treasury-wallet-deposit-qr.png)
+
+5. Transfer a small amount of the native token from that chain (e.g., ETH for Base, MATIC for Polygon) to the provided address.
+
+> **Important**: Always ensure you're sending tokens via the correct chain only, to avoid losing your funds. The wallet address shown is specific to the selected blockchain network.
+
+These funds serve as a verification step and are not consumed for the actual gas fees of sponsored transactions (those come from the Sponsor Wallet).

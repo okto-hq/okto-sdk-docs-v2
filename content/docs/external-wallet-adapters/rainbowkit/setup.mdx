@@ -45,11 +45,12 @@ npm i @okto_web3/wagmi-adapter @rainbow-me/rainbowkit wagmi viem@2.x @tanstack/r
 ```typescript title="vite.config.ts"
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from '@tailwindcss/vite'
 import { nodePolyfills } from "vite-plugin-node-polyfills";
-
+ 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), nodePolyfills()],
+  plugins: [react(), tailwindcss(), nodePolyfills()],
   server: {
     port: 3000, // will always start the service on port 3000
   },

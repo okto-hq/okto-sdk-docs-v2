@@ -18,13 +18,16 @@ Sponsorship enables you to cover transaction fees (gas fees) for your users, cre
 
 Sponsorship integrates with Okto's wallet infrastructure to automatically cover gas fees for transactions on supported chains for all transactions initiated by the client across users. When a user initiates a transaction, the sponsorship system pays the required gas fee, allowing the transaction to proceed even if the user doesn't have the native token for gas.
 
-<CollapsibleCallout type="note" title="Prerequisites">
+<Callout type="info" title="Prerequisites">
 
-    * Enable chains in your [Okto Dashboard](https://dashboard.okto.tech)
-    * Activate sponsorship individually for each of the enabled chains that needs sponsorship 
-    * Load native tokens into your sponsorship account
+1.  **Enable Chains:** Ensure the chains where you want to offer sponsorship are enabled in your [Okto Dashboard](https://dashboard.okto.tech) under "Chains & Tokens".
+2.  **Create & Setup Treasury Wallet:**
+    - You **must** have at least one [Treasury Wallet](/docs/developer-admin-dashboard/treasury-wallet) created in your Okto Dashboard.
+    - For each chain you enable for sponsorship, the Treasury Wallet you intend to use as the `feePayerAddress` must have its corresponding *destination chain address* funded with a small amount of native tokens for a one-time verification. (See [Treasury Wallet documentation](/docs/developer-admin-dashboard/treasury-wallet) for details).
+3.  **Activate Sponsorship:** On the "Sponsorship" page in the dashboard, activate sponsorship individually for each desired chain.
+4.  **Fund Sponsor Wallet:** Load sufficient native tokens into your Sponsor Wallet for each activated chain.
 
-</CollapsibleCallout>
+</Callout>
 
 <CollapsibleCallout type="note" title="Loading Funds to Sponsorship">
 

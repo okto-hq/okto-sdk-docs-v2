@@ -64,17 +64,18 @@ import ViewOnGithub from 'app/components/mdx/ViewOnGithub';
     To resolve a buffer not defined error with Vite, update your `vite.config.ts` file with the following configuration:
 
     ```typescript title="vite.config.ts"
-    import { defineConfig } from 'vite'
-    import react from '@vitejs/plugin-react'
-    import { nodePolyfills } from 'vite-plugin-node-polyfills'
-
+    import { defineConfig } from "vite";
+    import react from "@vitejs/plugin-react";
+    import tailwindcss from '@tailwindcss/vite'
+    import { nodePolyfills } from "vite-plugin-node-polyfills";
+    
     // https://vite.dev/config/
     export default defineConfig({
-      plugins: [react(), nodePolyfills()],
-      server: {
+    plugins: [react(), tailwindcss(), nodePolyfills()],
+    server: {
         port: 3000, // will always start the service on port 3000
-      }
-    })
+    },
+    });
     ```
     <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-react-template-app/blob/main/vite.config.ts" />
 
