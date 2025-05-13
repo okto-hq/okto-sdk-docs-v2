@@ -13,6 +13,7 @@
         "./authenticate/auth-methods",
         "./authenticate/google-oauth",
         "./authenticate/login-logout",
+        "./authenticate/auth-jwt",
         "./authenticate/auth-whatsapp",
         "./authenticate/auth-email",
         "---Usage---",

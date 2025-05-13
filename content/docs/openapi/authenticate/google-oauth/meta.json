@@ -1,9 +1,9 @@
 {
     "title": "Google ID Token",
     "pages": [
-      "loginUsingOktoAuth",
       "!learn",
       "get-token-id",
-      "google-console-setup"
+      "google-console-setup",
+      "loginUsingOktoAuth"
     ]
   }

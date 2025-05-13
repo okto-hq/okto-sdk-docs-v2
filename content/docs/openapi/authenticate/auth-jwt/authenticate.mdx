@@ -1,6 +1,6 @@
 ---
-title: Authenticate (Google)
-description: Authenticate users using Okto Auth by sending a JSON-RPC request to the Okto Gateway. This endpoint handles user authentication and session management.
+title: Authenticate (JWT)
+description: Authenticate users using Okto Auth by sending a JSON-RPC request to the Okto Gateway with the jwt token issued by the client to the user as payload. 
 full: false
 ---
 
@@ -44,8 +44,8 @@ POST https://sandbox-okto-gateway.oktostage.com/rpc
   "params": [
     {
       "authData": {
-        "idToken": "string",    // Google ID token
-        "provider": "google"    // Authentication provider
+        "idToken":  "string",              // JWT token
+        "provider": "client_jwt"           // Authentication provider
       },
       "sessionData": {
         "nonce": "string",                    // Unique identifier for the request
@@ -128,8 +128,8 @@ curl --location 'https://sandbox-okto-gateway.oktostage.com/rpc' \
   "params": [
     {
       "authData": {
-        "idToken": "<google-id-token>",
-        "provider": "google"
+        "idToken": "<jwt-token>",
+        "provider": "client_jwt"
       },
       "sessionData": {
         "nonce": "7c9c12c4-ba28-4637-aae4-68aa2bcfb628",
@@ -162,8 +162,8 @@ const raw = JSON.stringify({
   "params": [
     {
       "authData": {
-        "idToken": "<google-id-token>",
-        "provider": "google"
+        "idToken": "<jwt-token>",
+        "provider": "client_jwt"
       },
       "sessionData": {
         "nonce": "7c9c12c4-ba28-4637-aae4-68aa2bcfb628",
@@ -217,8 +217,8 @@ func main() {
     "params": [
       {
         "authData": {
-          "idToken": "<google-id-token>",
-          "provider": "google"
+          "idToken": "<jwt-token>",
+          "provider": "client_jwt"
         },
         "sessionData": {
           "nonce": "7c9c12c4-ba28-4637-aae4-68aa2bcfb628",
@@ -277,8 +277,8 @@ payload = json.dumps({
   "params": [
     {
       "authData": {
-        "idToken": "<google-id-token>",
-        "provider": "google"
+        "idToken": "<jwt-token>",
+        "provider": "client_jwt"
       },
       "sessionData": {
         "nonce": "7c9c12c4-ba28-4637-aae4-68aa2bcfb628",
