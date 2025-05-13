@@ -10,103 +10,127 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 The Okto API credentials are essential for integrating Okto into your application. They authenticate your requests and associate them with your Okto Dashboard account. Okto provides two essential credentials for integrating with your application:
 
-1. **[App ID](/docs/developer-admin-dashboard/api-key#app-id-client-id-client-swa) (Client ID / Client SWA)**: A public identifier for your application
-2. **[App Secret](/docs/developer-admin-dashboard/api-key#app-secret-client-api-key-client-private-key) (Client API Key / Client Private Key)**: A confidential key for secure authentication
+1.  **[Client SWA](/docs/developer-admin-dashboard/api-key#client-swa)**: A public identifier for your application, representing your client's Smart Wallet Account.
+2.  **[Client Private Key](/docs/developer-admin-dashboard/api-key#client-private-key)**: A confidential key for secure authentication of your client SWA.
+3.  **[Treasury API Key](/docs/developer-admin-dashboard/api-key#treasury-api-key)**: A confidential key used to authorize actions for your Treasury Wallets.
 
-These credentials work together to authenticate your requests to the Okto platform and ensure secure communication between your application and Okto's services.
+![API Page - Okto Dashboard](/images/dashboard-img-v2/dashboard-api-keys-screen-v2.png)
 
-## App ID / Client ID / Client SWA
+These credentials work together to authenticate your requests to the Okto platform and ensure secure communication.
 
-The App ID is a unique identifier for your application and you as a [Client](/docs/okto-layer/okto-client-user). It is the smart contract address associated with the client's Smart Wallet Account (SWA). It's used to associate your Okto client with this specific app in our system. 
+## Client SWA
 
-### Steps to Access App ID
+The Client SWA is a unique identifier for your application and you as a Client. It is the smart contract address associated with your client's primary Smart Wallet Account (SWA) on the Okto Chain. It's used to associate your Okto client with your specific app in our system.
 
-1. [Log in](https://dashboard.okto.tech/login) to the Okto Dashboard.
+### Steps to Access Client SWA
 
-2. Navigate to the **API Keys** section from the sidebar menu.
+1.  [Log in](https://dashboard.okto.tech/login) to the Okto Dashboard.
+
+2.  Navigate to the **API Keys** section from the sidebar menu.
 
 ![API Page - Okto Dashboard](/images/dashboard-img-v2/dashboard-api-screen-v2.png)
 
-3. Locate the **App ID** displayed at the top of the API Keys page.
+3. Locate the **Client SWA** displayed at the top of the API Keys page.
 
-4. Click the **Copy** button to copy the App ID to your clipboard.
+4. Click the **Copy** button to copy the Client SWA to your clipboard.
 
 ---
 
-## App Secret / Client API Key / Client Private Key
+## Client Private Key
 
-The App Secret is a confidential key used to authenticate your API requests. This is the private key (EVM ECDSA like 0x...) of the authority of the client SWA on the Okto Chain. Keep this secret secure and never share it publicly or include it in client-side code. In case the key is compromised, you can always reset the authority.
+The Client Private Key is a confidential key used to authenticate API requests associated with your Client SWA. This is the private key (EVM ECDSA format, e.g., `0x...`) corresponding to the authority of your Client SWA on the Okto Chain. Keep this secret secure and never share it publicly or include it in client-side code. In case the key is compromised, you can reset the authority.
 
-{/* <Callout title="Note">
-The “App ID”, which is also revealed in the “API Keys” page, is different. It is a public unique ID, but the **App Secret** is the actual key you need to download and keep safe. You can use this key to access all SDK and client-side APIs.
-</Callout> */}
+### Steps to Access Client Private Key
 
-### Steps to Access App Secret
+1.  [Log in](https://dashboard.okto.tech/login) to the Okto Dashboard.
 
-1. [Log in](https://dashboard.okto.tech/login) to the Okto Dashboard.
+2.  Navigate to the **API Keys** section from the sidebar menu.
 
-2. Navigate to the **API Keys** section from the sidebar menu.
+3.  Under the "Client Private Key" section, click the **Get Client Private Key** (or similarly named) button.
 
-3. Click the **Get App Secret** button. You may be prompted to re-authenticate.
-
-4. Once revealed, copy and securely store the App Secret. We recommend that you download this value and store it somewhere safe.
+4.  Once revealed, copy and securely store the Client Private Key. We recommend that you download this value and store it somewhere safe.
 
 ![API Page - Okto Dashboard](/images/dashboard-img-v2/dashboard-appsecret-screen-v2.png)
 
-<Callout title="Note">
-- App ID and App Secret pairs are unique for each environment (e.g., sandbox, production).  
-- Ensure you're using the correct pair for the environment you're working in.  
-- Okto does not store your API secret so keep it safe and secret.
+<Callout type="info" title="Note">
+- Client SWA and Client Private Key pairs are unique for each environment (e.g., sandbox, production).
+- Ensure you're using the correct pair for the environment you're working in.
+- Okto does not store your Client Private Key, so keep it safe and secret.
 </Callout>
 
 ---
 
-## Storing App Secret
+## Treasury API Key
 
-* **How Okto stores it**: Okto does not store client API secrets. If the App Secret is lost, it can be reset.
-* **How you should store it**:  
-  * Use environment variables or secure secret management systems.  
-  * Never hardcode the secret in your application code.  
-  * Avoid storing it in version control systems like Git.
+The Treasury API Key is a confidential key used to authorize actions and generate Okto Auth Tokens for any of your Treasury Wallets. It effectively acts as the session private key for operations performed by your Treasury Wallets. Like the Client Private Key, keep this secret secure.
+
+### Steps to Access Treasury API Key
+
+1.  [Log in](https://dashboard.okto.tech/login) to the Okto Dashboard.
+
+2.  Navigate to the **API Keys** section from the sidebar menu.
+
+3.  Locate the "Treasury API Key" section.
+
+4.  Click the **Get Treasury API Key** (or similarly named) button.
+
+5.  Once revealed, copy and securely store the Treasury API Key.
+    
+![API Page - Okto Dashboard](/images/dashboard-img-v2/dashboard-treasury-api-screen-v2.png)
+
+<Callout type="info" title="Important">
+The Treasury API Key is powerful as it can authorize transactions from any of your Treasury Wallets. Secure it with the utmost care.
+</Callout>
 
 ---
 
-## Reset App Secret
+## Storing Confidential Keys (Client Private Key & Treasury API Key)
 
-If you lose your App Secret or suspect unauthorized use:
+- **How Okto stores them**: Okto does not store these private keys. If lost, the Client Private Key can be reset (which may involve resetting its authority). The Treasury API Key, if lost, would also require a reset mechanism.
+- **How you should store them**:
+    * Use environment variables or secure secret management systems on your backend.
+    * Never hardcode these keys in your application code, especially client-side code.
+    * Avoid storing them in version control systems like Git.
 
-1. Go to the **API Keys** section on the dashboard.
 
-![API Page - Okto Dashboard](/images/dashboard-img-v2/dashboard-appsecret-screen-v2.png)
+---
 
-2. Click the **Reset** button next to the App Secret field.
+## Reset Client Private Key
 
-3. A new **App Secret** will be generated. Copy the App Secret and store it securely.
+If you lose your Client Private Key or suspect unauthorized use:
+
+1.  Go to the **API Keys** section on the dashboard.
+
+![API Page - Okto Dashboard](/images/dashboard-img-v2/dashboard-api-keys-screen-v2.png)
+
+2. Click the **Reset** button next to the Client Private Key field.
+
+3. A new **Client Private Key** will be generated. Copy the Client Private Key and store it securely.
 
 4. Update all your applications with the new secret to avoid service disruption.
 
-<Callout title="Note">
-  - If someone obtains your App ID and App Secret, they could potentially make unauthorized requests on behalf of your application.  
-  - In case of a suspected breach, immediately regenerate your App Secret and update your applications.
+<Callout type="info" title="Security Best Practices">
+- If anyone obtains your confidential keys, they could potentially make unauthorized requests or transactions.
+- In case of a suspected breach, immediately regenerate the compromised key(s) and update your applications.
 </Callout>
 
 ---
 
 ## FAQ
 
-**1. What is the difference between App ID and App Secret for Clients?**
+**1. What are the main credentials and their roles?**
 
-- App ID: A public identifier for your application used to associate your client with Okto. It also the contract address of your client SWA on the okto chain.
-
-- App Secret: A private key used to authenticate requests from your application to Okto's servers. It is also referred to as CLIENT PRIVATE KEY/ CLIENT API KEY in the docs.
+  - **Client SWA:** Public identifier of your client application's main smart wallet on Okto.
+  - **Client Private Key:** Secret key to authenticate actions for your Client SWA.
+  - **Treasury API Key:** Secret key to authenticate actions for any of your Treasury Wallets.
 
 **2. How do I know which environment (sandbox/production) my API keys belong to?**
 
 Each environment’s keys are managed separately. Ensure the environment is indicated in your dashboard (e.g., "Sandbox" or "Production") before copying your keys.
 
-**3. What should I do if I accidentally expose my App Secret?**
+**3. What should I do if I accidentally expose a private key?**
 
-Immediately reset your App Secret through the dashboard and update it in your applications to prevent unauthorized access.
+Immediately reset the compromised key (Client Private Key or Treasury API Key) through the dashboard and update it in your applications to prevent unauthorized access.
 
 **4. Can I use the same credentials across multiple applications?**
 
@@ -119,5 +143,6 @@ While technically possible, we recommend using separate credentials for each app
 With your Okto credentials in hand, you're ready to:
 
 1. [Enable Chains and Tokens](/docs/developer-admin-dashboard/wallet-control) for your application
-2. [Configure Sponsorship](/docs/developer-admin-dashboard/sponsorship) (optional)
-3. [Integrate with the Okto SDK](/docs/okto-sdk/supported-sdk-platforms)
+2. [Set up Treasury Wallets](/docs/developer-admin-dashboard/treasury-wallet)
+3. [Configure Sponsorship](/docs/developer-admin-dashboard/sponsorship) (optional)
+4. [Integrate with the Okto SDK](/docs/okto-sdk/supported-sdk-platforms)
