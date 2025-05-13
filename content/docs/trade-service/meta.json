@@ -6,6 +6,7 @@
     "pages": [
         "[← Back to Home](/)",
         "index",
+        "scenarios",
         "trade-service-actors",
         "refunds",
         "slippage",

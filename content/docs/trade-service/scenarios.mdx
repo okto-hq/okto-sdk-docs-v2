@@ -1,0 +1,89 @@
+---
+title: Swap Scenarios
+full: false
+description: Explore swap scenarios including same-chain swaps, FST bridging, cross-chain swaps, and ULL-based routing—covering FST, Non-FST, aggregators, and bridging flows.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+This document outlines all supported swap flows within the **Okto Trade Service**, including both same-chain and cross-chain scenarios. Each swap operation is executed via a sequence of on-chain transactions, some of which may involve routing, bridging, or intermediate conversions. These steps are abstracted from the end-user to ensure seamless and secure execution.
+
+## Swap
+
+<Callout title="Understand FST and Non-FST Tokens" type="info">
+- **FST (Filler Supported Tokens):** Tokens natively supported by the ULL (Unified Liquidity Layer) and eligible for direct bridging across chains.
+- **Non-FST (Filler Unsupported Tokens):** Tokens not supported by ULL for bridging. These must be first converted to an FST before bridging.
+
+For more details, check the Supported Networks & Tokens guide.
+</Callout>
+
+## 1. Same Chain Swap (Non-FST -> FST/Non-FST)
+
+This is an intra-chain swap, where both the source and destination tokens exist on the same blockchain. The transaction is performed within the user's wallet address and does **not** involve any cross-chain messaging or bridging.
+
+**Example-** Swap WETH (Non-FST) to USDT (FST) on the Base network.
+
+### Execution Flow
+
+(Image 1. Same Chain Swap (Non-FST -> FST/Non-FST))
+
+- **Transaction Initiation-** User initiates a swap between two tokens on the same chain.
+- **On-Chain Swap-** The Trade Service leverages on-chain aggregators to perform the token swap directly in the user's wallet.
+
+## 2. Pure Cross Chain Bridge (FST -> FST)
+
+In this scenario, a supported FST token is bridged from the source chain to the destination chain. Both source and destination tokens must be FSTs.
+
+**Example-** Swap USDC (FST) on BSC to USDC (FST) on Ethereum.
+
+### Execution Flow
+
+(Image 2. Pure Cross Chain Bridge (FST -> FST))
+
+- **Transaction Initiation-** The user begins a swap involving a FST.
+- **Bridging Transaction-** The source token is locked on the source chain via ULL.
+- **Token Release on Destination Chain-** The equivalent FST is released on the destination chain.
+
+## 3. Bridge + Destination Swap (FST -> Non-FST)
+
+This scenario begins with a FST on the source chain, allowing direct bridging via ULL. After the token is transferred to the destination chain, it is then swapped into a Non-FST using a same-chain swap.
+
+**Example-** Swap USDC on BSC (FST) to ETH on Ethereum (Non-FST).
+
+### Execution Flow
+
+(Image 3. Bridge + Destination Swap (FST -> Non-FST))
+
+- **Transaction Initiation-** The user begins a swap involving a FST on source chain.
+- **Bridging Transaction-** The source FST is locked on the source chain via ULL.
+- **Token Release on Destination Chain-** The equivalent FST is released on the destination chain.
+- **Destination-Side Swap-** The received FST is swapped into the requested Non-FST via on-chain aggregators.
+
+## 4. Source Swap + Bridge (Non-FST -> FST)
+
+In this scenario, the user starts with a Non-FST on the source chain. Because Non-FST tokens cannot be directly bridged, the system first converts it to a FST using a same-chain swap. The resulting FST is then bridged to the destination chain.
+
+**Example:** Swap ETH (Non-FST) on Ethereum to USDC (FST) on Base.
+
+### Execution Flow
+
+(Image 4. Source Swap + Bridge (Non-FST -> FST))
+
+- **Transaction Initiation-** User initiates a cross-chain swap using a Non-FST token.
+- **Source-Side Swap-** Non-FST is converted to a supported FST token using on-chain aggregators..
+- **Bridging via ULL-** The FST is then bridged from the source chain to the destination chain.
+
+## 5. Source Swap + Bridge + Destination Swap (Non-FST -> Non-FST)
+
+This is the most comprehensive swap flow, involving a Non-FST on both the source and destination chains. The source Non-FST is first converted to an FST, then bridged, and finally swapped again to the target Non-FST.
+
+**Example:** Swap ETH (Non-FST) on Ethereum to SHIBA (FST) on BSC.
+
+### Execution Flow
+
+(Image 5. Source Swap + Bridge + Destination Swap (Non-FST -> Non-FST))
+
+- **Transaction Initiation-** A cross-chain swap is initiated using a token that is not filler-supported.
+- **Source-Side Swap-** The Non-FST is first swapped on the source chain into a FST that ULL can bridge.
+- **Bridging via ULL-** The FST is then bridged from the source chain to the destination chain.
+- **Destination-Side Swap-** The bridged FST is further swapped on the destination chain to obtain the final desired token.
