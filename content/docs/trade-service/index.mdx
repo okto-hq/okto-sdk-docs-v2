@@ -40,16 +40,11 @@ Trade Service offers following fetures:
 
 ## Swap
 
-Each swap operation, especially cross-chain swaps, involves a series of intermediate on-chain transactions that are abstracted away from the user. These steps are essential for routing, bridging, and completing the swap securely and efficiently. The exact sequence varies based on the type of swap.
-
 ### Same Chain Swap 
 
 A same chain swap involves converting one token to another on the same blockchain, within the same user's wallet address. It does not require any cross-chain communication or bridging. 
 
 **Example-** Swap ETH to USDT on the Base network.
-
-- **User Initiates Transaction-** The user starts a swap for two tokens on the same blockchain.
-- **Swap Execution-** The source token is swapped to the destination token within the same user’s wallet address.
 
 ### Cross Chain Swap
 
@@ -57,21 +52,12 @@ A cross chain swap enables token conversion across different blockchains, delive
 
 **Example-** Swap SHIBA on BSC to USDT on Ethereum.
 
-### Cross Chain Swap – Filler Supported Tokens
+<Callout title="Important" type="info">
+- For a comprehensive overview of all supported swap flows in the Trade Service, refer to the [Swap Scenarios](./scenarios) guide.
+</Callout>
 
-- **User Initiates Transaction-** The user begins a swap involving a filler-supported source token.
-- **Bridging Transaction Initiation-** The source token is locked on the source chain via ULL.
-- **Token Release on Destination Chain-** The equivalent filler-supported token is released on the destination chain.
-- **(Optional) Destination-Side Swap-** If the final output token differs from the bridged token, a swap is executed on the destination chain.
 
-### Cross Chain Swap – Filler Unsupported Tokens
-
-- **User Initiates Transaction-** A cross-chain swap is initiated using a token that is not filler-supported.
-- **Source-Side Swap to Filler Supported Token-** The non-supported token is first swapped on the source chain into a filler-supported token that ULL can bridge.
-- **Bridging via ULL-** The filler-supported token is then bridged from the source chain to the destination chain using ULL’s cross-chain messaging and bridging mechanisms.
-- **Destination-Side Swap to Final Token-** If the intended destination token is also not filler-supported, the bridged asset is further swapped on the destination chain to obtain the final desired token.
-
-## Explore Trade Service APIs
+{/* ## Explore Trade Service APIs
 
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
   <TechnologyCard
@@ -122,3 +108,4 @@ A cross chain swap enables token conversion across different blockchains, delive
     link="-"
   />
 </div>
+*/}
