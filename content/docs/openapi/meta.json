@@ -8,6 +8,7 @@
         "---Quickstart---",
         "index",
         "getting-started",
+        "templateRepo",
         "---Authentication---",
         "./authenticate/okto-auth-session",
         "./authenticate/auth-methods",

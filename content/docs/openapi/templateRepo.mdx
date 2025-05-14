@@ -1,0 +1,131 @@
+---
+title: Template Repository
+full: false
+---
+
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Callout } from "fumadocs-ui/components/callout";
+
+A comprehensive walkthrough of the Okto SDK Template Apps designed for Next.js. This template demonstrates core Okto functionality—including authentication, wallet management, and blockchain interactions—so you can quickly get started building with Okto.
+
+<div className="bg-white dark:bg-[#1a1a1e] rounded-lg shadow-sm border border-gray-200 dark:border-[#2b2b2c] p-4 w-full my-4">
+  <div className="flex items-center justify-between">
+    <span className="text-base font-semibold text-gray-900 dark:text-gray-100">
+      API Reference Template Repository
+    </span>
+    <div className="flex gap-3">
+      <a
+        href="https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="no-underline px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors min-w-[120px] text-center"
+      >
+        View on GitHub
+      </a>
+    </div>
+  </div>
+</div>
+
+## Script Links
+
+Below are the links to individual scripts available in the GitHub repository:
+
+### Authenticate Scripts
+
+| **Script**            | **GitHub Link**                                                                                                         |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Google OAuth          | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/auth/googleAuthenticate_template.ts)   |
+| Email Authenticate    | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/auth/emailAuthenticate_template.ts)    |
+| WhatsApp Authenticate | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/auth/whatsappAuthenticate_template.ts) |
+| JWT Authenticate      | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/auth/jwtAuthenticate_template.ts)      |
+| Delegated Actions     | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/auth/delegatedActions_template.tse)    |
+| Treasury Wallet       | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/auth/treasuryWallet_template.ts)       |
+
+### Intent Scripts
+
+| **Script**             | **GitHub Link**                                                                                                   |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Token Transfer Intent  | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/intents/tokenTransfer.ts)        |
+| NFT Transfer Intent    | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/intents/nftTransferIntent.ts)    |
+| Raw Transaction Intent | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/intents/rawTransactionIntent.ts) |
+| Swap Intent            | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/intents/swapIntent.ts)           |
+| Sign Data              | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/intents/signData_template.ts)    |
+
+## Getting Started
+
+Find detailed instructions on how to set up the template app locally:
+
+<Tabs items={["Node.js"]}>
+  <Tab value="Node.js" >
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/okto-hq/okto-sdkv2-ts-template.git
+```
+
+2. Change into the project directory and install dependencies:
+
+```bash
+cd okto-sdkv2-ts-template
+npm install
+```
+
+3. Set up environment variables:
+
+```bash
+cp .env.sample .env
+```
+
+4. Add your API keys to the `.env` file:
+
+```bash title=".env"
+# The Okto environment "sandbox" or "production"
+OKTO_ENVIRONMENT =
+
+# Get the below values from Okto Developer Dashboard. Learn how here- https://docsv2.okto.tech/docs/developer-admin-dashboard
+OKTO_CLIENT_PRIVATE_KEY =
+OKTO_CLIENT_SWA =
+
+
+#optional: only needed if using google authenticate
+# For testing purposes, you can generate the id token from here
+# - https://docsv2-staging.okto.tech/docs/openapi/authenticate/google-oauth/get-token-id
+# NOTE: The google ID token has a very short expiry. Please generate a new token just before running this code. You can check the expiry at jwt.io
+GOOGLE_ID_TOKEN =
+
+
+# when testing intents or using delegated access you will have to generate the okto auth token from session config
+USER_SWA =
+SESSION_PUBLIC_KEY =
+SESSION_PRIVATE_KEY =
+OKTO_AUTH_TOKEN =
+
+# Trade service
+TRADE_SERVICE_SECRET =
+TRADE_SERVICE_BASE_URL =
+
+# wallet private key must be prefixed with 0x
+WALLET_PRIVATE_KEY =
+WALLET_ADDRESS =
+```
+
+    <Callout title="Note">
+    To obtain these credentials:
+
+    - **Client Private Key & SWA**: Get these from the Okto Dashboard. These keys are essential for authenticating your requests with Okto's services.
+
+    - **Google OAuth Credentials**: Required for Google Sign-In functionality
+      1. Set up a project in [Google Cloud Console](https://console.cloud.google.com/)
+      2. Create OAuth 2.0 credentials
+      3. Follow our [Google Console Setup Guide](docs/openapi/authenticate/google-oauth/google-console-setup) for detailed instructions
+    </Callout>
+
+5. Execute the script you want to run:
+
+```bash
+tsx path/to/your/script.ts
+```
+
+  </Tab>
+</Tabs>
