@@ -14,15 +14,21 @@ import {
   IoDocumentAttachSharp,
   IoLayersSharp,
   IoPushSharp,
-  IoDuplicate
+  IoDuplicate,
+  IoSwapHorizontalOutline,
+  IoWalletOutline,
+  IoSettingsSharp,
+  IoRefreshSharp,
+  IoBarChartSharp,
+  IoGlobeOutline,
+  IoPeopleSharp,
+  IoServerOutline,
+  IoHardwareChipOutline
 } from "react-icons/io5";
 
 The Okto Trade Service is a powerful API suite that enables developers to integrate seamless cross-chain token swaps into their applications. Built on Okto's Unified Liquidity Layer (ULL), the Trade Service eliminates the complexity traditionally associated with cross-chain transactions, abstracting away the need for multiple bridge interactions and providing a single, unified interface for any-to-any token swaps.
 
-The Okto Trade Service functions as:
-- **Independent Liquidity Filler:** Okto operates as its own aggregator, with the ability to independently fulfill swap intents using internal liquidity sources and routing logic.
-
-- **Aggregator of Aggregators:** In addition to its internal liquidity, Okto integrates with multiple third-party aggregators and liquidity providers. This enables the platform to source the most optimal routes and pricing from a wide range of external providers.
+The Trade Service functions as the Aggregator of Aggregators. It integrates with multiple third-party aggregators and liquidity providers. This enables the platform to source the most optimal routes and pricing from a wide range of external providers.
 
 ## Features
 
@@ -31,44 +37,68 @@ Trade Service offers following fetures:
 - **Optimal Routing:** Finds the best swap route for price and execution efficiency
 - **Bridgeless Design:** No direct bridge interaction required from users
 - **Fast Settlements:** Rapid cross-chain liquidity provisioning
-- **Simple Integration:** Easy-to-implement APIs
+- **Simple Integration:** Easy-to-implement APIs for seamless Integration
 
-## Core Concepts
+## Explore Trade Service
 
-### Intent-Based Swaps
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+  
+  <TechnologyCard
+    className="h-25"
+    icon={<IoHardwareChipOutline size={"1.5rem"} />}
+    title="Architecture"
+    subtitle="Understand the technical architecture of Trade Service"
+    link="/docs/trade-service/architecture"
+  />
+  
+  <TechnologyCard
+    className="h-25"
+    icon={<IoGlobeOutline size={"1.5rem"} />}
+    title="Supported Chains & FST"
+    subtitle="View compatible chains and supported tokens"
+    link="/docs/trade-service/supported-networks-tokens"
+  />
 
-The Trade Service uses an intent-based model where users express what they want to accomplish ("Swap Token A on Chain 1 for Token B on Chain 2") rather than how to do it. This allows the system to determine the most efficient execution path.
+  <TechnologyCard
+    className="h-25"
+    icon={<IoPeopleSharp size={"1.5rem"} />}
+    title="Trade Service Actors"
+    subtitle="Understand the participants in the swap ecosystem"
+    link="/docs/trade-service/trade-service-actors"
+  />
 
-### Unified Liquidity Layer (ULL)
+  <TechnologyCard
+    className="h-25"
+    icon={<IoSwapHorizontalOutline size={"1.5rem"} />}
+    title="Swap Scenarios"
+    subtitle="Understand different swap flows and execution paths"
+    link="/docs/trade-service/scenarios"
+  />
 
-The ULL is the infrastructure that makes cross-chain swaps possible by orchestrating liquidity across multiple blockchain ecosystems. It provides:
+  <TechnologyCard
+    className="h-25"
+    icon={<IoSettingsSharp size={"1.5rem"} />}
+    title="Slippage Management"
+    subtitle="Learn how the system handles price variance during swaps"
+    link="/docs/trade-service/slippage"
+  />
 
-- A network of liquidity providers (called "solvers" or "fillers")
-- Smart contract infrastructure for secure cross-chain settlement
-- A coordination layer that matches intents with solvers
+  <TechnologyCard
+    className="h-25"
+    icon={<IoWalletOutline size={"1.5rem"} />}
+    title="Fee Structure"
+    subtitle="Understand service fees and costs for transactions"
+    link="/docs/trade-service/fees"
+  />
 
-<Callout type="info">
-Read more about the Unified Liquidity Layer in [ULL Architecture Guide](/docs/okto-layer/ull).
-</Callout>
-
-### Swap
-
-#### Same Chain Swap 
-
-A same chain swap involves converting one token to another on the same blockchain, within the same user's wallet address. It does not require any cross-chain communication or bridging. 
-
-**Example-** Swap ETH to USDT on the Base network.
-
-#### Cross Chain Swap
-
-A cross chain swap enables token conversion across different blockchains, delivering the final tokens to the same user’s wallet on the destination chain. This process typically involves bridging assets between chains.
-
-**Example-** Swap SHIBA on BSC to USDT on Ethereum.
-
-<Callout title="Important" type="info">
-- For a comprehensive overview of all supported swap flows in the Trade Service, refer to the [Swap Scenarios](/docs/trade-service/scenarios) guide.
-</Callout>
-
+  <TechnologyCard
+    className="h-25"
+    icon={<IoRefreshSharp size={"1.5rem"} />}
+    title="Refund Mechanism"
+    subtitle="How assets are returned if transactions fail"
+    link="/docs/trade-service/refunds"
+  />
+</div>
 
 {/* ## Explore Trade Service APIs
 

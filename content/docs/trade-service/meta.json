@@ -1,17 +1,15 @@
 {
     "title": "Trade Service",
-    "description": "Trade Service",
-    "root": true,
-    "icon": "Rocket",
     "pages": [
         "[← Back to Home](/)",
         "index",
+        "supported-networks-tokens",
+        "architecture",
         "scenarios",
         "trade-service-actors",
-        "refunds",
         "slippage",
         "fees",
-        "supported-networks-tokens",
+        "refunds",
         "!setup",
         "!usage",
         "!resources"
