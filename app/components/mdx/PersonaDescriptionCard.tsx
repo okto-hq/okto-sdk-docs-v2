@@ -6,7 +6,7 @@ interface PersonaDescriptionCardProps {
   title?: string;
   description?: string;
   whatItDoes?: string[];
-  whatItIs?: string[];
+  whatItIs?: string[] | null;
   howToIdentify?: string[] | null;
 }
 
@@ -49,14 +49,16 @@ export default function PersonaDescriptionCard({
                 ))}
               </ul>
             </div>
-            <div className="bg-white dark:bg-[#0D0D0D] px-3 py-1 rounded-xl">
-              <p className="text-lg font-semibold mb-2 dark:text-white">What is it?</p>
-              <ul className="list-disc list-inside space-y-1 text-sm dark:text-gray-300">
-                {whatItIs.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-            </div>
+            {whatItIs && (
+              <div className="bg-white dark:bg-[#0D0D0D] px-3 py-1 rounded-xl">
+                <p className="text-lg font-semibold mb-2 dark:text-white">What is it?</p>
+                <ul className="list-disc list-inside space-y-1 text-sm dark:text-gray-300">
+                  {whatItIs.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
             {howToIdentify && (
               <div className="bg-white dark:bg-[#0D0D0D] px-3 py-1 rounded-xl">
                 <p className="text-lg font-semibold mb-2 dark:text-white">How to identify a {title.toLowerCase()}?</p>
