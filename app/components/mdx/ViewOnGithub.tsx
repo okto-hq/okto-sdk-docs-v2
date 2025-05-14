@@ -3,9 +3,10 @@ import { FaGithub } from 'react-icons/fa';
 
 interface ViewOnGithubProps {
     url: string;  // Required URL parameter
+    text?: string; // Optional text parameter
 }
 
-export default function ViewOnGithub({ url }: ViewOnGithubProps) {
+export default function ViewOnGithub({ url, text = "View on Github" }: ViewOnGithubProps) {
     return (
         <div style={{ textAlign: "right", fontSize: "13px", margin: "0", padding: "0", marginTop: "-1rem"}}>
             <Link
@@ -15,7 +16,7 @@ export default function ViewOnGithub({ url }: ViewOnGithubProps) {
                 className="inline-flex items-center text-black dark:text-zinc-200 font-medium no-underline"
             >
                 <FaGithub className="mr-2" />
-                View on GitHub
+                {text}
             </Link>
         </div>
     );

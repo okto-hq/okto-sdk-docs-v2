@@ -70,7 +70,7 @@ export default function Footer() {
             <h3 className="text-sm font-medium mb-3 mt-0">Community</h3>
             <ul className="space-y-2 p-0 m-0">
               <li className="p-0 m-0"><a href="https://docs.okto.tech/docs/troubleshooting" className="text-gray-400 hover:text-white text-sm" target="_blank" rel="noopener">Troubleshooting</a></li>
-              <li className="p-0 m-0"><a href="https://docs.okto.tech/summer-of-abstraction" className="text-gray-400 hover:text-white text-sm" target="_blank" rel="noopener">Summer of Abstraction</a></li>
+              {/* <li className="p-0 m-0"><a href="https://docs.okto.tech/summer-of-abstraction" className="text-gray-400 hover:text-white text-sm" target="_blank" rel="noopener">Summer of Abstraction</a></li> */}
               <li className="p-0 m-0"><a href="https://form.typeform.com/to/CvPAQNAU" className="text-gray-400 hover:text-white text-sm" target="_blank" rel="noopener">Okto Grants</a></li>
             </ul>
           </div>
