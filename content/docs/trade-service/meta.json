@@ -5,6 +5,7 @@
     "icon": "Rocket",
     "pages": [
         "[← Back to Home](/)",
+        "------",
         "index",
         "supported-networks-tokens",
         "architecture",

@@ -12,7 +12,7 @@
     },
     "servers": [
       {
-        "url": "https://trade-service-api.okto.tech",
+        "url": "https://okto-trade-service.oktostage.com/",
         "description": "Trade Service URL"
       }
     ],
@@ -23,24 +23,86 @@
       }
     ],
     "paths": {
-      "/api/trade-service/v1/endpoint1": {
-        "get": {
+      "/vpc/v1/get-quote": {
+        "post": {
           "tags": ["Usage"],
-          "summary": "API Endpoint 1",
-          "description": "Some description for endpoint 1",
-          "operationId": "opid1",
+          "summary": "Get Quote",
+          "description": "Returns a quote for the specified token pair and amount",
+          "operationId": "getQuote",
           "security": [
             {
               "bearerAuth": []
             }
           ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["fromToken", "fromChain", "toToken", "toChain", "fromAmount"],
+                  "properties": {
+                    "fromToken": {
+                      "type": "string",
+                      "example": "ETH"
+                    },
+                    "fromChain": {
+                      "type": "string",
+                      "example": "Ethereum"
+                    },
+                    "toToken": {
+                      "type": "string",
+                      "example": "USDC"
+                    },
+                    "toChain": {
+                      "type": "string",
+                      "example": "Polygon"
+                    },
+                    "fromAmount": {
+                      "type": "string",
+                      "example": "1"
+                    }
+                  }
+                }
+              }
+            }
+        },
           "responses": {
             "200": {
               "description": "Fetched",
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/schemas/GetWalletsResponse"
+                    "type": "object",
+                    "required": ["outputAmount", "routeMetadata"],
+                    "properties": {
+                      "outputAmount": {
+                        "type": "string",
+                        "example": "234"
+                      },
+                      "routeMetadata": {
+                        "type": "object",
+                        "properties": {
+                          "protocol": {
+                            "type": "string",
+                            "example": "1inch"
+                          },
+                          "aggregatorName": {
+                            "type": "string",
+                            "example": "1inch"
+                          },
+                          "type": {
+                            "type": "string",
+                            "enum": ["bridge", "swap"],
+                            "example": "bridge"
+                          }
+                        }
+                      },
+                      "permitData": {
+                        "type": "object",
+                        "nullable": true
+                      }
+                    }
                   }
                 }
               }
@@ -50,7 +112,31 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/responses/BadRequest"
+                    "type": "object",
+                    "properties": {
+                      "code": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 400
+                      },
+                      "errorCode": {
+                        "type": "string",
+                        "example": "INVALID_INPUT"
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "The provided token address is invalid."
+                      },
+                      "trace_id": {
+                        "type": "string",
+                        "example": "f83c2a5b-8352-4e2d-a33c-9b7d85f19261"
+                      },
+                      "details": {
+                        "type": "object",
+                        "nullable": true,
+                        "description": "Additional error context"
+                      }
+                    }
                   }
                 }
               }
