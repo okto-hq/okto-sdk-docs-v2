@@ -7,6 +7,8 @@ A comprehensive walkthrough of the Okto SDK Template Apps designed for Unity. Th
 
 import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
 import { Callout } from 'fumadocs-ui/components/callout';
+import CollapsibleCallout from "app/components/mdx/CollapsibleCallout";
+import ExternalLink from "app/components/mdx/ExternalLink";
 
 <div className="bg-white dark:bg-[#1a1a1e] rounded-lg shadow-sm border border-gray-200 dark:border-[#2b2b2c] p-4 w-full my-4">
   <div className="flex items-center justify-between">
@@ -88,16 +90,20 @@ For detailed installation instructions, select your framework below:
     clientSwa="YOUR_CLIENT_SWA"
     ```
 
-  <Callout title="Note">
-    To obtain these credentials:
+  <CollapsibleCallout type="warning" title="Essential Setup Required">
+    Before you begin, set up your [developer dashboard](https://dashboard.okto.tech) by making sure you have :
+    - Created your [Okto Developer Dashboard](/docs/developer-admin-dashboard/dashboard-account) account
+    - Get your [Okto credits](/docs/developer-admin-dashboard/okto-faucet) from the dashboard
+    - Obtained your [API keys](/docs/developer-admin-dashboard/api-key) from the dashboard
+    - Enabled the specific [Chains and Tokens](/docs/developer-admin-dashboard/wallet-control) you plan to use in your application
+    - Optional: Enabled [Sponsorship](/docs/developer-admin-dashboard/sponsorship) for the desired chains
 
-    - **Client Private Key & SWA**: Get these from the Okto Dashboard. These keys are essential for authenticating your requests with Okto's services.
+    If you need help, reach out to us on our <ExternalLink href="/docs/unity-sdk/troubleshooting">troubleshooting form</ExternalLink> and we will contact you.
+    </CollapsibleCallout>
 
-    - **Google OAuth Credentials**: Required for Google Sign-In functionality
-      1. Set up a project in [Google Cloud Console](https://console.cloud.google.com/)
-      2. Create OAuth 2.0 credentials
-      3. Follow our [Google Console Setup Guide](/docs/unity-sdk/authenticate-users/google-oauth/google-console-setup) for detailed instructions
-  </Callout>
+  - Okto API Keys: You need your `CLIENT_PRIVATE_KEY` and `CLIENT_SWA`. Obtain these from the [Okto Developer Dashboard](https://dashboard.okto.tech/login).
+  - Okto Account Setup: Ensure you have sufficient <ExternalLink href="https://dashboard.okto.tech/okto-credits">Okto Credits</ExternalLink>, enable the required <ExternalLink href="https://dashboard.okto.tech/wallet-controls">Chains and Tokens </ExternalLink>, and optionally <ExternalLink href="https://dashboard.okto.tech/paymaster">Activate Sponsorship</ExternalLink>.
+  - Google OAuth Credentials (if using Google authentication): Create OAuth 2.0 credentials in the <ExternalLink href="/docs/unity-sdk/authenticate-users/google-oauth/google-console-setup">Google Cloud Console</ExternalLink> to get your `GOOGLE_CLIENT_ID`.
 
   5. Start the Unity Project by running play.
   
