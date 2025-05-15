@@ -14,22 +14,61 @@ Executing a seamless any-to-any cross-chain swap via the Okto Trade Service invo
 
 ## Key Actors and Roles
 
-<div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-      <PersonaCard
-        icon="/images/user-persona.svg"
-        title="User"
-        description="The initiator of the transaction who expresses their desired outcome through the Developer Application interface."
-      />
-      <PersonaCard
-        icon="/images/vendor-persona.svg"
-        title="Client"
-        description="The dApp, wallet, or platform that integrates the Okto Trade Service SDK or API to provide interface for the User."
-      />
-      <PersonaCard
-        icon="/images/okto-persona.svg"
-        title="Trade Service"
-        description="The central system that coordinates the entire swap process, acting as the main interface between the Developer Application and the underlying Okto Infrastructure."
-      />
+<div className="bg-white dark:bg-[#0D0D0D] rounded-xl p-6 shadow-sm">
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <h3 className="text-xl font-semibold mb-3 dark:text-white">Main Actors</h3>
+      <ul className="space-y-2">
+        <li className="flex items-center">
+          <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mr-2">
+            <img src="/images/user-persona.svg" className="w-4 h-4" alt="User" />
+          </div>
+          <a href="#dive-deep-into-each-actors-role-in-the-system" className="text-[#5166EE] dark:text-[#7B8AFF] hover:underline">User</a>
+        </li>
+        <li className="flex items-center">
+          <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mr-2">
+            <img src="/images/vendor-persona.svg" className="w-4 h-4" alt="Client" />
+          </div>
+          <a href="#dive-deep-into-each-actors-role-in-the-system" className="text-[#5166EE] dark:text-[#7B8AFF] hover:underline">Client</a>
+        </li>
+        <li className="flex items-center">
+          <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mr-2">
+            <img src="/images/okto-persona.svg" className="w-4 h-4" alt="Okto Trade Service" />
+          </div>
+          <a href="#dive-deep-into-each-actors-role-in-the-system" className="text-[#5166EE] dark:text-[#7B8AFF] hover:underline">Okto Trade Service</a>
+        </li>
+        <li className="flex items-center">
+          <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mr-2">
+            <img src="/images/dex-aggregator-icon.svg" className="w-4 h-4" alt="DEX Aggregators" />
+          </div>
+          <a href="#dive-deep-into-each-actors-role-in-the-system" className="text-[#5166EE] dark:text-[#7B8AFF] hover:underline">DEX Aggregators</a>
+        </li>
+      </ul>
+    </div>
+<div>
+  <h3 className="text-xl font-semibold mb-3 dark:text-white">ULL Actors</h3>
+  <ul className="space-y-2">
+    <li className="flex items-center">
+      <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mr-2">
+        <img src="/images/facilitator-node-icon.svg" className="w-4 h-4" alt="Facilitator Node" />
+      </div>
+      <a href="#unified-liquidity-layer-ull-actors" className="text-[#5166EE] dark:text-[#7B8AFF] hover:underline">Facilitator Node</a>
+    </li>
+    <li className="flex items-center">
+      <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mr-2">
+        <img src="/images/filler-icon.svg" className="w-4 h-4" alt="Fillers" />
+      </div>
+      <a href="#unified-liquidity-layer-ull-actors" className="text-[#5166EE] dark:text-[#7B8AFF] hover:underline">Fillers (or Solvers)</a>
+    </li>
+    <li className="flex items-center">
+      <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mr-2">
+        <img src="/images/settler-icon.svg" className="w-4 h-4" alt="Settlers" />
+      </div>
+      <a href="#unified-liquidity-layer-ull-actors" className="text-[#5166EE] dark:text-[#7B8AFF] hover:underline">Settlers</a>
+    </li>
+  </ul>
+</div>
+  </div>
 </div>
 
 ## Dive deep into each actor's role in the system
