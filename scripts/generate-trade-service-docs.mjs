@@ -10,14 +10,22 @@ rimrafSync(out, {
     // Get relative path from output directory
     const relativePath = path.relative(out, v);
 
-   
+    // Check if file is inside the "authenticate" folder
+    const isInTradeServiceFolder = relativePath.startsWith("authenticate");
 
     return (
       !v.endsWith("index.mdx") &&
       !v.endsWith("setup.mdx") &&
       !v.endsWith("meta.json") &&
-      !v.endsWith("resources.mdx")
-
+      !v.endsWith("resources.mdx") &&
+      !v.endsWith("supported-networks-tokens.mdx") &&
+      !v.endsWith("architecture.mdx") &&
+      !v.endsWith("scenarios.mdx") &&
+      !v.endsWith("trade-service-actors.mdx") &&
+      !v.endsWith("slippage.mdx") &&
+      !v.endsWith("fees.mdx") &&
+      !v.endsWith("refunds.mdx") &&
+      !isInTradeServiceFolder
     );
   }
 });
