@@ -169,7 +169,7 @@ export default function NavbarComponent() {
             />
             <p className="text-2xl">okto</p>
             <Chip className="bg-[#F5F6FE] dark:bg-gray-700 text-[#5166EE] dark:text-[#7C8FFF] h-[22px] w-[55px] text-[14px]">
-              DocsV2
+              Docs
             </Chip>
           </NavbarItem>
         </ULink>
