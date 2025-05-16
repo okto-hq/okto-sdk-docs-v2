@@ -104,7 +104,7 @@ const SDK_CONFIG = {
         className="text-black dark:text-white flex-shrink-0"
       />
     ),
-    defaultRepo: "https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main",
+    defaultRepo: "https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template",
     defaultTemplateUrl: "/docs/openapi/templateRepo",
   },
 };

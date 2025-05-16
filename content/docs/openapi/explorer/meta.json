@@ -8,6 +8,7 @@
     "get-portfolio-activity",
     "get-nft-portfolio",
     "get-order-history",
-    "order-estimate"
+    "order-estimate",
+    "read-contract-data"
   ]
 }
