@@ -27,7 +27,7 @@
         "---Wallets---",
         "./wallets/overview",
         "./wallets/(embedded-wallets)/index",
-        "./wallets/(embedded-wallets)/delegated-actions",
+        "!./wallets/(embedded-wallets)/delegated-actions",
         "!./wallets/external-wallets",
         "---Resources---",
         "[Dev Tools](/tools)",
