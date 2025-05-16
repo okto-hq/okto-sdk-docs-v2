@@ -29,11 +29,6 @@
           "summary": "Get Quote",
           "description": "Returns a quote for the specified token pair and amount",
           "operationId": "getQuote",
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
           "requestBody": {
             "required": true,
             "content": {
@@ -44,29 +39,57 @@
                   "properties": {
                     "fromToken": {
                       "type": "string",
-                      "example": "ETH"
+                      "example": "eth"
                     },
                     "fromChain": {
                       "type": "string",
-                      "example": "Ethereum"
+                      "example": "eip155:1"
                     },
                     "toToken": {
                       "type": "string",
-                      "example": "USDC"
+                      "example": "usdc"
                     },
                     "toChain": {
+                      "type": "string",
+                      "example": "eip155:1"
+                    },
+                    "sameChainFee": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "sameChainFeeCollector": {
+                      "type": "string",
+                      "example": "Polygon"
+                    },
+                    "crossChainFee": {
+                      "type": "string",
+                      "example": "Polygon"
+                    },
+                    "crossChainFeeCollector": {
                       "type": "string",
                       "example": "Polygon"
                     },
                     "fromAmount": {
                       "type": "string",
                       "example": "1"
+                    },
+                    "slippage": {
+                      "type": "string",
+                      "example": "0.5"
+                    },
+                    "fromUserWalletAddress": {
+                      "type": "string",
+                      "example": "0xabc"
+                    },
+                    "toUserWalletAddress": {
+                      "type": "string",
+                      "example": "0xabc"
                     }
                   }
                 }
               }
             }
-        },
+          },
           "responses": {
             "200": {
               "description": "Fetched",
@@ -144,24 +167,177 @@
           }
         }
       },
-      "/api/trade-service/v1/endpoint2": {
-        "get": {
+      "/vpc/v1/get-best-route": {
+        "post": {
           "tags": ["Usage"],
-          "summary": "API Endpoint 2",
-          "description": "Some description for endpoint 2",
-          "operationId": "opid2",
-          "security": [
-            {
-              "bearerAuth": []
+          "summary": "Get Best Route",
+          "description": "Finds the most optimal route for the swap",
+          "operationId": "getBestRoute",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["fromToken", "fromChain", "toToken", "toChain", "fromAmount", "fromUserWalletAddress", "toUserWalletAddress"],
+                  "properties": {
+                    "routeId": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "fromToken": {
+                      "type": "string",
+                      "example": "eth"
+                    },
+                    "fromChain": {
+                      "type": "string",
+                      "example": "eip155:1"
+                    },
+                    "toToken": {
+                      "type": "string",
+                      "example": "usdc"
+                    },
+                    "toChain": {
+                      "type": "string",
+                      "example": "eip155:1"
+                    },
+                    "sameChainFee": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "sameChainFeeCollector": {
+                      "type": "string",
+                      "example": "Polygon"
+                    },
+                    "crossChainFee": {
+                      "type": "string",
+                      "example": "Polygon"
+                    },
+                    "crossChainFeeCollector": {
+                      "type": "string",
+                      "example": "Polygon"
+                    },
+                    "fromAmount": {
+                      "type": "string",
+                      "example": "1"
+                    },
+                    "slippage": {
+                      "type": "string",
+                      "example": "0.5"
+                    },
+                    "permitDeadline": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "fromUserWalletAddress": {
+                      "type": "string",
+                      "example": "0xabc"
+                    },
+                    "toUserWalletAddress": {
+                      "type": "string",
+                      "example": "0xabc"
+                    }
+                  }
+                }
+              }
             }
-          ],
+          },
           "responses": {
             "200": {
               "description": "Fetched",
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/schemas/GetSupportedNetworksResponse"
+                    "type": "object",
+                    "properties": {
+                      "routeId": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "priceImpact": {
+                        "type": "string",
+                        "example": "0"
+                      },
+                      "isPriceImpactCalculated": {
+                        "type": "boolean",
+                        "example": true
+                      },
+                      "tokenPrices": {
+                        "type": "object",
+                        "properties": {
+                          "fromTokenPriceInUSD": {
+                            "type": "string",
+                            "example": "3500"
+                          },
+                          "toTokenPriceInUSD": {
+                            "type": "string",
+                            "example": "1"
+                          }
+                        }
+                      },
+                      "feeCharged": {
+                        "type": "boolean",
+                        "example": false
+                      },
+                      "outputAmount": {
+                        "type": "string",
+                        "example": "998.75"
+                      },
+                      "steps": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "swap"
+                            },
+                            "metadata": {
+                              "type": "object",
+                              "properties": {
+                                "serviceType": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "transactionType": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "protocol": {
+                                  "type": "string",
+                                  "example": "1inch"
+                                },
+                                "aggregatorName": {
+                                  "type": "string",
+                                  "example": "1inch"
+                                }
+                              }
+                            },
+                            "chainId": {
+                              "type": "string",
+                              "example": "1"
+                            },
+                            "txnData": {
+                              "type": "object",
+                              "nullable": true
+                            },
+                            "intentCalldata": {
+                              "type": "object",
+                              "nullable": true
+                            }
+                          }
+                        }
+                      },
+                      "permitDataToSign": {
+                        "type": "object",
+                        "nullable": true
+                      },
+                      "routeExpiry": {
+                        "type": "string",
+                        "example": "",
+                        "nullable": true
+                      }
+                    }
                   }
                 }
               }
@@ -171,42 +347,31 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/responses/BadRequest"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/trade-service/v1/endpoint3": {
-        "get": {
-          "tags": ["Usage"],
-          "summary": "API Endpoint 3",
-          "description": "Some description for endpoint 3",
-          "operationId": "opid3",
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Fetched",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/GetSupportedTokensResponse"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/responses/BadRequest"
+                    "type": "object",
+                    "properties": {
+                      "code": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 400
+                      },
+                      "errorCode": {
+                        "type": "string",
+                        "example": "INVALID_INPUT"
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "The provided token address is invalid."
+                      },
+                      "trace_id": {
+                        "type": "string",
+                        "example": "f83c2a5b-8352-4e2d-a33c-9b7d85f19261"
+                      },
+                      "details": {
+                        "type": "object",
+                        "nullable": true,
+                        "description": "Additional error context"
+                      }
+                    }
                   }
                 }
               }
@@ -249,32 +414,185 @@
           }
         }
       },
-      "/api/trade-service/v1/endpoint5": {
-        "get": {
+      "/vpc/v1/get-call-data": {
+        "post": {
           "tags": ["Usage"],
-          "summary": "API Endpoint 5",
-          "description": "Some description for endpoint 5",
-          "operationId": "opid5",
-          "security": [
-            {
-              "bearerAuth": []
+          "summary": "Get Call Data",
+          "description": "Provides the calldata required to execute the transaction",
+          "operationId": "getCallData",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["routeId", "fromToken", "fromChain", "toToken", "toChain", "fromAmount", "toTokenAmountMinimum","fromUserWalletAddress", "toUserWalletAddress"],
+                  "properties": {
+                    "routeId": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "fromToken": {
+                      "type": "string",
+                      "example": "eth"
+                    },
+                    "fromChain": {
+                      "type": "string",
+                      "example": "eip155:1"
+                    },
+                    "toToken": {
+                      "type": "string",
+                      "example": "usdc"
+                    },
+                    "toChain": {
+                      "type": "string",
+                      "example": "eip155:1"
+                    },
+                    "sameChainFee": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "sameChainFeeCollector": {
+                      "type": "string",
+                      "example": "Polygon"
+                    },
+                    "crossChainFee": {
+                      "type": "string",
+                      "example": "Polygon"
+                    },
+                    "crossChainFeeCollector": {
+                      "type": "string",
+                      "example": "Polygon"
+                    },
+                    "fromAmount": {
+                      "type": "string",
+                      "example": "1"
+                    },
+                    "toTokenAmountMinimum": {
+                      "type": "string",
+                      "example": "1"
+                    },
+                    "slippage": {
+                      "type": "string",
+                      "example": "0.5"
+                    },
+                    "fromUserWalletAddress": {
+                      "type": "string",
+                      "example": "0xabc"
+                    },
+                    "toUserWalletAddress": {
+                      "type": "string",
+                      "example": "0xabc"
+                    },
+                    "permitData": {
+                      "type": "string",
+                      "example": ""
+                    },    
+                    "permitSignature": {
+                      "type": "string",
+                      "example": ""
+                    }                 
+                  }
+                }
+              }
             }
-          ],
-          "parameters": [
-            {
-              "$ref": "#/components/parameters/page"
-            },
-            {
-              "$ref": "#/components/parameters/size"
-            }
-          ],
+          },
           "responses": {
             "200": {
               "description": "Fetched",
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/schemas/GetPortfolioActivityResponse"
+                    "type": "object",
+                    "properties": {
+                      "routeId": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "priceImpact": {
+                        "type": "string",
+                        "example": "0"
+                      },
+                      "isPriceImpactCalculated": {
+                        "type": "boolean",
+                        "example": true
+                      },
+                      "tokenPrices": {
+                        "type": "object",
+                        "properties": {
+                          "fromTokenPriceInUSD": {
+                            "type": "string",
+                            "example": "3500"
+                          },
+                          "toTokenPriceInUSD": {
+                            "type": "string",
+                            "example": "1"
+                          }
+                        }
+                      },
+                      "feeCharged": {
+                        "type": "boolean",
+                        "example": false
+                      },
+                      "outputAmount": {
+                        "type": "string",
+                        "example": "998.75"
+                      },
+                      "steps": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "txn"
+                            },
+                            "metadata": {
+                              "type": "object",
+                              "properties": {
+                                "serviceType": {
+                                  "type": "string",
+                                  "example": "bridge"
+                                },
+                                "transactionType": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "protocol": {
+                                  "type": "string",
+                                  "example": "1inch"
+                                },
+                                "aggregatorName": {
+                                  "type": "string",
+                                  "example": "1inch"
+                                }
+                              }
+                            },
+                            "chainId": {
+                              "type": "string",
+                              "example": "1"
+                            },
+                            "txnData": {
+                              "type": "object",
+                              "nullable": true
+                            },
+                            "intentCalldata": {
+                              "type": "object",
+                              "nullable": true
+                            }
+                          }
+                        }
+                      },
+                      "orderTypedData": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "routeExpiry": {
+                        "type": "string",
+                        "example": "",
+                        "nullable": true
+                      }
+                    }
                   }
                 }
               }
@@ -284,7 +602,31 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/responses/BadRequest"
+                    "type": "object",
+                    "properties": {
+                      "code": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 400
+                      },
+                      "errorCode": {
+                        "type": "string",
+                        "example": "INVALID_INPUT"
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "The provided token address is invalid."
+                      },
+                      "trace_id": {
+                        "type": "string",
+                        "example": "f83c2a5b-8352-4e2d-a33c-9b7d85f19261"
+                      },
+                      "details": {
+                        "type": "object",
+                        "nullable": true,
+                        "description": "Additional error context"
+                      }
+                    }
                   }
                 }
               }

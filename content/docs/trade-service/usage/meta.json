@@ -2,8 +2,8 @@
   "title": "Usage",
   "pages": [
     "get-quote",
-    "!opid2",
-    "!opid3",
+    "get-best-route",
+    "get-call-data",
     "!opid4",
     "!opid5"
   ]
