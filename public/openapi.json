@@ -1010,6 +1010,160 @@
           }
         }
       }
+    },
+    "/api/oc/v1/readContractData": {
+      "post": {
+        "tags": ["Explorer"],
+        "summary": "Read Contract Data",
+        "description": "Read data from a smart contract on a specified network. The API returns the data from the contract based on the input parameters. Supports both EVM and Aptos networks.",
+        "operationId": "readContractData",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["caip2id", "data"],
+                "properties": {
+                  "caip2id": {
+                    "type": "string",
+                    "description": "Caip2id of the network on which to read the contract data",
+                    "example": "eip155:8453"
+                  },
+                  "data": {
+                      "type": "object",
+                      "description": "Contract Read Data",
+                      "required": ["contract_address", "abi", "args"],
+                      "properties": {
+                        "contractAddress": {
+                          "type": "string",
+                          "description": "The address of the contract to read from",
+                          "example": "0x3BA4c387f786bFEE076A58914F5Bd38d668B42c3"
+                        },
+                        "abi": {
+                          "type": "object",
+                          "description": "The ABI of the contract",
+                          "properties": {
+                            "inputs": {
+                              "type": "array",
+                              "items": {
+                                "type": "object"
+                              },
+                              "example": []
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "totalSupply"
+                            },
+                            "outputs": {
+                              "type": "array",
+                              "items": {
+                                "type": "object"
+                              },
+                              "example": [
+                                {
+                                  "internalType": "uint256",
+                                  "name": "",
+                                  "type": "uint256"
+                                }
+                              ]
+                            },
+                            "stateMutability": {
+                              "type": "string",
+                              "example": "view"
+                            },
+                            "type": {
+                              "type": "string",
+                              "example": "function"
+                            }
+                          }
+                        },
+                        "args": {
+                          "type": "object",
+                          "description": "Arguments to pass to the function",
+                          "example": {}
+                        }
+                    }
+
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contract data read successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "data"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Status of the contract read request",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "description": "Array containing the return values from the contract",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": ["17568736448"]
+                    }
+                  }
+
+                }
+              }
+            }
+          },
+         "400": {
+            "description": "Something went wrong",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "error"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Status of the contract read request",
+                      "example": "error"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 400
+                        },
+                        "errorCode": {
+                          "type": "string",
+                          "example": "ER-TECH-0004"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Something went wrong. Please try again"
+                        },
+                        "trace_id": {
+                          "type": "string",
+                          "example": "16d13cc33b8fdb4bb991be15b454144e"
+                        },
+                        "details": {
+                          "type": "string",
+                          "example": "Network Details not found"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
