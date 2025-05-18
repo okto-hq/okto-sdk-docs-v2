@@ -32,7 +32,7 @@ This guide walks you through integrating Okto APIs into your application. You'll
     - Enabled the specific [Chains and Tokens](/docs/developer-admin-dashboard/wallet-control) you plan to use in your application
     - Optional: Enabled [Sponsorship](/docs/developer-admin-dashboard/sponsorship) for the desired chains
 
-    If you need help, reach out to us on our <ExternalLink href="/docs/react-sdk/troubleshooting">troubleshooting form</ExternalLink> and we will contact you.
+    If you need help, reach out to us on our <ExternalLink href="/docs/openapi/troubleshooting">troubleshooting form</ExternalLink> and we will contact you.
     </CollapsibleCallout>
 
 - **Okto API Keys:** You need your `CLIENT_PRIVATE_KEY` and `CLIENT_SWA`. Obtain these from the [Okto Developer Dashboard](https://dashboard.okto.tech/login).
@@ -48,7 +48,7 @@ This guide walks you through integrating Okto APIs into your application. You'll
 Authentication with the Okto API requires generating an Okto Auth Token, which is used for all subsequent API calls.
 
 - For testing purpose, Use the [Okto Auth Token Generator](/tools) to obtain an authentication token.
-- Alternatively, implement authentication in your code using our [Sample Implementation](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api_template.ts) to implement authentication in your code
+- Alternatively, implement authentication in your code using our [Sample Implementation](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template) to implement authentication in your code
 - Ensure the session keys/Okto auth token are stored securely.
 
   <Callout title="Note" type="info">
@@ -73,7 +73,7 @@ Authorization: Bearer <OKTO_AUTH_TOKEN>
 ```
 
 - Check out our [API Documentation](/docs/openapi#explore-api) for a complete list of available endpoints, and start testing the API instantly using your generated Okto Auth Token.
-- For a hands-on example, check out our [Template App](https://github.com/okto-hq/okto-sdkv2-ts-template) to understand request structures and best practices.
+- For a hands-on example, check out our [Template App](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template) to understand request structures and best practices.
 
 </Step>
 </Steps>

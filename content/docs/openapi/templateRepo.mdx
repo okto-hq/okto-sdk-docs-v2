@@ -5,6 +5,8 @@ full: false
 
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Callout } from "fumadocs-ui/components/callout";
+import CollapsibleCallout from "app/components/mdx/CollapsibleCallout";
+import ExternalLink from "app/components/mdx/ExternalLink";
 
 A comprehensive walkthrough of the Okto SDK Template Apps designed for Next.js. This template demonstrates core Okto functionality—including authentication, wallet management, and blockchain interactions—so you can quickly get started building with Okto.
 
@@ -83,43 +85,38 @@ cp .env.sample .env
 # The Okto environment "sandbox" or "production"
 OKTO_ENVIRONMENT =
 
-# Get the below values from Okto Developer Dashboard. Learn how here- https://docsv2.okto.tech/docs/developer-admin-dashboard
+# Get the below values from Okto Developer Dashboard. Learn how here- https://docs.okto.tech/docs/developer-admin-dashboard
 OKTO_CLIENT_PRIVATE_KEY =
 OKTO_CLIENT_SWA =
 
 
 #optional: only needed if using google authenticate
 # For testing purposes, you can generate the id token from here
-# - https://docsv2-staging.okto.tech/docs/openapi/authenticate/google-oauth/get-token-id
+# - https://docs.okto.tech/docs/openapi/authenticate/google-oauth/get-token-id
 # NOTE: The google ID token has a very short expiry. Please generate a new token just before running this code. You can check the expiry at jwt.io
 GOOGLE_ID_TOKEN =
 
 
 # when testing intents or using delegated access you will have to generate the okto auth token from session config
-USER_SWA =
-SESSION_PUBLIC_KEY =
-SESSION_PRIVATE_KEY =
+# For testing purposes, you can generate the okto auth token from our tool 'Session and Okto Auth Token Generator'
+# - https://docs.okto.tech/tools
 OKTO_AUTH_TOKEN =
-
-# Trade service
-TRADE_SERVICE_SECRET =
-TRADE_SERVICE_BASE_URL =
-
-# wallet private key must be prefixed with 0x
-WALLET_PRIVATE_KEY =
-WALLET_ADDRESS =
 ```
 
-    <Callout title="Note">
-    To obtain these credentials:
+  <CollapsibleCallout type="warning" title="Essential Setup Required">
+    Before you begin, set up your [developer dashboard](https://dashboard.okto.tech) by making sure you have :
+    - Created your [Okto Developer Dashboard](/docs/developer-admin-dashboard/dashboard-account) account
+    - Get your [Okto credits](/docs/developer-admin-dashboard/okto-faucet) from the dashboard
+    - Obtained your [API keys](/docs/developer-admin-dashboard/api-key) from the dashboard
+    - Enabled the specific [Chains and Tokens](/docs/developer-admin-dashboard/wallet-control) you plan to use in your application
+    - Optional: Enabled [Sponsorship](/docs/developer-admin-dashboard/sponsorship) for the desired chains
 
-    - **Client Private Key & SWA**: Get these from the Okto Dashboard. These keys are essential for authenticating your requests with Okto's services.
+    If you need help, reach out to us on our <ExternalLink href="/docs/openapi/troubleshooting">troubleshooting form</ExternalLink> and we will contact you.
+    </CollapsibleCallout>
 
-    - **Google OAuth Credentials**: Required for Google Sign-In functionality
-      1. Set up a project in [Google Cloud Console](https://console.cloud.google.com/)
-      2. Create OAuth 2.0 credentials
-      3. Follow our [Google Console Setup Guide](docs/openapi/authenticate/google-oauth/google-console-setup) for detailed instructions
-    </Callout>
+  - Okto API Keys: You need your `CLIENT_PRIVATE_KEY` and `CLIENT_SWA`. Obtain these from the [Okto Developer Dashboard](https://dashboard.okto.tech/login).
+  - Okto Account Setup: Ensure you have sufficient <ExternalLink href="https://dashboard.okto.tech/okto-credits">Okto Credits</ExternalLink>, enable the required <ExternalLink href="https://dashboard.okto.tech/wallet-controls">Chains and Tokens </ExternalLink>, and optionally <ExternalLink href="https://dashboard.okto.tech/paymaster">Activate Sponsorship</ExternalLink>.
+  - Google OAuth Credentials (if using Google authentication): Create OAuth 2.0 credentials in the <ExternalLink href="/docs/openapi/authenticate/google-oauth/google-console-setup">Google Cloud Console</ExternalLink> to get your `GOOGLE_CLIENT_ID`.
 
 5. Execute the script you want to run:
 

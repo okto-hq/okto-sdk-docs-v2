@@ -113,7 +113,7 @@ This approach shows how to create a TypeScript application and manually configur
         clientSWA: process.env.CLIENT_SWA!,
     };
     ```
-    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/index.ts" />
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/ts-template/index.ts" />
 </Step>
 
 <Step>
@@ -138,7 +138,7 @@ This approach shows how to create a TypeScript application and manually configur
 
     main().catch(console.error);
     ```
-    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/index.ts" />
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/ts-template/index.ts" />
 
 </Step>
 
@@ -164,7 +164,7 @@ This approach shows how to create a TypeScript application and manually configur
         }
     }
     ```
-    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/index.ts" />
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/ts-template/index.ts" />
 </Step>
 
 <Step>
@@ -204,7 +204,7 @@ Now that we have our basic setup complete, let's implement a token transfer on P
     const polygonAccount = accounts.data.find(account => account.network_name === "POLYGON_TESTNET_AMOY");
     console.log("Your Polygon Amoy address:", polygonAccount.address);
     ```
-    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/index.ts" />
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/ts-template/index.ts" />
 
 </Step>
 
@@ -249,7 +249,7 @@ Now that we have our basic setup complete, let's implement a token transfer on P
         }
     }
     ```
-    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/index.ts" />
+    <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/ts-template/index.ts" />
 </Step>
 
 <Step>
@@ -306,7 +306,7 @@ const transferParams = {
 };
 const result = await tokenTransfer(oktoClient, transferParams);
 ```
-<ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/index.ts" />
+<ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/ts-template/index.ts" />
 
 #### 2. NFT Transfer
 Transfer NFTs between addresses. <ExternalLink href="/docs/typescript-sdk/(Intents)/nftTransfer">Learn more</ExternalLink>
@@ -322,7 +322,7 @@ const nftParams = {
 };
 const result = await nftTransfer(oktoClient, nftParams);
 ```
-<ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/index.ts" />
+<ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/ts-template/index.ts" />
 
 #### 3. Raw Transaction (EVM)
 Execute custom EVM contract calls. <ExternalLink href="/docs/typescript-sdk/(Intents)/evmRawTransaction">Learn more</ExternalLink>

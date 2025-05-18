@@ -26,7 +26,7 @@ export default function DevTools() {
           </span>
         </Link>
         <Link
-          href="https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src"
+          href="https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template"
           className="relative group no-underline px-6 py-3 rounded-md border-2 border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-800/80 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-2px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.5),0_2px_4px_-2px_rgba(0,0,0,0.4)] transition-all hover:scale-105 hover:shadow-[0_8px_12px_-3px_rgba(0,0,0,0.15),0_4px_6px_-4px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_8px_12px_-3px_rgba(0,0,0,0.6),0_4px_6px_-4px_rgba(0,0,0,0.5)] dark:hover:bg-zinc-700/90 dark:hover:border-zinc-500"
           target="_blank">
           <span className="flex items-center gap-2 text-zinc-800 dark:text-zinc-200 font-medium justify-center">
