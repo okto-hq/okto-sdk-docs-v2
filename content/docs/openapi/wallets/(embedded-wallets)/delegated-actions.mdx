@@ -7,12 +7,24 @@ import { Callout } from 'fumadocs-ui/components/callout';
 import FeatureCard from "app/components/mdx/FeatureCard";
 import { LuArrowRightLeft, LuCalendarClock, LuSprout } from "react-icons/lu";
 import FullscreenImage from 'app/components/mdx/FullscreenImage';
+import TechnologyCard from 'app/components/mdx/TechnologyCard';
+import { IoCodeSlashOutline } from "react-icons/io5";
 
 Okto lets you securely request "on-behalf-of" permissions from users for their embedded wallets. This is known as delegated actions. It allows your application or backend to perform certain wallet operations without requiring a user signature prompt each time, so long as it adheres to user-approved policies.
 
 ## What are delegated actions?
 
 Delegated actions empower your application to take pre-defined actions using a user's embedded wallet, with the user's explicit consent. This means your application can, for example, initiate transactions or sign messages on behalf of the user, within clearly defined boundaries and under secure conditions.
+
+<div className="my-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+  <TechnologyCard
+    className="h-25"
+    icon={<IoCodeSlashOutline size={"1.5rem"} />}
+    title="Template Script" 
+    subtitle="Delegated Actions Example Implementation"
+    link="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/delegatedActions_template.ts"
+  />
+</div>
 
 ## Understanding Delegated Intent Flow
 

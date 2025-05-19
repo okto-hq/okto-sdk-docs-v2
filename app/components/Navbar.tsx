@@ -93,13 +93,13 @@ export default function NavbarComponent() {
       icons: <SiTypescript />,
     },
     {
-      href: "/docs/wagmi/setup",
+      href: "/docs/external-wallet-adapters/wagmi/setup",
       label: "Wagmi",
       subpath: "/",
       icons: <SiWagmi />,
     },
     {
-      href: "/docs/rainbowkit/setup",
+      href: "/docs/external-wallet-adapters/rainbowkit/setup",
       label: "RainbowKit",
       subpath: "/",
       icons: <FaRainbow />,
@@ -124,8 +124,8 @@ export default function NavbarComponent() {
     if (pathname.startsWith("/docs/typescript-sdk")) return "Typescript";
     if (pathname.startsWith("/docs/react-native-sdk")) return "React Native";
     if (pathname.startsWith("/docs/unity-sdk")) return "Unity";
-    if (pathname.startsWith("/docs/wagmi/setup")) return "Wagmi";
-    if (pathname.startsWith("/docs/rainbowkit/setup")) return "RainbowKit";
+    if (pathname.startsWith("/docs/external-wallet-adapters/wagmi/setup")) return "Wagmi";
+    if (pathname.startsWith("/docs/external-wallet-adapters/rainbowkit/setup")) return "RainbowKit";
     if (pathname.startsWith("/docs/okto-eliza-plugin")) return "Eliza Plugin";
     if (pathname.startsWith("/docs/openapi")) return "API References";
     return "SDKs";

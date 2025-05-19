@@ -84,7 +84,7 @@ const SDK_CONFIG = {
     ),
     defaultRepo:
       "https://github.com/okto-hq/okto-sdkv2-external-adapter-template/tree/bmac-react-wagmi-okto",
-    defaultTemplateUrl: "/docs/wagmi/templateRepo",
+    defaultTemplateUrl: "/docs/external-wallet-adapters/wagmi/templateRepo",
   },
   "rainbow-okto": {
     icon: (
@@ -95,7 +95,7 @@ const SDK_CONFIG = {
     ),
     defaultRepo:
       "https://github.com/okto-hq/okto-sdkv2-external-adapter-template/tree/bmac-react-rainbowkit-okto",
-    defaultTemplateUrl: "/docs/rainbowkit/templateRepo",
+    defaultTemplateUrl: "/docs/external-wallet-adapters/rainbowkit/templateRepo",
   },
   "api-reference": {
     icon: (
