@@ -88,7 +88,7 @@ export default function QuickStartBanner() {
           </Link>
 
           <Link
-            href="/docs/wagmi-integration"
+            href="/docs/external-wallet-adapters/wagmi/setup"
             className={`${baseButtonStyles} quickstart-banner-link-analytics-tracker`}
           >
             <SiWagmi
