@@ -103,13 +103,21 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 | Network Name | CAIP-2 ID |
 |--------------|----------|
-| APTOS | aptos:1 |
-| APTOS_TESTNET | aptos:2 |
+| APTOS | aptos:mainnet |
+| APTOS_TESTNET | aptos:testnet |
+| ARBITRUM | eip155:42161 |
+| AVALANCHE | eip155:43114 |
 | BASE | eip155:8453 |
+| BASE_TESTNET | eip155:84532 |
+| BSC | eip155:56 |
+| ETHEREUM | eip155:1 |
+| FANTOM | eip155:250 |
+| HYPERLIQUID_EVM_TESTNET | eip155:998 |
+| LINEA | eip155:59144 |
+| METIS | eip155:1088 |
+| OPTIMISM | eip155:10 |
 | POLYGON | eip155:137 |
 | POLYGON_TESTNET_AMOY | eip155:80002 |
-| SOLANA | solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp |
-| SOLANA_DEVNET | solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1 |
 </div>
 
 <div className="important-notice">
@@ -130,10 +138,9 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
     
         | Value | Description |
         |-------|-------------|
-        | `MINT` | Indicates that the order is for minting a new NFT. |
         | `NFT_TRANSFER` | Indicates that the order is for transferring an NFT to another address. |
-        | `TOKEN_TRANSFER_EXECUTE` | Indicates that the order is for executing a token transfer transaction. |
-        | `EXECUTE_RAW_TX` | Indicates that the order is for executing a raw blockchain transaction. |
+        | `TOKEN_TRANSFER` | Indicates that the order is for executing a token transfer transaction. |
+        | `RAW_TRANSACTION` | Indicates that the order is for executing a raw blockchain transaction. |
     
 </div>
 
@@ -156,18 +163,33 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
     </div>
 </div>
 
+
 <div className="sub-headings">
 ### ENTITY_TYPE
-<p>Defines the type of NFT or asset involved in the transaction.</p>
+<p>Defines the category of asset involved in the transaction.</p>
 </div>
-
 <div className="table-container">
     <div className="table-content">
         | Value | Description |
         |-------|-------------|
-        | `ERC721` | An ERC-721 standard NFT on EVM-compatible blockchains. |
+        | `TOKENS` | Fungible tokens |
+        | `NETWORKS` | Blockchain networks |
+        | `NFTS` | Non-fungible tokens |
+    </div>
+</div>
+
+---
+
+<div className="sub-headings">
+### ERC_TYPE
+<p>Specifies the ERC standard for NFTs on EVM-compatible blockchains.</p>
+</div>
+<div className="table-container">
+    <div className="table-content">
+        | Value | Description |
+        |-------|-------------|
+        | `ERC721` | An ERC-721 standard NFT on EVM-compatible blockchains |
         | `ERC1155` | An ERC-1155 standard NFT on EVM-compatible blockchains. |
-        | `NFT` | An NFT on non-EVM blockchains. |
     </div>
 </div>
 
@@ -181,7 +203,7 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 <Accordion title="User">
 <p>Contains user authentication and session information.</p>
 
-| Key | Value | Data Type |  
+| Key | Description | Data Type |  
 |-----|--------|-----------|
 | `userId` | Unique identifier for the user | string |   
 | `userAddress` | User's wallet address | string |   
@@ -203,7 +225,7 @@ const user = {
 <Accordion title="UserOp">
 <p>Represents a user operation for account abstraction.</p>
 
-| Key | Value | Data Type |  
+| Key | Description | Data Type |  
 |-----|--------|-----------|
 | `callData` | Execution call data | Hex |   
 | `callGasLimit` | Gas limit for main call | Hex |   
@@ -246,7 +268,7 @@ const userOp = {
 <Accordion title="Wallet">
 <p>Represents a blockchain wallet with its network details.</p>
 
-| Key | Value | Data Type |
+| Key | Description | Data Type |
 |-----|--------|-----------|
 | `caipId` | Chain agnostic identifier | string |
 | `networkName` | Name of the network | string |
@@ -268,7 +290,7 @@ const wallet = {
 <Accordion title="Token">
 <p>Describes a cryptocurrency token and its properties.</p>
 
-| Key | Value | Data Type |  
+| Key | Description | Data Type |  
 |-----|--------|-----------|
 | `address` | Token contract address | string |   
 | `caipId` | Chain agnostic identifier | string |   
@@ -304,7 +326,7 @@ const token = {
 <Accordion title="Network">
 <p>Contains information about supported blockchain networks.</p>
 
-| Key | Value | Data Type |  
+| Key | Description | Data Type |  
 |-----|--------|-----------|
 | `caipId` | Chain agnostic identifier | string |   
 | `networkName` | Network name | string |   
@@ -332,7 +354,7 @@ const network = {
 <Accordion title="Order">
  <p>Represents an order/transaction status and details.</p>
 
-| Key | Value | Data Type |  
+| Key | Description | Data Type |  
 |-----|--------|-----------|
 | `downstreamTransactionHash` | Array of downstream tx hashes | string[] |   
 | `transactionHash` | Array of transaction hashes | string[] |   
@@ -361,7 +383,7 @@ const order = {
 <Accordion title="TokenTransferIntent">
 <p>Parameters for initiating a token transfer.</p>
 
-| Key | Value | Data Type |  
+| Key | Description | Data Type |  
 |-----|--------|-----------|
 | `amount` | Transfer amount | number \| bigint |   
 | `recipient` | Recipient's address | Address |   
@@ -382,7 +404,7 @@ const tokenTransferParams = {
 <Accordion title="NFTTransferIntent">
 <p>Parameters for initiating an NFT transfer.</p>
 
-| Key | Value | Data Type |  
+| Key | Description | Data Type |  
 |-----|--------|-----------|
 | `caip2Id` | Chain identifier | string |   
 | `collectionAddress` | NFT collection address | Address |   
@@ -407,7 +429,7 @@ const nftTransferParams = {
 <Accordion title="UserPortfolio">
 <p>Contains user's portfolio and holdings information.</p>
 
-| Key | Value | Data Type |  
+| Key | Description | Data Type |  
 |-----|--------|-----------|
 | `aggregatedData` | Portfolio summary | Object |   
 | `aggregatedData.holdingsCount` | Number of holdings | string |   
