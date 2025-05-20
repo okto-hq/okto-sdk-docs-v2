@@ -13,7 +13,7 @@
         "---Authentication---",
         "./authentication/okto-auth-session",
         "./authentication/google-oauth",
-        "!./authentication/email-otp",
+        "./authentication/email-otp",
         "!./authentication/phone-otp",
         "!./authentication/jwt-closed-loop",
         "./authentication/session-management",

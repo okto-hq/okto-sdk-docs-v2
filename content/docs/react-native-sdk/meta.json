@@ -13,7 +13,7 @@
     "---Authentication---",
     "./authenticate-users/okto-auth",
     "./authenticate-users/google-oauth",
-    "!./authenticate-users/email-otp",
+    "./authenticate-users/email-otp",
     "!./authenticate-users/phone-otp",
     "!./authenticate-users/jwt-closed-loop",
     "!./authenticate-users/onboarding-modal",

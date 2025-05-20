@@ -49,6 +49,14 @@ export default function GenerateClientSign() {
 
       <div className="space-y-2">
         <Label htmlFor="message">Message to Sign</Label>
+        <p className="w-full">
+          <strong>Note:</strong> The message should be in a valid <code>JSON.stringify</code> format.
+          <br />
+          <span className="block mt-1">Example:</span>
+          <code className="block wrap">
+            {"{"}"email":"test@test.com","client_swa":"0xe8201E368557508bF183D4e2DcE1bXXXXXXXXXXX","timestamp":1747722565485{"}"}
+          </code>
+        </p>
         <Textarea
           id="message"
           className="h-[100px]"

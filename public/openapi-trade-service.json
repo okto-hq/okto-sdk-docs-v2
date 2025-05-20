@@ -22,6 +22,11 @@
         "description": "All the usage related APIs"
       }
     ],
+    "security": [
+      {
+        "xAuthorizationSecret": []
+      }
+    ],
     "paths": {
       "/vpc/v1/get-quote": {
         "post": {
@@ -59,15 +64,15 @@
                     },
                     "sameChainFeeCollector": {
                       "type": "string",
-                      "example": "Polygon"
+                      "example": ""
                     },
                     "crossChainFee": {
                       "type": "string",
-                      "example": "Polygon"
+                      "example": ""
                     },
                     "crossChainFeeCollector": {
                       "type": "string",
-                      "example": "Polygon"
+                      "example": ""
                     },
                     "fromAmount": {
                       "type": "string",
@@ -207,15 +212,15 @@
                     },
                     "sameChainFeeCollector": {
                       "type": "string",
-                      "example": "Polygon"
+                      "example": ""
                     },
                     "crossChainFee": {
                       "type": "string",
-                      "example": "Polygon"
+                      "example": ""
                     },
                     "crossChainFeeCollector": {
                       "type": "string",
-                      "example": "Polygon"
+                      "example": ""
                     },
                     "fromAmount": {
                       "type": "string",
@@ -379,24 +384,243 @@
           }
         }
       },
-      "/api/trade-service/v1/endpoint4": {
-        "get": {
+      "/vpc/v1/register": {
+        "post": {
           "tags": ["Usage"],
-          "summary": "API Endpoint 4",
-          "description": "Some description for endpoint 4",
-          "operationId": "opid4",
-          "security": [
-            {
-              "bearerAuth": []
+          "summary": "Register Intent",
+          "description": "Registers a swap intent within the system",
+          "operationId": "registerIntent",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [],
+                  "properties": {
+                    "orderBytes": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "orderBytesSignature": {
+                      "type": "string",
+                      "example": "eth"
+                    },
+                    "caipId": {
+                      "type": "string",
+                      "example": "eip155:1"
+                    }                    
+                  }
+                }
+              }
             }
-          ],
+          },
+          "responses": {
+            "200": {
+              "description": "Intent registered successfully."
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "code": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 400
+                      },
+                      "errorCode": {
+                        "type": "string",
+                        "example": "INVALID_INPUT"
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "Failed to register intent."
+                      },
+                      "trace_id": {
+                        "type": "string",
+                        "example": "f83c2a5b-8352-4e2d-a33c-9b7d85f19261"
+                      },
+                      "details": {
+                        "type": "object",
+                        "nullable": true,
+                        "description": "Additional error context"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/vpc/v1/order-details": {
+        "post": {
+          "tags": ["Usage"],
+          "summary": "Get Order Details",
+          "description": "Fetches the details of an intent using the order ID",
+          "operationId": "orderDetails",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [],
+                  "properties": {
+                    "orderId": {
+                      "type": "string",
+                      "example": "<order_id>"
+                    },
+                    "orderBytesSignature": {
+                      "type": "string",
+                      "example": "<order_bytes_signature>"
+                    },
+                    "caipId": {
+                      "type": "string",
+                      "example": "eip155:1"
+                    }                    
+                  }
+                }
+              }
+            }
+          },
           "responses": {
             "200": {
               "description": "Fetched",
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/schemas/GetAggregatedPortfolioResponse"
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "swapper": {
+                        "type": "string",
+                        "example": "0"
+                      },
+                      "fillDeadline": {
+                        "type": "boolean",
+                        "example": true
+                      },
+                      "orderData": {
+                        "type": "object",
+                        "properties": {
+                          "platform": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "platformFeeBps": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "orderType": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "swapperInputs": {
+                            "type": "object",
+                            "properties": {
+                              "token": {
+                                "type": "string",
+                                "example": ""
+                              },
+                              "amount": {
+                                "type": "string",
+                                "example": ""
+                              }
+                            }
+                          },
+                          "swapperOutputs": {
+                            "type": "object",
+                            "properties": {
+                              "token": {
+                                "type": "string",
+                                "example": ""
+                              },
+                              "amount": {
+                                "type": "string",
+                                "example": ""
+                              },
+                              "recipient":{
+                                "type": "string",
+                                "example": ""
+                              },
+                              "chainId": {
+                                "type": "string",
+                                "example": ""
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "feeCharged": {
+                        "type": "boolean",
+                        "example": false
+                      },
+                      "outputAmount": {
+                        "type": "string",
+                        "example": "998.75"
+                      },
+                      "steps": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "swap"
+                            },
+                            "metadata": {
+                              "type": "object",
+                              "properties": {
+                                "serviceType": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "transactionType": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "protocol": {
+                                  "type": "string",
+                                  "example": "1inch"
+                                },
+                                "aggregatorName": {
+                                  "type": "string",
+                                  "example": "1inch"
+                                }
+                              }
+                            },
+                            "chainId": {
+                              "type": "string",
+                              "example": "1"
+                            },
+                            "txnData": {
+                              "type": "object",
+                              "nullable": true
+                            },
+                            "intentCalldata": {
+                              "type": "object",
+                              "nullable": true
+                            }
+                          }
+                        }
+                      },
+                      "permitDataToSign": {
+                        "type": "object",
+                        "nullable": true
+                      },
+                      "routeExpiry": {
+                        "type": "string",
+                        "example": "",
+                        "nullable": true
+                      }
+                    }
                   }
                 }
               }
@@ -406,7 +630,31 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/responses/BadRequest"
+                    "type": "object",
+                    "properties": {
+                      "code": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 400
+                      },
+                      "errorCode": {
+                        "type": "string",
+                        "example": "INVALID_INPUT"
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "Failed to register intent."
+                      },
+                      "trace_id": {
+                        "type": "string",
+                        "example": "f83c2a5b-8352-4e2d-a33c-9b7d85f19261"
+                      },
+                      "details": {
+                        "type": "object",
+                        "nullable": true,
+                        "description": "Additional error context"
+                      }
+                    }
                   }
                 }
               }
@@ -637,10 +885,11 @@
     },
     "components": {
       "securitySchemes": {
-        "bearerAuth": {
-          "type": "http",
-          "scheme": "bearer",
-          "name": "Authentication"
+        "xAuthorizationSecret": {
+          "type": "apiKey",
+          "in": "header",
+          "name": "x-authorization-secret",
+          "description": "Trade Service Secret (set this to the value of TRADE_SERVICE_SECRET from your .env)"
         },
         "basicAuth": {
           "type": "http",
