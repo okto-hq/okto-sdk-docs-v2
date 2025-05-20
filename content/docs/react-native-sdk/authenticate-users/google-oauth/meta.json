@@ -5,6 +5,7 @@
       "get-token-id",
       "google-console-setup-web",
       "google-console-setup-android",
-      "google-console-setup-ios"
+      "google-console-setup-ios",
+      "loginUsingOAuth"
     ]
   }

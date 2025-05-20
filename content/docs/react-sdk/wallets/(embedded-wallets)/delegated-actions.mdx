@@ -7,12 +7,24 @@ import { Callout } from 'fumadocs-ui/components/callout';
 import FeatureCard from "app/components/mdx/FeatureCard";
 import { LuArrowRightLeft, LuCalendarClock, LuSprout } from "react-icons/lu";
 import FullscreenImage from 'app/components/mdx/FullscreenImage';
+import TechnologyCard from 'app/components/mdx/TechnologyCard';
+import { IoCodeSlashOutline } from "react-icons/io5";
 
 Okto lets you securely request "on-behalf-of" permissions from users for their embedded wallets. This is known as delegated actions. It allows your application or backend to perform certain wallet operations without requiring a user signature prompt each time, so long as it adheres to user-approved policies.
 
 ## What are delegated actions?
 
 Delegated actions empower your application to take pre-defined actions using a user's embedded wallet, with the user's explicit consent. This means your application can, for example, initiate transactions or sign messages on behalf of the user, within clearly defined boundaries and under secure conditions.
+
+<div className="my-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+  <TechnologyCard
+    className="h-25"
+    icon={<IoCodeSlashOutline size={"1.5rem"} />}
+    title="Template Script" 
+    subtitle="Delegated Actions Example Implementation"
+    link="https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/delegatedActions_template.ts"
+  />
+</div>
 
 ## Understanding Delegated Intent Flow
 
@@ -30,14 +42,29 @@ Notice that in this flow, the user isn't directly involved in the transaction ap
 
 To implement delegated actions in your application:
 
+<Callout type="info" title="Important Notes">
+
+The Okto SDK itself does not provide methods to directly perform delegated actions. You must:
+
+- Capture the session key at the time of login
+- Store the session key securely
+- Generate an auth token using the session key
+- Use the generated auth token to call Okto APIs for delegated actions
+</Callout>
+
 1. **Capture the Session Key**:
    During user authentication, capture the session private key that's provided in the login callback. This key is essential for performing delegated actions.
+
+  <Callout type="warn">
+    **Important:** All Okto SDKs are frontend SDKs with a single session, and the auth token is securely stored on the client side. The session private key can only be captured at the time of login.
+  </Callout> 
 
    <Callout type="info">
    Learn more about session keys and their management in our [Session Management Guide](/docs/system-capabilities/session-management)
    </Callout>
 
-2. **Implementation Example**:
+  **Implementation Example**:
+
    Here's how to capture the session key during Google OAuth login:
 
    ```typescript
@@ -50,6 +77,7 @@ To implement delegated actions in your application:
            }, (sessionPrivateKey: string) => {
                console.log("Session Private Key:", sessionPrivateKey);
                // Store this key securely for delegated actions
+               // Important: In a production app, use a more secure storage method
                localStorage.setItem("sessionPrivKey", sessionPrivateKey);
            });
 
@@ -59,9 +87,9 @@ To implement delegated actions in your application:
        }
    }
    ```
-  
-  3. **Creating the Okto Auth Token for delegated actions**: Once you have the session key, you can generate an authorization token to make delegated actions:
 
+  2. **Generate Okto Auth Token for API calls:** Once you have the session key, you need to generate an Okto authorization token:
+  
   ```typescript
   import { secp256k1 } from "@noble/curves/secp256k1";
   import { keccak_256 } from "@noble/hashes/sha3";
@@ -119,8 +147,18 @@ To implement delegated actions in your application:
     
     return btoa(JSON.stringify(payload));
   }
+  ```
 
-  // Example usage with stored session key
+  3. **Use the Auth Token with API endpoints:** Once you have the auth token, you can use it to call the Okto APIs for delegated actions:
+  <Callout type="warn">
+    **Important:** Once you have generated the auth token, you must use the Okto APIs for all subsequent delegated action calls. You cannot set this token back in the SDK as there is no getter or setter function for the auth token in the client-side SDKs.
+  </Callout>
+  <Callout type="info">
+    **Session Expiration:** Be aware that the session has a default expiry (10 days). Even if you generate an auth token, if it's been more than 10 days since the original user login, the session would expire and the token would no longer be valid.
+  </Callout>
+
+  ```typescript
+  // Example of using the generated auth token to call an API endpoint
   async function performDelegatedAction() {
     // Retrieve the stored session private key
     const sessionPrivKey = localStorage.getItem("sessionPrivKey");
@@ -158,11 +196,11 @@ To implement delegated actions in your application:
   }
   ```
 
-
 ## How It Works
 1. **User Consent:** The user delegates their embedded wallet to your application when they login and this consent can be revoked at any time by logging out.
 2. **Limited Scope:** Delegation is governed by a policy engine that enforces limits (e.g., transaction count, spend limits) to protect the user.
 3. **Session-Based Security:** The delegated actions are bound to the session keys, which have a limited lifetime (10 days by default).
+4. **API Calls:** You use this token to make direct API calls for delegated actions.
 
 ## Policy Enforcement
 Okto's policy engine may enforce transaction thresholds—such as daily or total spend—beyond which users need to re-confirm.

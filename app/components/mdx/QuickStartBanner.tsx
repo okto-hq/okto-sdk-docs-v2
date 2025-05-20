@@ -1,4 +1,4 @@
-import { FaReact, FaUnity } from "react-icons/fa6";
+import { FaReact, FaUnity, FaRainbow } from "react-icons/fa6";
 import { TbBrandNextjs, TbBrandReactNative, TbApi } from "react-icons/tb";
 import { SiTypescript, SiWagmi } from "react-icons/si";
 import Link from "next/link";
@@ -88,7 +88,7 @@ export default function QuickStartBanner() {
           </Link>
 
           <Link
-            href="/docs/wagmi-integration"
+            href="/docs/external-wallet-adapters/wagmi/setup"
             className={`${baseButtonStyles} quickstart-banner-link-analytics-tracker`}
           >
             <SiWagmi
@@ -97,6 +97,19 @@ export default function QuickStartBanner() {
             />
             <span className={tooltipStyles}>
               Wagmi Integration
+            </span>
+          </Link>
+
+          <Link
+            href="/docs/external-wallet-adapters/rainbowkit/setup"
+            className={`${baseButtonStyles} quickstart-banner-link-analytics-tracker`}
+          >
+            <FaRainbow
+              size={36}
+              className={`${baseIconStyles} text-white-500 opacity-80 group-hover:opacity-100`}
+            />
+            <span className={tooltipStyles}>
+              RainbowKit Integration
             </span>
           </Link>
 

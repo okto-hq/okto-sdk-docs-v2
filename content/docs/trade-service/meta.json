@@ -15,7 +15,11 @@
         "fees",
         "refunds",
         "---Explore APIs---",
-        "usage",
+        "usage/get-quote",
+        "usage/get-best-route",
+        "usage/get-call-data",
+        "usage/register-intent",
+        "usage/order-details",
         "!setup",
         "!usage",
         "!resources"

@@ -26,7 +26,7 @@ export default function FeatureCard({
     </div>
   );
 
-  const cardClasses = "px-4 py-4 rounded-lg border border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 transition-all shadow-sm hover:shadow-md";
+  const cardClasses = "not-prose px-4 py-4 rounded-lg border border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 transition-all shadow-sm hover:shadow-md";
 
   return link ? (
     <Link href={link} className="no-underline not-prose feature-card-analytics-tracker" id={title}>
