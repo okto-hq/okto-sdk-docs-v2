@@ -54,7 +54,7 @@ export default function GenerateClientSign() {
           <br />
           <span className="block mt-1">Example:</span>
           <code className="block wrap">
-            {"{"}"email":"test@test.com","client_swa":"0xe8201E368557508bF183D4e2DcE1b1A1EXXXXXXX","timestamp":1747722565485{"}"}
+            {"{"}"email":"test@test.com","client_swa":"0xe8201E368557508bF183D4e2DcE1bXXXXXXXXXXX","timestamp":1747722565485{"}"}
           </code>
         </p>
         <Textarea
