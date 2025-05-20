@@ -1,0 +1,213 @@
+---
+title: Email Authentication
+description: Authenticate users via email using Okto's Typescript SDK with sendOTP, resendOTP, and loginUsingEmail methods for secure, token-based session management.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import '../../../styles.css';
+
+The `sendOTP()` method initiates the email authentication flow by sending a one-time password (OTP) to the specified user's email address.
+
+The `loginUsingEmail()` method verifies the provided OTP against the user's email. Upon successful verification, the user's session is established.
+
+### Example
+
+<Accordions defaultValue="Usage">
+<Accordion title="Usage">
+<Tabs items={['TypeScript']}>
+<Tab value="TypeScript">
+
+```typescript
+import { OktoClient } from "@okto_web3/core-js-sdk"; // [!code highlight]
+
+// Initialize OktoClient
+const oktoClient = new OktoClient({ 
+  environment: process.env.ENVIRONMENT!,
+  clientPrivateKey: process.env.CLIENT_PRIVATE_KEY!,
+  clientSWA: process.env.CLIENT_SWA!,
+});
+
+// Store token received from sendOTP / resendOTP
+let otpToken: string = '';
+
+// 1. Send OTP
+async function sendOTP(email: string) {
+  try {
+    const response = await oktoClient.sendOTP(email, 'email'); // [!code highlight]
+    console.log('OTP sent:', response);
+    otpToken = response.token; // Save token for verifying OTP
+  } catch (error) {
+    console.error('Error sending OTP:', error);
+  }
+}
+
+// 2. Resend OTP
+async function resendOTP(email: string) {
+  try {
+    const response = await oktoClient.resendOTP(email, otpToken, 'email'); // [!code highlight]
+    console.log('OTP resent:', response);
+    otpToken = response.token; // Update token
+  } catch (error) {
+    console.error('Error resending OTP:', error);
+  }
+}
+
+// 3. Verify OTP and Login
+async function verifyOTP(email: string, otp: string) {
+  try {
+    const session = await oktoClient.loginUsingEmail(email, otp, otpToken, (session: any) => { // [!code highlight]
+      console.log('Login callback:', session); // [!code highlight]
+      localStorage.setItem('okto_session', JSON.stringify(session)); // [!code highlight]
+    }); // [!code highlight]
+    console.log('Login successful:', session);
+  } catch (error) {
+    console.error('Error verifying OTP:', error);
+  }
+}
+
+```
+</Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```typescript
+OTP Sent: {
+    status: 'success',
+    data: {
+        status: 'success',
+        message: 'email otp sent',
+        code: 200,
+        token: '97fe0839-eb3b-5ab1-a91a-104d879d716d',
+        trace_id: '438139c4df89c2947f709032a0789453'
+    }
+}
+
+OTP Verified: {
+    status: 'success',
+    data: {
+        auth_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+        message: 'success',
+        refresh_auth_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+        device_token: '8661c1f7bceccc361bed04f29563bc81345da670ba79dd13a9d46036b07b3354'
+    }
+}
+
+Okto authToken:  eyJ0eXBlIjoiZWNkc2FfdW5jb21wcmVzc2VkIiwiZGF0YSI6eyJleHBpcmVfYXQiOjE3NDYwMzE2NDEsInNlc3Npb25fcHViX2tleSI6IjB4MDRiMDJmNWVkYzRkMmMyM2M0NDY2OWE4Njg2ZDY2ODQ4ZGZhNWI4NGY1ZDBjMDhjMTM4N2VjODRiNjU2M2Q5Y2Y2NTkxYjFiYjRiMzM1Nzk2OWIyNTVlNjVjZGJmOTk0MDE5ZjU5ZmJhYmU1YzM1ODdmN2E5Y2Q1MjZjNWRkMjNlZCJ9LCJkYXRhX3NpZ25hdHVyZSI6IjB4NjRlN2ZiOTlmNDFlOTIwZDc4ZmUxMzQxNzc0NzI2OGM2M2FmNzhkYzllNzg2NjdlM2Q2MTRkZTViMTk2MDUxYjM4NGVhNDJlNzNjNWEyZDY4N2VhYzdjZTdjYjczMjViMzNkOTNlZDAwMTQ1M2FjNDU4ZjZkYWVjYTk5NzAzNTExYiJ9
+```
+</Accordion>
+</Accordions>
+
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/typescript-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/typescript-sdk/troubleshooting) to contact support
+</Callout>
+
+### Method Overview
+
+| Method | Description |
+|---------|-------------|
+| <sub><i>async</i></sub> `OktoClient.sendOTP` | Sends an OTP to the user's email |
+| <sub><i>async</i></sub> `OktoClient.resendOTP` | Resends an OTP using a previously generated token |
+| <sub><i>async</i></sub> `OktoClient.loginUsingEmail` | Verifies the OTP and logs in the user |
+
+<div className="method-box">
+
+## Send OTP
+
+<sub><i>async</i></sub> `OktoClient.sendOTP(contact: string, method: "email")` sends the OTP to the specified email address.
+
+### Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|----------|
+| `contact` | `string` | User's email address | Yes |
+| `method` | `string` | OTP delivery method (email or whatsapp) | Yes |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | `Promise<EmailSendOtpResponse>` | Resolves with a success response if the OTP is sent successfully |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface EmailSendOtpResponse {
+            status: string;
+            message: string;
+            code: number;
+            token: string;
+        }
+        ```
+    </Accordion>
+</Accordions>
+
+</Callout>
+
+## Resend OTP
+
+<sub><i>async</i></sub> `OktoClient.resendOTP(contact: string, token: string, method: "email")` resends the OTP using the previously issued token. 
+
+### Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|----------|
+| `contact` | `string` | User's email address | Yes |
+| `token` | `string` | The token received from the previous `sendOTP` request | Yes |
+| `method` | "email" | OTP delivery method (email or whatsapp) | Yes |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | `Promise<EmailResendOtpResponse>` | Resolves with a success response if the OTP is resent successfully. |
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface EmailResendOtpResponse {
+            status: string;
+            message: string;
+            code: number;
+            token: string;
+        }
+        ```
+    </Accordion>
+</Accordions>
+
+</Callout>
+
+## Login Using Email
+
+<sub><i>async</i></sub> `OktoClient.loginUsingEmail(contact: string, otp: string, token: string)` verifies the OTP against the provided email and logs in the user. If successful, returns the user’s Smart Wallet Address.
+
+### Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|----------|
+| `contact` | `string` | User's email address | Yes |
+| `otp` | `string` | OTP sent to the user email address | Yes |
+| `token` | `string` | The token received from the previous `sendOTP` request | Yes |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `result` | `Promise<Address>` | Returns the user's Smart Wallet Address on successful login |
+
+</Callout>
+
+</div>
