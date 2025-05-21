@@ -329,7 +329,6 @@
               }
             }
           }
-          
         }
       }
     },
@@ -350,7 +349,13 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["type", "jobId", "gasDetails", "paymasterData", "details"],
+                "required": [
+                  "type",
+                  "jobId",
+                  "gasDetails",
+                  "paymasterData",
+                  "details"
+                ],
                 "properties": {
                   "type": {
                     "type": "string",
@@ -380,13 +385,18 @@
                   },
                   "details": {
                     "type": "object",
-                    "required": ["recipientWalletAddress", "networkId", "tokenAddress", "amount"],
+                    "required": [
+                      "recipientWalletAddress",
+                      "caip2Id",
+                      "tokenAddress",
+                      "amount"
+                    ],
                     "properties": {
                       "recipientWalletAddress": {
                         "type": "string",
                         "example": "0xff90C06e1fA92A9B7Dd95E7FBA9F7FC4d518058d"
                       },
-                      "networkId": {
+                      "caip2Id": {
                         "type": "string",
                         "example": "eip155:8453"
                       },
@@ -432,6 +442,149 @@
     "/api/oc/v1/authenticate/whatsapp": {
       "post": {
         "tags": ["Explorer"],
+        "summary": "Send WhatsApp OTP",
+        "description": "Sends a new OTP to the user's WhatsApp number. This should be the first step in the authentication flow.",
+        "operationId": "whatsappSendOtp",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["data", "client_signature", "type"],
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "required": [
+                      "whatsapp_number",
+                      "country_short_name",
+                      "client_swa",
+                      "timestamp"
+                    ],
+                    "properties": {
+                      "whatsapp_number": {
+                        "type": "string",
+                        "example": "9871170638"
+                      },
+                      "country_short_name": {
+                        "type": "string",
+                        "example": "IN"
+                      },
+                      "client_swa": {
+                        "type": "string",
+                        "example": "0xC06Cb1847f8cd185EB61980ec78311A1935c3Fd5"
+                      },
+                      "timestamp": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1744199446352
+                      }
+                    }
+                  },
+                  "client_signature": {
+                    "type": "string",
+                    "description": "Signature of `data` using `eth_sign`",
+                    "example": "0xa4363f9c3a5e05ca204080b72b869e0daa4be43d91dead3305377a20b7b416802dac6b10a392672b1a69b7fdbe4667a8d916fb158dafffc7d2de9b797a1d2c191c"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["ethsign"],
+                    "example": "ethsign"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "success"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "phone otp sent"
+                        },
+                        "code": {
+                          "type": "integer",
+                          "example": 200
+                        },
+                        "token": {
+                          "type": "string",
+                          "example": "c67931f6-a8b1-511c-91d5-9fc88231d541"
+                        },
+                        "trace_id": {
+                          "type": "string",
+                          "example": "0000000000000000208338242c787032"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Signature Expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 422
+                        },
+                        "errorCode": {
+                          "type": "string",
+                          "example": "422"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Something went wrong. Please try again"
+                        },
+                        "trace_id": {
+                          "type": "string",
+                          "example": "2a870ab615dab5fa1c58b26b46e864b3"
+                        },
+                        "details": {
+                          "type": "string",
+                          "example": "client signature invalid"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/oc/v1/authenticate/whatsapp/": {
+      "post": {
+        "tags": ["Explorer"],
         "summary": "Resend WhatsApp OTP",
         "description": "Resends an OTP to the user's WhatsApp number using the same endpoint as initial send. A valid `token` from the first OTP request must be included.",
         "operationId": "whatsappResendOtp",
@@ -445,7 +598,12 @@
                 "properties": {
                   "data": {
                     "type": "object",
-                    "required": ["whatsapp_number", "country_short_name", "client_swa", "timestamp"],
+                    "required": [
+                      "whatsapp_number",
+                      "country_short_name",
+                      "client_swa",
+                      "timestamp"
+                    ],
                     "properties": {
                       "whatsapp_number": {
                         "type": "string",
@@ -822,7 +980,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status","error"],
+                  "required": ["status", "error"],
                   "properties": {
                     "status": {
                       "type": "string",
@@ -966,13 +1124,13 @@
               }
             }
           },
-         "422": {
+          "422": {
             "description": "Unprocessable Entity",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status","error"],
+                  "required": ["status", "error"],
                   "properties": {
                     "status": {
                       "type": "string",
@@ -1014,9 +1172,14 @@
     "/api/oc/v1/readContractData": {
       "post": {
         "tags": ["Explorer"],
-        "summary": "Read Contract Data",
-        "description": "Read data from a smart contract on a specified network. The API returns the data from the contract based on the input parameters. Supports both EVM and Aptos networks.",
-        "operationId": "readContractData",
+        "summary": "Read Contract Data (EVM)",
+        "description": "Read data from a smart contract on a specified network. The API returns the data from the contract based on the input parameters. Supports both EVM and Aptos networks. Below is an example for EVM.",
+        "operationId": "readContractDataEVM",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -1031,60 +1194,81 @@
                     "example": "eip155:8453"
                   },
                   "data": {
-                      "type": "object",
-                      "description": "Contract Read Data",
-                      "required": ["contract_address", "abi", "args"],
-                      "properties": {
-                        "contractAddress": {
-                          "type": "string",
-                          "description": "The address of the contract to read from",
-                          "example": "0x3BA4c387f786bFEE076A58914F5Bd38d668B42c3"
-                        },
-                        "abi": {
-                          "type": "object",
-                          "description": "The ABI of the contract",
-                          "properties": {
-                            "inputs": {
-                              "type": "array",
-                              "items": {
-                                "type": "object"
-                              },
-                              "example": []
-                            },
-                            "name": {
-                              "type": "string",
-                              "example": "totalSupply"
-                            },
-                            "outputs": {
-                              "type": "array",
-                              "items": {
-                                "type": "object"
-                              },
-                              "example": [
-                                {
-                                  "internalType": "uint256",
-                                  "name": "",
-                                  "type": "uint256"
+                    "type": "object",
+                    "description": "Contract Read Data",
+                    "required": ["contract_address", "abi", "args"],
+                    "properties": {
+                      "contractAddress": {
+                        "type": "string",
+                        "description": "The address of the contract to read from",
+                        "example": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+                      },
+                      "abi": {
+                        "type": "object",
+                        "description": "The ABI of the contract",
+                        "properties": {
+                          "inputs": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "internalType": {
+                                  "type": "string",
+                                  "example": "address"
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "example": "account"
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "example": "address"
                                 }
-                              ]
-                            },
-                            "stateMutability": {
-                              "type": "string",
-                              "example": "view"
-                            },
-                            "type": {
-                              "type": "string",
-                              "example": "function"
+                              }
                             }
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "balanceOf"
+                          },
+                          "outputs": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "internalType": {
+                                  "type": "string",
+                                  "example": "uint256"
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "example": "uint256"
+                                }
+                              }
+                            }
+                          },
+                          "stateMutability": {
+                            "type": "string",
+                            "example": "view"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "function"
                           }
-                        },
-                        "args": {
-                          "type": "object",
-                          "description": "Arguments to pass to the function",
-                          "example": {}
                         }
+                      },
+                      "args": {
+                        "type": "object",
+                        "description": "Arguments to pass to the function",
+                        "example": {
+                          "account": "0xB7B8F759E8Bd293b91632100f53a45859832f463"
+                        }
+                      }
                     }
-
                   }
                 }
               }
@@ -1114,12 +1298,142 @@
                       "example": ["17568736448"]
                     }
                   }
-
                 }
               }
             }
           },
-         "400": {
+          "400": {
+            "description": "Something went wrong",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "error"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Status of the contract read request",
+                      "example": "error"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 400
+                        },
+                        "errorCode": {
+                          "type": "string",
+                          "example": "ER-TECH-0004"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Something went wrong. Please try again"
+                        },
+                        "trace_id": {
+                          "type": "string",
+                          "example": "16d13cc33b8fdb4bb991be15b454144e"
+                        },
+                        "details": {
+                          "type": "string",
+                          "example": "Network Details not found"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/oc/v1/readContractData/": {
+      "post": {
+        "tags": ["Explorer"],
+        "summary": "Read Contract Data (Aptos)",
+        "description": "Read data from a smart contract on a specified network. The API returns the data from the contract based on the input parameters. Supports both EVM and Aptos networks. Below is an example for Aptos.",
+        "operationId": "readContractDataAptos",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["caip2id", "data"],
+                "properties": {
+                  "caip2id": {
+                    "type": "string",
+                    "description": "Caip2id of the network on which to read the contract data",
+                    "example": "aptos:testnet"
+                  },
+                  "data": {
+                    "type": "object",
+                    "description": "Contract Read Data",
+                    "required": [
+                      "function",
+                      "typeArguments",
+                      "functionArguments"
+                    ],
+                    "properties": {
+                      "function": {
+                        "type": "string",
+                        "example": "0x1::coin::master_minter"
+                      },
+                      "typeArguments": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "example": []
+                      },
+                      "functionArguments": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "example": []
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contract data read successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "data"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Status of the contract read request",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "description": "Array containing the return values from the contract",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": ["0xafa0c7aa7f2eb9b38e5a3758efb32b17ac91b016610ec574f1fa55d550ed7dd7"]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
             "description": "Something went wrong",
             "content": {
               "application/json": {
@@ -1718,7 +2032,7 @@
           }
         }
       },
-      "GetAggregatedPortfolioResponse": { 
+      "GetAggregatedPortfolioResponse": {
         "type": "object",
         "required": ["status", "data"],
         "properties": {
@@ -1728,7 +2042,7 @@
           },
           "data": {
             "type": "object",
-            "required": ["aggregated_data" , "group_tokens"],
+            "required": ["aggregated_data", "group_tokens"],
             "properties": {
               "aggregated_data": {
                 "$ref": "#/components/schemas/AggregatedData"
@@ -1855,7 +2169,14 @@
           },
           "data": {
             "type": "object",
-            "required": ["user_id", "vendor_id", "user_swa", "vendor_swa", "is_session_added", "sign_auth_relayer_user_ops"],
+            "required": [
+              "user_id",
+              "vendor_id",
+              "user_swa",
+              "vendor_swa",
+              "is_session_added",
+              "sign_auth_relayer_user_ops"
+            ],
             "properties": {
               "user_id": {
                 "type": "string",
@@ -1913,7 +2234,10 @@
                   },
                   "fees": {
                     "type": "object",
-                    "required": ["transactionFees", "approxTransactionFeesInUSDT"],
+                    "required": [
+                      "transactionFees",
+                      "approxTransactionFeesInUSDT"
+                    ],
                     "properties": {
                       "transactionFees": {
                         "type": "object",
@@ -1932,7 +2256,15 @@
               },
               "callData": {
                 "type": "object",
-                "required": ["intentType", "jobId", "vendorId", "creatorId", "policies", "gsn", "payload"],
+                "required": [
+                  "intentType",
+                  "jobId",
+                  "vendorId",
+                  "creatorId",
+                  "policies",
+                  "gsn",
+                  "payload"
+                ],
                 "properties": {
                   "intentType": {
                     "type": "string",
@@ -1966,7 +2298,12 @@
                   },
                   "gsn": {
                     "type": "object",
-                    "required": ["isPossible", "isRequired", "requiredNetworks", "tokens"],
+                    "required": [
+                      "isPossible",
+                      "isRequired",
+                      "requiredNetworks",
+                      "tokens"
+                    ],
                     "properties": {
                       "isPossible": {
                         "type": "boolean",
@@ -1988,13 +2325,18 @@
                   },
                   "payload": {
                     "type": "object",
-                    "required": ["amount", "networkId", "recipientWalletAddress", "tokenAddress"],
+                    "required": [
+                      "amount",
+                      "caip2Id",
+                      "recipientWalletAddress",
+                      "tokenAddress"
+                    ],
                     "properties": {
                       "amount": {
                         "type": "string",
                         "example": "1"
                       },
-                      "networkId": {
+                      "caip2Id": {
                         "type": "string",
                         "example": "eip155:137"
                       },
@@ -2012,7 +2354,20 @@
               },
               "userOps": {
                 "type": "object",
-                "required": ["sender", "nonce", "callData", "callGasLimit", "verificationGasLimit", "preVerificationGas", "maxFeePerGas", "maxPriorityFeePerGas", "paymaster", "paymasterVerificationGasLimit", "paymasterPostOpGasLimit", "paymasterData"],
+                "required": [
+                  "sender",
+                  "nonce",
+                  "callData",
+                  "callGasLimit",
+                  "verificationGasLimit",
+                  "preVerificationGas",
+                  "maxFeePerGas",
+                  "maxPriorityFeePerGas",
+                  "paymaster",
+                  "paymasterVerificationGasLimit",
+                  "paymasterPostOpGasLimit",
+                  "paymasterData"
+                ],
                 "properties": {
                   "sender": {
                     "type": "string",
@@ -2070,14 +2425,25 @@
       },
       "Network": {
         "type": "object",
-        "required": ["caip_id", "network_name", "chain_id", "logo", "sponsorship_enabled", "gsn_enabled", "type", "network_id", "onramp_enabled", "whitelisted"],
+        "required": [
+          "caip_id",
+          "network_name",
+          "chain_id",
+          "logo",
+          "sponsorship_enabled",
+          "gsn_enabled",
+          "type",
+          "network_id",
+          "onramp_enabled",
+          "whitelisted"
+        ],
         "properties": {
           "caip_id": {
             "type": "string",
             "example": "eip155:56"
           },
           "network_name": {
-            "type": "string", 
+            "type": "string",
             "example": "BSC"
           },
           "chain_id": {
@@ -2116,7 +2482,13 @@
       },
       "Wallet": {
         "type": "object",
-        "required": ["caip_id", "network_name", "address", "network_id", "network_symbol"],
+        "required": [
+          "caip_id",
+          "network_name",
+          "address",
+          "network_id",
+          "network_symbol"
+        ],
         "properties": {
           "caip_id": {
             "type": "string",
@@ -2142,7 +2514,23 @@
       },
       "Token": {
         "type": "object",
-        "required": ["address", "caip_id", "symbol", "image", "name", "short_name", "id", "group_id", "is_primary", "network_id", "network_name", "onramp_enabled", "whitelisted","decimals", "precision"],
+        "required": [
+          "address",
+          "caip_id",
+          "symbol",
+          "image",
+          "name",
+          "short_name",
+          "id",
+          "group_id",
+          "is_primary",
+          "network_id",
+          "network_name",
+          "onramp_enabled",
+          "whitelisted",
+          "decimals",
+          "precision"
+        ],
         "properties": {
           "address": {
             "type": "string",
@@ -2200,7 +2588,7 @@
             "type": "string",
             "example": "6"
           },
-           "precision": {
+          "precision": {
             "type": "string",
             "example": "6"
           }
@@ -2208,7 +2596,13 @@
       },
       "AggregatedData": {
         "type": "object",
-        "required": ["holdings_count", "holdings_price_inr", "holdings_price_usdt", "total_holding_price_inr", "total_holding_price_usdt"],
+        "required": [
+          "holdings_count",
+          "holdings_price_inr",
+          "holdings_price_usdt",
+          "total_holding_price_inr",
+          "total_holding_price_usdt"
+        ],
         "properties": {
           "holdings_count": {
             "type": "string",
@@ -2219,7 +2613,7 @@
             "example": "594.5431000000001"
           },
           "holdings_price_usdt": {
-            "type": "string", 
+            "type": "string",
             "example": "8.821019999999999"
           },
           "total_holding_price_inr": {
@@ -2234,14 +2628,31 @@
       },
       "GroupToken": {
         "type": "object",
-        "required": ["id", "name", "symbol", "short_name", "token_image", "token_address", "group_id", "network_id", "precision", "network_name", "is_primary", "balance", "holdings_price_usdt", "holdings_price_inr", "aggregation_type", "tokens"],
+        "required": [
+          "id",
+          "name",
+          "symbol",
+          "short_name",
+          "token_image",
+          "token_address",
+          "group_id",
+          "network_id",
+          "precision",
+          "network_name",
+          "is_primary",
+          "balance",
+          "holdings_price_usdt",
+          "holdings_price_inr",
+          "aggregation_type",
+          "tokens"
+        ],
         "properties": {
           "id": {
             "type": "string",
             "example": "a9e192bb-bd18-3a47-ab07-5ecff29776e3"
           },
           "name": {
-            "type": "string", 
+            "type": "string",
             "example": "Polygon Ecosystem Token"
           },
           "symbol": {
@@ -2300,7 +2711,21 @@
             "type": "array",
             "items": {
               "type": "object",
-              "required": ["id", "name", "symbol", "short_name", "token_image", "token_address", "network_id", "precision", "network_name", "is_primary", "balance", "holdings_price_usdt", "holdings_price_inr"],
+              "required": [
+                "id",
+                "name",
+                "symbol",
+                "short_name",
+                "token_image",
+                "token_address",
+                "network_id",
+                "precision",
+                "network_name",
+                "is_primary",
+                "balance",
+                "holdings_price_usdt",
+                "holdings_price_inr"
+              ],
               "properties": {
                 "id": {
                   "type": "string",
@@ -2361,7 +2786,29 @@
       },
       "Activity": {
         "type": "object",
-        "required": ["symbol", "image", "name", "short_name", "id", "group_id", "description", "quantity", "amount", "order_type", "transfer_type", "status", "created_at", "updated_at", "timestamp", "tx_hash", "network_id", "network_name", "network_explorer_url", "network_symbol", "caip_id"],
+        "required": [
+          "symbol",
+          "image",
+          "name",
+          "short_name",
+          "id",
+          "group_id",
+          "description",
+          "quantity",
+          "amount",
+          "order_type",
+          "transfer_type",
+          "status",
+          "created_at",
+          "updated_at",
+          "timestamp",
+          "tx_hash",
+          "network_id",
+          "network_name",
+          "network_explorer_url",
+          "network_symbol",
+          "caip_id"
+        ],
         "properties": {
           "symbol": {
             "type": "string",
@@ -2416,7 +2863,7 @@
             "example": 1739176632
           },
           "updated_at": {
-            "type": "integer", 
+            "type": "integer",
             "example": 1739176632
           },
           "timestamp": {
@@ -2451,7 +2898,21 @@
       },
       "Nft": {
         "type": "object",
-        "required": ["caip_id", "network_name", "entity_type", "collection_address", "collection_name", "nft_id" , "image", "quantity", "token_uri", "description", "nft_name", "explorer_smart_contract_url", "collection_image"],
+        "required": [
+          "caip_id",
+          "network_name",
+          "entity_type",
+          "collection_address",
+          "collection_name",
+          "nft_id",
+          "image",
+          "quantity",
+          "token_uri",
+          "description",
+          "nft_name",
+          "explorer_smart_contract_url",
+          "collection_image"
+        ],
         "properties": {
           "caip_id": {
             "type": "string",
@@ -2511,7 +2972,7 @@
         "type": "object",
         "required": [
           "downstream_transaction_hash",
-          "transaction_hash", 
+          "transaction_hash",
           "status",
           "intent_id",
           "intent_type",
@@ -2527,14 +2988,18 @@
             "items": {
               "type": "string"
             },
-            "example": ["0xb30aacea6ee3883939255195172a62110b02aeb03dc590e0cd4d878995bc958b"]
+            "example": [
+              "0xb30aacea6ee3883939255195172a62110b02aeb03dc590e0cd4d878995bc958b"
+            ]
           },
           "transaction_hash": {
-            "type": "array", 
+            "type": "array",
             "items": {
               "type": "string"
             },
-            "example": ["0x1378f79faffa6ff1242c5d4ebdbc8fffc4bdbc44723cb63041d54fc67c671f97"]
+            "example": [
+              "0x1378f79faffa6ff1242c5d4ebdbc8fffc4bdbc44723cb63041d54fc67c671f97"
+            ]
           },
           "status": {
             "type": "string",
@@ -2563,7 +3028,7 @@
                 "type": "string",
                 "example": "164060000"
               },
-              "networkId": {
+              "caip2Id": {
                 "type": "string",
                 "example": "eip155:137"
               },

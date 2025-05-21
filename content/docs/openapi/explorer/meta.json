@@ -9,6 +9,7 @@
     "get-nft-portfolio",
     "get-order-history",
     "order-estimate",
-    "read-contract-data"
+    "read-contract-data-e-v-m",
+    "read-contract-data-aptos"
   ]
 }
