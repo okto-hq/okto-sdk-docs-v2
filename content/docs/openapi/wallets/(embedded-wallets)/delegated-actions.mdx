@@ -40,138 +40,20 @@ Notice that in this flow, the user isn't directly involved in the transaction ap
 
 ## How to implement delegated actions
 
-To implement delegated actions in your application:
+The implementation of delegated actions via API is identical to the regular API setup flow. When you authenticate a user via the API, you create a session that can be used for delegated actions.
 
-1. **Capture the Session Key**:
-   During user authentication, capture the session private key that's provided in the login callback. This key is essential for performing delegated actions.
+<Callout type="info" title="Implementation Steps">
+For detailed implementation steps, refer to our [API Setup Guide](/docs/openapi/getting-started) and the [Sample Implementation](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/delegatedActions_template.ts).
+</Callout>
 
-   <Callout type="info">
-   Learn more about session keys and their management in our [Session Management Guide](/docs/system-capabilities/session-management)
-   </Callout>
+**Key Points:**
 
-2. **Implementation Example**:
-   Here's how to capture the session key during Google OAuth login:
-
-   ```typescript
-   // Using Google OAuth
-   async function handleGoogleLogin(credentialResponse: any) {
-       try {
-           const user = await oktoClient.loginUsingOAuth({
-               idToken: credentialResponse.credential,
-               provider: "google",
-           }, (sessionPrivateKey: string) => {
-               console.log("Session Private Key:", sessionPrivateKey);
-               // Store this key securely for delegated actions
-               localStorage.setItem("sessionPrivKey", sessionPrivateKey);
-           });
-
-           console.log("Login successful:", user);
-       } catch (error) {
-           console.error("Login failed:", error);
-       }
-   }
-   ```
-  
-  3. **Creating the Okto Auth Token for delegated actions**: Once you have the session key, you can generate an authorization token to make delegated actions:
-
-  ```typescript
-  import { secp256k1 } from "@noble/curves/secp256k1";
-  import { keccak_256 } from "@noble/hashes/sha3";
-  import { signMessage } from "viem/accounts";
-
-  // Define SessionKey class for handling key operations
-  class SessionKey {
-    priv;
-    constructor(privKey) {
-      if (privKey) {
-        this.priv = Uint8Array.from(
-          Buffer.from(privKey.replace("0x", ""), "hex")
-        );
-      } else {
-        this.priv = secp256k1.utils.randomPrivateKey();
-      }
-    }
-    
-    get privateKeyHexWith0x() {
-      return `0x${Buffer.from(this.priv).toString("hex")}`;
-    }
-    
-    get uncompressedPublicKeyHexWith0x() {
-      return `0x${Buffer.from(secp256k1.getPublicKey(this.priv, false)).toString("hex")}`;
-    }
-    
-    static fromPrivateKey(privateKey) {
-      return new SessionKey(privateKey);
-    }
-  }
-
-  // Generate an Okto Auth Token using session keys
-  async function getAuthorizationToken(sessionConfig) {
-    const sessionPriv = sessionConfig?.sessionPrivKey;
-    const sessionPub = sessionConfig?.sessionPubKey;
-    
-    if (!sessionPriv || !sessionPub) {
-      throw new Error("Session keys are not set");
-    }
-    
-    const data = {
-      expire_at: Math.round(Date.now() / 1000) + 60 * 90, // 90 minutes expiry
-      session_pub_key: sessionPub,
-    };
-
-    // Okto auth token is the session public key encrypted with the session private key
-    const payload = {
-      type: "ecdsa_uncompressed",
-      data,
-      data_signature: await signMessage({
-        message: JSON.stringify(data),
-        privateKey: sessionPriv,
-      }),
-    };
-    
-    return btoa(JSON.stringify(payload));
-  }
-
-  // Example usage with stored session key
-  async function performDelegatedAction() {
-    // Retrieve the stored session private key
-    const sessionPrivKey = localStorage.getItem("sessionPrivKey");
-    const userSWA = oktoClient.userSWA; // Get from Okto client
-    
-    if (!sessionPrivKey || !userSWA) {
-      console.error("Missing session keys or user SWA");
-      return;
-    }
-    
-    // Create session object
-    const session = SessionKey.fromPrivateKey(sessionPrivKey);
-    
-    // Construct session config
-    const sessionConfig = {
-      sessionPrivKey: session.privateKeyHexWith0x,
-      sessionPubKey: session.uncompressedPublicKeyHexWith0x,
-      userSWA,
-    };
-    
-    // Generate auth token
-    const authToken = await getAuthorizationToken(sessionConfig);
-    console.log("Okto session authToken:", authToken);
-    
-    // Now use this token for API calls
-    // Example: fetch user portfolio
-    const response = await fetch("https://sandbox-api.okto.tech/api/oc/v1/aggregated-portfolio", {
-      headers: {
-        "Authorization": `Bearer ${authToken}`
-      }
-    });
-    
-    const portfolioData = await response.json();
-    return portfolioData;
-  }
-  ```
-
+- **Authentication Process:** Create session keys → Generate paymaster data → Build authentication payload → Call authenticate API to create a session.
+- **Store Session and Generate Auth Tokens:** Save the session configuration (session private key, session public key, and userSWA) securely and use it to generate auth tokens for API calls
+- **Make API Calls:** Use the auth tokens to perform operations on behalf of the user
 
 ## How It Works
+
 1. **User Consent:** The user delegates their embedded wallet to your application when they login and this consent can be revoked at any time by logging out.
 2. **Limited Scope:** Delegation is governed by a policy engine that enforces limits (e.g., transaction count, spend limits) to protect the user.
 3. **Session-Based Security:** The delegated actions are bound to the session keys, which have a limited lifetime (10 days by default).
