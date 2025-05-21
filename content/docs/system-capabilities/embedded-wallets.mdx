@@ -54,13 +54,17 @@ A core concept for understanding Okto Embedded Wallets is the **Wallet Provider 
 
 ---
 
-## Interoperability: The Key Rule
+## Interoperability
 
 The most critical aspect defined by the Wallet Provider is **interoperability**.
 
 To understand Okto's specific approach, it's helpful to first consider the general notion of interoperability. In blockchain, interoperability often refers to a single wallet's ability to move assets or interact seamlessly across different blockchain systems. 
 
 Okto's embedded wallet interoperability extends this idea: different client applications operating **under the same Wallet Provider (WP)** can offer the *exact same wallet and assets* to a common user. This creates a unified experience for the user within that specific Wallet Provider's ecosystem.
+
+<Callout type="info" title="Important Note">
+Interoperability for embedded wallets is currently a choice for clients, with the default being a non-interoperable setup where each client acts as its own Wallet Provider. If a client desires interoperability, they will need to reach out to the Okto team. In the future, the Okto dashboard will provide an option for clients to choose whether they want to be part of an interoperable system or operate as their own Wallet Provider, based on their specific use case.
+</Callout>
 
 <Callout type="info" title="Note">
     Embedded wallets are **only** interoperable within the **same** Wallet Provider ecosystem.
