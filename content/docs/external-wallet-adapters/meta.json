@@ -1,0 +1,10 @@
+{
+    "title": "External Wallet Adapters",
+    "root": true,
+    "pages": [
+        "[← Back to Home](/)",
+        "authenticate",
+        "wagmi",
+        "rainbowkit"
+    ]
+  }
