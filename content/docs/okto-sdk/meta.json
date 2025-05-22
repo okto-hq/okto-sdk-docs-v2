@@ -1,7 +1,9 @@
 {
-    "title": "About SDK",
+    "title": "Okto SDK",
+    "root": true,
     "pages": [
-        "overview",
+        "[← Back to Home](/)",
+        "index",
         "sdk-introduction",
         "supported-sdk-platforms",
         "feature-support",
