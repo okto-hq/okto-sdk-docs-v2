@@ -1,0 +1,103 @@
+---
+title: Overview
+description: Integrate Okto's embedded wallets into existing dApps using popular Web3 frontend libraries like Wagmi and RainbowKit
+full: false
+---
+
+import TechnologyCard from "app/components/mdx/TechnologyCard";
+import FeatureCard from "app/components/mdx/FeatureCard";
+import ExternalLink from "app/components/mdx/ExternalLink";
+import { IoCodeSlashOutline, IoShieldCheckmarkOutline, IoRocketOutline, IoGlobeOutline } from "react-icons/io5";
+import { LuKey, LuUsers } from "react-icons/lu";
+
+Okto provides seamless integration with popular Web3 frontend libraries, allowing you to add Okto's embedded smart contract wallets to your existing dApps. These adapters enable users to connect via social logins while maintaining compatibility with your current tech stack.
+
+---
+
+## Why Use External Wallet Adapters?
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+  <FeatureCard
+    icon={<IoRocketOutline size="1.2rem" />}
+    title="Seamless Integration"
+    description="Add Okto's social login capabilities without major architectural changes to existing Wagmi or RainbowKit applications."
+    iconColor="text-blue-600"
+  />
+  <FeatureCard
+    icon={<IoGlobeOutline size="1.2rem" />}
+    title="User-Friendly Onboarding"
+    description="Enable users to connect using familiar social providers like Google, eliminating complex wallet setup processes."
+    iconColor="text-green-600"
+  />
+  <FeatureCard
+    icon={<IoShieldCheckmarkOutline size="1.2rem" />}
+    title="Smart Contract Wallets"
+    description="Provide users with Okto-managed embedded smart contract wallets offering enhanced security and functionality."
+    iconColor="text-purple-600"
+  />
+  <FeatureCard
+    icon={<IoCodeSlashOutline size="1.2rem" />}
+    title="Familiar Developer Experience"
+    description="Continue using the Web3 libraries and patterns you're already comfortable with. No learning curve required."
+    iconColor="text-orange-600"
+  />
+</div>
+---
+
+## Authentication Requirements
+
+Before integrating any external wallet adapter, you'll need to set up authentication credentials:
+
+- **Google OAuth credentials:** Create OAuth 2.0 credentials in the <ExternalLink href="https://console.cloud.google.com/">Google Cloud Console</ExternalLink> to get your `googleClientId`.
+
+- **Okto Dashboard Setup:** You need your `clientPrivateKey` and `clientSWA`. Obtain these from the <ExternalLink href="https://dashboard.okto.tech/login">Okto Developer Dashboard</ExternalLink>.
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+<TechnologyCard
+    icon={<LuKey size={"1.5rem"} />}
+    title="OAuth Setup"
+    subtitle="Complete guide to setting up Google OAuth credentials"
+    link="/docs/external-wallet-adapters/authenticate/google-console-setup"
+/>
+<TechnologyCard
+    icon={<LuUsers size={"1.5rem"}/>}
+    title="Okto Dashboard Setup"
+    subtitle="Complete guide to setting up Okto Dashboard"
+    link="/docs/developer-admin-dashboard/dashboard-account"
+/>
+</div>
+---
+
+## Available Adapters
+
+### Wagmi
+
+The Okto Wagmi Adapter enables integration of Okto's embedded smart contract wallets into applications built with the [Wagmi](https://wagmi.sh/) library of React hooks.
+
+<Callout type="info">
+**Perfect for:** dApps already using Wagmi that want to add social login wallet options.
+</Callout>
+
+<TechnologyCard
+    icon={<IoCodeSlashOutline size={"1.5rem"} />}
+    title="Wagmi Setup Guide"
+    subtitle="Step-by-step integration guide for Wagmi-based dApps"
+    link="/docs/external-wallet-adapters/wagmi/setup"
+/>
+
+### RainbowKit
+
+For dApps using [RainbowKit](https://rainbowkit.com/) for wallet connection UIs, the Okto RainbowKit Adapter provides seamless integration through the familiar RainbowKit modal interface.
+
+<Callout type="info">
+**Perfect for:** dApps using RainbowKit that want to offer social login alongside traditional wallet options.
+</Callout>
+
+<TechnologyCard
+    icon={<IoCodeSlashOutline size={"1.5rem"} />}
+    title="RainbowKit Setup Guide"
+    subtitle="Step-by-step integration guide for RainbowKit-based dApps"
+    link="/docs/external-wallet-adapters/rainbowkit/setup"
+/>
+
+---

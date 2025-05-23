@@ -25,10 +25,16 @@ export default function TechnologyCard({
     subtitle: "for something",
     link: "#"
 }) {
+    const isExternalLink = link.startsWith('https')
+    
     return (
         <Link
             href={link}
             className={`block no-underline w-full max-w-sm group ${className}`}
+            {...(isExternalLink && { 
+                target: "_blank", 
+                rel: "noopener noreferrer" 
+            })}
         >
             <Card className="not-dark:hover:bg-[#e7eafd] bg-[#F5F6FE] dark:bg-gray-800 transition-colors duration-300 rounded-xl shadow-sm hover:shadow-md border-none h-full">
                 <CardContent className="flex items-center justify-between p-4">
