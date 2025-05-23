@@ -1,0 +1,110 @@
+---
+title: Understanding Swap Intents
+description: Learn about Swap Intents for seamless cross-chain token exchanges using the Okto SDK.
+full: false
+---
+
+import ExternalLink from 'app/components/mdx/ExternalLink';
+import TechnologyCard from 'app/components/mdx/TechnologyCard';
+import { IoSwapHorizontalOutline, IoLayersOutline } from "react-icons/io5";
+
+## What are Swap Intents?
+
+Swap intents enable seamless token exchanges within and across blockchain networks through Okto's infrastructure. Whether you're swapping tokens on the same chain or swapping assets between different networks, swap intents abstract away the complexity while ensuring optimal execution.
+
+<Callout type="info">
+Swap Intents are powered by Okto's [Trade Service](/docs/trade-service) and [Unified Liquidity Layer (ULL)](/docs/okto-layer/ull), which combined act as an aggregator of aggregators to provide optimal execution paths across multiple liquidity sources.
+</Callout>
+
+## How Swap Intents Work
+
+When you execute a swap intent, Okto:
+
+1. **Analyzes your swap request** – Evaluates the source and destination tokens, networks, and user preferences.
+2. **Discovers optimal routes** – Leverages DEX aggregators and the Unified Liquidity Layer (ULL) to identify the most efficient execution path.
+3. **Manages conversions** – Seamlessly handles any required token conversions to filler supported tokens (FST) for cross-chain swaps.
+4. **Executes the transaction** – Processes the swap with integrated slippage protection and real-time market checks.
+
+## Key Concepts
+
+### Filler Supported Tokens (FST)
+
+FSTs are tokens natively supported by Okto's Unified Liquidity Layer for direct cross-chain transfers. Understanding FSTs is crucial for swap operations:
+
+- **Direct bridging**: FSTs can be transferred across chains without intermediate conversions
+- **Automatic handling**: Non-FST tokens are automatically converted to FSTs when needed
+- **Network specific**: Each supported network has designated FST tokens
+
+<ExternalLink href="/docs/trade-service/supported-networks-tokens">
+View all supported networks and their FST tokens →
+</ExternalLink>
+
+### Swap Scenarios 
+
+Swap intents handle various scenarios automatically:
+
+#### 1. **Same-Chain Swaps**
+Direct token-to-token exchanges on the same blockchain.
+
+#### 2. **Cross-Chain Swaps**
+Complex multi-step operations that may involve:
+- Converting source tokens to FST
+- Bridging across chains via ULL
+- Converting to destination tokens
+
+<ExternalLink href="/docs/trade-service/scenarios">
+Learn more about different swap scenarios →
+</ExternalLink>
+
+### Fees
+
+Swap transactions may include:
+
+- Network gas fees
+- Okto service fees (for cross-chain swaps)
+- Optional client-configured fees
+
+<ExternalLink href="/docs/trade-service/fees">
+View detailed fee structure →
+</ExternalLink>
+
+### Refunds
+
+In case of failed transactions, automatic refunds are processed based on the swap scenario and point of failure.
+
+<ExternalLink href="/docs/trade-service/refunds">
+Understand refund mechanisms →
+</ExternalLink>
+
+### Slippage Protection
+
+Swap intents include automatic slippage protection based on:
+
+- Real-time market conditions
+- Token volatility metrics
+- Transaction type (same-chain vs cross-chain)
+
+<ExternalLink href="/docs/trade-service/slippage">
+Learn about slippage management →
+</ExternalLink>
+
+## Next Steps
+
+Ready to implement swap intents in your application? Explore the technical implementation guide and Trade Service architecture:
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+  <TechnologyCard
+    className="h-25"
+    icon={<IoSwapHorizontalOutline size={"1.5rem"} />}
+    title="Using Swap Intents"
+    subtitle="Implement secure user login and session management"
+    link="#"
+  />
+  <TechnologyCard
+    className="h-25"
+    icon={<IoLayersOutline size={"1.5rem"} />}
+    title="Trade Service"
+    subtitle="Deep dive into the infrastructure powering swap intents"
+    link="/docs/trade-service"
+  />
+</div>
