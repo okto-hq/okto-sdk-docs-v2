@@ -24,15 +24,15 @@ import { useOkto } from '@okto_web3/react-sdk';
 import { GoogleLogin } from '@react-oauth/google';
 
 function LoginComponent() {
-    const oktoClient = useOkto();
+    const oktoClient = useOkto(); // [!code highlight]
 
     // Using Google OAuth
     async function handleGoogleLogin(credentialResponse: any) {
         try {
-            const user = await oktoClient.loginUsingOAuth({
-                idToken: credentialResponse.credential,
-                provider: "google",
-            });
+            const user = await oktoClient.loginUsingOAuth({ // [!code highlight]
+                idToken: credentialResponse.credential, // [!code highlight]
+                provider: "google", // [!code highlight]
+            }); // [!code highlight]
             console.log("Login successful:", user);
         } catch (error:any) {
             console.error("Login failed:", error);

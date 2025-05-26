@@ -10,13 +10,22 @@ import { Callout } from "fumadocs-ui/components/callout";
 import CollapsibleCallout from "app/components/mdx/CollapsibleCallout";
 import ExternalLink from "app/components/mdx/ExternalLink";
 import TemplateRepoBanner from "app/components/mdx/TemplateRepoBanner";
+import DownloadBanner from "app/components/mdx/DownloadBanner";
 import { FaGithub } from "react-icons/fa";
+import { SiPostman } from "react-icons/si";
 import ViewOnGithub from "app/components/mdx/ViewOnGithub";
 
 <TemplateRepoBanner
   sdk="api-reference"
   title="API Reference Template Repository"
   description="Explore the Okto API Reference Template Repository for a comprehensive guide on integrating Okto APIs into your applications"
+/>
+
+<DownloadBanner
+  title="Okto 3pBFF Postman Collection"
+  description="Download and import the Okto 3pBFF Postman Collection for easy access to all API endpoints and methods."
+  filePath="/resources/3pBFF-Okto.postman_collection.json"
+  icon={<SiPostman />}
 />
 
 This guide walks you through integrating Okto APIs into your application. You'll set up your developer account, obtain API keys, authenticate requests, and make API calls using the Okto Auth Token. Follow the steps below to get started.
@@ -88,7 +97,7 @@ JSON-RPC methods directly interact with the Okto Gateway and are primarily used 
 
 | **API Endpoint**                                                                                                                                     | **Headers**                                                                | **Description**                                            |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| <ExternalLink href="/docs/openapi/authenticate/login-logout/loginUsingOktoAuth">`POST https://sandbox-okto-gateway.oktostage.com/rpc`</ExternalLink> | `Content-Type: application/json`                                           | Handles user authentication and session management.        |
+| <ExternalLink href="/docs/openapi/authenticate/google-oauth/loginUsingOktoAuth">`POST https://sandbox-okto-gateway.oktostage.com/rpc`</ExternalLink> | `Content-Type: application/json`                                           | Handles user authentication and session management.        |
 | <ExternalLink href="/docs/openapi/tokenTransfer">`POST https://sandbox-okto-gateway.oktostage.com/rpc`</ExternalLink>                                | `Content-Type: application/json` `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Handles token transfers between addresses.                 |
 | <ExternalLink href="/docs/openapi/nftTransfer">`POST https://sandbox-okto-gateway.oktostage.com/rpc`</ExternalLink>                                  | `Content-Type: application/json` `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Handles NFT transfers between addresses.                   |
 | <ExternalLink href="/docs/openapi/evmRawTransaction">`POST https://sandbox-okto-gateway.oktostage.com/rpc`</ExternalLink>                            | `Content-Type: application/json` `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Handles custom EVM transactions with specified parameters. |

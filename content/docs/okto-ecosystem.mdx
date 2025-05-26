@@ -4,6 +4,9 @@ description: "Bridge the gap between Web2 and Web3 with seamless multi-chain exp
 full: false
 ---
 
+import TechnologyCard from "app/components/mdx/TechnologyCard";
+import { IoWalletOutline, IoCodeSlashOutline, IoLayersOutline, IoSwapHorizontalOutline } from "react-icons/io5";
+
 ![Okto](/images/index-image.png)
 
 ## What is Okto?
@@ -31,51 +34,29 @@ Okto was created to bridge these gaps by combining robust crypto primitives with
 
 ## Okto's Suite of Products
 
-### 1. Okto Wallet
-
-**Okto Wallet** is the flagship fully featured DeFi application built on Okto. Available on the Play Store and App Store, it highlights the power of end-to-end chain abstraction with features that would be nearly impossible to implement without Okto's infrastructure:
-
-- **1-Click Cross-Chain Swaps**: Seamlessly trade assets across EVM chains, Solana, Aptos, and more.
-- **Gasless Transactions**: No need to hold native tokens for gas fees on any chain. Pay gas fees with any stable token you own.
-- **DEX Futures with 50X leverage**: Trade derivatives across 100+ token pairs powered by Hyperliquid.
-- **Unified Trading Interface**: Trade across spot markets and derivatives from a single dashboard.
-- **Airdrop Opportunities**: Stay updated on potential airdrops.
-- **Multi-Chain Support**: Manage assets across 30+ chains, including EVM, Solana, Aptos, and Cosmos.
-- **Passive Income**: Access DeFi opportunities with ease.
-- **Regulated On/Off Ramps**.
-
-The Okto Wallet doesn't just simplify basic blockchain interactions - it delivers professional-grade trading features with the ease of use that both beginners and experts can appreciate. [Learn more](https://www.okto.tech/).
-
-### 2. Okto SDK
-
-<Callout title="Note">
-Okto Wallet and Okto SDK are independent offerings:
-
-- **Okto Wallet**: A standalone DeFi app on iOS/Android that helps users take advantage of Defi and trading opportunities in a Web2 like interface.
-- **Okto SDK**: A developer tool to help build for Web3 while abstracting out the complexities.
-</Callout>
-
-The Okto SDK allows developers to leverage Okto's chain abstraction technology in their own applications. Available for React, React Native, Flutter, Unity, and TypeScript, it offers:
-
-- **Interoperable Embedded Wallets**: Onboard users to Web3 with a familiar Web2-like experience.
-- **Easy Integration**: Embed Okto SDK in any Web2 applications and convert it to Web3 in just a few steps.
-- **Simplified Development**: Abstract away the complexities of Web3, allowing even Web2 developers to build blockchain-enabled apps.
-- **Multi-Platform Support**: Available for various frontend frameworks and blockchain ecosystems.
-- **Multi-chain Development Simplified**: Implement features across multiple blockchains with a single interface—eliminating the need to learn chain-specific code for each ecosystem.
-- **Intent-based Transactions**: Implement complex multi-step operations with simple function calls
-
-Dozens of innovative projects across gaming, DeFi, and social applications are already leveraging the Okto SDK, creating applications that combine Web2-like simplicity with Web3 power. [Learn more](/docs/okto-sdk/overview)
-
-### 3. Trade Service (Coming Soon)
-
-Built on Okto's Unified Liquidity Layer (ULL), the Trade Service enables seamless cross-chain token swaps through a powerful API suite:
-
-**Key Features:**
-
-* **Any-to-Any Swaps**: Swap any token for any other token across multiple chains
-* **Optimal Routing**: Finds the best swap route for price and execution efficiency
-* **Bridgeless Design**: No direct bridge interaction required from users
-* **Fast Settlements**: Rapid cross-chain liquidity provisioning
-* **Simple Integration**: Easy-to-implement APIs for developers
-
-The Trade Service makes possible seamless cross-chain swaps, optimized routing, and batch settlements for improved efficiency and lower overall costs. For users, this means saying goodbye to manual bridging, liquidity hunting across DEXs, and maintaining separate balances for gas on different chains.
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+  <TechnologyCard
+    icon={<IoWalletOutline size="1.2rem" />}
+    title="Okto Wallet"
+    subtitle="Flagship DeFi application with 1-click cross-chain swaps, gasless transactions, and 50X leverage trading."
+    link="https://okto.tech"
+  />
+  <TechnologyCard
+    icon={<IoCodeSlashOutline size="1.2rem" />}
+    title="Okto SDK"
+    subtitle="Developer toolkit for building Web3 applications with embedded wallets and chain abstraction across multiple platforms."
+    link="/docs/okto-sdk"
+  />
+  <TechnologyCard
+    icon={<IoLayersOutline size="1.2rem" />}
+    title="External Wallet Adapters"
+    subtitle="Seamless integration with popular Web3 libraries like Wagmi and RainbowKit for existing dApps."
+    link="/docs/external-wallet-adapters"
+  />
+  <TechnologyCard
+    icon={<IoSwapHorizontalOutline size="1.2rem" />}
+    title="Trade Service"
+    subtitle="Powerful API suite for any-to-any cross-chain token swaps built on the Unified Liquidity Layer."
+    link="/docs/trade-service"
+  />
+</div>

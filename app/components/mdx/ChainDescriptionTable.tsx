@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const chains = [
-    { logo: "/images/HL-icon.png", name: "HyperEVM", type: "EVM", mainnet: false, testnet: true, section: "hyperevm"},
+    { logo: "/images/HL-icon.png", name: "HyperEVM", type: "EVM", mainnet: true, testnet: true, section: "hyperevm"},
     { logo: "/images/polygon-logo.svg", name: "Polygon", type: "EVM", mainnet: true, testnet: true, section: "polygon" },
     { logo: "/images/base-icon.svg", name: "Base", type: "EVM", mainnet: true, testnet: true, section: "base" },
     { logo: "/images/sol-icon.svg", name: "Solana", type: "Solana", mainnet: false, testnet: false, section: "solana" },

@@ -16,6 +16,21 @@ Okto automatically handles wallet creation for your users. When a user authentic
 2. Wallets are instantly available after authentication
 3. Users can immediately start interacting with supported chains
 
+### Understanding Wallet Providers
+
+Okto's embedded wallets are managed through **Wallet Providers (WP)**, which define distinct ecosystems for wallets and control their interoperability. Key concepts:
+
+- **Wallet Provider Types:** Okto currently offers two wallet providers:
+  - **Okto EOA Wallets:** Standard Externally Owned Accounts for EVM chains
+  - **Okto AA Wallets:** Account Abstraction (ERC-4337) wallets with enhanced features
+
+- **Client Association:** Your application is associated with one specific Wallet Provider
+- **Interoperability:** Wallets are interoperable within the same Wallet Provider ecosystem, meaning users get the same wallet address across different apps using the same WP
+
+<Callout title="Learn More">
+For a detailed understanding of wallet providers, interoperability, and how they work within the Okto ecosystem, see our [Embedded Wallets](/docs/system-capabilities/embedded-wallets#the-wallet-provider-ecosystem) guide.
+</Callout>
+
 ### Accessing User Wallets
 
 To retrieve a user's wallets across different chains, use the `getAccount` function:
