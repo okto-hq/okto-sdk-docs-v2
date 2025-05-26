@@ -1,6 +1,6 @@
 {
     "title": "Intents",
     "pages": [
-        "!createNFTCollection" , "intents", "tokenTransfer", "nftTransfer", "swap",  "evmRawTransaction"
+        "!createNFTCollection" , "intents", "tokenTransferEstimate", "tokenTransfer", "nftTransferEstimate","nftTransfer",  "evmRawTransactionEstimate", "evmRawTransaction" , "swap"
     ]
 }
