@@ -1,0 +1,303 @@
+---
+title: Swap Intent Execute
+description: Execute method finalizes and submits a swap intent on-chain using the Okto Gateway. It takes all required transaction parameters and returns a job ID to track execution status.
+full: false
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import DevTools from 'app/components/mdx/DevTools';
+
+<DevTools />
+
+## POST Request
+
+### Endpoint
+
+```bash
+POST https://sandbox-okto-gateway.oktostage.com/rpc
+```
+
+### Headers
+
+| Name | Type | Description |
+|------|------|-------------|
+| Content-Type | string | Must be `application/json` |
+| Authorization | string | Bearer token for authentication |
+
+### Request Body
+
+```json
+{
+  "method": "execute",
+  "jsonrpc": "2.0",
+  "id": "<request-id>",
+  "params": [
+        {
+            "callData": "string",                    // Encoded function call data
+            "callGasLimit": "string",                // Gas limit for the call
+            "maxFeePerGas": "string",                // Maximum fee per gas
+            "maxPriorityFeePerGas": "string",        // Maximum priority fee per gas
+            "nonce": "string",                       // Transaction nonce
+            "paymaster": "string",                   // Paymaster contract address
+            "paymasterData": "string",               // Data for paymaster
+            "paymasterPostOpGasLimit": "string",     // Gas limit for post-operation
+            "paymasterVerificationGasLimit": "string", // Gas limit for verification
+            "preVerificationGas": "string",          // Gas for pre-verification
+            "sender": "string",                      // Sender's address
+            "verificationGasLimit": "string",        // Gas limit for verification
+            "signature": "string"                    // Transaction signature
+        }
+    ]
+}
+```
+
+<CollapsibleCallout type="tip" title="Request Parameters">
+- `callData`: The encoded function call data for the token transfer
+- `callGasLimit`: Gas limit for the actual function call
+- `maxFeePerGas` and `maxPriorityFeePerGas`: Gas fee parameters
+- `nonce`: Unique identifier for the transaction
+- `paymaster`: Address of the paymaster contract
+- `paymasterData`: Data required for paymaster operations
+- `paymasterPostOpGasLimit`: Gas limit for post-operation checks
+- `paymasterVerificationGasLimit`: Gas limit for paymaster verification
+- `preVerificationGas`: Gas required for pre-verification steps
+- `sender`: Address of the transaction sender
+- `verificationGasLimit`: Gas limit for transaction verification
+- `signature`: Cryptographic signature of the transaction
+</CollapsibleCallout>
+
+## Response
+
+<Tabs items={['200 Success', '400 Bad Request']}>
+<Tab value="200 Success">
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": "<request-id>",
+  "result": {
+    "jobId": "string"    // Unique identifier for the transfer job
+  }
+}
+```
+
+</Tab>
+
+<Tab value="400 Bad Request">
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": "<request-id>",
+  "error": {
+    "code": "number",      // Error code
+    "message": "string",   // Error message
+    "data": "string"       // Additional error details
+  }
+}
+```
+
+</Tab>
+</Tabs>
+
+## Example
+
+<Tabs items={['cURL', 'JavaScript', 'Go', 'Python']}>
+<Tab value="cURL">
+
+```bash
+curl -X POST https://apigw.oktostage.com/api/oc/v1/execute \
+  -H "Authorization: Bearer <authToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+   "callData": "0x8dd7712f0000000000...",
+    "callGasLimit": "0x5f7cd",
+    "maxFeePerGas": "0x112a880",
+    "maxPriorityFeePerGas": "0x112a880",
+    "nonce": "0x0000000000000000000000000000000076b49e2c7f184aebaa9ca7387f7aef20",
+    "paymaster": "0xc2d31cdc6efd02f85ab943c4587f8d60e6e15f9c",
+    "paymasterData": "0x000000000000000000000000c5a3...",
+    "paymasterPostOpGasLimit": "0x1cf9",
+    "paymasterVerificationGasLimit": "0x13d6d",
+    "preVerificationGas": "0x16b7b",
+    "sender": "0xee5596022f7e4942d9f2ddfff57bdad4ae7160c3",
+    "verificationGasLimit": "0x28c6b",
+    "signature": "0x2c50427c1bc7f3b794aa37355ac59ba9f35ce5345cec28852f604ec55ae9a2355f78c7d721a1e4ea4cc420e1d21374f3dced08088f6225e06b9eb299bf231c8b1c"
+  }'
+
+
+```
+
+</Tab>
+
+<Tab value="JavaScript">
+
+```javascript
+const fetch = require('node-fetch'); // if using Node.js
+
+const url = 'https://apigw.oktostage.com/api/oc/v1/execute';
+const authToken = '<authToken>'; // Replace with your actual token
+
+const payload = {
+  callData: '0x8dd7712f...0000000000',
+  callGasLimit: '0x5f7cd',
+  maxFeePerGas: '0x112a880',
+  maxPriorityFeePerGas: '0x112a880',
+  nonce: '0x0000000000000000000000000000000076b49e2c7f184aebaa9ca7387f7aef20',
+  paymaster: '0xc2d31cdc6efd02f85ab943c4587f8d60e6e15f9c',
+  paymasterData: '0x0000000000...00000000000',
+  paymasterPostOpGasLimit: '0x1cf9',
+  paymasterVerificationGasLimit: '0x13d6d',
+  preVerificationGas: '0x16b7b',
+  sender: '0xee5596022f7e4942d9f2ddfff57bdad4ae7160c3',
+  verificationGasLimit: '0x28c6b',
+  signature: '0x2c50427c1bc7f3b794aa37355ac59ba9f35ce5345cec28852f604ec55ae9a2355f78c7d721a1e4ea4cc420e1d21374f3dced08088f6225e06b9eb299bf231c8b1c'
+};
+
+fetch(url, {
+  method: 'POST',
+  headers: {
+    'Authorization': `Bearer ${authToken}`,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(payload)
+})
+  .then(res => res.json())
+  .then(data => console.log('Response:', data))
+  .catch(err => console.error('Error:', err));
+
+```
+
+</Tab>
+
+<Tab value="Go">
+
+```go
+package main
+
+import (
+  "bytes"
+  "fmt"
+  "io"
+  "net/http"
+)
+
+func main() {
+  url := "https://sandbox-api.okto.tech/api/oc/v1/execute"
+  method := "POST"
+
+  payload := []byte(`{
+    "callData": "0x8dd7712f0000000000000000...",
+    "callGasLimit": "0x5f7cd",
+    "maxFeePerGas": "0x112a880",
+    "maxPriorityFeePerGas": "0x112a880",
+    "nonce": "0x0000000000000000000000000000000076b49e2c7f184aebaa9ca7387f7aef20",
+    "paymaster": "0xc2d31cdc6efd02f85ab943c4587f8d60e6e15f9c",
+    "paymasterData": "0x000000000000000000000000c5a378bb6...",
+    "paymasterPostOpGasLimit": "0x1cf9",
+    "paymasterVerificationGasLimit": "0x13d6d",
+    "preVerificationGas": "0x16b7b",
+    "sender": "0xee5596022f7e4942d9f2ddfff57bdad4ae7160c3",
+    "verificationGasLimit": "0x28c6b",
+    "signature": "0x2c50427c1bc7f3b794aa37355ac59ba9f35..."
+  }`)
+
+  client := &http.Client{}
+  req, err := http.NewRequest(method, url, bytes.NewBuffer(payload))
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+
+  req.Header.Add("Content-Type", "application/json")
+  req.Header.Add("Authorization", "Bearer <authToken>")
+
+  res, err := client.Do(req)
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+  defer res.Body.Close()
+
+  body, err := io.ReadAll(res.Body)
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+
+  fmt.Println(string(body))
+}
+
+```
+
+</Tab>
+
+<Tab value="Python">
+
+```python
+import requests
+import json
+
+url = "https://sandbox-api.okto.tech/api/oc/v1/execute"
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer <authToken>"
+}
+
+payload = {
+    "callData": "0x8dd7712f0000000000000000...",
+    "callGasLimit": "0x5f7cd",
+    "maxFeePerGas": "0x112a880",
+    "maxPriorityFeePerGas": "0x112a880",
+    "nonce": "0x0000000000000000000000000000000076b49e2c7f184aebaa9ca7387f7aef20",
+    "paymaster": "0xc2d31cdc6efd02f85ab943c4587f8d60e6e15f9c",
+    "paymasterData": "0x000000000000000000000000c5a378bb6...",
+    "paymasterPostOpGasLimit": "0x1cf9",
+    "paymasterVerificationGasLimit": "0x13d6d",
+    "preVerificationGas": "0x16b7b",
+    "sender": "0xee5596022f7e4942d9f2ddfff57bdad4ae7160c3",
+    "verificationGasLimit": "0x28c6b",
+    "signature": "0x2c50427c1bc7f3b794aa37355ac59ba9f35..."
+}
+
+response = requests.post(url, headers=headers, data=json.dumps(payload))
+print(response.text)
+
+```
+
+</Tab>
+</Tabs>
+
+## Response Examples
+
+<Tabs items={['200 Success', '400 Bad Request']}>
+<Tab value="200 Success">
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": "25456a8f-8b66-4405-ad18-906aad82eba3",
+  "result": {
+    "jobId": "9c424737-e204-461b-b93a-ca8e3dfd655c"
+  }
+}
+```
+</Tab>
+
+<Tab value="400 Bad Request">
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": "25456a8f-8b66-4405-ad18-906aad82eba3",
+  "error": {
+    "code": -32603,
+    "message": "Internal server error",
+    "data": "error with downstream service"
+  }
+}
+```
+</Tab>
+</Tabs>
