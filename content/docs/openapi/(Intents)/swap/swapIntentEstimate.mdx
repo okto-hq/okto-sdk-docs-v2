@@ -1,6 +1,6 @@
 ---
-title: Swap Intents Estimate
-description: Estimate swap operations using the Okto Gateway. This endpoint handles the estimation of swap intents.
+title: Swap Intent Estimate
+description: Estimate the outcome of a swap intent prior to execution. It returns key details such as the expected output amount, applicable network fees, and potential slippage, enabling users to make informed transaction decisions.
 full: false
 ---
 
@@ -35,25 +35,25 @@ POST https://sandbox-api.okto.tech/api/oc/v1/estimate
   "id": "<request-id>",
   "params": [
     {
-      "type": "SWAP", // Specify the type of Intent
-      "jobId": "", 
-      "paymasterData": "0x000000000000000000000000055f44a1f92651557fd7f8e47ced5fdd2fb5e02b00000000000000000000000000000000000000000000000000000000681923ec0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000415b13a7a5a7a0274d3caecf1f108c7f409409c0f61751ae969625d187566cf6b725cf2b4e02be9cb6eb7e0e3d3c2db6feb5e8a125b4312862ac5e6c36892ec7721b00000000000000000000000000000000000000000000000000000000000000", 
+      "type": "string", // Specify the type of Intent
+      "jobId": "string", 
+      "paymasterData": "string", 
       "gasDetails": {
-          "maxFeePerGas": "0x1ad274800",
-          "maxPriorityFeePerGas": "0x1ad274800"
+          "maxFeePerGas": "string",
+          "maxPriorityFeePerGas": "string"
       },
       "details": {
-          "fromChainTokenAddress": "",
-          "fromChainCaip2Id": "eip155:137",
-          "toChainTokenAddress": "0x88c949b4eb85a90071f2c0bef861bddee1a7479d",
-          "toChainCaip2Id": "eip155:137",
-          "sameChainFee": "10",
-          "sameChainFeeCollector": "0x2c2505D0E21f32F38bCEBeca1C331ab4069bBCb9",
-          "crossChainFee": "10",
-          "crossChainFeeCollector": "0x2c2505D0E21f32F38bCEBeca1C331ab4069bBCb9",
-          "fromChainTokenAmount": "10000",
-          "minToTokenAmount": "0",
-          "slippage": "2",
+          "fromChainTokenAddress": "string",
+          "fromChainCaip2Id": "string",
+          "toChainTokenAddress": "string",
+          "toChainCaip2Id": "string",
+          "sameChainFee": "string",
+          "sameChainFeeCollector": "string",
+          "crossChainFee": "string",
+          "crossChainFeeCollector": "string",
+          "fromChainTokenAmount": "string",
+          "minToTokenAmount": "string",
+          "slippage": "string",
           "advancedSettings": {}
       }
   }
@@ -62,17 +62,17 @@ POST https://sandbox-api.okto.tech/api/oc/v1/estimate
 ```
 
 <CollapsibleCallout type="tip" title="Request Parameters">
-- `fromChainTokenAddress`: The encoded function call data for the token transfer
-- `fromChainCaip2Id`: Gas limit for the actual function call
-- `toChainTokenAddress` and `maxPriorityFeePerGas`: Gas fee parameters
-- `toChainCaip2Id`: Unique identifier for the transaction
-- `sameChainFee`: Address of the paymaster contract
-- `sameChainFeeCollector`: Data required for paymaster operations
-- `crossChainFee`: Gas limit for post-operation checks
-- `crossChainFeeCollector`: Gas limit for paymaster verification
-- `fromChainTokenAmount`: Gas required for pre-verification steps
-- `minToTokenAmount`: Address of the transaction sender
-- `slippage`: Gas limit for transaction verification
+- `fromChainTokenAddress`: Address of the token on the source chain.
+- `fromChainCaip2Id`: Chain ID for the source chain.
+- `toChainTokenAddress`: Address of the token on the destination chain.
+- `toChainCaip2Id`: Chain ID for the destination chain.
+- `sameChainFee`: Estimated gas fee for same-chain transfers.
+- `sameChainFeeCollector`: Address to collect the fee for same-chain transfers.
+- `crossChainFee`: Estimated gas fee for cross-chain transfers.
+- `crossChainFeeCollector`: Address to collect the fee for cross-chain transfers.
+- `fromChainTokenAmount`: Amount of tokens to transfer from the source chain.
+- `minToTokenAmount`: Minimum amount of tokens expected on the destination chain.
+- `slippage`: Maximum allowable slippage percentage for the transfer.
 </CollapsibleCallout>
 
 ## Response
@@ -89,86 +89,82 @@ POST https://sandbox-api.okto.tech/api/oc/v1/estimate
         "status": "success",
        "data": {
         "callData": {
-            "clientSWA": "0xc5a378Bb628Fec4A07a83996E1c9421fcdfA3C8E",
-            "feePayerAddress": "0xc2D31Cdc6EFd02F85Ab943c4587f8D60E6E15F9c",
+            "clientSWA": "string",
+            "feePayerAddress": "string",
             "gsn": {
-                "isPossible": false,
-                "isRequired": false,
-                "requiredNetworks": [
-                    
-                ],
-                "tokens": [
-                    
-                ]
+                "isPossible": boolean,
+                "isRequired": boolean,
+                "requiredNetworks": [],
+                "tokens": []
             },
-            "intentType": "SWAP",
-            "jobId": "154e6d24-d935-4c81-b029-44d59a71a499",
+            "intentType": "string",
+            "jobId": "string",
             "payload": {
                 "advancedSettings": {
-                    "slippageUsed": "13.5"
+                    "slippageUsed": "string"
                 },
-                "crossChainFee": "0",
-                "crossChainFeeCollector": "0x2c2505D0E21f32F38bCEBeca1C331ab4069bBCb9",
-                "fromChainCaip2Id": "eip155:137",
-                "fromChainTokenAddress": "",
-                "fromChainTokenAmount": "448556142516737632",
-                "minToTokenAmount": "98001445185268",
-                "routeId": "9f474742-6680-58c1-b56b-bc539813bae2",
-                "sameChainFee": "0",
-                "sameChainFeeCollector": "0x2c2505D0E21f32F38bCEBeca1C331ab4069bBCb9",
-                "slippage": "1.5",
-                "toChainCaip2Id": "eip155:56",
-                "toChainTokenAddress": ""
+                "crossChainFee": "string",
+                "crossChainFeeCollector": "string",
+                "fromChainCaip2Id": "string",
+                "fromChainTokenAddress": "string",
+                "fromChainTokenAmount": "string",
+                "minToTokenAmount": "string",
+                "routeId": "string",
+                "sameChainFee": "string",
+                "sameChainFeeCollector": "string",
+                "slippage": "string",
+                "toChainCaip2Id": "string",
+                "toChainTokenAddress": "string"
             },
             "policies": {
-                "gsnEnabled": false,
-                "sponsorshipEnabled": false
+                "gsnEnabled": boolean,
+                "sponsorshipEnabled": boolean
             },
-            "userSWA": "0xee5596022F7e4942d9f2ddFFf57bdad4Ae7160C3"
+            "userSWA": "string"
         },
         "details": {
             "estimation": {
-                "amount": "",
-                "crossChainFee": "",
-                "crossChainFeeCollector": "",
-                "gasFeesInInputToken": "21200",
-                "integratorFeesInInputToken": "0",
-                "outputAmount": "98001445185268",
-                "platformBaseFeesInInputToken": "51",
-                "recommendedSlippage": "13.5",
-                "routeId": "9f474742-6680-58c1-b56b-bc539813bae2",
-                "routeValidUntil": "",
-                "sameChainFee": "",
-                "sameChainFeeCollector": "",
-                "slippageUsed": "13.5",
-                "totalFeesInInputToken": "21251"
+                "amount": "string",
+                "crossChainFee": "string",
+                "crossChainFeeCollector": "string",
+                "gasFeesInInputToken": "string",
+                "integratorFeesInInputToken": "string",
+                "outputAmount": "string",
+                "platformBaseFeesInInputToken": "string",
+                "recommendedSlippage": "string",
+                "routeId": "string",
+                "routeValidUntil": "string",
+                "sameChainFee": "string",
+                "sameChainFeeCollector": "string",
+                "slippageUsed": "string",
+                "totalFeesInInputToken": "string"
             },
             "fees": {
-                "approxTransactionFeesInUSDT": "",
+                "approxTransactionFeesInUSDT": "string",
                 "transactionFees": {
-                    "eip155:137": "33321101955596672"
+                    "eip155:137": "string"
                 }
             },
             "swapFees": {
-                "gasFeesInInputToken": "21200",
-                "integratorFeesInInputToken": "0",
-                "platformBaseFeesInInputToken": "51",
-                "totalFeesInInputToken": "21251"
+                "gasFeesInInputToken": "string",
+                "integratorFeesInInputToken": "string",
+                "platformBaseFeesInInputToken": "string",
+                "totalFeesInInputToken": "string"
             }
         },
         "userOps": {  
-            "callData": "0x8dd7712f00000000000...00000000000",
-            "callGasLimit": "0x5f7cd",
-            "maxFeePerGas": "0x112a880",
-            "maxPriorityFeePerGas": "0x112a880",
-            "nonce": "0x00000000000000000000000000000000154e6d24d9354c81b02944d59a71a499",
-            "paymaster": "0xc2d31cdc6efd02f85ab943c4587f8d60e6e15f9c",
-            "paymasterData": "0x00000000000000000...0000000000",
-            "paymasterPostOpGasLimit": "0x1cf9",
-            "paymasterVerificationGasLimit": "0x13d6d",
-            "preVerificationGas": "0x16b95",
-            "sender": "0xee5596022f7e4942d9f2ddfff57bdad4ae7160c3",
-            "verificationGasLimit": "0x28c6b"
+            "callData": "string",
+            "callGasLimit": "string",
+            "maxFeePerGas": "string",
+            "maxPriorityFeePerGas": "string",
+            "nonce": "string",
+            "paymaster": "string",
+            "paymasterData": "string",
+            "paymasterPostOpGasLimit": "string",
+            "paymasterVerificationGasLimit": "string",
+            "preVerificationGas": "string",
+            "sender": "string",
+            "verificationGasLimit": "string"
         }
       }
     }
@@ -397,9 +393,95 @@ print(response.text)
 ```json
 {
   "jsonrpc": "2.0",
-  "id": "25456a8f-8b66-4405-ad18-906aad82eba3",
+  "id": "<request-id>",
   "result": {
-    "jobId": "9c424737-e204-461b-b93a-ca8e3dfd655c"
+    "data": {
+        "status": "success",
+       "data": {
+        "callData": {
+            "clientSWA": "0xc5a378Bb628Fec4A07a83996E1c9421fcdfA3C8E",
+            "feePayerAddress": "0xc2D31Cdc6EFd02F85Ab943c4587f8D60E6E15F9c",
+            "gsn": {
+                "isPossible": false,
+                "isRequired": false,
+                "requiredNetworks": [
+                    
+                ],
+                "tokens": [
+                    
+                ]
+            },
+            "intentType": "SWAP",
+            "jobId": "154e6d24-d935-4c81-b029-44d59a71a499",
+            "payload": {
+                "advancedSettings": {
+                    "slippageUsed": "13.5"
+                },
+                "crossChainFee": "0",
+                "crossChainFeeCollector": "0x2c2505D0E21f32F38bCEBeca1C331ab4069bBCb9",
+                "fromChainCaip2Id": "eip155:137",
+                "fromChainTokenAddress": "",
+                "fromChainTokenAmount": "448556142516737632",
+                "minToTokenAmount": "98001445185268",
+                "routeId": "9f474742-6680-58c1-b56b-bc539813bae2",
+                "sameChainFee": "0",
+                "sameChainFeeCollector": "0x2c2505D0E21f32F38bCEBeca1C331ab4069bBCb9",
+                "slippage": "1.5",
+                "toChainCaip2Id": "eip155:56",
+                "toChainTokenAddress": ""
+            },
+            "policies": {
+                "gsnEnabled": false,
+                "sponsorshipEnabled": false
+            },
+            "userSWA": "0xee5596022F7e4942d9f2ddFFf57bdad4Ae7160C3"
+        },
+        "details": {
+            "estimation": {
+                "amount": "",
+                "crossChainFee": "",
+                "crossChainFeeCollector": "",
+                "gasFeesInInputToken": "21200",
+                "integratorFeesInInputToken": "0",
+                "outputAmount": "98001445185268",
+                "platformBaseFeesInInputToken": "51",
+                "recommendedSlippage": "13.5",
+                "routeId": "9f474742-6680-58c1-b56b-bc539813bae2",
+                "routeValidUntil": "",
+                "sameChainFee": "",
+                "sameChainFeeCollector": "",
+                "slippageUsed": "13.5",
+                "totalFeesInInputToken": "21251"
+            },
+            "fees": {
+                "approxTransactionFeesInUSDT": "",
+                "transactionFees": {
+                    "eip155:137": "33321101955596672"
+                }
+            },
+            "swapFees": {
+                "gasFeesInInputToken": "21200",
+                "integratorFeesInInputToken": "0",
+                "platformBaseFeesInInputToken": "51",
+                "totalFeesInInputToken": "21251"
+            }
+        },
+        "userOps": {  
+            "callData": "0x8dd7712f00000000000...00000000000",
+            "callGasLimit": "0x5f7cd",
+            "maxFeePerGas": "0x112a880",
+            "maxPriorityFeePerGas": "0x112a880",
+            "nonce": "0x00000000000000000000000000000000154e6d24d9354c81b02944d59a71a499",
+            "paymaster": "0xc2d31cdc6efd02f85ab943c4587f8d60e6e15f9c",
+            "paymasterData": "0x00000000000000000...0000000000",
+            "paymasterPostOpGasLimit": "0x1cf9",
+            "paymasterVerificationGasLimit": "0x13d6d",
+            "preVerificationGas": "0x16b95",
+            "sender": "0xee5596022f7e4942d9f2ddfff57bdad4ae7160c3",
+            "verificationGasLimit": "0x28c6b"
+        }
+      }
+    }
   }
 }
 ```
