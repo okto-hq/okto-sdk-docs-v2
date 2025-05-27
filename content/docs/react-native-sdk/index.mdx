@@ -47,6 +47,32 @@ import ViewOnGithub from 'app/components/mdx/ViewOnGithub';
 </Step>
 
 <Step>
+    ## Sponsorship Setup (Optional)
+
+    To enable sponsorship for transactions via Okto, follow the steps below:
+    1. **Enable Supported Chains:** Ensure the chains you wish to sponsor transactions on are enabled in your [Okto Dashboard](https://dashboard.okto.tech) under **Chains & Tokens**.
+
+    2. **Create and Configure a Treasury Wallet:** Create at least one Treasury Wallet in your Okto Dashboard.
+    - For each supported chain:
+        - The Treasury Wallet used as the `feePayerAddress` must have its corresponding *destination chain address* funded with a small amount of native tokens for one-time verification.
+        - Refer to the [Treasury Wallet Docs](/docs/developer-admin-dashboard/treasury-wallet) for setup and verification details.
+
+    3. **Activate Sponsorship:** Navigate to the **Sponsorship** section in the Okto Dashboard and enable sponsorship for each chain individually.
+
+    4. **Fund the Sponsor Wallet:** Deposit a sufficient amount of native tokens into your Sponsor Wallet for each chain where sponsorship is active. These tokens will be used to cover user transaction fees.
+
+
+    <CollapsibleCallout type="note" title="Loading Funds to Sponsorship">
+
+        * Only native tokens of the respective chains can be loaded into sponsorship accounts.  
+        * Each chain has a unique sponsorship address. You can find this address in your Okto dashboard.  
+        * For testnets, you can use faucets to acquire tokens. 
+
+    </CollapsibleCallout>
+
+</Step>
+
+<Step>
     ## Initialize an Expo App
 
     Create a new Expo project:
@@ -306,6 +332,32 @@ import ViewOnGithub from 'app/components/mdx/ViewOnGithub';
         2. For iOS: [iOS Setup](/docs/react-native-sdk/authenticate-users/google-oauth/google-console-setup-ios)
         3. For Android: [Android Setup](/docs/react-native-sdk/authenticate-users/google-oauth/google-console-setup-android)
     </CollapsibleCallout>
+</Step>
+
+<Step>
+    ## Sponsorship Setup (Optional)
+
+    To enable sponsorship for transactions via Okto, follow the steps below:
+    1. **Enable Supported Chains:** Ensure the chains you wish to sponsor transactions on are enabled in your [Okto Dashboard](https://dashboard.okto.tech) under **Chains & Tokens**.
+
+    2. **Create and Configure a Treasury Wallet:** Create at least one Treasury Wallet in your Okto Dashboard.
+    - For each supported chain:
+        - The Treasury Wallet used as the `feePayerAddress` must have its corresponding *destination chain address* funded with a small amount of native tokens for one-time verification.
+        - Refer to the [Treasury Wallet Docs](/docs/developer-admin-dashboard/treasury-wallet) for setup and verification details.
+
+    3. **Activate Sponsorship:** Navigate to the **Sponsorship** section in the Okto Dashboard and enable sponsorship for each chain individually.
+
+    4. **Fund the Sponsor Wallet:** Deposit a sufficient amount of native tokens into your Sponsor Wallet for each chain where sponsorship is active. These tokens will be used to cover user transaction fees.
+
+
+    <CollapsibleCallout type="note" title="Loading Funds to Sponsorship">
+
+        * Only native tokens of the respective chains can be loaded into sponsorship accounts.  
+        * Each chain has a unique sponsorship address. You can find this address in your Okto dashboard.  
+        * For testnets, you can use faucets to acquire tokens. 
+
+    </CollapsibleCallout>
+
 </Step>
 
 <Step>
