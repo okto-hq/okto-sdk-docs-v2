@@ -25,7 +25,7 @@ export const productsData = [
     content: (
       <div className="space-y-4">
         <p className="text-base text-gray-700 dark:text-gray-300">
-          <strong>Okto Wallet</strong> is the flagship fully featured DeFi Trading Wallet built on Okto. Available on the Play Store and App Store, it highlights the power of end-to-end chain abstraction with features that would be nearly impossible to implement without Okto's infrastructure.
+          <strong>Okto Wallet</strong> is the flagship consumer application built on Okto SDK. It is a fully featured DeFi Trading Wallet built on the Okto Platform. Available on the Play Store and App Store, it highlights the power of end-to-end chain abstraction with features that would be nearly impossible to implement without Okto's infrastructure.
         </p>
         <div className="flex justify-center pt-2">
           <TechnologyCard
@@ -76,7 +76,9 @@ export const productsData = [
     content: (
       <div className="space-y-4">
         <p className="text-base text-gray-700 dark:text-gray-300">
-          The <strong>Okto SDK</strong> is a comprehensive suite of developer tools designed to provide end-to-end chain abstraction. It allows developers to embed powerful, multi-chain wallet functionalities directly into their applications, offering users an experience as familiar as any modern web or mobile app, while preserving decentralization and transparency.
+          The <strong>Okto SDK</strong> is a comprehensive suite of developer tools designed to provide end-to-end chain abstraction and seamless transactions via powerful intents. It allows developers to embed powerful, multi-chain wallet functionalities directly into their applications, offering users an experience as familiar as any modern web or mobile app, while preserving decentralization and transparency.
+          <br />
+          The power of Trade Service is also available through the SDK as intents, enabling seamless cross-chain swaps and liquidity management.
         </p>
         
         <div className="p-3 bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg">
@@ -152,7 +154,7 @@ export const productsData = [
     content: (
       <div className="space-y-4">
         <p className="text-base text-gray-700 dark:text-gray-300">
-          <strong>External Wallet Adapters</strong> provide seamless integration with popular Web3 frontend libraries, allowing you to add Okto's embedded smart contract wallets to existing dApps without architectural changes.
+          <strong>External Wallet Adapters</strong> enable seamless integration with popular Web3 frontend libraries while keeping your existing external wallet flow completely unchanged. Okto Adapters simply add social login capabilities (such as Google Auth) to create Okto embedded wallets on the fly for users who aren't regular Web3 users - no code rewrite required. This allows your dApp to onboard and expand into an entirely new domain of Web2 users, enabling them to interact with your application without needing to understand the complexities of Web3 wallets or blockchain technology.
         </p>
 
         <div className="flex justify-center pt-2">
@@ -199,6 +201,8 @@ export const productsData = [
       <div className="space-y-4">
         <p className="text-base text-gray-700 dark:text-gray-300">
           Built on Okto's <strong>Unified Liquidity Layer (ULL)</strong>, the <strong>Trade Service</strong> enables seamless cross-chain swaps through a powerful API suite that eliminates traditional bridging complexity.
+          <br />
+          This service is completely independent of Okto embedded wallets and can be integrated with any Web3 application - simply use your own wallet to sign and send transactions.
         </p>
 
         <div className="flex justify-center pt-2">
