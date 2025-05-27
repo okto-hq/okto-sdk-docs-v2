@@ -1,0 +1,35 @@
+---
+title: Client Sponsor Wallet
+description: This guide explains how Sponsor Wallets enable gasless user transactions by funding gas fees across chains.
+full: false
+---
+
+## Overview
+
+The Sponsor Wallet in the Okto ecosystem is dedicated to funding gas fees for user transactions. Its primary purpose is to enable a "gasless" experience for your end-users by having the client cover the transaction costs on supported blockchain networks.
+
+You can create and manage Sponsor Wallets through the [Okto Developer Dashboard](/docs/developer-admin-dashboard/sponsorship).
+
+**Key Characteristics:**
+
+- **Gas Fee Funding:** Holds the actual cryptocurrency (e.g., MATIC on Polygon, ETH on Base) that will be used to pay for sponsored user transactions.
+
+- **Dashboard Management:** Sponsor Wallets are primarily managed (enabled per chain, funded) through the Okto Developer Dashboard on the "Gas Sponsorship" page.
+
+- **Chain-Specific:** You will have different Sponsor Wallet addresses for each chain where you enable sponsorship. Each must be funded independently.
+
+- **Authorization via Treasury Wallet:** While the Sponsor Wallet provides the funds, the authorization to use these funds for a specific transaction comes from a **Treasury Wallet** designated as the `feePayerAddress` in the API call.
+
+## SDK Interaction & Gas Sponsorship
+
+Direct SDK interaction for *authenticating as* a Sponsor Wallet (like generating an auth token for it) is generally not applicable because its role is passive (holding funds). The SDK interactions related to sponsorship involve:
+
+1.  **Enabling Sponsorship (Dashboard):** You must first enable sponsorship for the desired chains on the "Gas Sponsorship" page of the Okto Developer Dashboard.
+
+2.  **Funding Sponsor Wallet (Dashboard):** Deposit funds into the Sponsor Wallet for each enabled chain using the "Deposit" button on the dashboard. **Crucially, do not airdrop funds directly to the displayed Sponsor Wallet address; use the "Deposit" function to avoid loss of funds.**
+
+3.  **Specifying `feePayerAddress` in SDK Calls (Client-Side/Backend):**
+    When you want a user's transaction to be sponsored, you must include the `feePayerAddress` field in the payload for `estimateUserOp`.
+    - This `feePayerAddress` **must be the User SWA of one of your valid Treasury Wallets.**
+    - If sponsorship is enabled for the chain and the `feePayerAddress` is correctly provided (and the Treasury Wallet is set up for sponsorship), the gas fees for the user's transaction will be deducted from your Sponsor Wallet for that chain.
+    - If sponsorship is disabled, or if the `feePayerAddress` is missing or invalid when sponsorship is active, the transaction will likely fail or the user will have to pay gas.

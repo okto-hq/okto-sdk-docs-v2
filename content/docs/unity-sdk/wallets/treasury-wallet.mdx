@@ -1,0 +1,37 @@
+---
+title: Client Treasury Wallet
+description: This guide explains how to use Treasury Wallets for client-initiated on-chain actions, gas sponsorship, and API access via Auth Tokens.
+full: false
+---
+
+## Overview
+
+The Treasury Wallet in the Okto ecosystem serves as the client's own on-chain identity. Unlike user-specific Smart Wallet Accounts (SWAs), which are tied to end-users, Treasury Wallets are controlled by the client.
+
+**Key Purposes:**
+
+1.  **Client-Initiated On-Chain Operations:** Execute smart contract calls, send tokens (e.g., for airdrops), or perform any other on-chain transaction that the client needs to initiate directly, without relying on an end-user's wallet or action.
+
+2.  **Authorizing Gas Sponsorship:** When gas sponsorship is enabled for user transactions, a Treasury Wallet's User SWA must be specified as the `feePayerAddress`. This Treasury Wallet then authorizes the use of funds from the corresponding Sponsor Wallet to cover the gas fees.
+
+You can create and manage Treasury Wallets through the [Okto Developer Dashboard](/docs/developer-admin-dashboard/treasury-wallet).
+
+---
+
+## Generating an Okto Auth Token for a Treasury Wallet
+
+To interact with Okto APIs using a Treasury Wallet's identity (i.e., to sign and send transactions from a Treasury Wallet), you need to generate an Okto Auth Token specific to that Treasury Wallet.
+
+The process is similar to generating an auth token for delegated actions with a user's SWA, but the key components are sourced differently:
+
+1.  **Session Private Key (`sessionPrivKey`):** This is the **Treasury API Key** provided on the "API Key" page of your Okto Developer Dashboard. This key is unique to your client account and is used to authorize actions for *any* of your Treasury Wallets.
+
+2.  **Session Public Key (`sessionPubKey`):** This is derived from the Treasury API Key (Session Private Key).
+
+3.  **Treasury Wallet SWA (`treasuryWalletSWA` or `userSWA` in context):** This is the specific User SWA of the Treasury Wallet you wish to use for the transaction. You can find this address on the "Treasury Wallet" page of the dashboard after creating a wallet.
+
+---
+
+<Callout title="Note">
+All Okto Explorer API functions (e.g., `getAccount`, `getPortfolio`) can be used with an auth token generated for a Treasury Wallet, just as they would for a user's SWA. The functionality remains the same; only the signing identity (and thus the data returned) changes based on the token.
+</Callout>

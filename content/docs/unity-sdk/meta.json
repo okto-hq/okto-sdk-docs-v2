@@ -30,6 +30,8 @@
     "./wallets/(embedded-wallets)/index",
     "!./wallets/(embedded-wallets)/delegated-actions",
     "!./wallets/external-wallets",
+    "./wallets/treasury-wallet",
+    "./wallets/sponsor-wallet",
     "!./wallets/wagmi-integration",
     "---Resources---",
     "v2migration",
