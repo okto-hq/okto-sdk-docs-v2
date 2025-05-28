@@ -26,6 +26,10 @@ There are two ways to implement NFT transfers:
 - **UserOp Flow**: A granular approach where you manually control the creation, signing, and execution of the user operation. Useful for custom implementations or advanced use cases.
 </Callout>
 
+<Callout>
+If sponsorship is enabled for your user, you must pass the `feePayerAddress` (i.e., the Treasury Wallet address) as a parameter to the intent function. Refer to the example below for implementation details.
+</Callout>
+
 ### Example
 
 <Accordions defaultValue="Usage">
@@ -50,9 +54,11 @@ function NFTTransfer() {
                 amount: 1, // [!code highlight]
                 nftType: 'ERC721' // [!code highlight]
             }; // [!code highlight]
+
+            const feePayerAddress = "0xdb9B5..." // feePayerAddress used when sponsorship is available
             
             // Execute the transfer
-            const jobId = await nftTransfer(oktoClient, transferParams); // [!code highlight]
+            const jobId = await nftTransfer(oktoClient, transferParams, feePayerAddress?); // [!code highlight]
             console.log('Transfer jobId:', jobId);
         } catch (error) {
             console.error('Error in NFT transfer:', error);
@@ -86,8 +92,10 @@ function NFTTransfer() {
                 nftType: 'ERC721' // [!code highlight]
             };
 
+            const feePayerAddress = "0xdb9B5..." // feePayerAddress used when sponsorship is available
+
             // Create the user operation
-            const userOp = await nftTransfer(oktoClient, transferParams); // [!code highlight]
+            const userOp = await nftTransfer(oktoClient, transferParams, feePayerAddress?); // [!code highlight]
             
             // Sign the operation
             const signedOp = await oktoClient.signUserOp(userOp); // [!code highlight]
@@ -230,6 +238,7 @@ For error handling:
 |-----------|------|-------------|----------|
 | `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
 | `data` | [`NFTTransferIntentParams`](/docs/react-sdk/technical-reference#models) | Parameters for the NFT transfer | Yes |
+| `feePayerAddress` | `string` | Address of the Treasury Wallet responsible for covering gas fees when sponsorship is enabled | Optional |
 
 Where `NFTTransferIntentParams` contains:
 
