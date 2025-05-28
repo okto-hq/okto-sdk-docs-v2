@@ -6,17 +6,27 @@ full: false
 
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
-import { Callout } from 'fumadocs-ui/components/callout';
-import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
-import ExternalLink from 'app/components/mdx/ExternalLink';
-import TemplateRepoBanner from 'app/components/mdx/TemplateRepoBanner';
-import { FaGithub } from 'react-icons/fa';
-import ViewOnGithub from 'app/components/mdx/ViewOnGithub';
+import { Callout } from "fumadocs-ui/components/callout";
+import CollapsibleCallout from "app/components/mdx/CollapsibleCallout";
+import ExternalLink from "app/components/mdx/ExternalLink";
+import TemplateRepoBanner from "app/components/mdx/TemplateRepoBanner";
+import PageLinkBanner from "app/components/mdx/PageLinkBanner";
+import { FaGithub } from "react-icons/fa";
+import ViewOnGithub from "app/components/mdx/ViewOnGithub";
 import Link from "next/link";
+import { SiUnity } from "react-icons/si";
+import { FaPlug } from "react-icons/fa";
 
 <TemplateRepoBanner sdk="unity" />
 
-
+<PageLinkBanner
+  title="Unity SDK Plug N' Play"
+  titleIcon={<SiUnity />}
+  description="Setup unity with Okto SDK within 5 minutes with our plug n' play."
+  link="/docs/unity-sdk/plug-n-play-overview"
+  buttonText="View Page"
+  buttonIcon={<FaPlug size={20} />}
+/>
 
 <Steps>
 
@@ -39,14 +49,14 @@ import Link from "next/link";
     - **Okto API Keys:** You need your `clientPrivateKey` and `clientSwa`. Obtain these from the [Okto Developer Dashboard](https://dashboard.okto.tech/login).
     - **Okto Account Setup:** Ensure you have sufficient <ExternalLink href="https://dashboard.okto.tech/okto-credits">Okto Credits</ExternalLink>, enable the required <ExternalLink href="https://dashboard.okto.tech/wallet-controls">Chains and Tokens </ExternalLink>, and optionally <ExternalLink href="https://dashboard.okto.tech/paymaster">Activate Sponsorship</ExternalLink>.
     - **Google OAuth Credentials (if using Google authentication):** Create OAuth 2.0 credentials in the <ExternalLink href="/docs/unity-sdk/authenticate-users/google-oauth/google-console-setup">Google Cloud Console</ExternalLink> to get your `webClientId`.
-    
+
     <CollapsibleCallout type="tip" title="Setting up Google OAuth">
     1. Go to <ExternalLink href="https://console.cloud.google.com/">Google Cloud Console</ExternalLink>.
     2. Create a new project or select an existing one
     3. Create OAuth 2.0 credentials for your project.
     4. Save your Client ID.
     5. Add authorized redirect URIs if necessary
-    
+
     Need detailed instructions? Check our <ExternalLink href="/docs/unity-sdk/authenticate-users/google-oauth/google-console-setup">Google Console Setup Guide</ExternalLink>.
     </CollapsibleCallout>
 
@@ -110,7 +120,6 @@ Import the required packages:
 </Tabs>
 </Step>
 
-
 <Step>
     ## 3. Configure Environment Variables
 
@@ -149,7 +158,7 @@ Import the required packages:
         ClientPubKey = GetPublicKey(config.ClientPrivateKey),
         ClientSWA = config.ClientSWA
     };
-    _envConfig = config.Environment; 
+    _envConfig = config.Environment;
     ```
     <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-unity-template-app/tree/main/okto-unity/Assets/OktoSDK/Scripts/OktoSDK/OktoClient/OktoClient.cs" />
 
@@ -221,7 +230,7 @@ Import the required packages:
         {
             throw new Exception("Failed to retrieve supported wallets");
         }
-        if (response.data == null) 
+        if (response.data == null)
         {
             throw new Exception("Response data is missing");
         }
@@ -267,11 +276,11 @@ Import the required packages:
 
 </Steps>
 
-<br/>
+<br />
 
 ## Trying Out a User Operation
 
-Now that we have our basic setup complete, let's implement a token transfer on  Polygon Amoy Testnet to understand how user operations work in Okto.
+Now that we have our basic setup complete, let's implement a token transfer on Polygon Amoy Testnet to understand how user operations work in Okto.
 
 <Steps>
 
@@ -288,7 +297,7 @@ Now that we have our basic setup complete, let's implement a token transfer on  
         {
             throw new Exception("Failed to retrieve supported wallets");
         }
-        if (response.data == null) 
+        if (response.data == null)
         {
             throw new Exception("Response data is missing");
         }
@@ -364,29 +373,31 @@ Now that we have our basic setup complete, let's implement a token transfer on  
 Now that you've completed your first user operation, you're ready to explore more advanced features! Check out our [Usage Guide](/docs/unity-sdk/usage-overview) to learn about other operations like NFT transfers, contract interactions, and more.
 
 <Callout>
-For more examples and advanced usage, check out the [Template Repo](https://github.com/okto-hq/okto-sdkv2-unity-template-app).
+  For more examples and advanced usage, check out the [Template
+  Repo](https://github.com/okto-hq/okto-sdkv2-unity-template-app).
 </Callout>
 
 ## SDK Reference
 
 ### Get Commands
 
-| Command | Description | Documentation |
-|---------|-------------|---------------|
-| `var account = await GetAccount(oktoClient);` | Get user's wallet details | <ExternalLink href="/docs/unity-sdk/getAccount">Method Overview</ExternalLink> |
-| `var chains = await GetChains(oktoClient);` | List supported blockchain networks | <ExternalLink href="/docs/unity-sdk/getChains">Method Overview</ExternalLink> |
-| `var tokens = await getTokens(oktoClient);` | List supported tokens | <ExternalLink href="/docs/unity-sdk/getTokens">Method Overview</ExternalLink> |
-| `var portfolio = await GetPortfolio(oktoClient);` | Get user's token holdings | <ExternalLink href="/docs/unity-sdk/getPortfolio">Method Overview</ExternalLink> |
-| `var nfts = await GetPortfolioNFT(oktoClient);` | Get user's NFT holdings | <ExternalLink href="/docs/unity-sdk/getPortfolioNFT">Method Overview</ExternalLink> |
-| `var activity = await GetPortfolioActivity(oktoClient);` | Get transaction history | <ExternalLink href="/docs/unity-sdk/getPortfolioActivity">Method Overview</ExternalLink> |
-| `var orders = await GetOrdersHistory(oktoClient);` | Get transaction order history | <ExternalLink href="/docs/unity-sdk/getOrdersHistory">Method Overview</ExternalLink> |
-| `var collections = await GetNftCollections(oktoClient);` | Get NFT collections | <ExternalLink href="/docs/unity-sdk/getNftCollections">Method Overview</ExternalLink> |
+| Command                                                  | Description                        | Documentation                                                                            |
+| -------------------------------------------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------- |
+| `var account = await GetAccount(oktoClient);`            | Get user's wallet details          | <ExternalLink href="/docs/unity-sdk/getAccount">Method Overview</ExternalLink>           |
+| `var chains = await GetChains(oktoClient);`              | List supported blockchain networks | <ExternalLink href="/docs/unity-sdk/getChains">Method Overview</ExternalLink>            |
+| `var tokens = await getTokens(oktoClient);`              | List supported tokens              | <ExternalLink href="/docs/unity-sdk/getTokens">Method Overview</ExternalLink>            |
+| `var portfolio = await GetPortfolio(oktoClient);`        | Get user's token holdings          | <ExternalLink href="/docs/unity-sdk/getPortfolio">Method Overview</ExternalLink>         |
+| `var nfts = await GetPortfolioNFT(oktoClient);`          | Get user's NFT holdings            | <ExternalLink href="/docs/unity-sdk/getPortfolioNFT">Method Overview</ExternalLink>      |
+| `var activity = await GetPortfolioActivity(oktoClient);` | Get transaction history            | <ExternalLink href="/docs/unity-sdk/getPortfolioActivity">Method Overview</ExternalLink> |
+| `var orders = await GetOrdersHistory(oktoClient);`       | Get transaction order history      | <ExternalLink href="/docs/unity-sdk/getOrdersHistory">Method Overview</ExternalLink>     |
+| `var collections = await GetNftCollections(oktoClient);` | Get NFT collections                | <ExternalLink href="/docs/unity-sdk/getNftCollections">Method Overview</ExternalLink>    |
 
 ### User Operations (Intents)
 
 Intents are pre-built action templates within the Okto SDK that simplify common Web3 tasks. They provide one-liner functions for complex blockchain interactions.
 
 #### 1. Token Transfer
+
 Send tokens to another address. <ExternalLink href="/docs/unity-sdk/tokenTransfer">Learn more</ExternalLink>
 
 ```csharp
@@ -399,9 +410,11 @@ var transferParams = new TokenTransferIntentParams
 };
 string txHashStr = await ExecuteTokenTransfer(transferParams.recipientWalletAddress, transferParams.amount, caip2Id, transferParams.tokenAddress);
 ```
+
 <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-unity-template-app/okto-unity/Assets/OktoSDK/Scripts/UserOp/TokenTransfer/TokenTransferUiManager.cs" />
 
 #### 2. NFT Transfer
+
 Transfer NFTs between addresses. <ExternalLink href="/docs/unity-sdk/nftTransfer">Learn more</ExternalLink>
 
 ```csharp
@@ -423,9 +436,11 @@ transferParams.amount,
 transferParams.nftType,
 network);
 ```
+
 <ViewOnGithub url="https://github.com/okto-hq/okto-sdkv2-unity-template-app/okto-unity/Assets/OktoSDK/Scripts/UserOp/NFTTransfer/NftTransferView.cs" />
 
 #### 3. Raw Transaction (EVM)
+
 Execute custom EVM contract calls. <ExternalLink href="/docs/unity-sdk/evmRawTransaction">Learn more</ExternalLink>
 
 ```csharp
@@ -452,8 +467,14 @@ transferParams.data);
 
 ## Additional Resources
 
-- <ExternalLink href="/docs/unity-sdk/troubleshooting">Troubleshooting Guide</ExternalLink>
-- <ExternalLink href="/docs/unity-sdk/technical-reference">Technical Reference</ExternalLink>
-- <ExternalLink href="/docs/unity-sdk/usage-overview">Advanced Usage Examples</ExternalLink>
+- <ExternalLink href="/docs/unity-sdk/troubleshooting">
+    Troubleshooting Guide
+  </ExternalLink>
+- <ExternalLink href="/docs/unity-sdk/technical-reference">
+    Technical Reference
+  </ExternalLink>
+- <ExternalLink href="/docs/unity-sdk/usage-overview">
+    Advanced Usage Examples
+  </ExternalLink>
 
 Need help? Join our <ExternalLink href="https://discord.com/invite/okto-916349620383252511">Discord community</ExternalLink> or email us at `devrel@coindcx.com`.

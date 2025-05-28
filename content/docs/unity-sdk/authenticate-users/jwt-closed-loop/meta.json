@@ -1,7 +1,4 @@
 {
-    "title": "JWT (Coming Soon)",
-    "pages": [
-      "learn",
-      "!auth-user-via-code"
-    ]
-  }
+  "title": "JWT",
+  "pages": ["learn", "auth-user-via-jwt"]
+}
