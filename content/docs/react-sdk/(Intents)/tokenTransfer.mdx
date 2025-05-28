@@ -23,6 +23,10 @@ There are two ways to implement token transfers:
 - **UserOp Flow**: A granular approach where you manually control the creation, signing, and execution of the user operation. Useful for custom implementations or advanced use cases.
 </Callout>
 
+<Callout>
+If sponsorship is enabled for your user, you must pass the `feePayerAddress` (i.e., the Treasury Wallet address) as a parameter to the intent function. Refer to the example below for implementation details.
+</Callout>
+
 ### Example
 
 <Accordions defaultValue="Usage">
@@ -45,8 +49,11 @@ function TokenTransfer() {
                 token: "0x2170ed0880ac9a755fd29b2688956bd959f933f8", // Token contract address // [!code highlight]
                 caip2Id: "eip155:1" // [!code highlight]
             }; // [!code highlight]
+
+            const feePayerAddress = "0xdb9B5..." // feePayerAddress used when sponsorship is available
+
             // Execute the transfer
-            const jobId = await tokenTransfer(oktoClient, transferParams); // [!code highlight]
+            const jobId = await tokenTransfer(oktoClient, transferParams, feePayerAddress?); // [!code highlight]
             console.log('Transfer jobId:', jobId);
         } catch (error:any) {
             console.error('Error in token transfer:', error);
@@ -78,8 +85,10 @@ function TokenTransfer() {
                 caip2Id: "eip155:1" // [!code highlight]
             }; // [!code highlight]
 
+            const feePayerAddress = "0xdb9B5..." // feePayerAddress used when sponsorship is available
+
             // Create the user operation
-            const userOp = await tokenTransfer(oktoClient, transferParams); // [!code highlight]
+            const userOp = await tokenTransfer(oktoClient, transferParams, feePayerAddress?); // [!code highlight]
             
             // Sign the operation
             const signedOp = await oktoClient.signUserOp(userOp); // [!code highlight]
@@ -170,7 +179,6 @@ To track a transaction to completion:
 </Callout>
 </Accordion>
 
-
 <Accordion title="Corresponding jobId Response">
 ```typescript
 // Order returned from getOrdersHistory
@@ -222,6 +230,7 @@ For error handling:
 |-----------|------|-------------|----------|
 | `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
 | `data` | [`TokenTransferIntentParams`](/docs/react-sdk/technical-reference#models) | Parameters for the token transfer | Yes |
+| `feePayerAddress` | `string` | Address of the Treasury Wallet responsible for covering gas fees when sponsorship is enabled | Optional |
 
 Where `TokenTransferIntentParams` contains:
 
