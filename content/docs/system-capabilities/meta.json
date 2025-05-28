@@ -7,7 +7,7 @@
       "vendor-control",
       "user-management",
       "wallet-connector",
-      "cross-chain-intents",
-      "trade-service"
+      "trade-service",
+      "cross-chain-intents"
     ]
   }
