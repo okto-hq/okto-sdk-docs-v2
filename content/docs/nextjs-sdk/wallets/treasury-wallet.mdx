@@ -32,6 +32,43 @@ The process is similar to generating an auth token for delegated actions with a 
 
 ---
 
+<Callout title="Important">
+Usage of Treasury Wallet is not supported via Okto SDKs and must be performed through backend API integration. Follow the implementation steps below to use a Treasury Wallet effectively in server-side workflows.
+</Callout>
+
+### Implementation Example
+
+The [`treasuryWallet_template.ts`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/treasuryWallet_template.ts) script demonstrates how to generate this Okto Auth Token:
+
+- It uses the `treasuryWalletSWA` (the SWA of the specific Treasury Wallet you created on the dashboard).
+
+- It constructs a `sessionConfig` object containing `sessionPrivKey`, `sessionPubKey` (derived), and `treasuryWalletSWA`.
+
+- Finally, it invokes `getAuthorizationToken(sessionConfig)` to generate a bearer token. This token can then be used to authenticate subsequent API calls, including explorer functions and intent executions. For more details, refer to the [API References](/docs/openapi/getting-started#api-references).
+
+```typescript
+import { getAuthorizationToken } from "../utils/getAuthorizationToken.js"; 
+import { SessionKey } from "../utils/sessionKey.js"; 
+import dotenv from "dotenv";
+
+dotenv.config(); // Ensure your Treasury API Key is in .env
+
+const treasuryApiKey = process.env.OKTO_TREASURY_API_KEY; // Your Treasury API Key from Okto Dashboard
+const specificTreasuryWalletSWA = "0xYourTreasuryWalletSWAFromDashboard";
+
+const session = SessionKey.fromPrivateKey(treasuryApiKey); 
+
+const sessionConfig = { 
+   sessionPrivKey: session.privateKeyHexWith0x,
+   sessionPubKey: session.uncompressedPublicKeyHexWith0x,
+   treasuryWalletSWA: specificTreasuryWalletSWA, // Field name in this template
+   // or userSWA: specificTreasuryWalletSWA, // If adapting other templates
+ };
+
+ const authToken = await getAuthorizationToken(sessionConfig); 
+ console.log("Okto Treasury Wallet Auth Token: ", authToken);
+```
+
 <Callout title="Note">
 All Okto Explorer API functions (e.g., `getAccount`, `getPortfolio`) can be used with an auth token generated for a Treasury Wallet, just as they would for a user's SWA. The functionality remains the same; only the signing identity (and thus the data returned) changes based on the token.
 </Callout>

@@ -39,7 +39,7 @@ The [`treasuryWallet_template.ts`](https://github.com/okto-hq/okto-sdkv2-ts-temp
 
 - It constructs a `sessionConfig` object containing `sessionPrivKey`, `sessionPubKey` (derived), and `treasuryWalletSWA`.
 
-- Finally, it calls `getAuthorizationToken(sessionConfig)` to generate the bearer token.
+- Finally, it calls `getAuthorizationToken(sessionConfig)` to generate the bearer token. This token can then be used to authenticate subsequent API calls, including explorer functions and intent executions. For more details, refer to the [API References](/docs/openapi/getting-started#api-references).
 
 ```typescript
 import { getAuthorizationToken } from "../utils/getAuthorizationToken.js"; 
