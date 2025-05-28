@@ -1,5 +1,6 @@
 ---
 title: Client Treasury Wallet
+description: This guide explains how to use Treasury Wallets for client-initiated on-chain actions, gas sponsorship, and API access via Auth Tokens.
 full: false
 ---
 
@@ -31,6 +32,11 @@ The process is similar to generating an auth token for delegated actions with a 
 
 ---
 
+
+<Callout title="Important">
+Usage of Treasury Wallet is not supported via Okto SDKs and must be performed through backend API integration. Follow the implementation steps below to use a Treasury Wallet effectively in server-side workflows.
+</Callout>
+
 ### Implementation Example
 
 The [`treasuryWallet_template.ts`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/treasuryWallet_template.ts) script demonstrates how to generate this Okto Auth Token:
@@ -39,7 +45,7 @@ The [`treasuryWallet_template.ts`](https://github.com/okto-hq/okto-sdkv2-ts-temp
 
 - It constructs a `sessionConfig` object containing `sessionPrivKey`, `sessionPubKey` (derived), and `treasuryWalletSWA`.
 
-- Finally, it calls `getAuthorizationToken(sessionConfig)` to generate the bearer token. This token can then be used to authenticate subsequent API calls, including explorer functions and intent executions. For more details, refer to the [API References](/docs/openapi/getting-started#api-references).
+- Finally, it invokes `getAuthorizationToken(sessionConfig)` to generate a bearer token. This token can then be used to authenticate subsequent API calls, including explorer functions and intent executions. For more details, refer to the [API References](/docs/openapi/getting-started#api-references).
 
 ```typescript
 import { getAuthorizationToken } from "../utils/getAuthorizationToken.js"; 

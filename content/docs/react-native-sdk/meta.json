@@ -29,6 +29,8 @@
     "./wallets/overview",
     "./wallets/(embedded-wallets)/index",
     "./wallets/(embedded-wallets)/delegated-actions",
+    "./wallets/treasury-wallet",
+    "./wallets/sponsor-wallet",
     "!./wallets/external-wallets",
     "./wallets/wagmi-integration",
     "---Resources---",
