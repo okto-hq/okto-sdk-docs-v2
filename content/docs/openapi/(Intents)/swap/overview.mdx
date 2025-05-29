@@ -6,7 +6,8 @@ full: false
 
 import ExternalLink from 'app/components/mdx/ExternalLink';
 import TechnologyCard from 'app/components/mdx/TechnologyCard';
-import { IoSwapHorizontalOutline, IoLayersOutline } from "react-icons/io5";
+import FeatureCard from 'app/components/mdx/FeatureCard';
+import { IoSwapHorizontalOutline, IoLayersOutline, IoCashOutline, IoRefreshOutline, IoShieldCheckmarkOutline } from "react-icons/io5";
 
 ## What are Swap Intents?
 
@@ -31,68 +32,45 @@ When you execute a swap intent, Okto:
 3. **Manages conversions** – Seamlessly handles any required token conversions to filler supported tokens (FST) for cross-chain swaps.
 4. **Executes the transaction** – Processes the swap with integrated slippage protection and real-time market checks.
 
-## Key Concepts
+## Key Features & Resources
 
-### Filler Supported Tokens (FST)
-
-FSTs are tokens natively supported by Okto's Unified Liquidity Layer for direct cross-chain transfers. Understanding FSTs is crucial for swap operations:
-
-- **Direct bridging**: FSTs can be transferred across chains without intermediate conversions
-- **Automatic handling**: Non-FST tokens are automatically converted to FSTs when needed
-- **Network specific**: Each supported network has designated FST tokens
-
-<ExternalLink href="/docs/trade-service/supported-networks-tokens">
-View all supported networks and their FST tokens →
-</ExternalLink>
-
-### Swap Scenarios 
-
-Swap intents handle various scenarios automatically:
-
-#### 1. **Same-Chain Swaps**
-Direct token-to-token exchanges on the same blockchain.
-
-#### 2. **Cross-Chain Swaps**
-Complex multi-step operations that may involve:
-- Converting source tokens to FST
-- Bridging across chains via ULL
-- Converting to destination tokens
-
-<ExternalLink href="/docs/trade-service/scenarios">
-Learn more about different swap scenarios →
-</ExternalLink>
-
-### Fees
-
-Swap transactions may include:
-
-- Network gas fees
-- Okto service fees (for cross-chain swaps)
-- Optional client-configured fees
-
-<ExternalLink href="/docs/trade-service/fees">
-View detailed fee structure →
-</ExternalLink>
-
-### Refunds
-
-In case of failed transactions, automatic refunds are processed based on the swap scenario and point of failure.
-
-<ExternalLink href="/docs/trade-service/refunds">
-Understand refund mechanisms →
-</ExternalLink>
-
-### Slippage Protection
-
-Swap intents include automatic slippage protection based on:
-
-- Real-time market conditions
-- Token volatility metrics
-- Transaction type (same-chain vs cross-chain)
-
-<ExternalLink href="/docs/trade-service/slippage">
-Learn about slippage management →
-</ExternalLink>
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+  <FeatureCard
+    icon={<IoLayersOutline size={"1.5rem"} />}
+    title="Filler Supported Tokens (FST)"
+    description="Tokens natively supported by Okto's ULL for direct cross-chain transfers without needing intermediate conversions via aggregators."
+    iconColor="text-blue-500"
+    link="/docs/trade-service/supported-networks-tokens"
+  />
+  <FeatureCard
+    icon={<IoSwapHorizontalOutline size={"1.5rem"} />}
+    title="Swap Scenarios"
+    description="Different types of swap operations including same-chain swaps and complex cross-chain operations with automatic routing."
+    iconColor="text-green-500"
+    link="/docs/trade-service/scenarios"
+  />
+  <FeatureCard
+    icon={<IoCashOutline size={"1.5rem"} />}
+    title="Fee Structure"
+    description="Fees and charges that apply to different types of swap transactions through the Trade Service and Swap Intents."
+    iconColor="text-orange-500"
+    link="/docs/trade-service/fees"
+  />
+  <FeatureCard
+    icon={<IoRefreshOutline size={"1.5rem"} />}
+    title="Refund Mechanisms"
+    description="Automatic systems that return user funds when cross-chain transactions fail at various stages of execution."
+    iconColor="text-purple-500"
+    link="/docs/trade-service/refunds"
+  />
+  <FeatureCard
+    icon={<IoShieldCheckmarkOutline size={"1.5rem"} />}
+    title="Slippage Protection"
+    description="Built-in slippage protection with dynamic calculations based on real-time market conditions and token volatility."
+    iconColor="text-red-500"
+    link="/docs/trade-service/slippage"
+  />
+</div>
 
 ## Next Steps
 
@@ -104,7 +82,7 @@ Ready to implement swap intents in your application? Explore the technical imple
     icon={<IoSwapHorizontalOutline size={"1.5rem"} />}
     title="Using Swap Intents"
     subtitle="Implement secure user login and session management"
-    link="#"
+    link="./swapIntentExecute"
   />
   <TechnologyCard
     className="h-25"
