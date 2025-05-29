@@ -20,7 +20,7 @@ import {
   TbPlugConnected,
 } from "react-icons/tb";
 import { SiAxios, SiFlutter, SiNextdotjs, SiWagmi } from "react-icons/si";
-import { IoDocumentTextOutline } from "react-icons/io5";
+import { IoSwapHorizontalOutline } from "react-icons/io5";
 import { FaUnity } from "react-icons/fa6";
 import { SiTypescript } from "react-icons/si";
 import { useTheme } from "next-themes";
@@ -105,6 +105,12 @@ export default function NavbarComponent() {
       icons: <FaRainbow />,
     },
     {
+      href: "/docs/trade-service",
+      label: "Trade Service",
+      subpath: "/",
+      icons: <IoSwapHorizontalOutline />,
+    },
+    {
       href: "/docs/okto-eliza-plugin",
       label: "Eliza Plugin",
       subpath: "/",
@@ -126,6 +132,7 @@ export default function NavbarComponent() {
     if (pathname.startsWith("/docs/unity-sdk")) return "Unity";
     if (pathname.startsWith("/docs/external-wallet-adapters/wagmi/setup")) return "Wagmi";
     if (pathname.startsWith("/docs/external-wallet-adapters/rainbowkit/setup")) return "RainbowKit";
+    if (pathname.startsWith("/docs/trade-service")) return "Trade Service";
     if (pathname.startsWith("/docs/okto-eliza-plugin")) return "Eliza Plugin";
     if (pathname.startsWith("/docs/openapi")) return "API References";
     return "SDKs";
