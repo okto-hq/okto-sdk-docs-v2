@@ -6,8 +6,8 @@
     "pages": [
         "[← Back to Home](/)",
         "---Quickstart---",
+        "overview",
         "index",
-        "getting-started",
         "templateRepo",
         "---Authentication---",
         "./authenticate/okto-auth-session",
