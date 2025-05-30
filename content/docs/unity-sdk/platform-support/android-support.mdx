@@ -1,0 +1,42 @@
+---
+title: 'Android Support'
+description: 'Required AndroidManifest.xml configuration for Okto SDK in Unity'
+full: false
+---
+
+# AndroidManifest.xml Required Configuration for Okto SDK
+
+Add these permissions and intent filters inside your Unity AndroidManifest.xml to enable Okto SDK functionality:
+
+```xml
+<!-- Permissions -->
+<uses-permission android:name="android.permission.INTERNET"/>
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+<uses-permission android:name="android.permission.CAMERA"/>
+
+<!-- Inside your main activity (e.g., UnityPlayerActivity) -->
+
+<!-- Okto custom URL scheme -->
+<intent-filter>
+  <action android:name="android.intent.action.VIEW" />
+  <category android:name="android.intent.category.DEFAULT" />
+  <category android:name="android.intent.category.BROWSABLE" />
+  <data android:scheme="oktosdk" android:host="auth" />
+</intent-filter>
+
+<!-- Okto onboarding redirect URLs (sandbox & production) -->
+<intent-filter android:autoVerify="true">
+  <action android:name="android.intent.action.VIEW" />
+  <category android:name="android.intent.category.DEFAULT" />
+  <category android:name="android.intent.category.BROWSABLE" />
+
+  <!-- Production -->
+  <data android:scheme="https"
+        android:host="onboarding.okto.tech"
+        android:pathPrefix="/__/auth/handler" />
+
+  <!-- Sandbox -->
+  <data android:scheme="https"
+        android:host="sandbox-onboarding.okto.tech"
+        android:pathPrefix="/__/auth/handler" />
+</intent-filter>
