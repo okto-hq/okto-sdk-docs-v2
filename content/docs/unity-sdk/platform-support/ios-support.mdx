@@ -1,0 +1,54 @@
+---
+title: 'iOS Support'
+description: 'iOS support configuration steps for using Okto SDK in Unity'
+full: false
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+## Required iOS Configuration Steps
+
+### 1. Configure URL Scheme in Unity
+
+In the Unity Editor’s iOS Player Settings, add a supported URL scheme named `oktosdk`.
+
+This allows the Okto SDK to handle authentication callbacks via the `oktosdk://` URL scheme.
+
+---
+
+### 2. Update `Info.plist`
+
+After exporting your Unity project to Xcode, open the `Info.plist` file and add the following entry:
+
+```xml
+<key>CFBundleURLTypes</key>
+<array>
+  <dict>
+    <key>CFBundleURLName</key>
+    <string>com.package.name</string>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <string>oktosdk</string>
+    </array>
+  </dict>
+</array>
+
+
+---
+
+### 3. Link `SafariServices.framework`
+
+In Xcode:
+
+- Select the **UnityFramework** target from the project navigator.
+- Go to **Build Phases** → **Link Binary With Libraries**.
+- Click the **+** button and add `SafariServices.framework`.
+
+This is required for web-view authentication to function properly.
+
+---
+
+<Callout type="warning">
+If you experience issues, please double-check that all steps above have been completed correctly. In some cases, the issue may not be related to the Okto SDK. Conflicts or missing configuration in third-party libraries can also cause problems.
+</Callout>
+```

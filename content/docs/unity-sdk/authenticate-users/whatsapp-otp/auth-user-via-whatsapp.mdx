@@ -1,203 +1,76 @@
 ---
-title: Whatsapp Authentication
-description: Authenticate users via WhatsApp using Okto's Unity SDK with sendOTP, resendOTP, and loginUsingWhatsApp methods for secure, token-based session management.
+title: WhatsApp Authentication
+description: How to authenticate users via WhatsApp using Okto's Unity SDK with simple OTP methods.
 full: false
 ---
 
-import { TypeTable } from "fumadocs-ui/components/type-table";
-import { Tab, Tabs } from "fumadocs-ui/components/tabs";
-import { Callout } from "fumadocs-ui/components/callout";
-import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+# WhatsApp Authentication
 
-import "../../../styles.css";
+You can authenticate users through WhatsApp using Okto's Unity SDK. The main methods you’ll use are:
 
-The `sendOTP()` method initiates the WhatsApp authentication flow by sending a one-time password (OTP) to the specified user's WhatsApp number.
+- `SendPhoneOtpAsync(phoneNumber, countryShortName)` — sends a one-time password (OTP) to the user’s WhatsApp number.
+- `ResendPhoneOtpAsync(phoneNumber, token, countryShortName)` — resends the OTP if needed.
+- `VerifyPhoneOtpAsync(phoneNumber, otp, token, countryShortName)` — verifies the OTP and logs the user in.
 
-The `loginUsingWhatsApp()` method verifies the provided OTP against the user's WhatsApp number. Upon successful verification, the user's session is established.
+---
 
-### Example
+## Quick Overview
 
-<Accordions defaultValue="Usage">
-<Accordion title="Usage">
-<Tabs items={['TypeScript']}>
-<Tab value="TypeScript">
-```typescript
-import { useState } from 'react';
-import { useOkto } from '@okto_web3/react-sdk';
+| Method                         | What it does                                      |
+|-------------------------------|--------------------------------------------------|
+| `SendPhoneOtpAsync(phoneNumber, countryShortName)`  | Sends an OTP to the user’s WhatsApp number.    |
+| `ResendPhoneOtpAsync(phoneNumber, token, countryShortName)` | Resends the OTP using a previously issued token. |
+| `VerifyPhoneOtpAsync(phoneNumber, otp, token, countryShortName)` | Verifies the OTP and logs the user in, returning their wallet address. |
 
-function WhatsAppAuthentication() {
-const oktoClient = useOkto(); // [!code highlight]
+---
 
-    const [phoneNo, setPhoneNo] = useState('');
-    const [otp, setOtp] = useState('');
-    const [token, setToken] = useState('');
+## Example Code
 
-    async function handleSendOTP() {
-        try {
-            const response = await oktoClient.sendOTP(phoneNo, "whatsapp"); // [!code highlight]
-            console.log('OTP Sent:', response);
-            setToken(response.token);
-        } catch (error) {
-            console.error('Error sending OTP:', error);
+```csharp
+using OktoSDK;
+using UnityEngine;
+using System;
+
+public class WhatsAppAuthExample : MonoBehaviour
+{
+    public WhatsAppAuthentication whatsAppAuth;
+
+    public async void SendOtp(string phoneNumber)
+    {
+        try
+        {
+            var response = await whatsAppAuth.SendPhoneOtpAsync(phoneNumber);
+            Debug.Log("OTP Sent! Token: " + response.token);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Failed to send OTP: " + ex.Message);
         }
     }
 
-    async function handleResendOTP() {
-        try {
-            const response = await oktoClient.resendOTP(phoneNo, token, "whatsapp"); // [!code highlight]
-            console.log('OTP Resent:', response);
-            setToken(response.token);
-        } catch (error) {
-            console.error('Error resending OTP:', error);
+    public async void ResendOtp(string phoneNumber, string token)
+    {
+        try
+        {
+            var response = await whatsAppAuth.ResendPhoneOtpAsync(phoneNumber, token);
+            Debug.Log("OTP Resent! Token: " + response.token);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Failed to resend OTP: " + ex.Message);
         }
     }
 
-    async function handleVerifyOTP() {
-        try {
-            const session = await oktoClient.loginUsingWhatsApp(phoneNo, otp, token, (session: any) => { // [!code highlight]
-                localStorage.setItem("okto_session", JSON.stringify(session)); // [!code highlight]
-            }); // [!code highlight]
-            console.log('Login Successful:', session);
-        } catch (error) {
-            console.error('Error verifying OTP:', error);
+    public async void VerifyOtp(string phoneNumber, string otp, string token)
+    {
+        try
+        {
+            var session = await whatsAppAuth.VerifyPhoneOtpAsync(phoneNumber, otp, token);
+            Debug.Log("Login successful! Wallet address: " + session.smartWalletAddress);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("OTP verification failed: " + ex.Message);
         }
     }
-
-    return (
-        <div>
-            <input type="tel" placeholder="Enter WhatsApp number" value={phoneNo} onChange={(e) => setPhoneNo(e.target.value)} />
-            <input type="text" placeholder="Enter OTP" value={otp} onChange={(e) => setOtp(e.target.value)} />
-
-            <button onClick={handleSendOTP}>Send OTP</button>
-            <button onClick={handleResendOTP}>Resend OTP</button>
-            <button onClick={handleVerifyOTP}>Verify OTP</button>
-        </div>
-    );
-
 }
-
-````
-</Tab>
-</Tabs>
-</Accordion>
-
-<Accordion title="Success Response">
-```typescript
-0x9A94366DC5a9447C763aa2c3A09EB56dc82CB4D3
-````
-
-</Accordion>
-</Accordions>
-
-<Callout title="Note" type="info">
-For error handling: 
-- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation 
-- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
-</Callout>
-
-### Method Overview
-
-| Method                                                  | Description                                       |
-| ------------------------------------------------------- | ------------------------------------------------- |
-| <sub><i>async</i></sub> `OktoClient.sendOTP`            | Sends an OTP to the user's WhatsApp number        |
-| <sub><i>async</i></sub> `OktoClient.resendOTP`          | Resends an OTP using a previously generated token |
-| <sub><i>async</i></sub> `OktoClient.loginUsingWhatsApp` | Verifies the OTP and logs in the user             |
-
-<div className="method-box">
-
-## Send OTP
-
-<sub><i>async</i></sub> `OktoClient.sendOTP(contact: string, method: "whatsapp")` sends the OTP to the
-specified WhatsApp number.
-
-### Parameters
-
-| Parameter | Type     | Description                             | Required |
-| --------- | -------- | --------------------------------------- | -------- |
-| `contact` | `string` | User's WhatsApp number                  | Yes      |
-| `method`  | `string` | OTP delivery method (email or whatsapp) | Yes      |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type                               | Description                                                      |
-| ---------- | ---------------------------------- | ---------------------------------------------------------------- |
-| `result`   | `Promise<WhatsAppSendOtpResponse>` | Resolves with a success response if the OTP is sent successfully |
-
-<Accordions>
-    <Accordion title="Response Type">
-        ```typescript
-        interface WhatsAppSendOtpResponse {
-            status: string;
-            message: string;
-            code: number;
-            token: string;
-        }
-        ```
-    </Accordion>
-</Accordions>
-
-</Callout>
-
-## Resend OTP
-
-<sub><i>async</i></sub> `OktoClient.resendOTP(contact: string, token: string, method: "whatsapp")`
-resends the OTP using the previously issued token.
-
-### Parameters
-
-| Parameter | Type       | Description                                            | Required |
-| --------- | ---------- | ------------------------------------------------------ | -------- |
-| `contact` | `string`   | User's WhatsApp number                                 | Yes      |
-| `token`   | `string`   | The token received from the previous `sendOTP` request | Yes      |
-| `method`  | "whatsapp" | OTP delivery method (email or whatsapp)                | Yes      |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type                                 | Description                                                         |
-| ---------- | ------------------------------------ | ------------------------------------------------------------------- |
-| `result`   | `Promise<WhatsAppResendOtpResponse>` | Resolves with a success response if the OTP is resent successfully. |
-
-<Accordions>
-    <Accordion title="Response Type">
-        ```typescript
-        interface WhatsAppResendOtpResponse {
-            status: string;
-            message: string;
-            code: number;
-            token: string;
-        }
-        ```
-    </Accordion>
-</Accordions>
-
-</Callout>
-
-## Login Using WhatsApp
-
-<sub><i>async</i></sub> `OktoClient.loginUsingWhatsApp(contact: string, otp: string, token: string)`
-verifies the OTP against the provided WhatsApp number and logs in the user. If
-successful, returns the user's Smart Wallet Address.
-
-### Parameters
-
-| Parameter | Type     | Description                                            | Required |
-| --------- | -------- | ------------------------------------------------------ | -------- |
-| `contact` | `string` | User's WhatsApp number                                 | Yes      |
-| `otp`     | `string` | OTP sent to the user's WhatsApp number                 | Yes      |
-| `token`   | `string` | The token received from the previous `sendOTP` request | Yes      |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type               | Description                                                 |
-| ---------- | ------------------ | ----------------------------------------------------------- |
-| `result`   | `Promise<Address>` | Returns the user's Smart Wallet Address on successful login |
-
-</Callout>
-
-</div>

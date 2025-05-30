@@ -1,0 +1,28 @@
+---
+title: 'Guide'
+description: 'Quick guide to integrating Okto SDK with Unity using drag-and-drop.'
+full: false
+---
+
+## 1. Add `OnBoardingPage` Prefab to Your Scene
+
+- Drag and drop the `OnBoardingPage` prefab into the **Canvas** of your desired scene.
+
+## 2. Assign Your Onboarding Button
+
+- In the Inspector of the `OnBoardingPage` prefab, locate the `OnboardingUiManager`.
+- Drag your UI button into the `onboardingbtn` field.
+
+## 3. Add `Authenticate` Prefab and Configure
+
+- Drag and drop the `Authenticate` prefab into the same scene.
+- Select the appropriate **Environment** in the prefab settings.
+- Finally, click the onboarding button added in Step 2 — and you're all set!
+
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+<Callout type="info">
+This guide assumes you have added the <code>OktoHolder</code> prefab to your scene and configured client details in the <code>Environment</code> for the relevant environment.
+</Callout>

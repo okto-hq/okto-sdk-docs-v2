@@ -1,107 +1,51 @@
 ---
 title: JWT Authentication
-description: Authenticate users via JWT using Okto's ReactJS SDK with loginUsingJWTAuthentication method for secure, token-based session management.
+description: Authenticate users via JWT using Okto's Unity SDK with a simple Login method.
 full: false
 ---
 
-import { TypeTable } from "fumadocs-ui/components/type-table";
-import { Tab, Tabs } from "fumadocs-ui/components/tabs";
-import { Callout } from "fumadocs-ui/components/callout";
-import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+# JWT Authentication
 
-import "../../../styles.css";
+Use Okto's Unity SDK to authenticate users with JWT tokens via the `Login` method. This method internally calls the Okto backend to verify the JWT and establish a secure session.
 
-The `loginUsingJWTAuthentication()` method authenticates users using JWT tokens. It verifies the JWT token, creates an authentication payload, and sends it to the Gateway service. Upon successful authentication, it updates the user session.
+---
 
-### Example
+## Quick Overview
 
-<Accordions defaultValue="Usage">
-<Accordion title="Usage">
-<Tabs items={['TypeScript']}>
-<Tab value="TypeScript">
-```typescript
-import { useOkto } from '@okto_web3/react-sdk';
+| Method       | What it does                                      |
+|--------------|--------------------------------------------------|
+| `Login(jwtToken)` | Verifies the JWT token and logs the user in. Returns true on success. |
 
-function JwtAuthentication() {
-const oktoClient = useOkto(); // [!code highlight]
+---
 
-    async function handleJwtLogin(jwtToken: string) {
-        try {
-            const user = await oktoClient.loginUsingJWTAuthentication(jwtToken); // [!code highlight]
-            console.log("Login successful:", user);
-        } catch (error) {
-            console.error("Login failed:", error);
+## Example Code
+
+```csharp
+using OktoSDK.Auth;
+using UnityEngine;
+using System;
+
+public class JwtAuthExample : MonoBehaviour
+{
+    public JwtAuthenticate jwtAuth;
+
+    public async void LoginWithJwt(string jwtToken)
+    {
+        try
+        {
+            bool isSuccess = await jwtAuth.Login(jwtToken);
+            if (isSuccess)
+            {
+                Debug.Log("Login successful!");
+            }
+            else
+            {
+                Debug.LogError("Login failed: Invalid JWT or session error.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Login failed: " + ex.Message);
         }
     }
-
-    return (
-        <div>
-            {/* Your JWT token generation/retrieval UI here */}
-            <button onClick={() => handleJwtLogin("your-jwt-token")}>
-                Login with JWT
-            </button>
-        </div>
-    );
-
 }
-
-````
-</Tab>
-</Tabs>
-</Accordion>
-
-<Accordion title="Success Response">
-```typescript
-0x9A94366DC5a9447C763aa2c3A09EB56dc82CB4D3
-````
-
-</Accordion>
-</Accordions>
-
-<Callout title="Note" type="info">
-  For error handling: - Use the error code to debug issues. Check out the [SDK
-  errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation - For
-  help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting)
-  to contact support
-</Callout>
-
-### Method Overview
-
-| Method                                                           | Description                        |
-| ---------------------------------------------------------------- | ---------------------------------- |
-| <sub><i>async</i></sub> `OktoClient.loginUsingJWTAuthentication` | Authenticates user using JWT token |
-
-<div className="method-box">
-
-## Login Using JWT
-
-<sub>
-  <i>async</i>
-</sub>
-`OktoClient.loginUsingJWTAuthentication(jwtToken: string)` authenticates users
-using JWT tokens and establishes their session.
-
-### Parameters
-
-| Parameter  | Type     | Description                      | Required |
-| ---------- | -------- | -------------------------------- | -------- |
-| `jwtToken` | `string` | The JWT token for authentication | Yes      |
-
-### Response
-
-<Callout title="Success Response">
-
-| Field Name | Type               | Description                                                 |
-| ---------- | ------------------ | ----------------------------------------------------------- |
-| `result`   | `Promise<Address>` | Returns the user's Smart Wallet Address on successful login |
-
-</Callout>
-
-</div>
-
-<Callout title="Important" type="warn">
-Before using JWT authentication, ensure you have: 
-1. Set up JWT verification with Okto 
-2. Created a verification endpoint that Okto can call 
-3. Generated a valid JWT token with the required user identification
-</Callout>
