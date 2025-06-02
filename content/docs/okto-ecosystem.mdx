@@ -4,22 +4,22 @@ description: "Bridge the gap between Web2 and Web3 with seamless multi-chain exp
 full: false
 ---
 
-import TechnologyCard from "app/components/mdx/TechnologyCard";
+import FeatureCard from "app/components/mdx/FeatureCard";
 import { IoWalletOutline, IoCodeSlashOutline, IoLayersOutline, IoSwapHorizontalOutline } from "react-icons/io5";
 
 ![Okto](/images/index-image.png)
 
 ## What is Okto?
 
-Okto is a comprehensive end-to-end chain abstraction platform designed to simplify the complex world of blockchain technology. Our mission is "Bringing the world on chain" by making Web3 more accessible to everyone – not just developers and crypto enthusiasts, but anyone who wants to participate in the digital future.
+Okto is a comprehensive wallet infrastructure to simplify on-chain interactions. Okto abstracts chains, liquidity, and gas complexities, enabling developers to build applications where users can transact across networks via social logins, intent-driven actions, and policy-controlled wallets, all with Web2 simplicity.
 
-Okto addresses common challenges such as:
-- **Chain Abstraction** (accessing multiple blockchains seamlessly),
-- **Account Management** (secure self-custody without complex private key handling),
-- **Transaction Handling** (orchestration and automation of multi-step, cross-chain tasks),
-- **Fee Management** (abstracting away different gas tokens and payment flows).
+Okto addresses the core challenges preventing mainstream Web3 adoption:
 
-Just as web browsers made the internet accessible without understanding complex HTTP protocols, Okto aims to enable users to interact with blockchain through intuitive interfaces where the underlying complexity happens invisibly.
+- **Seamless Onboarding** via social logins and MPC wallets that eliminate seed phrases
+- **Chain Abstraction** through embedded wallets that work across 30+ ecosystems
+- **Intent-Based Transactions** where users express intents, not complex transaction steps
+- **Gasless Operations** letting users pay in stablecoins or apps sponsor fees entirely
+- **Developer Simplicity** with SDKs that reduce integration time from months to days
 
 ## Background & Motivation
 
@@ -35,28 +35,32 @@ Okto was created to bridge these gaps by combining robust crypto primitives with
 ## Okto's Suite of Products
 
 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
-  <TechnologyCard
+  <FeatureCard
     icon={<IoWalletOutline size="1.2rem" />}
     title="Okto Wallet"
-    subtitle="Flagship DeFi application with 1-click cross-chain swaps, gasless transactions, and 50X leverage trading."
+    description="Okto's flagship consumer application showcasing the power of chain abstraction with 1-click cross-chain swaps, gasless transactions, and 50X leverage trading."
     link="https://okto.tech"
+    iconColor="text-blue-500"
   />
-  <TechnologyCard
+  <FeatureCard
     icon={<IoCodeSlashOutline size="1.2rem" />}
     title="Okto SDK"
-    subtitle="Developer toolkit for building Web3 applications with embedded wallets and chain abstraction across multiple platforms."
+    description="Developer toolkit leveraging Okto's wallet infrastructure for building Web3 applications with embedded wallets, intent-driven transactions, and chain abstraction."
     link="/docs/okto-sdk"
+    iconColor="text-green-500"
   />
-  <TechnologyCard
+  <FeatureCard
     icon={<IoLayersOutline size="1.2rem" />}
     title="External Wallet Adapters"
-    subtitle="Seamless integration with popular Web3 libraries like Wagmi and RainbowKit for existing dApps."
+    description="Seamless integration with popular Web3 libraries while keeping your existing external wallet flow completely unchanged."
     link="/docs/external-wallet-adapters"
+    iconColor="text-purple-500"
   />
-  <TechnologyCard
+  <FeatureCard
     icon={<IoSwapHorizontalOutline size="1.2rem" />}
     title="Trade Service"
-    subtitle="Powerful API suite for any-to-any cross-chain token swaps built on the Unified Liquidity Layer."
+    description="Powerful API suite, built on Okto's Unified Liquidity Layer to enable seamless cross-chain token swaps and eliminate traditional bridging complexity."
     link="/docs/trade-service"
+    iconColor="text-red-500"
   />
 </div>
