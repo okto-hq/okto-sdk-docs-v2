@@ -76,10 +76,14 @@ export const productsData = [
     content: (
       <div className="space-y-4">
         <p className="text-base text-gray-700 dark:text-gray-300">
-          The <strong>Okto SDK</strong> is a comprehensive suite of developer tools designed to provide end-to-end chain abstraction and seamless transactions via powerful intents. It allows developers to embed powerful, multi-chain wallet functionalities directly into their applications, offering users an experience as familiar as any modern web or mobile app, while preserving decentralization and transparency.
-          <br />
+          The <strong>Okto SDK</strong> is a powerful wallet infrastructure that simplifies on-chain interactions for developers. It abstracts away the complexities of chains, liquidity, and gas, allowing developers to easily embed powerful, multi-chain wallet functionalities into their applications, offering users an experience as familiar as any modern web or mobile app, while preserving decentralization and transparency.
+          </p>
+
+        <div className="p-3 bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+          <p className="text-sm">
           The power of Trade Service is also available through the SDK as intents, enabling seamless cross-chain swaps and liquidity management.
-        </p>
+          </p>
+        </div>
         
         <div className="p-3 bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg">
           <p className="text-sm">

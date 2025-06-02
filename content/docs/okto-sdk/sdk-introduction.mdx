@@ -4,39 +4,41 @@ description: Learn about the Okto SDK and how it simplifies blockchain interacti
 full: false
 ---
 
-import { Callout } from 'fumadocs-ui/components/callout';
-
 ## What is Okto SDK?
 
-The **Okto SDK** is a powerful chain abstraction toolkit that transforms how applications, both Web2 and Web3, interact with blockchain technology. It lets developers build blockchain-enabled applications using familiar development patterns, delivering user experiences that match the simplicity of traditional web apps while integrating advanced blockchain capabilities.
+The **Okto SDK** is a powerful wallet infrastructure that simplifies on-chain interactions for developers. It abstracts away the complexities of chains, liquidity, and gas - letting developers build apps where users transact across networks via social logins, intent-driven actions, and policy-controlled wallets, all with Web2 simplicity.
 
 By acting as a comprehensive abstraction platform, the Okto SDK automatically handles most blockchain complexities. Rather than integrating multiple protocols or manually managing network details, developers can rely on Okto’s **plug-and-play** solution to create sophisticated Web3 features—ranging from token transfers to multi-chain interactions—via a streamlined, developer-friendly API.
 
-What sets **Okto** apart is its ability to simplify blockchain development for both developers and end users. For developers, Okto hides the underlying blockchain operations—like wallet management, multi-chain support, and transaction handling—behind straightforward APIs. For end users, this unlocks near–Web2-like interactions, including single-click transactions and frictionless cross-chain asset management.
+What sets **Okto** apart is its ability to deliver **Web2 simplicity with Web3 power**. For developers, Okto provides **embedded wallet** infrastructure that works across 30+ ecosystems with minimal code. For end users, this unlocks **seamless onboarding** via social logins and signless transactions where they simply express desired outcomes.
 
 ---
 
-## What Makes Okto SDK Special?
+## Core Value Propositions
 
-### 1. Easy Authentication
+### 1. Seamless Onboarding
 
-Traditionally, blockchain applications require users to navigate complex steps: installing browser extensions, managing private keys, and remembering seed phrases. Okto changes this paradigm by providing an authentication system that feels familiar to users—such as logging in with Google or Email—while preserving the secure nature of blockchain operations.
+Traditional blockchain applications require users to navigate complex steps: installing browser extensions, managing private keys, and remembering seed phrases. Okto changes this paradigm by providing **frictionless onboarding** via social logins and MPC wallets that eliminate seed phrases entirely.
 
-Under the hood, **Multi-Party Computation (MPC)** handles user key creation and storage. When someone signs in with their preferred method (e.g., Google OAuth or email verification), Okto automatically provisions and manages their blockchain wallet in the background. This ensures:
+Under the hood, **Multi-Party Computation (MPC)** handles user key creation and storage with **military-grade security**. When someone signs in with their preferred method (e.g., Google OAuth or email verification), Okto automatically provisions and manages their blockchain wallet in the background. This ensures:
 
-- A **streamlined user onboarding** that requires minimal blockchain knowledge  
-- **Robust security** through MPC, eliminating single points of compromise  
+- **Web2-like signup experience** that requires minimal blockchain knowledge  
+- **Military-grade security** through MPC + TSS technology with EigenLayer security  
 - **Non-disruptive** transitions between regular app usage and blockchain-enabled features  
 
-<Callout title="Learn More">
-Check out our detailed guides on [Google OAuth](../react-sdk/authenticate-users/google-oauth/google-console-setup), [Email OTP](../react-sdk/authenticate-users/email-otp/learn), or [Phone OTP](../react-sdk/authenticate-users/phone-otp/learn) implementations to set up these flows.
-</Callout>
+### 2. Chain Abstraction Embedded Wallet
 
-### 2. Simple Transactions
+Okto provides a **single wallet interface that works across 30+ ecosystems** including EVM chains, Solana, and Aptos. This **embedded wallet** infrastructure removes cross-chain complexity for both users and developers:
 
-Making blockchain transactions work properly is usually one of the hardest parts of development. Developers need to handle complex payload constructions, gas estimations where the system is designed for high fluctuations, different blockchain ecosystems, and complex error cases. Okto makes this simple.
+- **Universal Wallets**: Access and manage assets across all major chains from one interface
+- **Cross-Ecosystem Compatibility**: One wallet for EVM, Solana, Aptos, and more
+- **Delegated Transaction Flows**: Users approve batches of actions with programmable guardrails
 
-When your app needs to send tokens or interact with smart contracts, you simply specify what you want to do, and Okto takes care of the rest:
+### 3. Intent-driven Signless Transactions
+
+Making blockchain transactions work properly is usually one of the hardest parts of development. Developers need to handle complex payload constructions, gas estimations where the system is designed for high fluctuations, different blockchain ecosystems, and complex error cases.
+
+Okto transforms this with **intent-driven** interactions where users express desired outcomes in simple terms
 
 - Lets you provide the desired blockchain network as a parameter, eliminating the need to handle node providers, connection setups, or chain-specific configurations  
 - Automatically estimates and manages gas fees  
@@ -44,17 +46,23 @@ When your app needs to send tokens or interact with smart contracts, you simply 
 
 As a developer, you define the **what** (e.g., "transfer tokens" or "invoke a smart contract"), and Okto handles the **how** behind the scenes, offloading most blockchain-specific boilerplate and keeping your codebase clean.
 
-### 3. Managing Different Blockchains
+### 4. Gasless Transactions
 
-Many Web3 apps focus on a single chain due to the complexity of supporting multiple ecosystems. With Okto, multi-chain interactions become straightforward. Whether your app is on **Ethereum**, **Polygon**, **Aptos**, or another chain, Okto provides one consistent interface to handle them all.
+Okto eliminates one of Web3's biggest friction points—the need for native tokens on every chain:
 
-This means you can:
+- **Pay in Stablecoins**: Users can pay fees in USDC or other stablecoins
+- **Sponsored Transactions**: Apps can sponsor gas fees entirely for their users
+- **No Native Tokens Required**: Interact with any chain without holding its native token
+- **Simplified UX**: Remove the complexity of managing gas across multiple chains
 
-- Seamlessly move assets across networks  
-- Unify multi-chain token balances  
-- Interact with multiple protocols  
+### 5. Developer Simplicity
 
-…all without retooling the entire application.
+Okto SDK provides **multi-platform SDKs** that reduce integration time from months to days:
+
+- **Minimal Code Required**: Integrate complete wallet infrastructure with just a few lines
+- **Multi-Platform Support**: SDKs for React, Next.js, React Native, Flutter, Unity, iOS, Android
+- **Self-Serve Dashboard**: Configure chains, tokens, and policies through an intuitive interface
+- **Policy Engine**: Programmable transaction rules for spending limits and security requirements
 
 ---
 
@@ -77,12 +85,6 @@ For existing Web3 projects, Okto simplifies multi-chain support and helps you re
 - **Multi-chain Expansion**: Extend your dApp from one primary blockchain to multiple networks without additional bridging solutions  
 - **Improved User Experience**: Implement simplified onboarding (social logins, OTPs) and frictionless in-app transactions  
 - **Security**: Leverage Okto's infrastructure for key management and transaction signing
-
-<Callout title="Note">
-Currently, Okto only supports the MPC-embedded wallet, which is a smart contract account with delegated custody. If your Web3 application has users with EOA wallets or other self-custody wallets, we will soon introduce support for *connect wallet* and *import wallet* features.
-
-Integrating Okto into existing Web3 dApps replaces the current interaction libraries (e.g., `ethers.js`, `viem`, `solanaweb3.js`, `aptos-ts-sdk`) with a single Okto library. To make this migration process even simpler, we are bringing built-in compatibility for the most popular libraries within Okto itself. This ensures minimal code migration, allowing existing apps to quickly enjoy the benefits of Okto.
-</Callout>
 
 ---
 
@@ -110,5 +112,7 @@ Integrating Okto into existing Web3 dApps replaces the current interaction libra
 
 ## Summary
 
-The Okto SDK provides a bridge between the complexity of blockchain networks and the streamlined, user-friendly experiences that modern applications demand. By managing core blockchain tasks—**key custody**, **cross-chain support**, **transaction orchestration**, and **robust authentication**—Okto enables faster development, broader functionality, and enhanced security for any dApp or Web2 app looking to embrace Web3 capabilities.
+The Okto SDK is **wallet infrastructure to simplify on-chain interactions**. By managing core blockchain tasks—**embedded wallets**, **chain abstraction**, **signless transactions**, and **gasless operations**—Okto enables faster development, broader functionality, and enhanced security for any dApp or Web2 app looking to embrace Web3 capabilities.
+
+With Okto, developers can **build once and deploy everywhere**, accessing **universal liquidity** across all major chains while providing users with the **seamless** experience they expect from modern applications.
 
