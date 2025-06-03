@@ -7,45 +7,32 @@ import FullscreenImage from 'app/components/mdx/FullscreenImage';
 
 ## What is the Okto Platform?
 
-The Okto Platform is a specialized middleware designed to simplify how developers and users interact with blockchain technology. It abstracts away the complexities of multi-chain operations—managing wallets, bridging assets, paying gas fees, and handling fragmented liquidity—making blockchain applications more accessible for everyone. 
+The Okto Platform is a comprehensive wallet infrastructure designed to simplify how developers and users interact with blockchain technology. It abstracts away the complexities of multi-chain operations—managing wallets, bridging assets, paying gas fees, and handling fragmented liquidity—making blockchain applications more accessible for everyone.
 
-<FullscreenImage 
-  src="/images/Okto-Infra.png" 
-  alt="Architecture" 
-  className="w-full md:w-auto max-w-full rounded-lg shadow-md" 
+<FullscreenImage
+  src="/images/Okto-Infra.png"
+  alt="Architecture"
+  className="w-full md:w-auto max-w-full rounded-lg shadow-md"
 />
-
----
-
-## Overview of the Okto Platform
-
-The Okto Platform serves as a universal bridge between multiple blockchains and the applications built on them. Instead of requiring developers or users to understand the nuances of different chains, the Okto Platform performs the “heavy lifting” behind the scenes.
-
-### Key Features
-
-1. **Chain Abstraction:** Simplifies interactions by hiding the complexities of different networks.
-2. **Transaction Automation:** Handles multi-step, multi-chain processes seamlessly.
-3. **Unified Liquidity:** Ensures efficient asset movement across chains.
-4. **Developer-Friendly Interfaces:** Provides intuitive SDKs and APIs for faster integration.
-
-Whether you’re swapping tokens, minting NFTs, or interacting with DeFi, the Okto Platform ensures that these actions are streamlined and user-friendly.
 
 ---
 
 ## Core Components of the Okto Platform
 
-The architecture is built on four interconnected components that work together to deliver a seamless blockchain experience:
+The Okto Platform's architecture is built on four main interconnected components that work together to deliver a seamless blockchain experience:
 
 ---
 
 ### 1. **Decentralized Wallet Networks (DWNs)**
 
-The Decentralized Wallet Network is at the core of Okto’s user experience, offering a unified wallet for managing assets across multiple blockchains, including Ethereum, Solana, and Aptos.
+The Decentralized Wallet Network is at the core of Okto’s embedded wallet infrastructure and forms the foundation of simplified on-chain interactions. It enables users with a single embedded wallet for all major ecosystems - eliminating the complexity of cross-chain interactions at the source.
 
 **Key Features:**
-- **Unified Wallets**: Access and manage assets across chains like Ethereum, Solana, and Aptos from a single wallet.
-- **MPC-Based Security**: Ensures private keys are never fully exposed by leveraging Multi-Party Computation (MPC) and Trusted Execution Environments (TEEs).
-- **User-Friendly Design**: Enables logins via familiar methods like Google or Facebook, removing the need for seed phrases.
+- **Social Authentication:** Users enjoy frictionless onboarding via Google, Email OTP, WhatsApp, etc. No seed phrases needed.
+- **Top-Grade Security:** DWN uses delegated MPC (Multi-Party Computation) + TSS (Threshold Signature Scheme) technology, with EigenLayer AVS (Actively Validated Services) operators to securely manage wallet keys. Comprehensive audits back this security.
+- **Cross-Ecosystem Compatibility:** One wallet interface for EVM, Solana, Aptos, and more.
+- **Delegated Transaction Flows:** Users can approve batches of actions or grant temporary access to apps with programmable guardrails, enabling seamless experiences like session-based permissions without compromising security.
+- **Treasury Management:** Provides enterprise-ready wallet functionality with automated, policy-controlled features.
 
 [Learn more about DWNs →](./dwn)
 
@@ -53,12 +40,13 @@ The Decentralized Wallet Network is at the core of Okto’s user experience, off
 
 ### 2. **Unified Liquidity Layer (ULL)**
 
-The **ULL** addresses the challenges of fragmented liquidity across chains by acting as an aggregator of aggregators. It connects with solutions like LayerZero, Socket, and Wormhole to optimize cross-chain swaps and transfers.
+The ULL addresses liquidity fragmentation across the Web3 landscape by acting as an "aggregator of aggregators." It routes cross-chain swaps and transfers through the most efficient and cost-effective pathways available, using an intent-based approach powered by the ERC-7683 standard.
 
 **Key Features:**
-- **Aggregator of Aggregators**: Connects to leading bridging and swapping solutions.
-- **Optimized Routes**: Automatically finds the most efficient paths for cross-chain transactions.
-- **ERC-7683 Compatibility**: Ensures seamless interactions across EVM and non-EVM chains.
+- **Seamless cross-chain swaps:** Move assets between any supported blockchains with one click - any to any token from any to any chain
+- **Optimal Path Routing:** Automatically find the best path for your transactions based on cost, speed, and security preferences
+- **Pre-Loaded Liquidity:** Enables immediate transaction capability without manual DEX integrations by developers.
+- **Unified Token Standards:** Allows interaction with ERC-20, SPL, and other token standards through one consistent interface.
 
 [Learn more about ULL →](./ull)
 
@@ -66,12 +54,15 @@ The **ULL** addresses the challenges of fragmented liquidity across chains by ac
 
 ### 3. **Decentralized Transaction Networks (DTNs)**
 
-The **DTN** automates the orchestration of complex, multi-step blockchain transactions. It acts as the brain coordinating all interactions between DWNs, ULLs, and blockchains.
+The DTN serves as the "brain" of the Okto Platform, orchestrating complex multi-chain operations by translating user-defined intents into actionable sub-transactions across multiple blockchains. Users define outcomes (e.g., 'buy NFT X with ETH'); Okto's DTN bundles all cross-chain steps automatically.
 
 **Key Features:**
-- **Automation**: Breaks down tasks into smaller subtasks and executes them in the correct sequence.
-- **Error Handling**: Retries failed transactions automatically.
-- **Transparency**: Logs all steps on the Okto Chain for verification.
+- **Transaction Bundling:** DTN converts complex multi-step processes into one-click, signless actions.
+- **Cross-Chain Execution:** Enables users to swap tokens, mint NFTs, and bridge assets across chains - all from a unified interface, driven by their intent-driven goals.
+- **Smart Intent Routing:** Users declare goals; Okto’s DTN handles the technical execution, orchestrating subtasks and managing chain-specific details.
+- **Gasless Transactions:** Facilitates fee payments in stablecoins or allows apps to sponsor gas entirely.
+- **MEV Protection:** Incorporates built-in safeguards against front-running and sandwich attacks.
+- **Automatic Recovery:** Intelligently retries failed transactions due to network congestion or other issues without requiring user intervention.
 
 [Learn more about DTNs →](./dtn)
 
@@ -79,14 +70,29 @@ The **DTN** automates the orchestration of complex, multi-step blockchain transa
 
 ### 4. **The Okto Chain**
 
-The **Okto Chain** serves as the coordination platform for the entire Okto ecosystem. Built as a ZK-based Layer 2 on Polygon CDK, it ensures transparency, decentralization, and efficient task management across DWNs, ULLs, and DTNs.
+The Okto Chain serves as the central coordination platform for the entire Okto ecosystem. Built as a ZK-based Layer 2 on Polygon CDK, it ensures transparency, decentralization, and efficient task management across DWNs, ULLs, and DTNs.
 
 **Key Features:**
-- **Immutable Coordination**: Logs “jobs” and “intents” from the DTN to ensure all actions are executed as promised.
-- **Policy Management**: Tracks wallet permissions and approved bridging/transaction solutions.
-- **Scalable Rollups**: Optimized for high-volume, low-cost operations.
+- **ZK-Powered Verification:** Provides cryptographic proof of cross-chain transaction integrity.
+- **EigenLayer Security:** Enhances protection through restaking mechanisms.
+- **Immutable Policy Enforcement & Ledger:** Records user intents and DTN execution details as immutable records, ensuring trustless execution of security rules, user permissions, and compliance controls.
+- **Cross-Chain Coordination:** Synchronizes and records activities across the DWN, ULL, and DTN for auditing, transparency, and triggering tasks via event emission.
 
 [Learn more about the Okto Chain →](./okto-chain)
+
+---
+
+## How It All Works Together
+The four components of the Okto Platform work in seamless coordination:
+
+- **User Intent:** A user expresses a desired outcome (e.g., "stake ETH from my USDC on Polygon")
+- **DWN Authentication:** The user authenticates via social login, with DWN managing secure wallet creation and session management
+- **Okto Chain Recording:** The intent is recorded as a "job" on the Okto Chain for transparency and auditability
+- **DTN Orchestration:** DTN picks up the job, breaks it into sub-transactions (bridge USDC, swap for ETH, stake ETH)
+- **ULL Routing:** For liquidity-intensive steps, DTN coordinates with ULL to find optimal paths
+- **DWN Signing:** All transaction payloads are securely signed by the DWN's MPC network
+- **Execution & Monitoring:** DTN broadcasts transactions, monitors completion, and updates the Okto Chain
+- **Completion:** The user's intent is fulfilled seamlessly across multiple chains
 
 ---
 
@@ -94,17 +100,20 @@ The **Okto Chain** serves as the coordination platform for the entire Okto ecosy
 
 ### 1. For Developers:
 
-- Simplified SDKs and APIs for faster integration.
-- Chain-abstracted tools for building user-friendly dApps.
+- **Rapid Integration:** Build cross-chain features in days, not months.
+- **Chain-Agnostic Development:** Write once, deploy everywhere with unified APIs.
+- **Simplified Architecture:** Focus on application logic instead of blockchain complexity.
 
-### 2. For End-Users:
+### 2. For Users:
 
-- Unified wallets for multiple chains.
-- Seamless cross-chain transactions with minimal fees.
+- **Web2-Like Experience:** Login with familiar accounts, transact across any blockchain with one-click interactions.
+- **No Technical Complexity:** Never manage private keys or worry about gas tokens.
+- **Unified Portfolio:** View and manage assets across all chains from a single interface.
 
-### 3. For the Blockchain Ecosystem:
+### 3. For Enterprises:
 
-- Encourages adoption by reducing complexity.
-- Creates an interconnected, decentralized framework.
+- **Institutional Security:** Military-grade protection with comprehensive audits.
+- **Policy Controls:** Programmable transaction rules and compliance enforcement.
+- **Transparent Operations:** Immutable audit trails for all cross-chain activities.
 
 ---

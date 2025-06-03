@@ -28,7 +28,7 @@ Key functionalities include:
 
 - **Intent and Job Management:**  The Okto Chain records user-initiated intents for cross-chain actions. These intents are broken down into granular "jobs," each tracked and managed on-chain, ensuring a complete and verifiable history of user requests.
 
-- **Policy Enforcement:**  The Okto Chain enforces predefined policies governing user permissions, vendor restrictions, and interactions between Okto components. This ensures that all operations within the ecosystem adhere to security and compliance parameters.
+- **Policy Enforcement:**  The Okto Chain enforces predefined policies governing user permissions, client restrictions, and interactions between Okto components. This ensures that all operations within the ecosystem adhere to security and compliance parameters.
 
 - **Event-Driven Orchestration:** Publishes on-chain events (e.g., “job created,” “job assigned,” “job terminated”) to signal downstream components—particularly DTN—that further action is required.
 
@@ -42,6 +42,94 @@ Key functionalities include:
 
 - **Job Manager:** Registers new jobs, updates their statuses, assigns DTN nodes, and logs final states.
 
-- **Registries:** The Okto Chain maintains several key registries:
-    - **User Accounts Registry:** Stores information on user metadata, including permissions and associated vendor information.
-    - **Bloc Registry:** Holds programmable scripts (“blocs”) that implement the logic for asynchronous job execution.
+---
+
+## Core Smart Contracts
+
+The Okto Chain's capabilities are brought to life through specialized smart contracts:
+
+### Entry Point (ERC-4337)
+
+The central entry point for all User Operations (UserOps):
+
+- **UserOp Validation:** Ensures all operations meet security requirements
+- **Signature Verification:** Validates cryptographic signatures from DWN
+- **Policy Checks:** Enforces user and client-specific policies
+- **Gas Sponsorship:** Manages Paymaster interactions for gasless transactions
+
+### User Account & Client Account
+
+Implementation and Factory contracts for smart contract wallets:
+
+- **Account Deployment:** Creates new smart contract wallets for users and clients
+- **Proxy Architecture:** Allows for upgradability and flexible account logic
+- **Permission Management:** Controls access and authorization for different operations
+
+### Job Manager
+
+Central coordination for intent execution:
+
+- **Job Initiation:** Creates new jobs from user intents
+- **DTN Assignment:** Coordinates which DTN node handles specific jobs
+- **Status Tracking:** Monitors job progress and completion
+- **Event Emission:** Triggers downstream processing through strategic events
+
+### Bloc Registry & Blocs
+
+Registry of executable scripts for different intent types:
+
+- **Intent Definitions:** Smart contracts representing different operation types
+- **Parameter Validation:** Ensures intents meet required criteria
+- **Execution Logic:** Defines how different types of cross-chain operations should be handled
+- **Off-Chain Components:** Coordinates with external systems when necessary
+
+### Policy Manager
+
+Stores and enforces policies at multiple levels:
+
+- **User-Level Policies:** Individual spending limits and restrictions
+- **Client-Level Policies:** Application-specific rules and controls
+- **Wallet-Provider-Level Policies:** Global security and compliance requirements
+- **Dynamic Updates:** Allows policy modifications while maintaining security
+
+### Paymaster
+
+Enables gasless transactions through sponsored fees:
+
+- **Client Deposits:** Manages funds deposited by applications for gas sponsorship
+- **Signer Registration:** Coordinates authorized Paymaster usage
+- **Fee Management:** Handles gas fee calculations and payments
+- **Usage Tracking:** Monitors sponsored transaction volumes and costs
+
+---
+
+## Benefits
+
+### For Users
+
+- **Transparent Operations:** Complete visibility into all cross-chain activities
+- **Guaranteed Execution:** Immutable record ensures promised operations complete
+- **Policy Protection:** Automated enforcement of spending limits and security rules
+
+### For Developers
+
+- **Reliable Coordination:** Trustless infrastructure for complex multi-chain applications
+- **Event-Driven Integration:** Simple integration through standardized event patterns
+- **Flexible Policies:** Programmable rules for application-specific requirements
+
+### For the Ecosystem
+
+- **Interoperability:** Standardized coordination enables broader ecosystem integration
+- **Security:** Robust verification and audit trails for all operations
+- **Scalability:** Efficient rollup architecture supports high transaction volumes
+
+---
+
+## Getting Started
+
+The Okto Chain is live on testnet and ready for development:
+
+- [Testnet Explorer →](https://testnet.okto.tech/): Explore the Okto Chain testnet
+- [Developer Dashboard →](https://dashboard.okto.tech/): Configure your application
+- [Integration Guides →](/docs/okto-sdk): Start building with Okto SDKs
+- [Policy Documentation →](/docs/system-capabilities/policy-engine): Learn about policy configuration

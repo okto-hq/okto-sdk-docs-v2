@@ -36,20 +36,15 @@ Okto provides a comprehensive set of APIs for integrating Web3 functionality int
 
 ## API Architecture
 
-Okto's API landscape consists of two distinct types of APIs:
-
-### JSON-RPC Methods
-- **Description**: Direct calls to the Okto Gateway
-- **Endpoint**: `https://sandbox-okto-gateway.oktostage.com/rpc`
-- **Used for**: Authentication and Execute User Operations (Intents)
+Okto provides a unified set of REST APIs for all wallet and on-chain operations:
 
 ### REST APIs
 - **Description**: Calls to the Okto Gateway through a BFF service
 - **Endpoint**: `https://sandbox-apigw.oktostage.com`
-- **Used for**: Explorer functions (portfolio, wallets, tokens, etc.)
+- **Used for**: Authentication, executing user operations (intents), explorer functions (portfolio, wallets, tokens, etc.)
 
 <Callout type="info">
-  The OpenAPI specification documentation supports interactive elements for REST APIs, but not for JSON-RPC methods. For JSON-RPC methods (Authentication and Execute Intents), check out the [Template Repository](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template) for detailed code examples and helper scripts.
+  The OpenAPI specification documentation supports interactive elements for all REST APIs. For detailed code examples and helper scripts, check out the [Template Repository](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template).
 </Callout>
 
 ## Authentication Flow
@@ -57,7 +52,7 @@ Okto's API landscape consists of two distinct types of APIs:
 The Authentication Flow is performed on the client-side and consists of these steps:
 
 <FullscreenImage 
-  src="/images/api-auth-flow-2.png" 
+  src="/images/api-auth-flow-3.png" 
   alt="API Authentication Flow" 
   className="w-full md:w-auto max-w-full rounded-lg shadow-md" 
 />
@@ -65,7 +60,7 @@ The Authentication Flow is performed on the client-side and consists of these st
 1. **Login Using OAuth** - User authenticates through your chosen OAuth provider
 2. **Generate Session Key** - Create a cryptographic key pair for securing the session
 3. **Create Auth Payload** - Construct the necessary data with OAuth token and provider. The Auth Payload is a user operation which contains the callData, paymaster details and gas details.
-4. **Call Authenticate JSON-RPC** - Send the payload to Okto's JSON-RPC gateway
+4. **Call Authenticate API** - Call the Okto Authenticate API (GAuth, whatsapp, etc.) with the Auth Payload.
 5. **Receive User SWA** - Obtain the user's Smart Wallet Address
 
 At this point, authentication is successful.
@@ -96,12 +91,6 @@ After successful authentication and the generation of the Okto Auth Token, you w
 # For REST APIs
 curl -X GET https://sandbox-apigw.oktostage.com/api/oc/v1/wallets \
   -H "Authorization: Bearer <your-okto-auth-token>"
-
-# For JSON-RPC methods
-curl -X POST https://sandbox-okto-gateway.oktostage.com/rpc \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer <your-okto-auth-token>" \
-  -d '{"jsonrpc":"2.0","method":"execute","params":[...],"id":"request-id"}'
 ```
 
 ## Getting Started
