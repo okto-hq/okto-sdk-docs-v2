@@ -18,6 +18,7 @@ rimrafSync(out, {
 
     return (
       !v.endsWith("index.mdx") &&
+      !v.endsWith("overview.mdx") &&
       !v.endsWith("getting-started.mdx") &&
       !v.endsWith("meta.json") &&
       !v.endsWith("api-migration.mdx") &&
@@ -35,7 +36,7 @@ rimrafSync(out, {
 
 void OpenAPI.generateFiles({
   // input files
-  input: ['./public/openapi.json'],
+  input: ['./public/openapi/openapi-explorer.json'],
   output: out,
   groupBy: 'tag',
 });

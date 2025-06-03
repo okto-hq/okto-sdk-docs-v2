@@ -40,7 +40,7 @@ Okto provides a unified set of REST APIs for all wallet and on-chain operations:
 
 ### REST APIs
 - **Description**: Calls to the Okto Gateway through a BFF service
-- **Endpoint**: `https://sandbox-apigw.oktostage.com`
+- **Endpoint**: `https://sandbox-api.okto.tech`
 - **Used for**: Authentication, executing user operations (intents), explorer functions (portfolio, wallets, tokens, etc.)
 
 <Callout type="info">
@@ -89,7 +89,7 @@ After successful authentication and the generation of the Okto Auth Token, you w
 
 ```bash
 # For REST APIs
-curl -X GET https://sandbox-apigw.oktostage.com/api/oc/v1/wallets \
+curl -X GET https://sandbox-api.okto.tech/api/oc/v1/wallets \
   -H "Authorization: Bearer <your-okto-auth-token>"
 ```
 
