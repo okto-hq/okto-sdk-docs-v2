@@ -4,6 +4,6 @@
       "!learn",
       "get-token-id",
       "google-console-setup",
-      "loginUsingOktoAuth"
+      "../(auth)/google-auth"
     ]
   }

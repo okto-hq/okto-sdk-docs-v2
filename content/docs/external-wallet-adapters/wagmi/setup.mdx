@@ -44,12 +44,11 @@ npm i @okto_web3/wagmi-adapter wagmi @tanstack/react-query
   ```typescript title="vite.config.ts"
   import { defineConfig } from "vite";
   import react from "@vitejs/plugin-react";
-  import tailwindcss from '@tailwindcss/vite'
   import { nodePolyfills } from "vite-plugin-node-polyfills";
   
   // https://vite.dev/config/
   export default defineConfig({
-    plugins: [react(), tailwindcss(), nodePolyfills()],
+    plugins: [react(), nodePolyfills()],
     server: {
       port: 3000, // will always start the service on port 3000
     },
@@ -99,11 +98,11 @@ Create a configuration file to set up wagmi with the Okto connector:
     ```typescript title="wagmi.config.ts"
     import { okto } from '@okto_web3/wagmi-adapter';
     import { cookieStorage, createConfig, createStorage, http } from 'wagmi';
-    import { mainnet, optimism, polygon } from 'wagmi/chains';
+    import { baseSepolia } from 'wagmi/chains';
 
     export function getConfig() {
       return createConfig({
-        chains: [polygon],
+        chains: [baseSepolia],
         connectors: [
           okto({
             environment: 'sandbox',
@@ -117,7 +116,7 @@ Create a configuration file to set up wagmi with the Okto connector:
         }),
         ssr: true,
         transports: {
-          [polygon.id]: http(),
+          [baseSepolia.id]: http(),
         },
       });
     }
@@ -133,11 +132,11 @@ Create a configuration file to set up wagmi with the Okto connector:
     ```typescript title="wagmi.config.ts"
     import { okto } from '@okto_web3/wagmi-adapter';
     import { cookieStorage, createConfig, createStorage, http } from 'wagmi';
-    import { mainnet, optimism, polygon } from 'wagmi/chains';
+    import { baseSepolia  } from 'wagmi/chains';
 
     export function getConfig() {
       return createConfig({
-        chains: [polygon],
+        chains: [baseSepolia],
         connectors: [
           okto({
             environment: 'sandbox',
@@ -150,7 +149,7 @@ Create a configuration file to set up wagmi with the Okto connector:
           storage: cookieStorage,
         }),
         transports: {
-          [polygon.id]: http(),
+          [baseSepolia.id]: http(),
         },
       });
     }
@@ -183,16 +182,18 @@ Update your app's root component to include the necessary providers:
 
 <Tabs items={['NextJS', 'React']}>
   <Tab value="NextJS">
-    ```tsx title="providers.tsx"
-    import { headers } from 'next/headers';
-    import { useState } from 'react';
+    ```tsx title="layout.tsx"
+    "use client";
+
+    import { headers } om 'next/headers';
+    import { useState } from 'react';fr
     import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-    import type { ReactNode } from 'react';
+    import type { ReactNode } fm 'reacrot';
     import Script from 'next/script';
     import { WagmiProvider, cookieToInitialState } from 'wagmi';
     import { getConfig } from '../wagmi';
 
-    export default async function RootLayout(props: { children: ReactNode }) {
+    export default async function Layout(props: { children: ReactNode }) {
       const initialState = cookieToInitialState(
         getConfig(),
         (await headers()).get('cookie'),
@@ -219,23 +220,27 @@ Update your app's root component to include the necessary providers:
     ```
   </Tab>
   <Tab value="React">
-  ```tsx title="providers.tsx"
-  import { ReactNode } from 'react';
-  import { WagmiProvider } from 'wagmi';
-  import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-  import { getConfig } from './wagmi.config';
+  ```tsx title="main.tsx"
+  import { StrictMode } from "react";
+  import { createRoot } from "react-dom/client";
+  import App from "./App.tsx";
+  import { WagmiProvider } from "wagmi";
+  import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+  import { config } from "./wagmi.config.ts";
+
+  (window as any).Buffer = Buffer;
 
   const queryClient = new QueryClient();
 
-  export function Web3Provider({ children }: { children: ReactNode }) {
-    return (
-      <WagmiProvider config={getConfig()}>
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
-      </WagmiProvider>
-    );
-  }
+  createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
+    </WagmiProvider>
+  </StrictMode>
+);
   ```
 
     <Callout title="Note">

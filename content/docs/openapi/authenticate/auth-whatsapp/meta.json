@@ -1,9 +1,9 @@
 {
     "title": "WhatsApp Authentication",
     "pages": [
-      "../../explorer/whatsapp-send-otp",
-      "../../explorer/whatsapp-resend-otp",
-      "../../explorer/verify-whatsapp-otp",
-      "authenticate"
+      "../(auth)/whatsapp-send-otp",
+      "../(auth)/whatsapp-resend-otp",
+      "../(auth)/whatsapp-verify-otp",
+      "../(auth)/whatsapp-auth"
     ]
 }

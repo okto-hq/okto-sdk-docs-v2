@@ -45,12 +45,11 @@ npm i @okto_web3/wagmi-adapter @rainbow-me/rainbowkit wagmi viem@2.x @tanstack/r
 ```typescript title="vite.config.ts"
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import tailwindcss from '@tailwindcss/vite'
 import { nodePolyfills } from "vite-plugin-node-polyfills";
  
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(), nodePolyfills()],
+  plugins: [react(), nodePolyfills()],
   server: {
     port: 3000, // will always start the service on port 3000
   },
@@ -103,7 +102,7 @@ Create a configuration file to set up rainbowkit with the Okto connector:
     import { getOktoSdkConnector, OktoParameters } from '@okto_web3/wagmi-adapter';
     import { connectorsForWallets } from '@rainbow-me/rainbowkit';
     import { createConfig, http } from 'wagmi';
-    import { mainnet, optimism, polygon } from 'wagmi/chains';
+    import { mainnet, optimism, baseSepolia } from 'wagmi/chains';
 
     const oktoParams: OktoParameters = {
         environment: 'sandbox',
@@ -132,12 +131,12 @@ Create a configuration file to set up rainbowkit with the Okto connector:
     );
 
     export const config = createConfig({
-    chains: [mainnet, optimism, polygon],
+    chains: [mainnet, optimism, baseSepolia],
     connectors: connectors,
     transports: {
       [mainnet.id]: http(),
       [optimism.id]: http(),
-      [polygon.id]: http(),
+      [baseSepolia.id]: http(),
      },
     });
 
@@ -149,7 +148,7 @@ Create a configuration file to set up rainbowkit with the Okto connector:
     import { getOktoSdkConnector, OktoParameters } from '@okto_web3/wagmi-adapter';
     import { connectorsForWallets } from '@rainbow-me/rainbowkit';
     import { createConfig, http } from 'wagmi';
-    import { mainnet, optimism, polygon } from 'wagmi/chains';
+    import { mainnet, optimism, baseSepolia } from 'wagmi/chains';
 
     const oktoParams: OktoParameters = {
         environment: 'sandbox',
@@ -178,12 +177,12 @@ Create a configuration file to set up rainbowkit with the Okto connector:
     );
 
     export const config = createConfig({
-    chains: [mainnet, optimism, polygon],
+    chains: [mainnet, optimism, baseSepolia],
     connectors: connectors,
     transports: {
       [mainnet.id]: http(),
       [optimism.id]: http(),
-      [polygon.id]: http(),
+      [baseSepolia.id]: http(),
      },
     });
     ```
@@ -213,6 +212,7 @@ Update your app's root component to include the necessary providers:
     ```tsx title="layout.tsx"
     "use client"
 
+    import React from 'react';
     import { config } from './rainbowkit.config.ts';
     import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
     import '@rainbow-me/rainbowkit/styles.css';
@@ -220,7 +220,7 @@ Update your app's root component to include the necessary providers:
     import Script from 'next/script';
     import { WagmiProvider } from 'wagmi';
 
-     const queryClient = new QueryClient();
+    const queryClient = new QueryClient();
 
     export default function Layout({ children }: { children: React.ReactNode }) {
 
