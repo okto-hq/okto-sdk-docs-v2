@@ -4,6 +4,9 @@ FROM node:20-alpine3.17 AS build
 RUN apk add --update --no-cache dumb-init
 
 WORKDIR /app
+
+ENV NODE_OPTIONS=--max-old-space-size=4096
+
 COPY package.json ./
 
 COPY source.config.ts ./
