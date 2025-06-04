@@ -18,7 +18,7 @@ export function KeyBenefitCard({ icon, title, points }: KeyBenefitCardProps) {
         <div className="text-xl">{icon}</div>
           <h3 className="text-xl font-semibold">{title}</h3>
         </div>
-      <ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-white-300">
+      <ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-white">
           {points.map((point, i) => (
             <li key={i}>{point}</li>
           ))}
