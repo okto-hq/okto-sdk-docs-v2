@@ -89,50 +89,62 @@ Authorization: Bearer <OKTO_AUTH_TOKEN>
 
 ## API References
 
-Okto's API landscape is composed of two distinct types of APIs:
+### Authentication
 
-### JSON-RPC Methods
+Authentication APIs handle user login and session management across different authentication methods.
 
-JSON-RPC methods directly interact with the Okto Gateway and are primarily used for authentication and executing user operations (intents).
+| **Name** | **Description** | **API Endpoint** | **Template Script** |
+|----------|-----------------|------------------|---------------------|
+| <ExternalLink href="/docs/openapi/authenticate/google-auth">Google Authentication</ExternalLink> | Handles user authentication via Google OAuth. | `POST https://sandbox-api.okto.tech/api/oc/v1/authenticate` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template/auth/googleAuthenticate_template.ts) |
+| <ExternalLink href="/docs/openapi/authenticate/email-send-otp">Send Email OTP</ExternalLink> | Send OTP to user's email. | `POST https://sandbox-api.okto.tech/api/oc/v1/authenticate/email` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template/auth/emailAuthenticate_template.ts) |
+| <ExternalLink href="/docs/openapi/authenticate/email-verify-otp">Verify Email OTP</ExternalLink> | Verify OTP sent to email. | `POST https://sandbox-api.okto.tech/api/oc/v1/authenticate/email/verify` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template/auth/emailAuthenticate_template.ts) |
+| <ExternalLink href="/docs/openapi/authenticate/email-auth">Email Authentication</ExternalLink> | Handle user authentication via email OTP verification. | `POST https://sandbox-api.okto.tech/api/oc/v1/authenticate` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template/auth/emailAuthenticate_template.ts) |
+| <ExternalLink href="/docs/openapi/authenticate/whatsapp-send-otp">Send WhatsApp OTP</ExternalLink> | Send OTP to user's WhatsApp. | `POST https://sandbox-api.okto.tech/api/oc/v1/authenticate/whatsapp` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template/auth/whatsappAuthenticate_template.ts) |
+| <ExternalLink href="/docs/openapi/authenticate/whatsapp-resend-otp">Resend WhatsApp OTP</ExternalLink> | Resend OTP to user's WhatsApp. | `POST https://sandbox-api.okto.tech/api/oc/v1/authenticate/whatsapp/` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template/auth/whatsappAuthenticate_template.ts) |
+| <ExternalLink href="/docs/openapi/authenticate/whatsapp-verify-otp">Verify WhatsApp OTP</ExternalLink> | Verify OTP sent to WhatsApp. | `POST https://sandbox-api.okto.tech/api/oc/v1/authenticate/whatsapp/verify` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template/auth/whatsappAuthenticate_template.ts) |
+| <ExternalLink href="/docs/openapi/authenticate/whatsapp-auth">WhatsApp Authentication</ExternalLink> | Handle user authentication via WhatsApp OTP verification. | `POST https://sandbox-api.okto.tech/api/oc/v1/authenticate` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template/auth/whatsappAuthenticate_template.ts) |
+| <ExternalLink href="/docs/openapi/authenticate/jwt-auth">JWT Authentication</ExternalLink> | Handle user authentication via existing JWT infrastructure. | `POST https://sandbox-api.okto.tech/api/oc/v1/authenticate` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template/auth/jwtAuthenticate_template.ts) |
 
-| **Name** | **API Endpoint** | **Headers** | **Description** |
-|----------|------------------|-------------|-----------------|
-| <ExternalLink href="/docs/openapi/authenticate/google-oauth/loginUsingOktoAuth">Google Authentication</ExternalLink> | `POST https://sandbox-okto-gateway.oktostage.com/rpc` | `Content-Type: application/json` | Handles user authentication via Google OAuth. |
-| <ExternalLink href="/docs/openapi/authenticate/auth-email/authenticate">Email Authentication</ExternalLink> | `POST https://sandbox-okto-gateway.oktostage.com/rpc` | `Content-Type: application/json` | Handle user authentication via email OTP verification. |
-| <ExternalLink href="/docs/openapi/authenticate/auth-whatsapp/authenticate">WhatsApp Authentication</ExternalLink> | `POST https://sandbox-okto-gateway.oktostage.com/rpc` | `Content-Type: application/json` | Handle user authentication via WhatsApp OTP verification. |
-| <ExternalLink href="/docs/openapi/authenticate/auth-jwt/authenticate">JWT Authentication</ExternalLink> | `POST https://sandbox-okto-gateway.oktostage.com/rpc` | `Content-Type: application/json` | Handle user authentication via existing JWT infrastructure. |
-| <ExternalLink href="/docs/openapi/tokenTransfer">Token Transfer</ExternalLink> | `POST https://sandbox-okto-gateway.oktostage.com/rpc` | `Content-Type: application/json` `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Handles token transfers between addresses. |
-| <ExternalLink href="/docs/openapi/nftTransfer">NFT Transfer</ExternalLink> | `POST https://sandbox-okto-gateway.oktostage.com/rpc` | `Content-Type: application/json` `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Handles NFT transfers between addresses. |
-| <ExternalLink href="/docs/openapi/evmRawTransaction">Raw Transaction</ExternalLink> | `POST https://sandbox-okto-gateway.oktostage.com/rpc` | `Content-Type: application/json` `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Handles custom EVM transactions with specified parameters. |
-| <ExternalLink href="/docs/openapi/swap/swapIntentExecute">Swap Execute</ExternalLink> | `POST https://sandbox-okto-gateway.oktostage.com/rpc` | `Content-Type: application/json` `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Executes token swap operations. |
-| <ExternalLink href="/docs/openapi/signMessage">Sign Message</ExternalLink> | `POST https://sandbox-okto-gateway.oktostage.com/rpc` | `Content-Type: application/json` `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Signs messages following the EIP191 standard. |
-| <ExternalLink href="/docs/openapi/signTypedData">Sign Typed Data</ExternalLink> | `POST https://sandbox-okto-gateway.oktostage.com/rpc` | `Content-Type: application/json` `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Signs typed data following the EIP712 standard. |
+### Message Signing
 
-### REST APIs
+Message signing APIs allow users to cryptographically sign messages and typed data.
 
-REST APIs communicate with the Okto Gateway via a BFF service and are designed for explorer methods.
+| **Name** | **Description** | **API Endpoint** | **Template Script** |
+|----------|-----------------|------------------|---------------------|
+| <ExternalLink href="/docs/openapi/signMessage">Sign Message</ExternalLink> | Signs messages following the EIP191 standard. | `POST https://sandbox-api.okto.tech/api/oc/v1/sign` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template/intents/signData_template.ts) |
+| <ExternalLink href="/docs/openapi/signTypedData">Sign Typed Data</ExternalLink> | Signs typed data following the EIP712 standard. | `POST https://sandbox-api.okto.tech/api/oc/v1/sign` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template/intents/signData_template.ts) |
 
-| **Name** | **API Endpoint** | **Headers** | **Description** |
-|----------|------------------|-------------|-----------------|
-| <ExternalLink href="/docs/openapi/explorer/user-session-verify">Verify Session</ExternalLink> | `GET /api/oc/v1/verify-session` | `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Verify the session of the user. |
-| <ExternalLink href="/docs/openapi/explorer/email-send-otp">Send Email OTP</ExternalLink> | `POST /api/oc/v1/authenticate/email` | `x-api-key: <API_KEY>` `Content-Type: application/json` | Send OTP to user's email. |
-| <ExternalLink href="/docs/openapi/explorer/email-verify-otp">Verify Email OTP</ExternalLink> | `POST /api/oc/v1/authenticate/email/verify` | `x-api-key: <API_KEY>` `Content-Type: application/json` | Verify OTP sent to email. |
-| <ExternalLink href="/docs/openapi/explorer/whatsapp-send-otp">Send WhatsApp OTP</ExternalLink> | `POST /api/oc/v1/authenticate/whatsapp` | `x-api-key: <API_KEY>` `Content-Type: application/json` | Send OTP to user's WhatsApp. |
-| <ExternalLink href="/docs/openapi/explorer/whatsapp-resend-otp">Resend WhatsApp OTP</ExternalLink> | `POST /api/oc/v1/authenticate/whatsapp/` | `x-api-key: <API_KEY>` `Content-Type: application/json` | Resend OTP to user's WhatsApp. |
-| <ExternalLink href="/docs/openapi/explorer/verify-whatsapp-otp">Verify WhatsApp OTP</ExternalLink> | `POST /api/oc/v1/authenticate/whatsapp/verify` | `x-api-key: <API_KEY>` `Content-Type: application/json` | Verify OTP sent to WhatsApp. |
-| <ExternalLink href="/docs/openapi/explorer/get-wallets">Get Wallets</ExternalLink> | `GET /api/oc/v1/wallets` | `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Fetch all the wallets created by the user. |
-| <ExternalLink href="/docs/openapi/explorer/get-supported-networks">Get Supported Networks</ExternalLink> | `GET /api/oc/v1/supported/networks` | `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Get an array of all the whitelisted networks on your API key. |
-| <ExternalLink href="/docs/openapi/explorer/get-supported-tokens">Get Supported Tokens</ExternalLink> | `GET /api/oc/v1/supported/tokens` | `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Get an array of all the whitelisted tokens on your API key. |
-| <ExternalLink href="/docs/openapi/explorer/get-portfolio">Get Portfolio</ExternalLink> | `GET /api/oc/v1/aggregated-portfolio` | `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Get the portfolio data of the user. |
-| <ExternalLink href="/docs/openapi/explorer/get-portfolio-activity">Get Portfolio Activity</ExternalLink> | `GET /api/oc/v1/portfolio/activity` | `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Get user's portfolio activity. |
-| <ExternalLink href="/docs/openapi/explorer/get-nft-portfolio">Get NFT Portfolio</ExternalLink> | `GET /api/oc/v1/portfolio/nft` | `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Get the details of all the NFTs. |
-| <ExternalLink href="/docs/openapi/explorer/get-order-history">Get Order History</ExternalLink> | `GET /api/oc/v1/orders` | `Authorization: Bearer <OKTO_AUTH_TOKEN>` | Fetch all the orders of the user. |
-| <ExternalLink href="/docs/openapi/tokenTransferEstimate">Token Transfer Estimate</ExternalLink> | `POST /api/oc/v1/estimate` | `Authorization: Bearer <OKTO_AUTH_TOKEN>` `Content-Type: application/json` | Estimate gas for token transfers. |
-| <ExternalLink href="/docs/openapi/nftTransferEstimate">NFT Transfer Estimate</ExternalLink> | `POST /api/oc/v1/estimate` | `Authorization: Bearer <OKTO_AUTH_TOKEN>` `Content-Type: application/json` | Estimate gas for NFT transfers. |
-| <ExternalLink href="/docs/openapi/evmRawTransactionEstimate">Raw Transaction Estimate</ExternalLink> | `POST /api/oc/v1/estimate` | `Authorization: Bearer <OKTO_AUTH_TOKEN>` `Content-Type: application/json` | Estimate gas for raw EVM transactions. |
-| <ExternalLink href="/docs/openapi/swap/swapIntentEstimate">Swap Intent Estimate</ExternalLink> | `POST /api/oc/v1/estimate` | `Authorization: Bearer <OKTO_AUTH_TOKEN>` `Content-Type: application/json` | Estimate outcome of a swap intent. |
-| <ExternalLink href="/docs/openapi/explorer/read-contract-data-e-v-m">Read Contract Data (EVM)</ExternalLink> | `POST /api/oc/v1/readContractData` | `Authorization: Bearer <OKTO_AUTH_TOKEN>` `Content-Type: application/json` | Read data from EVM smart contracts. |
-| <ExternalLink href="/docs/openapi/explorer/read-contract-data-aptos">Read Contract Data (Aptos)</ExternalLink> | `POST /api/oc/v1/readContractData/` | `Authorization: Bearer <OKTO_AUTH_TOKEN>` `Content-Type: application/json` | Read data from Aptos smart contracts. |
+### Intent
+
+Intent APIs handle blockchain operations including transfers, swaps, and custom transactions.
+
+| **Name** | **Description** | **API Endpoint** | **Template Script** |
+|----------|-----------------|------------------|---------------------|
+| <ExternalLink href="/docs/openapi/tokenTransferEstimate">Token Transfer Estimate</ExternalLink> | Estimate gas for token transfers. | `POST https://sandbox-api.okto.tech/api/oc/v1/estimate` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/tokenTransfer_with_estimate.ts) |
+| <ExternalLink href="/docs/openapi/tokenTransfer">Token Transfer Execute</ExternalLink> | Handles token transfers between addresses. | `POST https://sandbox-api.okto.tech/api/oc/v1/execute` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/tokenTransfer.ts) |
+| <ExternalLink href="/docs/openapi/nftTransferEstimate">NFT Transfer Estimate</ExternalLink> | Estimate gas for NFT transfers. | `POST https://sandbox-api.okto.tech/api/oc/v1/estimate` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/nftTransfer_with_estimate.ts) |
+| <ExternalLink href="/docs/openapi/nftTransfer">NFT Transfer Execute</ExternalLink> | Handles NFT transfers between addresses. | `POST https://sandbox-api.okto.tech/api/oc/v1/execute` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/nftTransfer.ts) |
+| <ExternalLink href="/docs/openapi/evmRawTransactionEstimate">Raw Transaction Estimate</ExternalLink> | Estimate gas for raw EVM transactions. | `POST https://sandbox-api.okto.tech/api/oc/v1/estimate` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/rawTransaction_with_estimate.ts) |
+| <ExternalLink href="/docs/openapi/evmRawTransaction">Raw Transaction Execute</ExternalLink> | Handles custom EVM transactions with specified parameters. | `POST https://sandbox-api.okto.tech/api/oc/v1/execute` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/rawTransaction.ts) |
+| <ExternalLink href="/docs/openapi/swap/swapIntentEstimate">Swap Intent Estimate</ExternalLink> | Estimate outcome of a swap intent. | `POST https://sandbox-api.okto.tech/api/oc/v1/estimate` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/swapIntent.ts) |
+| <ExternalLink href="/docs/openapi/swap/swapIntentExecute">Swap Execute</ExternalLink> | Executes token swap operations. | `POST https://sandbox-api.okto.tech/api/oc/v1/execute` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/swapIntent.ts) |
+
+### Explorer
+
+Explorer APIs provide access to user data, portfolio information, and blockchain exploration features.
+
+| **Name** | **Description** | **API Endpoint** | **Template Script** |
+|----------|-----------------|------------------|---------------------|
+| <ExternalLink href="/docs/openapi/explorer/user-session-verify">Verify Session</ExternalLink> | Verify the session of the user. | `GET https://sandbox-api.okto.tech/api/oc/v1/verify-session` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template/auth/verifySession_template.ts) |
+| <ExternalLink href="/docs/openapi/explorer/get-wallets">Get Wallets</ExternalLink> | Fetch all the wallets created by the user. | `GET https://sandbox-api.okto.tech/api/oc/v1/wallets` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template/explorer/getAccount.ts) |
+| <ExternalLink href="/docs/openapi/explorer/get-supported-networks">Get Supported Networks</ExternalLink> | Get an array of all the whitelisted networks on your API key. | `GET https://sandbox-api.okto.tech/api/oc/v1/supported/networks` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template/explorer/getChains.ts) |
+| <ExternalLink href="/docs/openapi/explorer/get-supported-tokens">Get Supported Tokens</ExternalLink> | Get an array of all the whitelisted tokens on your API key. | `GET https://sandbox-api.okto.tech/api/oc/v1/supported/tokens` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template/explorer/getTokens.ts) |
+| <ExternalLink href="/docs/openapi/explorer/get-portfolio">Get Portfolio</ExternalLink> | Get the portfolio data of the user. | `GET https://sandbox-api.okto.tech/api/oc/v1/aggregated-portfolio` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template/explorer/getPortfolio.ts) |
+| <ExternalLink href="/docs/openapi/explorer/get-portfolio-activity">Get Portfolio Activity</ExternalLink> | Get user's portfolio activity. | `GET https://sandbox-api.okto.tech/api/oc/v1/portfolio/activity` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template/explorer/getPortfolioActivity.ts) |
+| <ExternalLink href="/docs/openapi/explorer/get-nft-portfolio">Get NFT Portfolio</ExternalLink> | Get the details of all the NFTs. | `GET https://sandbox-api.okto.tech/api/oc/v1/portfolio/nft` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template/explorer/getPortfolio.ts) |
+| <ExternalLink href="/docs/openapi/explorer/get-order-history">Get Order History</ExternalLink> | Fetch all the orders of the user. | `GET https://sandbox-api.okto.tech/api/oc/v1/orders` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template/utils/getOrderHistory.ts) |
+| <ExternalLink href="/docs/openapi/explorer/read-contract-data-e-v-m">Read Contract Data (EVM)</ExternalLink> | Read data from EVM smart contracts. | `POST https://sandbox-api.okto.tech/api/oc/v1/readContractData` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template/explorer/readContractData.ts) |
+| <ExternalLink href="/docs/openapi/explorer/read-contract-data-aptos">Read Contract Data (Aptos)</ExternalLink> | Read data from Aptos smart contracts. | `POST https://sandbox-api.okto.tech/api/oc/v1/readContractData/` | [View Template](https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template/explorer/readContractData.ts) |
 
 ## Additional Resources
 

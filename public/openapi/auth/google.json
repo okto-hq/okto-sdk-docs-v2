@@ -1,0 +1,211 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Okto",
+    "description": "Okto SDK is the fastest and easiest way a developer can build on Web3. Okto SDK offers interoperable embedded wallets for developers to onboard users on Web3 in a web2 like experience.\n\n## Resources\n\n* https://github.com/okto-hq/\n",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Ovia Seshadri",
+      "url": "https://okto.tech",
+      "email": "devrel@coindcx.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.okto.tech",
+      "description": "Sandbox BFF URL"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "All the auth related APIs"
+    }
+  ],
+  "paths": {
+    "/api/oc/v1/authenticate": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Authenticate (Google)",
+        "description": "Authenticate a User using Google idToken. This endpoint is used to authenticate users who have logged in using Google OAuth.",
+        "operationId": "googleAuth",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "authData",
+                  "sessionData",
+                  "sessionPkClientSignature",
+                  "sessionDataUserSignature"
+                ],
+                "properties": {
+                  "authData": {
+                    "type": "object",
+                    "required": ["idToken", "provider"],
+                    "properties": {
+                      "idToken": {
+                        "type": "string",
+                        "description": "Google idToken received after successful login",
+                        "example": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE2YjY0YzQwLTI3YjItNDk5Ny04N2QyLTc4ZDIxM2Q1Mjg0YSIsInR5cCI6IkpXVCJ9.eyJhenAiOiIxMDI1NjY2MjYyMzQ"
+                      },
+                      "provider": {
+                        "type": "string",
+                        "description": "Authentication provider",
+                        "enum": ["google"],
+                        "example": "google"
+                      }
+                    }
+                  },
+                  "sessionData": {
+                    "type": "object",
+                    "properties": {
+                      "nonce": {
+                        "type": "string",
+                        "description": "Unique identifier for the session",
+                        "example": "9010c35c-dd6f-4919-855d-0d8a479b8886"
+                      },
+                      "clientSWA": {
+                        "type": "string",
+                        "description": "Client Smart Wallet Address",
+                        "example": "0xe8201E368557508bF183D4e2DcE1b1A1E0bd20FA"
+                      },
+                      "sessionPk": {
+                        "type": "string",
+                        "description": "Session Public Key",
+                        "example": "0x04433904cb87d9ef414d358fe8cd161d3d2df5b916f021ae31af4c85157ebd1083c148a8386bb6f535b500a5e7a069eeda34961701c2182f56b870a814dbd5d208"
+                      },
+                      "maxPriorityFeePerGas": {
+                        "type": "string",
+                        "description": "Maximum priority fee per gas",
+                        "example": "0xBA43B7400"
+                      },
+                      "maxFeePerGas": {
+                        "type": "string",
+                        "description": "Maximum fee per gas",
+                        "example": "0xBA43B7400"
+                      },
+                      "paymaster": {
+                        "type": "string",
+                        "description": "Paymaster address",
+                        "example": "0x74324fA6Fa67b833dfdea4C1b3A9898574d076e3"
+                      },
+                      "paymasterData": {
+                        "type": "string",
+                        "description": "Paymaster data",
+                        "example": "0x000000000000000000000000e8201e368557508bf183d4e2dce1b1a1e0bd20fa00000000000000000000000000000000000000000000000000000000683e0415000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000041a5577911d8c6acac650ce142126e53bab5db3a9474ae5a1fc4528694e6d3c8d118639470981664eb1e563f0f99f764b94fdfb275de60ccc331a8f60f2d9c0b071c00000000000000000000000000000000000000000000000000000000000000"
+                      }
+                    }
+                  },
+                  "sessionPkClientSignature": {
+                    "type": "string",
+                    "description": "Client signature of the session public key",
+                    "example": "0xade9a004226aced4e3f7fd8a13cd68aafee5c0bc8bbbaf3cb76cb25d509f183f762edbee01ddcbf5f3c41c54503dc91c8264b788f08e1c1c924f29acae3c5ce61b"
+                  },
+                  "sessionDataUserSignature": {
+                    "type": "string",
+                    "description": "User signature of the session data",
+                    "example": "0x9efa67f77e17bfe5d36062b205462eb51ff4152e77bbe555cff65d3ce2c2ad790990019e0da4c7aa3f7966dcf345242ced1a2e23cc6529288563fae68e5e80241c"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User Authenticated Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "data"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "Authenticated user data",
+                      "required": [
+                        "userSWA",
+                        "nonce",
+                        "clientSWA",
+                        "sessionExpiry"
+                      ],
+                      "properties": {
+                        "userSWA": {
+                          "type": "string",
+                          "description": "User Smart Wallet Address",
+                          "example": "0x8B20023FC47D8F8BDB7418722dBB0e3e9964a906"
+                        },
+                        "nonce": {
+                          "type": "string",
+                          "description": "Unique identifier for the session",
+                          "example": "0x00000000000000000000000000000000f9d4db5746824690b2efeae9f9945858"
+                        },
+                        "clientSWA": {
+                          "type": "string",
+                          "description": "Client Smart Wallet Address",
+                          "example": "0xe8201E368557508bF183D4e2DcE1b1A1E0bd20FA"
+                        },
+                        "sessionExpiry": {
+                          "type": "integer",
+                          "description": "Session expiry timestamp (in seconds)",
+                          "example": 1747481250
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed to Authenticate User",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "error"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": -32603
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Internal Server Error"
+                        },
+                        "data": {
+                          "type": "string",
+                          "example": "error with downstream service"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {},
+    "parameters": {},
+    "responses": {},
+    "schemas": {}
+  }
+}

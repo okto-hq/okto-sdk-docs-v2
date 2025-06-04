@@ -32,7 +32,7 @@ rimrafSync(out, {
 
 void OpenAPI.generateFiles({
   // input files
-  input: ['./public/openapi-trade-service.json'],
+  input: ['./public/openapi/openapi-trade-service.json'],
   output: out,
   groupBy: 'tag',
 });

@@ -2,6 +2,6 @@
     "title": "JWT Authentication",
     "pages": [
       "learn",
-      "authenticate"
+      "../(auth)/jwt-auth"
     ]
 }
