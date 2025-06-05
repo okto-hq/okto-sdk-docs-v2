@@ -13,19 +13,16 @@ Sponsorship enables you to cover transaction fees (gas fees) for your users, cre
 
 ![Sponsorship Page - Okto Dashboard](/images/dashboard-img-v2/dashboard-sponsorship-v2.png)
 
-
 ## **How Sponsorship Works with Okto Across Ecosystems**
 
-Sponsorship integrates with Okto's wallet infrastructure to automatically cover gas fees for transactions on supported chains for all transactions initiated by the client across users. When a user initiates a transaction, the sponsorship system pays the required gas fee, allowing the transaction to proceed even if the user doesn't have the native token for gas.
+Sponsorship integrates with Okto's wallet infrastructure to automatically cover gas fees for transactions on supported chains for all transactions initiated by the client across users. When a user initiates a transaction, the Client's Sponsor Wallet pays the required gas fee, allowing the transaction to proceed even if the user doesn't have the native token for gas.
 
 <Callout type="info" title="Prerequisites">
 
-1.  **Enable Chains:** Ensure the chains where you want to offer sponsorship are enabled in your [Okto Dashboard](https://dashboard.okto.tech) under "Chains & Tokens".
-2.  **Create & Setup Treasury Wallet:**
-    - You **must** have at least one [Treasury Wallet](/docs/developer-admin-dashboard/treasury-wallet) created in your Okto Dashboard.
-    - For each chain you enable for sponsorship, the Treasury Wallet you intend to use as the `feePayerAddress` must have its corresponding *destination chain address* funded with a small amount of native tokens for a one-time verification. (See [Treasury Wallet documentation](/docs/developer-admin-dashboard/treasury-wallet) for details).
-3.  **Activate Sponsorship:** On the "Sponsorship" page in the dashboard, activate sponsorship individually for each desired chain.
-4.  **Fund Sponsor Wallet:** Load sufficient native tokens into your Sponsor Wallet for each activated chain.
+1. **Enable Chains:** In your [Okto Dashboard](https://dashboard.okto.tech) under "Chains & Tokens", enable the chains where you want to offer sponsorship.
+2. **Note Paymaster SWA:** Locate the `Paymaster SWA` address and add it as the authorizing entity (`feePayerAddress`) for sponsored transactions.
+3. **Activate Sponsorship:** On the "Sponsorship" page, activate sponsorship for each desired chain.
+4. **Fund Sponsor Wallet:** Deposit sufficient native tokens into your Sponsor Wallet for every activated chain.
 
 </Callout>
 
