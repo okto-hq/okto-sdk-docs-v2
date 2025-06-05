@@ -1,0 +1,683 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Okto",
+    "description": "Okto SDK is the fastest and easiest way a developer can build on Web3. Okto SDK offers interoperable embedded wallets for developers to onboard users on Web3 in a web2 like experience.\n\n## Resources\n\n* https://github.com/okto-hq/\n",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Ovia Seshadri",
+      "url": "https://okto.tech",
+      "email": "devrel@coindcx.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.okto.tech",
+      "description": "Sandbox BFF URL"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Intents",
+      "description": "All the intents related APIs"
+    }
+  ],
+  "paths": {
+    "/api/oc/v1/estimate": {
+      "post": {
+        "tags": ["Intents"],
+        "summary": "NFT Transfer Estimate",
+        "description": "Estimate gas for NFT transfer intent. Check out the [`NftTransfer Estimate`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/nftTransfer_with_estimate.ts) API template script for more details..",
+        "operationId": "nftTransferEstimate",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "type",
+                  "jobId",
+                  "gasDetails",
+                  "paymasterData",
+                  "details"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "NFT_TRANSFER"
+                  },
+                  "jobId": {
+                    "type": "string",
+                    "example": "b9e16100-446f-4050-84ed-a846d2bae528"
+                  },
+                  "gasDetails": {
+                    "type": "object",
+                    "required": ["maxFeePerGas", "maxPriorityFeePerGas"],
+                    "properties": {
+                      "maxFeePerGas": {
+                        "type": "string",
+                        "example": "0x2255100"
+                      },
+                      "maxPriorityFeePerGas": {
+                        "type": "string",
+                        "example": "0x2255100"
+                      }
+                    }
+                  },
+                  "paymasterData": {
+                    "type": "string",
+                    "example": "0x0000000000000000000000006b6fad2600bc57075ee560a6fdf362ffefb9dc3c000000000000000000000000000000000000000000000000000000006d0db17b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000004135a4864cbcbd0637eba6b680e81d5aa7065b6840f0d5a246662c6cc1717c2d9e36d5d8c49d06859f2966067222870d2c1b484962a5934b9c6f94e726f21dea7b1c00000000000000000000000000000000000000000000000000000000000000"
+                  },
+                  "details": {
+                    "type": "object",
+                    "required": [
+                      "caip2Id",
+                      "nftId",
+                      "recipientWalletAddress",
+                      "collectionAddress",
+                      "amount",
+                      "nftType"
+                    ],
+                    "properties": {
+                      "caip2Id": {
+                        "type": "string",
+                        "description": "CAIP-2 chain ID",
+                        "example": "eip155:137"
+                      },
+                      "nftId": {
+                        "type": "string",
+                        "description": "NFT ID",
+                        "example": "b9e16100-446f-4050-84ed-a846d2bae528"
+                      },
+                      "recipientWalletAddress": {
+                        "type": "string",
+                        "description": "Recipient wallet address",
+                        "example": "0x6ABcD0428e3129a6110CC5dCcb4C1BfdA1b4D3C4"
+                      },
+                      "collectionAddress": {
+                        "type": "string",
+                        "description": "NFT collection contract address",
+                        "example": "0x68ee2dddcbb1c03df5fc4b6235d993b8b4d1d0e5"
+                      },
+                      "amount": {
+                        "type": "string",
+                        "description": "Amount of NFTs to transfer",
+                        "example": "1"
+                      },
+                      "nftType": {
+                        "type": "string",
+                        "description": "NFT type",
+                        "example": "ERC721"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Fetched",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "data"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "callData": {
+                          "type": "object",
+                          "properties": {
+                            "clientSWA": {
+                              "type": "string",
+                              "example": "0xe8201E368557508bF183D4e2DcE1b1A1E0bd20FA"
+                            },
+                            "feePayerAddress": {
+                              "type": "string",
+                              "example": ""
+                            },
+                            "gsn": {
+                              "type": "object",
+                              "properties": {
+                                "isPossible": {
+                                  "type": "boolean",
+                                  "example": false
+                                },
+                                "isRequired": {
+                                  "type": "boolean",
+                                  "example": false
+                                },
+                                "requiredNetworks": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "example": []
+                                },
+                                "tokens": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "example": []
+                                }
+                              }
+                            },
+                            "intentType": {
+                              "type": "string",
+                              "example": "NFT_TRANSFER"
+                            },
+                            "jobId": {
+                              "type": "string",
+                              "example": "b9e16100-446f-4050-84ed-a846d2bae528"
+                            },
+                            "payload": {
+                              "type": "object",
+                              "properties": {
+                                "caip2Id": {
+                                  "type": "string",
+                                  "example": "eip155:137"
+                                },
+                                "nftId": {
+                                  "type": "string",
+                                  "example": "b9e16100-446f-4050-84ed-a846d2bae528"
+                                },
+                                "recipientWalletAddress": {
+                                  "type": "string",
+                                  "example": "0x6ABcD0428e3129a6110CC5dCcb4C1BfdA1b4D3C4"
+                                },
+                                "collectionAddress": {
+                                  "type": "string",
+                                  "example": "0x68ee2dddcbb1c03df5fc4b6235d993b8b4d1d0e5"
+                                },
+                                "amount": {
+                                  "type": "string",
+                                  "example": "1"
+                                },
+                                "nftType": {
+                                  "type": "string",
+                                  "example": "ERC721"
+                                }
+                              }
+                            },
+                            "policies": {
+                              "type": "object",
+                              "properties": {
+                                "gsnEnabled": {
+                                  "type": "boolean",
+                                  "example": false
+                                },
+                                "sponsorshipEnabled": {
+                                  "type": "boolean",
+                                  "example": false
+                                }
+                              }
+                            },
+                            "userSWA": {
+                              "type": "string",
+                              "example": "0xd917DFbdA2Bd9EF9628DA4E55150f6559aF5b6ac"
+                            }
+                          }
+                        },
+                        "details": {
+                          "type": "object",
+                          "properties": {
+                            "estimation": {
+                              "type": "object",
+                              "properties": {
+                                "amount": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "crossChainFee": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "crossChainFeeCollector": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "gasFeesInInputToken": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "integratorFeesInInputToken": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "outputAmount": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "platformBaseFeesInInputToken": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "recommendedSlippage": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "routeId": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "routeValidUntil": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "sameChainFee": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "sameChainFeeCollector": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "slippageUsed": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "totalFeesInInputToken": {
+                                  "type": "string",
+                                  "example": ""
+                                }
+                              }
+                            },
+                            "fees": {
+                              "type": "object",
+                              "properties": {
+                                "approxTransactionFeesInUSDT": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "transactionFees": {
+                                  "type": "object",
+                                  "properties": {
+                                    "eip155:84532": {
+                                      "type": "string",
+                                      "example": "177258950000"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "swapFees": {
+                              "type": "object",
+                              "properties": {
+                                "gasFeesInInputToken": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "integratorFeesInInputToken": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "platformBaseFeesInInputToken": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "totalFeesInInputToken": {
+                                  "type": "string",
+                                  "example": ""
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "userOps": {
+                          "type": "object",
+                          "properties": {
+                            "callData": {
+                              "type": "string",
+                              "example": "0x8dd7712f000000000000000000000000000000000000000000000000000000000000000000000000000000000543ad80b41c5f5956d34503668cdb965decb6170000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000001600000000000000000000000000000000000000000000000000000000000000240000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000c6569703135353a383435333200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000817b2264617461223a223078222c2266726f6d223a22307841314239654242663539374633423861313843353433643362453332353343373335323444353634222c22746f223a22307838386265453865623639314646414642313932424143344431453730343265316234346333654632222c2276616c7565223a22307830227d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f5241575f5452414e53414354494f4e000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+                            },
+                            "callGasLimit": {
+                              "type": "string",
+                              "example": "0x556a0"
+                            },
+                            "maxFeePerGas": {
+                              "type": "string",
+                              "example": "0x2255100"
+                            },
+                            "maxPriorityFeePerGas": {
+                              "type": "string",
+                              "example": "0x2255100"
+                            },
+                            "nonce": {
+                              "type": "string",
+                              "example": "0x00000000000000000000000000000000e4fb7f8bd19d478594af4b911469a3b0"
+                            },
+                            "paymaster": {
+                              "type": "string",
+                              "example": "0x74324fa6fa67b833dfdea4c1b3a9898574d076e3"
+                            },
+                            "paymasterData": {
+                              "type": "string",
+                              "example": "0x000000000000000000000000e8201e368557508bf183d4e2dce1b1a1e0bd20fa00000000000000000000000000000000000000000000000000000000682c9763000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000041d0a1c5ff763012644af339e4b7d8c82478a8791f8e666f28153af520a82e390e2e39e853412beab41039d32cbd67102d10be45f4947e69c008e5e6661b8121c31c00000000000000000000000000000000000000000000000000000000000000"
+                            },
+                            "paymasterPostOpGasLimit": {
+                              "type": "string",
+                              "example": "0x1"
+                            },
+                            "paymasterVerificationGasLimit": {
+                              "type": "string",
+                              "example": "0x139bb"
+                            },
+                            "preVerificationGas": {
+                              "type": "string",
+                              "example": "0x15867"
+                            },
+                            "sender": {
+                              "type": "string",
+                              "example": "0xd917dfbda2bd9ef9628da4e55150f6559af5b6ac"
+                            },
+                            "verificationGasLimit": {
+                              "type": "string",
+                              "example": "0x28488"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["status", "error"],
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "example": "error"
+                  },
+                  "error": {
+                    "type": "object",
+                    "properties": {
+                      "code": {
+                        "type": "integer",
+                        "example": 400
+                      },
+                      "errorCode": {
+                        "type": "string",
+                        "example": "ER-TECH-0005"
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "Something went wrong. Please try again"
+                      },
+                      "traceId": {
+                        "type": "string",
+                        "example": "1623f4d3254cbb49159d3859bf21a1e1"
+                      },
+                      "data": {
+                        "type": "string",
+                        "example": "error in reading request"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/oc/v1/execute": {
+      "post": {
+        "tags": ["Intents"],
+        "summary": "NFT Transfer Execute",
+        "description": "Execute a NFT transfer intent. Check out the [`NftTransfer`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/nftTransfer.ts) API template script for more details.",
+        "operationId": "nftTransferExecute",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sender",
+                  "nonce",
+                  "paymaster",
+                  "callGasLimit",
+                  "verificationGasLimit",
+                  "preVerificationGas",
+                  "maxFeePerGas",
+                  "maxPriorityFeePerGas",
+                  "paymasterPostOpGasLimit",
+                  "paymasterVerificationGasLimit",
+                  "callData",
+                  "paymasterData",
+                  "signature"
+                ],
+                "properties": {
+                  "sender": {
+                    "type": "string",
+                    "description": "Sender address",
+                    "example": "0x3fa18d1fc4ecfd2542a08cf35b680a4064bf986b"
+                  },
+                  "nonce": {
+                    "type": "string",
+                    "description": "Unique identifier for the session",
+                    "example": "0x000000000000000000000000000000009c424737e204461bb93aca8e3dfd655c"
+                  },
+                  "paymaster": {
+                    "type": "string",
+                    "description": "Paymaster address",
+                    "example": "0x74324fA6Fa67b833dfdea4C1b3A9898574d076e3"
+                  },
+                  "callGasLimit": {
+                    "type": "string",
+                    "description": "Call gas limit",
+                    "example": "0x493e0"
+                  },
+                  "verificationGasLimit": {
+                    "type": "string",
+                    "description": "Verification gas limit",
+                    "example": "0x30d40"
+                  },
+                  "preVerificationGas": {
+                    "type": "string",
+                    "description": "Pre-verification gas",
+                    "example": "0xc350"
+                  },
+                  "maxFeePerGas": {
+                    "type": "string",
+                    "description": "Maximum fee per gas",
+                    "example": "0x77359400"
+                  },
+                  "maxPriorityFeePerGas": {
+                    "type": "string",
+                    "description": "Maximum priority fee per gas",
+                    "example": "0x77359400"
+                  },
+                  "paymasterPostOpGasLimit": {
+                    "type": "string",
+                    "description": "Paymaster post operation gas limit",
+                    "example": "0x186a0"
+                  },
+                  "paymasterVerificationGasLimit": {
+                    "type": "string",
+                    "description": "Paymaster verification gas limit",
+                    "example": "0x186a0"
+                  },
+                  "callData": {
+                    "type": "string",
+                    "description": "Call data",
+                    "example": "0x8dd7712f00000000000000000000000000000000000000000000000000000000000000000000000000000000ed8fe2543efff64fc3567b03b612aa82c409579a000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000004e48fa61ac0000000000000000000000000000000009c424737e204461bb93aca8e3dfd655c0000000000000000000000006b6fad2600bc57075ee560a6fdf362ffefb9dc3c0000000000000000000000003fa18d1fc4ecfd2542a08cf35b680a4064bf986b00000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000140000000000000000000000000000000000000000000000000000000000000022000000000000000000000000000000000000000000000000000000000000004a000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000260000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000014000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000b6569703135353a3834353300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000013400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a30783641426344303432386533313239613631313043433564436362344331426664413162344433433400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a3078313966633531386239656564393346373041613442343931333364333033313031363939343637610000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000064552433732310000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c4e46545f5452414e53464552000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+                  },
+                  "paymasterData": {
+                    "type": "string",
+                    "description": "Paymaster data",
+                    "example": "0x0000000000000000000000006b6fad2600bc57075ee560a6fdf362ffefb9dc3c000000000000000000000000000000000000000000000000000000006d0db17b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000004161267e95d85242afb31fc89ef2e7aec62fc57f14bb7683140b63006ed4a05b294f8ec1bd5fe0a18409a009238657ce488dcc74e39475e8fbe7e45d2f1d2bf4c91b00000000000000000000000000000000000000000000000000000000000000"
+                  },
+                  "signature": {
+                    "type": "string",
+                    "description": "Signature",
+                    "example": "0x90d255c36bbe3612480f9c53fc80f5b37f0553ab8e512864ad2da326f912e42b7ddd1b13c714aaec6fd86846fc8d3e5eef29cfce9a74ae24f47280c0a4a733251c"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "data"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "Response data for the intent",
+                      "required": ["jobId"],
+                      "properties": {
+                        "jobId": {
+                          "type": "string",
+                          "description": "Job ID for the intent",
+                          "example": "9c424737-e204-461b-b93a-ca8e3dfd655c"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "error"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 400
+                        },
+                        "errorCode": {
+                          "type": "string",
+                          "example": "ER-TECH-0016"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Something went wrong. Please try again"
+                        },
+                        "traceId": {
+                          "type": "string",
+                          "example": "30fe44ce093c1fd0f93bf90dc76ad151"
+                        },
+                        "data": {
+                          "type": "string",
+                          "example": "Signature expired"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "name": "Authentication"
+      },
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      },
+      "apiKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key",
+        "description": "Okto App Secret",
+        "example": "OKTO_APP_SECRET"
+      },
+      "apiKeyQuery": {
+        "type": "apiKey",
+        "in": "query",
+        "name": "api_key"
+      },
+      "apiKeyCookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "api_key"
+      },
+      "v1auth": {
+        "type": "apiKey",
+        "name": "X-Api-Key",
+        "in": "header",
+        "description": "Okto App Secret",
+        "example": "YOUR_OKTO_APP_SECRET"
+      },
+      "oktoAppSecretAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Okto App Secret",
+        "description": "Okto App Secret",
+        "example": "YOUR_OKTO_APP_SECRET"
+      },
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "https://galaxy.scalar.com/oauth/authorize",
+            "scopes": {
+              "write:planets": "modify planets in your account",
+              "read:planets": "read your planets"
+            }
+          }
+        }
+      }
+    },
+    "parameters": {},
+    "responses": {},
+    "schemas": {}
+  }
+}
