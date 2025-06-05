@@ -8,7 +8,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 ## Overview
 
-A Treasury Wallet in Okto is a client-controlled Smart Wallet Account (SWA). Unlike end-user SWAs, Treasury Wallets serve as your (the client's) on-chain identity, allowing you to perform blockchain operations directly and to authorize gas sponsorship for your users' transactions.
+A Treasury Wallet in Okto is a client-controlled Smart Wallet Account (SWA). Unlike end-user SWAs, Treasury Wallets serve as your (the client's) on-chain identity, allowing you to perform blockchain operations directly.
 
 ![Treasury Wallet Page - Okto Dashboard](/images/dashboard-img-v2/dashboard-treasury-wallet.png)
 
@@ -17,7 +17,7 @@ Treasury Wallets, Sponsor Wallets, and User Wallets are all [DWN](/docs/okto-lay
 **Key Use Cases for Treasury Wallets:**
 
 - **Client-Side Chain Interactions:** Execute transactions or interact with smart contracts directly from a wallet you control. This is useful for operations like airdrops, DApp-specific administrative functions, or any scenario where your application logic needs to initiate an on-chain action.
-- **Enabling Gas Sponsorship:** A Treasury Wallet is **mandatory** if you wish to sponsor gas fees for your users. It acts as the authorizing entity (`feePayerAddress`) for such transactions.
+- **Aggregated Transaction Execution:** Can be used for operations like batch token transfers or aggregated smart contract interactions.
 
 ---
 
@@ -35,8 +35,6 @@ Treasury Wallets, Sponsor Wallets, and User Wallets are all [DWN](/docs/okto-lay
 ---
 
 ## Funding Treasury Wallets
-
-If you plan to use a Treasury Wallet to authorize gas sponsorship, it must hold a small amount of native tokens on the destination chain where the sponsored transactions will occur. This serves as a verification step to ensure the Treasury Wallet is active on that chain.
 
 The process to fund your Treasury Wallet is now streamlined directly through the Okto Dashboard:
 
@@ -59,5 +57,3 @@ The process to fund your Treasury Wallet is now streamlined directly through the
 5. Transfer a small amount of the native token from that chain (e.g., ETH for Base, MATIC for Polygon) to the provided address.
 
 > **Important**: Always ensure you're sending tokens via the correct chain only, to avoid losing your funds. The wallet address shown is specific to the selected blockchain network.
-
-These funds serve as a verification step and are not consumed for the actual gas fees of sponsored transactions (those come from the Sponsor Wallet).

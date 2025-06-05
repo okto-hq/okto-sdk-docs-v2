@@ -27,7 +27,7 @@
       "post": {
         "tags": ["Auth"],
         "summary": "Authenticate (Google)",
-        "description": "Authenticate a User using Google idToken. This endpoint is used to authenticate users who have logged in using Google OAuth.",
+        "description": "Authenticate a User using Google idToken. This endpoint is used to authenticate users who have logged in using Google OAuth. Check out the [`Google Auth`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/googleAuthenticate_template.ts) template script for more details.",
         "operationId": "googleAuth",
         "requestBody": {
           "required": true,

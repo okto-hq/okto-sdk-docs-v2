@@ -38,5 +38,6 @@ void OpenAPI.generateFiles({
   // input files
   input: ['./public/openapi/openapi-explorer.json'],
   output: out,
+  includeDescription: true,
   groupBy: 'tag',
 });

@@ -1,0 +1,378 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Okto",
+    "description": "Okto SDK is the fastest and easiest way a developer can build on Web3. Okto SDK offers interoperable embedded wallets for developers to onboard users on Web3 in a web2 like experience.\n\n## Resources\n\n* https://github.com/okto-hq/\n",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Ovia Seshadri",
+      "url": "https://okto.tech",
+      "email": "devrel@coindcx.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.okto.tech",
+      "description": "Sandbox BFF URL"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Intents",
+      "description": "All the intents related APIs"
+    }
+  ],
+  "paths": {
+    "/api/oc/v1/signMessage": {
+      "post": {
+        "tags": ["Intents"],
+        "summary": "Sign Message",
+        "description": "Sign a message using the Okto Gateway. Check out the [`Sign Message`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/signData_template.ts) API template script for more details.",
+        "operationId": "signMessage",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["data"],
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "required": ["userData", "transactions"],
+                    "properties": {
+                      "userData": {
+                        "type": "object",
+                        "required": ["userSWA", "jobId", "sessionPk"],
+                        "properties": {
+                          "userSWA": {
+                            "type": "string",
+                            "example": "0xd917DFbdA2Bd9EF9628DA4E55150f6559aF5b6ac"
+                          },
+                          "jobId": {
+                            "type": "string",
+                            "example": "e3b58883-15ce-4bdc-8e88-7f293c7f2a20"
+                          },
+                          "sessionPk": {
+                            "type": "string",
+                            "example": "0x04bbe2beca75a23b65a16c7b945d39ed11d1083bc5689550272be624042a4ca7d06a27640950812cb761518edda629df674518d5acb7e226ab1c1f1fa6d137b909"
+                          }
+                        }
+                      },
+                      "transactions": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": ["transactionId", "method", "signingMessage", "userSessionSignature"],
+                          "properties": {
+                            "transactionId": {
+                              "type": "string",
+                              "example": "b5ad84c9-0bb1-4cd8-ad17-4c8eca48ef2d"
+                            },
+                            "method": {
+                              "type": "string",
+                              "example": "EIP191"
+                            },
+                            "signingMessage": {
+                              "type": "string",
+                              "example": "hello okto"
+                            },
+                            "userSessionSignature": {
+                              "type": "string",
+                              "example": "0xffac7e7e461a7a968c7d59b3489a7bb300b59e333218ca37d97aff73de548636549edc33e97affd989c911620078a919c8f01c0fc95e9f719aaf75141c3456e41c"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Fetched",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "data"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "signature": {
+                          "type": "string",
+                          "description": "Signature of the message",
+                          "example": "0x83c701514dd434454495f514bf560904b76dec9f476cf847a2aa782546aead3b024e1f3fe69d47529384bae2d3f206d74777943f08b84dd3612dbcdd731c99f41c"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "error"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 400
+                        },
+                        "errorCode": {
+                          "type": "string",
+                          "example": "ER-TECH-0005"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Something went wrong. Please try again"
+                        },
+                        "traceId": {
+                          "type": "string",
+                          "example": "1623f4d3254cbb49159d3859bf21a1e1"
+                        },
+                        "data": {
+                          "type": "string",
+                          "example": "error in reading request"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/oc/v1/signMessage/": {
+      "post": {
+        "tags": ["Intents"],
+        "summary": "Sign Typed Data",
+        "description": "Sign a typed data object using the Okto Gateway. Check out the [`Sign Typed Data`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/signData_template.ts) API template script for more details.",
+        "operationId": "signTypedData",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["data"],
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "required": ["userData", "transactions"],
+                    "properties": {
+                      "userData": {
+                        "type": "object",
+                        "required": ["userSWA", "jobId", "sessionPk"],
+                        "properties": {
+                          "userSWA": {
+                            "type": "string",
+                            "example": "0xd917DFbdA2Bd9EF9628DA4E55150f6559aF5b6ac"
+                          },
+                          "jobId": {
+                            "type": "string",
+                            "example": "535868b0-c53b-4e95-997a-1a9c290df0b7"
+                          },
+                          "sessionPk": {
+                            "type": "string",
+                            "example": "0x04bbe2beca75a23b65a16c7b945d39ed11d1083bc5689550272be624042a4ca7d06a27640950812cb761518edda629df674518d5acb7e226ab1c1f1fa6d137b909"
+                          }
+                        }
+                      },
+                      "transactions": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": ["transactionId", "method", "signingMessage", "userSessionSignature"],
+                          "properties": {
+                            "transactionId": {
+                              "type": "string",
+                              "example": "59c5fd3f-560e-4253-948e-9e1dd6f5a3a9"
+                            },
+                            "method": {
+                              "type": "string",
+                              "example": "EIP712"
+                            },
+                            "signingMessage": {
+                              "type": "string",
+                              "example": "{\n    \"types\": {\n        \"EIP712Domain\": [\n            { \"name\": \"name\", \"type\": \"string\" },\n            { \"name\": \"chainId\", \"type\": \"uint256\" }\n        ],\n        \"Test\": [\n            { \"name\": \"message\", \"type\": \"string\" }\n        ]\n    },\n    \"primaryType\": \"Test\",\n    \"domain\": {\n        \"name\": \"OktoTest\",\n        \"chainId\": 1\n    },\n    \"message\": {\n        \"message\": \"Test message\"\n    }\n}"
+                            },
+                            "userSessionSignature": {
+                              "type": "string",
+                              "example": "0x71989329d16e216be40cda075cf6e3b121f63f425f14346b9b93318d9af0994d1dc3e3fc0e1a5522b962907a3474af44aaab154fef3cb3a7829993a199e4d76f1c"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "data"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "signature": {
+                          "type": "string",
+                          "description": "Signature of the message",
+                          "example": "0x4d0a8249fc83052c17078d3c600cd4364963f0b9a866c49cbf2cda683d9552b745c53746b97f6ebe79c18f5839450ac86511ed73849fbc2d58d1319346c50e451b"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "error"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 400
+                        },
+                        "errorCode": {
+                          "type": "string",
+                          "example": "ER-TECH-0016"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Something went wrong. Please try again"
+                        },
+                        "traceId": {
+                          "type": "string",
+                          "example": "30fe44ce093c1fd0f93bf90dc76ad151"
+                        },
+                        "data": {
+                          "type": "string",
+                          "example": "Signature expired"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "name": "Authentication"
+      },
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      },
+      "apiKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key",
+        "description": "Okto App Secret",
+        "example": "OKTO_APP_SECRET"
+      },
+      "apiKeyQuery": {
+        "type": "apiKey",
+        "in": "query",
+        "name": "api_key"
+      },
+      "apiKeyCookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "api_key"
+      },
+      "v1auth": {
+        "type": "apiKey",
+        "name": "X-Api-Key",
+        "in": "header",
+        "description": "Okto App Secret",
+        "example": "YOUR_OKTO_APP_SECRET"
+      },
+      "oktoAppSecretAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Okto App Secret",
+        "description": "Okto App Secret",
+        "example": "YOUR_OKTO_APP_SECRET"
+      },
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "https://galaxy.scalar.com/oauth/authorize",
+            "scopes": {
+              "write:planets": "modify planets in your account",
+              "read:planets": "read your planets"
+            }
+          }
+        }
+      }
+    },
+    "parameters": {},
+    "responses": {},
+    "schemas": {}
+  }
+}

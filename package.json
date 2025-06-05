@@ -9,6 +9,7 @@
       "postinstall": "fumadocs-mdx",
       "build:api-reference-docs-explorer": "node ./scripts/generate-api-reference-docs-explorer.mjs",
       "build:api-reference-docs-auth": "node ./scripts/generate-api-reference-docs-auth.mjs",
+      "build:api-reference-docs-intents": "node ./scripts/generate-api-reference-docs-intents.mjs",
       "build:trade-service-docs": "node ./scripts/generate-trade-service-docs.mjs"
    },
    "dependencies": {

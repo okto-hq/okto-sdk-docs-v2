@@ -34,5 +34,6 @@ void OpenAPI.generateFiles({
   // input files
   input: ['./public/openapi/openapi-trade-service.json'],
   output: out,
+  includeDescription: true,
   groupBy: 'tag',
 });
