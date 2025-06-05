@@ -1,0 +1,679 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Okto",
+    "description": "Okto SDK is the fastest and easiest way a developer can build on Web3. Okto SDK offers interoperable embedded wallets for developers to onboard users on Web3 in a web2 like experience.\n\n## Resources\n\n* https://github.com/okto-hq/\n",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Ovia Seshadri",
+      "url": "https://okto.tech",
+      "email": "devrel@coindcx.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.okto.tech",
+      "description": "Sandbox BFF URL"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Intents",
+      "description": "All the intents related APIs"
+    }
+  ],
+  "paths": {
+    "/api/oc/v1/estimate": {
+      "post": {
+        "tags": ["Intents"],
+        "summary": "Raw Transaction Estimate",
+        "description": "Estimate gas for raw transaction intent. Check out the [`RawTransaction Estimate`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/rawTransaction_with_estimate.ts) API template script for more details.",
+        "operationId": "rawTransactionEstimate",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "type",
+                  "jobId",
+                  "gasDetails",
+                  "paymasterData",
+                  "details"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "RAW_TRANSACTION"
+                  },
+                  "jobId": {
+                    "type": "string",
+                    "example": "e4fb7f8b-d19d-4785-94af-4b911469a3b0"
+                  },
+                  "gasDetails": {
+                    "type": "object",
+                    "required": ["maxFeePerGas", "maxPriorityFeePerGas"],
+                    "properties": {
+                      "maxFeePerGas": {
+                        "type": "string",
+                        "example": "0x2255100"
+                      },
+                      "maxPriorityFeePerGas": {
+                        "type": "string",
+                        "example": "0x2255100"
+                      }
+                    }
+                  },
+                  "paymasterData": {
+                    "type": "string",
+                    "example": "0x000000000000000000000000e8201e368557508bf183d4e2dce1b1a1e0bd20fa00000000000000000000000000000000000000000000000000000000682c9763000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000041d0a1c5ff763012644af339e4b7d8c82478a8791f8e666f28153af520a82e390e2e39e853412beab41039d32cbd67102d10be45f4947e69c008e5e6661b8121c31c00000000000000000000000000000000000000000000000000000000000000"
+                  },
+                  "details": {
+                    "type": "object",
+                    "required": ["caip2Id", "transactions"],
+                    "properties": {
+                      "caip2Id": {
+                        "type": "string",
+                        "example": "eip155:84532"
+                      },
+                      "transactions": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": ["data", "from", "to", "value"],
+                          "properties": {
+                            "data": {
+                              "type": "string",
+                              "example": "0x"
+                            },
+                            "from": {
+                              "type": "string",
+                              "example": "0xA1B9eBBf597F3B8a18C543d3bE3253C73524D564"
+                            },
+                            "to": {
+                              "type": "string",
+                              "example": "0x88beE8eb691FFAFB192BAC4D1E7042e1b44c3eF2"
+                            },
+                            "value": {
+                              "type": "string",
+                              "example": "0x0"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Fetched",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "data"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "callData": {
+                          "type": "object",
+                          "properties": {
+                            "clientSWA": {
+                              "type": "string",
+                              "example": "0xe8201E368557508bF183D4e2DcE1b1A1E0bd20FA"
+                            },
+                            "feePayerAddress": {
+                              "type": "string",
+                              "example": ""
+                            },
+                            "gsn": {
+                              "type": "object",
+                              "properties": {
+                                "isPossible": {
+                                  "type": "boolean",
+                                  "example": false
+                                },
+                                "isRequired": {
+                                  "type": "boolean",
+                                  "example": false
+                                },
+                                "requiredNetworks": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "example": []
+                                },
+                                "tokens": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "example": []
+                                }
+                              }
+                            },
+                            "intentType": {
+                              "type": "string",
+                              "example": "RAW_TRANSACTION"
+                            },
+                            "jobId": {
+                              "type": "string",
+                              "example": "e4fb7f8b-d19d-4785-94af-4b911469a3b0"
+                            },
+                            "payload": {
+                              "type": "object",
+                              "properties": {
+                                "caip2Id": {
+                                  "type": "string",
+                                  "example": "eip155:84532"
+                                },
+                                "transactions": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "data": {
+                                        "type": "string",
+                                        "example": "0x"
+                                      },
+                                      "from": {
+                                        "type": "string",
+                                        "example": "0xA1B9eBBf597F3B8a18C543d3bE3253C73524D564"
+                                      },
+                                      "to": {
+                                        "type": "string",
+                                        "example": "0x88beE8eb691FFAFB192BAC4D1E7042e1b44c3eF2"
+                                      },
+                                      "value": {
+                                        "type": "string",
+                                        "example": "0x0"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "policies": {
+                              "type": "object",
+                              "properties": {
+                                "gsnEnabled": {
+                                  "type": "boolean",
+                                  "example": false
+                                },
+                                "sponsorshipEnabled": {
+                                  "type": "boolean",
+                                  "example": false
+                                }
+                              }
+                            },
+                            "userSWA": {
+                              "type": "string",
+                              "example": "0xd917DFbdA2Bd9EF9628DA4E55150f6559aF5b6ac"
+                            }
+                          }
+                        },
+                        "details": {
+                          "type": "object",
+                          "properties": {
+                            "estimation": {
+                              "type": "object",
+                              "properties": {
+                                "amount": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "crossChainFee": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "crossChainFeeCollector": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "gasFeesInInputToken": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "integratorFeesInInputToken": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "outputAmount": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "platformBaseFeesInInputToken": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "recommendedSlippage": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "routeId": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "routeValidUntil": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "sameChainFee": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "sameChainFeeCollector": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "slippageUsed": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "totalFeesInInputToken": {
+                                  "type": "string",
+                                  "example": ""
+                                }
+                              }
+                            },
+                            "fees": {
+                              "type": "object",
+                              "properties": {
+                                "approxTransactionFeesInUSDT": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "transactionFees": {
+                                  "type": "object",
+                                  "properties": {
+                                    "eip155:84532": {
+                                      "type": "string",
+                                      "example": "177258950000"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "swapFees": {
+                              "type": "object",
+                              "properties": {
+                                "gasFeesInInputToken": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "integratorFeesInInputToken": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "platformBaseFeesInInputToken": {
+                                  "type": "string",
+                                  "example": ""
+                                },
+                                "totalFeesInInputToken": {
+                                  "type": "string",
+                                  "example": ""
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "userOps": {
+                          "type": "object",
+                          "properties": {
+                            "callData": {
+                              "type": "string",
+                              "example": "0x8dd7712f000000000000000000000000000000000000000000000000000000000000000000000000000000000543ad80b41c5f5956d34503668cdb965decb6170000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000001600000000000000000000000000000000000000000000000000000000000000240000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000c6569703135353a383435333200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000817b2264617461223a223078222c2266726f6d223a22307841314239654242663539374633423861313843353433643362453332353343373335323444353634222c22746f223a22307838386265453865623639314646414642313932424143344431453730343265316234346333654632222c2276616c7565223a22307830227d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f5241575f5452414e53414354494f4e000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+                            },
+                            "callGasLimit": {
+                              "type": "string",
+                              "example": "0x556a0"
+                            },
+                            "maxFeePerGas": {
+                              "type": "string",
+                              "example": "0x2255100"
+                            },
+                            "maxPriorityFeePerGas": {
+                              "type": "string",
+                              "example": "0x2255100"
+                            },
+                            "nonce": {
+                              "type": "string",
+                              "example": "0x00000000000000000000000000000000e4fb7f8bd19d478594af4b911469a3b0"
+                            },
+                            "paymaster": {
+                              "type": "string",
+                              "example": "0x74324fa6fa67b833dfdea4c1b3a9898574d076e3"
+                            },
+                            "paymasterData": {
+                              "type": "string",
+                              "example": "0x000000000000000000000000e8201e368557508bf183d4e2dce1b1a1e0bd20fa00000000000000000000000000000000000000000000000000000000682c9763000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000041d0a1c5ff763012644af339e4b7d8c82478a8791f8e666f28153af520a82e390e2e39e853412beab41039d32cbd67102d10be45f4947e69c008e5e6661b8121c31c00000000000000000000000000000000000000000000000000000000000000"
+                            },
+                            "paymasterPostOpGasLimit": {
+                              "type": "string",
+                              "example": "0x1"
+                            },
+                            "paymasterVerificationGasLimit": {
+                              "type": "string",
+                              "example": "0x139bb"
+                            },
+                            "preVerificationGas": {
+                              "type": "string",
+                              "example": "0x15867"
+                            },
+                            "sender": {
+                              "type": "string",
+                              "example": "0xd917dfbda2bd9ef9628da4e55150f6559af5b6ac"
+                            },
+                            "verificationGasLimit": {
+                              "type": "string",
+                              "example": "0x28488"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "error"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 400
+                        },
+                        "errorCode": {
+                          "type": "string",
+                          "example": "ER-TECH-0005"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Something went wrong. Please try again"
+                        },
+                        "traceId": {
+                          "type": "string",
+                          "example": "1623f4d3254cbb49159d3859bf21a1e1"
+                        },
+                        "data": {
+                          "type": "string",
+                          "example": "error in reading request"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/oc/v1/execute": {
+      "post": {
+        "tags": ["Intents"],
+        "summary": "Raw Transaction Execute",
+        "description": "Execute a raw transaction intent. Check out the [`RawTransaction`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/rawTransaction.ts) API template script for more details.",
+        "operationId": "rawTransactionExecute",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sender",
+                  "nonce",
+                  "paymaster",
+                  "callGasLimit",
+                  "verificationGasLimit",
+                  "preVerificationGas",
+                  "maxFeePerGas",
+                  "maxPriorityFeePerGas",
+                  "paymasterPostOpGasLimit",
+                  "paymasterVerificationGasLimit",
+                  "callData",
+                  "paymasterData",
+                  "signature"
+                ],
+                "properties": {
+                  "sender": {
+                    "type": "string",
+                    "description": "Sender address",
+                    "example": "0xb7f85b44fe92cfdd49b962dfd94b983678de5ee7"
+                  },
+                  "nonce": {
+                    "type": "string",
+                    "description": "Unique identifier for the session",
+                    "example": "0x0000000000000000000000000000000088017fc4059c4af388babb456a03b7af"
+                  },
+                  "paymaster": {
+                    "type": "string",
+                    "description": "Paymaster address",
+                    "example": "0x9b34131837d534cd199c0b8fdd8347c05e21a2d8"
+                  },
+                  "callGasLimit": {
+                    "type": "string",
+                    "description": "Call gas limit",
+                    "example": "0x493e0"
+                  },
+                  "verificationGasLimit": {
+                    "type": "string",
+                    "description": "Verification gas limit",
+                    "example": "0x30d40"
+                  },
+                  "preVerificationGas": {
+                    "type": "string",
+                    "description": "Pre-verification gas",
+                    "example": "0xc350"
+                  },
+                  "maxFeePerGas": {
+                    "type": "string",
+                    "description": "Maximum fee per gas",
+                    "example": "0x77359400"
+                  },
+                  "maxPriorityFeePerGas": {
+                    "type": "string",
+                    "description": "Maximum priority fee per gas",
+                    "example": "0x77359400"
+                  },
+                  "paymasterPostOpGasLimit": {
+                    "type": "string",
+                    "description": "Paymaster post operation gas limit",
+                    "example": "0x186a0"
+                  },
+                  "paymasterVerificationGasLimit": {
+                    "type": "string",
+                    "description": "Paymaster verification gas limit",
+                    "example": "0x186a0"
+                  },
+                  "callData": {
+                    "type": "string",
+                    "description": "Call data",
+                    "example": "0x8dd7712f00000000000000000000000000000000000000000000000000000000000000000000000000000000e2bb608bf66b81d3edc93e77ef1cddee4fdc679e0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000003e48fa61ac000000000000000000000000000000000cfcb83f026674a128790839a86e944d7000000000000000000000000e8201e368557508bf183d4e2dce1b1a1e0bd20fa000000000000000000000000fbb05b5bf0192458e0ca5946d7b82a61eba9802500000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000140000000000000000000000000000000000000000000000000000000000000022000000000000000000000000000000000000000000000000000000000000003a000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001600000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000002540be400000000000000000000000000000000000000000000000000000000000000000c6569703135353a38343533320000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a307839363762323663396537376632663565303735336263626362326262363234653562626666323463000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e544f4b454e5f5452414e5346455200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+                  },
+                  "paymasterData": {
+                    "type": "string",
+                    "description": "Paymaster data",
+                    "example": "0x0000000000000000000000006b6fad2600bc57075ee560a6fdf362ffefb9dc3c000000000000000000000000000000000000000000000000000000006d0db17b000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000041c058909b0bbf84a232df087cd51f715b6deffec8f85b186c3d74e55484544f1847b969f318fc75d3710f5ebf9d0e0bb2c7ffc245fd9be912cb2190832eb7830a1b00000000000000000000000000000000000000000000000000000000000000"
+                  },
+                  "signature": {
+                    "type": "string",
+                    "description": "Signature",
+                    "example": "0xe518ae8501170f2797e50ad74e9e648b5daea11eb687de82def4f124d265025e796f4d8f101ec0c104114cf6ef0d3d9f14aa50fb45e75fb7f8ef74787517d58b1c"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "data"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "Response data for the intent",
+                      "required": ["jobId"],
+                      "properties": {
+                        "jobId": {
+                          "type": "string",
+                          "description": "Job ID for the intent",
+                          "example": "9c424737-e204-461b-b93a-ca8e3dfd655c"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "error"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 400
+                        },
+                        "errorCode": {
+                          "type": "string",
+                          "example": "ER-TECH-0016"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Something went wrong. Please try again"
+                        },
+                        "traceId": {
+                          "type": "string",
+                          "example": "30fe44ce093c1fd0f93bf90dc76ad151"
+                        },
+                        "data": {
+                          "type": "string",
+                          "example": "Signature expired"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "name": "Authentication"
+      },
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      },
+      "apiKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key",
+        "description": "Okto App Secret",
+        "example": "OKTO_APP_SECRET"
+      },
+      "apiKeyQuery": {
+        "type": "apiKey",
+        "in": "query",
+        "name": "api_key"
+      },
+      "apiKeyCookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "api_key"
+      },
+      "v1auth": {
+        "type": "apiKey",
+        "name": "X-Api-Key",
+        "in": "header",
+        "description": "Okto App Secret",
+        "example": "YOUR_OKTO_APP_SECRET"
+      },
+      "oktoAppSecretAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Okto App Secret",
+        "description": "Okto App Secret",
+        "example": "YOUR_OKTO_APP_SECRET"
+      },
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "https://galaxy.scalar.com/oauth/authorize",
+            "scopes": {
+              "write:planets": "modify planets in your account",
+              "read:planets": "read your planets"
+            }
+          }
+        }
+      }
+    },
+    "parameters": {},
+    "responses": {},
+    "schemas": {}
+  }
+}

@@ -10,6 +10,7 @@ import GoogleIdTokenGenerator from '@/app/tools/components/GoogleIdTokenGenerato
 import OktoAuthTokenGenerator from '@/app/tools/components/OktoAuthTokenGenerator'
 import AbiEncoder from '@/app/tools/components/AbiEncoder'
 import GenerateClientSign from "./components/GenerateClientSign";
+import OktoAuthTool from './components/OktoAuthTool'
 
 interface Tool {
   title: string
@@ -53,6 +54,11 @@ const tools: Tool[] = [
     title: "Client Signature",
     description: "Generate a client signature for Okto SDK.",
     component: <GenerateClientSign />,
+  },
+  {
+    title: "Okto Auth Tool",
+    description: "Try out different Authentication methods provided by Okto.",
+    component: <OktoAuthTool />,
   },
 ];
 

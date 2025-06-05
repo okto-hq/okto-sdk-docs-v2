@@ -1,6 +1,7 @@
 {
-    "title": "Message Signing",
-    "pages": [
-        "signMessage", "signTypedData"
-    ]
+  "title": "Message Signing",
+  "pages": [
+    "../(Intents)/(3pbff)/sign-message",
+    "../(Intents)/(3pbff)/sign-typed-data"
+  ]
 }

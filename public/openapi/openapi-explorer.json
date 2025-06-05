@@ -31,7 +31,7 @@
       "get": {
         "tags": ["Explorer"],
         "summary": "Get Account",
-        "description": "Fetch all the wallets created by the user.",
+        "description": "Fetch all the wallets created by the user. Check out the [`getAccount`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/explorer/getAccount.ts) API template script for more details.",
         "operationId": "getWallets",
         "security": [
           {
@@ -66,7 +66,7 @@
       "get": {
         "tags": ["Explorer"],
         "summary": "Get Chains",
-        "description": "Get an array of all the whitelisted networks on your API key.",
+        "description": "Get an array of all the whitelisted networks on your API key. Check out the [`getChains`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/explorer/getChains.ts) API template script for more details.",
         "operationId": "getSupportedNetworks",
         "security": [
           {
@@ -101,7 +101,7 @@
       "get": {
         "tags": ["Explorer"],
         "summary": "Get Tokens",
-        "description": "Get an array of all the whitelisted tokens on your API key.",
+        "description": "Get an array of all the whitelisted tokens on your API key. Check out the [`getTokens`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/explorer/getTokens.ts) API template script for more details.",
         "operationId": "getSupportedTokens",
         "security": [
           {
@@ -136,7 +136,7 @@
       "get": {
         "tags": ["Explorer"],
         "summary": "Get Portfolio",
-        "description": "Get the portfolio data of the user, which includes all the tokens owned by the user across all the networks.",
+        "description": "Get the portfolio data of the user, which includes all the tokens owned by the user across all the networks. Check out the [`getPortfolio`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/explorer/getPortfolio.ts) API template script for more details.",
         "operationId": "getPortfolio",
         "security": [
           {
@@ -171,7 +171,7 @@
       "get": {
         "tags": ["Explorer"],
         "summary": "Get Portfolio Activity",
-        "description": "Get user's portfolio activity.",
+        "description": "Get user's portfolio activity. Check out the [`getPortfolioActivity`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/explorer/getPortfolioActivity.ts) API template script for more details.",
         "operationId": "getPortfolioActivity",
         "security": [
           {
@@ -301,7 +301,7 @@
       "get": {
         "tags": ["Explorer"],
         "summary": "Verify session",
-        "description": "Verify the session of the user.",
+        "description": "Verify the session of the user. Check out the [`Verify Session`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/verifySession_template.ts) API template script for more details.",
         "operationId": "userSessionVerify",
         "security": [
           {
@@ -332,118 +332,11 @@
         }
       }
     },
-    "/api/oc/v1/estimate": {
-      "post": {
-        "tags": ["Explorer"],
-        "summary": "Estimate",
-        "description": "Order Estimate",
-        "operationId": "OrderEstimate",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "type",
-                  "jobId",
-                  "gasDetails",
-                  "paymasterData",
-                  "details"
-                ],
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "TOKEN_TRANSFER"
-                  },
-                  "jobId": {
-                    "type": "string",
-                    "example": "4f858322-c613-439b-ad73-9ab85dea5382"
-                  },
-                  "gasDetails": {
-                    "type": "object",
-                    "required": ["maxFeePerGas", "maxPriorityFeePerGas"],
-                    "properties": {
-                      "maxFeePerGas": {
-                        "type": "string",
-                        "example": "0xBA43B7400"
-                      },
-                      "maxPriorityFeePerGas": {
-                        "type": "string",
-                        "example": "0xBA43B7400"
-                      }
-                    }
-                  },
-                  "paymasterData": {
-                    "type": "string",
-                    "example": "0x0000000000000000000000006b6fad2600bc57075ee560a6fdf362ffefb9dc3c000000000000000000000000000000000000000000000000000000006d0db17b000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000041b48db75bb370f6e497d61a0550a31d1a6666a4ccc9fb95bd283acb4badc50da7015043af919b59bd07d0a980621e402fa10a59c62b568073e8bd500b356a13af1b00000000000000000000000000000000000000000000000000000000000000"
-                  },
-                  "details": {
-                    "type": "object",
-                    "required": [
-                      "recipientWalletAddress",
-                      "caip2Id",
-                      "tokenAddress",
-                      "amount"
-                    ],
-                    "properties": {
-                      "recipientWalletAddress": {
-                        "type": "string",
-                        "example": "0xff90C06e1fA92A9B7Dd95E7FBA9F7FC4d518058d"
-                      },
-                      "caip2Id": {
-                        "type": "string",
-                        "example": "eip155:8453"
-                      },
-                      "tokenAddress": {
-                        "type": "string",
-                        "example": ""
-                      },
-                      "amount": {
-                        "type": "string",
-                        "example": "10000"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Fetched",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/OrderEstimateResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/responses/BadRequest"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/oc/v1/readContractData": {
       "post": {
         "tags": ["Explorer"],
         "summary": "Read Contract Data (EVM)",
-        "description": "Read data from a smart contract on a specified network. The API returns the data from the contract based on the input parameters. Supports both EVM and Aptos networks. Below is an example for EVM.",
+        "description": "Read data from a smart contract on a specified network. The API returns the data from the contract based on the input parameters. Supports both EVM and Aptos networks. Below is an example for EVM. \n\n Check out the [`readContractData`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/explorer/readContractData.ts) API template script for more details.",
         "operationId": "readContractDataEVM",
         "security": [
           {
@@ -622,7 +515,7 @@
       "post": {
         "tags": ["Explorer"],
         "summary": "Read Contract Data (Aptos)",
-        "description": "Read data from a smart contract on a specified network. The API returns the data from the contract based on the input parameters. Supports both EVM and Aptos networks. Below is an example for Aptos.",
+        "description": "Read data from a smart contract on a specified network. The API returns the data from the contract based on the input parameters. Supports both EVM and Aptos networks. Below is an example for Aptos. \n\n Check out the [`readContractData`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/explorer/readContractData.ts) API template script for more details.",
         "operationId": "readContractDataAptos",
         "security": [
           {

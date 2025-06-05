@@ -1,6 +1,14 @@
 {
-    "title": "Intents",
-    "pages": [
-        "!createNFTCollection" , "intents", "tokenTransferEstimate", "tokenTransfer", "nftTransferEstimate","nftTransfer",  "evmRawTransactionEstimate", "evmRawTransaction" , "swap"
-    ]
+  "title": "Intents",
+  "pages": [
+    "!createNFTCollection",
+    "intents",
+    "./(3pbff)/token-transfer-estimate",
+    "./(3pbff)/token-transfer-execute",
+    "./(3pbff)/nft-transfer-estimate",
+    "./(3pbff)/nft-transfer-execute",
+    "./(3pbff)/raw-transaction-estimate",
+    "./(3pbff)/raw-transaction-execute",
+    "swap"
+  ]
 }

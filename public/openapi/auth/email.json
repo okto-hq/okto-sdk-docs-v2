@@ -27,7 +27,7 @@
       "post": {
         "tags": ["Explorer"],
         "summary": "Send Email OTP",
-        "description": "Send an OTP to the user's email address.",
+        "description": "Send an OTP to the user's email address. Check out the [`Email auth`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/emailAuthenticate_template.ts) template script for more details.",
         "operationId": "emailSendOtp",
         "requestBody": {
           "required": true,
@@ -163,7 +163,7 @@
       "post": {
         "tags": ["Explorer"],
         "summary": "Verify Email OTP",
-        "description": "Verifies the OTP sent to the user's Email Address. Requires the OTP along with the same session token used in the send/resend step.",
+        "description": "Verifies the OTP sent to the user's Email Address. Requires the OTP along with the same session token used in the send/resend step. Check out the [`Email auth`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/emailAuthenticate_template.ts) template script for more details.",
         "operationId": "emailVerifyOtp",
         "requestBody": {
           "required": true,
@@ -313,7 +313,7 @@
       "post": {
         "tags": ["Auth"],
         "summary": "Authenticate (Email)",
-        "description": "Authenticate a User using Email OTP. This endpoint is used to authenticate users who have logged in using Email OTP.",
+        "description": "Authenticate a User using Email OTP. This endpoint is used to authenticate users who have logged in using Email OTP. Check out the [`Email auth`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/emailAuthenticate_template.ts) template script for more details.",
         "operationId": "emailAuth",
         "requestBody": {
           "required": true,
