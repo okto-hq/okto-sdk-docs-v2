@@ -3,29 +3,34 @@ title: Client Wallets
 full: false
 ---
 
-Clients in the Okto ecosystem can manage user onboarding, sponsor gas fees for user transactions, and perform their own on-chain operations. Okto provides two specialized wallet constructs to support these client activities: **Treasury Wallet** and **Sponsor Wallet**.
+Clients in the Okto ecosystem can manage user onboarding, sponsor gas fees for user transactions, and perform their own on-chain operations. Okto provides two specialized wallet constructs to support these client activities: **Treasury Wallet**, **Paymaster Wallet**, and **Sponsor Wallet**.
 
 <Callout type="info" title="Info">
-- Treasury and Sponsor wallets can be created and managed via the Okto Developer Dashboard.
+- Treasury, Paymaster, and Sponsor wallets can be created and managed via the Okto Developer Dashboard.
 - For a step-by-step guide, check out the [Treasury Wallet Dashboard Guide](/docs/developer-admin-dashboard/treasury-wallet).
 </Callout>
 
 ## 1. Treasury Wallet
 
-The Treasury Wallet serves as the client's own on-chain identity. It allows clients to:
-    * Perform on-chain actions independently of user wallets (e.g., invoking their own smart contracts, executing airdrops, or other DApp-specific operations).
-    * Authorize and validate gas sponsorship for user transactions when the sponsorship feature is enabled.
+The Treasury Wallet serves as the client's own on-chain identity. It allows clients to perform on-chain actions independently of user wallets (e.g., invoking their own smart contracts, executing airdrops, or other DApp-specific operations).
 
 - **Key Features:**
     - **Client-Initiated Transactions:** Execute transactions directly from a wallet controlled by the client.
     - **Aggregated Transaction Execution:** Can be used for operations like batch token transfers or aggregated smart contract interactions.
-    - **Sponsorship Authorization:** Acts as the authorizing entity (`feePayerAddress`) for transactions where gas fees are paid by the Sponsor Wallet.
+
+## 2. Paymaster Wallet
+
+The Paymaster Wallet is a specialized wallet that authorizes and validates gas sponsorship when the sponsorship feature is enabled.
+
+- **Key Features:**
+    - **Sponsorship Authorization:** Serves as the authorizing entity (`feePayerAddress`) for transactions where gas fees are covered by the Sponsor Wallet.
+    - **No Funding Required:** The Paymaster Wallet does not require any funds. Its sole purpose is to authorize gas sponsorship.
 
 <Callout type="warn" title="Note">
-A Treasury Wallet is **required** if the client intends to use gas sponsorship or needs to perform any on-chain actions directly from their own account. It is not required if the client's application only facilitates transactions initiated and funded by end-users.
+A Paymaster Wallet set as the `feePayerAddress` is **required** to enable gas sponsorship for user transactions.
 </Callout>
 
-## 2. Sponsor Wallet
+## 3. Sponsor Wallet
 
 The sponsor wallet is primarily designed for **gas sponsorship**. The Sponsor Wallet holds the funds that will be used to pay gas fees for user transactions on supported blockchain networks, enabling a gasless experience for your users.
 
