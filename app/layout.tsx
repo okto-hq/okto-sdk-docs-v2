@@ -6,9 +6,9 @@ import { useEffect, type ReactNode } from "react";
 import { Providers } from "./providers";
 import NavbarComponent from "./components/Navbar";
 import AskCookbook from "./components/AskCookbook";
-import SOABanner from "./components/SOABanner";
+// import SOABanner from "./components/SOABanner";
 import Script from "next/script";
-import Footer from "./components/Footer";
+// import Footer from "./components/Footer";
 import { usePathname } from "next/navigation";
 
 const inter = Inter({
@@ -71,7 +71,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               <NavbarComponent />
               {/* <SOABanner /> */}
               <main className="flex-1">{children}</main>
-              <Footer />
+              {/* <Footer /> */}
             </div>
           </Providers>
         </RootProvider>
