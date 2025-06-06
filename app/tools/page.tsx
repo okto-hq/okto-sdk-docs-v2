@@ -1,22 +1,33 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
-import GoogleIdTokenGenerator from '@/app/tools/components/GoogleIdTokenGenerator'
-import OktoAuthTokenGenerator from '@/app/tools/components/OktoAuthTokenGenerator'
-import AbiEncoder from '@/app/tools/components/AbiEncoder'
+import { useState } from "react";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import GoogleIdTokenGenerator from "@/app/tools/components/GoogleIdTokenGenerator";
+import OktoAuthTokenGenerator from "@/app/tools/components/OktoAuthTokenGenerator";
+import AbiEncoder from "@/app/tools/components/AbiEncoder";
 import GenerateClientSign from "./components/GenerateClientSign";
-import OktoAuthTool from './components/OktoAuthTool'
+import AuthDebuggerTool from "./components/AuthDebuggerTool";
 
 interface Tool {
-  title: string
-  description: string
-  link?: string
-  component?: JSX.Element
+  title: string;
+  description: string;
+  link?: string;
+  component?: JSX.Element;
 }
 
 const tools: Tool[] = [
@@ -26,13 +37,13 @@ const tools: Tool[] = [
   //   link: '/api-docs',
   // },
   {
-    title: 'Google ID Token Generator',
-    description: 'Generate Google ID Tokens for testing purposes.',
+    title: "Google ID Token Generator",
+    description: "Generate Google ID Tokens for testing purposes.",
     component: <GoogleIdTokenGenerator />,
   },
   {
-    title: 'Session & Okto Auth Token Generator',
-    description: 'Generate Okto Auth Token.',
+    title: "Session & Okto Auth Token Generator",
+    description: "Generate Okto Auth Token.",
     component: <OktoAuthTokenGenerator />,
   },
   // {
@@ -41,8 +52,8 @@ const tools: Tool[] = [
   //   link: 'https://www.npmjs.com/package/create-okto-app',
   // },
   {
-    title: 'ABI Encoder',
-    description: 'Encode smart contract function calls using ABI.',
+    title: "ABI Encoder",
+    description: "Encode smart contract function calls using ABI.",
     component: <AbiEncoder />,
   },
   // {
@@ -56,26 +67,27 @@ const tools: Tool[] = [
     component: <GenerateClientSign />,
   },
   {
-    title: "Okto Auth Tool",
+    title: "Auth Debugger Tool",
     description: "Try out different Authentication methods provided by Okto.",
-    component: <OktoAuthTool />,
+    component: <AuthDebuggerTool />,
   },
 ];
 
 export default function ToolsPage() {
-  const [openDialog, setOpenDialog] = useState<string | null>(null)
+  const [openDialog, setOpenDialog] = useState<string | null>(null);
 
   const handleOpenChange = (open: boolean, dialogId: string) => {
-    setOpenDialog(open ? dialogId : null)
-  }
+    setOpenDialog(open ? dialogId : null);
+  };
 
   return (
     <>
       <div className="container mx-auto px-4 py-12">
         <h1 className="text-3xl font-bold mb-6">Okto Dev Tools</h1>
         <p className="text-lg text-muted-foreground mb-12">
-          Explore our collection of powerful tools designed to enhance your experience with our SDK.
-          These tools will help you develop, test, and optimize your integration efficiently.
+          Explore our collection of powerful tools designed to enhance your
+          experience with our SDK. These tools will help you develop, test, and
+          optimize your integration efficiently.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {tools.map((tool, index) =>
@@ -105,7 +117,7 @@ export default function ToolsPage() {
                     </CardHeader>
                   </Card>
                 </DialogTrigger>
-                <DialogContent className="max-w-3xl w-full">
+                <DialogContent className="w-full max-w-5xl">
                   <DialogHeader>
                     <DialogTitle>{tool.title}</DialogTitle>
                   </DialogHeader>
@@ -113,7 +125,7 @@ export default function ToolsPage() {
                 </DialogContent>
               </Dialog>
             ) : (
-              <Link href={tool.link || '#'} key={index} className="group">
+              <Link href={tool.link || "#"} key={index} className="group">
                 <Card className="transition-all duration-300 hover:shadow-md h-[200px] flex flex-col">
                   <CardHeader className="flex-grow">
                     <CardTitle className="flex justify-between items-center">
@@ -138,5 +150,5 @@ export default function ToolsPage() {
         </div>
       </div>
     </>
-  )
+  );
 }
