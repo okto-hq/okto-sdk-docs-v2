@@ -14,10 +14,6 @@
     {
       "url": "https://sandbox-api.okto.tech",
       "description": "Sandbox BFF URL"
-    },
-    {
-      "url": "https://sandbox-okto-gateway.oktostage.com",
-      "description": "Sandbox Gateway URL"
     }
   ],
   "tags": [
