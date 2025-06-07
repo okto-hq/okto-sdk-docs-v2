@@ -1,9 +1,6 @@
 {
     "title": "Session Management",
     "pages": [
-      "loginUsingOktoAuth",
-      "../../explorer/user-session-verify",
-      "!verifyLogin",
-      "!getAuthToken"
+      "../../explorer/user-session-verify"
     ]
   }
