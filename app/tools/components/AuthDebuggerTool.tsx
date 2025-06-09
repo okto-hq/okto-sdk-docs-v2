@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,6 +23,8 @@ import {
 import { signMessage } from "viem/accounts";
 import { parse as uuidParse } from "uuid";
 import { CopyIcon } from "lucide-react";
+import Select from "@/components/ui/select";
+import GoogleIdTokenGenerator from "./GoogleIdTokenGenerator";
 
 export function nonceToBigInt(nonce: string): bigint {
   const uuidBytes = uuidParse(nonce); // Get the 16-byte array of the UUID
@@ -236,9 +238,11 @@ async function generateAuthPayload(
 }
 
 export default function AuthDebuggerTool() {
+  const [authMethod, setAuthMethod] = useState<"email" | "google">("email");
   const [clientSWA, setClientSWA] = useState("");
   const [clientPrivateKey, setClientPrivateKey] = useState("");
   const [email, setEmail] = useState("");
+  const [googleIdToken, setGoogleIdToken] = useState("");
   const [token, setToken] = useState("");
   const [otp, setOtp] = useState("");
   const [authToken, setAuthToken] = useState("");
@@ -249,6 +253,19 @@ export default function AuthDebuggerTool() {
   const [requestPayload, setRequestPayload] = useState<any>();
   const [error, setError] = useState("");
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
+
+  const handleAuthMethodChange = (newAuthMethod: "email" | "google") => {
+    setAuthMethod(newAuthMethod);
+    setStatus(newAuthMethod === "google" ? "login_using_oauth" : "send_OTP");
+    setToken("");
+    setOtp("");
+    setAuthToken("");
+    setResponse(null);
+    setError("");
+    setRequestPayload(null);
+    setSession(null);
+    setOktoToken(null);
+  };
 
   const copyToClipboard = (data: string, section: string) => {
     navigator.clipboard.writeText(data);
@@ -293,16 +310,22 @@ export default function AuthDebuggerTool() {
   };
 
   const handleLoginUsingOAuthPayload = async () => {
-    if (!authToken) {
+    if (authMethod === "email" && !authToken) {
       setError(
-        "Please enter all values - Okto Client SWA, Client Private Key, Email, Token and OTP."
+        "Please enter all values - Okto Client SWA, Client Private Key and Auth Token."
+      );
+      return;
+    }
+    if (authMethod === "google" && !googleIdToken) {
+      setError(
+        "Please enter all values - Okto Client SWA, Client Private Key and Google Id token"
       );
       return;
     }
 
     const data = {
-      idToken: authToken, // Replace with the user's Auth Token
-      provider: "okto", // Replace with your client_swa
+      idToken: authMethod === "email" ? authToken : googleIdToken,
+      provider: authMethod === "email" ? "okto" : "google",
     };
 
     const session = SessionKey.create();
@@ -318,16 +341,25 @@ export default function AuthDebuggerTool() {
   };
 
   const handleLoginUsingOAuth = async () => {
-    if (!authToken) {
+    if (authMethod === "email" && !authToken?.trim()) {
+      setError("Please enter the auth token");
+      return;
+    }
+    if (
+      authMethod === "google" &&
+      (!googleIdToken?.trim() ||
+        !clientPrivateKey?.trim() ||
+        !clientSWA?.trim())
+    ) {
       setError(
-        "Please enter all values - Okto Client SWA, Client Private Key, Email, Token and OTP."
+        "Please enter all values - Okto Client SWA, Client Private Key and Google Id token"
       );
       return;
     }
 
     const data = {
-      idToken: authToken, // Replace with the user's Auth Token
-      provider: "okto", // Replace with your client_swa
+      idToken: authMethod === "email" ? authToken : googleIdToken,
+      provider: authMethod === "email" ? "okto" : "google",
     };
 
     const session = SessionKey.create();
@@ -532,21 +564,44 @@ export default function AuthDebuggerTool() {
     }
   };
 
+  const handleGoogleAction = async () => {
+    try {
+      if (status === "login_using_oauth") {
+        await handleLoginUsingOAuth();
+        console.log("Login using OAuth");
+      } else if (status === "generate_okto_auth_token") {
+        await getOktoAuthToken();
+        console.log("Session and Token generated:");
+      }
+    } catch (err) {
+      console.error("Google login error:", err);
+    }
+  };
+
   const resetValues = () => {
-    setStatus("send_OTP");
-    setToken("");
-    setOtp("");
-    setAuthToken("");
-    setResponse(null);
-    setError("");
-    setRequestPayload(null);
-    setSession(null);
-    setOktoToken(null);
+    handleAuthMethodChange(authMethod);
   };
 
   return (
     <div className="space-y-4">
       {error && <p className="text-red-500">{error}</p>}
+
+      <div className="space-y-2 flex flex-row items-center gap-4">
+        <Label>Authentication Method</Label>
+        <Select
+          value={authMethod}
+          onChange={(e) => {
+            handleAuthMethodChange(e.target.value as "email" | "google");
+          }}
+          options={[
+            { label: "Email", value: "email" },
+            { label: "Google", value: "google" },
+          ]}
+          placeholder="Select authentication method"
+          className="w-[200px] dark:bg-slate-800 dark:border-slate-700 dark:text-white"
+        />
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <Label htmlFor="okto-client-swa">Okto Client SWA</Label>
@@ -577,83 +632,159 @@ export default function AuthDebuggerTool() {
           />
         </div>
       </div>
-      <div>
-        <Label htmlFor="email">Email</Label>
-        <Input
-          id="email"
-          type="text"
-          placeholder="Enter Email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            resetValues();
-          }}
-        />
-      </div>
 
-      {(status === "verify_OTP" || status === "login_using_oauth" || status === "generate_okto_auth_token")  && (
-        <div className="flex flex-col gap-4">
-          <Label htmlFor="otp">OTP</Label>
-          <Input
-            id="otp"
-            type="text"
-            placeholder="Enter OTP"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-          />
+      {authMethod === "email" ? (
+        <>
+          <div>
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="text"
+              placeholder="Enter Email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                resetValues();
+              }}
+            />
+          </div>
 
-          <Label htmlFor="Token">Token</Label>
-          <Input
-            id="Token "
-            type="text"
-            placeholder="Enter Token (received in response)"
-            value={token}
-            onChange={(e) => setToken(e.target.value)}
-          />
-        </div>
+          {(status === "verify_OTP" ||
+            status === "login_using_oauth" ||
+            status === "generate_okto_auth_token") && (
+            <div className="flex flex-col gap-4">
+              <Label htmlFor="otp">OTP</Label>
+              <Input
+                id="otp"
+                type="text"
+                placeholder="Enter OTP"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+              />
+
+              <Label htmlFor="Token">Token</Label>
+              <Input
+                id="Token"
+                type="text"
+                placeholder="Enter Token (received in response)"
+                value={token}
+                onChange={(e) => setToken(e.target.value)}
+              />
+            </div>
+          )}
+
+          {(status === "login_using_oauth" ||
+            status === "generate_okto_auth_token") && (
+            <div>
+              <Label htmlFor="authToken">Auth Token</Label>
+              <Input
+                id="authToken"
+                type="text"
+                placeholder="Enter Auth Token (received in response)"
+                value={authToken}
+                onChange={(e) => setAuthToken(e.target.value)}
+              />
+            </div>
+          )}
+
+          <Button
+            type="button"
+            className="mx-2"
+            onClick={() => {
+              if (status === "send_OTP") {
+                handleGenerateSendOtpPayload();
+              } else if (status === "verify_OTP") {
+                handleGennerateVerifyOtpPayload();
+              } else if (status === "login_using_oauth") {
+                handleLoginUsingOAuthPayload();
+              }
+            }}
+          >
+            Generate Payload
+          </Button>
+
+          <Button type="button" onClick={handleEmailAction}>
+            {status === "send_OTP"
+              ? "Send OTP"
+              : status === "verify_OTP"
+                ? "Verify OTP"
+                : status === "login_using_oauth"
+                  ? "Login Using OAuth"
+                  : "Generate Okto Auth Token"}
+          </Button>
+        </>
+      ) : (
+        <>
+          <div className="space-y-4">
+            <div className="flex items-center gap-4">
+              <div className="w-1/2">
+                <Label htmlFor="googleId">Google ID Token</Label>
+                <Input
+                  id="googleId"
+                  type="text"
+                  placeholder="Enter Google ID Token"
+                  value={googleIdToken}
+                  onChange={(e) => setGoogleIdToken(e.target.value)}
+                />
+              </div>
+              <span className="text-sm text-gray-500 mt-4">or</span>
+              <div className="mt-5">
+                <GoogleIdTokenGenerator
+                  onTokenReceived={(token) => setGoogleIdToken(token)}
+                  showTokenDisplay={false}
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  className="mx-2"
+                  onClick={handleLoginUsingOAuthPayload}
+                >
+                  Generate Payload
+                </Button>
+
+                <Button type="button" onClick={handleGoogleAction}>
+                  {status === "login_using_oauth"
+                    ? "Login Using OAuth"
+                    : "Generate Okto Auth Token"}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </>
       )}
-
-      {(status === "login_using_oauth" || status === "generate_okto_auth_token") && (
-        <div>
-          <Label htmlFor="authToken">Auth Token</Label>
-          <Input
-            id="authToken"
-            type="text"
-            placeholder="Enter Auth Token (received in response)"
-            value={authToken}
-            onChange={(e) => setAuthToken(e.target.value)}
-          />
-        </div>
-      )}
-
-      <Button
-        type="button"
-        className="mx-2"
-        onClick={() => {
-          if (status === "send_OTP") {
-            handleGenerateSendOtpPayload();
-          } else if (status === "verify_OTP") {
-            handleGennerateVerifyOtpPayload();
-          } else if (status === "login_using_oauth") {
-            handleLoginUsingOAuthPayload();
-          }
-        }}
-      >
-        Generate Payload
-      </Button>
-
-      <Button type="button" onClick={handleEmailAction}>
-        {status === "send_OTP"
-          ? "Send OTP"
-          : status === "verify_OTP"
-            ? "Verify OTP"
-            : status === "login_using_oauth"
-              ? "Login Using OAuth"
-              : "Generate Okto Auth Token"}
-      </Button>
 
       {session && (
         <div className="mt-4 grid grid-cols-1 gap-4">
+          {oktoToken && (
+            <div className="flex flex-col">
+              <h3 className="text-lg font-semibold mb-2">Okto Auth Token</h3>
+              <div
+                className="flex-1 p-4 pr-8 bg-gray-100 dark:bg-slate-800 rounded-md overflow-auto relative"
+                style={{ maxHeight: "400px" }}
+              >
+                <button
+                  type="button"
+                  className="absolute top-2 right-2 p-2 hover:bg-gray-200 dark:hover:bg-slate-700 rounded-md transition-colors"
+                  onClick={() => copyToClipboard(oktoToken, "token")}
+                >
+                  <CopyIcon className="h-4 w-4" />
+                  {copiedSection === "token" && (
+                    <span className="absolute -top-8 right-0 bg-gray-800 text-white px-2 py-1 rounded text-sm">
+                      Copied!
+                    </span>
+                  )}
+                </button>
+                <pre className="whitespace-pre-wrap break-words">
+                  {oktoToken}
+                </pre>
+              </div>
+            </div>
+          )}
+
           <div className="flex flex-col">
             <h3 className="text-lg font-semibold mb-2">
               Session Configuration
@@ -681,32 +812,6 @@ export default function AuthDebuggerTool() {
               </pre>
             </div>
           </div>
-
-          {oktoToken && (
-            <div className="flex flex-col">
-              <h3 className="text-lg font-semibold mb-2">Okto Auth Token</h3>
-              <div
-                className="flex-1 p-4 pr-8 bg-gray-100 dark:bg-slate-800 rounded-md overflow-auto relative"
-                style={{ maxHeight: "400px" }}
-              >
-                <button
-                  type="button"
-                  className="absolute top-2 right-2 p-2 hover:bg-gray-200 dark:hover:bg-slate-700 rounded-md transition-colors"
-                  onClick={() => copyToClipboard(oktoToken, "token")}
-                >
-                  <CopyIcon className="h-4 w-4" />
-                  {copiedSection === "token" && (
-                    <span className="absolute -top-8 right-0 bg-gray-800 text-white px-2 py-1 rounded text-sm">
-                      Copied!
-                    </span>
-                  )}
-                </button>
-                <pre className="whitespace-pre-wrap break-words">
-                  {oktoToken}
-                </pre>
-              </div>
-            </div>
-          )}
         </div>
       )}
 
