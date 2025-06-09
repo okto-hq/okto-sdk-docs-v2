@@ -2,11 +2,12 @@
     "title": "System Capabilities",
     "pages": [
       "embedded-wallets",
+      "social-auth",
+      "wallet-connector",
       "session-management",
       "policy-engine",
       "vendor-control",
       "user-management",
-      "wallet-connector",
       "trade-service",
       "cross-chain-intents"
     ]
