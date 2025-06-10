@@ -1,0 +1,174 @@
+---
+title: Read Contract Data
+description: Learn how to use read contract with the Okto SDK to fetch on-chain data from smart contracts on EVM and Aptos.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
+
+The `rawRead()` method provided by Okto SDK enables reading data directly from smart contracts on supported networks. It accepts structured input parameters and works seamlessly across both EVM and Aptos chains.
+
+### Example
+
+<Accordions defaultValue="Usage">
+<Accordion title="Usage">
+<Tabs items={['EVM Chain', 'Aptos Chain']}>
+  <Tab value="EVM Chain">
+    ```typescript
+    import { useOkto } from '@okto_web3/react-sdk';
+    import { rawRead } from '@okto_web3/react-sdk'; // [!code highlight]
+
+    function RawRead() {
+        const oktoClient = useOkto();
+
+        async function rawReadContract() {
+            try {
+                const payload = { // [!code highlight]
+                    caip2Id: "eip155:8453", // [!code highlight]
+                    data: { // [!code highlight]
+                        contractAddress: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", // [!code highlight]
+                        abi: {"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}, // [!code highlight]
+                        args: {"account":"0xB7B8F759E8Bd293b91632100f53a45859832f463"}, // [!code highlight]
+                    }, // [!code highlight]
+                }; // [!code highlight]
+
+                const response = await rawRead(oktoClient, payload); // [!code highlight]
+                console.log('Fetched Data: ', response);
+            } catch (error) {
+                console.error('Error fetching contract data:', error);
+            }
+        }
+
+        return (
+            <button onClick={rawReadContract}>
+                Read Contract
+            </button>
+        );
+    }
+    ```
+  </Tab>
+  <Tab value="Aptos Chain">
+    ```typescript
+    import { useOkto } from '@okto_web3/react-sdk';
+    import { rawRead } from '@okto_web3/react-sdk'; // [!code highlight]
+
+    function RawRead() {
+        const oktoClient = useOkto();
+
+        async function rawReadContract() {
+            try {
+                const payload = { // [!code highlight]
+                    caip2Id: "aptos:testnet", // [!code highlight]
+                    data: { // [!code highlight]
+                        function: "0x1::coin::balance", // [!code highlight]
+                        typeArguments: ["0x1::aptos_coin::AptosCoin"], // [!code highlight]
+                        functionArguments: ["0x9ed7f8c95c5e2c3cb06dfbb48681b87401fabeb88b7d710db3720f7a2ca3fffc"], // [!code highlight]
+                    }, // [!code highlight]
+                }; // [!code highlight]
+
+                const response = await rawRead(oktoClient, payload); // [!code highlight]
+                console.log('Fetched Data: ', response);
+            } catch (error) {
+                console.error('Error fetching contract data:', error);
+            }
+        }
+
+        return (
+            <button onClick={rawReadContract}>
+                Read Contract
+            </button>
+        );
+    }
+    ```
+  </Tab>
+</Tabs>
+</Accordion>
+
+<Accordion title="Success Response">
+```json
+{
+    "status": "success",
+    "data": [
+        "77008205983"
+    ]
+}
+```
+</Accordion>
+</Accordions>
+
+<Callout title="Note" type="info">
+For error handling:
+- Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/react-sdk/sdk-error-warnings) documentation
+- For help, navigate to the [troubleshooting guide](/docs/react-sdk/troubleshooting) to contact support
+</Callout>
+
+### Method Overview
+
+| Methods                                              | Description                          |                 
+|------------------------------------------------------|--------------------------------------|
+| <sub><i>async</i></sub> [`rawRead`](#raw-read)    | Read data from a smart contract      |
+
+<div className="method-box">
+
+## Raw Read
+
+<sub><i>async</i></sub> `rawRead()` reads the data from the smart contract. 
+
+### Parameters for EVM Chain
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|-----------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+| `payload` | `EVMRawReadParams` | Parameters for executing Raw Read on EVM | Yes |
+
+Where `EVMRawReadParams` contains:
+
+| Field | Type | Description | Required |
+|-------|------|-------------|----------|
+| `caip2Id` | `string` | The network identifier (e.g., `eip155:1` for Ethereum) | Yes |
+| `contractAddress` | `string` | Address of the target smart contract (must be a valid Ethereum address) | Yes |
+| `abi` | `string[]` | ABI definition of the smart contract | Yes |
+| `args` | `string[]` | Arguments required for the contract method call | Yes |
+
+### Parameters for Aptos Chain
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|-----------|
+| `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+| `payload` | `AptosRawReadParams` | Parameters for executing Raw Read on Aptos | Yes |
+
+Where `AptosRawReadParams` contains:
+
+| Field | Type | Description | Required |
+|-------|------|-------------|----------|
+| `caip2Id` | `string` | The network identifier (e.g., `aptos:testnet` for Aptos Testnet) | Yes |
+| `function` | `string` | Function identifier in the format `address::module_name::function_name` (e.g., `0x1::coin::balance`) | Yes |
+| `typeArguments` | `string[]` | Array of type arguments for functions | Yes |
+| `functionArguments` | `string[]` | Array of function arguments required for functions | Yes |
+
+### Response
+
+<Callout title="Success Response">
+
+| Field Name | Type                  | Description                                   | 
+|------------|-----------------------|-----------------------------------------------|
+| `result`   | `Promise<ReadContractResponse[]>` | Returns the data from the contract | 
+
+<Accordions>
+    <Accordion title="Response Type">
+        ```typescript
+        interface ReadContractResponse {
+            status: 'success';
+            data: string[];
+        }
+        ```
+    </Accordion>
+</Accordions>
+
+</Callout>
+
+</div>
