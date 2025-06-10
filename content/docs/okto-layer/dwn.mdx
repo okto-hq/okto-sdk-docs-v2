@@ -96,14 +96,14 @@ This phase covers how a user logs in and sets up a secure session to interact wi
 #### 1. User Initiates Login
 When you tap "Sign In", your client application generates a session key pair. The private key stays securely on your device, while the public key gets registered with Okto.
 
-#### 2. Authentication Request to Okto Gateway
-Your client application, via the Okto SDK, creates an authentication request and sends it to the Okto Gateway. This request bundles:
+#### 2. Authentication Request to the Okto Chain
+Your client application, via the Okto SDK, creates an authentication request and sends it to the Okto Chain. This request bundles:
 - Your authentication token (e.g., a Google OAuth token).
 - The generated session public key.
 - A signature created with the session private key, proving its ownership.
 
 #### 3. Decentralized Verification via Auth Relayer
-The Okto Gateway forwards the authentication request to the **Auth Relayer**. The Auth Relayer, utilizing a 2-of-3 Multi-Party Computation (MPC) node setup, independently verifies your credentials (e.g., the idToken) with the relevant authentication provider (like Google). A consensus among at least two of these three nodes validates your identity, ensuring no single party can spoof the authentication process.
+The Okto Chain forwards the authentication request to the **Auth Relayer**. The Auth Relayer, utilizing a 2-of-3 Multi-Party Computation (MPC) node setup, independently verifies your credentials (e.g., the idToken) with the relevant authentication provider (like Google). A consensus among at least two of these three nodes validates your identity, ensuring no single party can spoof the authentication process.
 
 #### 4. Key Generation & User Setup
 Once your identity is verified by the Auth Relayer, it initiates the creation of your primary blockchain keys. The Decentralized Wallet Network (DWN) generates these cryptographic keys (supporting ECDSA and EdDSA) using Distributed Key Generation (DKG). This critical process involves a 2-of-3 quorum of DWN operators.
@@ -119,7 +119,7 @@ With an active and registered session, you can now initiate transactions. Let's 
 With your session active, you tap "Mint NFT" in your dApp. The client prepares a UserOp containing the intent and session signature.
 
 #### 2. Submit to Okto Chain
-The UserOp is sent to Okto Gateway, validated, and broadcast to Okto Chain where policy checks are enforced.
+The UserOp is sent to Okto Chain, validated, and broadcast to Okto Chain where policy checks are enforced.
 
 #### 3. DTN Processing
 Upon validation, a job is created on the Okto chain, emitting an event for DTN to process. DTN fetches the full intent from the UserOp, constructs the raw transaction payload(s) required to execute the intent and registers its hash on the Okto chain.

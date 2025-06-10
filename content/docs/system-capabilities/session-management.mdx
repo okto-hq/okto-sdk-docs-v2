@@ -10,13 +10,13 @@ Session management is a critical component of the Okto Ecosystem that provides a
 
 1.  **Client-Side Session Key Generation:** When a user initiates a login through an Okto-integrated dApp, the client application generates a unique session key pair. This key pair is ephemeral and specific to the user's current session. The **private key** is securely stored locally on the user's device, while the **public key** is used for signing.
 
-2.  **Authentication Request to Gateway:** The client application constructs an authentication request containing:
+2.  **Authentication Request to Okto Chain:** The client application constructs an authentication request containing:
     *   **Login Credentials:** User authentication tokens (e.g., Google OAuth token, Email OTP, Phone OTP).
     *   **Session Public Key:** The newly generated session public key.
     *   **Signature:** A signature generated using the session private key, proving ownership of the session key pair.
-    This request is sent to the Okto Gateway.
+    This request is sent to the Okto Chain.
 
-3.  **Decentralized Verification (Auth Module):** The Gateway passes the request to the Auth Module. The Auth Module, operating as a decentralized network, independently verifies the user's login credentials against the respective authentication provider (e.g., Google Auth service). A consensus mechanism ensures that authentication is trustless and resistant to spoofing.
+3.  **Decentralized Verification (Auth Module):** The Okto Chain passes the request to the Auth Module. The Auth Module, operating as a decentralized network, independently verifies the user's login credentials against the respective authentication provider (e.g., Google Auth service). A consensus mechanism ensures that authentication is trustless and resistant to spoofing.
 
 5.  **Key Generation and User Setup:** Upon successful authentication, the Auth Module communicates with the Decentralized Wallet Network (DWN). The DWN, if necessary, generates the user's blockchain identity by generating cryptographic keys (ECDSA/EdDSA) using Multi-Party Computation (MPC). The public keys of the session and the user's wallet address are then relayed to the Okto Chain.
 
