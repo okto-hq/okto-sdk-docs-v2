@@ -1,23 +1,23 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { secp256k1 } from "@noble/curves/secp256k1";
 import { keccak_256 } from "@noble/hashes/sha3";
-import { parse as uuidParse,v4 as uuidv4 } from 'uuid';
+import { parse as uuidParse, v4 as uuidv4 } from "uuid";
 import {
-  encodeAbiParameters ,
+  encodeAbiParameters,
   encodePacked,
   fromHex,
   keccak256,
   parseAbiParameters,
   toBytes,
-  toHex as toHex2
+  toHex as toHex2,
 } from "viem";
-import axios from 'axios';
-import { signMessage } from "viem/accounts"
+import axios from "axios";
+import { signMessage } from "viem/accounts";
 
 var SessionKey = class _SessionKey {
   priv;
@@ -62,10 +62,7 @@ var SessionKey = class _SessionKey {
   static fromPrivateKey(privateKey: any) {
     return new _SessionKey(privateKey);
   }
-  verifySignature({
-    payload,
-    signature
-  }: any) {
+  verifySignature({ payload, signature }: any) {
     return secp256k1.verify(payload, signature, this.uncompressedPublicKey);
   }
 };
@@ -75,13 +72,19 @@ function nonceToBigInt(nonce: any) {
   let bigInt = BigInt(0);
   for (let i = 0; i < uuidBytes.length; i++) {
     if (uuidBytes[i] !== void 0) {
-      bigInt = bigInt << BigInt(8) | BigInt(uuidBytes[i]);
+      bigInt = (bigInt << BigInt(8)) | BigInt(uuidBytes[i]);
     }
   }
   return bigInt;
 }
 
-async function generatePaymasterData(address: any, privateKey: any, nonce: any, validUntil: any, validAfter: any) {
+async function generatePaymasterData(
+  address: any,
+  privateKey: any,
+  nonce: any,
+  validUntil: any,
+  validAfter: any
+) {
   if (validUntil instanceof Date) {
     validUntil = Math.floor(validUntil.getTime() / 1e3);
   } else if (typeof validUntil === "bigint") {
@@ -101,15 +104,15 @@ async function generatePaymasterData(address: any, privateKey: any, nonce: any, 
         toHex2(nonceToBigInt(nonce), { size: 32 }),
         address,
         validUntil,
-        validAfter
+        validAfter,
       ]
     )
   );
   const sig = await signMessage({
     message: {
-      raw: fromHex(paymasterDataHash, "bytes")
+      raw: fromHex(paymasterDataHash, "bytes"),
     },
-    privateKey
+    privateKey,
   });
   const paymasterData = encodeAbiParameters(
     parseAbiParameters("address, uint48, uint48, bytes"),
@@ -118,7 +121,12 @@ async function generatePaymasterData(address: any, privateKey: any, nonce: any, 
   return paymasterData;
 }
 
-async function generateAuthPayload(authData: any, sessionKey: any, clientSWA: any, clientPriv: any) {
+async function generateAuthPayload(
+  authData: any,
+  sessionKey: any,
+  clientSWA: any,
+  clientPriv: any
+) {
   const nonce = uuidv4();
   const payload: any = {};
   payload.authData = authData;
@@ -128,7 +136,7 @@ async function generateAuthPayload(authData: any, sessionKey: any, clientSWA: an
   payload.sessionData.sessionPk = sessionKey.uncompressedPublicKeyHexWith0x;
   payload.sessionData.maxPriorityFeePerGas = "0xBA43B7400";
   payload.sessionData.maxFeePerGas = "0xBA43B7400";
-  payload.sessionData.paymaster = '0x5408fAa7F005c46B85d82060c532b820F534437c';
+  payload.sessionData.paymaster = "0x5408fAa7F005c46B85d82060c532b820F534437c";
   console.log("clientSWA", clientSWA);
   payload.sessionData.paymasterData = await generatePaymasterData(
     clientSWA,
@@ -142,18 +150,18 @@ async function generateAuthPayload(authData: any, sessionKey: any, clientSWA: an
     raw: toBytes(
       keccak256(
         encodeAbiParameters(parseAbiParameters("address"), [
-          sessionKey.ethereumAddress
+          sessionKey.ethereumAddress,
         ])
       )
-    )
+    ),
   };
   payload.sessionPkClientSignature = await signMessage({
     message,
-    privateKey: clientPriv
+    privateKey: clientPriv,
   });
   payload.sessionDataUserSignature = await signMessage({
     message,
-    privateKey: sessionKey.privateKeyHexWith0x
+    privateKey: sessionKey.privateKeyHexWith0x,
   });
   return payload;
 }
@@ -161,7 +169,8 @@ async function generateAuthPayload(authData: any, sessionKey: any, clientSWA: an
 function serializeJSON(obj: any, space: any) {
   return JSON.stringify(
     obj,
-    (key, value) => typeof value === "bigint" ? value.toString() + "n" : value,
+    (key, value) =>
+      typeof value === "bigint" ? value.toString() + "n" : value,
     space
   );
 }
@@ -173,84 +182,88 @@ async function getAuthorizationToken(sessionConfig: any) {
   }
   const data = {
     expire_at: Math.round(Date.now() / 1e3) + 60 * 90,
-    session_pub_key: sessionPub
+    session_pub_key: sessionPub,
   };
   const payload = {
     type: "ecdsa_uncompressed",
     data,
     data_signature: await signMessage({
       message: JSON.stringify(data),
-      privateKey: sessionPriv
-    })
+      privateKey: sessionPriv,
+    }),
   };
   return btoa(JSON.stringify(payload));
 }
 
 export default function OktoAuthTokenGenerator() {
-  const [clientSWA, setClientSWA] = useState('')
-  const [clientPrivateKey, setClientPrivateKey] = useState('')
-  const [googleIdToken, setGoogleIdToken] = useState('')
-  const [sessionConfig, setSessionConfig] = useState({})
-  const [authToken, setAuthToken] = useState('')
-  const [error, setError] = useState('')
-  const [isCopied, setIsCopied] = useState(false)
+  const [clientSWA, setClientSWA] = useState("");
+  const [clientPrivateKey, setClientPrivateKey] = useState("");
+  const [googleIdToken, setGoogleIdToken] = useState("");
+  const [sessionConfig, setSessionConfig] = useState({});
+  const [authToken, setAuthToken] = useState("");
+  const [error, setError] = useState("");
+  const [isCopied, setIsCopied] = useState(false);
 
   const handleGetOktoToken = async () => {
     if (!clientSWA || !clientPrivateKey || !googleIdToken) {
-      setError('Please enter all values - Okto Client SWA, Client Private Key and Google ID Token.')
-      return
+      setError(
+        "Please enter all values - Okto Client SWA, Client Private Key and Google ID Token."
+      );
+      return;
     }
 
     const data = {
       idToken: googleIdToken,
-      provider: 'google'
-    }
+      provider: "google",
+    };
     const session = SessionKey.create();
-    
-    const authPayload = await generateAuthPayload(data,
+
+    const authPayload = await generateAuthPayload(
+      data,
       session,
       clientSWA,
-      clientPrivateKey);
+      clientPrivateKey
+    );
 
-    const requestBody = {
-      method: "authenticate",
-      jsonrpc: "2.0",
-      id: uuidv4(),
-      params: [authPayload]
-    }
-
-    const serliazedPayload = serializeJSON(requestBody, null);
+    console.log("Request Body:", authPayload);
     try {
-      const response = await axios.post('https://sandbox-okto-gateway.oktostage.com/rpc', serliazedPayload, { 
-        headers: {
-          "Content-Type": "application/json"
+      const response = await axios.post(
+        "https://sandbox-api.okto.tech/api/oc/v1/authenticate",
+        authPayload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      })
+      );
 
       if (response.status === 200) {
-        console.log("response.data.result", response.data.result);
+        console.log("response.data", response.data);
         const sessionConfig = {
           sessionPrivKey: session.privateKeyHexWith0x,
           sessionPubKey: session.uncompressedPublicKeyHexWith0x,
-          userSWA: response.data.result.userSWA
-        }
+          userSWA: response.data.data.userSWA,
+        };
         setSessionConfig(sessionConfig);
         const authToken = await getAuthorizationToken(sessionConfig);
         setAuthToken(authToken);
-        setError('')
+        setError("");
       } else {
-        setError(response.data.error.message || 'Failed to get Okto token')
+        setError(response.data.error.message || "Failed to get Okto token");
       }
-    } catch (err: any) {  
-      setError(err.response.data.error.message || 'An error occurred while fetching the Okto token')
+    } catch (err: any) {
+      setError(
+        err.response.data.error.message ||
+          "An error occurred while fetching the Okto token"
+      );
     }
-  }
+  };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(authToken)
-    setIsCopied(true)
-    setTimeout(() => setIsCopied(false), 2000)
-  }
+    navigator.clipboard.writeText(authToken);
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
+  };
 
   return (
     <div className="space-y-4">
@@ -291,26 +304,31 @@ export default function OktoAuthTokenGenerator() {
       {authToken && (
         <div className="mt-4">
           <div>
-          <h3>Okto Auth Token</h3>
-          <div className="my-3 p-2 bg-gray-100 dark:bg-slate-800 rounded-md break-all max-w-full overflow-x-auto" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
-            {authToken}
+            <h3>Okto Auth Token</h3>
+            <div
+              className="my-3 p-2 bg-gray-100 dark:bg-slate-800 rounded-md break-all max-w-full overflow-x-auto"
+              style={{ maxHeight: "300px", overflowY: "scroll" }}
+            >
+              {authToken}
+            </div>
+            <Button type="button" onClick={copyToClipboard}>
+              {isCopied ? "Copied!" : "Copy Okto Auth Token to Clipboard"}
+            </Button>
           </div>
-          <Button type="button" onClick={copyToClipboard}>
-            {isCopied ? 'Copied!' : 'Copy Okto Auth Token to Clipboard'}
-          </Button>
-          </div>
-          <div className='mt-4'>
-          <h3>Session Config</h3>
-          <div className="my-3 p-2 bg-gray-100 dark:bg-slate-800 rounded-md break-all max-w-full overflow-x-auto" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
-            {JSON.stringify(sessionConfig)}
-          </div>
-          <Button type="button" onClick={copyToClipboard}>
-            {isCopied ? 'Copied!' : 'Copy Session Config to Clipboard'}
-          </Button>
+          <div className="mt-4">
+            <h3>Session Config</h3>
+            <div
+              className="my-3 p-2 bg-gray-100 dark:bg-slate-800 rounded-md break-all max-w-full overflow-x-auto"
+              style={{ maxHeight: "300px", overflowY: "scroll" }}
+            >
+              {JSON.stringify(sessionConfig)}
+            </div>
+            <Button type="button" onClick={copyToClipboard}>
+              {isCopied ? "Copied!" : "Copy Session Config to Clipboard"}
+            </Button>
           </div>
         </div>
       )}
     </div>
-  )
+  );
 }
-

@@ -41,10 +41,15 @@ const tools: Tool[] = [
     description: "Generate Google ID Tokens for testing purposes.",
     component: <GoogleIdTokenGenerator />,
   },
+  // {
+  //   title: "Session & Okto Auth Token Generator",
+  //   description: "Generate Okto Auth Token.",
+  //   component: <OktoAuthTokenGenerator />,
+  // },
   {
-    title: "Session & Okto Auth Token Generator",
-    description: "Generate Okto Auth Token.",
-    component: <OktoAuthTokenGenerator />,
+    title: "Auth Debugger Tool",
+    description: "Try out different Authentication methods provided by Okto.",
+    component: <AuthDebuggerTool />,
   },
   // {
   //   title: 'Okto Quickstart CLI',
@@ -66,11 +71,7 @@ const tools: Tool[] = [
     description: "Generate a client signature for Okto SDK.",
     component: <GenerateClientSign />,
   },
-  {
-    title: "Auth Debugger Tool",
-    description: "Try out different Authentication methods provided by Okto.",
-    component: <AuthDebuggerTool />,
-  },
+ 
 ];
 
 export default function ToolsPage() {
