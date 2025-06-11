@@ -38,6 +38,7 @@
     "technical-reference",
     "sdk-error-warnings",
     "troubleshooting",
+    "debug-checklist",
     "!changelog"
   ],
   "root": true

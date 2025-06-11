@@ -1,0 +1,108 @@
+---
+title: Debugging Checklists
+description: Step-by-step debugging checklists for common issues you might encounter while integrating with Okto.
+full: false
+---
+
+## Environment and Setup Debugging
+
+### Development Environment
+
+- [ ] **Environment Variables**: Confirm all required environment variables are set
+- [ ] **API Keys**: Verify API keys are valid and have necessary permissions
+- [ ] **SDK Version**: Ensure you're using the latest SDK version
+- [ ] **Dependencies**: Check that all required dependencies are installed
+
+### Dashboard Configuration
+
+- [ ] **Okto Credits**: Verify sufficient [Okto Credits](/docs/developer-admin-dashboard/okto-faucet) in your account
+- [ ] **Network Settings**: Confirm required networks are enabled in dashboard
+- [ ] **Token Whitelist**: Check that tokens you're using are whitelisted
+- [ ] **Sponsorship Settings**: If using sponsorship, verify it's properly configured
+
+---
+
+## Sponsored Transaction Debugging
+
+If your sponsored transaction is not working, follow this checklist to identify and resolve the issue:
+
+### Prerequisites Check
+
+- [ ] **Chain and Token Enabled**: Ensure the required chain and tokens are enabled in your [Okto Dashboard Chains & Tokens](/docs/developer-admin-dashboard/wallet-control)
+- [ ] **Mainnet Chains**: Verify you're using mainnet chains (sponsorship is only supported on mainnet)
+- [ ] **Sponsorship Enabled**: Confirm sponsorship is enabled for the destination chain in your [Okto Dashboard Sponsorship Page](/docs/developer-admin-dashboard/sponsorship)
+- [ ] **Sponsor Wallet Activated and Funded**: Check that your Sponsor Wallet is activated and has sufficient deposited funds visible in the Okto Dashboard balance
+- [ ] **Paymaster SWA Generated**: Verify that the Paymaster SWA is automatically generated (appears when you activate at least one sponsorship)
+
+### Integration Check
+
+- [ ] **Correct Paymaster SWA**: Ensure the correct Paymaster SWA is provided as `feePayerAddress` in your intent call. See the React SDK example [here](/docs/react-sdk/tokenTransfer#example).
+- [ ] **Parameters**: Double-check all required parameters are included in your intent calls. 
+
+### Isolation Testing : Test Without Sponsorship
+  1. Disable sponsorship on the dashboard
+  2. Remove the `feePayerAddress` from your request
+  3. Test the same transaction with identical parameters
+  4. **If successful**: This indicates a sponsorship-specific issue - provide error response, job ID, and request cURL for support
+  5. **If still failing**: This suggests a payload/parameter issue unrelated to sponsorship
+
+---
+
+## Authentication Debugging
+
+### Google OAuth Issues
+
+- [ ] **Valid Google Client ID**: Ensure your Google Client ID is correctly configured
+- [ ] **Authorized JavaScript Origins**: Verify your domain is added to Authorized JavaScript origins in Google Cloud Console
+- [ ] **Authorized Redirect URIs**: Check that your redirect URIs are properly configured in Google Cloud Console
+- [ ] **ID Token Validity**: Check that your Google ID token hasn't expired (tokens have short lifespans)
+- [ ] **API Key Configuration**: Confirm your Okto API keys are properly set in environment variables
+
+---
+
+## Wallet and Transaction Debugging
+
+### Wallet Creation Issues
+
+- [ ] **Enabled Chains**: Confirm required chains are enabled in your [Dashboard Wallet Controls](/docs/developer-admin-dashboard/wallet-control)
+- [ ] **Enabled Tokens**: Verify required tokens are whitelisted
+- [ ] **User Authentication**: Ensure user is properly authenticated before wallet operations
+
+### Transaction Failures
+
+- [ ] **Sufficient Balance**: Check user has adequate token balance for the transaction
+- [ ] **Gas Fees**: Verify sufficient funds for gas fees (if not using sponsorship)
+- [ ] **Network Connectivity**: Ensure stable connection to the blockchain network
+- [ ] **Transaction Parameters**: Validate all transaction parameters are correct and properly formatted
+
+### Intent Execution Issues
+
+- [ ] **Intent Type**: Confirm you're using the correct intent type for your operation
+- [ ] **Required Fields**: Verify all required fields are included in your intent payload
+- [ ] **Address Formats**: Check that all addresses are properly formatted for the target chain
+- [ ] **Token Addresses**: For native tokens, use empty string instead of contract address
+
+---
+
+## API Integration Debugging
+
+### Request Issues
+
+- [ ] **Endpoint URLs**: Verify you're using the correct API endpoints for your environment
+- [ ] **HTTP Methods**: Confirm you're using the correct HTTP method (GET, POST, etc.)
+- [ ] **Request Headers**: Check that all required headers are included and properly formatted
+- [ ] **Content-Type**: Ensure `Content-Type: application/json` is set for POST requests
+
+### Response Issues
+
+- [ ] **Status Codes**: Check HTTP status codes for error indicators
+- [ ] **Error Messages**: Review error response messages for specific issue details
+- [ ] **Rate Limits**: Verify you're not hitting API rate limits
+- [ ] **Network Timeout**: Check for network timeout issues
+
+---
+
+## Need Further Help?
+
+If you've worked through the relevant checklist and still encounter issues, visit our [Troubleshooting page](./troubleshooting) for comprehensive support options and guidance on how to get help from our team.
+
