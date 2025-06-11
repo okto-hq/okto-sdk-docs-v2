@@ -60,6 +60,7 @@ npm i @okto_web3/wagmi-adapter wagmi @tanstack/react-query
   npm i -D vite-plugin-node-polyfills
   ```
 
+  **Without this package, your app will fail to build or run properly.**
   </Callout>
 
 </Step>
@@ -91,10 +92,12 @@ npm i @okto_web3/wagmi-adapter wagmi @tanstack/react-query
 
 ### Configure Wagmi
 
-Create a configuration file to set up wagmi with the Okto connector:
+Create a configuration file to set up wagmi with the Okto connector. You can choose between two authentication methods:
 
-<Tabs items={['NextJS', 'React']}>
-  <Tab value="NextJS">
+<Tabs items={['Google OAuth', 'Okto Onboarding Modal']}>
+  <Tab value="Google OAuth">
+    This method provides a streamlined Google sign-in experience.
+
     ```typescript title="wagmi.config.ts"
     import { okto } from '@okto_web3/wagmi-adapter';
     import { cookieStorage, createConfig, createStorage, http } from 'wagmi';
@@ -128,7 +131,10 @@ Create a configuration file to set up wagmi with the Okto connector:
     }
     ```
   </Tab>
-  <Tab value="React">
+  <Tab value="Okto Onboarding Modal">
+
+    This method shows a comprehensive onboarding modal with multiple authentication options (Google, email, phone, etc.).
+
     ```typescript title="wagmi.config.ts"
     import { okto } from '@okto_web3/wagmi-adapter';
     import { cookieStorage, createConfig, createStorage, http } from 'wagmi';
@@ -142,7 +148,7 @@ Create a configuration file to set up wagmi with the Okto connector:
             environment: 'sandbox',
             clientPrivateKey: '0xprivatekey',
             clientSWA: '0xswa',
-            googleClientId: 'xxx',
+            loginType: 'generic' // Add loginType 'generic' to enable the Okto onboarding modal
           }),
         ],
         storage: createStorage({
@@ -163,6 +169,12 @@ Create a configuration file to set up wagmi with the Okto connector:
   </Tab>
 </Tabs>
 
+<Callout type="info" title="📝 Login Types Explained">
+  - **Google OAuth (default)**: Uses Google OAuth for authentication, providing a simple sign-in experience with Google accounts.
+  - **Okto Onboarding Modal (`loginType: 'generic'`)**: Opens a full onboarding modal with multiple authentication options (Google, email, phone, etc.)
+Choose the method that best fits your user experience needs!
+</Callout>
+
 
 #### Okto Configuration Parameters
 
@@ -171,7 +183,9 @@ Create a configuration file to set up wagmi with the Okto connector:
 | `environment` | Environment to use for the SDK | `'sandbox'` \| `'production'` | Yes |
 | `clientPrivateKey` | Your client private key | `string` | Yes |
 | `clientSWA` | Your client SWA | `string` | Yes |
-| `googleClientId` | Your Google client ID | `string` | Yes |
+| `googleClientId` | Your Google client ID | `string` | No |
+| `loginType` | Login method type | `'generic'` | No |
+
 </Step>
 
 <Step>
@@ -205,7 +219,7 @@ Update your app's root component to include the necessary providers:
       return (
         <html lang="en">
           <head>
-            <Script src="https://accounts.google.com/gsi/client" async defer />
+            <Script src="https://accounts.google.com/gsi/client" async defer /> // Not needed if using Onboarding Modal
           </head>
           <body>
             <WagmiProvider config={config} initialState={initialState}>
@@ -244,7 +258,7 @@ Update your app's root component to include the necessary providers:
   ```
 
     <Callout title="Note">
-    For Vite project, add this script tag to your `index.html` file in the project root directory.
+    For Vite project, add this script tag to your `index.html` file in the project root directory. This is necessary for Google OAuth to work properly with wagmi. If using Onboarding Modal, this script is not required.
     ```html
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     ```
@@ -295,3 +309,43 @@ function WalletConnection() {
 </Step>
 
 </Steps>
+
+## Important Notes & Troubleshooting
+
+### Chain Switching
+When using traditional wallets like MetaMask with Wagmi, users can change networks directly in their wallet interface, and your application code automatically picks up the current selected chain. However, Okto users don't have a separate wallet UI to change networks manually.
+
+This means your application code must handle network switching programmatically when using Okto. If your dApp requires a specific chain (like Base Sepolia for transactions), you need to implement chain switching logic.
+
+<Callout type="info" title="🔗 Network Switching: Traditional Wallets vs Okto">
+  - **Traditional Wallets (MetaMask, etc.)**: User changes network in wallet → Code automatically detects the change
+  - **Okto**: No external wallet UI → Your app must programmatically switch networks when needed
+</Callout>
+
+**Implementation Example**
+Here's how to implement automatic chain switching when a user tries to perform an action requiring a specific network:
+
+```tsx
+import { useChainId, useSwitchChain } from 'wagmi';
+
+const chainId = useChainId();
+const { switchChain } = useSwitchChain();
+
+const handleTransaction = async () => {
+  // Check if user is on the required chain (Base Sepolia = 84532)
+  if (chainId !== 84532) {
+    try {
+      console.log("Current chainId:", chainId);
+      await switchChain({ chainId: 84532 }); // Switch to Base Sepolia
+    } catch (error) {
+      alert("Network switch to Base Sepolia failed or was rejected.");
+      return;
+    }
+  }
+  
+  // Proceed with transaction now that we're on the correct network
+  // ... your transaction logic here
+};
+```
+
+This pattern ensures your dApp works seamlessly with Okto by automatically switching to the required network before executing transactions.
