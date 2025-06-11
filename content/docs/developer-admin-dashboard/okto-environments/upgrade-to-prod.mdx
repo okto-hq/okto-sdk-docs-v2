@@ -1,29 +1,133 @@
 ---
 title: Upgrade to Production
-description: When your application is fully integrated and tested in the Sandbox environment, you can upgrade to a production account to go live with your Okto integration on Okto Mainnet.
+description: Comprehensive guide for migrating your application from Okto Sandbox to Production environment
 full: false
 ---
 
+## Overview
 
-## **Upgrade Procedure**
+Once you've successfully tested all features in the Sandbox environment, you can migrate to Okto's production environment. This page outlines everything you need to prepare before submitting your production migration request.
 
-1. **Eligibility Check**:  
-   * Ensure that your integration passes all required tests.
-   * Review and comply with Okto's production guidelines. 
+<Callout type="warn">
+Before proceeding with production migration, ensure that:
+1. All features have been thoroughly tested in Sandbox
+2. Legal and commercial agreements with Okto have been finalized
+3. Scale estimations are ready for infrastructure planning
+</Callout>
 
-2. **Submit Upgrade Request**:  
-   * Log into your Dashboard Account. 
-   * Navigate to **Upgrade to Prod** on the Dashboard Home Page.  
-   * Fill out the [Upgrade Request Form](https://form.typeform.com/to/jskNWEIE).  
+## Prerequisites for Production Migration
 
-3. **Verification Process**:  
-   * The Okto team will review your request and application.
-   * Additional information or integration adjustments may be requested.
+### 1. Client Dashboard Access
 
-4. **Approval and Setup**:  
-   * Upon approval, you’ll receive detailed instructions for production setup.
-   * Update your application with production API keys and endpoints provided.
+Production dashboard differs from Sandbox:
 
-5. **Go Live**:  
-   * Perform final tests in the production environment.
-   * Launch your Okto-integrated application for real users.
+- **Single Email Access**: Only one whitelisted email address can access the production dashboard per client
+- **Business Domain Required**: Must use a business domain email (Personal emails are not accepted)
+
+<Callout type="info">
+If multiple team members need access, create a shared business email that all authorized personnel can access.
+</Callout>
+
+### 2. Wallet Type Decision (Critical)
+
+<Callout type="warn" title="Important Decision">
+This is a one-time, irreversible decision that affects your wallet infrastructure.
+</Callout>
+
+The type of wallet you choose will determine your infrastructure capabilities:
+
+#### **Option A: AA (Account Abstraction) Wallets** - Choose if:
+- You plan to sponsor gas fees for your users on any EVM chain. It enables gasless transactions for a better user experience.
+- You plan to add EVM sponsorship capabilities in the future.
+
+#### **Option B: EOA (Externally Owned Account) Wallets** - Choose if:
+- You do NOT require sponsorship on EVM chains.
+- You're certain you won't need EVM sponsorship in the future.
+- **EOA wallets cannot be upgraded to AA wallets later** (until Pectra upgrade is live on the required chains).
+
+<Callout type="warn" title="Critical">
+Even if you're currently using only non-EVM chains (Solana, Aptos), if you might add EVM chains with sponsorship later, choose Option A (AA wallets) now. This decision cannot be changed after production deployment.
+</Callout>
+
+**Note**: This decision only applies to Okto SDK users. If you're using External Wallet Adapters or Trade Service, this doesn't apply.
+
+### 3. JWT Authentication Setup (If Applicable)
+
+For SDK users implementing JWT authentication:
+
+- **JWT Endpoint Whitelisting**: Your JWT endpoint URL needs to be whitelisted by Okto for production use.
+- **Endpoint Format**: The endpoint should return a valid JWT token for authenticated requests.
+- **Endpoint Accessibility**: Ensure the endpoint is accessible and properly configured.
+- **Testing**: Thoroughly test your JWT endpoint in the Sandbox environment before migrating to production.
+- **Contact Support**: If you need to change the JWT endpoint after deployment, contact Okto support as this is restricted for security reasons.
+
+### 4. Scale Estimations
+
+Provide expected usage metrics for infrastructure planning:
+
+- **Max Concurrent Users**: Peak simultaneous users expected
+- **Orders Per Minute**: Average transaction volume per minute
+- **Max Orders Per Hour**: Peak hourly transaction volume
+- **Orders Per Day**: Total daily transaction volume
+
+These metrics help us provision appropriate infrastructure for your production environment.
+
+### 5. Contract Whitelisting Requirements
+
+Prepare lists of tokens and NFTs your users will interact with:
+
+#### **Token Whitelisting**
+
+Format: `[Token Name] – [Contract Address URL on chain explorer]`
+
+#### **NFT Whitelisting**
+
+Format: `[NFT Collection Name] – [Contract Address URL on chain explorer]`
+
+<Callout type="info">
+You can also whitelist contracts directly through the Client Dashboard after production access is granted.
+</Callout>
+
+## Code Changes Required
+
+### For API Integration
+
+Update your base URL from Sandbox to Production:
+```
+Sandbox: https://sandbox-api.okto.tech
+Production: Will be provided upon production access
+```
+
+All other API endpoints and parameters remain the same.
+
+### For SDK Integration
+
+When initializing the Okto client, change the environment parameter from `sandbox` to `production`:
+```javascript
+<OktoProvider 
+   config={{ 
+      environment: "production", // Changed to "production" for production environment
+      clientPrivateKey: process.env.CLIENT_PRIVATE_KEY, 
+      clientSWA: process.env.CLIENT_SWA, 
+   }} 
+>
+   {children}
+</OktoProvider> 
+```
+
+## Migration Checklist
+
+Before submitting your migration request, ensure you have:
+
+- [ ] Completed all sandbox testing
+- [ ] Decided on wallet type (AA vs EOA)
+- [ ] Prepared scale estimations
+- [ ] Selected business email for dashboard access
+- [ ] Listed all tokens for whitelisting
+- [ ] Listed all NFTs for whitelisting
+- [ ] Tested JWT endpoint (if applicable)
+- [ ] Reviewed code changes needed
+
+## Support
+
+If you need assistance during the migration process, contact our support team through the appropriate channels provided in the dashboard.
