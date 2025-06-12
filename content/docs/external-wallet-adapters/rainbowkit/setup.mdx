@@ -287,10 +287,11 @@ Update your app's root component to include the necessary providers:
     ````
 
     <Callout title="Note">
-    For Vite project, add this script tag to your `index.html` file in the project root directory. This is necessary for Google OAuth to work properly with RainbowKit. If using Onboarding Modal, this script is not required.
+    For Vite project, add this script tag to your `index.html` file in the project root directory. **The script must be placed inside the `<head>` tag.** 
     ```html
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     ```
+    This is necessary for Google OAuth to work properly with RainbowKit. If using Onboarding Modal, this script is not required.
     </Callout>
 
   </Tab>
