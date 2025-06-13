@@ -2,7 +2,7 @@
     "openapi": "3.1.0",
     "info": {
       "title": "Okto Trade Service",
-      "description": "Okto Trade Service describes the APIs for the trade service.q",
+      "description": "Okto Trade Service describes the APIs for the trade service. It provides endpoints for fetching quotes, best routes, registering intents, and retrieving order details.",
       "version": "1.0.0",
       "contact": {
         "name": "Ovia Seshadri",
@@ -32,7 +32,7 @@
         "post": {
           "tags": ["Usage"],
           "summary": "Get Quote",
-          "description": "Returns a quote for the specified token pair and amount",
+          "description": "Returns a quote for the specified token pair and amount.",
           "operationId": "getQuote",
           "requestBody": {
             "required": true,
@@ -175,7 +175,7 @@
         "post": {
           "tags": ["Usage"],
           "summary": "Get Best Route",
-          "description": "Finds the most optimal route for the swap",
+          "description": "Finds the most optimal route for the swap.",
           "operationId": "getBestRoute",
           "requestBody": {
             "required": true,
@@ -424,7 +424,7 @@
         "post": {
           "tags": ["Usage"],
           "summary": "Register Intent",
-          "description": "Registers a swap intent within the system",
+          "description": "Registers a swap intent within the system.",
           "operationId": "registerIntent",
           "requestBody": {
             "required": true,
@@ -514,7 +514,7 @@
         "post": {
           "tags": ["Usage"],
           "summary": "Get Order Details",
-          "description": "Fetches the details of an intent using the order ID",
+          "description": "Fetches the details of an intent using the order ID.",
           "operationId": "orderDetails",
           "requestBody": {
             "required": true,
@@ -720,7 +720,7 @@
         "post": {
           "tags": ["Usage"],
           "summary": "Get Call Data",
-          "description": "Provides the calldata required to execute the transaction",
+          "description": "Provides the calldata required to execute the transaction.",
           "operationId": "getCallData",
           "requestBody": {
             "required": true,
