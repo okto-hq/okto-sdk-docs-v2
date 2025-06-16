@@ -10,6 +10,7 @@
     "getNftCollections",
     "getOrdersHistory",
     "read-contract-data",
-    "ab-encoding"
+    "ab-encoding",
+    "decode-contract-data"
   ]
 }

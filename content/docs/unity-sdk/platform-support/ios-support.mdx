@@ -10,7 +10,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 ### 1. Configure URL Scheme in Unity
 
-In the Unity Editor’s iOS Player Settings, add a supported URL scheme named `oktosdk`.
+In the Unity Editor's iOS Player Settings, add a supported URL scheme named `oktosdk`.
 
 This allows the Okto SDK to handle authentication callbacks via the `oktosdk://` URL scheme.
 
@@ -32,7 +32,7 @@ After exporting your Unity project to Xcode, open the `Info.plist` file and add 
     </array>
   </dict>
 </array>
-
+```
 
 ---
 
@@ -51,4 +51,3 @@ This is required for web-view authentication to function properly.
 <Callout type="warning">
 If you experience issues, please double-check that all steps above have been completed correctly. In some cases, the issue may not be related to the Okto SDK. Conflicts or missing configuration in third-party libraries can also cause problems.
 </Callout>
-```

@@ -1,0 +1,106 @@
+---
+title: Decode Smart Contract Call Data
+description: Learn how to decode encoded smart contract function calls using the Okto SDK in Unity.
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Icon as IIcon } from '@iconify/react';
+
+import '../../styles.css';
+
+## Overview
+
+The Okto SDK provides decoding function that allow you to interpret encoded smart contract function calls. 
+
+<Callout type="info">
+Decoding is the reverse process of encoding - it takes hex-encoded call data and converts it back into readable function names and parameters using the contract's ABI.
+</Callout>
+
+### Example
+
+<Accordions>
+<Accordion title="Basic Function Decoding">
+
+```csharp
+using OktoSDK;
+using OktoSDK.Features.SmartContract;
+using UnityEngine;
+
+public class DecodingExample : MonoBehaviour
+{
+    public Decoding.DecodedCallData TestDepositDecoding()
+    {
+        string callData = "0xb6b55f250000000000000000000000000000000000000000000000000de0b6b3a7640000";
+        
+        string abi = @"[{
+            ""inputs"": [
+                {""name"": ""amount"", ""type"": ""uint256""}
+            ],
+            ""name"": ""deposit"",
+            ""outputs"": [],
+            ""stateMutability"": ""nonpayable"",
+            ""type"": ""function""
+        }]";
+        
+        return Decoding.DecodeCallDataDirectWrapper(callData, abi);
+    }
+}
+```
+
+</Accordion>
+</Accordions>
+
+### Class Overview
+
+| Class | Description |
+|---------|-------------|
+| `Decoding` | Static class providing methods to decode smart contract call data |
+
+<div className="method-box">
+
+## Decode Call Data
+
+`DecodeCallDataDirectWrapper(string callData, string abi)` decodes hex-encoded smart contract call data using the provided ABI.
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `callData` | `string` | Hex-encoded function call data (starting with "0x") |
+| `abi` | `string` | JSON ABI definition of the contract function |
+
+### Response
+
+<Callout title="Success Response">
+
+The method returns a `DecodedCallData` object with the following properties:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `IsSuccessful` | `bool` | Indicates if decoding was successful |
+| `FunctionName` | `string` | Name of the decoded function |
+| `Parameters` | `Dictionary<string, string>` | Parameter names and their decoded values |
+| `ErrorMessage` | `string` | Error message if decoding failed |
+
+</Callout>
+
+<Accordions>
+<Accordion title="Supported Parameter Types">
+
+The decoding system supports all standard Solidity types:
+
+| Type Category | Supported Types | Example Values |
+|---------------|----------------|----------------|
+| **Integers** | `uint8`, `uint16`, `uint32`, `uint64`, `uint128`, `uint256`, `int8`, `int16`, `int32`, `int64`, `int128`, `int256` | `"1000000000000000000"` |
+| **Address** | `address` | `"0x742d35Cc6634C0532925a3b844Bc454e4438f44e"` |
+| **Boolean** | `bool` | `"true"` or `"false"` |
+| **Bytes** | `bytes`, `bytes1`, `bytes32`, etc. | `"0x1234567890abcdef..."` |
+| **String** | `string` | `"Hello World"` |
+
+</Accordion>
+</Accordions>
+
+</div>

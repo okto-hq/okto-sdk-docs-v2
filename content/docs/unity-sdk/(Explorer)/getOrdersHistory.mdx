@@ -10,7 +10,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
 
-The `getOrdersHistory` function retrieves the transaction history of orders placed by the authenticated user.
+The `GetOrders` function retrieves the transaction history of orders placed by the authenticated user.
 
 <ChainSupportStatus 
 />
@@ -22,34 +22,23 @@ The `getOrdersHistory` function retrieves the transaction history of orders plac
 <Tabs items={['C#']}>
 <Tab value="C#">
 ```csharp
-using System;
-using System.Threading.Tasks;
-using UnityEngine;
-//This is an independent script which called GetOrder() Api
-namespace OktoSDK
-{
-    public class GetOrder : MonoBehaviour
-    {
-        public async Task<object> GetOrdersHistory(OktoClient oc, OrderFilterRequest filters = null)
+        public async void OnGetOrdersHistoryButtonClick()
         {
-            if (!oc.IsLoggedIn())
-            {
-                ResponsePanel.SetOrderResponse("You are not logged In!");
-                //ResponsePanel.DisplayResponse();
-                return "You are not logged In!";
-            }
+            if (!EnsureLoggedIn()) return;
+
             try
             {
-                return await BffClientRepository.GetBffClientRepository().GetOrders(filters);
+                Loader.ShowLoader();
+
+                var orders = await BffClientRepository.GetOrders();
+                string jsonString = JsonConvert.SerializeObject(orders, Formatting.Indented);
+                OrderResponsePanel.SetOrderResponse(jsonString);
             }
-            catch (Exception error)
+            catch (System.Exception e)
             {
-                Debug.LogError($"Failed to retrieve orders: {error}");
-                throw new Exception("Failed to retrieve orders. Please try again later.");
+                DisplayError("Get Orders History", e);
             }
         }
-    }
-}
 ```
 </Tab>
 </Tabs>
