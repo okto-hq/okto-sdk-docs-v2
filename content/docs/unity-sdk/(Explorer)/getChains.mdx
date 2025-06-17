@@ -31,21 +31,16 @@ namespace OktoSDK
 {
     public class Chain : MonoBehaviour
     {
-        public async Task<object> GetChains(OktoClient oc)
+        public async Task<List<NetworkData>> GetChains()
         {
-            if (!oc.IsLoggedIn())
-            {
-                ResponsePanel.SetResponse("You are not logged In!");
-                return "You are not logged In!";
-            }
             try
             {
-                var supportedNetworks = await BffClientRepository.GetBffClientRepository().GetSupportedNetworks();
+                var supportedNetworks = await BffClientRepository.GetSupportedNetworks();
                 return supportedNetworks;
             }
             catch (Exception error)
             {
-                Debug.LogError($"Failed to retrieve supported networks: {error}");
+                CustomLogger.LogError($"Failed to retrieve supported networks: {error}");
                 throw new Exception("Unable to fetch supported networks");
             }
         }

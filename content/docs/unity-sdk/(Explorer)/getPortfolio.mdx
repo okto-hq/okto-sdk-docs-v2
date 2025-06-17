@@ -31,20 +31,15 @@ namespace OktoSDK
 {
     public class Portfolio : MonoBehaviour
     {
-        public async Task<object> GetPortfolio(OktoClient oc)
+        public async Task<UserPortfolioData> GetPortfolio(OktoClient oc)
         {
-            if (!oc.IsLoggedIn())
-            {
-                ResponsePanel.SetResponse("You are not logged In!");
-                return "You are not logged In!";
-            }
             try
             {
-                return await BffClientRepository.GetBffClientRepository().GetPortfolio();
+                return await BffClientRepository.GetPortfolio();
             }
             catch (Exception error)
             {
-                Debug.LogError($"Failed to retrieve portfolio: {error}");
+                CustomLogger.LogError($"Failed to retrieve portfolio: {error}");
                 throw;
             }
         }

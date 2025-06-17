@@ -26,9 +26,9 @@
     "/api/oc/v1/authenticate": {
       "post": {
         "tags": ["Auth"],
-        "summary": "Authenticate (Google)",
-        "description": "Authenticate a User using Google idToken. This endpoint is used to authenticate users who have logged in using Google OAuth. Check out the [`Google Auth`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/googleAuthenticate_template.ts) template script for more details.",
-        "operationId": "googleAuth",
+        "summary": "Authenticate (Apple)",
+        "description": "Authenticate a User using Apple idToken. This endpoint is used to authenticate users who have logged in using Apple OAuth. Check out the [`Apple Auth`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/appleAuthenticate_template.ts) template script for more details.",
+        "operationId": "appleAuth",
         "requestBody": {
           "required": true,
           "content": {
@@ -48,14 +48,14 @@
                     "properties": {
                       "idToken": {
                         "type": "string",
-                        "description": "Google idToken received after successful login",
-                        "example": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE2YjY0YzQwLTI3YjItNDk5Ny04N2QyLTc4ZDIxM2Q1Mjg0YSIsInR5cCI6IkpXVCJ9.eyJhenAiOiIxMDI1NjY2MjYyMzQ"
+                        "description": "Apple idToken received after successful login",
+                        "example": "eyJraWQiOiJyczBNM2tPVjlwIiwiYWxnIjoiUlMyNTYifQ.."
                       },
                       "provider": {
                         "type": "string",
                         "description": "Authentication provider",
-                        "enum": ["google"],
-                        "example": "google"
+                        "enum": ["apple"],
+                        "example": "apple"
                       }
                     }
                   },
@@ -65,17 +65,17 @@
                       "nonce": {
                         "type": "string",
                         "description": "Unique identifier for the session",
-                        "example": "9010c35c-dd6f-4919-855d-0d8a479b8886"
+                        "example": "f9e806da-2474-474b-8807-7e023741f4b7"
                       },
                       "clientSWA": {
                         "type": "string",
                         "description": "Client Smart Wallet Address",
-                        "example": "0xe8201E368557508bF183D4e2DcE1b1A1E0bd20FA"
+                        "example": "0xdb70Faf78B19576d3C969487cb75f5152cee2E8F"
                       },
                       "sessionPk": {
                         "type": "string",
                         "description": "Session Public Key",
-                        "example": "0x04433904cb87d9ef414d358fe8cd161d3d2df5b916f021ae31af4c85157ebd1083c148a8386bb6f535b500a5e7a069eeda34961701c2182f56b870a814dbd5d208"
+                        "example": "0x0479ac376b8ed6344a9b639a2d926187e0dc1be703bb39cc37e33364fc825179ea25849d51cbfca3c0c515d6c09314028d904b2faf402ddf7ed6ebf9ada5a47c43"
                       },
                       "maxPriorityFeePerGas": {
                         "type": "string",
@@ -95,19 +95,19 @@
                       "paymasterData": {
                         "type": "string",
                         "description": "Paymaster data",
-                        "example": "0x000000000000000000000000e8201e368557508bf183d4e2dce1b1a1e0bd20fa00000000000000000000000000000000000000000000000000000000683e0415000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000041a5577911d8c6acac650ce142126e53bab5db3a9474ae5a1fc4528694e6d3c8d118639470981664eb1e563f0f99f764b94fdfb275de60ccc331a8f60f2d9c0b071c00000000000000000000000000000000000000000000000000000000000000"
+                        "example": "0x000000000000000000000000db70faf78b19576d3c969487cb75f5152cee2e8f00000000000000000000000000000000000000000000000000000000684dc459000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000041433487e01b4721100acacf9974353e27234d4677e24179487010581e1706111438a01687677119367b055855e772d8abaac091964cec1fac252f7f13436b584f1c00000000000000000000000000000000000000000000000000000000000000"
                       }
                     }
                   },
                   "sessionPkClientSignature": {
                     "type": "string",
                     "description": "Client signature of the session public key",
-                    "example": "0xade9a004226aced4e3f7fd8a13cd68aafee5c0bc8bbbaf3cb76cb25d509f183f762edbee01ddcbf5f3c41c54503dc91c8264b788f08e1c1c924f29acae3c5ce61b"
+                    "example": "0xd8f40c1c4bd5feda66b61473fa3390ad6095d6e2c3b2631eb2bee0177b4abc1819df60079c5cae2d0bf7d4dae693dee5ee75c6be9c40cf4801aad51dfb19fe811b"
                   },
                   "sessionDataUserSignature": {
                     "type": "string",
                     "description": "User signature of the session data",
-                    "example": "0x9efa67f77e17bfe5d36062b205462eb51ff4152e77bbe555cff65d3ce2c2ad790990019e0da4c7aa3f7966dcf345242ced1a2e23cc6529288563fae68e5e80241c"
+                    "example": "0x3d995180af0e04105e41995e0392ed250479265835115e177bc1314842cef059503e897dd39444ac4658b0d35fdba728936abf5d1d524ba381d1ce0f91437bac1c"
                   }
                 }
               }
@@ -140,22 +140,22 @@
                         "userSWA": {
                           "type": "string",
                           "description": "User Smart Wallet Address",
-                          "example": "0x8B20023FC47D8F8BDB7418722dBB0e3e9964a906"
-                        },
-                        "nonce": {
-                          "type": "string",
-                          "description": "Unique identifier for the session",
-                          "example": "0x00000000000000000000000000000000f9d4db5746824690b2efeae9f9945858"
+                          "example": "0xb7ab3D9004286d1eDeFFA0E7Ec6cc6cDf0F38abF"
                         },
                         "clientSWA": {
                           "type": "string",
                           "description": "Client Smart Wallet Address",
-                          "example": "0xe8201E368557508bF183D4e2DcE1b1A1E0bd20FA"
+                          "example": "0xdb70Faf78B19576d3C969487cb75f5152cee2E8F"
+                        },
+                        "nonce": {
+                          "type": "string",
+                          "description": "Unique identifier for the session",
+                          "example": "0x00000000000000000000000000000000f9e806da2474474b88077e023741f4b7"
                         },
                         "sessionExpiry": {
                           "type": "integer",
                           "description": "Session expiry timestamp (in seconds)",
-                          "example": 1747481250
+                          "example": 1750769404
                         }
                       }
                     }
