@@ -32,30 +32,20 @@ using UnityEngine;
 //This is an independent script which calls GetNftPotfolio() Api
 namespace OktoSDK
 {
-    public class NFT : MonoBehaviour
+    public class Portfolio : MonoBehaviour
     {
-        public async Task<object> GetNftCollections(OktoClient oc)
+        public async Task<List<UserNFTBalance>> GetPortfolioNFT(OktoClient oc)
         {
-            if (oc == null)
-            {
-                ResponsePanel.SetResponse("You are not logged In!");
-                return "You are not logged In!";
-            }
-            if (!oc.IsLoggedIn())
-            {
-                ResponsePanel.SetResponse("You are not logged In!");
-                //ResponsePanel.DisplayResponse();
-                return "You are not logged In!";
-            }
+            Loader.ShowLoader();
+
             try
             {
-                var response = await BffClientRepository.GetBffClientRepository().GetPortfolioNft();
-                return response;
+                return await BffClientRepository.GetPortfolioNft();
             }
             catch (Exception error)
             {
-                Debug.LogError($"Error fetching NFT collections: {error}");
-                throw new Exception("Failed to fetch NFT collections from the backend.");
+                CustomLogger.LogError($"Failed to retrieve orders: {error}");
+                throw;
             }
         }
     }

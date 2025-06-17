@@ -2,6 +2,7 @@
     "title": "Onboarding Modal",
     "pages": [
       "learn",
-      "auth-user-via-modal"
+      "auth-user-via-modal",
+      "onboarding-customizations"
     ]
   }
