@@ -13,6 +13,8 @@
         "./authenticate/okto-auth-session",
         "./authenticate/auth-methods",
         "./authenticate/google-oauth",
+        "./authenticate/apple-auth",
+        "./authenticate/twitter-auth",
         "./authenticate/login-logout",
         "./authenticate/auth-jwt",
         "./authenticate/auth-whatsapp",
