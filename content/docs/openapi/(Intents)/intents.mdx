@@ -4,53 +4,45 @@ description: Overview guide to Okto Intents—covering token transfers, NFT tran
 full: false
 ---
 
-import KeyBenefitsGrid, { KeyBenefitCard } from "app/components/mdx/KeyBenefitsCard";
+import FeatureCard from "app/components/mdx/FeatureCard";
 import ExternalLink from "app/components/mdx/ExternalLink";
 import { IoPersonOutline, IoFlashOutline, IoShieldCheckmarkOutline } from 'react-icons/io5';
 
-Intents make Web3 easy.  Instead of complex steps, you simply tell Okto your *intent* – what you want to achieve.  Okto handles the rest, making blockchain actions feel simple.
+Intents are high-level abstractions for on-chain actions. Instead of constructing and managing low-level blockchain transactions, you declare the desired outcome—the *intent*—and the Okto platform handles the execution complexity.
 
 ## What are Intents on Okto?
 
-Intents are like simple instructions for Web3. You say what you want, not *how* to do it. The Okto Platform figures out the best way to make it happen.  The Okto Platform takes care of:
+Okto Intents are designed to simplify the developer experience by abstracting away the intricacies of blockchain interactions. When an intent is submitted, the Okto platform is responsible for:
 
-- **Breaking Down Complex Tasks:**  Intents become easy steps for the system.
-- **Smart Fee Handling:**  Okto makes sure you pay the right amount for fees.
-- **Automatic Steps:**  The system does all the work in the background.
-- **Cross-Chain Made Easy:**  Moving things between blockchains is automatic.
-
-<Callout type="Note">
-Cross-chain liquidity intents are coming soon! These will enable seamless token swaps across different blockchain networks. To learn more about upcoming cross-chain capabilities, check out [Cross-Chain Intents →](/docs/system-capabilities/cross-chain-intents)
-</Callout>
+-   **Transaction Assembly:** Translating the high-level intent into a compliant on-chain transaction.
+-   **Fee Optimization:** Calculating and applying appropriate gas fees for timely execution.
+-   **State Management:** Handling the entire lifecycle of the transaction, from submission to confirmation.
+-   **Cross-Chain Execution:** Orchestrating complex workflows for intents that span multiple blockchain networks.
 
 ## Key Benefits
 
-<KeyBenefitsGrid>
-  <KeyBenefitCard
-    title="👤 User-Friendly"
-    points={[
-      'Simple Instructions: Tell Okto what you want in plain terms.',
-      'No Tech Knowledge Needed: Skip the blockchain details.',
-      'Fewer Errors: Automation reduces mistakes.',
-    ]}
+<div className="grid grid-cols-1 md:grid-cols-1 gap-4 mt-6">
+  <FeatureCard
+    icon={<IoPersonOutline size={"1.5rem"} />}
+    title="Simplified Abstraction"
+    description="Declare outcomes, not execution steps. Reduce the need for deep blockchain expertise and minimize implementation errors through automation."
+    iconColor="text-blue-500"
   />
-  <KeyBenefitCard
-    title="⚡ Smart & Fast"
-    points={[
-      'Smart Fees: Automatic, cost-effective fees.',
-      'Best Routes: Okto finds the fastest and cheapest way to do things.',
-      'Quick Actions: Complex tasks get done faster.',
-    ]}
+  <FeatureCard
+    icon={<IoFlashOutline size={"1.5rem"} />}
+    title="Efficient Execution"
+    description="Benefit from automated gas management, optimized routing for cross-chain actions, and accelerated development cycles."
+    iconColor="text-green-500"
   />
-  <KeyBenefitCard
-    title="🛡️ Secure & Reliable"
-    points={[
-      'Safe Steps: Transactions happen in a secure order.',
-      'Protection Built-In: Okto helps avoid common Web3 problems.',
-      'Dependable Transfers: Your cross-chain actions are handled reliably.',
-    ]}
+  <FeatureCard
+    icon={<IoShieldCheckmarkOutline size={"1.5rem"} />}
+    title="Secure by Design"
+    description="Leverage a secure, ordered transaction flow with built-in safeguards against common issues like improper nonce handling for reliable execution."
+    iconColor="text-red-500"
   />
-</KeyBenefitsGrid>
+</div>
+
+---
 
 ## Core Intent Types
 
@@ -62,3 +54,183 @@ Okto API V2 provides these Intent types:
 | <ExternalLink href="/docs/openapi/nftTransfer">NFT Transfer Intent</ExternalLink> | Transfer NFTs with ease and security. |
 | <ExternalLink href="/docs/openapi/swap/overview">Swap Intent</ExternalLink> | Exchange tokens seamlessly across chains using Okto's Trade Service. |
 | <ExternalLink href="/docs/openapi/evmRawTransaction">Raw Transaction Intent</ExternalLink> | For advanced users: direct contract calls and complex operations. |
+
+---
+
+## The Role of the UserOperation in Intents
+
+A common point of confusion for developers is the presence of a large `UserOperation` (UserOp) payload in the intent API requests. This payload is fundamental to Okto's architecture and is a direct consequence of our commitment to self-custody and decentralization through Account Abstraction (ERC-4337).
+
+**Why is a UserOp necessary?**
+
+Every Okto user is provisioned with a self-custodial smart contract wallet. All interactions with this wallet—such as transferring a token or calling a contract function—must be initiated via an on-chain transaction. In the ERC-4337 standard, these actions are encapsulated within a **UserOperation**. 
+
+The UserOp is a pseudo-transaction object that describes the action the user's smart wallet should perform. For a detailed breakdown of its structure and role in Account Abstraction, please refer to our guide on [**Understanding UserOps**](/docs/react-sdk/userop-learn).
+
+<Callout type="info" title="Abstraction via Tooling">
+Manual construction of UserOps is not required. The Okto SDK and our provided API template scripts handle the entire UserOp creation and signing process. Developers only need to supply the high-level parameters for the specific intent, and the tooling abstracts away the underlying payload construction.
+</Callout>
+
+---
+
+## The API Workflow: Estimate & Execute
+
+For most intents, the implementation follows a simple two-step process. This workflow is designed to abstract away the complexity of building and signing blockchain transactions.
+
+1. **Estimate the Intent**: Use the `estimate` endpoint to prepare the intent. You provide the high-level details of your intent, and in return, Okto gives you a complete, pre-populated `UserOperation` object along with gas fee estimations.
+
+2. **Execute the Intent**: Next, you take the `userOps` object from the estimate response, sign it on the client-side using the user's ephemeral session key, and submit it for execution.
+
+---
+
+## Intent Implementation Guides
+
+Below are practical guides for implementing the available intents using the **Estimate & Execute** flow.
+
+### Token Transfer
+
+Use this intent to transfer a specified amount of a fungible token.
+
+**API Endpoints:**
+- **Estimate:** [`/api/oc/v1/estimate`](/docs/openapi/token-transfer-estimate)
+- **Execute:** [`/api/oc/v1/execute`](/docs/openapi/token-transfer-execute)
+
+The payload for the `/estimate` endpoint requires the `type` and a `details` object containing the transfer information.
+
+```json
+{
+  "type": "TOKEN_TRANSFER",
+  "jobId": "<unique-uuid-v4>",
+  "details": {
+    "caip2Id": "eip155:80002",
+    "tokenAddress": "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+    "recipientWalletAddress": "0x15000a9E47E8527a7C4A02189e581F4D0Df589C3",
+    "amount": "1000000"
+  },
+  ... // Other fields like gasDetails, paymasterData
+}
+```
+**Key `details` Fields:**
+- `caip2Id`: The network identifier (e.g., `eip155:80002` for Polygon Amoy).
+- `tokenAddress`: The contract address of the ERC-20 token. **Leave this as an empty string (`""`) for native token**.
+- `recipientWalletAddress`: The destination address.
+- `amount`: The quantity of the token to send, expressed in its lowest denomination (e.g., wei for ETH-like tokens).
+
+---
+
+### NFT Transfer
+
+Use this intent to transfer an ERC-721 or ERC-1155 non-fungible token.
+
+**API Endpoints:**
+- **Estimate:** [`/api/oc/v1/estimate`](/docs/openapi/nft-transfer-estimate)
+- **Execute:** [`/api/oc/v1/execute`](/docs/openapi/nft-transfer-execute)
+
+The payload for the `/estimate` endpoint specifies the NFT to be transferred.
+
+```json
+{
+  "type": "NFT_TRANSFER",
+  "jobId": "<unique-uuid-v4>",
+  "details": {
+    "caip2Id": "eip155:80002",
+    "collectionAddress": "0x0b5ca10156a184201d93609fd7d1606c10d5da21",
+    "nftId": "0",
+    "recipientWalletAddress": "0x597F2Fd9E42b58dF047849Bb29E25377745fF0da",
+    "nftType": "ERC721",
+    "amount": "1"
+  },
+  ... // Other fields like gasDetails, paymasterData
+}
+```
+**Key `details` Fields:**
+- `collectionAddress`: The smart contract address of the NFT collection.
+- `nftId`: The specific token ID of the NFT to transfer.
+- `nftType`: Either `"ERC721"` or `"ERC1155"`.
+- `amount`: For ERC-721, this should always be `"1"`. For ERC-1155, specify the quantity to transfer.
+
+---
+
+### Swap Intent
+
+This powerful intent enables seamless token-for-token exchanges, both within the same blockchain and across different networks. It abstracts away the complexities of decentralized exchanges (DEXs) and bridges.
+
+<Callout>For a deep dive into the swap architecture, supported routes, and fee structures, please refer to the main [**Swap Intents Overview**](/docs/openapi/swap/overview).</Callout>
+
+**API Endpoints:**
+- **Estimate:** [`/api/oc/v1/estimate`](/docs/openapi/swap/swapIntentEstimate)
+- **Execute:** [`/api/oc/v1/execute`](/docs/openapi/swap/swapIntentExecute)
+
+The payload for the `/estimate` endpoint defines the parameters for the desired swap.
+
+```json
+{
+  "type": "SWAP",
+  "jobId": "<unique-uuid-v4>",
+  "details": {
+    "fromChainCaip2Id": "eip155:8453",
+    "toChainCaip2Id": "eip155:137",
+    "fromChainTokenAddress": "",
+    "toChainTokenAddress": "0x...",
+    "fromChainTokenAmount": "100000000",
+    "slippage": "3"
+  },
+  ... // Other fields like gasDetails, paymasterData
+}
+```
+**Key `details` Fields:**
+- `fromChainCaip2Id` & `toChainCaip2Id`: Define the source and destination networks. These can be the same for intra-chain swaps.
+- `fromChainTokenAddress` & `toChainTokenAddress`: Contract addresses of the tokens involved. Use an empty string for native assets.
+- `fromChainTokenAmount`: The amount of the source token to be swapped, in its lowest denomination.
+- `slippage`: The maximum acceptable price change percentage (e.g., `"3"` for 3%).
+
+---
+
+### Raw Transaction
+
+This advanced intent allows you to execute any custom transaction by interacting directly with a smart contract. It provides maximum flexibility for use cases not covered by other intents.
+
+#### Required Parameters by Blockchain
+
+The essential parameters you provide within the `transactions` array vary by blockchain architecture:
+
+| Blockchain Type | Parameters | Description |
+|---|---|---|
+| **EVM Chains** | `to`, `value`, `data`, `from` | Recipient address, native token amount (wei), encoded function call, sender wallet |
+| **Aptos** | `function`, `type_arguments`, `arguments` | Function identifier, type parameters, function arguments |
+| **Solana** | Coming soon | Instruction-based format |
+
+**API Endpoints:**
+- **Estimate:** [`/api/oc/v1/estimate`](/docs/openapi/raw-transaction-estimate)
+- **Execute:** [`/api/oc/v1/execute`](/docs/openapi/raw-transaction-execute)
+
+The payload requires a `transactions` array, where each object represents a single contract call.
+
+Example payload for an EVM chain:
+
+```json
+{
+  "type": "RAW_TRANSACTION",
+  "jobId": "<unique-uuid-v4>",
+  "details": {
+    "caip2Id": "eip155:84532",
+    "transactions": [
+      {
+        "to": "0x363653DE3f920Ec8710b1Fc01e24Df96Bf7fb15E",
+        "from": "0xA8c1021b6322e5fF8e059295fa027A1380789037",
+        "value": "0x0",
+        "data": "0x6057361d0000000000000000000000000000000000000000000000000000000000000005"
+      }
+    ]
+  },
+  // Other fields like gasDetails, paymasterData
+}
+```
+**Key `transactions` Object Fields for EVM Chains:**
+- `to`: The target smart contract address you want to interact with.
+- `from`: The user's smart wallet address on the specified chain.
+  <Callout type="warn" title="Important">The `from` address **must** be the user's smart wallet address for that network. You can retrieve this address using the [Get Account](/docs/openapi/explorer/get-wallets) endpoint.</Callout>
+- `value`: The amount of native currency (in hex format) to send with the transaction (e.g., `"0x0"` for no value).
+- `data`: The ABI-encoded function call, including the function signature and parameters. You can use tools like `viem` or the [ABI Encoder](https://docs.okto.tech/tools) to generate this.
+
+---
