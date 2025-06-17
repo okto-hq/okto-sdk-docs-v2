@@ -18,6 +18,7 @@ rimrafSync(out, {
 
     return (
       !v.endsWith("index.mdx") &&
+      !v.endsWith("debug-checklist.mdx") &&
       !v.endsWith("overview.mdx") &&
       !v.endsWith("getting-started.mdx") &&
       !v.endsWith("meta.json") &&

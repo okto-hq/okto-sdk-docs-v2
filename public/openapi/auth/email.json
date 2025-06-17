@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Okto",
-    "description": "Okto SDK is the fastest and easiest way a developer can build on Web3. Okto SDK offers interoperable embedded wallets for developers to onboard users on Web3 in a web2 like experience.\n\n## Resources\n\n* https://github.com/okto-hq/\n",
+    "description": "Okto API is the fastest and easiest way a developer can build on Web3. Okto API offers interoperable embedded wallets for developers to onboard users on Web3 in a web2 like experience.\n\n## Resources\n\n* https://github.com/okto-hq/\n",
     "version": "1.0.0",
     "contact": {
       "name": "Ovia Seshadri",
