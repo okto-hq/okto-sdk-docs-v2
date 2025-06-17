@@ -1,6 +1,6 @@
 {
     "title": "API Reference",
-    "description": "API reference for Okto SDK V2",
+    "description": "API reference for Okto API V2",
     "root": true,
     "icon": "Rocket",
     "pages": [
@@ -13,6 +13,8 @@
         "./authenticate/okto-auth-session",
         "./authenticate/auth-methods",
         "./authenticate/google-oauth",
+        "./authenticate/apple-auth",
+        "./authenticate/twitter-auth",
         "./authenticate/login-logout",
         "./authenticate/auth-jwt",
         "./authenticate/auth-whatsapp",
