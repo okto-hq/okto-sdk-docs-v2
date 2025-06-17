@@ -1,53 +1,36 @@
 ---
 title: Rate Limits
-description: To ensure fair usage and prevent abuse, the Okto SDK API enforces rate limits on requests.
+description: To ensure fair usage and prevent abuse, the Okto SDK & APIs enforces rate limits on requests. These limits vary depending on the environment and your subscription tier.
 full: false
 ---
 
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
+## Rate Limits by Environment
 
+<Callout type="info">
+  Rate limits vary based on your environment and tier. Sandbox has no limits for development and testing.
+</Callout>
 
-<Tabs items={['Sandbox', 'Production']}>
+| Okto API/SDK | Sandbox | Production Free Tier | Production Paid Tiers |
+| :--- | :--- | :--- | :--- |
+| **GET** | | | |
+| Explorer Functions | Unlimited | Unlimited | [Contact Team](mailto:devrel@coindcx.com) |
+| **POST** | | | |
+| Message Signing | 120 requests/min per Client SWA | 120 requests/min per Client SWA | [Contact Team](mailto:devrel@coindcx.com) |
+| Raw Read | 120 requests/min per Client SWA | 120 requests/min per Client SWA | [Contact Team](mailto:devrel@coindcx.com) |
+| Authenticate calls | 120 requests/min per Client SWA | 120 requests/min per Client SWA | [Contact Team](mailto:devrel@coindcx.com) |
+| Intents (Token/NFT transfer, Raw Txn, Swap) | 120 requests/min per Client SWA | 120 requests/min per Client SWA | [Contact Team](mailto:devrel@coindcx.com) |
+| External Adapter Social Auth + Transactions | 120 requests/min per Client SWA | 120 requests/min per Client SWA | [Contact Team](mailto:devrel@coindcx.com) |
+| Trade service APIs | [Contact Team](mailto:devrel@coindcx.com) | [Contact Team](mailto:devrel@coindcx.com) | [Contact Team](mailto:devrel@coindcx.com) |
 
-  <Tab value="Sandbox">
-    
-        - **Request Limit**: ```1,000 API calls per hour per-client key```
-        - **Applies to**: ```All POST operations```
-        - **Reset Period**: ```Every hour```
-      
-  </Tab>
-
-  <Tab value="Production">
-
-      #### <span style={{ color: 'green' }}>AUTH</span>
-        - **Request Limit**: ```50 API calls per 5-minute window per-client key```
-        - **Applies to**: ```IP address from which the request is coming (END USER)```
-        - **Reset Period**: ```Every 5 minutes```
-
-    
-      #### <span style={{ color: 'green' }}>POST</span>
-        - **Request Limit**: ```1,500 API calls per 5-minute window per-client key```
-        - **Applies to**: ```All POST operations```
-        - **Reset Period**: ```Every 5 minutes```
-
-        ### **How Rate Limiting Works**
-        The **five-minute interval** starts from the first API request each day.
-
-        For example:
-        - If the first request is sent at **12:02 am**, the rate limit applies from **12:02 am to 12:07 am**
-        - A maximum of 1,500 requests can be made within this period.
-        - The interval resets every five minutes.
-    
-    
-  </Tab>
-</Tabs>
-
+<sub>*Intents include Token Transfer, NFT Transfer, and Raw Transaction operations</sub>
 
 ## Error Response
 
 When you exceed the rate limit, you'll receive the following error response:
+
 ```json
 {
     "status": "error",
@@ -60,6 +43,8 @@ When you exceed the rate limit, you'll receive the following error response:
 }
 ```
 
-As per industry standards, a **`retry-after` response header** will be included when a rate-exceeded error is encountered. The value of this header indicates the **time (in seconds)** after which the rate limit restriction will expire. You can retry your request after this period. 
+Following industry standards, a **`retry-after` response header** will be included when a rate-exceeded error is encountered. The value of this header indicates the **time (in seconds)** after which the rate limit restriction will expire. You can retry your request after this period. 
 
+## Higher Rate Limits
 
+Need higher rate limits for your production application? [Contact the Sales Team](mailto:devrel@coindcx.com) to learn about our Basic, Pro, and Enterprise tiers with increased limits and additional features.
