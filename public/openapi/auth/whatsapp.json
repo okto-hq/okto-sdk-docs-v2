@@ -471,7 +471,7 @@
       "post": {
         "tags": ["Auth"],
         "summary": "Authenticate (Whatsapp)",
-        "description": "Authenticate a User using Whatsapp OTP. This endpoint is used to authenticate users who have logged in using Whatsapp OTP. Check out the [`Whatsapp Auth`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/whatsappAuthenticate_template.ts) template script for more details.",
+        "description": "Authenticate a User using Whatsapp OTP. This endpoint is used to authenticate users who have logged in using Whatsapp OTP. For more details, see our [Authentication Methods guide](https://docs.okto.tech/docs/openapi/authenticate/auth-methods). Refer to the [`Whatsapp Auth`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/whatsappAuthenticate_template.ts) template script for implementation guidance.",
         "operationId": "whatsappAuth",
         "requestBody": {
           "required": true,
