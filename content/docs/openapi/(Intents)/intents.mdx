@@ -8,16 +8,17 @@ import FeatureCard from "app/components/mdx/FeatureCard";
 import ExternalLink from "app/components/mdx/ExternalLink";
 import { IoPersonOutline, IoFlashOutline, IoShieldCheckmarkOutline } from 'react-icons/io5';
 
-Intents are high-level abstractions for on-chain actions. Instead of constructing and managing low-level blockchain transactions, you declare the desired outcome—the *intent*—and the Okto platform handles the execution complexity.
+Intents are high-level abstractions for on-chain actions. Instead of constructing and managing low-level blockchain transactions, you describe what you want to achieve—the intent—and Okto handles all the technical complexity behind the scenes.
 
 ## What are Intents on Okto?
 
-Okto Intents are designed to simplify the developer experience by abstracting away the intricacies of blockchain interactions. When an intent is submitted, the Okto platform is responsible for:
+Okto Intents are designed to simplify the developer experience by abstracting away the intricacies of blockchain interactions. Think of intents as a translation layer between your application's needs and blockchain complexity. When an intent is submitted, the Okto platform is responsible for:
 
 -   **Transaction Assembly:** Translating the high-level intent into a compliant on-chain transaction.
--   **Fee Optimization:** Calculating and applying appropriate gas fees for timely execution.
+-   **Fee Optimization:** Calculating and applying appropriate gas fees for reliable execution.
 -   **State Management:** Handling the entire lifecycle of the transaction, from submission to confirmation.
--   **Cross-Chain Execution:** Orchestrating complex workflows for intents that span multiple blockchain networks.
+-   **Cross-Chain Execution:** Orchestrating complex multi-step workflows for intents across different networks.
+-   **Ensure Security:** Validate all parameters and provide built-in safety mechanisms.
 
 ## Key Benefits
 
@@ -48,14 +49,12 @@ Okto Intents are designed to simplify the developer experience by abstracting aw
 
 Okto API V2 provides these Intent types:
 
-| **Intent Type** | **Description** |
-|----------|------------------------|
-| <ExternalLink href="/docs/openapi/tokenTransfer">Token Transfer Intent</ExternalLink> | Easily transfer tokens. Okto handles fees and routing. |
-| <ExternalLink href="/docs/openapi/nftTransfer">NFT Transfer Intent</ExternalLink> | Transfer NFTs with ease and security. |
-| <ExternalLink href="/docs/openapi/swap/overview">Swap Intent</ExternalLink> | Exchange tokens seamlessly across chains using Okto's Trade Service. |
-| <ExternalLink href="/docs/openapi/evmRawTransaction">Raw Transaction Intent</ExternalLink> | For advanced users: direct contract calls and complex operations. |
-
----
+| Intent Type | Description | Template Scripts |
+| :--- | :--- | :--- |
+| [Token Transfer Intent](https://www.google.com/search?q=/docs/openapi/tokenTransfer) | Easily transfer tokens. Okto handles fees and routing. | [Basic Implementation](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/tokenTransfer.ts) or [With Gas Estimate](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/tokenTransfer_with_estimate.ts) |
+| [NFT Transfer Intent](https://www.google.com/search?q=/docs/openapi/nftTransfer) | Transfer NFTs with ease and security. | [Basic Implementation](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/nftTransfer.ts) or [With Gas Estimate](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/nftTransfer_with_estimate.ts) |
+| [Swap Intent](https://www.google.com/search?q=/docs/openapi/swap/overview) | Exchange tokens seamlessly across chains using Okto's Trade Service. | [Complete Implementation](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/swapIntent.ts) |
+| [Raw Transaction Intent](https://www.google.com/search?q=/docs/openapi/evmRawTransaction) | For advanced users: direct contract calls and complex operations. | [Basic Implementation](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/rawTransaction.ts) or [With Gas Estimate](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/rawTransaction_with_estimate.ts) |
 
 ## The Role of the UserOperation in Intents
 
@@ -77,9 +76,27 @@ Manual construction of UserOps is not required. The Okto SDK and our provided AP
 
 For most intents, the implementation follows a simple two-step process. This workflow is designed to abstract away the complexity of building and signing blockchain transactions.
 
-1. **Estimate the Intent**: Use the `estimate` endpoint to prepare the intent. You provide the high-level details of your intent, and in return, Okto gives you a complete, pre-populated `UserOperation` object along with gas fee estimations.
+1. **Estimate the Intent**
 
-2. **Execute the Intent**: Next, you take the `userOps` object from the estimate response, sign it on the client-side using the user's ephemeral session key, and submit it for execution.
+Call the `estimate` endpoint with your intent's high-level details. Okto returns a pre-populated `UserOperation` object and gas fee estimates. 
+
+Use this step to preview gas costs, handle cross-chain or complex transactions, or enable features like sponsorship.
+
+2. **Execute the Intent**
+
+<Callout type="info" title="Signing the UserOperation">
+Sign the `userOps` object from the estimate response on the client side using the user's ephemeral session key before submitting it to the `execute` endpoint. See [example](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/utils/invokeExecuteUserOp.ts#L29).
+</Callout>
+
+To execute an intent, you submit the signed `userOps` object (from the estimate response or your own construction) to the `execute` endpoint. The response includes a `jobId` for tracking transaction status.
+
+<Callout type="info" title="When to Use Estimate & Execute">
+- **Use Only Execute:**  
+  Skip `estimate` if you build the UserOp manually with known parameters and gas values. This is suitable for simple, repeatable, or backend-driven transactions where performance is critical.
+
+- **Use Estimate + Execute:**  
+  Use both endpoints for dynamic gas estimation, automatic UserOp construction, or user-facing flows that require cost previews, validation, or sponsored transactions.
+</Callout>
 
 ---
 
@@ -161,28 +178,50 @@ This powerful intent enables seamless token-for-token exchanges, both within the
 - **Estimate:** [`/api/oc/v1/estimate`](/docs/openapi/swap/swapIntentEstimate)
 - **Execute:** [`/api/oc/v1/execute`](/docs/openapi/swap/swapIntentExecute)
 
-The payload for the `/estimate` endpoint defines the parameters for the desired swap.
+The payload for the `/estimate` endpoint defines the parameters for the desired swap using JSON-RPC format.
 
 ```json
 {
-  "type": "SWAP",
-  "jobId": "<unique-uuid-v4>",
-  "details": {
-    "fromChainCaip2Id": "eip155:8453",
-    "toChainCaip2Id": "eip155:137",
-    "fromChainTokenAddress": "",
-    "toChainTokenAddress": "0x...",
-    "fromChainTokenAmount": "100000000",
-    "slippage": "3"
-  },
-  ... // Other fields like gasDetails, paymasterData
+  "method": "estimate",
+  "jsonrpc": "2.0",
+  "id": "<request-id>",
+  "params": [
+    {
+      "type": "SWAP",
+      "jobId": "<unique-uuid-v4>",
+      "paymasterData": "<paymaster-data>",
+      "gasDetails": {
+        "maxFeePerGas": "",
+        "maxPriorityFeePerGas": ""
+      },
+      "details": {
+        "fromChainCaip2Id": "eip155:8453",
+        "toChainCaip2Id": "eip155:137",
+        "fromChainTokenAddress": "",
+        "toChainTokenAddress": "0x...",
+        "fromChainTokenAmount": "100000000",
+        "slippage": "3",
+        "sameChainFee": "0",
+        "sameChainFeeCollector": "0x2c2505D0E21f32F38bCEBeca1C331ab4069bBCb9",
+        "crossChainFee": "10",
+        "crossChainFeeCollector": "0x2c2505D0E21f32F38bCEBeca1C331ab4069bBCb9"
+      }
+    }
+  ]
 }
 ```
+
 **Key `details` Fields:**
-- `fromChainCaip2Id` & `toChainCaip2Id`: Define the source and destination networks. These can be the same for intra-chain swaps.
-- `fromChainTokenAddress` & `toChainTokenAddress`: Contract addresses of the tokens involved. Use an empty string for native assets.
-- `fromChainTokenAmount`: The amount of the source token to be swapped, in its lowest denomination.
+- `fromChainCaip2Id` & `toChainCaip2Id`: Define the source and destination networks using CAIP-2 format. These can be the same for intra-chain swaps.
+- `fromChainTokenAddress` & `toChainTokenAddress`: Contract addresses of the tokens involved. Use an empty string (`""`) for native assets.
+- `fromChainTokenAmount`: The amount of the source token to be swapped, in its lowest denomination (e.g., wei for ETH).
 - `slippage`: The maximum acceptable price change percentage (e.g., `"3"` for 3%).
+- `sameChainFee` & `crossChainFee`: Fee amounts for same-chain and cross-chain operations respectively.
+- `sameChainFeeCollector` & `crossChainFeeCollector`: Addresses that collect the respective fees.
+
+**Additional Optional Fields:**
+- `minToTokenAmount`: Minimum amount of destination tokens expected (calculated automatically if not provided).
+- `advancedSettings`: Additional configuration options for the swap.
 
 ---
 
