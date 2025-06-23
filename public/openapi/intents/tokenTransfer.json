@@ -27,7 +27,7 @@
       "post": {
         "tags": ["Intents"],
         "summary": "Token Transfer Estimate",
-        "description": "Estimate gass for token transfer intent. Check out the [`TokenTransfer Estimate`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/tokenTransfer_with_estimate.ts) API template script for more details. ",
+        "description": "Estimate gas for token transfer intent. For more details on Token Transfer intents, see [Understanding Intents](https://docs.okto.tech/docs/openapi/intents). Refer to the [`TokenTransfer Estimate`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/tokenTransfer_with_estimate.ts) API template script for implementation guidance.",
         "operationId": "tokenTransferEstimate",
         "security": [
           {
@@ -418,7 +418,7 @@
       "post": {
         "tags": ["Intents"],
         "summary": "Token Transfer Execute",
-        "description": "Execute a token transfer intent. Check out the [`TokenTransfer`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/tokenTransfer.ts) API template script for more details.",
+        "description": "Execute a token transfer intent. For more details on Token Transfer intents, see [Understanding Intents](https://docs.okto.tech/docs/openapi/intents). Refer to the [`TokenTransfer`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/tokenTransfer.ts) API template script for implementation guidance.",
         "operationId": "tokenTransferExecute",
         "security": [
           {

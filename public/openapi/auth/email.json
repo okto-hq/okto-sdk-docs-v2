@@ -313,7 +313,7 @@
       "post": {
         "tags": ["Auth"],
         "summary": "Authenticate (Email)",
-        "description": "Authenticate a User using Email OTP. This endpoint is used to authenticate users who have logged in using Email OTP. Check out the [`Email auth`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/emailAuthenticate_template.ts) template script for more details.",
+        "description": "Authenticate a User using Email OTP. This endpoint is used to authenticate users who have logged in using Email OTP. For more details, see our [Authentication Methods guide](https://docs.okto.tech/docs/openapi/authenticate/auth-methods). Refer to the [`Email auth`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/emailAuthenticate_template.ts) template script for implementation guidance.",
         "operationId": "emailAuth",
         "requestBody": {
           "required": true,
