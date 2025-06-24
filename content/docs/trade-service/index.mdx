@@ -1,163 +1,143 @@
 ---
-title: Overview
+title: Trade Service Setup
+description: Learn how to integrate Trade Service APIs
 full: false
-description: "Comprehensive API suite for same-chain and cross-chain token swaps with routing, slippage control, and filler-aggregator logic—featuring ULL, permit2, and intent registration."
 ---
 
-import ExternalLink from 'app/components/mdx/ExternalLink';
+import { Steps } from 'fumadocs-ui/components/steps';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import TechnologyCard from "app/components/mdx/TechnologyCard";
+import TemplateRepoBanner from "app/components/mdx/TemplateRepoBanner";
 import { 
-  IoCodeSlashOutline,
   IoKeyOutline,
-  IoFileTrayFullSharp,
   IoGitBranch,
   IoDocumentAttachSharp,
   IoLayersSharp,
   IoPushSharp,
-  IoDuplicate,
-  IoSwapHorizontalOutline,
-  IoWalletOutline,
-  IoSettingsSharp,
-  IoRefreshSharp,
-  IoBarChartSharp,
-  IoGlobeOutline,
-  IoPeopleSharp,
-  IoServerOutline,
-  IoHardwareChipOutline
+  IoFileTrayFullSharp
 } from "react-icons/io5";
 
-The Okto Trade Service is a powerful API suite that enables developers to integrate seamless cross-chain token swaps into their applications. Built on Okto's Unified Liquidity Layer (ULL), the Trade Service eliminates the complexity traditionally associated with cross-chain transactions, abstracting away the need for multiple bridge interactions and providing a single, unified interface for any-to-any token swaps.
+The Okto Trade Service provides a comprehensive API suite for executing token swaps across multiple blockchain networks. This guide walks you through the setup process and explains the correct order of API execution for successful swaps.
 
-The Trade Service functions as the Aggregator of Aggregators. It integrates with multiple third-party aggregators and liquidity providers. This enables the platform to source the most optimal routes and pricing from a wide range of external providers.
+<TemplateRepoBanner
+  sdk="trade-service"
+  title="Trade Service Template Repository"
+  description="Explore the Okto Trade Service Template Repository for a comprehensive guide on integrating Trade Service APIs into your applications"
+/>
 
-<Callout type="info" title="Flexible Integration Options">
-The Trade Service offers two primary integration paths:
+## Quick Start
 
-1. **Via Okto Embedded Wallets:** Use Swap Intents through the Okto SDK for a fully integrated experience with built-in wallet management.
-2. **Via Any External Wallet:** Use the Trade Service APIs directly to get transaction objects that can be signed and executed by any wallet provider (e.g., MetaMask).
+### Step 0: Prerequisites
 
-This flexibility ensures you can leverage Okto's powerful swap infrastructure regardless of your existing wallet setup or user preferences.
+To access the Trade Service APIs, you need to authenticate your requests using an API key. Please contact the Okto team at `deverel@coindcx.com` to request your Trade Service API credentials.
+
+## Order of Execution
+
+<Callout type="tip" title="Integration Flow">
+The Trade Service follows a specific execution order: **Get Quote (Optional) → Get Best Route → Get Call Data → Register Intent → Monitor Status**
 </Callout>
 
-## Features
+Execute the Trade Service APIs in this specific order for successful token swaps:
 
-Trade Service offers following fetures: 
-- **Any-to-Any Swaps:** Swap any token for any other token across multiple chains
-- **Optimal Routing:** Finds the best swap route for price and execution efficiency
-- **Bridgeless Design:** No direct bridge interaction required from users
-- **Fast Settlements:** Rapid cross-chain liquidity provisioning
-- **Simple Integration:** Easy-to-implement APIs for seamless Integration
+<Steps>
 
-## Explore Trade Service
+### Step 1: Get Quote (Optional)
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
-  
+The `getQuote` API gives you a real-time estimate of the swap's outcome. This step is optional but recommended for providing a good user experience.
+
+**Purpose:** To determine how much of the destination token the user will receive for their source token amount, giving an idea of what the whole transaction will cost.
+
+To see which assets are supported, check the [Supported Chains and FST](/docs/trade-service/supported-networks-tokens).
+
+[Learn more about Get Quote →](/docs/trade-service/usage/get-quote)
+
+<Callout type="note" title="Independent APIs">
+Get Quote and Get Best Route are not sequential — they can be used independently or together. Use Get Quote for faster previews and Get Best Route for detailed execution planning.
+</Callout>
+
+### Step 2: Get Best Route
+
+The `getBestRoute` API finds the most optimal route for your swap. This step is **mandatory** before executing any swap.
+
+**Purpose:** To calculate the optimal route by considering factors like fees, price impact, and liquidity.
+
+[Learn more about Get Best Route →](/docs/trade-service/usage/get-best-route)
+
+<Callout title="Handling Non-FST Tokens" type="info">
+For cross-chain swaps, if the user's source token is not a [Filler-Supported Token (FST)](/docs/trade-service/supported-networks-tokens), this API will define a route that includes an intermediate swap. The source token will first be converted into a supported FST on the source chain before being bridged. Learn more in our [Swap Scenarios](/docs/trade-service/scenarios) documentation.
+</Callout>
+
+### Step 3: Get Transaction Call Data
+
+After determining the best route, you need to fetch the transaction data that the user will sign.
+
+**Purpose:** To generate the encoded `calldata` for the on-chain transaction.
+
+The response from this API contains the transaction object that must be passed to the user's wallet for signing.
+
+[Learn more about Get Call Data →](/docs/trade-service/usage/get-call-data)
+
+### Step 4: Register Intent
+
+Once the user signs the transaction, the next step depends on whether it's a same-chain or cross-chain swap.
+
+- For same-chain swaps, use the calldata to execute the transaction directly through the user's wallet.
+- For cross-chain swaps, register the intent with Okto.
+
+[Learn more about Register Intent →](/docs/trade-service/usage/register-intent)
+
+### Step 5: Monitor Order Status
+
+After the intent is registered, you need to monitor its status until completion. This is a post-execution step.
+
+**Purpose:** To track the progress of the swap and confirm its final outcome (success or failure).
+
+You should keep polling this endpoint until the status is successful. The swap is complete when the `status` field in the response is `success`. This typically means polling until you see the transaction data in the response.
+
+[Learn more about Order Details →](/docs/trade-service/usage/order-details)
+
+</Steps>
+
+## API Endpoints Overview
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
   <TechnologyCard
-    className="h-25"
-    icon={<IoHardwareChipOutline size={"1.5rem"} />}
-    title="Architecture"
-    subtitle="Understand the technical architecture of Trade Service"
-    link="/docs/trade-service/architecture"
-  />
-  
-  <TechnologyCard
-    className="h-25"
-    icon={<IoGlobeOutline size={"1.5rem"} />}
-    title="Supported Chains & FST"
-    subtitle="View compatible chains and supported tokens"
-    link="/docs/trade-service/supported-networks-tokens"
-  />
-
-  <TechnologyCard
-    className="h-25"
-    icon={<IoPeopleSharp size={"1.5rem"} />}
-    title="Trade Service Actors"
-    subtitle="Understand the participants in the swap ecosystem"
-    link="/docs/trade-service/trade-service-actors"
-  />
-
-  <TechnologyCard
-    className="h-25"
-    icon={<IoSwapHorizontalOutline size={"1.5rem"} />}
-    title="Swap Scenarios"
-    subtitle="Understand different swap flows and execution paths"
-    link="/docs/trade-service/scenarios"
-  />
-
-  <TechnologyCard
-    className="h-25"
-    icon={<IoSettingsSharp size={"1.5rem"} />}
-    title="Slippage Management"
-    subtitle="Learn how the system handles price variance during swaps"
-    link="/docs/trade-service/slippage"
-  />
-
-  <TechnologyCard
-    className="h-25"
-    icon={<IoWalletOutline size={"1.5rem"} />}
-    title="Fee Structure"
-    subtitle="Understand service fees and costs for transactions"
-    link="/docs/trade-service/fees"
-  />
-
-  <TechnologyCard
-    className="h-25"
-    icon={<IoRefreshSharp size={"1.5rem"} />}
-    title="Refund Mechanism"
-    subtitle="How assets are returned if transactions fail"
-    link="/docs/trade-service/refunds"
-  />
-</div>
-
-## Overview of APIs
-
-<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
-  <TechnologyCard
-    className="h-25"
+    className="h-full"
     icon={<IoFileTrayFullSharp size={"1.5rem"} />}
     title="Get Quote"
-    subtitle="Returns a quote for the specified token pair and amount"
+    subtitle="Quick price estimate (Optional)"
     link="/docs/trade-service/usage/get-quote"
   />
 
   <TechnologyCard
-    className="h-25"
+    className="h-full"
     icon={<IoGitBranch size={"1.5rem"} />}
     title="Get Best Route"
-    subtitle="Finds the most optimal route for the swap"
+    subtitle="Find optimal swap path (Required)"
     link="/docs/trade-service/usage/get-best-route"
   />
 
   <TechnologyCard
-    className="h-25"
+    className="h-full"
     icon={<IoDocumentAttachSharp size={"1.5rem"} />}
     title="Get Call Data"
-    subtitle="Provides the calldata required to execute the transaction"
+    subtitle="Generate transaction data"
     link="/docs/trade-service/usage/get-call-data"
   />
 
   <TechnologyCard
-    className="h-25"
+    className="h-full"
     icon={<IoLayersSharp size={"1.5rem"} />}
     title="Register Intent"
-    subtitle="Registers a swap intent with the system"
+    subtitle="Submit cross-chain swaps"
     link="/docs/trade-service/usage/register-intent"
   />
 
   <TechnologyCard
-    className="h-25"
+    className="h-full"
     icon={<IoPushSharp size={"1.5rem"} />}
-    title="Get Intent by orderId"
-    subtitle="Fetches the details of an intent using the order ID"
+    title="Get Order Details"
+    subtitle="Monitor swap status"
     link="/docs/trade-service/usage/order-details"
   />
-  {/*
-    <TechnologyCard
-      className="h-25"
-      icon={<IoDuplicate size={"1.5rem"} />}
-      title="Generate permit2"
-      subtitle="Reduce gas fees compared to traditional approval methods"
-      link="-"
-    />
-  */}
 </div>
