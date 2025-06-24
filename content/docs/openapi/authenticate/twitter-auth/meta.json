@@ -1,6 +1,7 @@
 {
     "title": "Twitter Authentication",
     "pages": [
+      "twitter-api-keys",
       "../(auth)/twitter-auth"
     ]
 }

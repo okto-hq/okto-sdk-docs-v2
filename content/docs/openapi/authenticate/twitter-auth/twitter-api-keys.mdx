@@ -1,0 +1,87 @@
+---
+title: Get X (Twitter) API Keys
+description: Learn how to obtain X API keys for authenticating with the X API.
+---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+To authenticate with the X API, you need to obtain API keys from the [X Developer Portal](https://developer.x.com/). Follow these steps to get your keys:
+
+<Steps>
+    
+<Step>
+
+## 1. Create a X Developer Account
+
+Visit the [X Developer Portal](https://developer.x.com/) and sign up for a developer account using your X (Twitter) credentials.
+
+![X Developer Portal Dashboard](/images/x-api-keys-1.png)
+
+</Step>
+<Step>
+
+## 2. Create an App
+
+From the dashboard, navigate to **Projects & Apps** in the sidebar, then click on **Overview**. Next, click **Create App**.
+
+![X Developer Portal Dashboard](/images/x-api-keys-2.png)
+
+</Step>
+<Step>
+
+## 3. Name Your App
+
+Enter a name for your application. This name will be visible to users when they authorize your app. Click **Next** to continue.
+
+![X Developer Portal Dashboard](/images/x-api-keys-3.png)
+
+</Step>
+<Step>
+
+## 4. Save Your API Keys
+
+From this tab, you will find the API Key and the API Secret Key. Copy the first two marked keys: API Key and API Key Secret. You will need these to authenticate via X and get the access token.
+
+![X Developer Portal Dashboard](/images/x-api-keys-4.png)
+
+<Callout type="warn">
+Store these credentials securely. Do not share them publicly or commit them to version control.
+</Callout>
+
+</Step>
+
+<Step>
+
+## 5. Configure App Settings
+
+After saving your keys, you'll be taken to your app's settings page. Here you can view your app details and configure additional settings.
+
+![X Developer Portal Dashboard](/images/x-api-keys-5.png)
+
+</Step>
+<Step>
+
+## 6. Set Up User Authentication
+
+To enable user authentication, click **Set up** in the User authentication section.
+
+![X Developer Portal Dashboard](/images/x-api-keys-6.png)
+
+## 7. Configure Callback URLs
+
+Configure the callback URLs for your application. These URLs are used by X to redirect users after they authorize your app.
+
+![X Developer Portal Dashboard](/images/x-api-keys-7.png)
+
+</Step>
+<Step>
+
+## 8. Use Your API Keys
+
+You now have everything needed to authenticate with the X API. Refer to the [X API documentation](https://developer.x.com/en/docs) for usage examples.
+</Step>
+</Steps>
+
+---
+
+For more information, see [X's official documentation](https://developer.x.com/en/docs/authentication/oauth-1-0a).
