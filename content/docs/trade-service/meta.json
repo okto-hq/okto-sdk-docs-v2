@@ -6,6 +6,7 @@
     "pages": [
         "[← Back to Home](/)",
         "------",
+        "overview",
         "index",
         "supported-networks-tokens",
         "architecture",

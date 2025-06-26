@@ -1,163 +1,596 @@
 ---
-title: Overview
+title: Trade Service Setup
+description: Learn how to integrate Trade Service APIs
 full: false
-description: "Comprehensive API suite for same-chain and cross-chain token swaps with routing, slippage control, and filler-aggregator logic—featuring ULL, permit2, and intent registration."
 ---
 
-import ExternalLink from 'app/components/mdx/ExternalLink';
-import TechnologyCard from "app/components/mdx/TechnologyCard";
+import { Steps } from 'fumadocs-ui/components/steps';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import TechnologyCard from "app/components/mdx/TechnologyCard"
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import TemplateRepoBanner from "app/components/mdx/TemplateRepoBanner";
+import FullscreenImage from 'app/components/mdx/FullscreenImage';
 import { 
-  IoCodeSlashOutline,
   IoKeyOutline,
-  IoFileTrayFullSharp,
   IoGitBranch,
   IoDocumentAttachSharp,
   IoLayersSharp,
   IoPushSharp,
-  IoDuplicate,
-  IoSwapHorizontalOutline,
-  IoWalletOutline,
-  IoSettingsSharp,
-  IoRefreshSharp,
-  IoBarChartSharp,
-  IoGlobeOutline,
-  IoPeopleSharp,
-  IoServerOutline,
-  IoHardwareChipOutline
+  IoFileTrayFullSharp
 } from "react-icons/io5";
 
-The Okto Trade Service is a powerful API suite that enables developers to integrate seamless cross-chain token swaps into their applications. Built on Okto's Unified Liquidity Layer (ULL), the Trade Service eliminates the complexity traditionally associated with cross-chain transactions, abstracting away the need for multiple bridge interactions and providing a single, unified interface for any-to-any token swaps.
+The Okto Trade Service provides a comprehensive API suite for executing token swaps across multiple blockchain networks. This guide walks you through the setup process and explains the correct order of API execution for successful swaps.
 
-The Trade Service functions as the Aggregator of Aggregators. It integrates with multiple third-party aggregators and liquidity providers. This enables the platform to source the most optimal routes and pricing from a wide range of external providers.
+<TemplateRepoBanner
+  sdk="trade-service"
+  title="Trade Service Template Repository"
+  description="Explore the Okto Trade Service Template Repository for a comprehensive guide on integrating Trade Service APIs into your applications"
+/>
 
-<Callout type="info" title="Flexible Integration Options">
-The Trade Service offers two primary integration paths:
+## Prerequisites
 
-1. **Via Okto Embedded Wallets:** Use Swap Intents through the Okto SDK for a fully integrated experience with built-in wallet management.
-2. **Via Any External Wallet:** Use the Trade Service APIs directly to get transaction objects that can be signed and executed by any wallet provider (e.g., MetaMask).
+To access the Trade Service APIs, you need to authenticate your requests using an API key. Please contact the Okto team at `deverel@coindcx.com` to request your Trade Service API credentials.
 
-This flexibility ensures you can leverage Okto's powerful swap infrastructure regardless of your existing wallet setup or user preferences.
-</Callout>
+## Core API Functions
 
-## Features
+The entire swap process revolves around these core API calls. Their usage varies depending on the swap scenario.
 
-Trade Service offers following fetures: 
-- **Any-to-Any Swaps:** Swap any token for any other token across multiple chains
-- **Optimal Routing:** Finds the best swap route for price and execution efficiency
-- **Bridgeless Design:** No direct bridge interaction required from users
-- **Fast Settlements:** Rapid cross-chain liquidity provisioning
-- **Simple Integration:** Easy-to-implement APIs for seamless Integration
+- **[`Get Quote`](/docs/trade-service/usage/get-quote) (Optional):** Provides a quick price estimate for a swap. This is the fastest call and is used for display purposes only.
+- **[`Get Best Route`](/docs/trade-service/usage/get-best-route):** Calculates the most optimal path for a swap, returning the initial transaction structure.
+- **[`Get Call Data`](/docs/trade-service/usage/get-call-data):** Provides the complete, detailed transaction data required for signing and execution.
+- **[`Register Intent`](/docs/trade-service/usage/register-intent):** Registers a signed cross-chain swap intent with the Okto ULL for fulfillment.
+- **[`Get Order Details`](/docs/trade-service/usage/order-details):** Tracks the final status of a swap after it has been executed or registered.
 
-## Explore Trade Service
+## Setup Guide
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
-  
-  <TechnologyCard
-    className="h-25"
-    icon={<IoHardwareChipOutline size={"1.5rem"} />}
-    title="Architecture"
-    subtitle="Understand the technical architecture of Trade Service"
-    link="/docs/trade-service/architecture"
-  />
-  
-  <TechnologyCard
-    className="h-25"
-    icon={<IoGlobeOutline size={"1.5rem"} />}
-    title="Supported Chains & FST"
-    subtitle="View compatible chains and supported tokens"
-    link="/docs/trade-service/supported-networks-tokens"
-  />
+<Tabs items={['Same-Chain Swap', 'Cross-Chain Swap']}>
+  <Tab value="Same-Chain Swap">
+    Same chain swaps are executed entirely within a single blockchain, making them simpler and faster than cross-chain operations. 
+    
+    The `registerIntent` API is **not** used. You will directly sign and execute the transaction(s) returned by `getBestRoute`.
 
-  <TechnologyCard
-    className="h-25"
-    icon={<IoPeopleSharp size={"1.5rem"} />}
-    title="Trade Service Actors"
-    subtitle="Understand the participants in the swap ecosystem"
-    link="/docs/trade-service/trade-service-actors"
-  />
+    <Steps>
 
-  <TechnologyCard
-    className="h-25"
-    icon={<IoSwapHorizontalOutline size={"1.5rem"} />}
-    title="Swap Scenarios"
-    subtitle="Understand different swap flows and execution paths"
-    link="/docs/trade-service/scenarios"
-  />
+    ### Step 1: Get Quote (Optional)
 
-  <TechnologyCard
-    className="h-25"
-    icon={<IoSettingsSharp size={"1.5rem"} />}
-    title="Slippage Management"
-    subtitle="Learn how the system handles price variance during swaps"
-    link="/docs/trade-service/slippage"
-  />
+    The `getQuote` API gives you a real-time estimate of the swap's outcome for quick pricing details. It will help determine how much of the destination token the user will receive for their source token amount.
 
-  <TechnologyCard
-    className="h-25"
-    icon={<IoWalletOutline size={"1.5rem"} />}
-    title="Fee Structure"
-    subtitle="Understand service fees and costs for transactions"
-    link="/docs/trade-service/fees"
-  />
+    <Accordions>
+      <Accordion title="Request Example">
+        ```json
+        {
+          "fromChain": "eip155:8453",
+          "toChain": "eip155:8453",
+          "fromToken": "0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca",
+          "toToken": "",
+          "fromAmount": "1000000",
+          "fromUserWalletAddress": "0x904a42c708eb0000403be20cca202d2268",
+          "toUserWalletAddress": "0x904a42c708eb000403be20cca202d2268"
+        }
+        ```
+      </Accordion>
+      <Accordion title="Response Example">
+        ```json
+        {
+          "status": "success",
+          "data": {
+            "outputAmount": "410190957432900",
+            "routeMetadata": [
+              {
+                "protocol": "1InchV6",
+                "aggregatorName": "1InchV6",
+                "type": "swap"
+              }
+            ]
+          }
+        }
+        ```
+      </Accordion>
+    </Accordions>
 
-  <TechnologyCard
-    className="h-25"
-    icon={<IoRefreshSharp size={"1.5rem"} />}
-    title="Refund Mechanism"
-    subtitle="How assets are returned if transactions fail"
-    link="/docs/trade-service/refunds"
-  />
-</div>
+    ### Step 2: Get Best Route
 
-## Overview of APIs
+    Call `getBestRoute` API to find the most optimal route for your swap and receive the necessary transaction steps. The response will contain an array of transaction objects.
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
-  <TechnologyCard
-    className="h-25"
-    icon={<IoFileTrayFullSharp size={"1.5rem"} />}
-    title="Get Quote"
-    subtitle="Returns a quote for the specified token pair and amount"
-    link="/docs/trade-service/usage/get-quote"
-  />
+    **A. With Approval:** If the user has not previously approved the DEX/aggregator to spend their source token, the response will include two transaction steps.
+    1.  **Approval Transaction:** The user must sign and execute this first.
+    2.  **Swap Transaction:** After the approval is confirmed, the user signs and executes this second transaction.
 
-  <TechnologyCard
-    className="h-25"
-    icon={<IoGitBranch size={"1.5rem"} />}
-    title="Get Best Route"
-    subtitle="Finds the most optimal route for the swap"
-    link="/docs/trade-service/usage/get-best-route"
-  />
+    <Accordions>
+      <Accordion title="Request Example">
+        ```json
+        {
+          "fromChain": "eip155:8453",
+          "toChain": "eip155:8453",
+          "fromToken": "0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca",
+          "toToken": "",
+          "fromAmount": "1000000",
+          "fromUserWalletAddress": "0x904a42c708eb0000403be20cca202d2268",
+          "toUserWalletAddress": "0x904a42c708eb000403be20cca202d2268"
+        }
+        ```
+      </Accordion>
+      <Accordion title="Response Example">
+        ```json
+        {
+          "status": "success",
+          "data": {
+            "routeId": "1efac817-6de4-427a-833e-942bbdba12b6",
+            "priceImpact": "-0.08289643891713",
+            "isPriceImpactCalculated": true,
+            "tokenPrices": {
+              "fromTokenPriceInUSD": "1",
+              "toTokenPriceInUSD": "2439.90986698649787569700000000000000000000000000000000"
+            },
+            "outputAmount": "410190957432900",
+            "steps": [
+              {
+                "type": "transaction",
+                "metadata": {
+                  "serviceType": "Swap",
+                  "transactionType": "approval",
+                  "protocol": "BASE_PANCAKESWAP_V3",
+                  "aggregatorName": "1InchV6"
+                },
+                "chainId": "eip155:8453",
+                "txnData": { /* Approval transaction data */ }
+              },
+              {
+                "type": "transaction",
+                "metadata": {
+                  "serviceType": "Swap",
+                  "transactionType": "dex",
+                  "protocol": "BASE_PANCAKESWAP_V3",
+                  "aggregatorName": "1InchV6"
+                },
+                "chainId": "eip155:8453",
+                "txnData": { /* Swap transaction data */ }
+              }
+            ],
+            "routeExpiry": "1m0s",
+            "recommendedSlippage": "3",
+            "slippageUsed": "3",
+            "routeValidUntil": 1750842270
+          }
+        }
+        ```
+      </Accordion>
+    </Accordions>
 
-  <TechnologyCard
-    className="h-25"
-    icon={<IoDocumentAttachSharp size={"1.5rem"} />}
-    title="Get Call Data"
-    subtitle="Provides the calldata required to execute the transaction"
-    link="/docs/trade-service/usage/get-call-data"
-  />
+    **B. Without Approval:** If approval has already been granted or the token is native, the response will contain only a single swap transaction.
 
-  <TechnologyCard
-    className="h-25"
-    icon={<IoLayersSharp size={"1.5rem"} />}
-    title="Register Intent"
-    subtitle="Registers a swap intent with the system"
-    link="/docs/trade-service/usage/register-intent"
-  />
+    <Accordions>
+      <Accordion title="Request Example">
+        ```json
+        {
+          "fromChain": "eip155:8453",
+          "toChain": "eip155:8453",
+          "fromToken": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+          "toToken": "",
+          "fromAmount": "1000000",
+          "fromUserWalletAddress": "0x904a42c708eb0000403be20cca202d2268",
+          "toUserWalletAddress": "0x904a42c708eb000403be20cca202d2268"
+        }
+        ```
+      </Accordion>
+      <Accordion title="Response Example">
+        ```json
+        {
+          "status": "success",
+          "data": {
+            "routeId": "cd81bac0-9da6-4d29-aa6d-f0797991021a",
+            "priceImpact": "0.0012538379496",
+            "isPriceImpactCalculated": true,
+            "tokenPrices": {
+              "fromTokenPriceInUSD": "1.00004564201925934549873258335627187101568883150543",
+              "toTokenPriceInUSD": "2448.55028201181624209014410236104018474035974213407746"
+            },
+            "outputAmount": "408418446790410",
+            "steps": [
+              {
+                "type": "transaction",
+                "metadata": {
+                  "serviceType": "Swap",
+                  "transactionType": "dex",
+                  "protocol": "BASE_UNISWAP_V4",
+                  "aggregatorName": "1InchV6"
+                },
+                "chainId": "eip155:8453",
+                "txnData": { /* Swap transaction data */ }
+              }
+            ],
+            "routeExpiry": "1m0s",
+            "recommendedSlippage": "3",
+            "slippageUsed": "3",
+            "routeValidUntil": 1750836842
+          }
+        }
+        ```
+      </Accordion>
+    </Accordions>
+    
+    ### Step 3: Sign and Execute
+    The user signs and executes the transaction(s) from the `getBestRoute` response using their wallet. No further API calls are needed. `getCallData` and `registerIntent` are skipped entirely for same-chain swaps.
 
-  <TechnologyCard
-    className="h-25"
-    icon={<IoPushSharp size={"1.5rem"} />}
-    title="Get Intent by orderId"
-    subtitle="Fetches the details of an intent using the order ID"
-    link="/docs/trade-service/usage/order-details"
-  />
-  {/*
-    <TechnologyCard
-      className="h-25"
-      icon={<IoDuplicate size={"1.5rem"} />}
-      title="Generate permit2"
-      subtitle="Reduce gas fees compared to traditional approval methods"
-      link="-"
-    />
-  */}
-</div>
+    <FullscreenImage src="/images/same-chain-swaps-flow.png" alt="Same Chain Swaps Flow" />
+    </Steps>
+
+  </Tab>
+  <Tab value="Cross-Chain Swap">
+    Cross-chain swaps are more complex and involve transferring tokens between different blockchains using Okto's Unified Liquidity Layer (ULL). They are handled differently based on whether the source token is a Filler-Supported Token (FST). This distinction determines the entire execution flow.
+
+    <Callout title="FST vs. Non-FST">
+      - **FST:** A token directly supported by Okto's ULL for cross-chain bridging. This flow uses `registerIntent`.
+      - **Non-FST:** Any token that is not an FST. It must first be swapped into an FST on the source chain before bridging. This flow uses an `init` transaction and does **not** call `registerIntent`.
+      - Check out [Supported Chains and FSTs](/docs/trade-service/supported-networks-tokens) for the list of supported FSTs.
+    </Callout>
+
+    <Tabs items={["FST", "Non-FST"]}>
+        <Tab value="FST">
+        This is the "intent" based flow, where you register the user's intent with Okto's Unified Liquidity Layer (ULL) for fulfillment.
+
+        <Steps>
+
+        ### Step 1: Get Quote (Optional)
+
+        The `getQuote` API gives you a real-time estimate of the swap's outcome for quick pricing details. It will help determine how much of the destination token the user will receive for their source token amount.
+
+        <Accordions>
+          <Accordion title="Request Example">
+            ```json
+            {
+              "fromChain": "eip155:8453",
+              "toChain": "eip155:42161",
+              "fromToken": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+              "toToken": "",
+              "fromAmount": "1000000",
+              "fromUserWalletAddress": "0x904a42c708eb0000403be20cca202d2268",
+              "toUserWalletAddress": "0x904a42c708eb000403be20cca202d2268"
+            }
+            ```
+          </Accordion>
+          <Accordion title="Response Example">
+            ```json
+            {
+              "status": "success",
+              "data": {
+                "outputAmount": "392912909939204",
+                "routeMetadata": [
+                  {
+                    "protocol": "Okto-ULL",
+                    "aggregatorName": "Okto-ULL",
+                    "type": "Bridge"
+                  }
+                ],
+                "permitData": ""
+              }
+            }
+            ```
+          </Accordion>
+        </Accordions>
+
+        ### Step 2: Get Best Route
+        Call `getBestRoute`. This will return the best route for the swap, including the initial transaction structure. The response will contain an array of steps.
+
+        <Accordions>
+          <Accordion title="Request Example">
+            ```json
+            {
+              "fromChain": "eip155:8453",
+              "toChain": "eip155:42161",
+              "fromToken": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+              "toToken": "",
+              "fromAmount": "1000000",
+              "fromUserWalletAddress": "0x904a42c708eb0000403be20cca202d2268",
+              "toUserWalletAddress": "0x904a42c708eb000403be20cca202d2268"
+            }
+            ```
+          </Accordion>
+          <Accordion title="Response Example">
+            ```json
+            {
+              "status": "success",
+              "data": {
+                "routeId": "07046085-bf94-4e6d-9ac1-096d8387ef17",
+                "tokenPrices": {},
+                "feeCharged": true,
+                "outputAmount": "381105320570813",
+                "steps": [
+                  {
+                    "type": "api",
+                    "metadata": {
+                      "serviceType": "bridge",
+                      "protocol": "Okto-ULL",
+                      "aggregatorName": "Okto-ULL"
+                    },
+                    "chainId": "eip155:8453",
+                    "gasFeesInInputToken": "37495",
+                    "platformBaseFeesInInputToken": "500",
+                    "integratorFeesInInputToken": "0",
+                    "totalFeesInInputToken": "37995"
+                  }
+                ],
+                "permitDataToSign": "{\"Permit2\": \"0x...\", \"signature\": \"0x...\"}",
+                "recommendedSlippage": "3",
+                "slippageUsed": "3",
+                "routeValidUntil": 1750837507
+              }
+            }
+            ```
+          </Accordion>
+        </Accordions>
+
+        <Callout type="warn" title="Title Permit2 Contract">
+        The response's `type` will be `api`. It will also contain a `permitDataToSign` field. The user must sign the `permitDataToSign` object. This signature allows Okto's `permit2` contract to transfer tokens on their behalf.
+        </Callout>
+
+        ### Step 3: Get Call Data
+        After obtaining the best route, you need to get the detailed call data for the swap. This is done by calling `getCallData`.
+        You will need to pass the `permitSignature`, which is the signature of the `permitData` object in the `getCallData` request.
+        <Accordions>
+          <Accordion title="Request Example">
+            ```json
+            {
+              "routeId": "07046085-bf94-4e6d-9ac1-096d8387ef17",
+              "fromToken": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+              "toToken": "",
+              "fromChain": "eip155:8453",
+              "toChain": "eip155:42161",
+              "fromAmount": "1000000",
+              "toTokenAmountMinimum": "381105320570813",
+              "slippage": "0.5",
+              "fromUserWalletAddress": "0x904a42c708eb0914c3b45f403be20cca202d2268",
+              "toUserWalletAddress": "0x904a42c708eb0914c3b45f403be20cca202d2268",
+              "permitSignature": "0x...", // The signature of the permitData object
+              "permitData": "{\"Permit2\": \"0x...\", \"signature\": \"0x...\"}"
+            }
+            ```
+          </Accordion>
+          <Accordion title="Response Example">
+            ```json
+            {
+              "status": "success",
+              "data": {
+                "routeId": "07046085-bf94-4e6d-9ac1-096d8387ef17",
+                "tokenPrices": {},
+                "outputAmount": "381105320570813",
+                "steps": [
+                  {
+                    "type": "intent",
+                    "metadata": {
+                      "serviceType": "bridge",
+                      "protocol": "Okto-ULL",
+                      "aggregatorName": "Okto-ULL"
+                    },
+                    "chainId": "eip155:8453",
+                    "intentCalldata": "0x...", // The calldata for the intent transaction
+                  }
+                ],
+                "orderTypedData": "{\"types\":{\"EIP712Domain\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"version\",\"type\":\"string\"},{\"name\":\"chainId\",\"type\":\"uint256\"},{\"name\":\"verifyingContract\",\"type\":\"address\"}],\"GaslessCrossChainOrder\":[{\"name\":\"originSettler\",\"type\":\"address\"},{\"name\":\"user\",\"type\":\"address\"},{\"name\":\"nonce\",\"type\":\"uint256\"},{\"name\":\"originChainId\",\"type\":\"uint256\"},{\"name\":\"openDeadline\",\"type\":\"uint32\"},{\"name\":\"fillDeadline\",\"type\":\"uint32\"},{\"name\":\"orderDataType\",\"type\":\"bytes32\"},{\"name\":\"orderData\",\"type\":\"bytes\"}]},\"primaryType\":\"GaslessCrossChainOrder\",\"domain\":{\"name\":\"Okto Settlement Contract\",\"version\":\"1\",\"chainId\":8453,\"verifyingContract\":\"0x080eE0f7519b805c41153CC51d79b0C755f76006\"},\"message\":{\"fillDeadline\":\"1750838180\",\"nonce\":\"1537787619\",\"openDeadline\":\"1750838046\",\"orderData\":\"0x...\",\"orderDataType\":\"0x3501896997d41492e9906c386f2a43083ede3230d2641e949cdaceed9def1b46\",\"originChainId\":\"30623935521215732608318225916586969493646139388472508660171461673454691529708\",\"originSettler\":\"0x080eE0f7519b805c41153CC51d79b0C755f76006\",\"user\":\"0x904A42C708EB0914c3B45F403be20cCa202d2268\"}}",
+                "recommendedSlippage": "4",
+                "slippageUsed": "4"
+              }
+            }
+            ```
+          </Accordion>
+        </Accordions>
+
+        ### Step 4: Register Intent
+        Call `registerIntent`, passing the `intentCallData` and the signed `orderTypedData`. This registers the swap with the ULL. The response will contain a `jobId`.
+
+        <Accordions>
+          <Accordion title="Request Example">
+            ```json
+            {
+              "orderBytes": "0x....", // The `intentCallData` from the previous response
+              "orderBytesSignature": "0x...", // The signed `orderTypedData`
+              "caipId": "eip155:8453"
+            }
+            ```
+          </Accordion>
+          <Accordion title="Response Example">
+            ```json
+            {
+              "status": "success",
+              "data": "0xb70f49fe45b8780f106132f4aa32ef30351a183d20f102a6f3111768c3324a90"
+            }
+            ```
+          </Accordion>
+        </Accordions>
+
+        ### Step 5: Get Order Details
+        Poll the `getOrderDetails` API using the `jobId` from the previous step until you receive a terminal status like `success` or `failure`.
+        <FullscreenImage src="/images/cross-chain-swaps-fst-flow.png" alt="Cross Chain Swaps Flow" />
+        </Steps>
+        </Tab>
+
+        <Tab value="Non-FST">
+        This flow applies when the source token (including native tokens) is not an FST and must first be swapped to an FST before bridging. It involves an `init` transaction and does **not** use the `registerIntent` API.
+
+        <Steps>
+
+        ### Step 1: Get Quote (Optional)
+
+        The `getQuote` API gives you a real-time estimate of the swap's outcome for quick pricing details. It will help determine how much of the destination token the user will receive for their source token amount.
+
+        <Accordions>
+          <Accordion title="Request Example">
+            ```json
+            {
+              "fromChain": "eip155:8453",
+              "toChain": "eip155:42161",
+              "fromToken": "",
+              "toToken": "",
+              "fromAmount": "5000000000000000",
+              "fromUserWalletAddress": "0x904a42c708eb0000403be20cca202d2268",
+              "toUserWalletAddress": "0x904a42c708eb000403be20cca202d2268"
+            }
+            ```
+          </Accordion>
+          <Accordion title="Response Example">
+            ```json
+            {
+              "status": "success",
+              "data": {
+                "outputAmount": "4987870634427558",
+                "routeMetadata": [
+                  {
+                    "protocol": "Okto-ULL",
+                    "aggregatorName": "Okto-ULL",
+                    "type": "Bridge"
+                  }
+                ],
+                "permitData": ""
+              }
+            }
+            ```
+          </Accordion>
+        </Accordions>
+
+        ### Step 2: Get Best Route
+        Call `getBestRoute`. This will return the best route for the swap, including the initial transaction structure. The response will contain an array of steps. The `getCallData` response will return an array of transactions needed to initiate the swap. The `type` will be `transaction`.
+
+        <Accordions>
+          <Accordion title="Request Example">
+            ```json
+            {
+              "fromChain": "eip155:8453",
+              "toChain": "eip155:42161",
+              "fromToken": "0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca",
+              "toToken": "",
+              "fromAmount": "1000000",
+              "fromUserWalletAddress": "0x904a42c708eb0914c3b45f403be20cca202d2268",
+              "toUserWalletAddress": "0x904a42c708eb0914c3b45f403be20cca202d2268"
+            }
+            ```
+          </Accordion>
+          <Accordion title="Response Example">
+            ```json
+            {
+              "status": "success",
+              "data": {
+                "routeId": "5de2a46b-7a1b-4ce0-96f0-e2f937be551a",
+                "tokenPrices": {},
+                "feeCharged": true,
+                "outputAmount": "362330244054933",
+                "steps": [
+                  {
+                    "type": "transaction",
+                    "metadata": {
+                      "serviceType": "bridge",
+                      "transactionType": "approval",
+                      "protocol": "Okto-ULL",
+                      "aggregatorName": "Okto-ULL"
+                    },
+                    "chainId": "eip155:8453",
+                    "txnData": { /* Approval transaction data */ },
+                  },
+                  {
+                    "type": "transaction",
+                    "metadata": {
+                      "serviceType": "bridge",
+                      "transactionType": "init",
+                      "protocol": "Okto-ULL",
+                      "aggregatorName": "Okto-ULL"
+                    },
+                    "chainId": "eip155:8453",
+                    "txnData": { /* Init transaction data */ },
+                    "gasFeesInInputToken": "40943",
+                    "platformBaseFeesInInputToken": "0",
+                    "integratorFeesInInputToken": "0",
+                    "totalFeesInInputToken": "40943"
+                  }
+                ],
+                "permitDataToSign": "{\"types\":{\"EIP712Domain\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"chainId\",\"type\":\"uint256\"},{\"name\":\"verifyingContract\",\"type\":\"address\"}],\"PermitBatchTransferFrom\":[{\"name\":\"permitted\",\"type\":\"TokenPermissions[]\"},{\"name\":\"spender\",\"type\":\"address\"},{\"name\":\"nonce\",\"type\":\"uint256\"},{\"name\":\"deadline\",\"type\":\"uint256\"}],\"TokenPermissions\":[{\"name\":\"token\",\"type\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\"}]},\"primaryType\":\"PermitBatchTransferFrom\",\"domain\":{\"name\":\"Permit2\",\"chainId\":8453,\"verifyingContract\":\"0x000000000022D473030F116dDEE9F6B43aC78BA3\"},\"message\":{\"deadline\":\"1750842529\",\"nonce\":\"1538981262\",\"permitted\":[{\"amount\":\"1000000\",\"token\":\"0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA\"}],\"spender\":\"0x0d8683d5f32e61ee62D3A29da70091F8854c71d8\"}}",
+                "routeExpiry": "1m0s",
+                "recommendedSlippage": "5",
+                "slippageUsed": "5",
+                "routeValidUntil": 1750842169
+              }
+            }
+            ```
+          </Accordion>
+        </Accordions>
+
+        <Callout title="Native vs. Non-Native (ERC20) Tokens">
+        - **Non-Native (ERC20):** If the user has not approved the contract, an additional `approval` transaction will be included in the `steps` array. This must be signed and passed in the `getCallData` request.
+        - **Native (e.g., ETH):** Native tokens do not require approval, so the `approval` step is skipped.
+        </Callout>
+
+        ### Step 3: Get Call Data
+        After obtaining the best route, you need to get the detailed call data for the swap. This is done by calling `getCallData`. In the case of non-native tokens, you will need to pass the `permitSignature`, which is the signature of the `permitData` object in the `getBestRoute` request.
+
+        <Accordions>
+          <Accordion title="Request Example">
+            ```json
+            {
+              "routeId": "5de2a46b-7a1b-4ce0-96f0-e2f937be551a",
+              "fromToken": "0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
+              "toToken": "",
+              "fromChain": "eip155:8453",
+              "toChain": "eip155:42161",
+              "fromAmount": "1000000",
+              "toTokenAmountMinimum": "362330244054933",
+              "slippage": "0.5",
+              "fromUserWalletAddress": "0x904a42c708eb0914c3b45f403be20cca202d2268",
+              "toUserWalletAddress": "0x904a42c708eb0914c3b45f403be20cca202d2268",
+              "permitSignature": "0x...", // The signature of the permitData object
+              "permitData": "{ /* Permit2 data */ }"
+            }
+            ```
+            <Callout type="warn">
+              If your source token is native (e.g., ETH), you can skip the `permitSignature` and `permitData` fields.
+            </Callout>
+          </Accordion>
+          <Accordion title="Response Example">
+            ```json
+            {
+              "status": "success",
+              "data": {
+                "routeId": "5de2a46b-7a1b-4ce0-96f0-e2f937be551a",
+                "tokenPrices": {},
+                "feeCharged": true,
+                "steps": [
+                  {
+                    "type": "transaction",
+                    "metadata": {
+                      "serviceType": "bridge",
+                      "transactionType": "approval",
+                      "protocol": "Okto-ULL",
+                      "aggregatorName": "Okto-ULL"
+                    },
+                    "chainId": "eip155:8453",
+                    "txnData": { /* Approval transaction data */}
+                  },
+                  {
+                    "type": "transaction",
+                    "metadata": {
+                      "serviceType": "bridge",
+                      "transactionType": "init",
+                      "protocol": "Okto-ULL",
+                      "aggregatorName": "Okto-ULL"
+                    },
+                    "chainId": "eip155:8453",
+                    "txnData": { /* Init transaction data */ },
+                  }
+                ],
+                "recommendedSlippage": "5",
+                "slippageUsed": "5"
+              }
+            }
+            ```
+            <Callout type="warn">
+              In the case of native tokens, the `steps` array will only contain the `init` transaction.
+            </Callout>
+          </Accordion>
+        </Accordions>
+
+        ### Step 4: Sign and Execute
+        The user signs and executes the transaction(s) from the `getCallData` response in the specified order.
+        <FullscreenImage src="/images/cross-chain-swaps-nfst-flow.png" alt="Cross Chain Swaps Flow" />
+        </Steps>
+      </Tab>
+    </Tabs>
+
+  </Tab>
+</Tabs>

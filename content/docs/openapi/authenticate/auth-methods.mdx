@@ -15,6 +15,32 @@ Authentication in Okto serves as the foundation for secure user interactions wit
 | **Google OAuth** | Uses Google's secure identity platform | Web and mobile applications | [API Reference](./google-auth) |
 | **WhatsApp OTP** | Verifies users through WhatsApp messages | Mobile-centric applications | [API Reference](./whatsapp-send-otp) |
 | **Email OTP** | Authenticates users via email verification | Universal applications (Alternative authentication option) | [API Reference](./email-send-otp) |
+| **Apple OAuth** | Uses Apple's secure identity platform | iOS applications and Apple ecosystem | [Apple Auth API](./apple-auth) |
+| **X(Twitter) OAuth** | Uses X's identity platform | Social applications and X integration | [X Auth API](./twitter-auth) |
+| **JWT Authentication** | Custom JWT token verification for closed-loop systems | Enterprise applications with existing auth systems | [JWT Auth Guide](./auth-jwt/learn) |
+
+By implementing one or more of these authentication methods, you can provide your users with a secure, seamless experience while leveraging Okto's powerful blockchain capabilities.
+
+---
+
+## Choosing Your Authentication Method
+
+Okto offers flexible authentication options to fit your application's needs. They can be broadly categorized into two types: **Single-Step Social & JWT Flows** and **Multi-Step OTP Flows**.
+
+### Single-Step: Social & JWT Authentication
+
+These methods involve a single call to the Okto `authenticate` endpoint, where you exchange a token from an external provider (like Google or your own system) for an Okto `authToken`.
+
+- [Google Authentication](./google-auth)
+- [Apple Authentication](./apple-auth)
+- [X (Twitter) Authentication](./twitter-auth)
+
+### Multi-Step: OTP-Based Authentication
+
+These methods provide a secure sign-in flow using a one-time password (OTP) sent to the user's device. The process involves three distinct API calls: **Send OTP**, **Verify OTP**, and finally, **Authenticate**.
+
+- [Email OTP Authentication](./email-send-otp)
+- [WhatsApp OTP Authentication](./whatsapp-send-otp)
 
 ---
 
@@ -23,59 +49,97 @@ Authentication in Okto serves as the foundation for secure user interactions wit
 All authentication methods in Okto follow a similar high-level architecture:
 
 1. **User Identity Verification** - Validate user identity through Google, WhatsApp, or Email
-2. **Session Establishment** - Generate secure session keys for ongoing interactions
-3. **User Wallet Creation** - Automatically create blockchain wallets for new users
-4. **Authorization Token Generation** - Create an Okto Auth Token for API requests
+2. **Session Key Generation** - Create ephemeral cryptographic keys for the session
+3. **Session Establishment** - Generate secure session keys for ongoing interactions
+4. **User Wallet Creation** - Automatically create blockchain wallets for new users
+5. **Authorization Token Generation** - Create an Okto Auth Token for API requests
 
 This architecture ensures secure, seamless authentication while maintaining the self-custodial nature of user wallets.
 
 ---
 
-## Google OAuth Authentication
+## The Okto Auth Token
 
-Google OAuth 2.0 provides a streamlined authentication experience by leveraging Google's trusted identity platform.
+The ultimate output of every authentication flow is an `Okto Auth Token`. This is a short-lived, session-specific token that proves your application has the user's permission to perform actions.
 
-### How Google Authentication Works
-
-1. **Client Invokes Google Login** - Client application initiates the Google OAuth flow
-2. **Google Returns ID Token** - After successful login, Google generates and returns an ID token
-3. **Client Application Submits ID Token to Okto** - The ID token is sent to Okto's authentication endpoint
-4. **Okto Verifies Token** - Okto validates the token with Google and identifies the user
-5. **Session Creation** - A secure session is established between the user and the client application
-6. **Auth Token Generated** - Okto returns an authentication token for future API requests
+The `authToken` must be included in the `Authorization` header as a Bearer token for all subsequent API calls. 
 
 ---
 
-## WhatsApp OTP Authentication
+## Universal Implementation Guide
 
-WhatsApp OTP authentication provides a secure verification process through WhatsApp messages, which is particularly useful for mobile-centric applications.
+All authentication methods converge on a single, powerful endpoint: `POST /api/oc/v1/authenticate`. While the initial steps differ, the final call to this endpoint follows a universal pattern. Understanding this flow is key to implementing any method.
 
-### How WhatsApp Authentication Works
+Here are the universal steps your backend must perform:
 
-1. **Initiate WhatsApp Authentication** - Client application requests WhatsApp authentication for a user's phone number
-2. **OTP Generation and Delivery** - Okto generates a one-time password and sends it via WhatsApp
-3. **User Verification** - The user receives and enters the OTP in the client application
-4. **OTP Validation** - Client application submits the OTP to Okto for verification
-5. **Session Establishment** - Upon successful verification, a secure session is created
-6. **Auth Token Generated** - Okto returns an authentication token for future API requests
+### Step 1: Obtain an `idToken`
+
+This is the initial credential that proves the user's identity. Where you get it depends on the method:
+
+-   **Social Logins (Google, Apple, Twitter):** You receive an `idToken` (or access token) directly from the provider's OAuth flow after the user signs in.
+-   **Custom JWT:** You generate a JWT for your user from your own authentication system.
+-   **OTP Flows (Email, WhatsApp):** You complete the `send` and `verify` steps to receive a temporary `auth_token`, which serves as the `idToken` for this flow.
+
+### Step 2: Generate a New Session Key
+
+For each new login session, you must generate a new, unique cryptographic key pair. This key pair represents the user's session and is used to sign subsequent requests.
+
+The session key is securely associated with the user's wallet on-chain, enabling secure, signless transactions. It is distinct from your client keys and the user's login credentials.
+
+You can use our [Template SessionKey utility](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/utils/sessionKey.ts) to generate these keys easily.
+
+### Step 3: Construct the `authenticate` Payload
+
+This is the most critical step. You will construct a detailed JSON object to send to the `authenticate` endpoint. It consists of two main parts: `authData` and `sessionData`, along with their corresponding signatures.
+
+```json
+{
+  "authData": {
+    "idToken": "...", // The token from Step 1
+    "provider": "..." // e.g., 'google', 'apple', 'client_jwt', 'okto'
+  },
+  "sessionData": {
+    "nonce": "...", // A unique UUID for this request
+    "clientSWA": "...", // Your client's smart wallet address
+    "sessionPk": "...", // The public key from the session key generated in Step 2
+    "maxPriorityFeePerGas": "...",
+    "maxFeePerGas": "...",
+    "paymaster": "...",
+    "paymasterData": "..."
+  },
+  "sessionPkClientSignature": "...", // Signature of the session public key, signed by your client private key
+  "sessionDataUserSignature": "..." // Signature of the session public key, signed by the new session private key
+}
+```
+
+### Step 4: Call the authenticate Endpoint
+
+Send the complete payload from Step 3 to POST `/api/oc/v1/authenticate`.
+
+### Step 5: Handle the Response & Generate the Final Okto Auth Token
+
+A successful response will contain the `userSWA` (the user's smart wallet address) and session details:
+
+```json
+{
+  "status": "success",
+  "data": {
+    "userSWA": "0x8B20023FC47D8F8BDB7418722dBB0e3e9964a906",
+    "nonce": "0x00000000000000000000000000000000f9d4db5746824690b2efeae9f9945858",
+    "clientSWA": "0xe8201E368557508bF183D4e2DcE1b1A1E0bd20FA",
+    "sessionExpiry": 1747481250
+  }
+}
+```
+
+Now complete your session configuration and generate the final `Okto Auth Token`. Our [template scripts](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/utils/getAuthorizationToken.ts) show exactly how this is done.
+
+**Store Session Data Securely:** Save the sessionConfig object safely. You'll need it to regenerate the auth token or perform delegated actions later.
+
+### Verifying a Session
+
+You can check if a stored session is still valid by calling the `/api/oc/v1/verify-session` endpoint with a generated `Okto Auth Token`. This is useful to determine if a user needs to log in again.
 
 ---
 
-## Email OTP Authentication
-
-Email OTP authentication provides a secure verification process through email, offering broad compatibility across platforms.
-
-### How Email Authentication Works
-
-1. **Initiate Email Authentication** - Client application request email authentication for a user's email address
-2. **OTP Generation and Delivery** - Okto generates a one-time password and send it via email to the user
-3. **User Verification** - The user receives and enters the OTP in the client application
-4. **OTP Validation** - Client application submits the OTP to Okto for verification
-5. **Session Establishment** - Upon successful verification, a secure session is created
-6. **Auth Token Generated** - Okto returns an authentication token for future API requests
-
----
-
-By implementing one or more of these authentication methods, you can provide your users with a secure, seamless experience while leveraging Okto's powerful blockchain capabilities.
-
-
+For complete implementation examples, refer to the [Okto TS SDK Template Repository](https://github.com/okto-hq/okto-sdkv2-ts-template) which contains working code samples for all authentication methods.

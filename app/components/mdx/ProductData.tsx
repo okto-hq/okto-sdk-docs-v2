@@ -20,18 +20,18 @@ export const productsData = [
   {
     id: 'wallet',
     title: 'Okto Wallet',
-    subtitle: 'Self Custody DeFi Trading Wallet',
+    subtitle: 'Leading Wallet for Everything Hyperliquid',
     icon: <IoWalletOutline size="1.5rem" />,
     content: (
       <div className="space-y-4">
         <p className="text-base text-gray-700 dark:text-gray-300">
-          <strong>Okto Wallet</strong> is the flagship consumer application built on Okto SDK. It is a fully featured DeFi Trading Wallet built on the Okto Platform. Available on the Play Store and App Store, it highlights the power of end-to-end chain abstraction with features that would be nearly impossible to implement without Okto's infrastructure.
+          <strong>Okto Wallet</strong> is the flagship consumer application built on Okto SDK. It is a fully featured DeFi Trading Wallet built on the Okto Platform. Available on the Play Store and App Store, it is the premier mobile-native wallet specifically designed for the <strong>Hyperliquid</strong> ecosystem. Okto Wallet is the bridge that connects Hyperliquid's powerful DeFi infrastructure with intuitive, accessible user experiences.
         </p>
         <div className="flex justify-center pt-2">
           <TechnologyCard
             icon={<IoWalletOutline size={"1.5rem"} />}
             title="Download Okto Wallet"
-            subtitle="Experience the future of DeFi trading"
+            subtitle="Leading Wallet for Everything Hyperliquid"
             link="https://okto.tech"
           />
         </div>
