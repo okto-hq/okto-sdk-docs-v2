@@ -23,6 +23,8 @@
         "usage/order-details",
         "!setup",
         "!usage",
-        "!resources"
+        "!resources",
+        "---Troubleshooting---",
+        "debugging"
     ]
 }
