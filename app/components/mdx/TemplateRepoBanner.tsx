@@ -123,7 +123,7 @@ const SDK_CONFIG = {
 export default function TemplateRepoBanner({
   sdk,
   title = "Quick Start Template Available!",
-  description = "Skip the manual setup and get started in minutes with our template repository. It includes pre-configured Okto SDK integration, authentication setup, and example components and operations.",
+  description = "Skip the manual setup and get started in minutes with our template repository. Please note that this template is for development and testing purposes only. Be sure to customize and secure it before using in production.",
   repoUrl,
   templateUrl,
 }: TemplateRepoBannerProps) {

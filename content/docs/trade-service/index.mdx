@@ -18,18 +18,19 @@ import {
   IoPushSharp,
   IoFileTrayFullSharp
 } from "react-icons/io5";
+import CollapsibleCallout from 'app/components/mdx/CollapsibleCallout';
 
-The Okto Trade Service provides a comprehensive API suite for executing token swaps across multiple blockchain networks. This guide walks you through the setup process and explains the correct order of API execution for successful swaps.
+The Okto Trade Service provides a comprehensive API suite for executing token swaps across multiple blockchain networks. This guide walks through the setup process and explains the correct order of API execution for successful swaps.
 
 <TemplateRepoBanner
   sdk="trade-service"
   title="Trade Service Template Repository"
-  description="Explore the Okto Trade Service Template Repository for a comprehensive guide on integrating Trade Service APIs into your applications"
+  description="Explore the Okto Trade Service Template for a comprehensive guide on integrating Trade Service APIs into your application. Please note that this template is for development and testing purposes only. Be sure to customize and secure it before using in production."
 />
 
 ## Prerequisites
 
-To access the Trade Service APIs, you need to authenticate your requests using an API key. Please contact the Okto team at `deverel@coindcx.com` to request your Trade Service API credentials.
+To access the Trade Service APIs, requests must be authenticated using an API key. Please contact the Okto team at `deverel@coindcx.com` to request your Trade Service API credentials.
 
 ## Core API Functions
 
@@ -41,19 +42,47 @@ The entire swap process revolves around these core API calls. Their usage varies
 - **[`Register Intent`](/docs/trade-service/usage/register-intent):** Registers a signed cross-chain swap intent with the Okto ULL for fulfillment.
 - **[`Get Order Details`](/docs/trade-service/usage/order-details):** Tracks the final status of a swap after it has been executed or registered.
 
+<CollapsibleCallout type="tip" title="Transaction Steps Format">
+Both `getBestRoute` and `getCallData` APIs return transaction steps with a defined format:
+```json
+{
+  "type": "transaction", 
+  "metadata": {
+    "serviceType": "bridge", 
+    "transactionType": "dex",
+    "protocol": "BASE_UNISWAP_V4",
+    "aggregatorName": "1InchV6"
+  },
+  "chainId": "eip155:8453",
+  "txnData": { /* Transaction data */ }
+}
+```
+**`type`:** Can be either "transaction" or "api"
+  - "transaction" means the user must sign and execute it in the specified order
+  - "api" means the step will be handled via API calls
+
+**`metadata`:** Contains `serviceType`, `transactionType`, `protocol`, and `aggregatorName`
+  - **`serviceType`:** Always "bridge" for cross-chain operations, "Swap" for same-chain
+  - **`transactionType`:** Can be "approval", "init", "dex", etc.
+  - **`protocol`:** The actual DEX used for the swap
+  - **`aggregatorName`:** Same as protocol if DEX is used directly, or the aggregator name if accessed via an aggregator (e.g., Protocol: "Uniswap", Aggregator: "1Inch")
+</CollapsibleCallout>
+
 ## Setup Guide
 
 <Tabs items={['Same-Chain Swap', 'Cross-Chain Swap']}>
   <Tab value="Same-Chain Swap">
-    Same chain swaps are executed entirely within a single blockchain, making them simpler and faster than cross-chain operations. 
+    Same-chain swaps are executed entirely within a single blockchain, making them simpler and faster than cross-chain operations. 
     
-    The `registerIntent` API is **not** used. You will directly sign and execute the transaction(s) returned by `getBestRoute`.
+    The `registerIntent` API is **not** used. The transaction(s) returned by `getBestRoute` are signed and executed directly.
+
+    <FullscreenImage src="/images/same-chain-swaps-flow.png" alt="Same Chain Swaps Flow" />
 
     <Steps>
 
     ### Step 1: Get Quote (Optional)
 
-    The `getQuote` API gives you a real-time estimate of the swap's outcome for quick pricing details. It will help determine how much of the destination token the user will receive for their source token amount.
+    The `getQuote` API returns a real-time estimate of the swap's outcome for quick pricing details. It helps determine how much of the destination token the user will receive for a given amount of the source token.
 
     <Accordions>
       <Accordion title="Request Example">
@@ -90,9 +119,10 @@ The entire swap process revolves around these core API calls. Their usage varies
 
     ### Step 2: Get Best Route
 
-    Call `getBestRoute` API to find the most optimal route for your swap and receive the necessary transaction steps. The response will contain an array of transaction objects.
+    The `getBestRoute` API finds the most optimal route for the swap and returns the necessary transaction steps in an array. The response will contain pricing, the best route, and an array of transaction objects.
 
     **A. With Approval:** If the user has not previously approved the DEX/aggregator to spend their source token, the response will include two transaction steps.
+    
     1.  **Approval Transaction:** The user must sign and execute this first.
     2.  **Swap Transaction:** After the approval is confirmed, the user signs and executes this second transaction.
 
@@ -212,28 +242,33 @@ The entire swap process revolves around these core API calls. Their usage varies
     ### Step 3: Sign and Execute
     The user signs and executes the transaction(s) from the `getBestRoute` response using their wallet. No further API calls are needed. `getCallData` and `registerIntent` are skipped entirely for same-chain swaps.
 
-    <FullscreenImage src="/images/same-chain-swaps-flow.png" alt="Same Chain Swaps Flow" />
+    ### Step 4: Get Order Details
+
+    For same-chain swaps, Okto only provides the the transaction payload. No Okto `jobId` or `orderId` is created. The execution occurs directly between the user's wallet and the on-chain DEX/aggregator. To check the status of the swap, monitor the transaction hash received after execution via a blockchain explorer or the user's wallet provider.
+
     </Steps>
 
   </Tab>
   <Tab value="Cross-Chain Swap">
-    Cross-chain swaps are more complex and involve transferring tokens between different blockchains using Okto's Unified Liquidity Layer (ULL). They are handled differently based on whether the source token is a Filler-Supported Token (FST). This distinction determines the entire execution flow.
+    Cross-chain swaps involve transferring tokens between different blockchains using Okto's Unified Liquidity Layer (ULL). These swaps are handled differently based on whether the source token is a Filler-Supported Token (FST). This distinction determines the entire execution flow.
 
     <Callout title="FST vs. Non-FST">
       - **FST:** A token directly supported by Okto's ULL for cross-chain bridging. This flow uses `registerIntent`.
-      - **Non-FST:** Any token that is not an FST. It must first be swapped into an FST on the source chain before bridging. This flow uses an `init` transaction and does **not** call `registerIntent`.
+      - **Non-FST:** Any token that is not an FST. On a high level, Non-FST tokens must first be swapped to an FST-supported token and then executed directly. In this process, the system directly sends the transaction to an Okto contract to initiate the swap. Hence, `registerIntent` is not required.
       - Check out [Supported Chains and FSTs](/docs/trade-service/supported-networks-tokens) for the list of supported FSTs.
     </Callout>
 
     <Tabs items={["FST", "Non-FST"]}>
-        <Tab value="FST">
-        This is the "intent" based flow, where you register the user's intent with Okto's Unified Liquidity Layer (ULL) for fulfillment.
+      <Tab value="FST">
+        Since the source token is already FST-supported, cross-chain intent can be registered directly with ULL for fulfillment.
+
+        <FullscreenImage src="/images/cross-chain-swaps-fst-flow.png" alt="Cross Chain Swaps Flow" />
 
         <Steps>
 
         ### Step 1: Get Quote (Optional)
 
-        The `getQuote` API gives you a real-time estimate of the swap's outcome for quick pricing details. It will help determine how much of the destination token the user will receive for their source token amount.
+        The `getQuote` API returns a real-time estimate of the swap's outcome for quick pricing details. It helps determine how much of the destination token the user will receive for a given amount of the source token.
 
         <Accordions>
           <Accordion title="Request Example">
@@ -270,7 +305,16 @@ The entire swap process revolves around these core API calls. Their usage varies
         </Accordions>
 
         ### Step 2: Get Best Route
-        Call `getBestRoute`. This will return the best route for the swap, including the initial transaction structure. The response will contain an array of steps.
+        The `getBestRoute` API returns pricing, the optimal route, and the initial transaction structure. The response `type` will be `api` and will contain a `permitDataToSign` object that must be signed.
+
+        <Callout type="warn" title="Action Required: Sign Permit2 Data">
+        The `getBestRoute` response includes a `permitDataToSign` parameter, which must be signed by the user's wallet (e.g., using `signTypedData`). This signature authorizes Okto to transfer tokens on the user's behalf using the [EIP-2612 Permit2 standard](https://eips.ethereum.org/EIPS/eip-2612).
+
+        **What is Permit2?**  
+        Permit2 allows a third party to transfer tokens on behalf of a user without requiring an on-chain approval transaction each time. The user registers the token once on the Permit2 contract for that chain. After registration, the user can generate off-chain signatures for future transfers, which third parties can submit to Permit2 to execute token movements.
+
+        For more details, see the official [Permit2 documentation](https://docs.uniswap.org/contracts/permit2/overview).
+        </Callout>
 
         <Accordions>
           <Accordion title="Request Example">
@@ -320,13 +364,15 @@ The entire swap process revolves around these core API calls. Their usage varies
           </Accordion>
         </Accordions>
 
-        <Callout type="warn" title="Title Permit2 Contract">
-        The response's `type` will be `api`. It will also contain a `permitDataToSign` field. The user must sign the `permitDataToSign` object. This signature allows Okto's `permit2` contract to transfer tokens on their behalf.
+        **Sign Permit Data:** Take the `permitDataToSign` parameter from the response payload and sign it using the user's wallet provider.
+
+        <Callout type="warn" title="Approval Transaction">
+        If the user's wallet has not previously authorized the `Permit2` contract for the source token on the source chain, the `getBestRoute` response may also include an `approval` transaction step. This transaction must be signed and executed *after* `getCallData` and *before* `registerIntent`.
         </Callout>
 
         ### Step 3: Get Call Data
-        After obtaining the best route, you need to get the detailed call data for the swap. This is done by calling `getCallData`.
-        You will need to pass the `permitSignature`, which is the signature of the `permitData` object in the `getCallData` request.
+        After obtaining the best route, call the `getCallData` API to get the detailed call data for the swap. Pass the `permitSignature` (the signature of the `permitDataToSign` object) in the request.
+
         <Accordions>
           <Accordion title="Request Example">
             ```json
@@ -376,14 +422,14 @@ The entire swap process revolves around these core API calls. Their usage varies
         </Accordions>
 
         ### Step 4: Register Intent
-        Call `registerIntent`, passing the `intentCallData` and the signed `orderTypedData`. This registers the swap with the ULL. The response will contain a `jobId`.
+        Call the `registerIntent` API, passing the `intentCalldata` (as `orderBytes`) and the signed `orderTypedData` (as `orderBytesSignature`). This registers the swap intent with the ULL. The response will contain an order ID.
 
         <Accordions>
           <Accordion title="Request Example">
             ```json
             {
               "orderBytes": "0x....", // The `intentCallData` from the previous response
-              "orderBytesSignature": "0x...", // The signed `orderTypedData`
+              "orderBytesSignature": "0x...", // The signature of the `orderTypedData`
               "caipId": "eip155:8453"
             }
             ```
@@ -399,19 +445,21 @@ The entire swap process revolves around these core API calls. Their usage varies
         </Accordions>
 
         ### Step 5: Get Order Details
-        Poll the `getOrderDetails` API using the `jobId` from the previous step until you receive a terminal status like `success` or `failure`.
-        <FullscreenImage src="/images/cross-chain-swaps-fst-flow.png" alt="Cross Chain Swaps Flow" />
+        The `data` field in the `registerIntent` response is the Okto `jobId` (or `orderId`). Poll the `getOrderDetails` API with this `jobId` until a terminal status like `success` or `failure` is received.
+
         </Steps>
         </Tab>
 
-        <Tab value="Non-FST">
-        This flow applies when the source token (including native tokens) is not an FST and must first be swapped to an FST before bridging. It involves an `init` transaction and does **not** use the `registerIntent` API.
+      <Tab value="Non-FST">
+        This flow is used when the source token is not an FST. It requires swapping the token to an FST on the source chain before bridging. This is achieved by executing a transaction directly with an Okto contract, bypassing the separate `registerIntent` step.
+
+        <FullscreenImage src="/images/cross-chain-swaps-nfst-flow.png" alt="Cross Chain Swaps Flow" />
 
         <Steps>
 
         ### Step 1: Get Quote (Optional)
 
-        The `getQuote` API gives you a real-time estimate of the swap's outcome for quick pricing details. It will help determine how much of the destination token the user will receive for their source token amount.
+        The `getQuote` API returns a real-time estimate of the swap's outcome for quick pricing details. It helps determine how much of the destination token the user will receive for a given amount of the source token.
 
         <Accordions>
           <Accordion title="Request Example">
@@ -448,7 +496,7 @@ The entire swap process revolves around these core API calls. Their usage varies
         </Accordions>
 
         ### Step 2: Get Best Route
-        Call `getBestRoute`. This will return the best route for the swap, including the initial transaction structure. The response will contain an array of steps. The `getCallData` response will return an array of transactions needed to initiate the swap. The `type` will be `transaction`.
+        The `getBestRoute` API returns pricing, the optimal route, and the initial transaction structure. The response will contain an array of steps with `type: "transaction"`. For non-native (ERC20) tokens, this response also includes `permitDataToSign`, which must be signed before proceeding.
 
         <Accordions>
           <Accordion title="Request Example">
@@ -512,13 +560,18 @@ The entire swap process revolves around these core API calls. Their usage varies
           </Accordion>
         </Accordions>
 
-        <Callout title="Native vs. Non-Native (ERC20) Tokens">
-        - **Non-Native (ERC20):** If the user has not approved the contract, an additional `approval` transaction will be included in the `steps` array. This must be signed and passed in the `getCallData` request.
-        - **Native (e.g., ETH):** Native tokens do not require approval, so the `approval` step is skipped.
+        <Callout type="warn" title="Action Required: Sign Permit2 Data">
+        The `getBestRoute` response includes a `permitDataToSign` parameter, which must be signed by the user's wallet (e.g., using `signTypedData`). This signature authorizes Okto to transfer tokens on the user's behalf using the [EIP-2612 Permit2 standard](https://eips.ethereum.org/EIPS/eip-2612).
+        </Callout>
+
+        **Sign Permit Data:** Take the `permitDataToSign` parameter from the response payload and sign it using the user's wallet provider.
+
+        <Callout type="warn" title="Approval Transaction">
+        If the user's wallet has not previously authorized the `Permit2` contract for the source token on the source chain, the `getBestRoute` response may also include an `approval` transaction step. This transaction must be signed and executed *after* `getCallData` and *before* `registerIntent`.
         </Callout>
 
         ### Step 3: Get Call Data
-        After obtaining the best route, you need to get the detailed call data for the swap. This is done by calling `getCallData`. In the case of non-native tokens, you will need to pass the `permitSignature`, which is the signature of the `permitData` object in the `getBestRoute` request.
+        After obtaining the best route, call the `getCallData` API to get the detailed call data for the swap. For non-native tokens, pass the `permitSignature` (the signature of the `permitDataToSign` object) in the request.
 
         <Accordions>
           <Accordion title="Request Example">
@@ -587,10 +640,23 @@ The entire swap process revolves around these core API calls. Their usage varies
 
         ### Step 4: Sign and Execute
         The user signs and executes the transaction(s) from the `getCallData` response in the specified order.
-        <FullscreenImage src="/images/cross-chain-swaps-nfst-flow.png" alt="Cross Chain Swaps Flow" />
+
+        1.  **Approval Transaction (if present):** Sign and execute the `approval` transaction first.
+        2.  **Init Transaction:** Once the approval is confirmed (or if it was not needed), sign and execute the `init` transaction.
+
+        When the user signs and executes the init transaction, a transaction hash will be returned. This hash can be used to extract the order ID for tracking purposes.
+
+        ### Step 5: Get Order Details
+
+        Use the extracted order ID to poll the `getOrderDetails` API until a terminal status like `success` or `failure` is received.
+
         </Steps>
       </Tab>
     </Tabs>
 
   </Tab>
 </Tabs>
+
+## Debugging and Error Handling
+
+For a comprehensive list of potential errors, their meanings, and troubleshooting steps, please refer to our dedicated [Error Codes documentation](/docs/trade-service/debugging).
