@@ -1,6 +1,7 @@
 {
     "title": "Apple Authentication",
     "pages": [
+      "apple-auth-setup",
       "../(auth)/apple-auth"
     ]
 }

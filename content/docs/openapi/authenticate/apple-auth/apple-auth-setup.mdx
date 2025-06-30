@@ -1,0 +1,212 @@
+---
+title: Apple Authentication Setup
+description: Guide to obtaining Apple credentials and implementing Sign in with Apple for Okto SDK
+full: true
+---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+## Overview
+
+Apple authentication provides a secure, privacy-focused sign-in method that's particularly valuable for iOS applications and users in the Apple ecosystem.
+
+Apple authentication with Okto follows a two-phase approach:
+
+1. **Apple Setup Phase**: Configure your Apple Developer account and obtain the necessary credentials
+2. **Integration Phase**: Use Apple's `idToken` with Okto's `/api/oc/v1/authenticate` endpoint to create user sessions.
+
+## Prerequisites
+
+To use "Sign in with Apple," you must have an active [Apple Developer Program](https://developer.apple.com/) membership.
+
+## Required Apple Credentials
+
+To implement Apple authentication with Okto, you'll need two main environment variables: `APPLE_ID` and `APPLE_SECRET`. To get these, you will need to gather the following four pieces of information from your Apple Developer account:
+
+1. **Service ID:** This will be your `AUTH_APPLE_ID`.
+2. **Team ID:** A component used to generate your `clientSecret`.
+3. **Key ID:** A component used to generate your `clientSecret`.
+4. **Private Key (`.p8` file):** A cryptographic key file, also used to generate your `clientSecret`.
+
+## Step-by-Step Setup Process
+
+### Step 1: Create an App ID
+
+<Steps>
+<Step>
+Log in to the [Apple Developer Console](https://developer.apple.com/account/)
+</Step>
+<Step>
+Navigate to **Certificates, Identifiers & Profiles**
+</Step>
+<Step>
+Click **Identifiers** in the sidebar
+</Step>
+<Step>
+Click the **+** button to create a new identifier
+</Step>
+<Step>
+Select **App IDs** and click **Continue**
+</Step>
+<Step>
+Choose **App** and click **Continue**
+</Step>
+<Step>
+Fill in the details:
+   - **Description**: A human-readable name for your app
+   - **Bundle ID**: Use explicit format (e.g., `com.yourcompany.yourapp`)
+</Step>
+<Step>
+Scroll down to **Capabilities** and enable **Sign In with Apple**
+</Step>
+<Step>
+Click **Continue** and then **Register**
+</Step>
+</Steps>
+
+### Step 2: Create a Services ID
+
+<Steps>
+<Step>
+In the Apple Developer Console, go to **Identifiers**
+</Step>
+<Step>
+Click the **+** button to create a new identifier
+</Step>
+<Step>
+Select **Services IDs** and click **Continue**
+</Step>
+<Step>
+Fill in the details:
+   - **Description**: Name for your web service
+   - **Identifier**: This will be your `AUTH_APPLE_ID` (e.g., `com.yourcompany.yourapp.web`)
+</Step>
+<Step>
+Click **Continue** and then **Register**
+</Step>
+<Step>
+After creation, click on your newly created Services ID
+</Step>
+<Step>
+Enable **Sign In with Apple**
+</Step>
+<Step>
+Click **Configure** next to Sign In with Apple
+</Step>
+<Step>
+Configure the settings:
+   - **Primary App ID**: Select the App ID you created in Step 1
+   - **Domains and Subdomains**: Add your website domain (e.g., `yourapp.com`)
+   - **Return URLs**: Add your callback URL (e.g., `https://yourapp.com/api/auth/callback/apple`)
+</Step>
+<Step>
+Click **Save** and then **Continue** and **Save**
+</Step>
+</Steps>
+
+### Step 3: Create a Private Key
+
+<Steps>
+<Step>
+In the Apple Developer Console, go to **Keys**
+</Step>
+<Step>
+Click the **+** button to create a new key
+</Step>
+<Step>
+Fill in the details:
+   - **Key Name**: Descriptive name (e.g., "Sign in with Apple Key")
+   - **Key Type**: Select **ES256**
+</Step>
+<Step>
+Enable **Sign In with Apple**
+</Step>
+<Step>
+Click **Configure** next to Sign In with Apple
+</Step>
+<Step>
+Select your **Primary App ID** from Step 1
+</Step>
+<Step>
+Click **Save** and then **Continue**
+</Step>
+<Step>
+Click **Register**
+</Step>
+<Step>
+**Important**: Download the `.p8` key file immediately - you cannot download it again
+</Step>
+<Step>
+Note the **Key ID** displayed on the confirmation page
+</Step>
+</Steps>
+
+### Step 4: Find Your Team ID
+
+In the Apple Developer Console, go to **Membership** in the sidebar to view your Team ID and other account details. The Team ID is required for generating the client secret.
+
+### Step 5: Generating the Client Secret (`APPLE_SECRET`)
+
+The `clientSecret` for Apple is a short-lived JSON Web Token (JWT) that you generate using the credentials you just gathered.
+You can use a simple script to generate this secret.
+
+```javascript
+import jwt from 'jsonwebtoken';
+import fs from 'fs';
+
+function generateAppleClientSecret() {
+  const teamId = process.env.APPLE_TEAM_ID; // Your Apple Developer Team ID
+  const keyId = process.env.APPLE_KEY_ID; // Your Key ID from the Apple Developer Console
+  const clientId = process.env.AUTH_APPLE_ID; // Your Service ID
+  const privateKey = process.env.APPLE_PRIVATE_KEY.replace(/\\n/g, '\n'); // Your private key from the .p8 file
+
+  // create the JWT header
+  const header = {
+    alg: 'ES256',
+    kid: keyId, // Key ID from the Apple Developer Console
+  };
+
+  // create the JWT payload
+  const payload = {
+    iss: teamId, // Your Apple Developer Team ID
+    iat: Math.floor(Date.now() / 1000), // Issued at time
+    exp: Math.floor(Date.now() / 1000) + 3600, // Expiration time (1 hour)
+    aud: 'https://appleid.apple.com', 
+    sub: clientId, // Your Service ID
+  };
+
+  // sign the JWT with the private key
+  return jwt.sign(payload, privateKey, { 
+    algorithm: 'ES256',
+    header: header 
+  });
+}
+
+// Usage
+const clientSecret = generateAppleClientSecret(); // This will generate your client secret
+```
+
+The clientSecret is your `APPLE_SECRET` and should be stored securely. It is used to authenticate your app with Apple's servers when users sign in.
+
+The `clientSecret` should be generated fresh for each authentication request to ensure security and prevent token expiration issues.
+
+For more details on how to generate the client secret, refer to the [Apple documentation](https://developer.apple.com/documentation/accountorganizationaldatasharing/creating-a-client-secret).
+
+### Step 6: Integrate with Okto
+
+Once you have your Apple credentials configured, the integration process involves:
+
+1. **Frontend Apple Sign-In**: Your application initiates Apple Sign-In and receives an `idToken` from Apple after successful user authentication.
+
+2. **Server-Side Authentication**: Your backend sends this `idToken` to Okto's `/api/oc/v1/authenticate` endpoint along with:
+   - The Apple `idToken` in the `authData` object with `provider: "apple"`
+   - Auth Payload
+
+3. **Okto Response**: Upon successful authentication, Okto returns the User's Smart Wallet Address (`userSWA`).
+
+4. **Auth Token Generation**: Use the userSWA to create an Okto Auth Token, which you'll include as a Bearer token in the `Authorization` header for all subsequent API requests.
+
+---
+
+For complete implementation examples and code templates, refer to our [Apple Authentication template script](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/appleAuthenticate_template.ts) and the [Authentication Methods guide](./auth-methods) for detailed flow architecture.
+
