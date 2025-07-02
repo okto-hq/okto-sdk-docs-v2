@@ -42,32 +42,6 @@ The entire swap process revolves around these core API calls. Their usage varies
 - **[`Register Intent`](/docs/trade-service/usage/register-intent):** Registers a signed cross-chain swap intent with the Okto ULL for fulfillment.
 - **[`Get Order Details`](/docs/trade-service/usage/order-details):** Tracks the final status of a swap after it has been executed or registered.
 
-<CollapsibleCallout type="tip" title="Transaction Steps Format">
-Both `getBestRoute` and `getCallData` APIs return transaction steps with a defined format:
-```json
-{
-  "type": "transaction", 
-  "metadata": {
-    "serviceType": "bridge", 
-    "transactionType": "dex",
-    "protocol": "BASE_UNISWAP_V4",
-    "aggregatorName": "1InchV6"
-  },
-  "chainId": "eip155:8453",
-  "txnData": { /* Transaction data */ }
-}
-```
-**`type`:** Can be either "transaction" or "api"
-  - "transaction" means the user must sign and execute it in the specified order
-  - "api" means the step will be handled via API calls
-
-**`metadata`:** Contains `serviceType`, `transactionType`, `protocol`, and `aggregatorName`
-  - **`serviceType`:** Always "bridge" for cross-chain operations, "Swap" for same-chain
-  - **`transactionType`:** Can be "approval", "init", "dex", etc.
-  - **`protocol`:** The actual DEX used for the swap
-  - **`aggregatorName`:** Same as protocol if DEX is used directly, or the aggregator name if accessed via an aggregator (e.g., Protocol: "Uniswap", Aggregator: "1Inch")
-</CollapsibleCallout>
-
 ## Setup Guide
 
 <Tabs items={['Same-Chain Swap', 'Cross-Chain Swap']}>
@@ -238,6 +212,32 @@ Both `getBestRoute` and `getCallData` APIs return transaction steps with a defin
         ```
       </Accordion>
     </Accordions>
+
+    <CollapsibleCallout type="tip" title="Transaction Steps Format">
+    Both `getBestRoute` and `getCallData` APIs return transaction steps with a defined format:
+    ```json
+    {
+      "type": "transaction", 
+      "metadata": {
+        "serviceType": "bridge", 
+        "transactionType": "dex",
+        "protocol": "BASE_UNISWAP_V4",
+        "aggregatorName": "1InchV6"
+      },
+      "chainId": "eip155:8453",
+      "txnData": { /* Transaction data */ }
+    }
+    ```
+    **`type`:** Can be either "transaction" or "api"
+      - "transaction" means the user must sign and execute it in the specified order
+      - "api" means the step will be handled via API calls
+
+    **`metadata`:** Contains `serviceType`, `transactionType`, `protocol`, and `aggregatorName`
+      - **`serviceType`:** Always "bridge" for cross-chain operations, "Swap" for same-chain
+      - **`transactionType`:** Can be "approval", "init", "dex", etc.
+      - **`protocol`:** The actual DEX used for the swap
+      - **`aggregatorName`:** Same as protocol if DEX is used directly, or the aggregator name if accessed via an aggregator (e.g., Protocol: "Uniswap", Aggregator: "1Inch")
+    </CollapsibleCallout>
     
     ### Step 3: Sign and Execute
     The user signs and executes the transaction(s) from the `getBestRoute` response using their wallet. No further API calls are needed. `getCallData` and `registerIntent` are skipped entirely for same-chain swaps.
@@ -363,6 +363,32 @@ Both `getBestRoute` and `getCallData` APIs return transaction steps with a defin
             ```
           </Accordion>
         </Accordions>
+
+        <CollapsibleCallout type="tip" title="Transaction Steps Format">
+        Both `getBestRoute` and `getCallData` APIs return transaction steps with a defined format:
+        ```json
+        {
+          "type": "transaction", 
+          "metadata": {
+            "serviceType": "bridge", 
+            "transactionType": "dex",
+            "protocol": "BASE_UNISWAP_V4",
+            "aggregatorName": "1InchV6"
+          },
+          "chainId": "eip155:8453",
+          "txnData": { /* Transaction data */ }
+        }
+        ```
+        **`type`:** Can be either "transaction" or "api"
+          - "transaction" means the user must sign and execute it in the specified order
+          - "api" means the step will be handled via API calls
+
+        **`metadata`:** Contains `serviceType`, `transactionType`, `protocol`, and `aggregatorName`
+          - **`serviceType`:** Always "bridge" for cross-chain operations, "Swap" for same-chain
+          - **`transactionType`:** Can be "approval", "init", "dex", etc.
+          - **`protocol`:** The actual DEX used for the swap
+          - **`aggregatorName`:** Same as protocol if DEX is used directly, or the aggregator name if accessed via an aggregator (e.g., Protocol: "Uniswap", Aggregator: "1Inch")
+        </CollapsibleCallout>
 
         **Sign Permit Data:** Take the `permitDataToSign` parameter from the response payload and sign it using the user's wallet provider.
 
@@ -612,6 +638,32 @@ Both `getBestRoute` and `getCallData` APIs return transaction steps with a defin
             ```
           </Accordion>
         </Accordions>
+
+        <CollapsibleCallout type="tip" title="Transaction Steps Format">
+        Both `getBestRoute` and `getCallData` APIs return transaction steps with a defined format:
+        ```json
+        {
+          "type": "transaction", 
+          "metadata": {
+            "serviceType": "bridge", 
+            "transactionType": "dex",
+            "protocol": "BASE_UNISWAP_V4",
+            "aggregatorName": "1InchV6"
+          },
+          "chainId": "eip155:8453",
+          "txnData": { /* Transaction data */ }
+        }
+        ```
+        **`type`:** Can be either "transaction" or "api"
+          - "transaction" means the user must sign and execute it in the specified order
+          - "api" means the step will be handled via API calls
+
+        **`metadata`:** Contains `serviceType`, `transactionType`, `protocol`, and `aggregatorName`
+          - **`serviceType`:** Always "bridge" for cross-chain operations, "Swap" for same-chain
+          - **`transactionType`:** Can be "approval", "init", "dex", etc.
+          - **`protocol`:** The actual DEX used for the swap
+          - **`aggregatorName`:** Same as protocol if DEX is used directly, or the aggregator name if accessed via an aggregator (e.g., Protocol: "Uniswap", Aggregator: "1Inch")
+        </CollapsibleCallout>
 
         <Callout type="warn" title="Action Required: Sign Permit2 Data">
         The `getBestRoute` response includes a `permitDataToSign` parameter, which must be signed by the user's wallet (e.g., using `signTypedData`). This signature authorizes Okto to transfer tokens on the user's behalf using the [EIP-2612 Permit2 standard](https://eips.ethereum.org/EIPS/eip-2612).
