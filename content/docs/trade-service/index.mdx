@@ -50,7 +50,7 @@ The entire swap process revolves around these core API calls. Their usage varies
     
     The `registerIntent` API is **not** used. The transaction(s) returned by `getBestRoute` are signed and executed directly.
 
-    <FullscreenImage src="/images/same-chain-swaps-flow.png" alt="Same Chain Swaps Flow" />
+    <FullscreenImage src="/images/samechainswap.png" alt="Same Chain Swaps Flow" />
 
     <Steps>
 
@@ -262,7 +262,7 @@ The entire swap process revolves around these core API calls. Their usage varies
       <Tab value="FST">
         Since the source token is already FST-supported, cross-chain intent can be registered directly with ULL for fulfillment.
 
-        <FullscreenImage src="/images/cross-chain-swaps-fst-flow.png" alt="Cross Chain Swaps Flow" />
+        <FullscreenImage src="/images/crosschainswapfst.png" alt="Cross Chain Swaps Flow" />
 
         <Steps>
 
@@ -473,13 +473,66 @@ The entire swap process revolves around these core API calls. Their usage varies
         ### Step 5: Get Order Details
         The `data` field in the `registerIntent` response is the Okto `jobId` (or `orderId`). Poll the `getOrderDetails` API with this `jobId` until a terminal status like `success` or `failure` is received.
 
+         <Accordions>
+          <Accordion title="Request Example">
+            ```json
+            {
+              "orderId": "0x9262a7731f07f74e7746f682220a3a8e2d51ca8fcc33f0cd08c469d79a2814e8",
+              "caipId": "eip155:42161"
+            }
+            ```
+          </Accordion>
+          <Accordion title="Response Example">
+            ```json
+            {
+              "status": "success",
+              "swapper": "0",
+              "fillDeadline": "1740749184",
+              "orderData": {
+                "platform": "0xABF20970058e65504bEaCD655FFca97Ba4Eaa4E9",
+                "platformFeeBps": "10",
+                "orderType": "",
+                "swapperInputs": {
+                  "token": "0x000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e5831",
+                  "amount": "1000"
+                },
+                "swapperOutputs": {
+                  "token": "0x000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e5831",
+                  "amount": "1000",
+                  "recipient": "0x00000000000000000000000058db70bde957b931782fb62197a47f02ac42f082",
+                  "chainId": "14378721742530068972694903139298357247153498415214797681026897651680066921586"
+                }
+              },
+              "feeCharged": false,
+              "outputAmount": "998.75",
+              "steps": [
+                {
+                  "type": "swap",
+                  "metadata": {
+                    "serviceType": "",
+                    "transactionType": "",
+                    "protocol": "Okto_ULL",
+                    "aggregatorName": "Okto_ULL"
+                  },
+                  "chainId": "14378721742530068972694903139298357247153498415214797681026897651680066921586",
+                  "txnData": {},
+                  "intentCalldata": {}
+                }
+              ],
+              "permitDataToSign": "string",
+              "routeExpiry": "1m0s"
+            }
+            ```
+          </Accordion>
+        </Accordions>
+
         </Steps>
         </Tab>
 
       <Tab value="Non-FST">
         This flow is used when the source token is not an FST. It requires swapping the token to an FST on the source chain before bridging. This is achieved by executing a transaction directly with an Okto contract, bypassing the separate `registerIntent` step.
 
-        <FullscreenImage src="/images/cross-chain-swaps-nfst-flow.png" alt="Cross Chain Swaps Flow" />
+        <FullscreenImage src="/images/crosschainswapnonfst.png" alt="Cross Chain Swaps Flow" />
 
         <Steps>
 
@@ -698,9 +751,74 @@ The entire swap process revolves around these core API calls. Their usage varies
 
         When the user signs and executes the init transaction, a transaction hash will be returned. This hash can be used to extract the order ID for tracking purposes.
 
-        ### Step 5: Get Order Details
+        ### Step 5: Extract Order ID from Transaction Receipt
+        After the `init` transaction is confirmed, use the transaction hash to retrieve the receipt. The order ID can then be extracted from the emitted logs.
 
+        The init transaction emits an `OrderInitiated` event containing the order ID. Here's how to extract it:
+
+          1. **Get Transaction Receipt:** Use the transaction hash with `publicClient.waitForTransactionReceipt()` or an equivalent method.
+          2. **Find OrderInitiated Event:** Look for the event with the specific topic hash
+          3. **Extract Order ID:** The order ID is encoded in the first 32 bytes (i.e., the first 64 hex characters) of the `data` field.
+
+        <Callout type="info">
+          For a sample implementation of extracting the order ID from the transaction receipt, refer to the [extractOrderId utility script](https://github.com/okto-hq/okto-sdkv2-trade-service-template-app/blob/main/src/utils/extractOrderId.ts).
+        </Callout>
+
+        ### Step 6: Get Order Details
         Use the extracted order ID to poll the `getOrderDetails` API until a terminal status like `success` or `failure` is received.
+
+         <Accordions>
+          <Accordion title="Request Example">
+            ```json
+            {
+              "orderId": "0x9262a7731f07f74e7746f682220a3a8e2d51ca8fcc33f0cd08c469d79a2814e8",
+              "caipId": "eip155:42161"
+            }
+            ```
+          </Accordion>
+          <Accordion title="Response Example">
+            ```json
+            {
+              "status": "success",
+              "swapper": "0",
+              "fillDeadline": "1740749184",
+              "orderData": {
+                "platform": "0xABF20970058e65504bEaCD655FFca97Ba4Eaa4E9",
+                "platformFeeBps": "10",
+                "orderType": "",
+                "swapperInputs": {
+                  "token": "0x000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e5831",
+                  "amount": "1000"
+                },
+                "swapperOutputs": {
+                  "token": "0x000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e5831",
+                  "amount": "1000",
+                  "recipient": "0x00000000000000000000000058db70bde957b931782fb62197a47f02ac42f082",
+                  "chainId": "14378721742530068972694903139298357247153498415214797681026897651680066921586"
+                }
+              },
+              "feeCharged": false,
+              "outputAmount": "998.75",
+              "steps": [
+                {
+                  "type": "swap",
+                  "metadata": {
+                    "serviceType": "",
+                    "transactionType": "",
+                    "protocol": "Okto_ULL",
+                    "aggregatorName": "Okto_ULL"
+                  },
+                  "chainId": "14378721742530068972694903139298357247153498415214797681026897651680066921586",
+                  "txnData": {},
+                  "intentCalldata": {}
+                }
+              ],
+              "permitDataToSign": "string",
+              "routeExpiry": "1m0s"
+            }
+            ```
+          </Accordion>
+        </Accordions>
 
         </Steps>
       </Tab>
