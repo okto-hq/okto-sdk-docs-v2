@@ -50,7 +50,7 @@ The entire swap process revolves around these core API calls. Their usage varies
     
     The `registerIntent` API is **not** used. The transaction(s) returned by `getBestRoute` are signed and executed directly.
 
-    <FullscreenImage src="/images/same-chain-swaps-flow.png" alt="Same Chain Swaps Flow" />
+    <FullscreenImage src="/images/samechainswap.png" alt="Same Chain Swaps Flow" />
 
     <Steps>
 
@@ -262,7 +262,7 @@ The entire swap process revolves around these core API calls. Their usage varies
       <Tab value="FST">
         Since the source token is already FST-supported, cross-chain intent can be registered directly with ULL for fulfillment.
 
-        <FullscreenImage src="/images/cross-chain-swaps-fst-flow.png" alt="Cross Chain Swaps Flow" />
+        <FullscreenImage src="/images/crosschainswapfst.png" alt="Cross Chain Swaps Flow" />
 
         <Steps>
 
@@ -532,7 +532,7 @@ The entire swap process revolves around these core API calls. Their usage varies
       <Tab value="Non-FST">
         This flow is used when the source token is not an FST. It requires swapping the token to an FST on the source chain before bridging. This is achieved by executing a transaction directly with an Okto contract, bypassing the separate `registerIntent` step.
 
-        <FullscreenImage src="/images/cross-chain-swaps-nfst-flow.png" alt="Cross Chain Swaps Flow" />
+        <FullscreenImage src="/images/crosschainswapnonfst.png" alt="Cross Chain Swaps Flow" />
 
         <Steps>
 
