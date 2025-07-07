@@ -30,7 +30,9 @@ The Okto Trade Service provides a comprehensive API suite for executing token sw
 
 ## Prerequisites
 
-To access the Trade Service APIs, requests must be authenticated using an API key. Please contact the Okto team at `deverel@coindcx.com` to request your Trade Service API credentials.
+- To access the Trade Service APIs, requests must be authenticated using an API key. Please contact the Okto team at `deverel@coindcx.com` to request your Trade Service API credentials.
+
+- Okto's Trade Service only supports mainnets. For more information on the chains and tokens supported by the Trade Service, check [Supported Chains and Tokens](/docs/trade-service/supported-networks-tokens) documentation.
 
 ## Core API Functions
 
@@ -46,6 +48,8 @@ The entire swap process revolves around these core API calls. Their usage varies
 
 <Tabs items={['Same-Chain Swap', 'Cross-Chain Swap']}>
   <Tab value="Same-Chain Swap">
+    ### Same Chain Swap
+
     Same-chain swaps are executed entirely within a single blockchain, making them simpler and faster than cross-chain operations. 
     
     The `registerIntent` API is **not** used. The transaction(s) returned by `getBestRoute` are signed and executed directly.
@@ -260,6 +264,8 @@ The entire swap process revolves around these core API calls. Their usage varies
 
     <Tabs items={["FST", "Non-FST"]}>
       <Tab value="FST">
+        ### Cross Chain Swap (FST)
+
         Since the source token is already FST-supported, cross-chain intent can be registered directly with ULL for fulfillment.
 
         <FullscreenImage src="/images/crosschainswapfst.png" alt="Cross Chain Swaps Flow" />
@@ -530,6 +536,8 @@ The entire swap process revolves around these core API calls. Their usage varies
         </Tab>
 
       <Tab value="Non-FST">
+        ### Cross Chain Swap (Non-FST)
+
         This flow is used when the source token is not an FST. It requires swapping the token to an FST on the source chain before bridging. This is achieved by executing a transaction directly with an Okto contract, bypassing the separate `registerIntent` step.
 
         <FullscreenImage src="/images/crosschainswapnonfst.png" alt="Cross Chain Swaps Flow" />
