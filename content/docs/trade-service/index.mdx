@@ -48,7 +48,7 @@ The entire swap process revolves around these core API calls. Their usage varies
 
 <Tabs items={['Same-Chain Swap', 'Cross-Chain Swap']}>
   <Tab value="Same-Chain Swap">
-    ### Same Chain Swap
+    ## Same-Chain Swap
 
     Same-chain swaps are executed entirely within a single blockchain, making them simpler and faster than cross-chain operations. 
     
@@ -254,6 +254,8 @@ The entire swap process revolves around these core API calls. Their usage varies
 
   </Tab>
   <Tab value="Cross-Chain Swap">
+    ## Cross-Chain Swap
+
     Cross-chain swaps involve transferring tokens between different blockchains using Okto's Unified Liquidity Layer (ULL). These swaps are handled differently based on whether the source token is a Filler-Supported Token (FST). This distinction determines the entire execution flow.
 
     <Callout title="FST vs. Non-FST">
@@ -264,7 +266,7 @@ The entire swap process revolves around these core API calls. Their usage varies
 
     <Tabs items={["FST", "Non-FST"]}>
       <Tab value="FST">
-        ### Cross Chain Swap (FST)
+        ### Cross-Chain Swap (FST)
 
         Since the source token is already FST-supported, cross-chain intent can be registered directly with ULL for fulfillment.
 
@@ -536,7 +538,7 @@ The entire swap process revolves around these core API calls. Their usage varies
         </Tab>
 
       <Tab value="Non-FST">
-        ### Cross Chain Swap (Non-FST)
+        ### Cross-Chain Swap (Non-FST)
 
         This flow is used when the source token is not an FST. It requires swapping the token to an FST on the source chain before bridging. This is achieved by executing a transaction directly with an Okto contract, bypassing the separate `registerIntent` step.
 
