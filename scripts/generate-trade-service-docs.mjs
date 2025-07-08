@@ -25,6 +25,7 @@ rimrafSync(out, {
       !v.endsWith("slippage.mdx") &&
       !v.endsWith("fees.mdx") &&
       !v.endsWith("refunds.mdx") &&
+      !v.endsWith("template-repository.mdx") && 
       !isInTradeServiceFolder
     );
   }

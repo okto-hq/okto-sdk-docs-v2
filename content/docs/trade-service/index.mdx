@@ -246,10 +246,9 @@ The entire swap process revolves around these core API calls. Their usage varies
     ### Step 3: Sign and Execute
     The user signs and executes the transaction(s) from the `getBestRoute` response using their wallet. No further API calls are needed. `getCallData` and `registerIntent` are skipped entirely for same-chain swaps.
 
-    ### Step 4: Get Order Details
-
-    For same-chain swaps, Okto only provides the the transaction payload. No Okto `jobId` or `orderId` is created. The execution occurs directly between the user's wallet and the on-chain DEX/aggregator. To check the status of the swap, monitor the transaction hash received after execution via a blockchain explorer or the user's wallet provider.
-
+    <Callout type="info">
+      For same-chain swaps, Okto only provides the the transaction payload. No Okto `jobId` or `orderId` is created. The execution occurs directly between the user's wallet and the on-chain DEX/aggregator. To check the status of the swap, monitor the transaction hash received after execution via a blockchain explorer or the user's wallet provider.
+    </Callout>
     </Steps>
 
   </Tab>

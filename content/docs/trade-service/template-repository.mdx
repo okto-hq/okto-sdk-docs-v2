@@ -1,0 +1,169 @@
+---
+title: Trade Service Template App
+full: false
+---
+
+A demonstration of the Okto Trade Service APIs. This template app showcases core Trade Service functionality—including fetching quotes, retrieving the best transaction routes, managing transaction steps, registering intents, and executing swaps—so you can quickly start building with Okto.
+
+<Callout type="warn" title="Customize Before Production">
+  Note that this template is for development and testing purposes only. Be sure to customize and secure it before using in production.
+</Callout>
+
+<Callout type="info" title="Prerequisites"> 
+  - To access the Trade Service APIs, requests must be authenticated using an API key. Please contact the Okto team at `deverel@coindcx.com` to request your Trade Service API credentials. 
+  - Okto's Trade Service only supports mainnets. For more information on the chains and tokens supported by the Trade Service, check [Supported Chains and Tokens](/docs/trade-service/supported-networks-tokens) documentation.
+</Callout>
+
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import CollapsibleCallout from "app/components/mdx/CollapsibleCallout";
+import ExternalLink from "app/components/mdx/ExternalLink";
+
+<div className="bg-white dark:bg-[#1a1a1e] rounded-lg shadow-sm border border-gray-200 dark:border-[#2b2b2c] p-4 w-full my-4">
+  <div className="flex items-center justify-between">
+    <span className="text-base font-semibold text-gray-900 dark:text-gray-100">Trade Service API Template Repository</span>
+    <div className="flex gap-3">
+      <a
+        href="https://public-okto-trade-service-template.vercel.app/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="no-underline px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-colors min-w-[120px] text-center"
+      >
+        Live Demo
+      </a>
+      <a
+        href="https://github.com/okto-hq/okto-sdkv2-trade-service-template-app"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="no-underline px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors min-w-[120px] text-center"
+      >
+        View on GitHub
+      </a>
+    </div>
+  </div>
+</div>
+
+## Getting Started
+
+Follow the steps below to get your Okto Trade Service Template App running:
+
+<Tabs items={["React"]}>
+  <Tab value="React" label="React">
+
+    1. **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/okto-hq/okto-sdkv2-trade-service-template-app
+    ```
+
+    2. **Install dependencies:**
+
+    ```bash
+    cd okto-sdkv2-trade-service-template-app
+    npm install
+    ```
+
+    3. **Configure your environment:**
+
+    <Tabs items={["Localhost", "When Deploying"]}>
+      <Tab value="Localhost" label="Localhost">
+        To run locally, configure your Vite proxy for **sandbox environment**:
+
+        - Update your `vite.config.ts`:
+        ```ts
+        import { defineConfig } from "vite";
+        import react from "@vitejs/plugin-react-swc";
+        import tailwindcss from "@tailwindcss/vite";
+        import { nodePolyfills } from "vite-plugin-node-polyfills";
+
+        export default defineConfig(() => ({
+          plugins: [react(), tailwindcss(), nodePolyfills()],
+          server: {
+            proxy: {
+              "/trade-sandbox-api-proxy": {
+                target: "https://sandbox-okto-trade-service-kong.okto.tech/",
+                changeOrigin: true,
+                secure: false,
+                rewrite: (path) => path.replace(/^\/trade-sandbox-api-proxy/, "/v1"),
+              },
+            },
+          },
+        }));
+        ```
+
+        - Update your `src/api/client.ts`:
+        ```ts
+          import axios from "axios";
+
+          export const tradeServiceSandboxClient = axios.create({
+            baseURL: "/trade-sandbox-api-proxy",
+            timeout: 30000,
+          });
+
+          tradeServiceSandboxClient.interceptors.request.use((config) => {
+            const storedSecret = localStorage.getItem("TRADE_SERVICE_SECRET");
+
+            if (!storedSecret) {
+              console.error("Trade Service secret is missing in localStorage!");
+              throw new Error("Trade Service secret is missing. Please set it in the app before trading.");
+            }
+
+            config.headers["X-Api-Key"] = storedSecret;
+            console.log("[TradeService] Using X-Api-Key from localStorage:", storedSecret);
+            return config;
+          });
+        ```
+      </Tab> 
+      <Tab value="When Deploying" label="When Deploying"> 
+          <Callout type="info" title="Before Going Live"> 
+           Note that you must whitelist your deployed URL with the Okto Trade Service API backend. To do so, contact `devrel@coindcx.com` to complete this process. 
+          </Callout>
+
+          - When deploying your app using **sandbox environment**, add your trade service API key in `.env` file and then import in the `src/api/const.ts` file as follows:
+
+          ```bash
+          // .env
+          VITE_TRADE_SERVICE_SANDBOX_API_KEY = <YOUR_TRADE_SERVICE_SANDBOX_API_KEY>
+
+          // src/api/const.ts
+          export const TRADE_SERVICE_SANDBOX_API_KEY = import.meta.env.VITE_TRADE_SERVICE_SANDBOX_API_KEY!;
+          ```
+
+          - Update your `vite.config.ts`:
+          ```ts
+          import { defineConfig } from "vite";
+          import react from "@vitejs/plugin-react-swc";
+          import tailwindcss from "@tailwindcss/vite";
+          import { nodePolyfills } from "vite-plugin-node-polyfills";
+
+          export default defineConfig({
+            plugins: [react(), tailwindcss(), nodePolyfills()],
+          });
+          ```
+
+          - Update your `src/api/client.ts`:
+          ```ts
+            import axios from "axios";
+            import {
+              TRADE_SERVICE_SANDBOX_API_KEY,
+            } from "./consts";
+
+            export const tradeServiceSandboxClient = axios.create({
+              baseURL: "https://sandbox-okto-trade-service-kong.okto.tech/v1",
+              timeout: 30000,
+              headers: {
+                "X-Api-Key": TRADE_SERVICE_SANDBOX_API_KEY,
+              },
+            });
+          ```
+      </Tab>
+    </Tabs>
+
+    5. **Start the development server:**
+
+      ```bash 
+      npm run dev
+      ```
+
+</Tab>
+</Tabs>
