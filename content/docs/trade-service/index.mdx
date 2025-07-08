@@ -526,6 +526,18 @@ The entire swap process revolves around these core API calls. Their usage varies
           </Accordion>
         </Accordions>
 
+        **Understanding Order Status**
+        
+        The `orderData.status` field in the response indicates your order’s current state:
+        | Status Code | Description                                                       |
+        |-----------------|----------------------------------------------------|
+        | `-1` | Order expired. The order did not register on-chain. Terminal state. |
+        | `0` | Order received by the backend but not yet registered on-chain.   |
+        | `1` | Order registered on-chain but not yet filled.                    |
+        | `2` | Order settled successfully. Terminal state.                      |
+        | `3` | Order in dispute. The order was filled but not yet settled.      |
+        | `4` | Order refunded. The order was not filled, and user was refunded. Terminal state. |
+
         </Steps>
         </Tab>
 
@@ -814,10 +826,22 @@ The entire swap process revolves around these core API calls. Their usage varies
           </Accordion>
         </Accordions>
 
+        **Understanding Order Status**
+        
+        The `orderData.status` field in the response indicates your order’s current state:
+
+        | Status Code | Description                                                       |
+        |-------------|-------------------------------------------------------------------|
+        | `-1`        | Order expired. The order did not register on-chain. Terminal state. |
+        | `0`         | Order received by the backend but not yet registered on-chain.   |
+        | `1`         | Order registered on-chain but not yet filled.                    |
+        | `2`         | Order settled successfully. Terminal state.                      |
+        | `3`         | Order in dispute. The order was filled but not yet settled.      |
+        | `4`         | Order refunded. The order was not filled, and user was refunded. Terminal state. |
+
         </Steps>
       </Tab>
     </Tabs>
-
   </Tab>
 </Tabs>
 
