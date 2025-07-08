@@ -493,42 +493,34 @@ The entire swap process revolves around these core API calls. Their usage varies
           <Accordion title="Response Example">
             ```json
             {
-              "status": "success",
-              "swapper": "0",
-              "fillDeadline": "1740749184",
               "orderData": {
-                "platform": "0xABF20970058e65504bEaCD655FFca97Ba4Eaa4E9",
-                "platformFeeBps": "10",
-                "orderType": "",
-                "swapperInputs": {
-                  "token": "0x000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e5831",
-                  "amount": "1000"
-                },
-                "swapperOutputs": {
-                  "token": "0x000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e5831",
-                  "amount": "1000",
-                  "recipient": "0x00000000000000000000000058db70bde957b931782fb62197a47f02ac42f082",
-                  "chainId": "14378721742530068972694903139298357247153498415214797681026897651680066921586"
-                }
+                "integrator": "0x0000000000000000000000000000000000000000",
+                "integratorFeeBps": "0",
+                "minReceived": [
+                  {
+                    "token": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+                    "amount": "500000",
+                    "recipient": "0x31Fd17cf0E242C38456E34c1245fDdD426b6fcdf",
+                    "chainId": "43376495806317063146517865045423980218291426573811029661813620785995169497246"
+                  }
+                ],
+                "fillInstructions": [
+                  {
+                    "destinationChainId": "30623935521215732608318225916586969493646139388472508660171461673454691529708",
+                    "destinationSettler": "0x080eE0f7519b805c41153CC51d79b0C755f76006",
+                    "originData": {
+                      "originChainId": "",
+                      "fillOutputs": null
+                    }
+                  }
+                ]
               },
-              "feeCharged": false,
-              "outputAmount": "998.75",
-              "steps": [
-                {
-                  "type": "swap",
-                  "metadata": {
-                    "serviceType": "",
-                    "transactionType": "",
-                    "protocol": "Okto_ULL",
-                    "aggregatorName": "Okto_ULL"
-                  },
-                  "chainId": "14378721742530068972694903139298357247153498415214797681026897651680066921586",
-                  "txnData": {},
-                  "intentCalldata": {}
-                }
-              ],
-              "permitDataToSign": "string",
-              "routeExpiry": "1m0s"
+              "filler": "0x31Fd17cf0E242C38456E34c1245fDdD426b6fcdf",
+              "status": "0",
+              "user": "0x8aaf1F5A168EE78D1b96df345eCaf0098607B8F6",
+              "fillDeadline": "1751961723",
+              "orderDataType": "0",
+              "destinationTx": ""
             }
             ```
           </Accordion>
@@ -789,42 +781,34 @@ The entire swap process revolves around these core API calls. Their usage varies
           <Accordion title="Response Example">
             ```json
             {
-              "status": "success",
-              "swapper": "0",
-              "fillDeadline": "1740749184",
               "orderData": {
-                "platform": "0xABF20970058e65504bEaCD655FFca97Ba4Eaa4E9",
-                "platformFeeBps": "10",
-                "orderType": "",
-                "swapperInputs": {
-                  "token": "0x000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e5831",
-                  "amount": "1000"
-                },
-                "swapperOutputs": {
-                  "token": "0x000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e5831",
-                  "amount": "1000",
-                  "recipient": "0x00000000000000000000000058db70bde957b931782fb62197a47f02ac42f082",
-                  "chainId": "14378721742530068972694903139298357247153498415214797681026897651680066921586"
-                }
+                "integrator": "0x0000000000000000000000000000000000000000",
+                "integratorFeeBps": "0",
+                "minReceived": [
+                  {
+                    "token": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+                    "amount": "500000",
+                    "recipient": "0x31Fd17cf0E242C38456E34c1245fDdD426b6fcdf",
+                    "chainId": "43376495806317063146517865045423980218291426573811029661813620785995169497246"
+                  }
+                ],
+                "fillInstructions": [
+                  {
+                    "destinationChainId": "30623935521215732608318225916586969493646139388472508660171461673454691529708",
+                    "destinationSettler": "0x080eE0f7519b805c41153CC51d79b0C755f76006",
+                    "originData": {
+                      "originChainId": "",
+                      "fillOutputs": null
+                    }
+                  }
+                ]
               },
-              "feeCharged": false,
-              "outputAmount": "998.75",
-              "steps": [
-                {
-                  "type": "swap",
-                  "metadata": {
-                    "serviceType": "",
-                    "transactionType": "",
-                    "protocol": "Okto_ULL",
-                    "aggregatorName": "Okto_ULL"
-                  },
-                  "chainId": "14378721742530068972694903139298357247153498415214797681026897651680066921586",
-                  "txnData": {},
-                  "intentCalldata": {}
-                }
-              ],
-              "permitDataToSign": "string",
-              "routeExpiry": "1m0s"
+              "filler": "0x31Fd17cf0E242C38456E34c1245fDdD426b6fcdf",
+              "status": "0",
+              "user": "0x8aaf1F5A168EE78D1b96df345eCaf0098607B8F6",
+              "fillDeadline": "1751961723",
+              "orderDataType": "0",
+              "destinationTx": ""
             }
             ```
           </Accordion>

@@ -547,128 +547,103 @@
                     "properties": {
                       "status": {
                         "type": "string",
-                        "example": "success"
+                        "example": "1"
                       },
-                      "swapper": {
+                      "filler": {
                         "type": "string",
-                        "example": "0"
+                        "example": "0x31Fd17cf0E242C38456E34c1245fDdD426b6fcdf"
                       },
                       "fillDeadline": {
                         "type": "string",
-                        "example": "1740749184"
+                        "example": "1751961723"
+                      },
+                      "orderDataType": {
+                        "type": "string",
+                        "example": "0"
+                      },
+                      "user": {
+                        "type": "string",
+                        "example": "0x8aaf1F5A168EE78D1b96df345eCaf0098607B8F6"
+                      },
+                      "destinationTx": {
+                        "type": "string",
+                        "example": ""
                       },
                       "orderData": {
                         "type": "object",
                         "properties": {
-                          "platform": {
+                          "integrator": {
                             "type": "string",
-                            "example": "0xABF20970058e65504bEaCD655FFca97Ba4Eaa4E9"
+                            "example": "0x0000000000000000000000000000000000000000"
                           },
-                          "platformFeeBps": {
+                          "integratorFeeBps": {
                             "type": "string",
-                            "example": "10"
+                            "example": "0"
                           },
-                          "orderType": {
-                            "type": "string",
-                            "example": ""
-                          },
-                          "swapperInputs": {
-                            "type": "object",
-                            "properties": {
-                              "token": {
-                                "type": "string",
-                                "example": "0x000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e5831"
-                              },
-                              "amount": {
-                                "type": "string",
-                                "example": "1000"
-                              }
-                            }
-                          },
-                          "swapperOutputs": {
-                            "type": "object",
-                            "properties": {
-                              "token": {
-                                "type": "string",
-                                "example": "0x000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e5831"
-                              },
-                              "amount": {
-                                "type": "string",
-                                "example": "1000"
-                              },
-                              "recipient":{
-                                "type": "string",
-                                "example": "0x00000000000000000000000058db70bde957b931782fb62197a47f02ac42f082"
-                              },
-                              "chainId": {
-                                "type": "string",
-                                "example": "14378721742530068972694903139298357247153498415214797681026897651680066921586"
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "feeCharged": {
-                        "type": "boolean",
-                        "example": false
-                      },
-                      "outputAmount": {
-                        "type": "string",
-                        "example": "998.75"
-                      },
-                      "steps": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "swap"
-                            },
-                            "metadata": {
+                          "minReceived": {
+                            "type": "array",
+                            "items": {
                               "type": "object",
                               "properties": {
-                                "serviceType": {
+                                "token": {
                                   "type": "string",
-                                  "example": ""
+                                  "example": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359"
                                 },
-                                "transactionType": {
+                                "amount": {
                                   "type": "string",
-                                  "example": ""
+                                  "example": "500000"
                                 },
-                                "protocol": {
+                                "recipient": {
                                   "type": "string",
-                                  "example": "Okto_ULL"
+                                  "example": "0x31Fd17cf0E242C38456E34c1245fDdD426b6fcdf"
                                 },
-                                "aggregatorName": {
+                                "chainId": {
                                   "type": "string",
-                                  "example": "Okto_ULL"
+                                  "example": "43376495806317063146517865045423980218291426573811029661813620785995169497246"
                                 }
                               }
-                            },
-                            "chainId": {
-                              "type": "string",
-                              "example": "14378721742530068972694903139298357247153498415214797681026897651680066921586"
-                            },
-                            "txnData": {
+                            }
+                          },
+                          "fillInstructions": {
+                            "type": "array",
+                            "items": {
                               "type": "object",
-                              "nullable": true
-                            },
-                            "intentCalldata": {
-                              "type": "object",
-                              "nullable": true
+                              "properties": {
+                                "destinationChainId": {
+                                  "type": "string",
+                                  "example": "30623935521215732608318225916586969493646139388472508660171461673454691529708"
+                                },
+                                "destinationSettler": {
+                                  "type": "string",
+                                  "example": "0x080eE0f7519b805c41153CC51d79b0C755f76006"
+                                },
+                                "originData": {
+                                  "type": "object",
+                                  "properties": {
+                                    "originChainId": {
+                                      "type": "string",
+                                      "example": ""
+                                    },
+                                    "fillOutputs": {
+                                      "type": "object",
+                                      "nullable": true
+                                    }
+                                  }
+                                }
+                              }
                             }
                           }
                         }
                       },
                       "permitDataToSign": {
                         "type": "string",
-                        "nullable": ""
+                        "nullable": true,
+                        "example": ""
                       },
                       "routeExpiry": {
                         "type": "string",
-                        "example": "1m0s",
-                        "nullable": true
+                        "nullable": true,
+                        "example": "1m0s"
                       }
                     }
                   }
