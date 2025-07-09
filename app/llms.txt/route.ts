@@ -1,12 +1,14 @@
 import { source } from '@/lib/source';
-import { getLLMText } from '@/lib/getLLMText';
 
-// cached forever
 export const revalidate = false;
 
 export async function GET() {
-  const scan = source.getPages().map(getLLMText);
-  const scanned = await Promise.all(scan);
-
-  return new Response(scanned.join('\n\n'));
+  const pages = source.getPages();
+  const lines = pages.map(page => {
+    // Remove leading '/docs/' from page.url for the llm route
+    const llmUrl = '/llm' + page.url.replace(/^\/docs/, '');
+    const absoluteUrl = `https://docs.okto.tech${llmUrl}.md`;
+    return `Title: ${page.data.title} | URL: ${absoluteUrl} | Description: ${page.data.description || 'No description available'}`;
+  });
+  return new Response(lines.join('\n'));
 }
