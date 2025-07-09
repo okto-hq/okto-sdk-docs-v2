@@ -10,10 +10,19 @@ export async function GET(
   { params }: { params: Promise<{ slug?: string[] }> },
 ) {
   const { slug } = await params;
-  const page = source.getPage(slug);
+
+  // Strip .md or .mdx extension from the last segment if present
+  let cleanSlug = slug;
+  if (slug && slug.length > 0) {
+    const lastSegment = slug[slug.length - 1];
+    const cleanLastSegment = lastSegment.replace(/\.(md|mdx)$/, '');
+    cleanSlug = [...slug.slice(0, -1), cleanLastSegment];
+  }
+
+  const page = source.getPage(cleanSlug);
   if (!page) notFound();
 
-  return new NextResponse(await getLLMText(page));
+  return new NextResponse(await getLLMText(page)); // Return content without metadata
 }
 
 export function generateStaticParams() {
