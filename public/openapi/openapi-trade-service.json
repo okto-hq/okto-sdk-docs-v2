@@ -32,7 +32,7 @@
         "post": {
           "tags": ["Usage"],
           "summary": "Get Quote",
-          "description": "Fetch a real-time quote for swapping a specified token amount from one chain to another. Check out the [`getQuote`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/trade-service/index.ts) API template script for implementation details.",
+          "description": "Fetch a real-time quote for swapping a specified token amount from one chain to another. Check out the [`getQuote`](https://github.com/okto-hq/okto-sdkv2-trade-service-template-app/tree/main/src/api) API template script for implementation details.",
           "operationId": "getQuote",
           "requestBody": {
             "required": true,
@@ -175,7 +175,7 @@
         "post": {
           "tags": ["Usage"],
           "summary": "Get Best Route",
-          "description": "Find the most optimal route for swapping tokens across chains. This API determines the best path based on source/destination tokens, chains, amount, and user wallet addresses. Check out the [`getBestRoute`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/trade-service/index.ts) API template script for implementation details.",
+          "description": "Find the most optimal route for swapping tokens across chains. This API determines the best path based on source/destination tokens, chains, amount, and user wallet addresses. Check out the [`getBestRoute`](https://github.com/okto-hq/okto-sdkv2-trade-service-template-app/tree/main/src/api) API template script for implementation details.",
           "operationId": "getBestRoute",
           "requestBody": {
             "required": true,
@@ -424,7 +424,7 @@
         "post": {
           "tags": ["Usage"],
           "summary": "Register Intent",
-          "description": "Registers a swap intent on the system using a signed order. This API call is typically made after generating a quote and selecting a route, and before executing the actual swap. It ensures the swap details are securely logged and authorized for processing. Check out the [`registerIntent`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/trade-service/index.ts) API template script for implementation details.",
+          "description": "Registers a swap intent on the system using a signed order. This API call is typically made after generating a quote and selecting a route, and before executing the actual swap. It ensures the swap details are securely logged and authorized for processing. Check out the [`registerIntent`](https://github.com/okto-hq/okto-sdkv2-trade-service-template-app/tree/main/src/api) API template script for implementation details.",
           "operationId": "registerIntent",
           "requestBody": {
             "required": true,
@@ -514,7 +514,7 @@
         "post": {
           "tags": ["Usage"],
           "summary": "Get Order Details",
-          "description": "Fetch detailed information about a previously registered swap intent using the order ID. This API returns the status, route, fee, swapper inputs/outputs, and execution steps associated with the order. It is typically used to track the progress or outcome of a swap intent. Check out the [`orderDetails`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/trade-service/index.ts) API template script for implementation details.",
+          "description": "Fetch detailed information about a previously registered swap intent using the order ID. This API returns the status, route, fee, swapper inputs/outputs, and execution steps associated with the order. It is typically used to track the progress or outcome of a swap intent. Check out the [`orderDetails`](https://github.com/okto-hq/okto-sdkv2-trade-service-template-app/tree/main/src/api) API template script for implementation details.",
           "operationId": "orderDetails",
           "requestBody": {
             "required": true,
@@ -547,128 +547,103 @@
                     "properties": {
                       "status": {
                         "type": "string",
-                        "example": "success"
+                        "example": "1"
                       },
-                      "swapper": {
+                      "filler": {
                         "type": "string",
-                        "example": "0"
+                        "example": "0x31Fd17cf0E242C38456E34c1245fDdD426b6fcdf"
                       },
                       "fillDeadline": {
                         "type": "string",
-                        "example": "1740749184"
+                        "example": "1751961723"
+                      },
+                      "orderDataType": {
+                        "type": "string",
+                        "example": "0"
+                      },
+                      "user": {
+                        "type": "string",
+                        "example": "0x8aaf1F5A168EE78D1b96df345eCaf0098607B8F6"
+                      },
+                      "destinationTx": {
+                        "type": "string",
+                        "example": ""
                       },
                       "orderData": {
                         "type": "object",
                         "properties": {
-                          "platform": {
+                          "integrator": {
                             "type": "string",
-                            "example": "0xABF20970058e65504bEaCD655FFca97Ba4Eaa4E9"
+                            "example": "0x0000000000000000000000000000000000000000"
                           },
-                          "platformFeeBps": {
+                          "integratorFeeBps": {
                             "type": "string",
-                            "example": "10"
+                            "example": "0"
                           },
-                          "orderType": {
-                            "type": "string",
-                            "example": ""
-                          },
-                          "swapperInputs": {
-                            "type": "object",
-                            "properties": {
-                              "token": {
-                                "type": "string",
-                                "example": "0x000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e5831"
-                              },
-                              "amount": {
-                                "type": "string",
-                                "example": "1000"
-                              }
-                            }
-                          },
-                          "swapperOutputs": {
-                            "type": "object",
-                            "properties": {
-                              "token": {
-                                "type": "string",
-                                "example": "0x000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e5831"
-                              },
-                              "amount": {
-                                "type": "string",
-                                "example": "1000"
-                              },
-                              "recipient":{
-                                "type": "string",
-                                "example": "0x00000000000000000000000058db70bde957b931782fb62197a47f02ac42f082"
-                              },
-                              "chainId": {
-                                "type": "string",
-                                "example": "14378721742530068972694903139298357247153498415214797681026897651680066921586"
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "feeCharged": {
-                        "type": "boolean",
-                        "example": false
-                      },
-                      "outputAmount": {
-                        "type": "string",
-                        "example": "998.75"
-                      },
-                      "steps": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "swap"
-                            },
-                            "metadata": {
+                          "minReceived": {
+                            "type": "array",
+                            "items": {
                               "type": "object",
                               "properties": {
-                                "serviceType": {
+                                "token": {
                                   "type": "string",
-                                  "example": ""
+                                  "example": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359"
                                 },
-                                "transactionType": {
+                                "amount": {
                                   "type": "string",
-                                  "example": ""
+                                  "example": "500000"
                                 },
-                                "protocol": {
+                                "recipient": {
                                   "type": "string",
-                                  "example": "Okto_ULL"
+                                  "example": "0x31Fd17cf0E242C38456E34c1245fDdD426b6fcdf"
                                 },
-                                "aggregatorName": {
+                                "chainId": {
                                   "type": "string",
-                                  "example": "Okto_ULL"
+                                  "example": "43376495806317063146517865045423980218291426573811029661813620785995169497246"
                                 }
                               }
-                            },
-                            "chainId": {
-                              "type": "string",
-                              "example": "14378721742530068972694903139298357247153498415214797681026897651680066921586"
-                            },
-                            "txnData": {
+                            }
+                          },
+                          "fillInstructions": {
+                            "type": "array",
+                            "items": {
                               "type": "object",
-                              "nullable": true
-                            },
-                            "intentCalldata": {
-                              "type": "object",
-                              "nullable": true
+                              "properties": {
+                                "destinationChainId": {
+                                  "type": "string",
+                                  "example": "30623935521215732608318225916586969493646139388472508660171461673454691529708"
+                                },
+                                "destinationSettler": {
+                                  "type": "string",
+                                  "example": "0x080eE0f7519b805c41153CC51d79b0C755f76006"
+                                },
+                                "originData": {
+                                  "type": "object",
+                                  "properties": {
+                                    "originChainId": {
+                                      "type": "string",
+                                      "example": ""
+                                    },
+                                    "fillOutputs": {
+                                      "type": "object",
+                                      "nullable": true
+                                    }
+                                  }
+                                }
+                              }
                             }
                           }
                         }
                       },
                       "permitDataToSign": {
                         "type": "string",
-                        "nullable": ""
+                        "nullable": true,
+                        "example": ""
                       },
                       "routeExpiry": {
                         "type": "string",
-                        "example": "1m0s",
-                        "nullable": true
+                        "nullable": true,
+                        "example": "1m0s"
                       }
                     }
                   }
@@ -716,7 +691,7 @@
         "post": {
           "tags": ["Usage"],
           "summary": "Get Call Data",
-          "description": "Generate the complete calldata required to execute a token swap transaction on-chain. This API prepares the encoded calldata based on the selected route, amount, tokens, slippage, and fee configurations. It supports both same-chain and cross-chain swaps and includes optional permit data for approvals. Check out the [`getCallData`](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/trade-service/index.ts) API template script for implementation details.",
+          "description": "Generate the complete calldata required to execute a token swap transaction on-chain. This API prepares the encoded calldata based on the selected route, amount, tokens, slippage, and fee configurations. It supports both same-chain and cross-chain swaps and includes optional permit data for approvals. Check out the [`getCallData`](https://github.com/okto-hq/okto-sdkv2-trade-service-template-app/tree/main/src/api) API template script for implementation details.",
           "operationId": "getCallData",
           "requestBody": {
             "required": true,

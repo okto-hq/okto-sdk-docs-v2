@@ -30,7 +30,9 @@ The Okto Trade Service provides a comprehensive API suite for executing token sw
 
 ## Prerequisites
 
-To access the Trade Service APIs, requests must be authenticated using an API key. Please contact the Okto team at `deverel@coindcx.com` to request your Trade Service API credentials.
+- To access the Trade Service APIs, requests must be authenticated using an API key. Please contact the Okto team at `deverel@coindcx.com` to request your Trade Service API credentials.
+
+- Okto's Trade Service only supports mainnets. For more information on the chains and tokens supported by the Trade Service, check [Supported Chains and Tokens](/docs/trade-service/supported-networks-tokens) documentation.
 
 ## Core API Functions
 
@@ -46,6 +48,8 @@ The entire swap process revolves around these core API calls. Their usage varies
 
 <Tabs items={['Same-Chain Swap', 'Cross-Chain Swap']}>
   <Tab value="Same-Chain Swap">
+    ## Same-Chain Swap
+
     Same-chain swaps are executed entirely within a single blockchain, making them simpler and faster than cross-chain operations. 
     
     The `registerIntent` API is **not** used. The transaction(s) returned by `getBestRoute` are signed and executed directly.
@@ -242,14 +246,15 @@ The entire swap process revolves around these core API calls. Their usage varies
     ### Step 3: Sign and Execute
     The user signs and executes the transaction(s) from the `getBestRoute` response using their wallet. No further API calls are needed. `getCallData` and `registerIntent` are skipped entirely for same-chain swaps.
 
-    ### Step 4: Get Order Details
-
-    For same-chain swaps, Okto only provides the the transaction payload. No Okto `jobId` or `orderId` is created. The execution occurs directly between the user's wallet and the on-chain DEX/aggregator. To check the status of the swap, monitor the transaction hash received after execution via a blockchain explorer or the user's wallet provider.
-
+    <Callout type="info">
+      For same-chain swaps, Okto only provides the the transaction payload. No Okto `jobId` or `orderId` is created. The execution occurs directly between the user's wallet and the on-chain DEX/aggregator. To check the status of the swap, monitor the transaction hash received after execution via a blockchain explorer or the user's wallet provider.
+    </Callout>
     </Steps>
 
   </Tab>
   <Tab value="Cross-Chain Swap">
+    ## Cross-Chain Swap
+
     Cross-chain swaps involve transferring tokens between different blockchains using Okto's Unified Liquidity Layer (ULL). These swaps are handled differently based on whether the source token is a Filler-Supported Token (FST). This distinction determines the entire execution flow.
 
     <Callout title="FST vs. Non-FST">
@@ -260,6 +265,8 @@ The entire swap process revolves around these core API calls. Their usage varies
 
     <Tabs items={["FST", "Non-FST"]}>
       <Tab value="FST">
+        ### Cross-Chain Swap (FST)
+
         Since the source token is already FST-supported, cross-chain intent can be registered directly with ULL for fulfillment.
 
         <FullscreenImage src="/images/crosschainswapfst.png" alt="Cross Chain Swaps Flow" />
@@ -485,51 +492,57 @@ The entire swap process revolves around these core API calls. Their usage varies
           <Accordion title="Response Example">
             ```json
             {
-              "status": "success",
-              "swapper": "0",
-              "fillDeadline": "1740749184",
               "orderData": {
-                "platform": "0xABF20970058e65504bEaCD655FFca97Ba4Eaa4E9",
-                "platformFeeBps": "10",
-                "orderType": "",
-                "swapperInputs": {
-                  "token": "0x000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e5831",
-                  "amount": "1000"
-                },
-                "swapperOutputs": {
-                  "token": "0x000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e5831",
-                  "amount": "1000",
-                  "recipient": "0x00000000000000000000000058db70bde957b931782fb62197a47f02ac42f082",
-                  "chainId": "14378721742530068972694903139298357247153498415214797681026897651680066921586"
-                }
+                "integrator": "0x0000000000000000000000000000000000000000",
+                "integratorFeeBps": "0",
+                "minReceived": [
+                  {
+                    "token": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+                    "amount": "500000",
+                    "recipient": "0x31Fd17cf0E242C38456E34c1245fDdD426b6fcdf",
+                    "chainId": "43376495806317063146517865045423980218291426573811029661813620785995169497246"
+                  }
+                ],
+                "fillInstructions": [
+                  {
+                    "destinationChainId": "30623935521215732608318225916586969493646139388472508660171461673454691529708",
+                    "destinationSettler": "0x080eE0f7519b805c41153CC51d79b0C755f76006",
+                    "originData": {
+                      "originChainId": "",
+                      "fillOutputs": null
+                    }
+                  }
+                ]
               },
-              "feeCharged": false,
-              "outputAmount": "998.75",
-              "steps": [
-                {
-                  "type": "swap",
-                  "metadata": {
-                    "serviceType": "",
-                    "transactionType": "",
-                    "protocol": "Okto_ULL",
-                    "aggregatorName": "Okto_ULL"
-                  },
-                  "chainId": "14378721742530068972694903139298357247153498415214797681026897651680066921586",
-                  "txnData": {},
-                  "intentCalldata": {}
-                }
-              ],
-              "permitDataToSign": "string",
-              "routeExpiry": "1m0s"
+              "filler": "0x31Fd17cf0E242C38456E34c1245fDdD426b6fcdf",
+              "status": "0",
+              "user": "0x8aaf1F5A168EE78D1b96df345eCaf0098607B8F6",
+              "fillDeadline": "1751961723",
+              "orderDataType": "0",
+              "destinationTx": ""
             }
             ```
           </Accordion>
         </Accordions>
 
+        **Understanding Order Status**
+        
+        The `orderData.status` field in the response indicates your order’s current state:
+        | Status Code | Description                                                       |
+        |-----------------|----------------------------------------------------|
+        | `-1` | Order expired. The order did not register on-chain. Terminal state. |
+        | `0` | Order received by the backend but not yet registered on-chain.   |
+        | `1` | Order registered on-chain but not yet filled.                    |
+        | `2` | Order settled successfully. Terminal state.                      |
+        | `3` | Order in dispute. The order was filled but not yet settled.      |
+        | `4` | Order refunded. The order was not filled, and user was refunded. Terminal state. |
+
         </Steps>
         </Tab>
 
       <Tab value="Non-FST">
+        ### Cross-Chain Swap (Non-FST)
+
         This flow is used when the source token is not an FST. It requires swapping the token to an FST on the source chain before bridging. This is achieved by executing a transaction directly with an Okto contract, bypassing the separate `registerIntent` step.
 
         <FullscreenImage src="/images/crosschainswapnonfst.png" alt="Cross Chain Swaps Flow" />
@@ -779,51 +792,55 @@ The entire swap process revolves around these core API calls. Their usage varies
           <Accordion title="Response Example">
             ```json
             {
-              "status": "success",
-              "swapper": "0",
-              "fillDeadline": "1740749184",
               "orderData": {
-                "platform": "0xABF20970058e65504bEaCD655FFca97Ba4Eaa4E9",
-                "platformFeeBps": "10",
-                "orderType": "",
-                "swapperInputs": {
-                  "token": "0x000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e5831",
-                  "amount": "1000"
-                },
-                "swapperOutputs": {
-                  "token": "0x000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e5831",
-                  "amount": "1000",
-                  "recipient": "0x00000000000000000000000058db70bde957b931782fb62197a47f02ac42f082",
-                  "chainId": "14378721742530068972694903139298357247153498415214797681026897651680066921586"
-                }
+                "integrator": "0x0000000000000000000000000000000000000000",
+                "integratorFeeBps": "0",
+                "minReceived": [
+                  {
+                    "token": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+                    "amount": "500000",
+                    "recipient": "0x31Fd17cf0E242C38456E34c1245fDdD426b6fcdf",
+                    "chainId": "43376495806317063146517865045423980218291426573811029661813620785995169497246"
+                  }
+                ],
+                "fillInstructions": [
+                  {
+                    "destinationChainId": "30623935521215732608318225916586969493646139388472508660171461673454691529708",
+                    "destinationSettler": "0x080eE0f7519b805c41153CC51d79b0C755f76006",
+                    "originData": {
+                      "originChainId": "",
+                      "fillOutputs": null
+                    }
+                  }
+                ]
               },
-              "feeCharged": false,
-              "outputAmount": "998.75",
-              "steps": [
-                {
-                  "type": "swap",
-                  "metadata": {
-                    "serviceType": "",
-                    "transactionType": "",
-                    "protocol": "Okto_ULL",
-                    "aggregatorName": "Okto_ULL"
-                  },
-                  "chainId": "14378721742530068972694903139298357247153498415214797681026897651680066921586",
-                  "txnData": {},
-                  "intentCalldata": {}
-                }
-              ],
-              "permitDataToSign": "string",
-              "routeExpiry": "1m0s"
+              "filler": "0x31Fd17cf0E242C38456E34c1245fDdD426b6fcdf",
+              "status": "0",
+              "user": "0x8aaf1F5A168EE78D1b96df345eCaf0098607B8F6",
+              "fillDeadline": "1751961723",
+              "orderDataType": "0",
+              "destinationTx": ""
             }
             ```
           </Accordion>
         </Accordions>
 
+        **Understanding Order Status**
+        
+        The `orderData.status` field in the response indicates your order’s current state:
+
+        | Status Code | Description                                                       |
+        |-------------|-------------------------------------------------------------------|
+        | `-1`        | Order expired. The order did not register on-chain. Terminal state. |
+        | `0`         | Order received by the backend but not yet registered on-chain.   |
+        | `1`         | Order registered on-chain but not yet filled.                    |
+        | `2`         | Order settled successfully. Terminal state.                      |
+        | `3`         | Order in dispute. The order was filled but not yet settled.      |
+        | `4`         | Order refunded. The order was not filled, and user was refunded. Terminal state. |
+
         </Steps>
       </Tab>
     </Tabs>
-
   </Tab>
 </Tabs>
 

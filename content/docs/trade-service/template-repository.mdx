@@ -3,14 +3,15 @@ title: Trade Service Template App
 full: false
 ---
 
-A comprehensive walkthrough of the **Okto Trade Service API Template App** for React. This template demonstrates core Trade Service functionality—including getting quotes, retrieving the best transaction routes, managing transaction steps, registering intents, and executing swaps—so you can quickly start building with Okto.
+A demonstration of the Okto Trade Service APIs. This template app showcases core Trade Service functionality—including fetching quotes, retrieving the best transaction routes, managing transaction steps, registering intents, and executing swaps—so you can quickly start building with Okto.
 
 <Callout type="warn" title="Customize Before Production">
   Note that this template is for development and testing purposes only. Be sure to customize and secure it before using in production.
 </Callout>
 
 <Callout type="info" title="Prerequisites"> 
-  To access the Trade Service APIs, requests must be authenticated using an API key. Please contact the Okto team at `deverel@coindcx.com` to request your Trade Service API credentials. 
+  - To access the Trade Service APIs, requests must be authenticated using an API key. Please contact the Okto team at `deverel@coindcx.com` to request your Trade Service API credentials. 
+  - Okto's Trade Service only supports mainnets. For more information on the chains and tokens supported by the Trade Service, check [Supported Chains and Tokens](/docs/trade-service/supported-networks-tokens) documentation.
 </Callout>
 
 import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
@@ -66,9 +67,9 @@ Follow the steps below to get your Okto Trade Service Template App running:
 
     <Tabs items={["Localhost", "When Deploying"]}>
       <Tab value="Localhost" label="Localhost">
-        To run locally, configure your Vite proxy for sandbox environment:
+        To run locally, configure your Vite proxy for **sandbox environment**:
 
-        Update your `vite.config.ts`:
+        - Update your `vite.config.ts`:
         ```ts
         import { defineConfig } from "vite";
         import react from "@vitejs/plugin-react-swc";
@@ -90,7 +91,7 @@ Follow the steps below to get your Okto Trade Service Template App running:
         }));
         ```
 
-        Update your `src/api/client.ts`:
+        - Update your `src/api/client.ts`:
         ```ts
           import axios from "axios";
 
@@ -118,17 +119,17 @@ Follow the steps below to get your Okto Trade Service Template App running:
            Note that you must whitelist your deployed URL with the Okto Trade Service API backend. To do so, contact `devrel@coindcx.com` to complete this process. 
           </Callout>
 
-          When deploying your application, add your trade-service API key in `.env` file and them import in the `src/api/const.ts` file as follows:
+          - When deploying your app using **sandbox environment**, add your trade service API key in `.env` file and then import in the `src/api/const.ts` file as follows:
 
           ```bash
           // .env
-          VITE_TRADE_SERVICE_API_KEY = <YOUR_TRADE_SERVICE_API_KEY>
+          VITE_TRADE_SERVICE_SANDBOX_API_KEY = <YOUR_TRADE_SERVICE_SANDBOX_API_KEY>
 
           // src/api/const.ts
-          export const TRADE_SERVICE_API_KEY = import.meta.env.VITE_TRADE_SERVICE_API_KEY!;
+          export const TRADE_SERVICE_SANDBOX_API_KEY = import.meta.env.VITE_TRADE_SERVICE_SANDBOX_API_KEY!;
           ```
 
-          Update your `vite.config.ts`:
+          - Update your `vite.config.ts`:
           ```ts
           import { defineConfig } from "vite";
           import react from "@vitejs/plugin-react-swc";
@@ -140,39 +141,18 @@ Follow the steps below to get your Okto Trade Service Template App running:
           });
           ```
 
-          Update your `src/api/client.ts`:
+          - Update your `src/api/client.ts`:
           ```ts
             import axios from "axios";
             import {
-              TRADE_PRODUCTION_API_KEY,
-              TRADE_SANDBOX_API_KEY,
-              TRADE_STAGING_API_KEY,
+              TRADE_SERVICE_SANDBOX_API_KEY,
             } from "./consts";
 
-            // ---------- Staging ----------
-            export const tradeServiceStagingClient = axios.create({
-              baseURL: "https://okto-trade-service-kong.oktostage.com/v1",
-              timeout: 30000,
-              headers: {
-                "X-Api-Key": TRADE_STAGING_API_KEY,
-              },
-            });
-
-            // ---------- Sandbox (for deployed sandbox environments) ----------
             export const tradeServiceSandboxClient = axios.create({
               baseURL: "https://sandbox-okto-trade-service-kong.okto.tech/v1",
               timeout: 30000,
               headers: {
-                "X-Api-Key": TRADE_SANDBOX_API_KEY,
-              },
-            });
-
-            // ---------- Production ----------
-            export const tradeServiceProductionClient = axios.create({
-              baseURL: "https://okto-trade-service-kong.okto.tech/v1",
-              timeout: 30000,
-              headers: {
-                "X-Api-Key": TRADE_PRODUCTION_API_KEY,
+                "X-Api-Key": TRADE_SERVICE_SANDBOX_API_KEY,
               },
             });
           ```
