@@ -7,7 +7,7 @@ export async function GET() {
   const pages = source.getPages();
   const formattedPages = await Promise.all(
     pages.map(async (page) => {
-      const content = await getLLMText(page, true); // include metadata and content
+      const content = await getLLMText(page); // include metadata and content
       return content + '\n\n---';
     })
   );

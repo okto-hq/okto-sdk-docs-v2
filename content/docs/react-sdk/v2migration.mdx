@@ -55,7 +55,7 @@ In Okto V1, only one environment variable was needed: `OKTO_CLIENT_API_KEY`. How
 <Tabs items={['New Configuration', 'Old Configuration']} defaultValue="New Configuration">
 <div>
 <Tab value="New Configuration">
-```env
+```bash
 VITE_CLIENT_PRIV_KEY="YOUR_CLIENT_PRIVATE_KEY"
 VITE_CLIENT_SWA="YOUR_CLIENT_SWA"
 
@@ -114,29 +114,29 @@ In V1, the provider required `OKTO_CLIENT_API_KEY` and `buildType` as parameters
 <Tabs items={["Updated Implementation", "Old Implementation"]} defaultValue="Updated Implementation">
 <div>
 <Tab value="Updated Implementation" >
-```tsx 
-import React from "react"; 
+```tsx
+import React from "react";
 import { OktoProvider } from "@okto_web3/react-sdk";
 
-const config = { 
-  environment: "sandbox", 
-  clientPrivateKey: import.meta.env.VITE_CLIENT_PRIV_KEY, 
+const config = {
+  environment: "sandbox",
+  clientPrivateKey: import.meta.env.VITE_CLIENT_PRIV_KEY,
   clientSWA: import.meta.env.VITE_CLIENT_SWA, };
 
-function App() { 
-  return ( 
-    <OktoProvider config={config}> 
-    <LoginPage /> 
-    </OktoProvider> 
-  ); 
+function App() {
+  return (
+    <OktoProvider config={config}>
+    <LoginPage />
+    </OktoProvider>
+  );
 }
 
 export default App;
 ```
-</Tab> 
+</Tab>
 </div>
 <div className="no-copy-code">
-<Tab value="Old Implementation"> 
+<Tab value="Old Implementation">
 ```tsx
 import { OktoProvider, BuildType } from 'okto-sdk-react';
 
@@ -144,7 +144,7 @@ const OKTO_CLIENT_API_KEY = "OKTO_CLIENT_API_KEY";
 
 function App() {
   return (
-    <OktoProvider 
+    <OktoProvider
       apiKey={OKTO_CLIENT_API_KEY}
       buildType={BuildType.SANDBOX}
     >
@@ -193,7 +193,7 @@ import {
   useOkto,
   type OktoContextType,
 } from 'okto-sdk-react';
- 
+
 const { authenticate } = useOkto() as OktoContextType;
 const idToken = 'USER_ID_TOKEN';
 authenticate(idToken, (result, error) => {
@@ -238,7 +238,7 @@ import {
   useOkto,
   type OktoContextType,
 } from 'okto-sdk-react';
- 
+
 const { authenticate } = useOkto() as OktoContextType;
 const idToken = 'USER_ID_TOKEN';
 authenticate(idToken, (result, error) => {
@@ -293,7 +293,7 @@ The Message Signing methods enables the creation of signatures for messages or s
 | V1 Function | V2 Function | Changes |
 |---------|-------------|---------------|
 | - | <ExternalLink href="/docs/react-sdk/signMessage">`oktoClient.signMessage(message)`</ExternalLink> | - Signs message following the EIP191 standard |
-| - | <ExternalLink href="/docs/react-sdk/signTypedData">`oktoClient.signTypedData(data)`</ExternalLink> | - Signs typed data following the EIP712 standard | 
+| - | <ExternalLink href="/docs/react-sdk/signTypedData">`oktoClient.signTypedData(data)`</ExternalLink> | - Signs typed data following the EIP712 standard |
 
 ### Intent Functions
 
