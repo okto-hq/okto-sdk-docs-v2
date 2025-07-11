@@ -69,7 +69,7 @@ In Okto V1, only one environment variable was needed: `OKTO_CLIENT_API_KEY`. How
 <Tabs items={['New Configuration', 'Old Configuration']} defaultValue="New Configuration">
 <div>
 <Tab value="New Configuration">
-```env
+```bash
 CLIENT_PRIVATE_KEY="YOUR_CLIENT_PRIVATE_KEY"
 CLIENT_SWA="YOUR_CLIENT_SWA"
 ```
@@ -103,18 +103,18 @@ In V1, the provider required `OKTO_CLIENT_API_KEY` and `buildType` as parameters
 <Tabs items={["Updated Implementation", "Old Implementation"]} defaultValue="Updated Implementation">
 <div>
 <Tab value="Updated Implementation" >
-```tsx 
+```tsx
 import { Hash, Hex, OktoProvider } from '@okto_web3/react-native-sdk';
 import { ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
- 
+
 const config = {
     environment: "sandbox",
     clientPrivateKey: "YOUR_CLIENT_PRIVATE_KEY" as Hash,  // Replace with your actual private key
     clientSWA: "YOUR_CLIENT_SWA" as Hex,             // Replace with your actual SWA
 };
- 
+
 export default function RootLayout() {
     return (
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
@@ -129,10 +129,10 @@ export default function RootLayout() {
     );
 }
 ```
-</Tab> 
+</Tab>
 </div>
 <div className="no-copy-code">
-<Tab value="Old Implementation"> 
+<Tab value="Old Implementation">
 ```tsx
 import { AppRegistry } from 'react-native';
 import App from './src/App';
@@ -189,7 +189,7 @@ import {
   useOkto,
   type OktoContextType,
 } from 'okto-sdk-react';
- 
+
 const { authenticate } = useOkto() as OktoContextType;
 const idToken = 'USER_ID_TOKEN';
 authenticate(idToken, (result, error) => {
@@ -234,7 +234,7 @@ import {
   useOkto,
   type OktoContextType,
 } from 'okto-sdk-react';
- 
+
 const { authenticate } = useOkto() as OktoContextType;
 const idToken = 'USER_ID_TOKEN';
 authenticate(idToken, (result, error) => {
@@ -289,7 +289,7 @@ The Message Signing methods enables the creation of signatures for messages or s
 | V1 Function | V2 Function | Changes |
 |---------|-------------|---------------|
 | - | <ExternalLink href="/docs/react-sdk/signMessage">`oktoClient.signMessage(message)`</ExternalLink> | - Signs message following the EIP191 standard |
-| - | <ExternalLink href="/docs/react-sdk/signTypedData">`oktoClient.signTypedData(data)`</ExternalLink> | - Signs typed data following the EIP712 standard | 
+| - | <ExternalLink href="/docs/react-sdk/signTypedData">`oktoClient.signTypedData(data)`</ExternalLink> | - Signs typed data following the EIP712 standard |
 
 ### Intent Functions
 
