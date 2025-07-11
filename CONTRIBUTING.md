@@ -8,6 +8,10 @@ Thank you for your interest in contributing to the Okto documentation! We value 
 - [Documentation Standards](#documentation-standards)
     - [Content Structure and Format](#content-structure-and-format)
     - [Writing Style Guidelines](#writing-style-guidelines)
+- [Contributing to OpenAPI scripts](#contributing-to-openapi-scripts)
+    - [Updating Existing Theory Guides](#updating-existing-theory-guides)
+    - [Adding New Theory Guides](#adding-new-theory-guides)
+    - [Adding or Updating Endpoints](#adding-or-updating-endpoints)
 - [Contribution Review Process](#contribution-review-process)
 - [Issue Reporting](#issue-reporting)
     - [Issue Report Template](#issue-report-template)
@@ -66,6 +70,82 @@ To maintain a high standard of quality and consistency across the Okto documenta
 *   **Link Verification:**  Please verify all external links monthly to ensure they are still active and relevant.
 *   **Use Headers Properly:**  Structure content with properly nested headers (h2, h3, h4) for clear organization.
 
+## Contributing to OpenAPI Scripts
+
+Okto uses OpenAPI auto-generated scripts to maintain up-to-date API documentation across:
+
+*   **API Reference Section (Explorer, Auth, Intents)**  
+*   **Trade Service Section**
+
+If you want to contribute to guides under the API Reference or Trade Service sections, follow these steps.
+
+### Updating Existing Theory Guides
+
+1.  **Locate the Relevant Guide:** Locate the relevant guide in:
+* `content/docs/openapi/` (API Reference guides)
+* `content/docs/trade-service/` (Trade Service guides)
+
+2.  **Verify and Submit:** Confirm your changes locally, commit them, and open a pull request for review.
+
+### Adding New Theory Guides
+
+1.  **Add Your Guide:** Place your new `.mdx` guide in the appropriate directory:
+
+    *   **For API Reference:** `content/docs/openapi/` 
+    *   **For Trade Service:** `content/docs/trade-service/` 
+
+2. **Update meta.json:** Update the `meta.json` in that directory to include your new guide in navigation.
+
+3.  **Update Generation Scripts:** Update the relevant script in the `scripts/` directory so your guide is **retained during regeneration**.
+
+    *    **For API Reference:** If you add a guide in `content/docs/openapi/`, update `scripts/generate-api-reference-docs-explorer.mjs` to include your new guide.
+
+    *   **For Trade Service:** If you add a guide in `content/docs/trade-service/`, update `scripts/generate-trade-service-docs.mjs` to include your new guide.
+
+### Adding or Updating Endpoints
+
+If you want to add a **new API endpoint** or modify **existing endpoint scripts**, follow these steps.
+
+1.  **Modify the relevant OpenAPI JSON file:** Locate and edit the correct file under `public/openapi/`:
+
+    *   **For API Reference:**
+
+        `public/openapi/openapi-explorer.json`
+
+        `public/openapi/auth/openapi.json`
+
+        `public/openapi/intents/openapi.json`
+
+    *   **For Trade Service:**
+
+        `public/openapi/openapi-trade-service.json`
+
+2.  **Regenerate the documentation:** Run the appropriate build command based on where you made changes.
+
+    *   **For API Reference (Explorer):**
+        ```bash
+        npm run build:api-reference-docs-explorer
+        ```
+
+    *   **For API Reference (Auth):**
+        ```
+        npm run build:api-reference-docs-auth
+        ```
+
+    *   **For API Reference (Intents):**
+        ```
+        npm run build:api-reference-docs-intents
+        ```
+
+    *   **For Trade Service:**
+        ```
+        npm run build:trade-service-docs
+        ```
+
+3.  **Verify your changes:** Check that your updated or new endpoints appear correctly in the generated documentation.
+
+> *Ensure no unintended file changes occurred during regeneration.*
+
 ## Contribution Review Process
 
 Once you've prepared your documentation improvements and submitted a pull request, here's what happens next:
@@ -74,8 +154,6 @@ Once you've prepared your documentation improvements and submitted a pull reques
 2. We may suggest changes or improvements
 3. Once approved, your contribution will be merged into the main branch
 4. Your name will be added to our contributors list (unless you opt out)
-
----
 
 ## Issue Reporting
 
