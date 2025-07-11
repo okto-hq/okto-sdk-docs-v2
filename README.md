@@ -66,4 +66,3 @@ git checkout -b feat/your-feature-name
 ## Credits
 
 This documentation site is built using [Fumadocs](https://fumadocs.vercel.app/), a modern docs generator.
-# Test commit with fix-mdx-frontmatter
