@@ -6,6 +6,7 @@ full: false
 
 import FeatureCard from "app/components/mdx/FeatureCard";
 import ExternalLink from "app/components/mdx/ExternalLink";
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { IoPersonOutline, IoFlashOutline, IoShieldCheckmarkOutline } from 'react-icons/io5';
 
 Intents are high-level abstractions for on-chain actions. Instead of constructing and managing low-level blockchain transactions, you describe what you want to achieve—the intent—and Okto handles all the technical complexity behind the scenes.
@@ -237,7 +238,7 @@ The essential parameters you provide within the `transactions` array vary by blo
 |---|---|---|
 | **EVM Chains** | `to`, `value`, `data`, `from` | Recipient address, native token amount (wei), encoded function call, sender wallet |
 | **Aptos** | `function`, `type_arguments`, `arguments` | Function identifier, type parameters, function arguments |
-| **Solana** | Coming soon | Instruction-based format |
+| **Solana** | `instructions`, `signer` | List of instructions (accounts, program ID, encoded data) and the signer's public key for transaction authorization. |
 
 **API Endpoints:**
 - **Estimate:** [`/api/oc/v1/estimate`](/docs/openapi/raw-transaction-estimate)
@@ -245,31 +246,98 @@ The essential parameters you provide within the `transactions` array vary by blo
 
 The payload requires a `transactions` array, where each object represents a single contract call.
 
-Example payload for an EVM chain:
+<Tabs items={["EVM", "Aptos", "Solana"]}>
+  <Tab value="EVM">
 
-```json
-{
-  "type": "RAW_TRANSACTION",
-  "jobId": "<unique-uuid-v4>",
-  "details": {
-    "caip2Id": "eip155:84532",
-    "transactions": [
-      {
-        "to": "0x363653DE3f920Ec8710b1Fc01e24Df96Bf7fb15E",
-        "from": "0xA8c1021b6322e5fF8e059295fa027A1380789037",
-        "value": "0x0",
-        "data": "0x6057361d0000000000000000000000000000000000000000000000000000000000000005"
-      }
-    ]
-  },
-  // Other fields like gasDetails, paymasterData
-}
-```
-**Key `transactions` Object Fields for EVM Chains:**
-- `to`: The target smart contract address you want to interact with.
-- `from`: The user's smart wallet address on the specified chain.
-  <Callout type="warn" title="Important">The `from` address **must** be the user's smart wallet address for that network. You can retrieve this address using the [Get Account](/docs/openapi/explorer/get-wallets) endpoint.</Callout>
-- `value`: The amount of native currency (in hex format) to send with the transaction (e.g., `"0x0"` for no value).
-- `data`: The ABI-encoded function call, including the function signature and parameters. You can use tools like `viem` or the [ABI Encoder](https://docs.okto.tech/tools) to generate this.
+   #### Example payload for EVM Chains
+    ```json
+    {
+      "type": "RAW_TRANSACTION",
+      "jobId": "<unique-uuid-v4>",
+      "details": {
+        "caip2Id": "eip155:84532", // BASE_TESTNET
+        "transactions": [
+          {
+            "to": "0x363653DE3f920Ec8710b1Fc01e24Df96Bf7fb15E",
+            "from": "0xA8c1021b6322e5fF8e059295fa027A1380789037",
+            "value": "0x0",
+            "data": "0x6057361d0000000000000000000000000000000000000000000000000000000000000005"
+          }
+        ]
+      },
+      // Other fields like gasDetails, paymasterData
+    }
+    ```
+    **Key `transactions` Object Fields for EVM Chains:**
+    - `to`: The target smart contract address you want to interact with.
+    - `from`: The user's smart wallet address on the specified chain.
+      <Callout type="warn" title="Important">The `from` address **must** be the user's smart wallet address for that network. You can retrieve this address using the [Get Account](/docs/openapi/explorer/get-wallets) endpoint.</Callout>
+    - `value`: The amount of native currency (in hex format) to send with the transaction (e.g., `"0x0"` for no value).
+    - `data`: The ABI-encoded function call, including the function signature and parameters. You can use tools like `viem` or the [ABI Encoder](https://docs.okto.tech/tools) to generate this.
+
+  </Tab>
+  <Tab value="Aptos">
+
+   #### Example payload for Aptos Chain
+    ```json
+    {
+      "type": "RAW_TRANSACTION",
+      "jobId": "<unique-uuid-v4>",
+      "details": {
+        "caip2Id": "aptos:testnet", // APTOS_TESTNET
+        "transaction": {
+          "function": "0x1::aptos_account::transfer",
+          "typeArguments": [],
+          "functionArguments": [
+            "0x9ed7f8c95c5e2c3cb06dfbb48681b87401fabeb88b7d710db3720f7a2ca3fffc",
+            "10000"
+          ]
+        }
+      },
+      // Other fields like gasDetails, paymasterData
+    }
+    ```
+    **Key `transactions` Object Fields for Aptos Chain:**
+    - `function`: The identifier of the Move function to invoke on-chain.
+    - `typeArguments`: An array of type arguments to pass to the function, if applicable.
+    - `functionArguments`: An array of arguments to pass to the Move function.
+
+  </Tab>
+  <Tab value="Solana">
+  #### Example payload for Solana Chain
+    ```json
+    {
+      "type": "RAW_TRANSACTION",
+      "jobId": "<unique-uuid-v4>",
+      "details": {
+        "caip2Id": "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1", // SOLANA_DEVNET
+        "transaction": {
+          "instructions": [
+            {
+              "keys": [
+                {
+                  "pubkey": "CEGakCfWiBEUsh1vENRjZz26SiiVCu88ySjSPbRN7rsh",
+                  "isSigner": true,
+                  "isWritable": true
+                }
+              ],
+              "programId": "BTSdutYFqgaecPtnEcEefPUBsLUu6i2o1xsLrdfqKV4T",
+              "data": [102, 232, 96, 233, 198, 89, 95, 116]
+            }
+          ],
+          "signer": "CEGakCfWiBEUsh1vENRjZz26SiiVCu88ySjSPbRN7rsh"
+        }
+      },
+      // Other fields like gasDetails, paymasterData
+    }
+    ```
+    **Key `transactions` Object Fields for Solana Chain:**
+    - `instructions`: An array of Solana instructions containing:
+      - `keys`: Account metas involved in the instruction, specifying `pubkey`, `isSigner`, and `isWritable`.
+      - `programId`: The program you are calling on-chain.
+      - `data`: An array of bytes representing the instruction data.
+    - `signer`: The user's smart wallet address on Solana, which will sign the transaction.
+  </Tab>
+</Tabs>
 
 ---
