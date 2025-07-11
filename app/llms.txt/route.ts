@@ -8,7 +8,7 @@ export async function GET() {
     // Remove leading '/docs/' from page.url for the llm route
     const llmUrl = '/llm' + page.url.replace(/^\/docs/, '');
     const absoluteUrl = `https://docs.okto.tech${llmUrl}.md`;
-    return `Title: ${page.data.title} | URL: ${absoluteUrl} | Description: ${page.data.description || 'No description available'}`;
+    return `- [${page.data.title}](${absoluteUrl}): ${page.data.description || 'No description available'}`;
   });
   return new Response(lines.join('\n'));
 }
