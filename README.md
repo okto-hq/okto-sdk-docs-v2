@@ -58,6 +58,9 @@ git checkout -b feat/your-feature-name
 
 4. Create a Pull Request against the `main` branch
 
+
+> *Note: If you are contributing to API Reference or Trade Service documentation powered by OpenAPI auto-generated scripts, please read the [Contributing to OpenAPI Scripts section](CONTRIBUTING.md/#contributing-to-openapi-scripts) in our CONTRIBUTING.md carefully. It contains important details about updating and generating scripts, to prevent unintended file removals during automated generation.*
+
 ## Useful References
 
 - Learn more about Okto [here](https://okto.tech).
