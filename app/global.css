@@ -11,6 +11,10 @@ html {
   scroll-behavior: smooth;
 }
 
+:root {
+  --fd-nav-height: 64px !important;
+}
+
 @layer base {
   :root {
     --card-foreground: 240 10% 3.9%;
@@ -84,89 +88,18 @@ html {
   max-width: 100vw !important;
 }
 
+/* small border to the sidebar */
 #nd-docs-layout aside {
   background-color: hsl(var(--background));
   border-right: 1px solid hsl(var(--border));
 }
 
-@media screen and (min-width: 761px) {
-  #nd-docs-layout {
-    /* position: fixed; */
-    top: 60px;
-    height: calc(100vh - 60px);
-    overflow-y: auto;
-  }
-}
-
-#nd-docs-layout::-webkit-scrollbar {
-  display: none;
-}
-
-@media screen and (min-width: 761px) {
-  #nd-docs-layout aside {
-    /* position: fixed; */
-    /* top: 60px; */
-    height: calc(100vh - 60px);
-    /* overflow-y: auto; */
-  }
-}
-
-@media screen and (min-width: 761px) {
-  #nd-docs-layout>div:last-child {
-    height: calc(100vh - 60px);
-  }
-}
-
-@media screen and (max-width: 761px) {
-  #nd-docs-layout aside {
-    top: 60px;
-  }
-}
 
 /* hide the compress sidebar button */
-#nd-sidebar > div > div.flex.flex-col.gap-2.px-4.empty\:hidden > div {
-  display: none;
-}
-
-#nd-sidebar > div > div.flex.flex-col.border-t.px-4.py-3.empty\:hidden {
-  display: none;
-}
-
-.button-no-outline {
-  outline: 0 !important;
-}
-
-.button-no-outline:focus {
-  outline: 0 !important;
-}
 
 .display-logo {
   max-width: none !important;
 }
-
-#nd-docs-layout > div:nth-of-type(1) > article > div:last-child > a {
-  background-color: #F5F6FE;
-}
-
-.dark #nd-docs-layout > div:nth-of-type(1) > article > div:last-child > a {
-  background-color: #252630; /* dark mode background color */
-  color: #FFFFFF; /* dark mode text color */
-}
-
-#nd-docs-layout > div:nth-of-type(1) > article > div:last-child > a:hover {
-  background-color: #F5F6FE; /* light mode hover background color */
-  color: #5166EE; /* light mode hover text color */
-}
-
-.dark #nd-docs-layout > div:nth-of-type(1) > article div:last-child > a:hover {
-  background-color: #252630;  /* dark mode hover background color */
-  color: #7C8FFF; /* dark mode hover text color */
-}
-
-#nd-docs-layout > aside > div:nth-of-type(2) > div > div > div > a > svg {
-  display: none;
-}
-
 
 /* Add this rule to make the "Back" link bold in the sidebar */
 #nd-docs-layout aside a[href="/"] {

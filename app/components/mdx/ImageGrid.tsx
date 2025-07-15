@@ -29,7 +29,8 @@ export const DownloadLinks: React.FC<DownloadLinksProps> = ({ svg, png }) => (
     marginTop: '8px',
   }}>
     <a href={svg} download style={{ color: '#4B5563', textDecoration: 'none', fontSize: '14px', border: '1px solid #4B5563', borderRadius: '4px', padding: '4px 8px', backgroundColor: '#F3F4F6'}}>SVG</a>
-    <a href={png} download style={{ color: '#4B5563', textDecoration: 'none', fontSize: '14px', border: '1px solid #4B5563', borderRadius: '4px', padding: '4px 8px', backgroundColor: '#F3F4F6' }}>PNG</a>
+    {png ?  <a href={png} download style={{ color: '#4B5563', textDecoration: 'none', fontSize: '14px', border: '1px solid #4B5563', borderRadius: '4px', padding: '4px 8px', backgroundColor: '#F3F4F6' }}>PNG</a> : null}
+   
   </div>
 );
 
