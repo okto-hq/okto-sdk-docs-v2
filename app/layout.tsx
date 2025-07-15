@@ -12,7 +12,7 @@ import Script from "next/script";
 import { usePathname } from "next/navigation";
 
 const inter = Inter({
-  subsets: ["latin"],
+  subsets: ["latin"]
 });
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -63,16 +63,18 @@ export default function Layout({ children }: { children: ReactNode }) {
         </noscript>
         <RootProvider
           search={{
-            enabled: false,
+            enabled: false
+          }}
+          theme={{
+            enableSystem: true,
+            defaultTheme: "dark"
           }}
         >
           <Providers>
-            <div className="min-h-screen flex flex-col">
-              <NavbarComponent />
-              {/* <SOABanner /> */}
-              <main className="flex-1">{children}</main>
-              {/* <Footer /> */}
-            </div>
+            <NavbarComponent />
+            {/* <SOABanner /> */}
+            <main className="flex-1">{children}</main>
+            {/* <Footer /> */}
           </Providers>
         </RootProvider>
         <AskCookbook />
