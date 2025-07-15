@@ -63,8 +63,8 @@ const SDK_CONFIG = {
   },
   typescript: {
     icon: <SiTypescript size={24} className="flex-shrink-0 text-[#3178c6]" />,
-    defaultRepo: "https://github.com/okto-hq/okto-sdkv2-ts-template",
-    defaultTemplateUrl: "https://github.com/okto-hq/okto-sdkv2-ts-template",
+    defaultRepo: "https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/ts-sdk-template/index.ts",
+    defaultTemplateUrl: "https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/ts-sdk-template/index.ts",
   },
   "eliza-okto-plugin": {
     icon: <FaCode size={24} className="flex-shrink-0 text-[#3178c6]" />,
@@ -105,7 +105,7 @@ const SDK_CONFIG = {
         className="flex-shrink-0 text-black dark:text-white"
       />
     ),
-    defaultRepo: "https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template",
+    defaultRepo: "https://github.com/okto-hq/okto-sdkv2-express-template-app",
     defaultTemplateUrl: "/docs/openapi/templateRepo",
   },
   "trade-service": {

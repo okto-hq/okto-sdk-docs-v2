@@ -7,21 +7,33 @@ import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Callout } from "fumadocs-ui/components/callout";
 import CollapsibleCallout from "app/components/mdx/CollapsibleCallout";
 import ExternalLink from "app/components/mdx/ExternalLink";
+import DownloadBanner from "app/components/mdx/DownloadBanner";
+import { SiPostman } from "react-icons/si";
 
-A comprehensive walkthrough of the Okto TS Template App designed for Okto APIs. This template demonstrates core Okto functionality—including authentication, wallet management, and blockchain interactions—so you can quickly get started building with Okto.
+A comprehensive walkthrough of the Okto Express Template App designed for Okto APIs. This Express app demonstrates how to interact with the Okto 3pBFF through API calls, including authentication, explorer, and intents.
 
-<Callout type="warn" title="Customize Before Production">
-Please note that this template is for development and testing purposes only. Be sure to customize and secure it before using in production.
+<Callout type="warn" title="Demo Only">
+  Note that this app is for demonstration purposes only and is not meant for
+  production application. Be sure to customize and secure it before using in
+  production.
 </Callout>
 
 <div className="bg-white dark:bg-[#1a1a1e] rounded-lg shadow-sm border border-gray-200 dark:border-[#2b2b2c] p-4 w-full my-4">
   <div className="flex items-center justify-between">
     <span className="text-base font-semibold text-gray-900 dark:text-gray-100">
-      API Reference Template Repository
+      API Express Template Repository
     </span>
     <div className="flex gap-3">
       <a
-        href="https://github.com/okto-hq/okto-sdkv2-ts-template/tree/main/src/api-template"
+        href="https://public-okto-react-sdk-template.vercel.app/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="no-underline px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-colors min-w-[120px] text-center"
+      >
+        Live Demo
+      </a>
+      <a
+        href="https://github.com/okto-hq/okto-sdkv2-express-template-app"
         target="_blank"
         rel="noopener noreferrer"
         className="no-underline px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors min-w-[120px] text-center"
@@ -32,34 +44,62 @@ Please note that this template is for development and testing purposes only. Be 
   </div>
 </div>
 
-## Script Links
+## Route Implementations
 
-Below are the links to individual scripts available in the GitHub repository:
+This template app demonstrates the implementation of the following route handlers:
 
-### Authenticate Scripts
+- **Auth Routes:** [authRoutes.ts](https://github.com/okto-hq/okto-sdkv2-express-template-app/blob/main/src/routes/authRoutes.ts)
+- **Intent Routes:** [intentRoutes.ts](https://github.com/okto-hq/okto-sdkv2-express-template-app/blob/main/src/routes/intentRoutes.ts)
+- **Explorer Routes:** [explorerRoutes.ts](https://github.com/okto-hq/okto-sdkv2-express-template-app/blob/main/src/routes/explorerRoutes.ts)
 
-| **Script**            | **GitHub Link**                                                                                                         |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| Google OAuth          | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/googleAuthenticate_template.ts)   |
-| Email Authenticate    | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/emailAuthenticate_template.ts)    |
-| WhatsApp Authenticate | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/whatsappAuthenticate_template.ts) |
-| JWT Authenticate      | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/jwtAuthenticate_template.ts)      |
-| Delegated Actions     | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/delegatedActions_template.ts)    |
-| Treasury Wallet       | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/auth/treasuryWallet_template.ts)       |
+<DownloadBanner
+  title="Okto API Express Template Postman Collection"
+  description="Download and import the Okto API Express Postman Collection for easy access and testing of all endpoints and methods."
+  filePath="/resources/Okto-express-template-app.postman_collection.json"
+  icon={<SiPostman />}
+/>
 
-### Intent Scripts
+## API Routes
 
-| **Script**             | **GitHub Link**                                                                                                   |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| Token Transfer Intent  | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/tokenTransfer.ts)        |
-| NFT Transfer Intent    | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/nftTransfer.ts)    |
-| Raw Transaction Intent | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/rawTransaction.ts) |
-| Swap Intent            | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/swapIntent.ts)           |
-| Sign Data              | [View on GitHub](https://github.com/okto-hq/okto-sdkv2-ts-template/blob/main/src/api-template/intents/signData_template.ts)    |
+Each of these route files demonstrates how to interact with the Okto backend for their respective API categories.
+
+### Auth Routes (`/api/auth`)
+
+| Method | Path                 | Description              |
+| ------ | -------------------- | ------------------------ |
+| POST   | /email/otp           | Request OTP for email    |
+| POST   | /email/verify-otp    | Verify OTP for email     |
+| POST   | /whatsapp/otp        | Request OTP for WhatsApp |
+| POST   | /whatsapp/verify-otp | Verify OTP for WhatsApp  |
+| POST   | /authenticate        | Authenticate user        |
+
+### Explorer Routes (`/api/explorer`)
+
+| Method | Path                | Description                     |
+| ------ | ------------------- | ------------------------------- |
+| GET    | /account            | Get account details             |
+| GET    | /chains             | Get supported chains            |
+| GET    | /tokens             | Get supported tokens            |
+| GET    | /portfolio          | Get portfolio summary           |
+| GET    | /portfolio-activity | Get portfolio activity          |
+| GET    | /portfolio-nft      | Get portfolio NFTs              |
+| GET    | /order-history      | Get order history               |
+| POST   | /read-contract-data | Read data from a smart contract |
+
+### Intent Routes (`/api/intent`)
+
+| Method | Path                                 | Description                              |
+| ------ | ------------------------------------ | ---------------------------------------- |
+| POST   | /tokenTransfer                       | Initiate a token transfer intent         |
+| POST   | /rawTransaction                      | Initiate a raw transaction intent        |
+| POST   | /tokenTransfer/estimate              | Estimate a token transfer intent         |
+| POST   | /rawTransaction/estimate             | Estimate a raw transaction intent        |
+| POST   | /tokenTransfer/executeAfterEstimate  | Execute token transfer after estimation  |
+| POST   | /rawTransaction/executeAfterEstimate | Execute raw transaction after estimation |
 
 ## Getting Started
 
-Find detailed instructions on how to set up the template app locally:
+Find detailed instructions on how to set up the express template app locally:
 
 <Tabs items={["Node.js"]}>
   <Tab value="Node.js" >
@@ -67,13 +107,13 @@ Find detailed instructions on how to set up the template app locally:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/okto-hq/okto-sdkv2-ts-template.git
+git clone https://github.com/okto-hq/okto-sdkv2-express-template-app.git
 ```
 
 2. Change into the project directory and install dependencies:
 
 ```bash
-cd okto-sdkv2-ts-template
+cd okto-sdkv2-express-template-app
 npm install
 ```
 
@@ -81,30 +121,6 @@ npm install
 
 ```bash
 cp .env.sample .env
-```
-
-4. Add your API keys to the `.env` file:
-
-```bash title=".env"
-# The Okto environment "sandbox" or "production"
-OKTO_ENVIRONMENT =
-
-# Get the below values from Okto Developer Dashboard. Learn how here- https://docs.okto.tech/docs/developer-admin-dashboard
-OKTO_CLIENT_PRIVATE_KEY =
-OKTO_CLIENT_SWA =
-
-
-#optional: only needed if using google authenticate
-# For testing purposes, you can generate the id token from here
-# - https://docs.okto.tech/docs/openapi/authenticate/google-oauth/get-token-id
-# NOTE: The google ID token has a very short expiry. Please generate a new token just before running this code. You can check the expiry at jwt.io
-GOOGLE_ID_TOKEN =
-
-
-# when testing intents or using delegated access you will have to generate the okto auth token from session config
-# For testing purposes, you can generate the okto auth token from our tool 'Session and Okto Auth Token Generator'
-# - https://docs.okto.tech/tools
-OKTO_AUTH_TOKEN =
 ```
 
   <CollapsibleCallout type="warning" title="Essential Setup Required">
@@ -118,14 +134,13 @@ OKTO_AUTH_TOKEN =
     If you need help, reach out to us on our <ExternalLink href="/docs/openapi/troubleshooting">troubleshooting form</ExternalLink> and we will contact you.
     </CollapsibleCallout>
 
-  - Okto API Keys: You need your `CLIENT_PRIVATE_KEY` and `CLIENT_SWA`. Obtain these from the [Okto Developer Dashboard](https://dashboard.okto.tech/login).
-  - Okto Account Setup: Ensure you have sufficient <ExternalLink href="https://dashboard.okto.tech/okto-credits">Okto Credits</ExternalLink>, enable the required <ExternalLink href="https://dashboard.okto.tech/wallet-controls">Chains and Tokens </ExternalLink>, and optionally <ExternalLink href="https://dashboard.okto.tech/paymaster">Activate Sponsorship</ExternalLink>.
-  - Google OAuth Credentials (if using Google authentication): Create OAuth 2.0 credentials in the <ExternalLink href="/docs/openapi/authenticate/google-oauth/google-console-setup">Google Cloud Console</ExternalLink> to get your `GOOGLE_CLIENT_ID`.
+- Okto API Keys: You need your `CLIENT_PRIVATE_KEY` and `CLIENT_SWA` for testing out the API endpoints. Obtain these from the [Okto Developer Dashboard](https://dashboard.okto.tech/login).
+- Okto Account Setup: Ensure you have sufficient <ExternalLink href="https://dashboard.okto.tech/okto-credits">Okto Credits</ExternalLink>, enable the required <ExternalLink href="https://dashboard.okto.tech/wallet-controls">Chains and Tokens </ExternalLink>, and optionally <ExternalLink href="https://dashboard.okto.tech/paymaster">Activate Sponsorship</ExternalLink>.
 
-5. Execute the script you want to run:
+4. Run the application:
 
 ```bash
-tsx path/to/your/script.ts
+npm run dev
 ```
 
   </Tab>

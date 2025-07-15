@@ -5,53 +5,104 @@ description: The "Okto Brand Kit" webpage serves as the ultimate resource for un
 ---
 
 import { ImageGrid, DownloadLinks, AssetItem } from "/app/components/mdx/ImageGrid";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "/components/ui/tabs";
 
-## Icons
+<Tabs defaultValue="sdk" className="w-full">
+  <TabsList>
+    <TabsTrigger value="sdk">Okto SDK Icons & Logos</TabsTrigger>
+    <TabsTrigger value="wallet">Okto Wallet Icons & Logos</TabsTrigger>
+  </TabsList>
 
+  <TabsContent value="sdk">
+   
+    <h2>Icons</h2>
+    <ImageGrid columns={3}>
+      <AssetItem>
+        <h3>Icon</h3>
+        <img src="/images/brand-kit/icons/icon.png" alt="Okto Icon" />
+        <DownloadLinks svg="/images/brand-kit/icons/icon.svg" png="/images/brand-kit/icons/icon.png" />
+      </AssetItem>
+      <AssetItem>
+        <h3>Icon with White Background</h3>
+        <img src="/images/brand-kit/icons/icon_bg_white.png" alt="Okto Icon with White Background" />
+        <DownloadLinks svg="/images/brand-kit/icons/icon_bg_white.svg" png="/images/brand-kit/icons/icon_bg_white.png" />
+      </AssetItem>
+      <AssetItem>
+        <h3>White Icon</h3>
+        <img src="/images/brand-kit/icons/icon_white.png" alt="Okto White Icon" />
+        <DownloadLinks svg="/images/brand-kit/icons/icon_white.svg" png="/images/brand-kit/icons/icon_white.png" />
+      </AssetItem>
+    </ImageGrid>
+
+    <h2 style={{ marginTop: "2rem" }}>Main Logo</h2>
+    <ImageGrid columns={3}>
+      <AssetItem>
+        <h3>Logo with Black Wordmark</h3>
+        <img src="/images/brand-kit/main-logo/logo.png" alt="Okto Logo with Black Wordmark" />
+        <DownloadLinks svg="/images/brand-kit/main-logo/logo.svg" png="/images/brand-kit/main-logo/logo.png" />
+      </AssetItem>
+      <AssetItem>
+        <h3>Logo with White Wordmark</h3>
+        <img src="/images/brand-kit/main-logo/logo_bg_white.png" alt="Okto Logo with White Wordmark" />
+        <DownloadLinks svg="/images/brand-kit/main-logo/logo_bg_white.svg" png="/images/brand-kit/main-logo/logo_bg_white.png" />
+      </AssetItem>
+      <AssetItem>
+        <h3>White Logo</h3>
+        <img src="/images/brand-kit/main-logo/logo_white.png" alt="Okto White Logo" />
+        <DownloadLinks svg="/images/brand-kit/main-logo/logo_white.svg" png="/images/brand-kit/main-logo/logo_white.png" />
+      </AssetItem>
+    </ImageGrid>
+
+    <h2 style={{ marginTop: "2rem" }}>Partnership Logo</h2>
+    <ImageGrid columns={1}>
+      <AssetItem maxWidth="40%">
+        <h3>Logo with Black Wordmark</h3>
+        <img src="/images/brand-kit/partnership-logo/logo.png" alt="Okto Partnership Logo" />
+        <DownloadLinks svg="/images/brand-kit/partnership-logo/logo.svg" png="/images/brand-kit/partnership-logo/logo.png" />
+      </AssetItem>
+    </ImageGrid>
+
+  </TabsContent>
+
+  <TabsContent value="wallet">
+    
+    <h2>Icons</h2>
+    <ImageGrid columns={3}>
+      <AssetItem>
+        <h3>Wallet Icon</h3>
+        <img src="/images/brand-kit/okto-wallet/okto_wallet_icon.png" alt="Okto Wallet Icon" />
+        <DownloadLinks svg="/images/brand-kit/okto-wallet/okto_wallet_icon.svg" png="/images/brand-kit/okto-wallet/okto_wallet_icon.png" />
+      </AssetItem>
+    </ImageGrid>
+
+<h2 style={{ marginTop: "2rem" }}>Main Logo</h2>
 <ImageGrid columns={3}>
   <AssetItem>
-    <h3>Icon</h3>
-    <img src="/images/brand-kit/icons/icon.png" alt="Okto Icon" />
-    <DownloadLinks svg="/images/brand-kit/icons/icon.svg" png="/images/brand-kit/icons/icon.png" />
+    <h3>Wallet Logo Black Wordmark</h3>
+    <img src="/images/brand-kit/okto-wallet/okto_wallet_logo_black_wordmark.png" alt="Okto Wallet Logo Black Wordmark" />
+    <DownloadLinks
+      svg="/images/brand-kit/okto-wallet/okto_wallet_logo_black_wordmark.svg"
+      png="/images/brand-kit/okto-wallet/okto_wallet_logo_black_wordmark.png"
+    />
   </AssetItem>
   <AssetItem>
-    <h3>Icon with White Background</h3>
-    <img src="/images/brand-kit/icons/icon_bg_white.png" alt="Okto Icon with White Background" />
-    <DownloadLinks svg="/images/brand-kit/icons/icon_bg_white.svg" png="/images/brand-kit/icons/icon_bg_white.png" />
-  </AssetItem>
-  <AssetItem>
-    <h3>White Icon</h3>
-    <img src="/images/brand-kit/icons/icon_white.png" alt="Okto White Icon" />
-    <DownloadLinks svg="/images/brand-kit/icons/icon_white.svg" png="/images/brand-kit/icons/icon_white.png" />
+    <h3>Wallet White Wordmark</h3>
+    <img src="/images/brand-kit/okto-wallet/okto_wallet_white_wordmark.png" alt="Okto Wallet White Wordmark" />
+    <DownloadLinks
+      svg="/images/brand-kit/okto-wallet/okto_wallet_white_wordmark.svg"
+      png="/images/brand-kit/okto-wallet/okto_wallet_white_wordmark.png"
+    />
   </AssetItem>
 </ImageGrid>
 
-## Main Logo
+    <h2 style={{ marginTop: "2rem" }}>Partnership Logo</h2>
+    <ImageGrid columns={1}>
+      <AssetItem maxWidth="40%">
+        <h3>Okto Wallet by CoinDCX</h3>
+        <img src="/images/brand-kit/partnership-logo/logo.png" alt="Okto Wallet by CoinDCX" />
+        <DownloadLinks svg="/images/brand-kit/okto-wallet/okto_wallet_by_coindcx.svg" />
+      </AssetItem>
+    </ImageGrid>
 
-<ImageGrid columns={3}>
-  <AssetItem>
-    <h3>Logo with Black Wordmark</h3>
-    <img src="/images/brand-kit/main-logo/logo.png" alt="Okto Logo with Black Wordmark" />
-    <DownloadLinks svg="/images/brand-kit/main-logo/logo.svg" png="/images/brand-kit/main-logo/logo.png" />
-  </AssetItem>
-  <AssetItem>
-    <h3>Logo with White Wordmark</h3>
-    <img src="/images/brand-kit/main-logo/logo_bg_white.png" alt="Okto Logo with White Wordmark" />
-    <DownloadLinks svg="/images/brand-kit/main-logo/logo_bg_white.svg" png="/images/brand-kit/main-logo/logo_bg_white.png" />
-  </AssetItem>
-  <AssetItem>
-    <h3>White Logo</h3>
-    <img src="/images/brand-kit/main-logo/logo_white.png" alt="Okto White Logo" />
-    <DownloadLinks svg="/images/brand-kit/main-logo/logo_white.svg" png="/images/brand-kit/main-logo/logo_white.png" />
-  </AssetItem>
-</ImageGrid>
-
-## Partnership Logo
-
-<ImageGrid columns={1}>
-  <AssetItem maxWidth="40%">
-    <h3>Logo with Black Wordmark</h3>
-    <img src="/images/brand-kit/partnership-logo/logo.png" alt="Okto Partnership Logo" />
-    <DownloadLinks svg="/images/brand-kit/partnership-logo/logo.svg" png="/images/brand-kit/partnership-logo/logo.png" />
-  </AssetItem>
-</ImageGrid>
+  </TabsContent>
+</Tabs>
