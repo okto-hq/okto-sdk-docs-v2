@@ -8,6 +8,7 @@ Thank you for your interest in contributing to the Okto documentation! We value 
 - [Documentation Standards](#documentation-standards)
     - [Content Structure and Format](#content-structure-and-format)
     - [Writing Style Guidelines](#writing-style-guidelines)
+- [Contributing to Documentation](#contributing-to-documentation)
 - [Contributing to OpenAPI scripts](#contributing-to-openapi-scripts)
     - [Contributing to Existing OpenAPI Sections](#contributing-to-existing-sections)
     - [Creating a New OpenAPI Section](#creating-a-new-openapi-section)
@@ -68,6 +69,28 @@ To maintain a high standard of quality and consistency across the Okto documenta
 *   **Visual Aids for Complex Flows:**  Use Mermaid diagrams to visually represent complex workflows, processes, or architectural components.
 *   **Link Verification:**  Please verify all external links monthly to ensure they are still active and relevant.
 *   **Use Headers Properly:**  Structure content with properly nested headers (h2, h3, h4) for clear organization.
+
+## Contributing to Documentation
+
+Okto Docs uses a Next.js-based routing structure, with all content stored under the `content/docs/` directory. If you want to contribute to the docs, you will primarily work within this directory to add or update documentation.
+
+If you want to contribute to components, these are located in the `app/components/` directory.
+
+### Adding New Section or Guides
+
+1.  **Create a Directory or Guide:** Follow the [Content Structure Format](#content-structure-and-format) and create a new directory or a new `.mdx` guide under the appropriate section within `content/docs/`.
+
+2.  **Update meta.json:** In the new directory, add a `meta.json` file defining its structure. If you created a new guide, add it to the `meta.json` in that directory to ensure it appears in the navigation.
+
+### Updating Existing Docs
+
+1.  **Locate and Edit Existing Guides:** Navigate to the relevant section in `content/docs/` and apply your updates to the necessary `.mdx` files.
+
+### Updating Components
+
+1.  **Edit Global Components:** If you need to update reusable global components (for e.g., `Navbar`, `Footer`, etc.), edit files under `app/components/`.
+
+2.  **Edit MDX-Specific Components:** If you need to update components used within `.mdx` files, edit files under `app/components/mdx/`.
 
 ## Contributing to OpenAPI Scripts
 
