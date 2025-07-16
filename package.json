@@ -13,7 +13,7 @@
     "build:trade-service-docs": "node ./scripts/generate-trade-service-docs.mjs",
     "postbuild:trade-service-docs": "node ./scripts/inject-x-description-md.mjs",
     "fix-mdx-frontmatter": "node ./scripts/fix-mdx-frontmatter.js",
-    "precommit": "",
+    "precommit": "npm run fix-mdx-frontmatter && npm run build:api-reference-docs-explorer && npm run build:api-reference-docs-auth && npm run build:api-reference-docs-intents && npm run build:trade-service-docs && npm run build",
     "prepare": "node -e \"try { require('husky'); } catch(e) { process.exit(0); }\" && (husky || echo 'Husky not available in production')"
   },
   "dependencies": {
@@ -41,7 +41,7 @@
     "clsx": "^2.1.1",
     "ethers": "^6.13.4",
     "framer-motion": "^12.5.0",
-    "fumadocs-core": "^15.1.2",
+    "fumadocs-core": "15.1.2",
     "fumadocs-mdx": "^11.5.6",
     "fumadocs-openapi": "^7.0.5",
     "fumadocs-ui": "^15.0.15",
