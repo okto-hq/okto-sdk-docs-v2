@@ -10,7 +10,7 @@ import TechnologyCard from "app/components/mdx/TechnologyCard"
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import TemplateRepoBanner from "app/components/mdx/TemplateRepoBanner";
 import FullscreenImage from 'app/components/mdx/FullscreenImage';
-import { 
+import {
   IoKeyOutline,
   IoGitBranch,
   IoDocumentAttachSharp,
@@ -50,9 +50,9 @@ The entire swap process revolves around these core API calls. Their usage varies
   <Tab value="Same-Chain Swap">
     ## Same-Chain Swap
 
-    Same-chain swaps are executed entirely within a single blockchain, making them simpler and faster than cross-chain operations. 
-    
-    The `registerIntent` API is **not** used. The transaction(s) returned by `getBestRoute` are signed and executed directly.
+    `Swap` is an atomic operation where you send tokens to us and we send back requested tokens.<br />
+
+    Same-chain swaps are executed entirely within same blockchain, making them simpler and most of the times faster than cross-chain operations.
 
     <FullscreenImage src="/images/samechainswap.png" alt="Same Chain Swaps Flow" />
 
@@ -60,7 +60,7 @@ The entire swap process revolves around these core API calls. Their usage varies
 
     ### Step 1: Get Quote (Optional)
 
-    The `getQuote` API returns a real-time estimate of the swap's outcome for quick pricing details. It helps determine how much of the destination token the user will receive for a given amount of the source token.
+    The `getQuote` API returns a real-time estimate of the swap's outcome for quick pricing details. It helps determine how much of the destination token the user will receive for a given amount of the source token.<br />
 
     <Accordions>
       <Accordion title="Request Example">
@@ -100,7 +100,7 @@ The entire swap process revolves around these core API calls. Their usage varies
     The `getBestRoute` API finds the most optimal route for the swap and returns the necessary transaction steps in an array. The response will contain pricing, the best route, and an array of transaction objects.
 
     **A. With Approval:** If the user has not previously approved the DEX/aggregator to spend their source token, the response will include two transaction steps.
-    
+
     1.  **Approval Transaction:** The user must sign and execute this first.
     2.  **Swap Transaction:** After the approval is confirmed, the user signs and executes this second transaction.
 
@@ -221,9 +221,9 @@ The entire swap process revolves around these core API calls. Their usage varies
     Both `getBestRoute` and `getCallData` APIs return transaction steps with a defined format:
     ```json
     {
-      "type": "transaction", 
+      "type": "transaction",
       "metadata": {
-        "serviceType": "bridge", 
+        "serviceType": "bridge",
         "transactionType": "dex",
         "protocol": "BASE_UNISWAP_V4",
         "aggregatorName": "1InchV6"
@@ -242,12 +242,12 @@ The entire swap process revolves around these core API calls. Their usage varies
       - **`protocol`:** The actual DEX used for the swap
       - **`aggregatorName`:** Same as protocol if DEX is used directly, or the aggregator name if accessed via an aggregator (e.g., Protocol: "Uniswap", Aggregator: "1Inch")
     </CollapsibleCallout>
-    
+
     ### Step 3: Sign and Execute
-    The user signs and executes the transaction(s) from the `getBestRoute` response using their wallet. No further API calls are needed. `getCallData` and `registerIntent` are skipped entirely for same-chain swaps.
+    The user signs and executes the transaction(s) from the `getBestRoute` response using their wallet. No further API calls are needed.
 
     <Callout type="info">
-      For same-chain swaps, Okto only provides the the transaction payload. No Okto `jobId` or `orderId` is created. The execution occurs directly between the user's wallet and the on-chain DEX/aggregator. To check the status of the swap, monitor the transaction hash received after execution via a blockchain explorer or the user's wallet provider.
+      For same-chain swaps, Okto only provides the the transaction payload. No Okto `jobId` or `orderId` is created. The execution occurs directly between the user's wallet and the on-chain DEX/aggregator. To check the status of the swap, monitor the transaction hash received after execution via a blockchain explorer or the user's wallet provider. You can read more about transaction here: https://ethereum.org/en/developers/docs/transactions/
     </Callout>
     </Steps>
 
@@ -317,7 +317,7 @@ The entire swap process revolves around these core API calls. Their usage varies
         <Callout type="warn" title="Action Required: Sign Permit2 Data">
         The `getBestRoute` response includes a `permitDataToSign` parameter, which must be signed by the user's wallet (e.g., using `signTypedData`). This signature authorizes Okto to transfer tokens on the user's behalf using the [EIP-2612 Permit2 standard](https://eips.ethereum.org/EIPS/eip-2612).
 
-        **What is Permit2?**  
+        **What is Permit2?**
         Permit2 allows a third party to transfer tokens on behalf of a user without requiring an on-chain approval transaction each time. The user registers the token once on the Permit2 contract for that chain. After registration, the user can generate off-chain signatures for future transfers, which third parties can submit to Permit2 to execute token movements.
 
         For more details, see the official [Permit2 documentation](https://docs.uniswap.org/contracts/permit2/overview).
@@ -375,9 +375,9 @@ The entire swap process revolves around these core API calls. Their usage varies
         Both `getBestRoute` and `getCallData` APIs return transaction steps with a defined format:
         ```json
         {
-          "type": "transaction", 
+          "type": "transaction",
           "metadata": {
-            "serviceType": "bridge", 
+            "serviceType": "bridge",
             "transactionType": "dex",
             "protocol": "BASE_UNISWAP_V4",
             "aggregatorName": "1InchV6"
@@ -526,7 +526,7 @@ The entire swap process revolves around these core API calls. Their usage varies
         </Accordions>
 
         **Understanding Order Status**
-        
+
         The `orderData.status` field in the response indicates your order’s current state:
         | Status Code | Description                                                       |
         |-----------------|----------------------------------------------------|
@@ -656,9 +656,9 @@ The entire swap process revolves around these core API calls. Their usage varies
         Both `getBestRoute` and `getCallData` APIs return transaction steps with a defined format:
         ```json
         {
-          "type": "transaction", 
+          "type": "transaction",
           "metadata": {
-            "serviceType": "bridge", 
+            "serviceType": "bridge",
             "transactionType": "dex",
             "protocol": "BASE_UNISWAP_V4",
             "aggregatorName": "1InchV6"
@@ -826,7 +826,7 @@ The entire swap process revolves around these core API calls. Their usage varies
         </Accordions>
 
         **Understanding Order Status**
-        
+
         The `orderData.status` field in the response indicates your order’s current state:
 
         | Status Code | Description                                                       |
