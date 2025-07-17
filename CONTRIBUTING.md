@@ -8,10 +8,10 @@ Thank you for your interest in contributing to the Okto documentation! We value 
 - [Documentation Standards](#documentation-standards)
     - [Content Structure and Format](#content-structure-and-format)
     - [Writing Style Guidelines](#writing-style-guidelines)
+- [Contributing to Documentation](#contributing-to-documentation)
 - [Contributing to OpenAPI scripts](#contributing-to-openapi-scripts)
-    - [Updating Existing Theory Guides](#updating-existing-theory-guides)
-    - [Adding New Theory Guides](#adding-new-theory-guides)
-    - [Adding or Updating Endpoints](#adding-or-updating-endpoints)
+    - [Contributing to Existing OpenAPI Sections](#contributing-to-existing-sections)
+    - [Creating a New OpenAPI Section](#creating-a-new-openapi-section)
 - [Contribution Review Process](#contribution-review-process)
 - [Issue Reporting](#issue-reporting)
     - [Issue Report Template](#issue-report-template)
@@ -70,6 +70,28 @@ To maintain a high standard of quality and consistency across the Okto documenta
 *   **Link Verification:**  Please verify all external links monthly to ensure they are still active and relevant.
 *   **Use Headers Properly:**  Structure content with properly nested headers (h2, h3, h4) for clear organization.
 
+## Contributing to Documentation
+
+Okto Docs uses a Next.js-based routing structure, with all content stored under the `content/docs/` directory. If you want to contribute to the docs, you will primarily work within this directory to add or update documentation.
+
+If you want to contribute to components, these are located in the `app/components/` directory.
+
+### Adding New Section or Guides
+
+1.  **Create a Directory or Guide:** Follow the [Content Structure Format](#content-structure-and-format) and create a new directory or a new `.mdx` guide under the appropriate section within `content/docs/`.
+
+2.  **Update meta.json:** In the new directory, add a `meta.json` file defining its structure. If you created a new guide, add it to the `meta.json` in that directory to ensure it appears in the navigation.
+
+### Updating Existing Docs
+
+1.  **Locate and Edit Existing Guides:** Navigate to the relevant section in `content/docs/` and apply your updates to the necessary `.mdx` files.
+
+### Updating Components
+
+1.  **Edit Global Components:** If you need to update reusable global components (for e.g., `Navbar`, `Footer`, etc.), edit files under `app/components/`.
+
+2.  **Edit MDX-Specific Components:** If you need to update components used within `.mdx` files, edit files under `app/components/mdx/`.
+
 ## Contributing to OpenAPI Scripts
 
 Okto uses OpenAPI auto-generated scripts to maintain up-to-date API documentation across:
@@ -77,9 +99,13 @@ Okto uses OpenAPI auto-generated scripts to maintain up-to-date API documentatio
 *   **API Reference Section (Explorer, Auth, Intents)**  
 *   **Trade Service Section**
 
-If you want to contribute to guides under the API Reference or Trade Service sections, follow these steps.
+This section will help you contribute to Okto's API documentation in a structured way.
+
+## Contributing to Existing OpenAPI Sections
 
 ### Updating Existing Theory Guides
+
+Theory guides are conceptual documentation that explain how APIs work and how to use them (like `index.mdx`, `overview.mdx`, `setup.mdx`).
 
 1.  **Locate the Relevant Guide:** Locate the relevant guide in:
 * `content/docs/openapi/` (API Reference guides)
@@ -87,7 +113,7 @@ If you want to contribute to guides under the API Reference or Trade Service sec
 
 2.  **Verify and Submit:** Confirm your changes locally, commit them, and open a pull request for review.
 
-### Adding New Theory Guides
+### Adding New Theory Guides 
 
 1.  **Add Your Guide:** Place your new `.mdx` guide in the appropriate directory:
 
@@ -102,9 +128,20 @@ If you want to contribute to guides under the API Reference or Trade Service sec
 
     *   **For Trade Service:** If you add a guide in `content/docs/trade-service/`, update `scripts/generate-trade-service-docs.mjs` to include your new guide.
 
+    In these scripts, there is a `return()` statement filtering which files to keep. Add your new guide’s filename, so it’s included during regeneration. For example:
+
+    ``` 
+        !v.endsWith("index.mdx") &&
+        !v.endsWith("overview.mdx") &&
+        !v.endsWith("setup.mdx") &&
+        !v.endsWith("meta.json") &&
+        ....
+        !v.endsWith("YOUR_NEW_GUIDE.mdx")
+    ```
+
 ### Adding or Updating Endpoints
 
-If you want to add a **new API endpoint** or modify **existing endpoint scripts**, follow these steps.
+Follow these steps when you want to add new API endpoints or modify existing endpoint documentation.
 
 1.  **Modify the relevant OpenAPI JSON file:** Locate and edit the correct file under `public/openapi/`:
 
@@ -145,6 +182,30 @@ If you want to add a **new API endpoint** or modify **existing endpoint scripts*
 3.  **Verify your changes:** Check that your updated or new endpoints appear correctly in the generated documentation.
 
 > *Ensure no unintended file changes occurred during regeneration.*
+
+## Creating a New OpenAPI Section
+
+Follow these steps, when you need to add a completely new OpenAPI section (for example, a new service's API documentation).
+
+1. **Create the Content Folder:** Create a new folder under `content/docs/` (e.g., `content/docs/new-service/`) with your `.mdx` theory guides and a `meta.json` file for navigation structure.
+
+2. **Add the OpenAPI JSON File:** Place your OpenAPI JSON in `public/openapi/` (e.g., `public/openapi/openapi-new-service.json`).
+
+> *Ensure the JSON is valid and follows the OpenAPI structure used in other Okto sections.*
+
+3. **Create the Generation Script:** Add a new script `scripts/generate-new-service-docs.mjs` in the `scripts/` directory, using existing scripts as reference. Refer to the existing scripts (e.g. `generate-trade-service-docs.mjs`).
+
+4. **Add NPM Script for Regeneration:** In `package.json`, add a new command:
+`"build:new-service-docs": "node scripts/generate-new-service-docs.mjs"`.
+This will allow consistent regeneration during local dev and CI.
+
+5. **Test Locally:** Execute your build command
+    ```bash
+    npm run build:new-service-docs
+    ``` 
+    and verify that endpoint documentation is generated correctly, theory guides are retained, and the section appears in your local docs site.
+
+> ***Tip:** Keep your new script structure consistent with existing scripts for maintainability.*
 
 ## Contribution Review Process
 

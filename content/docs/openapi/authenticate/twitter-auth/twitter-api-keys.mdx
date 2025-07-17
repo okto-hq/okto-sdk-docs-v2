@@ -3,7 +3,7 @@ title: Get X (Twitter) API Keys
 description: Learn how to obtain X API keys for authenticating with the X API.
 ---
 
-import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { Step, Steps } from "fumadocs-ui/components/steps";
 
 To authenticate with the X API, you need to obtain API keys from the [X Developer Portal](https://developer.x.com/). Follow these steps to get your keys:
 
@@ -44,9 +44,7 @@ From this tab, you will find the API Key and the API Secret Key. Copy the first 
 
 ![X Developer Portal Dashboard](/images/x-api-keys-4.png)
 
-<Callout type="warn">
-Store these credentials securely. Do not share them publicly or commit them to version control.
-</Callout>
+<Callout type="warn">Store these credentials securely. Do not share them publicly or commit them to version control.</Callout>
 
 </Step>
 
@@ -65,11 +63,21 @@ After saving your keys, you'll be taken to your app's settings page. Here you ca
 
 To enable user authentication, click **Set up** in the User authentication section.
 
+**Choosing App Type:**
+
+- **Native App:** Select this if you are building a mobile or desktop application that runs directly on a user's device (e.g., iOS, Android, Windows, or Mac apps). Native apps are considered public clients and typically cannot keep secrets secure.
+- **Web App, Automated App or Bot:** Select this if you are building a web application, server-side app, or a bot. These are confidential clients that can securely store secrets and are suitable for most web-based integrations or backend services.
+
 ![X Developer Portal Dashboard](/images/x-api-keys-6.png)
 
 ## 7. Configure Callback URLs
 
 Configure the callback URLs for your application. These URLs are used by X to redirect users after they authorize your app.
+
+**What to enter:**
+
+- **Callback URI / Redirect URL:** Enter the URL where users should be redirected after they authorize your app. This is usually an endpoint in your app that handles the OAuth callback, such as `https://yourapp.com/auth/callback`.
+- **Website URL:** Enter the main website address for your app or service, such as `https://yourapp.com`. This is shown to users during the authorization process.
 
 ![X Developer Portal Dashboard](/images/x-api-keys-7.png)
 
@@ -79,6 +87,7 @@ Configure the callback URLs for your application. These URLs are used by X to re
 ## 8. Use Your API Keys
 
 You now have everything needed to authenticate with the X API. Refer to the [X API documentation](https://developer.x.com/en/docs) for usage examples.
+
 </Step>
 </Steps>
 
