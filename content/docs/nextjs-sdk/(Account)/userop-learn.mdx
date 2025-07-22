@@ -4,6 +4,10 @@ description: Learn about User Operations (UserOp) in the context of Account Abst
 full: false
 ---
 
+import AIMarkdownComponent from "components/AIMarkdownComponent";
+
+<AIMarkdownComponent isIndex={false} />
+
 ## What is a User Operation?
 
 User Operations (UserOps) are fundamental to [**ERC-4337 Account Abstraction**](https://eips.ethereum.org/EIPS/eip-4337). They are **pseudo-transaction objects** utilized for interacting with smart contract accounts.  Unlike traditional transactions initiated by Externally Owned Accounts (EOAs), UserOps serve as structured instructions directed to a smart contract account to perform a blockchain action.  Okto SDK provides tools to facilitate the creation, signing, and submission of UserOps.

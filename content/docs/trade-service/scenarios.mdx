@@ -4,6 +4,10 @@ full: false
 description: Explore the Trade Service swap scenarios including same-chain swaps and various cross-chain swap flows.
 ---
 
+import AIMarkdownComponent from "components/AIMarkdownComponent";
+
+<AIMarkdownComponent isIndex={false} />
+
 This page outlines all supported swap flows within the **Okto Trade Service**, including both same-chain and cross-chain scenarios. Each swap operation is executed via a sequence of on-chain transactions, some of which may involve routing, cross-chain transfers, or intermediate conversions. These steps are abstracted from the end-user to ensure seamless and secure execution.
 
 <Callout title="Understand FST and Non-FST Tokens" type="info">
