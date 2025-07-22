@@ -8,8 +8,10 @@ import { TypeTable } from "fumadocs-ui/components/type-table";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { Callout } from "fumadocs-ui/components/callout";
 import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
-
 import "../../../styles.css";
+import AIMarkdownComponent from "components/AIMarkdownComponent";
+
+<AIMarkdownComponent isIndex={false} />
 
 The `loginUsingJWTAuthentication()` method authenticates users using JWT tokens. It verifies the JWT token, creates an authentication payload, and sends it to the  Okto chain. Upon successful authentication, it updates the user session.
 

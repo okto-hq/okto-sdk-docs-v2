@@ -10,8 +10,10 @@ import { Callout } from 'fumadocs-ui/components/callout';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import { Icon as IIcon } from '@iconify/react'; 
 import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
-
 import '../../styles.css';
+import AIMarkdownComponent from "components/AIMarkdownComponent";
+
+<AIMarkdownComponent isIndex={false} />
 
 Okto SDK provides the `getAccount()` method to retrieve details of wallets connected to the current user's Okto account. This includes both embedded wallets created via Okto and external wallets connected by the user (e.g., MetaMask, Phantom).
 

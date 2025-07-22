@@ -8,8 +8,10 @@ import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
 import '../../../styles.css';
+import AIMarkdownComponent from "components/AIMarkdownComponent";
+
+<AIMarkdownComponent isIndex={false} />
 
 The `loginUsingOAuth()` method authenticates users using OAuth providers. It generates a session key pair, creates an authenticate payload, and sends it to the Okto chain. Upon successful authentication, it updates the user session.
 
