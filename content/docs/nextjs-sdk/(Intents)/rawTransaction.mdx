@@ -1,0 +1,1103 @@
+---
+title: Raw Transaction
+description: Learn how to create raw transactions on EVM, Aptos and SVM using the Okto SDK.
+full: false
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
+
+<ChainSupportStatus />
+
+<Tabs items={['EVM Chains', 'Aptos Chain', 'SVM Chains']}>
+    <Tab valud="EVM Chains">
+        ## EVM Chains
+
+        The `evmRawTransaction()` function creates a user operation for executing raw EVM transactions. This function allows you to create custom transactions by specifying the raw transaction parameters.
+
+        <Callout>
+            There are two ways to implement raw transactions:
+
+            - **Abstracted Flow**: A simplified approach where the user operation is automatically created, signed, and executed in a single step. Perfect for most applications.
+            - **UserOp Flow**: A granular approach where you manually control the creation, signing, and execution of the user operation. Useful for custom implementations or advanced use cases.
+        </Callout>
+
+        <Callout>
+            If sponsorship is enabled for your user, you must pass the `feePayerAddress` (i.e., the Treasury Wallet address) as a parameter to the intent function. Refer to the example below for implementation details.
+        </Callout>
+
+        ### Example
+
+        <Accordions defaultValue="Usage">
+            <Accordion title="Usage">
+                <Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+                    <Tab value="Abstracted Flow">
+                    ```typescript
+                    import { useOkto } from '@okto_web3/react-sdk';
+                    import { evmRawTransaction } from '@okto_web3/react-sdk'; // [!code highlight]
+
+                    function RawTransaction() {
+                        const oktoClient = useOkto(); 
+
+                        async function handleRawTransaction() {
+                            try {
+                                const rawTxParams = { // [!code highlight]
+                                    caip2Id: "eip155:1", // Ethereum Mainnet // [!code highlight]
+                                    transaction: { // [!code highlight]
+                                        from: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e", // [!code highlight]
+                                        to: "0x23581767a106ae21c074b2276D25e5C3e136a68b", // [!code highlight]
+                                        data: "0x", // Optional transaction data // [!code highlight]
+                                        value: BigInt("1000000000000000000") // 1 ETH // [!code highlight]
+                                    } // [!code highlight]
+                                }; // [!code highlight]
+
+                                const feePayerAddress = "0xdb9B5..." // feePayerAddress used when sponsorship is available
+                                
+                                // Execute the transaction
+                                const jobId = await evmRawTransaction(oktoClient, rawTxParams, feePayerAddress?); // [!code highlight]
+                                console.log('Transaction jobId:', jobId);
+                            } catch (error) {
+                                console.error('Error in raw transaction:', error);
+                            }
+                        }
+
+                        return (
+                            <button onClick={handleRawTransaction}>
+                                Execute Raw Transaction
+                            </button>
+                        );
+                    }
+                    ```
+                    </Tab>
+                    <Tab value="UserOp Flow">
+                    ```typescript
+                    import { useOkto } from '@okto_web3/react-sdk';
+                    import { evmRawTransaction } from '@okto_web3/react-sdk/userop'; // [!code highlight]
+
+                    function RawTransaction() {
+                        const oktoClient = useOkto();
+
+                        async function handleRawTransaction() {
+                            try {
+                                const rawTxParams = { // [!code highlight]
+                                    caip2Id: "eip155:1", // Ethereum Mainnet // [!code highlight]
+                                    transaction: { // [!code highlight]
+                                        from: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e", // [!code highlight]
+                                        to: "0x23581767a106ae21c074b2276D25e5C3e136a68b", // [!code highlight]
+                                        data: "0x", // Optional transaction data // [!code highlight]
+                                        value: BigInt("1000000000000000000") // 1 ETH // [!code highlight]
+                                    } // [!code highlight]
+                                }; // [!code highlight]
+
+                                const feePayerAddress = "0xdb9B5..." // feePayerAddress used when sponsorship is available
+
+                                // Create the user operation
+                                const userOp = await evmRawTransaction(oktoClient, rawTxParams, feePayerAddress?); // [!code highlight]
+                                
+                                // Sign the operation
+                                const signedOp = await oktoClient.signUserOp(userOp); // [!code highlight]
+                                
+                                // Execute the transaction
+                                const jobId = await oktoClient.executeUserOp(signedOp); // [!code highlight]
+                                console.log('Transaction jobId:', jobId);
+                            } catch (error) {
+                                console.error('Error in raw transaction:', error);
+                            }
+                        }
+
+                        return (
+                            <button onClick={handleRawTransaction}>
+                                Execute Raw Transaction
+                            </button>
+                        );
+                    }
+                    ```
+                    </Tab>
+                </Tabs>
+            </Accordion>
+            <Accordion title="Sample Response">
+                <Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+                    <Tab value="Abstracted Flow">
+                    ```typescript
+                    // JobId returned
+                    "3ee33731-9e96-4ab9-892c-ea476b36295d"
+                    ```
+                    </Tab>
+                    <Tab value="UserOp Flow">
+                    ```typescript
+                    // UserOp returned from evmRawTransaction
+                    {
+                        "sender": "0xa9F6b3A5a718754979dbA78113f3614Dd4524c53",
+                        "nonce": "0x000000000000000000000000000000003ee337319e964ab9892cea476b36295d",
+                        "paymaster": "0x74324fa6fa67b833dfdea4c1b3a9898574d076e3",
+                        "callGasLimit": "0x493e0",
+                        "verificationGasLimit": "0x30d40",
+                        "preVerificationGas": "0xc350",
+                        "maxFeePerGas": "0x77359400",
+                        "maxPriorityFeePerGas": "0x77359400",
+                        "paymasterPostOpGasLimit": "0x186a0",
+                        "paymasterVerificationGasLimit": "0x186a0",
+                        "callData": "0x8dd7712f...", // truncated for brevity
+                        "paymasterData": "0x000000...", // truncated for brevity
+                        "signature": "0x6bf06e6d..." // truncated for brevity
+                    }
+                    ```
+                    </Tab>
+                </Tabs>
+            </Accordion>
+            <Accordion title="Creating raw transactions parameters using viem">
+                <Tabs items={['TypeScript']}>
+                    <Tab value="TypeScript">
+                        ```typescript
+                        import { parseEther, encodeFunctionData } from 'viem';
+
+                        // Example contract interaction parameters
+                        const abi = [{
+                        "inputs": [{"name": "amount", "type": "uint256"}],
+                        "name": "deposit",
+                        "outputs": [], 
+                        "stateMutability": "payable",
+                        "type": "function"
+                        }];
+
+                        // Encode function data using Viem
+                        const data = encodeFunctionData({
+                        abi,
+                        functionName: 'deposit',
+                        args: [parseEther('1.0')]
+                        });
+
+                        // Create raw transaction parameters
+                        const rawTxParams = {
+                        caip2Id: "eip155:1",
+                        transaction: {
+                            from: "0xSenderAddress",
+                            to: "0xDestinationAddress",
+                            data,
+                            value: parseEther('1.0')
+                        }
+                        };
+                        ```
+                    </Tab>
+                </Tabs>
+            </Accordion>
+            <Accordion title="Creating raw transactions parameters using ethers">
+                <Tabs items={['TypeScript']}>
+                    <Tab value="TypeScript">
+                        ```typescript
+                        import { ethers } from 'ethers';
+
+                        // Example contract interaction parameters
+                        const abi = [
+                            "function deposit(uint256 amount) payable"
+                        ];
+
+                        // Create contract interface
+                        const iface = new ethers.Interface(abi);
+
+                        // Encode function data
+                        const data = iface.encodeFunctionData("deposit", [
+                            ethers.parseEther("1.0")
+                        ]);
+
+                        // Create raw transaction parameters
+                        const rawTxParams = {
+                            caip2Id: "eip155:1",
+                            transaction: {
+                                from: "0xSenderAddress",
+                                to: "0xDestinationAddress",
+                                data,
+                                value: ethers.parseEther("1.0")
+                            }
+                        };
+                        ```
+                    </Tab>
+                </Tabs>
+            </Accordion>
+            <Accordion title="Suggested Post Implementation">
+                ```typescript
+                import { useOkto } from '@okto_web3/react-sdk';
+                import { getOrdersHistory } from '@okto_web3/react-sdk';
+
+                async function getRawTransactionOrder(jobId: string) {
+                    const oktoClient = useOkto();
+                    try {
+                        // Get order history with filter for specific jobId
+                        const orders = await getOrdersHistory(oktoClient, {
+                            intentId: jobId,                    // Filter by specific order/transaction
+                            intentType: "RAW_TRANSACTION",      // Filter for raw transaction orders
+                            status: "SUCCESSFUL"                // Filter by status: "SUCCESSFUL" | "FAILED" | "PENDING" | "REJECTED"
+                        });
+                        return orders?.[0] || null;
+                    } catch (error) {
+                        console.error('Error fetching transaction order:', error);
+                        throw error;
+                    }
+                }
+
+                // Usage example:
+                const order = await getRawTransactionOrder(jobId);
+                console.log('Order Status:', order?.status);
+                ```
+                <Callout title="Important: Transaction Lifecycle">
+                    The `getOrderHistory` function fetches the current status of a transaction on the Okto chain. However, the transaction status will continue to update on the Okto chain as it progresses through various stages in the [Distributed Transaction Network (DTN)](/docs/okto-layer/dtn).
+
+                    To track a transaction to completion:
+                    - Keep fetching the order history for your specific `jobId` until the status shows "SUCCESSFUL"
+                    - Once successful, the transaction hash will be available in the response
+                    - Use this transaction hash to verify the transaction on the destination chain's explorer
+                </Callout>
+            </Accordion>
+            <Accordion title="Corresponding jobId Response">
+                ```typescript
+                // Order returned from getOrdersHistory
+                {
+                    "downstream_transaction_hash": ["0x742d35Cc6634C0532925a3b844Bc454e4438f44e"],
+                    "transaction_hash": ["0x8dd7712f5f95ad24ddc0c2b90ea7f2f879680ec350fe4f373068b0e3370b9187"],
+                    "status": "SUCCESSFUL",
+                    "intent_id": "3ee33731-9e96-4ab9-892c-ea476b36295d",
+                    "intent_type": "RAW_TRANSACTION",
+                    "network_name": "Ethereum",
+                    "caip_id": "eip155:1",
+                    "details": {
+                        "from": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+                        "to": "0x23581767a106ae21c074b2276D25e5C3e136a68b",
+                        "data": "0x8dd7712f...", // truncated for brevity
+                        "value": "1000000000000000000"
+                    },
+                    "reason": "",
+                    "block_timestamp": 1677721600
+                }
+                ```
+            </Accordion>
+        </Accordions>
+
+        <Callout title="Note" type="info">
+            For error handling:
+            - Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/nextjs-sdk/sdk-error-warnings) documentation
+            - For help, navigate to the [troubleshooting guide](/docs/nextjs-sdk/troubleshooting) to contact support
+        </Callout>
+
+        ### Method Overview
+
+        | Method | Description |
+        |---------|-------------|
+        | <sub><i>async</i></sub> [`evmRawTransaction`](#evm-raw-transaction) | Create a user operation for raw EVM transaction |
+
+        <div className="method-box">
+
+            ## EVM Raw Transaction
+
+            <Callout title="Note">
+                Before using this function, ensure your target chain is an EVM-compatible chain by checking the [Supported Chains and Tokens](/docs/system-capabilities/supported-chains) documentation.
+            </Callout>
+
+            <sub><i>async</i></sub> `evmRawTransaction(oktoClient: OktoClient, data: RawTransactionIntentParams)` creates a user operation for raw EVM transactions.
+
+            ### Parameters
+
+            | Parameter | Type | Description | Required |
+            |-----------|------|-------------|----------|
+            | `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+            | `data` | `RawTransactionIntentParams` | Parameters for the raw transaction | Yes |
+            | `feePayerAddress` | `string` | Address of the Treasury Wallet responsible for covering gas fees when sponsorship is enabled | Optional |
+
+            Where `RawTransactionIntentParams` contains:
+
+            | Field | Type | Description | Required |
+            |-------|------|-------------|----------|
+            | `caip2Id` | `string` | The network identifier (e.g., eip155:1 for Ethereum) | Yes |
+            | `transaction` | `EVMRawTransaction` | The raw transaction parameters | Yes |
+
+            And `EVMRawTransaction` contains:
+
+            | Field | Type | Description | Required |
+            |-------|------|-------------|----------|
+            | `from` | `Address` | The sender's address | Yes |
+            | `to` | `Address` | The recipient's address | Yes |
+            | `data` | `Hash` | The transaction data | No |
+            | `value` | `Hash` | The amount of native currency to send | Yes |
+
+            ### Response
+
+            <Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+                <Tab value="Abstracted Flow">
+                    <Callout title="Success Response">
+
+                    | Field Name | Type | Description |
+                    |------------|------|-------------|
+                    | `result` | `Promise<string>` | Returns the jobId for the raw transaction |
+
+                    <Accordions>
+                        <Accordion title="Response Type">
+                            ```typescript
+                            interface {
+                                jobId: string;  
+                            }
+                            ```
+                        </Accordion>
+                    </Accordions>
+                    </Callout>
+                </Tab>
+                <Tab value="UserOp Flow">
+                    <Callout title="Success Response">
+
+                    | Field Name | Type | Description |
+                    |------------|------|-------------|
+                    | `result` | [`Promise<UserOp>`](/docs/nextjs-sdk/technical-reference#models) | Returns the user operation for the raw transaction |
+
+                    <Accordions>
+                        <Accordion title="Response Type">
+                            ```typescript
+                            interface UserOp {
+                                sender: string;
+                                nonce: string;
+                                paymaster: string;
+                                callGasLimit: string;
+                                verificationGasLimit: string;
+                                preVerificationGas: string;
+                                maxFeePerGas: string;
+                                maxPriorityFeePerGas: string;
+                                paymasterPostOpGasLimit: string;
+                                paymasterVerificationGasLimit: string;
+                                callData: string;
+                                paymasterData: string;
+                                signature: string;
+                            }
+                            ```
+                        </Accordion>
+                    </Accordions>
+                    </Callout>
+                </Tab>
+            </Tabs>
+        </div>
+    </Tab>
+    <Tab value="Aptos Chain">
+        ## Aptos Chain
+
+        The `aptosRawTransaction()` function creates a user operation for executing raw Aptos transactions. This function allows you to create custom transactions by specifying the raw transaction parameters.
+
+        <Callout>
+            There are two ways to implement raw transactions:
+
+            - **Abstracted Flow**: A simplified approach where the user operation is automatically created, signed, and executed in a single step. Perfect for most applications.
+            - **UserOp Flow**: A granular approach where you manually control the creation, signing, and execution of the user operation. Useful for custom implementations or advanced use cases.
+        </Callout>
+
+        <Callout>
+            If sponsorship is enabled for your user, you must pass the `feePayerAddress` (i.e., the Treasury Wallet address) as a parameter to the intent function. Refer to the example below for implementation details.
+        </Callout>
+
+        ### Example
+
+        <Accordions defaultValue="Usage">
+            <Accordion title="Usage">
+                <Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+                    <Tab value="Abstracted Flow">
+                    ```typescript
+                    import { useOkto } from '@okto_web3/react-sdk';
+                    import { aptosRawTransaction } from '@okto_web3/react-sdk'; // [!code highlight]
+
+                    function RawTransaction() {
+                        const oktoClient = useOkto(); 
+
+                        async function handleRawTransaction() {
+                            try {
+                                const rawTxParams = { // [!code highlight]
+                                    caip2Id: "aptos:testnet", // Aptos Testnet // [!code highlight]
+                                    transaction: { // [!code highlight]
+                                        function: "0x1::aptos_account::batch_transfer", // Batch transfer function // [!code highlight]
+                                        typeArguments: [], // Optional type arguments // [!code highlight]
+                                        functionArguments: [ // [!code highlight]
+                                            [ // Recipient addresses // [!code highlight]
+                                                "0x9ed7f8c95c5e2c3cb06dfbb48681b87401fabeb88b7d710db3720f7a2ca3fffc", // [!code highlight]
+                                                "0x2053680713a672fc41dbf71862efcbd14e01ba99bcb3913e933f5335a9f6e2b1" // [!code highlight]
+                                            ], // [!code highlight]
+                                            [ // Amounts to transfer // [!code highlight]
+                                                "10", // [!code highlight]
+                                                "10" // [!code highlight]
+                                            ] // [!code highlight]
+                                        ] // [!code highlight]
+                                    } // [!code highlight]
+                                }; // [!code highlight]
+                                
+                                // Execute the transaction
+                                const jobId = await aptosRawTransaction(oktoClient, rawTxParams); // [!code highlight]
+                                console.log('Transaction jobId:', jobId);
+                            } catch (error) {
+                                console.error('Error in raw transaction:', error);
+                            }
+                        }
+
+                        return (
+                            <button onClick={handleRawTransaction}>
+                                Execute Raw Transaction
+                            </button>
+                        );
+                    }
+                    ```
+                    </Tab>
+                    <Tab value="UserOp Flow">
+                    ```typescript
+                    import { useOkto } from '@okto_web3/react-sdk';
+                    import { aptosRawTransaction } from '@okto_web3/react-sdk/userop'; // [!code highlight]
+
+                    function RawTransaction() {
+                        const oktoClient = useOkto();
+
+                        async function handleRawTransaction() {
+                            try {
+                                const rawTxParams = { // [!code highlight]
+                                    caip2Id: "aptos:testnet", // Aptos Testnet // [!code highlight]
+                                    transaction: { // [!code highlight]
+                                        function: "0x1::aptos_account::batch_transfer", // Batch transfer function // [!code highlight]
+                                        typeArguments: [], // Optional type arguments // [!code highlight]
+                                        functionArguments: [ // [!code highlight]
+                                            [ // Recipient addresses // [!code highlight]
+                                                "0x9ed7f8c95c5e2c3cb06dfbb48681b87401fabeb88b7d710db3720f7a2ca3fffc", // [!code highlight]
+                                                "0x2053680713a672fc41dbf71862efcbd14e01ba99bcb3913e933f5335a9f6e2b1" // [!code highlight]
+                                            ], // [!code highlight]
+                                            [ // Amounts to transfer // [!code highlight]
+                                                "10", // [!code highlight]
+                                                "10" // [!code highlight]
+                                            ] // [!code highlight]
+                                        ] // [!code highlight]
+                                    } // [!code highlight]
+                                }; // [!code highlight]
+
+                                const feePayerAddress = "0xdb9B5..." // feePayerAddress used when sponsorship is available
+
+                                // Create the user operation
+                                const userOp = await aptosRawTransaction(oktoClient, rawTxParams, feePayerAddress?); // [!code highlight]
+                                
+                                // Sign the operation
+                                const signedOp = await oktoClient.signUserOp(userOp); // [!code highlight]
+                                
+                                // Execute the transaction
+                                const jobId = await oktoClient.executeUserOp(signedOp); // [!code highlight]
+                                console.log('Transaction jobId:', jobId);
+                            } catch (error) {
+                                console.error('Error in raw transaction:', error);
+                            }
+                        }
+
+                        return (
+                            <button onClick={handleRawTransaction}>
+                                Execute Raw Transaction
+                            </button>
+                        );
+                    }
+                    ```
+                    </Tab>
+                </Tabs>
+            </Accordion>
+            <Accordion title="Sample Response">
+                <Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+                    <Tab value="Abstracted Flow">
+                    ```typescript
+                    // JobId returned
+                    "82938f86-229e-42e4-a7a8-6c21fa403f28"
+                    ```
+                    </Tab>
+                    <Tab value="UserOp Flow">
+                    ```typescript
+                    // UserOp returned from aptosRawTransaction
+                    {
+                        "sender": "0xa9F6b3A5a718754979dbA78113f3614Dd4524c53",
+                        "nonce": "0x000000000000000000000000000000003ee337319e964ab9892cea476b36295d",
+                        "paymaster": "0x74324fa6fa67b833dfdea4c1b3a9898574d076e3",
+                        "callGasLimit": "0x493e0",
+                        "verificationGasLimit": "0x30d40",
+                        "preVerificationGas": "0xc350",
+                        "maxFeePerGas": "0x77359400",
+                        "maxPriorityFeePerGas": "0x77359400",
+                        "paymasterPostOpGasLimit": "0x186a0",
+                        "paymasterVerificationGasLimit": "0x186a0",
+                        "callData": "0x8dd7712f...", // truncated for brevity
+                        "paymasterData": "0x000000...", // truncated for brevity
+                        "signature": "0x6bf06e6d..." // truncated for brevity
+                    }
+                    ```
+                    </Tab>
+                </Tabs>
+            </Accordion>
+            <Accordion title="Suggested Post Implementation">
+                ```typescript
+                import { useOkto } from '@okto_web3/react-sdk';
+                import { getOrdersHistory } from '@okto_web3/react-sdk';
+
+                async function getRawTransactionOrder(jobId: string) {
+                    const oktoClient = useOkto();
+                    try {
+                        // Get order history with filter for specific jobId
+                        const orders = await getOrdersHistory(oktoClient, {
+                            intentId: jobId,                    // Filter by specific order/transaction
+                            intentType: "RAW_TRANSACTION",      // Filter for raw transaction orders
+                            status: "SUCCESSFUL"                // Filter by status: "SUCCESSFUL" | "FAILED" | "PENDING" | "REJECTED"
+                        });
+                        return orders?.[0] || null;
+                    } catch (error) {
+                        console.error('Error fetching transaction order:', error);
+                        throw error;
+                    }
+                }
+
+                // Usage example:
+                const order = await getRawTransactionOrder(jobId);
+                console.log('Order Status:', order?.status);
+                ```
+                <Callout title="Important: Transaction Lifecycle">
+                    The `getOrderHistory` function fetches the current status of a transaction on the Okto chain. However, the transaction status will continue to update on the Okto chain as it progresses through various stages in the [Distributed Transaction Network (DTN)](/docs/okto-layer/dtn).
+
+                    To track a transaction to completion:
+                    - Keep fetching the order history for your specific `jobId` until the status shows "SUCCESSFUL"
+                    - Once successful, the transaction hash will be available in the response
+                    - Use this transaction hash to verify the transaction on the destination chain's explorer
+                </Callout>
+            </Accordion>
+            <Accordion title="Corresponding jobId Response">
+                ```typescript
+                // Order returned from getOrdersHistory
+                {
+                    "downstream_transaction_hash": [
+                        "0xef499289dd5cdc86d4b3cf860fb0b238dd45ccd12e4b6e9c9c5b66c85df7957f"
+                    ],
+                    "transaction_hash": [
+                        "0x3b0dbbccffe9c4cd19b11d1c93bf14bd34d555c5be711f61bd94a1ad0d65c42b",
+                        "0x04a85c3edadd19e4003f134c6af3b193db1dba9eaf9ba84b6292424fc9ab2214"
+                    ],
+                    "status": "SUCCESSFUL",
+                    "intent_id": "82938f86-229e-42e4-a7a8-6c21fa403f28",
+                    "intent_type": "RAW_TRANSACTION",
+                    "network_name": "OKTO_TESTNET_2",
+                    "caip_id": "aptos:testnet",
+                    "details": {
+                        "function": "0x1::aptos_account::batch_transfer",
+                        "typeArguments": [],
+                        "functionArguments": [
+                            [
+                                "0x9ed7f8c95c5e2c3cb06dfbb48681b87401fabeb88b7d710db3720f7a2ca3fffc",
+                                "0x2053680713a672fc41dbf71862efcbd14e01ba99bcb3913e933f5335a9f6e2b1"
+                            ],
+                            [
+                                "10",
+                                "10"
+                            ]
+                        ]
+                    },
+                    "reason": "",
+                    "block_timestamp": 1749664063
+                }
+                ```
+            </Accordion>
+        </Accordions>
+
+        <Callout title="Note" type="info">
+            For error handling:
+            - Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/nextjs-sdk/sdk-error-warnings) documentation
+            - For help, navigate to the [troubleshooting guide](/docs/nextjs-sdk/troubleshooting) to contact support
+        </Callout>
+
+        ### Method Overview
+
+        | Method | Description |
+        |---------|-------------|
+        | <sub><i>async</i></sub> [`aptosRawTransaction`](#evm-raw-transaction) | Create a user operation for Aptos raw transaction |
+
+        <div className="method-box">
+
+            ## Aptos Raw Transaction
+
+            <Callout title="Note">
+                Before using this function, ensure your target chain is an Aptos chain by checking the [Supported Chains and Tokens](/docs/system-capabilities/supported-chains) documentation.
+            </Callout>
+
+            <sub><i>async</i></sub> `aptosRawTransaction(oktoClient: OktoClient, data: RawTransactionIntentParams)` creates a user operation for Aptos raw transactions.
+
+            ### Parameters
+
+            | Parameter | Type | Description | Required |
+            |-----------|------|-------------|----------|
+            | `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+            | `data` | `RawTransactionIntentParams` | Parameters for the raw transaction | Yes |
+            | `feePayerAddress` | `string` | Address of the Treasury Wallet responsible for covering gas fees when sponsorship is enabled | Optional |
+
+            Where `RawTransactionIntentParams` contains:
+
+            | Field | Type | Description | Required |
+            |-------|------|-------------|----------|
+            | `caip2Id` | `string` | The network identifier (e.g., `aptos:testnet` for Aptos) | Yes |
+            | `transaction` | `AptosRawTransaction` | The raw transaction parameters | Yes |
+
+            And `AptosRawTransaction` contains:
+
+            | Field | Type | Description | Required |
+            |-------|------|-------------|----------|
+            | `function` | `string` | The Aptos function to call (e.g., `0x1::aptos_account::transfer`) | Yes |
+            | `typeArguments` | `string[]` | Type arguments for the function call | Yes (can be empty) |
+            | `functionArguments` | `Array<unknown>` | Arguments to pass to the function call | Yes |
+
+            ### Response
+
+            <Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+                <Tab value="Abstracted Flow">
+                    <Callout title="Success Response">
+
+                    | Field Name | Type | Description |
+                    |------------|------|-------------|
+                    | `result` | `Promise<string>` | Returns the jobId for the raw transaction |
+
+                    <Accordions>
+                        <Accordion title="Response Type">
+                            ```typescript
+                            interface {
+                                jobId: string;  
+                            }
+                            ```
+                        </Accordion>
+                    </Accordions>
+                    </Callout>
+                </Tab>
+                <Tab value="UserOp Flow">
+                    <Callout title="Success Response">
+
+                    | Field Name | Type | Description |
+                    |------------|------|-------------|
+                    | `result` | [`Promise<UserOp>`](/docs/nextjs-sdk/technical-reference#models) | Returns the user operation for the raw transaction |
+
+                    <Accordions>
+                        <Accordion title="Response Type">
+                            ```typescript
+                            interface UserOp {
+                                sender: string;
+                                nonce: string;
+                                paymaster: string;
+                                callGasLimit: string;
+                                verificationGasLimit: string;
+                                preVerificationGas: string;
+                                maxFeePerGas: string;
+                                maxPriorityFeePerGas: string;
+                                paymasterPostOpGasLimit: string;
+                                paymasterVerificationGasLimit: string;
+                                callData: string;
+                                paymasterData: string;
+                                signature: string;
+                            }
+                            ```
+                        </Accordion>
+                    </Accordions>
+                    </Callout>
+                </Tab>
+            </Tabs>
+        </div>
+    </Tab>
+    <Tab value="SVM Chains">
+        ## SVM Chains
+
+        The `svmRawTransaction()` function creates a user operation for executing SVM raw transactions. This function allows you to create custom transactions by specifying the raw transaction parameters.
+
+        <Callout>
+            There are two ways to implement raw transactions:
+
+            - **Abstracted Flow**: A simplified approach where the user operation is automatically created, signed, and executed in a single step. Perfect for most applications.
+            - **UserOp Flow**: A granular approach where you manually control the creation, signing, and execution of the user operation. Useful for custom implementations or advanced use cases.
+        </Callout>
+
+        <Callout title="Important" type="warn">
+            **For Solana Mainnet & Devnet:** Sponsorship is mandatory, and nonce wallets must be created manually.
+        </Callout>
+
+        ### Example
+
+        <Accordions defaultValue="Usage">
+            <Accordion title="Usage">
+                <Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+                    <Tab value="Abstracted Flow">
+                    ```typescript
+                    import { useOkto } from '@okto_web3/react-sdk';
+                    import { svmRawTransaction } from '@okto_web3/react-sdk'; // [!code highlight]
+
+                    function RawTransaction() {
+                        const oktoClient = useOkto(); 
+
+                        async function handleRawTransaction() {
+                            try {
+                                const rawTxParams = { // [!code highlight]
+                                    caip2Id: "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1", // Solana Devnet // [!code highlight]
+                                    transaction: { // [!code highlight]
+                                        instructions: [ // [!code highlight]
+                                            { // [!code highlight]
+                                                keys: [ // [!code highlight]
+                                                    { // Sender account // [!code highlight]
+                                                        pubkey: "CEGakCfWiBEUsh1vENRjZz26SiiVCu88ySjSPbRN7rsh", // [!code highlight]
+                                                        isSigner: true, // [!code highlight]
+                                                        isWritable: true // [!code highlight]
+                                                    }, // [!code highlight]
+                                                    { // Recipient account // [!code highlight]
+                                                        pubkey: "74BTT17VEjxY5LdRNzzUz3Xo5R5Mh3UGwYW9EuPo65Sz", // [!code highlight]
+                                                        isSigner: false, // [!code highlight]
+                                                        isWritable: true // [!code highlight]
+                                                    } // [!code highlight]
+                                                ], // [!code highlight]
+                                                programId: "11111111111111111111111111111111", // Solana Token Program // [!code highlight]
+                                                data: [2, 0, 0, 0, 160, 134, 1, 0, 0, 0, 0, 0] // Transfer 0.0001 SOL // [!code highlight]
+                                            } // [!code highlight]
+                                        ], // [!code highlight]
+                                        signer: "CEGakCfWiBEUsh1vENRjZz26SiiVCu88ySjSPbRN7rsh"  // [!code highlight]
+                                    } // [!code highlight]
+                                }; // [!code highlight]
+
+                                const feePayerAddress = "0xdb9B5..." // feePayerAddress used when sponsorship is available
+                                                                
+                                // Execute the transaction
+                                // feePayerAddress is mandatory for Solana Transactions
+                                const jobId = await svmRawTransaction(oktoClient, rawTxParams, feePayerAddress); // [!code highlight]
+                                console.log('Transaction jobId:', jobId);
+                            } catch (error) {
+                                console.error('Error in raw transaction:', error);
+                            }
+                        }
+
+                        return (
+                            <button onClick={handleRawTransaction}>
+                                Execute Raw Transaction
+                            </button>
+                        );
+                    }
+                    ```
+                    </Tab>
+                    <Tab value="UserOp Flow">
+                    ```typescript
+                    import { useOkto } from '@okto_web3/react-sdk';
+                    import { svmRawTransaction } from '@okto_web3/react-sdk/userop'; // [!code highlight]
+
+                    function RawTransaction() {
+                        const oktoClient = useOkto();
+
+                        async function handleRawTransaction() {
+                            try {
+                                const rawTxParams = { // [!code highlight]
+                                    caip2Id: "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1", // Solana Devnet // [!code highlight]
+                                    transaction: { // [!code highlight]
+                                        instructions: [ // [!code highlight]
+                                            { // [!code highlight]
+                                                keys: [ // [!code highlight]
+                                                    { // Sender account // [!code highlight]
+                                                        pubkey: "CEGakCfWiBEUsh1vENRjZz26SiiVCu88ySjSPbRN7rsh", // [!code highlight]
+                                                        isSigner: true, // [!code highlight]
+                                                        isWritable: true // [!code highlight]
+                                                    }, // [!code highlight]
+                                                    { // Recipient account // [!code highlight]
+                                                        pubkey: "74BTT17VEjxY5LdRNzzUz3Xo5R5Mh3UGwYW9EuPo65Sz", // [!code highlight]
+                                                        isSigner: false, // [!code highlight]
+                                                        isWritable: true // [!code highlight]
+                                                    } // [!code highlight] // [!code highlight]
+                                                ], // [!code highlight]
+                                                programId: "11111111111111111111111111111111", // Solana Token Program // [!code highlight]
+                                                data: [2, 0, 0, 0, 160, 134, 1, 0, 0, 0, 0, 0] // Transfer 0.0001 SOL // [!code highlight]
+                                            } // [!code highlight]
+                                        ], // [!code highlight]
+                                        signer: "CEGakCfWiBEUsh1vENRjZz26SiiVCu88ySjSPbRN7rsh"  // [!code highlight]
+                                    } // [!code highlight]
+                                }; // [!code highlight]
+
+                                const feePayerAddress = "0xdb9B5..." // feePayerAddress used when sponsorship is available
+
+                                // Create the user operation
+                                // feePayerAddress is mandatory for Solana Transactions
+                                const userOp = await svmRawTransaction(oktoClient, rawTxParams, feePayerAddress); // [!code highlight]
+                                
+                                // Sign the operation
+                                const signedOp = await oktoClient.signUserOp(userOp); // [!code highlight]
+                                
+                                // Execute the transaction
+                                const jobId = await oktoClient.executeUserOp(signedOp); // [!code highlight]
+                                console.log('Transaction jobId:', jobId);
+                            } catch (error) {
+                                console.error('Error in raw transaction:', error);
+                            }
+                        }
+
+                        return (
+                            <button onClick={handleRawTransaction}>
+                                Execute Raw Transaction
+                            </button>
+                        );
+                    }
+                    ```
+                    </Tab>
+                </Tabs>
+            </Accordion>
+            <Accordion title="Sample Response">
+                <Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+                    <Tab value="Abstracted Flow">
+                    ```typescript
+                    // JobId returned
+                    "57802803-f5df-4ea8-8f4a-32db03c47622"
+                    ```
+                    </Tab>
+                    <Tab value="UserOp Flow">
+                    ```typescript
+                    // UserOp returned from evmRawTransaction
+                    {
+                        "sender": "0xa9F6b3A5a718754979dbA78113f3614Dd4524c53",
+                        "nonce": "0x000000000000000000000000000000003ee337319e964ab9892cea476b36295d",
+                        "paymaster": "0x74324fa6fa67b833dfdea4c1b3a9898574d076e3",
+                        "callGasLimit": "0x493e0",
+                        "verificationGasLimit": "0x30d40",
+                        "preVerificationGas": "0xc350",
+                        "maxFeePerGas": "0x77359400",
+                        "maxPriorityFeePerGas": "0x77359400",
+                        "paymasterPostOpGasLimit": "0x186a0",
+                        "paymasterVerificationGasLimit": "0x186a0",
+                        "callData": "0x8dd7712f...", // truncated for brevity
+                        "paymasterData": "0x000000...", // truncated for brevity
+                        "signature": "0x6bf06e6d..." // truncated for brevity
+                    }
+                    ```
+                    </Tab>
+                </Tabs>
+            </Accordion>
+            <Accordion title="Suggested Post Implementation">
+                ```typescript
+                import { useOkto } from '@okto_web3/react-sdk';
+                import { getOrdersHistory } from '@okto_web3/react-sdk';
+
+                async function getRawTransactionOrder(jobId: string) {
+                    const oktoClient = useOkto();
+                    try {
+                        // Get order history with filter for specific jobId
+                        const orders = await getOrdersHistory(oktoClient, {
+                            intentId: jobId,                    // Filter by specific order/transaction
+                            intentType: "RAW_TRANSACTION",      // Filter for raw transaction orders
+                            status: "SUCCESSFUL"                // Filter by status: "SUCCESSFUL" | "FAILED" | "PENDING" | "REJECTED"
+                        });
+                        return orders?.[0] || null;
+                    } catch (error) {
+                        console.error('Error fetching transaction order:', error);
+                        throw error;
+                    }
+                }
+
+                // Usage example:
+                const order = await getRawTransactionOrder(jobId);
+                console.log('Order Status:', order?.status);
+                ```
+                <Callout title="Important: Transaction Lifecycle">
+                    The `getOrderHistory` function fetches the current status of a transaction on the Okto chain. However, the transaction status will continue to update on the Okto chain as it progresses through various stages in the [Distributed Transaction Network (DTN)](/docs/okto-layer/dtn).
+
+                    To track a transaction to completion:
+                    - Keep fetching the order history for your specific `jobId` until the status shows "SUCCESSFUL"
+                    - Once successful, the transaction hash will be available in the response
+                    - Use this transaction hash to verify the transaction on the destination chain's explorer
+                </Callout>
+            </Accordion>
+            <Accordion title="Corresponding jobId Response">
+                ```typescript
+                // Order returned from getOrdersHistory
+                {
+                    "downstream_transaction_hash": [
+                        "aVSywNsmPNa1tj9rpfdbnZDf1rjWiqVN2BYBGWBTg7jGu2mKRkGAjYUhnohbbcak35eDUNKxQaav18iemYRTakx"
+                    ],
+                    "transaction_hash": [
+                        "0xce01e0cf82a029c00a84549aeec25d84d23eb1ecd300c0f50754e5e2732fc7ae",
+                        "0x55d63b4aea0322f20a5b8ad699bae6d2f5748464b9f41eee49474a95f979e3b3"
+                    ],
+                    "status": "SUCCESSFUL",
+                    "intent_id": "57802803-f5df-4ea8-8f4a-32db03c47622",
+                    "intent_type": "RAW_TRANSACTION",
+                    "network_name": "OKTO_TESTNET_2",
+                    "caip_id": "eip155:1802466136",
+                    "details": {
+                        "caip2Id": "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1",
+                        "transactions": [
+                        [
+                            {
+                            "Key": "instructions",
+                            "Value": [
+                                [
+                                {
+                                    "Key": "programId",
+                                    "Value": "11111111111111111111111111111111"
+                                },
+                                {
+                                    "Key": "data",
+                                    "Value": [
+                                    2,
+                                    0,
+                                    0,
+                                    0,
+                                    160,
+                                    134,
+                                    1,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                    ]
+                                },
+                                {
+                                    "Key": "keys",
+                                    "Value": [
+                                    [
+                                        {
+                                        "Key": "pubkey",
+                                        "Value": "CEGakCfWiBEUsh1vENRjZz26SiiVCu88ySjSPbRN7rsh"
+                                        },
+                                        {
+                                        "Key": "isSigner",
+                                        "Value": true
+                                        },
+                                        {
+                                        "Key": "isWritable",
+                                        "Value": true
+                                        }
+                                    ],
+                                    [
+                                        {
+                                        "Key": "pubkey",
+                                        "Value": "9x6aBtMeo2AcYbE5JCWVxJzUn2PE87qr5xp4vru86W7u"
+                                        },
+                                        {
+                                        "Key": "isSigner",
+                                        "Value": false
+                                        },
+                                        {
+                                        "Key": "isWritable",
+                                        "Value": true
+                                        }
+                                    ]
+                                    ]
+                                }
+                                ]
+                            ]
+                            },
+                            {
+                            "Key": "signer",
+                            "Value": "CEGakCfWiBEUsh1vENRjZz26SiiVCu88ySjSPbRN7rsh"
+                            }
+                        ]
+                        ]
+                    },
+                    "reason": "",
+                    "block_timestamp": 1752588041000
+                }
+                ```
+            </Accordion>
+        </Accordions>
+
+        <Callout title="Note" type="info">
+            For error handling:
+            - Use the error code to debug issues. Check out the [SDK errors and warnings](/docs/nextjs-sdk/sdk-error-warnings) documentation
+            - For help, navigate to the [troubleshooting guide](/docs/nextjs-sdk/troubleshooting) to contact support
+        </Callout>
+
+        ### Method Overview
+
+        | Method | Description |
+        |---------|-------------|
+        | <sub><i>async</i></sub> [`svmRawTransaction`](#svm-raw-transaction) | Create a user operation for raw SVM transaction |
+
+        <div className="method-box">
+
+            ## SVM Raw Transaction
+
+            <Callout title="Note">
+                Before using this function, ensure your target chain is a SVM chain by checking the [Supported Chains and Tokens](/docs/system-capabilities/supported-chains) documentation.
+            </Callout>
+
+            <sub><i>async</i></sub> `svmRawTransaction(oktoClient: OktoClient, data: RawTransactionIntentParams, feePayerAddress: string)` creates a user operation for raw SVM transactions.
+
+            ### Parameters
+
+            | Parameter | Type | Description | Required |
+            |-----------|------|-------------|----------|
+            | `oktoClient` | `OktoClient` | Instance of OktoClient obtained from useOkto hook | Yes |
+            | `data` | `RawTransactionIntentParams` | Parameters for the raw transaction | Yes |
+            | `feePayerAddress` | `string` | Address of the Treasury Wallet responsible for covering gas fees when sponsorship is enabled | Yes |
+
+            where `RawTransactionIntentParams` contains:
+            | Field | Type | Description | Required |
+            |-------|------|-------------|----------|
+            | `caip2Id` | `string` | The network identifier (e.g., `solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1` for Solana Devnet) | Yes |
+            | `transaction` | `SolanaRawTransaction` | The raw transaction parameters | Yes |
+
+            `SolanaRawTransaction` contains:
+            | Field | Type | Description | Required |
+            |-------|------|-------------|----------|
+            | `instructions` | `Instruction[]` | Array of instructions to include in the transaction | Yes |
+            | `signer` | `string` | The public key of the signing account | Yes |
+
+            `Instruction` contains:
+            | Field | Type | Description | Required |
+            |-------|------|-------------|----------|
+            | `programId` | `string` | The Solana program ID to invoke (e.g., `11111111111111111111111111111111` for System Program) | Yes |
+            | `data` | `number[]` | Serialized instruction data | Yes |
+            | `keys` | `InstructionKey[]` | List of accounts involved in the instruction | Yes |
+
+            `InstructionKey` contains:
+            | Field | Type | Description | Required |
+            |-------|------|-------------|----------|
+            | `pubkey` | `string` | The public key of the account | Yes |
+            | `isSigner` | `boolean` | Whether the account is a signer | Yes |
+            | `isWritable` | `boolean` | Whether the account is writable | Yes |
+
+            ### Response
+
+            <Tabs items={['Abstracted Flow', 'UserOp Flow']}>
+                <Tab value="Abstracted Flow">
+                    <Callout title="Success Response">
+
+                    | Field Name | Type | Description |
+                    |------------|------|-------------|
+                    | `result` | `Promise<string>` | Returns the jobId for the raw transaction |
+
+                    <Accordions>
+                        <Accordion title="Response Type">
+                            ```typescript
+                            interface {
+                                jobId: string;  
+                            }
+                            ```
+                        </Accordion>
+                    </Accordions>
+                    </Callout>
+                </Tab>
+                <Tab value="UserOp Flow">
+                    <Callout title="Success Response">
+
+                    | Field Name | Type | Description |
+                    |------------|------|-------------|
+                    | `result` | [`Promise<UserOp>`](/docs/nextjs-sdk/technical-reference#models) | Returns the user operation for the raw transaction |
+
+                    <Accordions>
+                        <Accordion title="Response Type">
+                            ```typescript
+                            interface UserOp {
+                                sender: string;
+                                nonce: string;
+                                paymaster: string;
+                                callGasLimit: string;
+                                verificationGasLimit: string;
+                                preVerificationGas: string;
+                                maxFeePerGas: string;
+                                maxPriorityFeePerGas: string;
+                                paymasterPostOpGasLimit: string;
+                                paymasterVerificationGasLimit: string;
+                                callData: string;
+                                paymasterData: string;
+                                signature: string;
+                            }
+                            ```
+                        </Accordion>
+                    </Accordions>
+                    </Callout>
+                </Tab>
+            </Tabs>
+        </div>
+    </Tab>
+</Tabs>
