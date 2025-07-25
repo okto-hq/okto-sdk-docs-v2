@@ -786,21 +786,21 @@ import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
                                             { // [!code highlight]
                                                 keys: [ // [!code highlight]
                                                     { // Sender account // [!code highlight]
-                                                        pubkey: "CEGakCfWiBEUsh1vENRjZz26SiiVCu88ySjSPbRN7rsh",
-                                                        isSigner: true,
-                                                        isWritable: true
+                                                        pubkey: "CEGakCfWiBEUsh1vENRjZz26SiiVCu88ySjSPbRN7rsh", // [!code highlight]
+                                                        isSigner: true, // [!code highlight]
+                                                        isWritable: true // [!code highlight]
                                                     }, // [!code highlight]
                                                     { // Recipient account // [!code highlight]
-                                                        pubkey: "74BTT17VEjxY5LdRNzzUz3Xo5R5Mh3UGwYW9EuPo65Sz",
-                                                        isSigner: false,
-                                                        isWritable: true
-                                                    } // [!code highlight]
+                                                        pubkey: "74BTT17VEjxY5LdRNzzUz3Xo5R5Mh3UGwYW9EuPo65Sz", // [!code highlight]
+                                                        isSigner: false, // [!code highlight]
+                                                        isWritable: true // [!code highlight]
+                                                    } // [!code highlight] // [!code highlight]
                                                 ], // [!code highlight]
                                                 programId: "11111111111111111111111111111111", // Solana Token Program // [!code highlight]
                                                 data: [2, 0, 0, 0, 160, 134, 1, 0, 0, 0, 0, 0] // Transfer 0.0001 SOL // [!code highlight]
                                             } // [!code highlight]
                                         ], // [!code highlight]
-                                        signer: "CEGakCfWiBEUsh1vENRjZz26SiiVCu88ySjSPbRN7rsh" // Okto Smart Wallet Mainnet Address // [!code highlight]
+                                        signer: "CEGakCfWiBEUsh1vENRjZz26SiiVCu88ySjSPbRN7rsh"  // [!code highlight]
                                     } // [!code highlight]
                                 }; // [!code highlight]
 
@@ -1030,7 +1030,7 @@ import ChainSupportStatus from 'app/components/mdx/ChainSupportStatus';
             | Field | Type | Description | Required |
             |-------|------|-------------|----------|
             | `instructions` | `Instruction[]` | Array of instructions to include in the transaction | Yes |
-            | `signer` | `string` | The public key of the signing account (usually the Okto smart wallet address) | Yes |
+            | `signer` | `string` | The public key of the signing account | Yes |
 
             `Instruction` contains:
             | Field | Type | Description | Required |
